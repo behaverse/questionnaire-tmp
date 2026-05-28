@@ -1,0 +1,59 @@
+# Questionnaire Apps Ecosystem — Design
+
+This folder is the **single authoritative source** for what the Questionnaire Apps Ecosystem is. Every other doc, code repo, or piece of communication should match what is here. If something is inconsistent with the design folder, the design folder is right.
+
+**Companion folder.** Roadmap, MVP scope, and phasing live in [../plan/](../plan/00_index.md). Design describes *what the system is*; plan describes *how and when it gets built*. The two folders are deliberately separate.
+
+**Last revised.** 2026-05-23 (**all 13 originally-tracked open decisions are now resolved** — OD-01, OD-12, OD-13 resolved 2026-05-23; OD-05/06/07/09/10/11/14 resolved 2026-05-21; OD-03/04/08 resolved 2026-05-15). **Versioning aligned with the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning)** — Calendar Versioning (`vYY.MMDD`) replaces SemVer across schemas, questionnaires, and reusable entities. No design decision blocks the start of implementation.
+
+## Reading order
+
+| # | Document | Purpose | Status |
+|---|---|---|---|
+| 01 | [01_vision.md](01_vision.md) | What the project is, who it's for, success criteria | Draft |
+| 02 | [02_terminology.md](02_terminology.md) | Consistent naming and definitions | Draft |
+| 03 | [03_use_cases.md](03_use_cases.md) | The scenarios the system must support, with requirements | Draft |
+| 04 | [04_architecture.md](04_architecture.md) | Components, responsibilities, data flows, sibling services | Draft |
+| 05 | [05_data_model.md](05_data_model.md) | Canonical schemas (definition, metadata, response, event, session) | Draft |
+| 06 | [06_library.md](06_library.md) | Library component — catalogue, reusable components, peer review | Draft |
+| 07 | [07_editor.md](07_editor.md) | Editor component — authoring, translations, logic, version control | Draft |
+| 08 | [08_viewer.md](08_viewer.md) | Viewer family — Web, Native (Godot) | Draft |
+| 08a | [08a_viewer_service.md](08a_viewer_service.md) | Viewer Service — deployments, sessions, submission brokering | Draft |
+| 09 | [09_platform.md](09_platform.md) | Participant Platform — accounts, studies, scheduling, dashboards | Draft |
+| 10 | [10_open_decisions.md](10_open_decisions.md) | Decisions intentionally deferred, with options and trade-offs | Live |
+| 11 | [11_content_licensing.md](11_content_licensing.md) | Licensing posture for Library content; question-vs-questionnaire model | Draft |
+| 12 | [12_governance.md](12_governance.md) | Operating organisation, sibling projects, cross-project contracts | Draft |
+| 13 | [13_importers.md](13_importers.md) | Migration assistance from foreign formats; provenance | Draft |
+
+## What lives here vs. in plan/
+
+| design/ — what the system *is* | plan/ — how it *gets built* |
+|---|---|
+| The 14 use cases (UC-01 .. UC-14) | Which use cases are MVP vs. Phase 2 vs. Phase 3 |
+| The data model and all schemas | The order in which schemas get authored |
+| The four components and their contracts | Which component is built first |
+| Open design decisions and trade-offs | Milestones, dates, sequencing |
+| Architectural principles | Operational decisions (when to lock tech, when to seed content) |
+
+If you find yourself wanting to add a "Phase 2" tag inside a design doc — it belongs in [../plan/04_feature_priority.md](../plan/04_feature_priority.md), not here.
+
+## Reading guides
+
+- **Stakeholders / funders.** Read 01 → 03 → 04. About 25 minutes.
+- **Researchers evaluating fit.** Read 01 → 03 → 06 → 09. About 40 minutes.
+- **Developers picking up a component.** Read 02 → 04 → 05 → the component-specific doc (06–09, 08a) → 10.
+- **Anyone resolving an open question.** Start at 10 (the open-decisions log), then back up to the docs that reference it.
+- **Anyone evaluating legal / operational fit.** Read 11 (content licensing) and 12 (governance).
+
+## Document conventions
+
+- **Identifiers** follow the patterns in [02_terminology.md](02_terminology.md): `qst_`, `q_`, `os_`, `ins_`, `pr_`, `scl_`, `page_`, `dep_`.
+- **Open decisions** are numbered `OD-NN` and live in [10_open_decisions.md](10_open_decisions.md). Other docs reference them, not re-decide them.
+- **External standards** (xAPI, JSON Schema, ISO 639-1, …) are adopted; we never redefine them.
+- **Tech-stack choices** that would constrain implementation are deliberately absent from design docs. They live in [10_open_decisions.md](10_open_decisions.md) until resolved.
+
+## Archived material
+
+Earlier scattered specs and prototype design notes (`SPECIFICATION_READONLY.md`, `SYSTEM_DESIGN.md`, `system_design.md`, `data_standards.md`, the old `specs/` and `schemas/` folders) have been moved to [../archive_do_not_edit/](../archive_do_not_edit/). They are kept for historical reference. **Do not edit them; do not cite them as authoritative.** This folder supersedes them in full.
+
+The three prototype codebases (`qv_godot/`, `survey_database/`, `survey_system/`) remain in place under the project root. They are **reference-only** for the design phase; the design is written from clean principles, not from inherited code constraints. Migration of existing content (notably the 792 questions in `survey_database/`) is a future task.
