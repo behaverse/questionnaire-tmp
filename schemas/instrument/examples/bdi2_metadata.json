@@ -1,0 +1,44 @@
+{
+  "id": "qst_bdi2",
+  "title": "Beck Depression Inventory-II",
+  "short_title": "BDI-II",
+  "description": "21-item self-report measure of depression severity in adults.",
+  "version": "v26.0528",
+  "language": "en",
+  "authors": [
+    { "name": "Aaron T. Beck", "affiliation": "University of Pennsylvania" },
+    { "name": "Robert A. Steer" },
+    { "name": "Gregory K. Brown" }
+  ],
+  "publication": {
+    "year": 1996,
+    "citation": "Beck AT, Steer RA, Brown GK. Manual for the Beck Depression Inventory-II. San Antonio, TX: Psychological Corporation; 1996.",
+    "doi": "10.1037/t00742-000",
+    "publisher": "Psychological Corporation"
+  },
+  "license": "proprietary_restricted",
+  "rights_holder": "Pearson Assessments",
+  "request_url": "https://www.pearsonassessments.com/bdi-ii",
+  "classification": {
+    "domain": ["depression", "clinical"],
+    "population": ["adults", "adolescents"],
+    "age_range": [13, 80],
+    "administration_mode": ["self_report"]
+  },
+  "psychometrics": {
+    "item_count": 21,
+    "estimated_minutes": 10,
+    "reliability": [
+      { "type": "cronbach_alpha", "value": 0.92, "population": "clinical", "sample_size": 500 }
+    ],
+    "validity": [
+      { "type": "criterion_concurrent", "value": 0.71, "comparator": "Hamilton Depression Rating Scale" }
+    ]
+  },
+  "usage": {
+    "requires_permission": true,
+    "cost": "paid",
+    "clinical_use_only": false,
+    "training_required": false
+  }
+}
