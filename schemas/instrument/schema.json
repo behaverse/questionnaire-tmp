@@ -34,6 +34,52 @@
         "published": { "type": "string", "format": "date-time" }
       },
       "additionalProperties": false
+    },
+    "publication": {
+      "type": "object",
+      "required": ["year", "citation"],
+      "properties": {
+        "year":      { "type": "integer", "minimum": 1800, "maximum": 2100 },
+        "citation":  { "type": "string", "minLength": 1 },
+        "doi":       { "type": "string", "pattern": "^10\\.\\d+/.+$" },
+        "isbn":      { "type": "string" },
+        "publisher": { "type": "string" },
+        "url":       { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": false
+    },
+    "license": {
+      "enum": [
+        "public_domain", "cc0", "cc_by", "cc_by_nc", "cc_by_sa",
+        "proprietary_open_redistribution", "proprietary_restricted",
+        "unknown", "mixed_see_components"
+      ]
+    },
+    "license_notes": { "type": "string", "maxLength": 1024 },
+    "rights_holder": { "type": "string" },
+    "request_url":   { "type": "string", "format": "uri" },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "requires_permission": { "type": "boolean" },
+        "cost":                { "enum": ["free", "paid", "negotiable"] },
+        "clinical_use_only":   { "type": "boolean" },
+        "training_required":   { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Imported-content only. See design/13_importers.md.",
+      "properties": {
+        "source":                 { "type": "string" },
+        "source_version":         { "type": "string" },
+        "imported_at":            { "type": "string", "format": "date-time" },
+        "imported_by":            { "type": "string" },
+        "import_loss_report_url": { "type": "string", "format": "uri" },
+        "importer_version":       { "type": "string" }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,

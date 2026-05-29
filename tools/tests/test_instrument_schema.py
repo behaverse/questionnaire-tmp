@@ -222,3 +222,141 @@ def test_timestamps_iso8601(schema):
         },
     }
     assert validate_instance(schema, instance) == []
+
+
+# ---------- publication ----------
+
+def test_publication_with_required_inner_fields(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "publication": {
+            "year": 2001,
+            "citation": "Kroenke K et al. PHQ-9. J Gen Intern Med. 2001;16:606.",
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_publication_full(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "publication": {
+            "year": 2001,
+            "citation": "Kroenke K et al.",
+            "doi": "10.1046/j.1525-1497.2001.016009606.x",
+            "isbn": "978-0-1234-5678-9",
+            "publisher": "Pfizer Inc.",
+            "url": "https://example.org/phq9",
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_publication_missing_year_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "publication": {"citation": "X"},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("year" in e for e in errors)
+
+
+def test_publication_missing_citation_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "publication": {"year": 2001},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("citation" in e for e in errors)
+
+
+def test_publication_license_field_rejected(schema):
+    """publication.license is removed; it duplicates top-level license."""
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "publication": {
+            "year": 2001, "citation": "X",
+            "license": "cc_by",
+        },
+    }
+    errors = validate_instance(schema, instance)
+    assert any("license" in e for e in errors)
+
+
+def test_publication_bad_doi_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "publication": {"year": 2001, "citation": "X", "doi": "not-a-doi"},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("doi" in e for e in errors)
+
+
+def test_publication_year_out_of_range_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "publication": {"year": 1500, "citation": "X"},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("year" in e or "minimum" in e for e in errors)
+
+
+# ---------- license vocabulary ----------
+
+@pytest.mark.parametrize("license_tag", [
+    "public_domain", "cc0", "cc_by", "cc_by_nc", "cc_by_sa",
+    "proprietary_open_redistribution", "proprietary_restricted",
+    "unknown", "mixed_see_components",
+])
+def test_license_enum_accepts(schema, license_tag):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "license": license_tag,
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_license_enum_rejects_unknown_value(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "license": "MIT",
+    }
+    errors = validate_instance(schema, instance)
+    assert any("license" in e for e in errors)
+
+
+# ---------- usage, provenance ----------
+
+def test_usage_full(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "usage": {
+            "requires_permission": True,
+            "cost": "paid",
+            "clinical_use_only": False,
+            "training_required": False,
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_usage_cost_enum_rejects(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "usage": {"cost": "expensive"},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("cost" in e for e in errors)
+
+
+def test_provenance_imported(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "provenance": {
+            "source": "survey_database/2025",
+            "source_version": "v25.0901",
+            "imported_at": "2026-05-01T08:00:00Z",
+            "imported_by": "migration-bot",
+        },
+    }
+    assert validate_instance(schema, instance) == []
