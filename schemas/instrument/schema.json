@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/instrument/v26.0528/schema.json",
+  "title": "Instrument Metadata",
+  "description": "Bibliographic and psychometric properties for an instrument. See docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md §2.",
+  "type": "object",
+  "required": ["id", "title", "description", "language"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]+_[a-z0-9_]+$",
+      "minLength": 3,
+      "maxLength": 64
+    },
+    "title": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 2048 },
+    "language": { "$ref": "#/$defs/LanguageCode" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "LanguageCode": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$",
+      "description": "BCP-47 language tag. Resolution falls back from most-specific to base to canonical."
+    }
+  }
+}
