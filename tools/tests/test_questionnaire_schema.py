@@ -653,3 +653,33 @@ def test_cross_question_validation_missing_message_fails(schema, registry):
     }
     errors = validate_instance(schema, instance, registry=registry)
     assert any("message" in e for e in errors)
+
+
+# ---------- root extensions + x_ ----------
+
+def test_root_extensions_accepted(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "extensions": {"anything": 42},
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_root_x_prefix_accepted(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "x_custom_marker": "internal",
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_root_unknown_field_rejected(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "pagess": [],  # typo
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("pagess" in e or "Additional" in e for e in errors)

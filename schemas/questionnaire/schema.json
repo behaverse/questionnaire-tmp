@@ -32,8 +32,10 @@
     "logic":      { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
     "style":      { "$ref": "#/$defs/Style" },
     "flow":       { "$ref": "#/$defs/FlowInstrument" },
-    "validation": { "type": "array", "items": { "$ref": "#/$defs/CrossQuestionValidationRule" } }
+    "validation": { "type": "array", "items": { "$ref": "#/$defs/CrossQuestionValidationRule" } },
+    "extensions": { "type": "object" }
   },
+  "patternProperties": { "^x_": {} },
   "additionalProperties": false,
   "$defs": {
     "LanguageCode": {
