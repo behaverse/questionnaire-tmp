@@ -120,3 +120,105 @@ def test_language_with_region_lowercase_fails(schema):
     instance = {"id": "qst_x", "title": "X", "description": "Y", "language": "pt-br"}
     errors = validate_instance(schema, instance)
     assert any("language" in e for e in errors)
+
+
+# ---------- optional fields ----------
+
+def test_short_title_accepted(schema):
+    instance = {
+        "id": "qst_phq9", "title": "PHQ-9", "description": "X", "language": "en",
+        "short_title": "PHQ-9",
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_version_valid(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "version": "v26.0528",
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_version_dev_suffix_valid(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "version": "v26.0528.dev2",
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_version_semver_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "version": "1.0.0",
+    }
+    errors = validate_instance(schema, instance)
+    assert any("version" in e for e in errors)
+
+
+def test_authors_minimal(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "authors": [{"name": "Aaron T. Beck"}],
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_authors_full(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "authors": [{
+            "name": "Aaron T. Beck",
+            "orcid": "0000-0001-2345-678X",
+            "affiliation": "University of Pennsylvania",
+            "email": "beck@example.edu",
+        }],
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_authors_missing_name_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "authors": [{"orcid": "0000-0001-2345-6789"}],
+    }
+    errors = validate_instance(schema, instance)
+    assert any("name" in e for e in errors)
+
+
+def test_authors_bad_orcid_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "authors": [{"name": "X", "orcid": "not-an-orcid"}],
+    }
+    errors = validate_instance(schema, instance)
+    assert any("orcid" in e for e in errors)
+
+
+def test_available_languages_accepts_bcp47_mix(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "available_languages": ["en", "pt", "pt-BR", "zh-Hans"],
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_available_languages_rejects_duplicates(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "available_languages": ["en", "en"],
+    }
+    errors = validate_instance(schema, instance)
+    assert any("unique" in e.lower() or "duplicate" in e.lower() for e in errors)
+
+
+def test_timestamps_iso8601(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "timestamps": {
+            "created": "2026-01-15T10:00:00Z",
+            "modified": "2026-05-28T14:30:00Z",
+        },
+    }
+    assert validate_instance(schema, instance) == []

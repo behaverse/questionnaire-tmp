@@ -14,7 +14,27 @@
     },
     "title": { "type": "string", "minLength": 1, "maxLength": 256 },
     "description": { "type": "string", "minLength": 1, "maxLength": 2048 },
-    "language": { "$ref": "#/$defs/LanguageCode" }
+    "language": { "$ref": "#/$defs/LanguageCode" },
+    "short_title": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "version": { "$ref": "#/$defs/Version" },
+    "authors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Author" }
+    },
+    "available_languages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/LanguageCode" },
+      "uniqueItems": true
+    },
+    "timestamps": {
+      "type": "object",
+      "properties": {
+        "created":   { "type": "string", "format": "date-time" },
+        "modified":  { "type": "string", "format": "date-time" },
+        "published": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    }
   },
   "additionalProperties": false,
   "$defs": {
@@ -22,6 +42,22 @@
       "type": "string",
       "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$",
       "description": "BCP-47 language tag. Resolution falls back from most-specific to base to canonical."
+    },
+    "Version": {
+      "type": "string",
+      "pattern": "^v\\d{2}\\.\\d{4}(\\.dev\\d+)?$",
+      "description": "Calendar version vYY.MMDD per Behaverse schemas policy. Optional .devN suffix for in-development iterations on the same date."
+    },
+    "Author": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name":        { "type": "string", "minLength": 1 },
+        "orcid":       { "type": "string", "pattern": "^\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]$" },
+        "affiliation": { "type": "string" },
+        "email":       { "type": "string", "format": "email" }
+      },
+      "additionalProperties": false
     }
   }
 }
