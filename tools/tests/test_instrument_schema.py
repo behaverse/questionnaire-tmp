@@ -196,6 +196,15 @@ def test_authors_bad_orcid_fails(schema):
     assert any("orcid" in e for e in errors)
 
 
+def test_author_bad_email_fails_with_format_checker(schema):
+    instance = {
+        "id": "qst_x", "title": "X", "description": "Y", "language": "en",
+        "authors": [{"name": "X", "email": "not-an-email"}],
+    }
+    errors = validate_instance(schema, instance)
+    assert any("email" in e.lower() or "format" in e.lower() for e in errors)
+
+
 def test_available_languages_accepts_bcp47_mix(schema):
     instance = {
         "id": "qst_x", "title": "T", "description": "D", "language": "en",

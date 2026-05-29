@@ -13,7 +13,7 @@ import json
 import sys
 from pathlib import Path
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
@@ -63,7 +63,11 @@ def build_registry(schemas_root: Path) -> Registry:
 
 def validate_instance(schema: dict, instance: dict, registry: Registry | None = None) -> list[str]:
     """Return a list of human-readable error messages (empty list = valid)."""
-    validator = Draft202012Validator(schema, registry=registry or Registry())
+    validator = Draft202012Validator(
+        schema,
+        registry=registry or Registry(),
+        format_checker=Draft202012Validator.FORMAT_CHECKER,
+    )
     errors = sorted(validator.iter_errors(instance), key=lambda e: e.path)
     return [
         f"{'/'.join(str(p) for p in e.absolute_path) or '<root>'}: {e.message}"

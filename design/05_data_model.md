@@ -116,19 +116,18 @@ Reusable entities below the questionnaire level (questions, option-sets, instruc
 
 ```jsonc
 {
-  "$schema": "https://behaverse.org/schemas/questionnaire/definition/v26.0523.json",
-  "id": "qst_phq9",
-  "version": "v26.0523",
-  "metadata":     { /* Schema 1 */ },
-  "style":        { /* questionnaire-level appearance */ },
-  "flow":         { /* navigation, completion, randomisation declarations */ },
-  "translations": { /* per-language overrides */ },
-  "pages":        [ /* Page objects (required structural backbone) */ ],
-  "blocks":       [ /* Block wrappers referencing page_ids (optional) */ ],
-  "subscales":    [ /* Subscale objects referencing question_ids (optional) */ ],
-  "logic":        [ /* Logic rules */ ],
-  "scoring":      [ /* Scoring definitions */ ],
-  "validation":   { /* cross-question validation rules */ }
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata":   { /* embedded Instrument (Schema 1); metadata.id must start with qst_ */ },
+  "style":      { /* questionnaire-level appearance (cascades down) */ },
+  "flow":       { /* navigation, completion, randomisation (root-only) */ },
+  "pages":      [ /* Page objects (required structural backbone) */ ],
+  "blocks":     [ /* Block wrappers referencing page_ids (optional) */ ],
+  "subscales":  [ /* Subscale objects referencing question_ids (optional) */ ],
+  "logic":      [ /* LogicRule objects: skip / visibility / piping / branch */ ],
+  "scoring":    [ /* ScoringDef objects with formula + optional bands */ ],
+  "validation": [ /* CrossQuestionValidationRule objects */ ],
+  "extensions": { /* opaque extension data */ }
 }
 ```
 
@@ -165,7 +164,7 @@ A Section is a within-page layout grouping. It contains questions only (not othe
   "questions": [ /* references to or inline Question objects */ ],
   "show_if": null,                 // logic expression, optional — hides the section; other entries on the page still render
   "randomize": false,              // shuffle questions within this section
-  "shared_option_set_id": null,    // set when all questions in the section share an option-set (matrix layout)
+  "shared_option_set": null,       // set when all questions in the section share an option-set (matrix layout)
   "style": { /* section-level appearance overrides; "layout": "matrix" renders the section as a matrix */ }
 }
 ```

@@ -6,6 +6,8 @@
     "schema":        "http://schema.org/",
     "dc":            "http://purl.org/dc/terms/",
 
+    "id":        "@id",
+
     "metadata":  { "@id": "instrument:metadata", "@context": "https://behaverse.org/schemas/instrument/context.jsonld" },
     "style":     { "@id": "questionnaire:style" },
     "flow":      { "@id": "questionnaire:flow" },

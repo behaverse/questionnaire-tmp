@@ -449,7 +449,9 @@
     "PageEntry": {
       "oneOf": [
         { "$ref": "#/$defs/Section" },
-        { "$ref": "#/$defs/Question" }
+        { "$ref": "#/$defs/Question" },
+        { "$ref": "#/$defs/InstructionReference" },
+        { "$ref": "#/$defs/PromptReference" }
       ]
     },
     "Section": {

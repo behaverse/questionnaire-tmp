@@ -22,7 +22,7 @@ All code, documentation, and interfaces in this ecosystem use the terms below co
 | **Questionnaire** | A complete instrument: metadata, instructions, structured pages of questions, logic, scoring. | A validated open-licensed depression scale |
 | **Block** | A cross-page thematic wrapper that references one or more Pages by ID. Used to express "Part A: Background" sections in long instruments, including section-level progress UI ("2 more pages in this block"). Optional; short instruments use Pages directly without Blocks. **Note:** in this project Block is the *larger* unit (matches cognitive-testing usage: "a block of 50 trials"), inverting the everyday English convention where Section > Block. | A "Part A" block holding three demographics pages |
 | **Page** | A screen unit. The author controls which questions appear on which Page, and a Page has its own `show_if` for visibility and `randomize` for shuffling its entries. `page_id` is recorded in xAPI events and per-item responses. The required structural unit — every Question lives on some Page. | "Demographics page", "PHQ-9 items page 1" |
-| **Section** | A within-page layout grouping (a labelled block or matrix on a single screen). A Section may carry a `shared_option_set_id` to render its questions as a matrix. Optional; simple pages have no Sections and just list bare Questions. | A "Likert matrix" section on the symptoms page |
+| **Section** | A within-page layout grouping (a labelled block or matrix on a single screen). A Section may carry a `shared_option_set` (inline or reference) to render its questions as a matrix. Optional; simple pages have no Sections and just list bare Questions. | A "Likert matrix" section on the symptoms page |
 | **Scale / Subscale** | A named subset of questions scored together. Questions and subscales have a many-to-many relationship: one question can belong to several subscales; subscales reference questions, not the other way around. Orthogonal to Block/Page/Section. | "Anxiety subscale" |
 | **Tag** | A free-form (or controlled-vocabulary) analytic label on a Question, used for codebooks, faceted analysis exports, and ad-hoc analytic groupings. Not an entity in the Library; lives as a `tags[]` array on each Question. | `["depression", "self-report", "screening"]` |
 | **Question** | A single item requiring a response. Reusable across questionnaires. | "How often did you feel sad in the past week?" |
@@ -113,7 +113,7 @@ The `type` field accepts either a **core short-name** (the small stable set belo
 |---|---|
 | `dropdown` | `radio` + `style.layout = "dropdown"` |
 | `vas` | `slider` + `style.anchors_visible_only = true` |
-| `matrix` | A **Section** with `style.layout = "matrix"` and `shared_option_set_id` set (the matrix is N questions of type `radio` sharing an option-set, rendered together on one page). Not a question type. |
+| `matrix` | A **Section** with `style.layout = "matrix"` and `shared_option_set` set (the matrix is N questions of type `radio` sharing an option-set, rendered together on one page). Not a question type. |
 | `rating` | `radio` (or `slider`) + `style.icon = "star"` |
 | `boolean` | `radio` with two options + `style.layout = "toggle"` |
 | `media` | `display` with a media payload (the former type self-admitted it captured no response) |

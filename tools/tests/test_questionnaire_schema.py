@@ -278,6 +278,28 @@ def test_option_set_reference_in_radio(schema, registry):
     assert validate_instance(schema, _wrap(q), registry=registry) == []
 
 
+def test_instruction_reference_in_page(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [
+            {"ref": "ins_consent_v1@v26.0528"},
+            radio_question(),
+        ]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_prompt_reference_in_page(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [
+            {"ref": "pr_subscale_intro@v26.0528"},
+            radio_question(),
+        ]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
 # ---------- Section ----------
 
 def test_section_minimal(schema, registry):
