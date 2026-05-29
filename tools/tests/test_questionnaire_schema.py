@@ -1,0 +1,140 @@
+"""Tests for schemas/questionnaire/schema.json.
+
+The schema embeds Instrument metadata via cross-schema $ref. Tests rely
+on the validator harness's local URI resolver.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+from tools.validate_schemas import build_registry, load_schema, validate_instance
+
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+SCHEMAS_ROOT = REPO_ROOT / "schemas"
+SCHEMA_PATH = SCHEMAS_ROOT / "questionnaire" / "schema.json"
+
+
+@pytest.fixture(scope="module")
+def schema() -> dict:
+    return load_schema(SCHEMA_PATH)
+
+
+@pytest.fixture(scope="module")
+def registry():
+    return build_registry(SCHEMAS_ROOT)
+
+
+def base_metadata() -> dict:
+    return {
+        "id": "qst_test",
+        "title": "Test Questionnaire",
+        "description": "Smallest valid questionnaire for unit tests.",
+        "language": "en",
+    }
+
+
+def radio_question(qid: str = "q_test", prompt: str = "Test?") -> dict:
+    return {
+        "id": qid,
+        "type": "radio",
+        "prompt": prompt,
+        "properties": {
+            "option_set": {
+                "options": [
+                    {"value": 0, "text": "No"},
+                    {"value": 1, "text": "Yes"},
+                ]
+            }
+        },
+    }
+
+
+# ---------- minimal valid questionnaire ----------
+
+def test_minimal_valid_questionnaire(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [
+            {"id": "page_only", "entries": [radio_question()]}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_missing_metadata_fails(schema, registry):
+    instance = {"pages": [{"id": "page_only", "entries": [radio_question()]}]}
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("metadata" in e for e in errors)
+
+
+def test_missing_pages_fails(schema, registry):
+    instance = {"metadata": base_metadata()}
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("pages" in e for e in errors)
+
+
+def test_empty_pages_fails(schema, registry):
+    instance = {"metadata": base_metadata(), "pages": []}
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("page" in e.lower() or "minItems" in e for e in errors)
+
+
+# ---------- metadata.id is narrowed to qst_* ----------
+
+def test_metadata_id_must_be_qst_prefix(schema, registry):
+    md = base_metadata()
+    md["id"] = "tsk_n_back"  # valid in Instrument; rejected in Questionnaire
+    instance = {
+        "metadata": md,
+        "pages": [{"id": "page_only", "entries": [radio_question()]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("id" in e or "qst_" in e for e in errors)
+
+
+# ---------- page structural rules ----------
+
+def test_page_requires_id_and_entries(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"entries": [radio_question()]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("id" in e for e in errors)
+
+
+def test_page_id_pattern(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "PAGE_X", "entries": [radio_question()]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+# ---------- radio question shape ----------
+
+def test_radio_question_with_inline_option_set(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_radio_question_missing_prompt_fails(schema, registry):
+    bad = radio_question()
+    del bad["prompt"]
+    instance = {"metadata": base_metadata(), "pages": [{"id": "page_x", "entries": [bad]}]}
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("prompt" in e for e in errors)
+
+
+def test_radio_question_missing_options_fails(schema, registry):
+    bad = {"id": "q_x", "type": "radio", "prompt": "?", "properties": {}}
+    instance = {"metadata": base_metadata(), "pages": [{"id": "page_x", "entries": [bad]}]}
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("option_set" in e or "required" in e for e in errors)

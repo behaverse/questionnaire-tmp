@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/questionnaire/v26.0528/schema.json",
+  "title": "Questionnaire Definition",
+  "description": "Structural specification of a questionnaire. See docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md §3.",
+  "type": "object",
+  "required": ["metadata", "pages"],
+  "properties": {
+    "@context": {
+      "type": "string",
+      "default": "https://behaverse.org/schemas/questionnaire/context.jsonld"
+    },
+    "metadata": {
+      "allOf": [
+        { "$ref": "https://behaverse.org/schemas/instrument/v26.0528/schema.json" },
+        {
+          "type": "object",
+          "properties": {
+            "id": { "pattern": "^qst_[a-z0-9_]+$" }
+          }
+        }
+      ]
+    },
+    "pages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Page" },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "LanguageCode": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$"
+    },
+    "Expression": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "$comment": "Expression grammar defined by the WASM evaluator (OD-11). Schema does not validate grammar."
+    },
+    "QuestionId": { "type": "string", "pattern": "^q_[a-z0-9_]+$", "maxLength": 64 },
+    "OptionSetId": { "type": "string", "pattern": "^os_[a-z0-9_]+$", "maxLength": 64 },
+    "PageId": { "type": "string", "pattern": "^page_[a-z0-9_]+$", "maxLength": 64 },
+    "InlineTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "fields"],
+          "properties": {
+            "status": { "enum": ["draft", "complete", "validated"] },
+            "fields": { "type": "object" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Page": {
+      "type": "object",
+      "required": ["id", "entries"],
+      "properties": {
+        "id":               { "$ref": "#/$defs/PageId" },
+        "title":            { "type": "string" },
+        "description":      { "type": "string" },
+        "entries":          {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Question" },
+          "minItems": 1
+        },
+        "show_if":          { "$ref": "#/$defs/Expression" },
+        "randomize":        { "type": "boolean", "default": false },
+        "max_time_seconds": { "type": ["number", "null"], "minimum": 0 },
+        "translations":     { "$ref": "#/$defs/InlineTranslations" }
+      },
+      "additionalProperties": false
+    },
+    "Question": {
+      "$ref": "#/$defs/QuestionRadio",
+      "$comment": "Single type now; will become oneOf when additional question types are added (Tasks 11+)."
+    },
+    "QuestionRadio": {
+      "type": "object",
+      "required": ["id", "type", "prompt", "properties"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/QuestionId" },
+        "type":       { "const": "radio" },
+        "prompt":     { "type": "string", "minLength": 1 },
+        "required":   { "type": "boolean" },
+        "show_if":    { "$ref": "#/$defs/Expression" },
+        "tags":       { "type": "array", "items": { "type": "string" } },
+        "translations": { "$ref": "#/$defs/InlineTranslations" },
+        "properties": { "$ref": "#/$defs/RadioProperties" }
+      },
+      "additionalProperties": false
+    },
+    "RadioProperties": {
+      "type": "object",
+      "required": ["option_set"],
+      "properties": {
+        "option_set": { "$ref": "#/$defs/OptionSet" },
+        "randomize_options": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": false
+    },
+    "OptionSet": {
+      "type": "object",
+      "required": ["options"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/OptionSetId" },
+        "name":       { "type": "string" },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "text"],
+            "properties": {
+              "value": { "type": ["string", "number", "boolean"] },
+              "text":  { "type": "string", "minLength": 1 },
+              "icon":  { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "translations": { "$ref": "#/$defs/InlineTranslations" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
