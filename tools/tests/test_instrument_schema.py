@@ -495,3 +495,88 @@ def test_psychometrics_percentile_keys_pattern(schema):
     }
     errors = validate_instance(schema, instance)
     assert len(errors) >= 1
+
+
+# ---------- inline translations on Instrument ----------
+
+def test_translations_pt_validated(schema):
+    instance = {
+        "id": "qst_x", "title": "Test", "description": "D", "language": "en",
+        "translations": {
+            "pt": {
+                "status": "validated",
+                "fields": {"title": "Teste", "description": "D-pt"},
+            }
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_translations_bcp47_key_pt_br(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "translations": {
+            "pt-BR": {"status": "draft", "fields": {"title": "Teste BR"}},
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_translations_invalid_status_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "translations": {
+            "pt": {"status": "approved", "fields": {}},
+        },
+    }
+    errors = validate_instance(schema, instance)
+    assert any("status" in e or "enum" in e for e in errors)
+
+
+def test_translations_missing_status_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "translations": {
+            "pt": {"fields": {"title": "Teste"}},
+        },
+    }
+    errors = validate_instance(schema, instance)
+    assert any("status" in e for e in errors)
+
+
+def test_translations_bad_lang_key_rejected(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "translations": {
+            "EN": {"status": "validated", "fields": {}},
+        },
+    }
+    errors = validate_instance(schema, instance)
+    assert len(errors) >= 1
+
+
+# ---------- extensions + x_ policy ----------
+
+def test_extensions_object_accepted(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "extensions": {"any": "thing", "even": {"nested": 42}},
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_x_prefix_field_accepted(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "x_internal_note": "private",
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_unknown_top_level_field_rejected(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "autors": [{"name": "Beck"}],  # typo
+    }
+    errors = validate_instance(schema, instance)
+    assert any("autors" in e or "Additional" in e for e in errors)
