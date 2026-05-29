@@ -41,7 +41,9 @@
     },
     "QuestionId": { "type": "string", "pattern": "^q_[a-z0-9_]+$", "maxLength": 64 },
     "OptionSetId": { "type": "string", "pattern": "^os_[a-z0-9_]+$", "maxLength": 64 },
-    "PageId": { "type": "string", "pattern": "^page_[a-z0-9_]+$", "maxLength": 64 },
+    "PageId":          { "type": "string", "pattern": "^page_[a-z0-9_]+$", "maxLength": 64 },
+    "InstructionId":   { "type": "string", "pattern": "^ins_[a-z0-9_]+$",  "maxLength": 64 },
+    "PromptId":        { "type": "string", "pattern": "^pr_[a-z0-9_]+$",   "maxLength": 64 },
     "InlineTranslations": {
       "type": "object",
       "patternProperties": {
@@ -78,6 +80,7 @@
     },
     "Question": {
       "oneOf": [
+        { "$ref": "#/$defs/QuestionReference" },
         { "$ref": "#/$defs/QuestionRadio" },
         { "$ref": "#/$defs/QuestionCheckbox" },
         { "$ref": "#/$defs/QuestionSlider" },
@@ -109,7 +112,12 @@
       "type": "object",
       "required": ["option_set"],
       "properties": {
-        "option_set": { "$ref": "#/$defs/OptionSet" },
+        "option_set": {
+          "oneOf": [
+            { "$ref": "#/$defs/OptionSetReference" },
+            { "$ref": "#/$defs/OptionSet" }
+          ]
+        },
         "randomize_options": { "type": "boolean", "default": false }
       },
       "additionalProperties": false
@@ -135,6 +143,43 @@
           "minItems": 1
         },
         "translations": { "$ref": "#/$defs/InlineTranslations" }
+      },
+      "additionalProperties": false
+    },
+    "QuestionReference": {
+      "type": "object",
+      "required": ["ref"],
+      "properties": {
+        "ref":      {
+          "type": "string",
+          "pattern": "^q_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$"
+        },
+        "required": { "type": "boolean" },
+        "show_if":  { "$ref": "#/$defs/Expression" }
+      },
+      "additionalProperties": false
+    },
+    "OptionSetReference": {
+      "type": "object",
+      "required": ["ref"],
+      "properties": {
+        "ref": { "type": "string", "pattern": "^os_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" }
+      },
+      "additionalProperties": false
+    },
+    "InstructionReference": {
+      "type": "object",
+      "required": ["ref"],
+      "properties": {
+        "ref": { "type": "string", "pattern": "^ins_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" }
+      },
+      "additionalProperties": false
+    },
+    "PromptReference": {
+      "type": "object",
+      "required": ["ref"],
+      "properties": {
+        "ref": { "type": "string", "pattern": "^pr_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" }
       },
       "additionalProperties": false
     },
@@ -197,7 +242,12 @@
           "type": "object",
           "required": ["option_set"],
           "properties": {
-            "option_set":         { "$ref": "#/$defs/OptionSet" },
+            "option_set": {
+              "oneOf": [
+                { "$ref": "#/$defs/OptionSetReference" },
+                { "$ref": "#/$defs/OptionSet" }
+              ]
+            },
             "min_selected":       { "type": "integer", "minimum": 0 },
             "max_selected":       { "type": "integer", "minimum": 1 },
             "randomize_options":  { "type": "boolean", "default": false }
@@ -259,7 +309,12 @@
           "type": "object",
           "required": ["option_set"],
           "properties": {
-            "option_set": { "$ref": "#/$defs/OptionSet" }
+            "option_set": {
+              "oneOf": [
+                { "$ref": "#/$defs/OptionSetReference" },
+                { "$ref": "#/$defs/OptionSet" }
+              ]
+            }
           },
           "additionalProperties": false
         }

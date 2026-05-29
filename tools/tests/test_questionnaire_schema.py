@@ -227,3 +227,52 @@ def test_question_unknown_type_fails(schema, registry):
     q = {"id": "q_x", "type": "matrix", "prompt": "?", "properties": {}}
     errors = validate_instance(schema, _wrap(q), registry=registry)
     assert len(errors) >= 1
+
+
+# ---------- entity references ----------
+
+def test_question_reference_minimal(schema, registry):
+    q_ref = {"ref": "q_depression_1@v26.0528"}
+    assert validate_instance(schema, _wrap(q_ref), registry=registry) == []
+
+
+def test_question_reference_with_required_override(schema, registry):
+    q_ref = {"ref": "q_depression_1@v26.0528", "required": False}
+    assert validate_instance(schema, _wrap(q_ref), registry=registry) == []
+
+
+def test_question_reference_with_show_if_override(schema, registry):
+    q_ref = {"ref": "q_depression_1@v26.0528", "show_if": "q_prev > 2"}
+    assert validate_instance(schema, _wrap(q_ref), registry=registry) == []
+
+
+def test_question_reference_rejects_inline_prompt_override(schema, registry):
+    """OD-05: prompt is not overridable on a reference. Schema enforces via additionalProperties:false."""
+    q_ref = {"ref": "q_depression_1@v26.0528", "prompt": "override"}
+    errors = validate_instance(schema, _wrap(q_ref), registry=registry)
+    assert len(errors) >= 1
+
+
+def test_question_reference_rejects_validation_override(schema, registry):
+    q_ref = {"ref": "q_depression_1@v26.0528",
+             "validation": {"format": ".*"}}
+    errors = validate_instance(schema, _wrap(q_ref), registry=registry)
+    assert len(errors) >= 1
+
+
+def test_question_reference_bad_pattern_fails(schema, registry):
+    q_ref = {"ref": "depression_1@v26.0528"}  # missing q_ prefix
+    errors = validate_instance(schema, _wrap(q_ref), registry=registry)
+    assert len(errors) >= 1
+
+
+def test_question_reference_missing_version_fails(schema, registry):
+    q_ref = {"ref": "q_depression_1"}  # no version
+    errors = validate_instance(schema, _wrap(q_ref), registry=registry)
+    assert len(errors) >= 1
+
+
+def test_option_set_reference_in_radio(schema, registry):
+    q = {"id": "q_mood", "type": "radio", "prompt": "Mood?",
+         "properties": {"option_set": {"ref": "os_likert5@v26.0528"}}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
