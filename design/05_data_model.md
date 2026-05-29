@@ -29,8 +29,8 @@ All fields in data models owned by this project use **`snake_case`**. Fields inh
 
 | # | Schema | Purpose | Hosted at |
 |---|---|---|---|
-| 1 | Questionnaire Metadata | Bibliographic + psychometric properties, licensing, provenance | `behaverse.org/schemas/questionnaire/metadata/vYY.MMDD.json` |
-| 2 | Questionnaire Definition (Canonical) | Structural specification (pages, blocks, sections, questions, subscales, tags, style, flow, logic, scoring, translations) | `behaverse.org/schemas/questionnaire/definition/vYY.MMDD.json` |
+| 1 | Instrument Metadata | Bibliographic + psychometric properties, licensing, provenance | `behaverse.org/schemas/instrument/vYY.MMDD/schema.json` |
+| 2 | Questionnaire Definition | Structural specification (pages, blocks, sections, questions, subscales, tags, style, flow, logic, scoring, translations) | `behaverse.org/schemas/questionnaire/vYY.MMDD/schema.json` |
 | 3 | Questionnaire Runtime | Optimised for viewer rendering — a denormalised view of Schema 2 (references resolved, translations applied for the requested language, scoring optionally stripped) | `behaverse.org/schemas/questionnaire/runtime/vYY.MMDD.json` |
 | 4a | Event Data (xAPI) | Semantic events: viewed, answered, navigated, submitted, recorded, … | `behaverse.org/schemas/questionnaire/events/xapi/vYY.MMDD.json` |
 | 4b | Behavioural Channels | Per-session attachments for continuous data (mouse, keyboard, future webcam/microphone) | `behaverse.org/schemas/questionnaire/channels/vYY.MMDD.json` |
@@ -75,23 +75,25 @@ These are deliberately not resolved in this document; they appear in [10_open_de
 
 **Related standards.** Schema.org `ScholarlyArticle`, Dublin Core, DataCite.
 
+Schema enforces a minimum-valid floor (id, title, description, language). The Library publish workflow layers additional requirements (version, authors ≥1, license) at promote-to-published time.
+
 **Required fields.**
 
 | Field | Type | Notes |
 |---|---|---|
 | `id` | string | `qst_{slug}` |
 | `title` | string | Full official title |
-| `version` | string | Calendar version `vYY.MMDD` (per [Behaverse schemas versioning policy](https://behaverse.org/schemas/#versioning)) |
-| `language` | string | Canonical language (ISO 639-1) |
-| `authors` | array of objects | Each with `name`; optional `orcid`, `affiliation` |
-| `publication` | object | At minimum `year` and `citation`; optional `doi`, `isbn`, `publisher`, `license`, `url` |
+| `description` | string | One- to two-sentence description |
+| `language` | string | Canonical language (BCP-47; ISO 639-1 base with optional script/region subtags) |
 
 **Recommended fields.**
 
 | Field | Notes |
 |---|---|
 | `short_title` | Common abbreviation (e.g. "PHQ-9") |
-| `description` | One- to two-sentence description |
+| `version` | Calendar version `vYY.MMDD` (per [Behaverse schemas versioning policy](https://behaverse.org/schemas/#versioning)); schema floor optional, required at Library publish |
+| `authors` | Each with `name`; optional `orcid`, `affiliation` |
+| `publication` | At minimum `year` and `citation`; optional `doi`, `isbn`, `publisher`, `url`; optional in schema — if present, inner `year` and `citation` required |
 | `available_languages` | All ISO 639-1 codes with validated translations |
 | `classification` | `domain[]`, `population[]`, `tags[]`, `age_range`, `administration_mode[]` |
 | `psychometrics` | `item_count`, `estimated_minutes`, `reliability[]`, `validity[]`, `norms[]` |
@@ -211,7 +213,7 @@ The `tags[]` field is a list of free-form (or controlled-vocabulary) labels used
 
 Where reusable-component references are supported, a question entry in a Page or Section is either:
 
-- a **reference** to an existing question entity in the Library: `{ "$ref": "q_depression_1@v26.0523" }` with a defined set of allowed local overrides (see below), or
+- a **reference** to an existing question entity in the Library: `{ "ref": "q_depression_1@v26.0523" }` (a project convention field, not a JSON Schema `$ref` overload) with a defined set of allowed local overrides (see below), or
 - an **inline** question object with all fields present.
 
 **Allowed overrides on a Library reference** (per OD-05, resolved 2026-05-21):
@@ -233,22 +235,20 @@ Rationale: cross-study analytic integrity requires that `q_depression_1@v26.0523
 The questionnaire owns two top-level blocks for instrument-level appearance and runtime behaviour:
 
 - **`style`** — *how the instrument looks.* Examples: `progress_bar` (boolean), `question_numbering` (`"sequential"`, `"per_page"`, `"none"`), `label_visible` (default for all questions).
-- **`flow`** — *how the participant moves through the instrument.* Examples: `allow_back` (boolean), `require_complete` (boolean), `randomize_pages` (boolean), `randomize_pages_in_block` (array of block IDs), `randomize_questions_in_page` (array of page IDs), `randomize_questions_in_section` (array of section IDs), `max_time_seconds` (number or null).
+- **`flow`** — *how the participant moves through the instrument.* Examples: `allow_back` (boolean), `require_complete` (boolean), `randomize_pages` (boolean), `max_time_seconds` (number or null). Per-entity `randomize: boolean` (on Block, Page, Section) is the single mechanism; Flow's `randomize_pages` covers top-level pages only.
 
 The same `style` and `flow` keys may also appear on a Block, a Page, a Section, and a Question (each overriding the next-higher level's default for content scoped within it). Inheritance order — questionnaire → block → page → section → question — applies; the most specific declaration wins.
 
 Deployment-configurable subset (see [08a_viewer_service.md](08a_viewer_service.md)):
 
 - **Overridable at deployment time** (deployment value wins when specified; falls back to the instrument's value otherwise): `style.progress_bar`, `style.question_numbering`, `flow.max_time_seconds`.
-- **Instrument-only** (deployment cannot override; changing requires a new instrument version): `flow.allow_back`, `flow.require_complete`, `flow.randomize_pages`, `flow.randomize_pages_in_block`, `flow.randomize_questions_in_page`, `flow.randomize_questions_in_section`.
+- **Instrument-only** (deployment cannot override; changing requires a new instrument version): `flow.allow_back`, `flow.require_complete`, `flow.randomize_pages`.
 
 Deployment-specific configuration that does **not** live in the questionnaire (it lives in the Viewer Service's deployment record): theme, redirect URL, completion message, randomisation seed strategy, show-score flag, active-from/until window, quota.
 
 ### Translations
 
-A flat map keyed by `language → field-path → translated-text`, where `field-path` uses dotted/bracket notation matching the canonical document (`pages[0].entries[0].prompt` for a bare question; `pages[0].entries[1].questions[0].prompt` when the entry is a Section).
-
-Each entry carries a `status`: `draft`, `complete`, or `validated`. Only `validated` translations are served to participants (see "Locale resolution" below).
+Translations live inline on each entity, not in a top-level questionnaire block. Each entity carries an optional `translations` field: `{ <BCP-47 tag>: { status: "draft"|"complete"|"validated", fields: { <sparse parallel mirror of entity's translatable fields> } } }`. Reusable entities (Question, OptionSet, Instruction, Prompt) translate themselves once in the Library; references inherit their translations automatically. The questionnaire-level "ready in language L" check aggregates across the dependency graph: every entity (self + referenced) must have `translations.L.status === "validated"` for the questionnaire to be served in L. Schema 2 enforces no overrides on references via `additionalProperties: false` on the reference $defs (per OD-05).
 
 ### Logic
 
@@ -318,12 +318,7 @@ With hard-pinning, none of these flow into a referencing questionnaire automatic
 
 ### Open questions for Schema 2
 
-These four questions were left open in the original draft (`archive_do_not_edit/specs/05_DATA_STANDARDS.md`) and are tracked as requirements the eventual schema must satisfy. Concrete syntax is produced when the schemas are authored:
-
-1. **Validation rules.** The schema must encode per-question validation (required, format, range, length) and cross-question validation in a way that is portable across viewers. Validation messages must be translatable.
-2. **Logic rules.** The schema must encode skip, branching, piping, and visibility rules in a viewer-independent expression language. The same logic must evaluate identically in the Web Viewer, the Native Viewer, and the Editor preview (see OD-11 — reference expression evaluator).
-3. **Versioning and translations.** Questionnaires evolve. The schema supports calendar versioning (`vYY.MMDD`, per the [Behaverse schemas versioning policy](https://behaverse.org/schemas/#versioning)) at the questionnaire level, the reusable-entity level, and the per-language translation level. The version number itself does not encode breaking-vs-non-breaking — that distinction is carried by a separate `severity` metadata tag (see §"Versioning rules" below).
-4. **Scoring and analysis.** The schema must encode scoring definitions (sums, means, weighted, subscales, derived scores) and their interpretation (cutoffs, severity bands, norm-based percentiles) in a form a viewer can execute and a researcher can audit.
+The four open syntax questions originally tracked here (validation, logic, versioning+translations, scoring) were resolved in [docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md](../docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md) and implemented in [schemas/questionnaire/](../schemas/questionnaire/) at v26.0528. See the spec for concrete syntax decisions; see CHANGELOG for version history.
 
 All decisions referenced from this schema are resolved; see the Resolution log in [10_open_decisions.md](10_open_decisions.md): OD-01 (canonical-format stack), OD-05 (overrides), OD-06 (versioning), OD-11 (expression evaluator), OD-12 (structural model).
 
@@ -333,7 +328,7 @@ All decisions referenced from this schema are resolved; see the Resolution log i
 
 **Purpose.** Optimised for viewer rendering. Per OD-01 (resolved 2026-05-23 → S1 Pure custom), Schema 3 is a **flattened, denormalised view of Schema 2** produced by the Viewer Service (or computed client-side by the viewer) when minting a session:
 
-- Reusable-entity references (`$ref: "q_x@v26.0523"`) resolved to inline question objects.
+- Reusable-entity references (`ref: "q_x@v26.0523"`) resolved to inline question objects.
 - Translations applied for the participant's active locale; only the active-locale text is included.
 - Logic / validation / scoring blocks pass through unchanged for the viewer's WASM evaluator (OD-11) to consume.
 - Optional: scoring formulas may be stripped if the deployment's `show_score` is false (the formulas still travel with the submission, but the viewer never evaluates them).
@@ -501,7 +496,7 @@ A locale is `{ language, region? }`:
 - `language` — required, ISO 639-1 code (e.g. `"en"`, `"pt"`, `"ar"`).
 - `region` — optional, ISO 3166-1 alpha-2 code (e.g. `"BR"`, `"PT"`). Used for region-sensitive rendering (date formats, decimal separators) when present; ignored for translation matching.
 
-Translations are keyed by `language` only. `pt-BR` and `pt-PT` resolve to the same translation entries; the `region` distinguishes only locale-sensitive rendering.
+Translations may be keyed at any BCP-47 granularity (e.g. pt, pt-BR, pt-PT). Runtime resolution falls back from most-specific to base to canonical language: pt-BR → pt → instrument canonical. Authors choose the granularity per translation; bare base-language tags (e.g. pt) serve all regional participants who haven't specified a region preference.
 
 ### Resolution precedence
 
