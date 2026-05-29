@@ -80,6 +80,103 @@
         "importer_version":       { "type": "string" }
       },
       "additionalProperties": false
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+        },
+        "population": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+        },
+        "age_range": {
+          "type": "array",
+          "prefixItems": [
+            { "type": "integer", "minimum": 0, "maximum": 120 },
+            { "type": "integer", "minimum": 0, "maximum": 120 }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "administration_mode": {
+          "type": "array",
+          "items": {
+            "enum": ["self_report", "interviewer", "observer", "informant", "performance"]
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "psychometrics": {
+      "type": "object",
+      "properties": {
+        "item_count":        { "type": "integer", "minimum": 1 },
+        "estimated_minutes": { "type": "number",  "minimum": 0 },
+        "reliability": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "value"],
+            "properties": {
+              "type":        { "type": "string" },
+              "value":       { "type": "number" },
+              "population":  { "type": "string" },
+              "sample_size": { "type": "integer", "minimum": 1 },
+              "ci_lower":    { "type": "number" },
+              "ci_upper":    { "type": "number" },
+              "citation":    { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "validity": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "value"],
+            "properties": {
+              "type":        { "type": "string" },
+              "value":       { "type": "number" },
+              "comparator":  { "type": "string" },
+              "population":  { "type": "string" },
+              "sample_size": { "type": "integer", "minimum": 1 },
+              "citation":    { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "norms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["population"],
+            "properties": {
+              "population": { "type": "string" },
+              "n":          { "type": "integer", "minimum": 1 },
+              "mean":       { "type": "number" },
+              "sd":         { "type": "number" },
+              "median":     { "type": "number" },
+              "percentiles": {
+                "type": "object",
+                "patternProperties": { "^p\\d{1,2}$": { "type": "number" } },
+                "additionalProperties": false
+              },
+              "citation":   { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,

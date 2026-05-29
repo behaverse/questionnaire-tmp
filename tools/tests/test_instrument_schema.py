@@ -360,3 +360,138 @@ def test_provenance_imported(schema):
         },
     }
     assert validate_instance(schema, instance) == []
+
+
+# ---------- classification ----------
+
+def test_classification_full(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "classification": {
+            "domain": ["depression", "screening"],
+            "population": ["adults", "primary_care"],
+            "tags": ["self-report", "9-item"],
+            "age_range": [18, 99],
+            "administration_mode": ["self_report"],
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_classification_domain_open(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "classification": {"domain": ["emerging_novel_construct"]},
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_classification_administration_mode_closed(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "classification": {"administration_mode": ["telepathic"]},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("administration_mode" in e or "enum" in e for e in errors)
+
+
+@pytest.mark.parametrize("mode", [
+    "self_report", "interviewer", "observer", "informant", "performance"
+])
+def test_classification_administration_mode_each_value(schema, mode):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "classification": {"administration_mode": [mode]},
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_classification_age_range_tuple(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "classification": {"age_range": [18, 99]},
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_classification_age_range_wrong_length_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "classification": {"age_range": [18, 99, 120]},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("age_range" in e or "items" in e.lower() for e in errors)
+
+
+def test_classification_age_range_out_of_bounds_fails(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "classification": {"age_range": [18, 200]},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("age_range" in e or "maximum" in e for e in errors)
+
+
+# ---------- psychometrics ----------
+
+def test_psychometrics_full(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "psychometrics": {
+            "item_count": 9,
+            "estimated_minutes": 5,
+            "reliability": [
+                {"type": "cronbach_alpha", "value": 0.89, "population": "primary care",
+                 "sample_size": 6000, "ci_lower": 0.85, "ci_upper": 0.93,
+                 "citation": "Kroenke 2001"}
+            ],
+            "validity": [
+                {"type": "criterion_concurrent", "value": 0.71, "comparator": "HAM-D"}
+            ],
+            "norms": [
+                {"population": "primary_care", "n": 6000, "mean": 6.5, "sd": 5.5,
+                 "median": 5, "percentiles": {"p25": 3, "p50": 5, "p75": 9, "p95": 17}}
+            ],
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_psychometrics_reliability_requires_type_and_value(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "psychometrics": {"reliability": [{"population": "X"}]},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("type" in e or "value" in e for e in errors)
+
+
+def test_psychometrics_open_reliability_type(schema):
+    """Emerging methods like 'mcdonald_omega' should pass."""
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "psychometrics": {
+            "reliability": [{"type": "mcdonald_omega", "value": 0.92}],
+        },
+    }
+    assert validate_instance(schema, instance) == []
+
+
+def test_psychometrics_norms_require_population(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "psychometrics": {"norms": [{"mean": 5, "sd": 3}]},
+    }
+    errors = validate_instance(schema, instance)
+    assert any("population" in e for e in errors)
+
+
+def test_psychometrics_percentile_keys_pattern(schema):
+    instance = {
+        "id": "qst_x", "title": "T", "description": "D", "language": "en",
+        "psychometrics": {
+            "norms": [{"population": "X", "percentiles": {"p_25": 3}}]
+        },
+    }
+    errors = validate_instance(schema, instance)
+    assert len(errors) >= 1
