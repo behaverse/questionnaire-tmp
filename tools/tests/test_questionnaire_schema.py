@@ -387,3 +387,95 @@ def test_subscale_with_weights(schema, registry):
         ],
     }
     assert validate_instance(schema, instance, registry=registry) == []
+
+
+# ---------- Style and Flow ----------
+
+def test_style_at_questionnaire_root(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "style": {"progress_bar": True, "question_numbering": "sequential"},
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_style_at_page(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "style": {"label_visible": False},
+                   "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_style_at_question(schema, registry):
+    q = {**radio_question(), "style": {"layout": "dropdown"}}
+    instance = {"metadata": base_metadata(),
+                "pages": [{"id": "page_x", "entries": [q]}]}
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_style_x_prefix(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "style": {"progress_bar": True, "x_theme_id": "behaverse_default"},
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_style_unknown_field_rejected(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "style": {"unknown_field": True},
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+def test_flow_at_questionnaire_root(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "flow": {"allow_back": False, "max_time_seconds": 600},
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_flow_randomize_pages(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "flow": {"randomize_pages": True},
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_max_time_seconds_on_page(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "max_time_seconds": 30,
+                   "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_max_time_seconds_null_on_page(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "max_time_seconds": None,
+                   "entries": [radio_question()]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_flow_unknown_key_rejected(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "flow": {"randomize_questions_in_page": ["page_x"]},  # removed per Q19a
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
