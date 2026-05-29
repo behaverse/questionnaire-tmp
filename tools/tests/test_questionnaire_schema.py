@@ -130,11 +130,100 @@ def test_radio_question_missing_prompt_fails(schema, registry):
     del bad["prompt"]
     instance = {"metadata": base_metadata(), "pages": [{"id": "page_x", "entries": [bad]}]}
     errors = validate_instance(schema, instance, registry=registry)
-    assert any("prompt" in e for e in errors)
+    # Under a oneOf discriminator the top-level error reports "not valid under any of the
+    # given schemas" rather than naming the missing field directly; both forms are acceptable.
+    assert any("prompt" in e or "not valid" in e or "oneOf" in e for e in errors)
 
 
 def test_radio_question_missing_options_fails(schema, registry):
     bad = {"id": "q_x", "type": "radio", "prompt": "?", "properties": {}}
     instance = {"metadata": base_metadata(), "pages": [{"id": "page_x", "entries": [bad]}]}
     errors = validate_instance(schema, instance, registry=registry)
-    assert any("option_set" in e or "required" in e for e in errors)
+    # Under a oneOf discriminator the top-level error reports "not valid under any of the
+    # given schemas" rather than naming the missing field directly; both forms are acceptable.
+    assert any("option_set" in e or "required" in e or "not valid" in e or "oneOf" in e for e in errors)
+
+
+# ---------- non-radio Question types ----------
+
+def _wrap(question: dict) -> dict:
+    return {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [question]}],
+    }
+
+
+def test_text_question(schema, registry):
+    q = {"id": "q_name", "type": "text", "prompt": "Your name?",
+         "properties": {"placeholder": "Full name"}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_textarea_question(schema, registry):
+    q = {"id": "q_essay", "type": "textarea", "prompt": "Describe.",
+         "properties": {"rows": 5}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_checkbox_question_inline_options(schema, registry):
+    q = {"id": "q_topics", "type": "checkbox", "prompt": "Topics:",
+         "properties": {"option_set": {
+             "options": [{"value": "a", "text": "A"}, {"value": "b", "text": "B"}]
+         }}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_slider_question(schema, registry):
+    q = {"id": "q_mood", "type": "slider", "prompt": "Mood?",
+         "properties": {"min": 0, "max": 100, "step": 1,
+                        "anchors": [{"value": 0, "label": "Low"},
+                                    {"value": 100, "label": "High"}]}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_ranking_question(schema, registry):
+    q = {"id": "q_pref", "type": "ranking", "prompt": "Rank these:",
+         "properties": {"option_set": {
+             "options": [{"value": "a", "text": "A"}, {"value": "b", "text": "B"},
+                         {"value": "c", "text": "C"}]
+         }}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_date_question(schema, registry):
+    q = {"id": "q_dob", "type": "date", "prompt": "Date of birth?",
+         "properties": {"granularity": "date", "min": "1900-01-01"}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_file_question(schema, registry):
+    q = {"id": "q_upload", "type": "file", "prompt": "Upload report:",
+         "properties": {"accept": ["application/pdf"], "max_size_mb": 10}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_display_question(schema, registry):
+    q = {"id": "q_intro", "type": "display", "prompt": "Welcome.",
+         "properties": {"media": {"url": "https://example.org/intro.mp4",
+                                  "kind": "video"}}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_question_extension_iri_type(schema, registry):
+    q = {"id": "q_nback", "type": "https://behaverse.org/types/n_back",
+         "prompt": "N-back task",
+         "properties": {"n": 2, "trials": 50}}
+    assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+def test_question_extension_bad_iri_fails(schema, registry):
+    q = {"id": "q_x", "type": "https://example.com/types/foo",
+         "prompt": "?", "properties": {}}
+    errors = validate_instance(schema, _wrap(q), registry=registry)
+    assert len(errors) >= 1
+
+
+def test_question_unknown_type_fails(schema, registry):
+    q = {"id": "q_x", "type": "matrix", "prompt": "?", "properties": {}}
+    errors = validate_instance(schema, _wrap(q), registry=registry)
+    assert len(errors) >= 1
