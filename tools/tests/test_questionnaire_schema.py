@@ -276,3 +276,114 @@ def test_option_set_reference_in_radio(schema, registry):
     q = {"id": "q_mood", "type": "radio", "prompt": "Mood?",
          "properties": {"option_set": {"ref": "os_likert5@v26.0528"}}}
     assert validate_instance(schema, _wrap(q), registry=registry) == []
+
+
+# ---------- Section ----------
+
+def test_section_minimal(schema, registry):
+    section = {
+        "id": "sec_cluster",
+        "questions": [radio_question("q_1", "Q1?"), radio_question("q_2", "Q2?")],
+    }
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [section]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_section_with_shared_option_set_ref(schema, registry):
+    section = {
+        "id": "sec_likert",
+        "shared_option_set": {"ref": "os_likert5@v26.0528"},
+        "questions": [
+            {"id": "q_1", "type": "radio", "prompt": "Q1?",
+             "properties": {"option_set": {"ref": "os_likert5@v26.0528"}}},
+        ],
+    }
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [section]}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_section_cannot_nest(schema, registry):
+    nested = {
+        "id": "sec_outer",
+        "questions": [
+            {"id": "sec_inner", "questions": [radio_question()]}  # not a Question
+        ],
+    }
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [nested]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+# ---------- Block ----------
+
+def test_block_minimal(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [
+            {"id": "page_a", "entries": [radio_question()]},
+            {"id": "page_b", "entries": [radio_question("q_y", "Q?")]},
+        ],
+        "blocks": [
+            {"id": "blk_main", "page_ids": ["page_a", "page_b"]}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_block_with_randomize(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [
+            {"id": "page_a", "entries": [radio_question()]},
+            {"id": "page_b", "entries": [radio_question("q_y", "Q?")]},
+        ],
+        "blocks": [
+            {"id": "blk_main", "page_ids": ["page_a", "page_b"], "randomize": True}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_block_id_pattern(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_a", "entries": [radio_question()]}],
+        "blocks": [{"id": "BLOCK_X", "page_ids": ["page_a"]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+# ---------- Subscale ----------
+
+def test_subscale_minimal(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question("q_a"), radio_question("q_b")]}],
+        "subscales": [
+            {"id": "scl_total", "name": "Total", "question_ids": ["q_a", "q_b"]}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_subscale_with_weights(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question("q_a"), radio_question("q_b")]}],
+        "subscales": [
+            {"id": "scl_total", "name": "Total",
+             "question_ids": ["q_a", "q_b"],
+             "weight_per_question": {"q_a": 1.0, "q_b": 2.0}}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
