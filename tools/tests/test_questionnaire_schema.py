@@ -479,3 +479,51 @@ def test_flow_unknown_key_rejected(schema, registry):
     }
     errors = validate_instance(schema, instance, registry=registry)
     assert len(errors) >= 1
+
+
+# ---------- LogicRule ----------
+
+def test_logic_skip_rule(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_a", "entries": [radio_question()]}],
+        "logic": [
+            {"type": "skip", "condition": "q_test > 0",
+             "action": {"skip_to": "page_a"}}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_logic_visibility_rule(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "logic": [
+            {"type": "visibility", "condition": "q_test == 1",
+             "action": {"target_id": "q_test", "show": False}}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_logic_unknown_type_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "logic": [
+            {"type": "magic", "condition": "true", "action": {}}
+        ],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("type" in e or "enum" in e for e in errors)
+
+
+def test_logic_missing_condition_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "logic": [{"type": "skip", "action": {"skip_to": "page_x"}}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("condition" in e for e in errors)
