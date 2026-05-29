@@ -593,3 +593,63 @@ def test_scoring_band_missing_label_fails(schema, registry):
     }
     errors = validate_instance(schema, instance, registry=registry)
     assert any("label" in e for e in errors)
+
+
+# ---------- PerQuestionValidation ----------
+
+def test_per_question_validation_format(schema, registry):
+    q = {"id": "q_email", "type": "text", "prompt": "Email?",
+         "validation": {"format": "^\\S+@\\S+\\.\\S+$"},
+         "properties": {}}
+    instance = {"metadata": base_metadata(),
+                "pages": [{"id": "page_x", "entries": [q]}]}
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_per_question_validation_range_and_length(schema, registry):
+    q = {"id": "q_age", "type": "slider", "prompt": "Age?",
+         "properties": {"min": 0, "max": 120},
+         "validation": {"range": [18, 99]}}
+    instance = {"metadata": base_metadata(),
+                "pages": [{"id": "page_x", "entries": [q]}]}
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_per_question_validation_with_messages(schema, registry):
+    q = {"id": "q_email", "type": "text", "prompt": "Email?",
+         "validation": {
+             "format": "^\\S+@\\S+\\.\\S+$",
+             "format_message": "Please enter a valid email"
+         },
+         "properties": {}}
+    instance = {"metadata": base_metadata(),
+                "pages": [{"id": "page_x", "entries": [q]}]}
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+# ---------- CrossQuestionValidationRule ----------
+
+def test_cross_question_validation(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question("q_1"), radio_question("q_2")]}],
+        "validation": [
+            {"id": "v_q1_implies_q2",
+             "condition": "q_1 == 1 && is_empty(q_2)",
+             "message": "If you answered Yes to Q1, please complete Q2.",
+             "targets": ["q_2"]}
+        ],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_cross_question_validation_missing_message_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "validation": [
+            {"id": "v_x", "condition": "q_test == 1"}
+        ],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("message" in e for e in errors)
