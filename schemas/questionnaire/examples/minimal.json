@@ -1,0 +1,30 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "id": "qst_minimal",
+    "title": "Minimal example",
+    "description": "Smallest valid questionnaire for schema CI.",
+    "language": "en"
+  },
+  "pages": [
+    {
+      "id": "page_only",
+      "entries": [
+        {
+          "id": "q_feel_good",
+          "type": "radio",
+          "prompt": "How do you feel today?",
+          "properties": {
+            "option_set": {
+              "options": [
+                { "value": 0, "text": "Bad" },
+                { "value": 1, "text": "Neutral" },
+                { "value": 2, "text": "Good" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
