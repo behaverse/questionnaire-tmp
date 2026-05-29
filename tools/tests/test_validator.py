@@ -74,8 +74,15 @@ def test_validate_instance_returns_errors_on_invalid(tmp_schemas_dir):
 
 def test_main_exits_nonzero_when_any_example_invalid(tmp_schemas_dir, capsys):
     with pytest.raises(SystemExit) as exc:
-        main(schemas_root=tmp_schemas_dir)
+        main(tmp_schemas_dir)
     assert exc.value.code == 1
     out = capsys.readouterr().out
     assert "FAIL" in out
     assert "PASS" in out  # the ok.json still passes
+
+
+def test_load_schema_raises_with_path_on_malformed_json(tmp_path):
+    bad = tmp_path / "bad.json"
+    bad.write_text("{this is not json")
+    with pytest.raises(ValueError, match=str(bad)):
+        load_schema(bad)

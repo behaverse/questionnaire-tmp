@@ -23,7 +23,10 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 def load_schema(path: Path) -> dict:
     """Load a JSON Schema file from disk."""
-    return json.loads(path.read_text())
+    try:
+        return json.loads(path.read_text())
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
 
 
 def discover_examples(schemas_root: Path) -> list[tuple[str, Path]]:
@@ -46,7 +49,9 @@ def discover_examples(schemas_root: Path) -> list[tuple[str, Path]]:
 def build_registry(schemas_root: Path) -> Registry:
     """Register every schema's $id -> local file mapping so cross-schema $ref resolves."""
     registry = Registry()
-    for schema_dir in schemas_root.iterdir():
+    for schema_dir in sorted(schemas_root.iterdir()):
+        if not schema_dir.is_dir():
+            continue
         schema_path = schema_dir / "schema.json"
         if not schema_path.is_file():
             continue
@@ -66,28 +71,26 @@ def validate_instance(schema: dict, instance: dict, registry: Registry | None = 
     ]
 
 
-def main(schemas_root: Path | None = None) -> None:
-    parser = argparse.ArgumentParser(description="Validate schemas and their examples.")
-    parser.add_argument("--schemas-root", type=Path, default=schemas_root or REPO_ROOT / "schemas")
-    args = parser.parse_args() if schemas_root is None else argparse.Namespace(
-        schemas_root=schemas_root
-    )
-
-    root = args.schemas_root
-    registry = build_registry(root)
+def main(schemas_root: Path) -> None:
+    """Validate every example in schemas_root/*/examples/ against the matching schema.
+    Exits non-zero on failure.
+    """
+    registry = build_registry(schemas_root)
 
     failed = 0
-    examples = discover_examples(root)
+    examples = discover_examples(schemas_root)
     if not examples:
-        print(f"No examples found under {root}")
+        print(f"No examples found under {schemas_root}")
         sys.exit(1)
 
     for schema_name, example_path in examples:
-        schema_path = root / schema_name / "schema.json"
+        schema_path = schemas_root / schema_name / "schema.json"
         schema = load_schema(schema_path)
         instance = json.loads(example_path.read_text())
         errors = validate_instance(schema, instance, registry=registry)
-        rel = example_path.relative_to(root.parent if root.parent.name else root)
+        rel = example_path.relative_to(
+            schemas_root.parent if schemas_root.parent.name else schemas_root
+        )
         if errors:
             failed += 1
             print(f"FAIL  {rel}")
@@ -102,5 +105,12 @@ def main(schemas_root: Path | None = None) -> None:
     print(f"\nAll {len(examples)} example(s) passed.")
 
 
+def _cli() -> None:
+    parser = argparse.ArgumentParser(description="Validate schemas and their examples.")
+    parser.add_argument("--schemas-root", type=Path, default=REPO_ROOT / "schemas")
+    args = parser.parse_args()
+    main(args.schemas_root)
+
+
 if __name__ == "__main__":
-    main()
+    _cli()
