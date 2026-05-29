@@ -527,3 +527,69 @@ def test_logic_missing_condition_fails(schema, registry):
     }
     errors = validate_instance(schema, instance, registry=registry)
     assert any("condition" in e for e in errors)
+
+
+# ---------- ScoringDef ----------
+
+def test_scoring_minimal(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "scoring": [{"id": "total", "formula": "sum(scl_total)"}],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_scoring_with_range_and_bands(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "scoring": [{
+            "id": "total", "name": "Total", "formula": "sum(scl_total)",
+            "range": [0, 27],
+            "interpretation": [
+                {"min": 0, "max": 4, "label": "None", "severity": "none"},
+                {"min": 5, "max": 9, "label": "Mild", "severity": "mild"},
+                {"min": 20, "max": 27, "label": "Severe", "severity": "severe"}
+            ]
+        }],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_scoring_unbounded_band(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "scoring": [{
+            "id": "total", "formula": "sum(scl_total)",
+            "interpretation": [
+                {"min": None, "max": 5, "label": "Low"},
+                {"min": 5, "max": None, "label": "High"}
+            ]
+        }],
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_scoring_missing_formula_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "scoring": [{"id": "total"}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("formula" in e for e in errors)
+
+
+def test_scoring_band_missing_label_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "entries": [radio_question()]}],
+        "scoring": [{
+            "id": "total", "formula": "sum(scl_total)",
+            "interpretation": [{"min": 0, "max": 5}]
+        }],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("label" in e for e in errors)

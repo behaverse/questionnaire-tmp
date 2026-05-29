@@ -28,6 +28,7 @@
     },
     "blocks":     { "type": "array", "items": { "$ref": "#/$defs/Block" } },
     "subscales":  { "type": "array", "items": { "$ref": "#/$defs/Subscale" } },
+    "scoring":    { "type": "array", "items": { "$ref": "#/$defs/ScoringDef" } },
     "logic":      { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
     "style":      { "$ref": "#/$defs/Style" },
     "flow":       { "$ref": "#/$defs/FlowInstrument" }
@@ -526,6 +527,38 @@
           "additionalProperties": false
         },
         "translations": { "$ref": "#/$defs/InlineTranslations" }
+      },
+      "additionalProperties": false
+    },
+    "ScoringDef": {
+      "type": "object",
+      "required": ["id", "formula"],
+      "properties": {
+        "id":      { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+        "name":    { "type": "string" },
+        "formula": { "$ref": "#/$defs/Expression" },
+        "range": {
+          "type": "array",
+          "prefixItems": [{ "type": "number" }, { "type": "number" }],
+          "items": false,
+          "minItems": 2, "maxItems": 2
+        },
+        "interpretation": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/InterpretationBand" }
+        },
+        "translations": { "$ref": "#/$defs/InlineTranslations" }
+      },
+      "additionalProperties": false
+    },
+    "InterpretationBand": {
+      "type": "object",
+      "required": ["label"],
+      "properties": {
+        "min":      { "type": ["number", "null"] },
+        "max":      { "type": ["number", "null"] },
+        "label":    { "type": "string" },
+        "severity": { "type": "string" }
       },
       "additionalProperties": false
     },
