@@ -486,11 +486,66 @@
     },
     "PageElement": {
       "oneOf": [
+        { "$ref": "#/$defs/Section" },
         { "$ref": "#/$defs/MessageRef" },
         { "$ref": "#/$defs/PageElementSavedItem" },
         { "$ref": "#/$defs/PageElementInlineItem" }
-      ],
-      "$comment": "Section will be added as a fourth branch in Task 13."
+      ]
+    },
+    "Section": {
+      "type": "object",
+      "required": ["id", "elements"],
+      "properties": {
+        "id":            { "$ref": "#/$defs/SectionId" },
+        "title":         { "type": "string" },
+        "shared_option": {
+          "oneOf": [
+            { "$ref": "#/$defs/OptionRef" },
+            { "$ref": "#/$defs/OptionInline" }
+          ]
+        },
+        "elements":      { "type": "array", "items": { "$ref": "#/$defs/SectionElement" }, "minItems": 1 },
+        "show_if":       { "$ref": "#/$defs/Expression" },
+        "randomize":     { "type": "boolean", "default": false },
+        "translations":  { "$ref": "#/$defs/SectionTranslations" },
+        "extensions":    { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "SectionElement": {
+      "oneOf": [
+        { "$ref": "#/$defs/MessageRef" },
+        { "$ref": "#/$defs/PageElementSavedItem" },
+        { "$ref": "#/$defs/SectionInlineItem" }
+      ]
+    },
+    "SectionInlineItem": {
+      "type": "object",
+      "required": ["question"],
+      "properties": {
+        "id":       { "type": "string", "pattern": "^it_[a-z0-9_]+$" },
+        "question": { "oneOf": [{ "$ref": "#/$defs/QuestionRef" }, { "$ref": "#/$defs/QuestionInline" }] },
+        "option":   { "oneOf": [{ "$ref": "#/$defs/OptionRef" },   { "$ref": "#/$defs/OptionInline" }] },
+        "required": { "type": "boolean" },
+        "show_if":  { "$ref": "#/$defs/Expression" }
+      },
+      "additionalProperties": false
+    },
+    "SectionTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "title":  { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     },
     "PageElementSavedItem": {
       "type": "object",

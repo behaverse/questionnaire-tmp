@@ -811,3 +811,77 @@ def test_page_translations(schema, registry):
         "pt": {"status": "validated", "title": "Sintomas"}
     }
     assert validate_instance(schema, instance, registry=registry) == []
+
+
+# ---------- Section + shared_option ----------
+
+def test_section_matrix_with_shared_option(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_matrix",
+            "elements": [{
+                "id": "sec_likert",
+                "shared_option": {"ref": "opt_agreement_7@v26.0601"},
+                "elements": [
+                    {"question": {"ref": "q_1@v26.0601"}},
+                    {"question": {"ref": "q_2@v26.0601"}},
+                    {"question": {"ref": "q_3@v26.0601"}}
+                ]
+            }]
+        }]
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_section_cannot_nest(schema, registry):
+    """A Section cannot contain another Section."""
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [{
+                "id": "sec_outer",
+                "elements": [{
+                    "id": "sec_inner",  # nested Section — rejected
+                    "elements": [{"question": {"ref": "q_x@v26.0601"}, "option": {"ref": "opt_x@v26.0601"}}]
+                }]
+            }]
+        }]
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+def test_section_with_saved_item_ref(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [{
+                "id": "sec_x",
+                "elements": [
+                    {"ref": "it_phq9_1@v26.0601", "required": True},
+                    {"ref": "it_phq9_2@v26.0601", "required": True}
+                ]
+            }]
+        }]
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_section_with_message_ref(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [{
+                "id": "sec_x",
+                "elements": [
+                    {"ref": "msg_intro@v26.0601"},
+                    {"question": {"ref": "q_1@v26.0601"}, "option": {"ref": "opt_x@v26.0601"}}
+                ]
+            }]
+        }]
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
