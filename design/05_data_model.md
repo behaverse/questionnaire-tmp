@@ -110,218 +110,28 @@ Reusable entities below the questionnaire level (questions, option-sets, instruc
 
 ## Schema 2 — Questionnaire Definition (Canonical)
 
-> **⚠️ Pivoted by OD-15 (resolved 2026-05-31).** The reusable-entity model described in the rest of this section reflects the v26.0528 implementation. **The current target model is in [05a_reusable_entities.md](05a_reusable_entities.md)** — 11 reusable entities in two categories (content-bearing: Message, Context, Instruction, Prompt, Option, Placeholder, Help, RegEx; ref-binding: Question, Item, Solution). UI input widget is derived from Option's `(input_data_type, measurement_type, selection)` triple — no polymorphic `Question.type` discriminator. Content carried in a `content` language-keyed map. Section's `shared_option` for matrix layouts. v26.0528 will be archived under `schemas/questionnaire/versions/v26.0528/` when the new schema lands. The v26.0528 prose below is preserved for archival reference until the new schema implementation is written; it should be read alongside 05a, not as the current target.
-
 **Purpose.** Complete structural specification. The source of truth for what a questionnaire is. Stored in the Library; produced by the Editor; consumed by viewers.
 
-**Root structure.**
+**Current version: v26.0601** (per OD-15 resolved 2026-05-31). The authoritative entity model lives in [05a_reusable_entities.md](05a_reusable_entities.md). This section summarises the structure; see 05a for entity-by-entity field tables, examples, and the resolution log of the 23 OD-15 sub-questions.
 
-```jsonc
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
-  "metadata":   { /* embedded Instrument (Schema 1); metadata.id must start with qst_ */ },
-  "style":      { /* questionnaire-level appearance (cascades down) */ },
-  "flow":       { /* navigation, completion, randomisation (root-only) */ },
-  "pages":      [ /* Page objects (required structural backbone) */ ],
-  "blocks":     [ /* Block wrappers referencing page_ids (optional) */ ],
-  "subscales":  [ /* Subscale objects referencing question_ids (optional) */ ],
-  "logic":      [ /* LogicRule objects: skip / visibility / piping / branch */ ],
-  "scoring":    [ /* ScoringDef objects with formula + optional bands */ ],
-  "validation": [ /* CrossQuestionValidationRule objects */ ],
-  "extensions": { /* opaque extension data */ }
-}
-```
+**Eleven reusable entities in two categories:**
 
-The five-concept structural model (Block, Page, Section, Subscale, Tag) is specified in OD-12 ([10_open_decisions.md](10_open_decisions.md)). Pages are the required structural backbone; Blocks and Subscales are top-level wrappers that reference pages and questions by ID respectively; Sections live inside their owning Page (containment, since their scope is one page only); Tags are per-question labels.
+- **Content-bearing entities** (carry human-authored text or numeric content in a `content` language-keyed map): Message, Context, Instruction, Prompt, Option, Placeholder, Help, RegEx.
+- **Ref-binding entities** (carry only references to other entities, no content of their own): Question, Item, Solution. (Solution is the documented hybrid — carries an `expected_response` value.)
 
-### Page
+**Item** is the participant-administered unit: Question + Option. Items can be saved as Library entities (`it_*`) or authored inline on Page elements. Page `elements[]` is a heterogeneous array of: Section / Message ref / saved Item ref + overrides / inline Item.
 
-A Page is the screen unit and the required structural backbone of a questionnaire. The author controls which questions appear on which Page. Every Question lives on exactly one Page; the same question entity (referenced from the Library) may appear on different Pages of different questionnaires.
+**Question** is the "asking" composition: Prompt + optional Context + optional Instruction. Saved (`q_*`) or inline inside Item. Refs-only.
 
-```jsonc
-{
-  "id": "page_demographics",
-  "title": "Demographics",
-  "description": "Optional",
-  "entries": [
-    /* mix of Section objects and bare Question objects/references */
-  ],
-  "show_if": null,                 // logic expression, optional — hides the whole page
-  "randomize": false,              // shuffle entries within this page
-  "style": { /* page-level appearance overrides */ }
-}
-```
+**UI input widget** the viewer renders is derived from the Option's `(input_data_type, measurement_type, selection)` triple — *not* declared on the question.
 
-Pagination is page-by-page by default. Each Page renders as one screen.
+**Construct** (psychometric concept measured) lives on Prompt. **Dimension** (kind of judgment / scale) lives on both Prompt and Option, typically matching; the Library warns on mismatch.
 
-### Section
+**Section's `shared_option`** for matrix layouts; inner Items omit their `option` and inherit.
 
-A Section is a within-page layout grouping. It contains questions only (not other Sections — no nesting) and lives inside a Page's `entries[]` alongside any bare Questions on that page. The most common use is a labelled block or a matrix layout (where all questions in the Section share an option-set).
+**`metadata` field** still embeds Schema 1 (Instrument) via cross-schema `$ref`. Schema 1 is unchanged at v26.0528.
 
-```jsonc
-{
-  "id": "sec_likert_matrix",
-  "title": "Symptoms",
-  "questions": [ /* references to or inline Question objects */ ],
-  "show_if": null,                 // logic expression, optional — hides the section; other entries on the page still render
-  "randomize": false,              // shuffle questions within this section
-  "shared_option_set": null,       // set when all questions in the section share an option-set (matrix layout)
-  "style": { /* section-level appearance overrides; "layout": "matrix" renders the section as a matrix */ }
-}
-```
-
-Sections cannot nest in the current schema. Sections cannot span pages.
-
-### Block
-
-A Block is a cross-page thematic wrapper. Unlike Page and Section, a Block does not own its content — it *references* pages by ID, the same way a Subscale references questions. A Page may belong to zero, one, or several Blocks. Block UI affordances include section-level progress signals ("2 more pages in this block").
-
-```jsonc
-{
-  "id": "blk_part_a",
-  "title": "Part A: Background",
-  "description": "Optional",
-  "page_ids": ["page_demographics", "page_history"],
-  "show_if": null,                 // logic expression, optional — hides the whole block (all referenced pages)
-  "randomize": false               // shuffle the order in which the referenced pages appear
-}
-```
-
-Blocks declare structural intent without enforcing it: the canonical reading order of a questionnaire is `pages[]` order at the top level. Block UI is layered over that.
-
-### Subscale
-
-Subscales are first-class top-level entities, separate from Pages, Sections, and Blocks. The relationship between questions and subscales is many-to-many: one question may belong to multiple subscales; subscales declare which questions belong to them by ID.
-
-```jsonc
-{
-  "id": "scl_anxiety",
-  "name": "Anxiety",
-  "description": "Optional",
-  "question_ids": ["q_anx_1", "q_anx_2", "q_anx_3", "q_validity_1"],
-  "weight_per_question": null      // optional map of {question_id: weight}; defaults to 1.0 each
-}
-```
-
-### Question
-
-Each question carries (at minimum): `id`, `type`, `prompt`, optional `required`, optional `show_if`, optional `validation`, optional `style`, optional `tags[]`, and `properties` (type-specific).
-
-The `type` field accepts either a **core short-name** (`text`, `textarea`, `radio`, `checkbox`, `slider`, `ranking`, `date`, `file`, `display`) or a **namespaced IRI** of the form `behaverse.org/types/{name}` for extension types. The list and mapping is in [02_terminology.md](02_terminology.md).
-
-The `tags[]` field is a list of free-form (or controlled-vocabulary) labels used for analysis grouping, codebook generation, and faceted analysis. Tags are not entities in the Library; they are per-question metadata. A question can carry any number of tags. Tags are not used by viewers for runtime behaviour — they pass through into response exports for the researcher's analysis tools.
-
-Where reusable-component references are supported, a question entry in a Page or Section is either:
-
-- a **reference** to an existing question entity in the Library: `{ "ref": "q_depression_1@v26.0523" }` (a project convention field, not a JSON Schema `$ref` overload) with a defined set of allowed local overrides (see below), or
-- an **inline** question object with all fields present.
-
-**Allowed overrides on a Library reference** (per OD-05, resolved 2026-05-21):
-
-| Field | Overridable on reference? | Notes |
-|---|---|---|
-| Position (place in the parent's `entries[]` / `questions[]`) | **Yes** | Determined by the reference's location in the composition; no "override" per se. |
-| `required` flag | **Yes** | The same question may be optional in one questionnaire and required in another. |
-| `show_if` | **Yes** | Visibility logic is a property of the *usage*, not the entity. |
-| Per-question `style` | **No** | Style is part of the entity's identity; deviations must fork. (This narrows the prior wording — the strict cross-study analytic guarantee wins.) |
-| `prompt`, `type`, `properties`, `validation`, `tags`, default option-set | **No** | Content edits require forking a derived entity in the Library. |
-
-When an author edits a non-overridable field, the Editor surfaces a fork prompt (see [07_editor.md](07_editor.md) §"Reusable-component workflow") with three actions: derive locally, propose a new shared version through the Library's PR workflow, or cancel.
-
-Rationale: cross-study analytic integrity requires that `q_depression_1@v26.0523` means *the same prompt, the same options, the same validation* wherever it appears. Visibility and required-ness are properties of how a question is *used* in a particular flow, not of the question itself.
-
-### Style and flow
-
-The questionnaire owns two top-level blocks for instrument-level appearance and runtime behaviour:
-
-- **`style`** — *how the instrument looks.* Examples: `progress_bar` (boolean), `question_numbering` (`"sequential"`, `"per_page"`, `"none"`), `label_visible` (default for all questions).
-- **`flow`** — *how the participant moves through the instrument.* Examples: `allow_back` (boolean), `require_complete` (boolean), `randomize_pages` (boolean), `max_time_seconds` (number or null). Per-entity `randomize: boolean` (on Block, Page, Section) is the single mechanism; Flow's `randomize_pages` covers top-level pages only.
-
-The same `style` and `flow` keys may also appear on a Block, a Page, a Section, and a Question (each overriding the next-higher level's default for content scoped within it). Inheritance order — questionnaire → block → page → section → question — applies; the most specific declaration wins.
-
-Deployment-configurable subset (see [08a_viewer_service.md](08a_viewer_service.md)):
-
-- **Overridable at deployment time** (deployment value wins when specified; falls back to the instrument's value otherwise): `style.progress_bar`, `style.question_numbering`, `flow.max_time_seconds`.
-- **Instrument-only** (deployment cannot override; changing requires a new instrument version): `flow.allow_back`, `flow.require_complete`, `flow.randomize_pages`.
-
-Deployment-specific configuration that does **not** live in the questionnaire (it lives in the Viewer Service's deployment record): theme, redirect URL, completion message, randomisation seed strategy, show-score flag, active-from/until window, quota.
-
-### Translations
-
-Translations live inline on each entity, not in a top-level questionnaire block. Each entity carries an optional `translations` field: `{ <BCP-47 tag>: { status: "draft"|"complete"|"validated", fields: { <sparse parallel mirror of entity's translatable fields> } } }`. Reusable entities (Question, OptionSet, Instruction, Prompt) translate themselves once in the Library; references inherit their translations automatically. The questionnaire-level "ready in language L" check aggregates across the dependency graph: every entity (self + referenced) must have `translations.L.status === "validated"` for the questionnaire to be served in L. Schema 2 enforces no overrides on references via `additionalProperties: false` on the reference $defs (per OD-05).
-
-### Logic
-
-A list of rules. Each rule has a `type`, a `condition` (boolean expression over question IDs), and an `action`.
-
-Recognised rule types:
-
-| Type | Action target | Effect |
-|---|---|---|
-| `skip` | a page / block / question ID | Skip to target when condition is true |
-| `visibility` | a question / section / page / block ID | Show or hide target based on condition |
-| `piping` | a text field path | Substitute another question's answer into the text |
-| `branch` | a page ID | Navigate to a non-default next page |
-
-**Expression syntax.** Operators `==`, `!=`, `>`, `<`, `>=`, `<=`, `&&`, `||`, `!`; helper functions `contains()`, `is_empty()`, `length()`, `sum()`, `avg()`. Identifiers reference question IDs.
-
-**Canonical evaluator.** Detailed semantics (type coercion, missing-value behaviour, multi-select references, date arithmetic, translation-aware references) are defined by **a single WASM module** that ships alongside the schemas (per OD-11, resolved 2026-05-21). The same binary is embedded by the Web Viewer, the Native (Godot) Viewer, and the Editor preview — guaranteeing identical evaluation by construction (deterministic float arithmetic, deterministic date arithmetic, deterministic locale-aware comparisons). A normative test suite ships alongside the module as a regression harness, not as the cross-viewer contract.
-
-### Scoring
-
-A list of named computations over responses.
-
-```jsonc
-{
-  "id": "total_score",
-  "name": "Total score",
-  "formula": "sum(scl_depression)",
-  "range": [0, 27],
-  "interpretation": [
-    { "min": 0,  "max": 4,  "label": "None to minimal" },
-    { "min": 5,  "max": 9,  "label": "Mild"            },
-    { "min": 10, "max": 14, "label": "Moderate"        },
-    { "min": 15, "max": 19, "label": "Moderately severe" },
-    { "min": 20, "max": 27, "label": "Severe"          }
-  ]
-}
-```
-
-Scoring formulas may reference subscale IDs (`sum(scl_anxiety)`, `mean(scl_validity)`) or question-ID patterns (`sum(q_depression_*)`). Subscale references are preferred when subscales are declared, because they make the dependency explicit.
-
-Computed scores are emitted as part of the submission and are available in the participant dashboard (when configured) and in researcher exports.
-
-### Validation
-
-Per-question validation lives on the question itself. Cross-question validation (e.g. "if Q1 = yes, Q2 must be answered") lives in the top-level `validation` block as a list of rules with the same expression language as `logic.condition`. Validation expressions are evaluated by the same WASM module that evaluates logic and scoring (per OD-11).
-
-### Versioning rules
-
-Per OD-06 (resolved 2026-05-21), and aligned with the [Behaverse schemas versioning policy](https://behaverse.org/schemas/#versioning) (Calendar Versioning `vYY.MMDD`), every reference from a questionnaire to a reusable Library entity (`q_*`, `os_*`, `ins_*`, `pr_*`) **hard-pins** to a specific calendar version: `q_depression_1@v26.0523`. The runtime contract:
-
-- Published entity versions are immutable. A new version produces a new entry; the old entry remains addressable for as long as anything references it.
-- Reference resolution: the version is part of the reference; no implicit "latest" semantics exist. A reference without `@version` is a schema violation.
-- Deprecation: an entity may carry a `deprecated` flag (separate from the version itself). Deprecation marks the entity but never removes it; deployed questionnaires keep rendering. The Editor warns at edit time when a referenced entity is deprecated; the author may continue with the deprecated version, upgrade explicitly, or fork.
-- New versions never silently flow into existing questionnaires — published or draft. The Editor surfaces "new version available" as an explicit notification with a diff and an explicit upgrade action; the author chooses.
-- A separate **deprecation-conflict rule:** if a referenced entity version is being withdrawn (per the Library takedown procedure in [11_content_licensing.md](11_content_licensing.md)), the Library marks the version `withdrawn` but keeps the content addressable; deployed questionnaires keep rendering. The dependency-graph API ([06_library.md](06_library.md)) lets a contributor see the impact surface before proposing a withdrawal.
-- **Property URIs remain stable across versions** (per the Behaverse policy), ensuring backward compatibility at the property level even when the parent schema or entity is re-versioned.
-
-**Breaking-vs-non-breaking under CalVer.** The version string itself (e.g. `v26.0523`) does not encode whether a change is breaking — CalVer dates are pure timestamps. The analytic distinction is carried by a separate `severity` metadata field on each new version:
-
-| `severity` value | Meaning (preserves the analytic content of the older SemVer Major/Minor/Patch framing) |
-|---|---|
-| `breaking` | Changes that alter responses or scoring — re-wording an item, changing an option-set, changing a scoring formula. Tools should treat this version as analytically distinct from prior versions. |
-| `additive` | Additions that do not change existing responses — a new optional question, a new translation, a new psychometric data point. |
-| `corrective` | Corrections that should not affect interpretation — typos, formatting, comment text. |
-
-With hard-pinning, none of these flow into a referencing questionnaire automatically — even a `corrective` version requires explicit author opt-in. The `severity` tag exists to inform the author's decision, not to authorise auto-upgrade.
-
-### Open questions for Schema 2
-
-The four open syntax questions originally tracked here (validation, logic, versioning+translations, scoring) were resolved in [docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md](../docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md) and implemented in [schemas/questionnaire/](../schemas/questionnaire/) at v26.0528. See the spec for concrete syntax decisions; see CHANGELOG for version history.
-
-All decisions referenced from this schema are resolved; see the Resolution log in [10_open_decisions.md](10_open_decisions.md): OD-01 (canonical-format stack), OD-05 (overrides), OD-06 (versioning), OD-11 (expression evaluator), OD-12 (structural model).
+**Versioning:** the bump from v26.0528 to v26.0601 is `breaking` per CalVer severity policy. The v26.0528 schema is archived under `schemas/questionnaire/versions/v26.0528/`; published v26.0528 instances remain valid until re-authored.
 
 ---
 
