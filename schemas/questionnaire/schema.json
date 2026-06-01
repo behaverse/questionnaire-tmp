@@ -438,6 +438,35 @@
     "RegExRef":       { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^rx_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
     "QuestionRef":    { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^q_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
     "ItemRef":        { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^it_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "Solution": {
+      "type": "object",
+      "required": ["id", "prompt", "expected_response"],
+      "properties": {
+        "id":                { "$ref": "#/$defs/SolutionId" },
+        "prompt":            { "$ref": "#/$defs/PromptRef" },
+        "option":            { "$ref": "#/$defs/OptionRef" },
+        "expected_response": { "type": ["string", "number", "boolean", "null"] },
+        "content":           { "$ref": "#/$defs/SolutionContent" },
+        "extensions":        { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "SolutionContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "description"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "description": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
     "Page": {
       "type": "object",
       "required": ["id", "elements"],

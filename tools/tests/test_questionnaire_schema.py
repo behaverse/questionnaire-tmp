@@ -665,3 +665,50 @@ def test_item_rejects_required_field(schema, registry):
     bad = {**minimal_item(), "required": True}
     errors = list(v.iter_errors(bad))
     assert any("Additional" in e.message or "required" in e.message for e in errors)
+
+
+# ---------- Solution ----------
+
+def test_solution_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Solution"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    sol = {
+        "id": "sol_x",
+        "prompt": {"ref": "pr_x@v26.0601"},
+        "expected_response": 4
+    }
+    assert list(v.iter_errors(sol)) == []
+
+
+def test_solution_with_option_ref(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Solution"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    sol = {
+        "id": "sol_attention",
+        "prompt": {"ref": "pr_attention@v26.0601"},
+        "option": {"ref": "opt_agreement_7@v26.0601"},
+        "expected_response": 4,
+        "content": {
+            "en": { "status": "validated", "description": "Attention check." }
+        }
+    }
+    assert list(v.iter_errors(sol)) == []
+
+
+def test_solution_expected_response_can_be_string(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Solution"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    sol = {"id": "sol_text", "prompt": {"ref": "pr_x@v26.0601"}, "expected_response": "Paris"}
+    assert list(v.iter_errors(sol)) == []
+
+
+def test_solution_missing_expected_response_fails(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Solution"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {"id": "sol_x", "prompt": {"ref": "pr_x@v26.0601"}}
+    errors = list(v.iter_errors(bad))
+    assert any("expected_response" in e.message for e in errors)
