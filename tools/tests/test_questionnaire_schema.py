@@ -107,3 +107,93 @@ def test_root_unknown_field_rejected(schema, registry):
     }
     errors = validate_instance(schema, instance, registry=registry)
     assert any("pagess" in e or "Additional" in e for e in errors)
+
+
+# ---------- Message ----------
+
+def minimal_message() -> dict:
+    return {
+        "id": "msg_welcome",
+        "type": ["welcome"],
+        "content": {
+            "en": { "status": "validated", "text": "Welcome." }
+        }
+    }
+
+
+def test_message_minimal_validates_against_def(schema, registry):
+    from jsonschema import Draft202012Validator, FormatChecker
+    msg_schema = {**schema["$defs"]["Message"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(msg_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    errors = list(validator.iter_errors(minimal_message()))
+    assert errors == []
+
+
+def test_message_missing_type_fails(schema, registry):
+    from jsonschema import Draft202012Validator, FormatChecker
+    msg_schema = {**schema["$defs"]["Message"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(msg_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = minimal_message()
+    del bad["type"]
+    errors = list(validator.iter_errors(bad))
+    assert any("type" in e.message for e in errors)
+
+
+def test_message_type_must_be_array(schema, registry):
+    from jsonschema import Draft202012Validator, FormatChecker
+    msg_schema = {**schema["$defs"]["Message"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(msg_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = minimal_message()
+    bad["type"] = "welcome"  # string, not array
+    errors = list(validator.iter_errors(bad))
+    assert any("array" in e.message.lower() for e in errors)
+
+
+def test_message_compound_type_accepted(schema, registry):
+    """Legacy compound values like 'job; purpose' now an array of two tags."""
+    from jsonschema import Draft202012Validator, FormatChecker
+    msg_schema = {**schema["$defs"]["Message"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(msg_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    msg = minimal_message()
+    msg["type"] = ["job", "purpose"]
+    assert list(validator.iter_errors(msg)) == []
+
+
+def test_message_content_per_language_status(schema, registry):
+    from jsonschema import Draft202012Validator, FormatChecker
+    msg_schema = {**schema["$defs"]["Message"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(msg_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    msg = {
+        "id": "msg_multi",
+        "type": ["purpose"],
+        "content": {
+            "en": { "status": "validated", "text": "EN text" },
+            "pt": { "status": "draft",     "text": "PT text" },
+            "pt-BR": { "status": "complete", "text": "PT-BR text" }
+        }
+    }
+    assert list(validator.iter_errors(msg)) == []
+
+
+def test_message_content_invalid_status_fails(schema, registry):
+    from jsonschema import Draft202012Validator, FormatChecker
+    msg_schema = {**schema["$defs"]["Message"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(msg_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    msg = {
+        "id": "msg_bad",
+        "type": ["info"],
+        "content": {
+            "en": { "status": "approved", "text": "..." }
+        }
+    }
+    errors = list(validator.iter_errors(msg))
+    assert any("is not one of" in e.message or "enum" in e.message or "status" in e.message for e in errors)
+
+
+def test_message_content_must_have_at_least_one_language(schema, registry):
+    from jsonschema import Draft202012Validator, FormatChecker
+    msg_schema = {**schema["$defs"]["Message"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(msg_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    msg = {"id": "msg_empty_content", "type": ["info"], "content": {}}
+    errors = list(validator.iter_errors(msg))
+    assert any("minProperties" in e.message or "fewer" in e.message.lower() or "non-empty" in e.message for e in errors)
