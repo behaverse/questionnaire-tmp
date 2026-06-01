@@ -197,3 +197,40 @@ def test_message_content_must_have_at_least_one_language(schema, registry):
     msg = {"id": "msg_empty_content", "type": ["info"], "content": {}}
     errors = list(validator.iter_errors(msg))
     assert any("minProperties" in e.message or "fewer" in e.message.lower() or "non-empty" in e.message for e in errors)
+
+
+# ---------- Context ----------
+
+def minimal_context() -> dict:
+    return {
+        "id": "ctx_intro",
+        "content": {
+            "en": { "status": "validated", "text": "Background paragraph." }
+        }
+    }
+
+
+def test_context_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    ctx_schema = {**schema["$defs"]["Context"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(ctx_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(validator.iter_errors(minimal_context())) == []
+
+
+def test_context_missing_content_fails(schema, registry):
+    from jsonschema import Draft202012Validator
+    ctx_schema = {**schema["$defs"]["Context"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(ctx_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {"id": "ctx_x"}
+    errors = list(validator.iter_errors(bad))
+    assert any("content" in e.message for e in errors)
+
+
+def test_context_id_pattern(schema, registry):
+    from jsonschema import Draft202012Validator
+    ctx_schema = {**schema["$defs"]["Context"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(ctx_schema, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = minimal_context()
+    bad["id"] = "ctxintro"  # missing underscore
+    errors = list(validator.iter_errors(bad))
+    assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
