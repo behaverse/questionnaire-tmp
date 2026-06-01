@@ -618,3 +618,50 @@ def test_question_inline_form(schema, registry):
     v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
     inline = {"prompt": {"ref": "pr_x@v26.0601"}}
     assert list(v.iter_errors(inline)) == []
+
+
+# ---------- Item (refs-only) ----------
+
+def minimal_item() -> dict:
+    return {
+        "id": "it_aiss_2",
+        "question": {"ref": "q_aiss_2@v26.0601"},
+        "option":   {"ref": "opt_agreement_7@v26.0601"}
+    }
+
+
+def test_item_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Item"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(v.iter_errors(minimal_item())) == []
+
+
+def test_item_missing_question_fails(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Item"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = minimal_item()
+    del bad["question"]
+    errors = list(v.iter_errors(bad))
+    assert any("question" in e.message for e in errors)
+
+
+def test_item_missing_option_fails(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Item"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = minimal_item()
+    del bad["option"]
+    errors = list(v.iter_errors(bad))
+    assert any("option" in e.message for e in errors)
+
+
+def test_item_rejects_required_field(schema, registry):
+    """Item is refs-only — required and show_if live on Page elements, not Items."""
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Item"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {**minimal_item(), "required": True}
+    errors = list(v.iter_errors(bad))
+    assert any("Additional" in e.message or "required" in e.message for e in errors)

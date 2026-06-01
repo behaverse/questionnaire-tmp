@@ -409,6 +409,18 @@
       },
       "additionalProperties": false
     },
+    "Item": {
+      "type": "object",
+      "required": ["id", "question", "option"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/ItemId" },
+        "question":   { "$ref": "#/$defs/QuestionRef" },
+        "option":     { "$ref": "#/$defs/OptionRef" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
     "QuestionId":    { "type": "string", "pattern": "^q_[a-z0-9_]+$",    "maxLength": 64 },
     "ItemId":        { "type": "string", "pattern": "^it_[a-z0-9_]+$",   "maxLength": 64 },
     "SolutionId":    { "type": "string", "pattern": "^sol_[a-z0-9_]+$",  "maxLength": 64 },
