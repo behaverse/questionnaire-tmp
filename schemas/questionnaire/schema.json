@@ -287,6 +287,97 @@
       },
       "additionalProperties": false
     },
+    "Option": {
+      "allOf": [
+        { "$ref": "#/$defs/OptionBase" },
+        {
+          "if": {
+            "type": "object",
+            "required": ["input_data_type"],
+            "properties": { "input_data_type": { "const": "choice" } }
+          },
+          "then": {
+            "required": ["selection", "options"]
+          }
+        }
+      ],
+      "required": ["id", "input_data_type", "measurement_type", "content"]
+    },
+    "OptionInline": {
+      "allOf": [
+        { "$ref": "#/$defs/OptionBase" },
+        {
+          "if": {
+            "type": "object",
+            "required": ["input_data_type"],
+            "properties": { "input_data_type": { "const": "choice" } }
+          },
+          "then": {
+            "required": ["selection", "options"]
+          }
+        }
+      ],
+      "required": ["input_data_type", "measurement_type", "content"]
+    },
+    "OptionBase": {
+      "type": "object",
+      "properties": {
+        "id":               { "$ref": "#/$defs/OptionId" },
+        "dimension":        { "type": "string", "pattern": "^[a-z][a-z0-9_]+$", "maxLength": 64 },
+        "input_data_type":  { "enum": ["choice", "number", "text"] },
+        "measurement_type": { "enum": ["nominal", "ordinal", "interval", "ratio"] },
+        "selection":        { "enum": ["single", "multiple"] },
+        "min":              { "type": "number" },
+        "max":              { "type": "number" },
+        "step":             { "type": "number", "exclusiveMinimum": 0 },
+        "min_selected":     { "type": "integer", "minimum": 0 },
+        "max_selected":     { "type": "integer", "minimum": 1 },
+        "placeholder":      { "oneOf": [{ "$ref": "#/$defs/PlaceholderRef" }, { "$ref": "#/$defs/PlaceholderInline" }] },
+        "help":             { "oneOf": [{ "$ref": "#/$defs/HelpRef" },        { "$ref": "#/$defs/HelpInline" }] },
+        "input_validation": { "oneOf": [{ "$ref": "#/$defs/RegExRef" },       { "type": "string", "minLength": 1 }] },
+        "options":          { "type": "array", "items": { "$ref": "#/$defs/OptionChoiceStructural" }, "minItems": 2 },
+        "content":          { "$ref": "#/$defs/OptionContent" },
+        "extensions":       { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "OptionChoiceStructural": {
+      "type": "object",
+      "required": ["index", "value"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 1 },
+        "value": { "type": ["string", "number", "boolean", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "OptionContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "label":  { "type": "string", "minLength": 1 },
+            "units":  { "type": "string", "minLength": 1 },
+            "options": { "type": "array", "items": { "$ref": "#/$defs/OptionChoiceContent" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "OptionChoiceContent": {
+      "type": "object",
+      "required": ["index", "text"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 1 },
+        "text":  { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
     "MessageId":     { "type": "string", "pattern": "^msg_[a-z0-9_]+$",  "maxLength": 64 },
     "ContextId":     { "type": "string", "pattern": "^ctx_[a-z0-9_]+$",  "maxLength": 64 },
     "InstructionId": { "type": "string", "pattern": "^ins_[a-z0-9_]+$",  "maxLength": 64 },

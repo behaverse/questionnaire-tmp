@@ -409,3 +409,164 @@ def test_regex_missing_example_input_fails(schema, registry):
     r = {"id": "rx_x", "regex": "^a$"}
     errors = list(v.iter_errors(r))
     assert any("example_input" in e.message for e in errors)
+
+
+# ---------- Option ----------
+
+def minimal_choice_option() -> dict:
+    return {
+        "id": "opt_yesno",
+        "input_data_type": "choice",
+        "measurement_type": "nominal",
+        "selection": "single",
+        "options": [
+            { "index": 1, "value": 0 },
+            { "index": 2, "value": 1 }
+        ],
+        "content": {
+            "en": {
+                "status": "validated",
+                "options": [
+                    { "index": 1, "text": "no" },
+                    { "index": 2, "text": "yes" }
+                ]
+            }
+        }
+    }
+
+
+def minimal_number_option() -> dict:
+    return {
+        "id": "opt_age",
+        "input_data_type": "number",
+        "measurement_type": "ratio",
+        "min": 0,
+        "max": 120,
+        "step": 1,
+        "content": {
+            "en": { "status": "validated", "label": "Age (years)", "units": "years" }
+        }
+    }
+
+
+def test_option_choice_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(v.iter_errors(minimal_choice_option())) == []
+
+
+def test_option_number_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(v.iter_errors(minimal_number_option())) == []
+
+
+def test_option_choice_requires_selection(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_choice_option()
+    del opt["selection"]
+    errors = list(v.iter_errors(opt))
+    assert any("selection" in e.message for e in errors)
+
+
+def test_option_choice_requires_options(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_choice_option()
+    del opt["options"]
+    errors = list(v.iter_errors(opt))
+    assert any("options" in e.message for e in errors)
+
+
+def test_option_choice_selection_enum(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_choice_option()
+    opt["selection"] = "multi"  # rejected — must be "multiple"
+    errors = list(v.iter_errors(opt))
+    assert any("multi" in e.message.lower() or "enum" in e.message or "is not one of" in e.message for e in errors)
+
+
+def test_option_choice_selection_multiple_accepted(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_choice_option()
+    opt["selection"] = "multiple"
+    opt["min_selected"] = 1
+    opt["max_selected"] = 2
+    assert list(v.iter_errors(opt)) == []
+
+
+def test_option_choice_options_have_at_least_two(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_choice_option()
+    opt["options"] = [{"index": 1, "value": 0}]
+    opt["content"]["en"]["options"] = [{"index": 1, "text": "only"}]
+    errors = list(v.iter_errors(opt))
+    assert any("minItems" in e.message or "fewer" in e.message.lower() or "too short" in e.message.lower() for e in errors)
+
+
+def test_option_choice_value_null_accepted(schema, registry):
+    """value: null for 'prefer not to say' choices."""
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_choice_option()
+    opt["options"].append({"index": 3, "value": None})
+    opt["content"]["en"]["options"].append({"index": 3, "text": "prefer not to say"})
+    assert list(v.iter_errors(opt)) == []
+
+
+def test_option_placeholder_can_be_inline(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_number_option()
+    opt["placeholder"] = {"content": {"en": {"status": "validated", "text": "e.g. 30"}}}
+    assert list(v.iter_errors(opt)) == []
+
+
+def test_option_placeholder_can_be_ref(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = minimal_number_option()
+    opt["placeholder"] = {"ref": "ph_age@v26.0601"}
+    assert list(v.iter_errors(opt)) == []
+
+
+def test_option_input_validation_can_be_inline_string(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = {
+        "id": "opt_year",
+        "input_data_type": "text",
+        "measurement_type": "interval",
+        "input_validation": "^(19|20)\\d{2}$",
+        "content": {"en": {"status": "validated", "label": "Year"}}
+    }
+    assert list(v.iter_errors(opt)) == []
+
+
+def test_option_inline_no_id_required(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["OptionInline"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    inline = {
+        "input_data_type": "choice",
+        "measurement_type": "ordinal",
+        "selection": "single",
+        "options": [{"index": 1, "value": 0}, {"index": 2, "value": 1}],
+        "content": {"en": {"status": "validated", "options": [{"index": 1, "text": "no"}, {"index": 2, "text": "yes"}]}}
+    }
+    assert list(v.iter_errors(inline)) == []
