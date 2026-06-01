@@ -1,0 +1,25 @@
+{
+  "id": "opt_phq9_freq_4",
+  "dimension": "frequency",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "selection": "single",
+  "options": [
+    { "index": 1, "value": 0 },
+    { "index": 2, "value": 1 },
+    { "index": 3, "value": 2 },
+    { "index": 4, "value": 3 }
+  ],
+  "content": {
+    "en": {
+      "status": "validated",
+      "label": "PHQ-9 frequency (4-point)",
+      "options": [
+        { "index": 1, "text": "Not at all" },
+        { "index": 2, "text": "Several days" },
+        { "index": 3, "text": "More than half the days" },
+        { "index": 4, "text": "Nearly every day" }
+      ]
+    }
+  }
+}
