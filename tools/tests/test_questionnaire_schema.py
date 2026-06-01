@@ -371,3 +371,41 @@ def test_help_inline_no_id(schema, registry):
     v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
     h = {"content": {"en": {"status": "validated", "text": "Help text."}}}
     assert list(v.iter_errors(h)) == []
+
+
+# ---------- RegEx ----------
+
+def test_regex_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["RegEx"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    r = {
+        "id": "rx_year_4digit",
+        "regex": "^(19|20)\\d{2}$",
+        "example_input": "2026"
+    }
+    assert list(v.iter_errors(r)) == []
+
+
+def test_regex_with_description(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["RegEx"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    r = {
+        "id": "rx_email",
+        "regex": "^\\S+@\\S+\\.\\S+$",
+        "example_input": "a@b.c",
+        "content": {
+            "en": { "status": "validated", "description": "Basic email format" }
+        }
+    }
+    assert list(v.iter_errors(r)) == []
+
+
+def test_regex_missing_example_input_fails(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["RegEx"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    r = {"id": "rx_x", "regex": "^a$"}
+    errors = list(v.iter_errors(r))
+    assert any("example_input" in e.message for e in errors)

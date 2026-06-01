@@ -259,6 +259,34 @@
       "additionalProperties": false,
       "minProperties": 1
     },
+    "RegEx": {
+      "type": "object",
+      "required": ["id", "regex", "example_input"],
+      "properties": {
+        "id":            { "$ref": "#/$defs/RegExId" },
+        "regex":         { "type": "string", "minLength": 1 },
+        "example_input": { "type": "string", "minLength": 1 },
+        "content":       { "$ref": "#/$defs/RegExContent" },
+        "extensions":    { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "RegExContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "description"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "description": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
     "MessageId":     { "type": "string", "pattern": "^msg_[a-z0-9_]+$",  "maxLength": 64 },
     "ContextId":     { "type": "string", "pattern": "^ctx_[a-z0-9_]+$",  "maxLength": 64 },
     "InstructionId": { "type": "string", "pattern": "^ins_[a-z0-9_]+$",  "maxLength": 64 },
