@@ -110,6 +110,8 @@ Reusable entities below the questionnaire level (questions, option-sets, instruc
 
 ## Schema 2 — Questionnaire Definition (Canonical)
 
+> **⚠️ Pivoted by OD-15 (resolved 2026-05-31).** The reusable-entity model described in the rest of this section reflects the v26.0528 implementation. **The current target model is in [05a_reusable_entities.md](05a_reusable_entities.md)** — 11 reusable entities in two categories (content-bearing: Message, Context, Instruction, Prompt, Option, Placeholder, Help, RegEx; ref-binding: Question, Item, Solution). UI input widget is derived from Option's `(input_data_type, measurement_type, selection)` triple — no polymorphic `Question.type` discriminator. Content carried in a `content` language-keyed map. Section's `shared_option` for matrix layouts. v26.0528 will be archived under `schemas/questionnaire/versions/v26.0528/` when the new schema lands. The v26.0528 prose below is preserved for archival reference until the new schema implementation is written; it should be read alongside 05a, not as the current target.
+
 **Purpose.** Complete structural specification. The source of truth for what a questionnaire is. Stored in the Library; produced by the Editor; consumed by viewers.
 
 **Root structure.**

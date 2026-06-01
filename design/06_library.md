@@ -37,17 +37,23 @@ The Library is the catalogue and repository of validated questionnaires, the reu
 
 ### 2. Reusable-component pool
 
-Reusable entities are first-class citizens of the Library:
+Per OD-15 (resolved 2026-05-31; full body in [05a_reusable_entities.md](05a_reusable_entities.md)), reusable entities are first-class citizens of the Library, split into **content-bearing** (text/numeric content with per-language `content` map) and **ref-binding** (named compositions of refs to other entities).
 
-| Entity | What the Library exposes |
-|---|---|
-| Question | The question text, type, default option-set, validation rules, translations, usage count, version history |
-| Option-set | The ordered list of options (e.g. a 5-point Likert agree/disagree), translations, usage count |
-| Instruction | Reusable instructional blocks (e.g. consent forms, intro text) |
-| Prompt | Short reusable text snippets |
-| Translation | Language-specific text tied to a target entity |
+| Category | Entity | Prefix | What the Library exposes |
+|---|---|---|---|
+| Content-bearing | **Message** | `msg_` | Standalone participant-facing text (welcome, end, transitions). `type` string-array; `content` language map. |
+| Content-bearing | **Context** | `ctx_` | Background paragraphs that frame a Question. `content` language map. |
+| Content-bearing | **Instruction** | `ins_` | How-to-respond text. Optional `dimension`; `content` language map. |
+| Content-bearing | **Prompt** | `pr_` | The stem text the participant reads. `name`, `construct`, `dimension`, `topics[]`, `reversed`; `content` language map. |
+| Content-bearing | **Option** | `opt_` | Response-options spec: structural fields (input/measurement type, value/index, selection, min/max/step) + `content` language map (label, units, per-choice text). Determines the UI input widget. |
+| Content-bearing | **Placeholder** | `ph_` | Hint text inside an input field. `content` language map. |
+| Content-bearing | **Help** | `help_` | Tooltip / "?" content. `content` language map. |
+| Content-bearing | **RegEx** | `rx_` | Reusable validation patterns. `regex` + `example_input` (structural); optional `content.description` per language. |
+| Ref-binding | **Question** | `q_` | Refs-only composition: Prompt-ref + optional Context-ref + optional Instruction-ref. The "asking" half of an Item. |
+| Ref-binding | **Item** | `it_` | Refs-only composition: Question-ref + Option-ref. The participant-administered unit. Page elements reference saved Items (with `required` / `show_if` overrides per OD-05) or author Items inline. |
+| Ref-binding (hybrid) | **Solution** | `sol_` | Correct-response record: Prompt-ref + optional Option-ref + `expected_response` value (the hybrid exception — a binding entity that carries a value). |
 
-The Library tracks **which questionnaires reference each entity**, so changes can be surfaced as breaking or non-breaking and so analysts can find every study that used a particular item.
+The Library tracks **which questionnaires reference each entity**, so changes can be surfaced as breaking, additive, or corrective (CalVer severity tag per OD-06) and so analysts can find every study that used a particular Item, Prompt, or Option.
 
 ### 3. Metadata and citation
 

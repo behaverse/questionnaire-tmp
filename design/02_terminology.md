@@ -17,23 +17,34 @@ All code, documentation, and interfaces in this ecosystem use the terms below co
 
 ## Content hierarchy
 
+Per OD-15 (resolved 2026-05-31; full body in [05a_reusable_entities.md](05a_reusable_entities.md)). The terms below replace the v26.0528 entity vocabulary.
+
 | Term | Meaning | Example |
 |---|---|---|
-| **Questionnaire** | A complete instrument: metadata, instructions, structured pages of questions, logic, scoring. | A validated open-licensed depression scale |
-| **Block** | A cross-page thematic wrapper that references one or more Pages by ID. Used to express "Part A: Background" sections in long instruments, including section-level progress UI ("2 more pages in this block"). Optional; short instruments use Pages directly without Blocks. **Note:** in this project Block is the *larger* unit (matches cognitive-testing usage: "a block of 50 trials"), inverting the everyday English convention where Section > Block. | A "Part A" block holding three demographics pages |
-| **Page** | A screen unit. The author controls which questions appear on which Page, and a Page has its own `show_if` for visibility and `randomize` for shuffling its entries. `page_id` is recorded in xAPI events and per-item responses. The required structural unit — every Question lives on some Page. | "Demographics page", "PHQ-9 items page 1" |
-| **Section** | A within-page layout grouping (a labelled block or matrix on a single screen). A Section may carry a `shared_option_set` (inline or reference) to render its questions as a matrix. Optional; simple pages have no Sections and just list bare Questions. | A "Likert matrix" section on the symptoms page |
-| **Scale / Subscale** | A named subset of questions scored together. Questions and subscales have a many-to-many relationship: one question can belong to several subscales; subscales reference questions, not the other way around. Orthogonal to Block/Page/Section. | "Anxiety subscale" |
-| **Tag** | A free-form (or controlled-vocabulary) analytic label on a Question, used for codebooks, faceted analysis exports, and ad-hoc analytic groupings. Not an entity in the Library; lives as a `tags[]` array on each Question. | `["depression", "self-report", "screening"]` |
-| **Question** | A single item requiring a response. Reusable across questionnaires. | "How often did you feel sad in the past week?" |
-| **Item** | Synonym for *Question* in psychometric contexts. |
-| **Option-set** | A reusable set of answer options, referenced by one or more questions. | The five-point Likert agree/disagree set |
-| **Answer Option** | A single selectable choice within an option-set. | "Strongly agree" |
-| **Instruction** | A reusable instructional block (text/media) presented to participants. | "Read each statement carefully…" |
-| **Prompt** | A reusable text snippet inserted into questions (e.g. introductory or contextual). |
-| **Translation** | A language-specific rendering of any text-bearing entity above. |
+| **Questionnaire** | A complete instrument: metadata (Schema 1) plus structured pages of Items, blocks, subscales, logic. | A validated open-licensed depression scale |
+| **Block** | A cross-page thematic wrapper that references one or more Pages by ID. Optional; short instruments use Pages directly. In this project Block is the *larger* unit (cognitive-testing usage), inverting everyday English. | A "Part A" block holding three demographics pages |
+| **Page** | A screen unit. The required structural backbone — every Item lives on some Page. Carries an `elements[]` array (heterogeneous: Section / Message ref / saved Item ref + overrides / inline Item). | "PHQ-9 items page 1" |
+| **Section** | A within-page layout grouping (matrix layout for shared-Option items). May carry a `shared_option` (inline or reference) that inner Items inherit. | A 9-item PHQ-9 matrix section |
+| **Item** | The participant-administered unit: **Question + Option**. The thing that appears as one element on a Page. Saved as `it_*` Library entity (refs only) or authored inline. Use-specific fields (`required`, `show_if`) live on the Page element. | "Canonical PHQ-9 item 1" |
+| **Question** | The "asking" composition: **Prompt + optional Context + optional Instruction**. Saved as `q_*` Library entity (refs only) or inline inside an Item. Does **not** include the response options. | A Question bundling a depression Prompt with its canonical Instruction |
+| **Prompt** | The stem text the participant reads. Content-bearing entity (`pr_*`); carries `name`, `construct`, `dimension`, `topics[]`, `reversed`, and a `content` language-keyed map. | "How often did you feel sad in the past week?" |
+| **Option** | The response-options specification. Content-bearing entity (`opt_*`) with structural fields (input/measurement type, value/index per choice, selection mode, min/max/step) at the top level and translatable text (label, units, per-choice text) inside `content`. Determines the UI input widget. | A 7-point agreement Likert; a numeric hours-per-week input |
+| **Context** | Background paragraph that frames the meaning of an upcoming Question. Content-bearing entity (`ctx_*`). | "When we ask about 'physical activity' in the next questions, we mean…" |
+| **Instruction** | How to interact with the response options. Content-bearing entity (`ins_*`). Carries an optional `dimension`. | "Rate each statement on the 7-point agreement scale" |
+| **Message** | Standalone participant-facing text that is not a Question (welcome, end, transitions, informational). Content-bearing entity (`msg_*`) with `type` string-array. | "Thank you for participating." |
+| **Placeholder** | Hint text inside an input field. Content-bearing entity (`ph_*`). | "e.g. 5" |
+| **Help** | Tooltip / "?" content next to a field. Content-bearing entity (`help_*`). | "ORCID is a 16-digit identifier…" |
+| **RegEx** | Reusable validation pattern. Content-bearing entity (`rx_*`); carries `regex` + `example_input` (structural, not translatable) plus optional `content.description`. ECMAScript flavour. | `^(19\|20)\d{2}$` for four-digit year |
+| **Solution** | The correct response for a Prompt that has one. Hybrid ref-binding entity (`sol_*`) — refs Prompt + optional Option, carries an `expected_response` value. | The correct answer to an attention-check Item |
+| **Subscale** | A named subset of Prompts scored together. Carries a Construct (or explicit prompt_ids). Subscale ↔ Prompt is many-to-many. Scoring details deferred to a future OD. | "PHQ-9 Anxiety subscale" |
+| **Construct** | The psychometric concept a Prompt loads on (`depression`, `sensation_seeking`). Open vocabulary with curator registry. Lives on Prompt only. | `sensation_seeking` |
+| **Dimension** | The kind of judgment / scale (`agreement`, `frequency`, `duration`). Same concept on Prompt and Option; typically matches across a Prompt-Option pairing. Open vocabulary with curator registry. | `agreement` |
+| **Reversed** | A boolean on Prompt: when true, the Prompt is worded as the *opposite* of its Construct. Scoring applies `value' = max + min − value`. | "Are you feeling sad?" with construct `happiness` → `reversed: true` |
+| **Topic** | Free-form analytic label on a Prompt (in `topics[]`). | `["risk_taking", "novelty_seeking"]` |
+| **Composition** | The structure that defines a questionnaire's contents — `metadata` + `pages[].elements[]` + `blocks[]` + `subscales[]`. Reserved for the questionnaire-level binding, not as a generic synonym for any ref-binding. | (the JSON document as a whole) |
+| **UI input widget** | The user-interface control the viewer renders (radio, checkbox, slider, numeric spinner, text input). Derived from the Option's `(input_data_type, measurement_type, selection)` triple — not declared explicitly. | Radio buttons rendering an Option with `input_data_type: choice, selection: single` |
 
-A **Questionnaire** is composed of top-level **`pages[]`**, optional **`blocks[]`** (referencing `page_ids`), optional **`subscales[]`** (referencing `question_ids`), and the **Questions / Option-sets / Instructions / Prompts** the pages and sections reference. The referenced reusable entities exist independently in the Library and may appear in many questionnaires. The pagination model is specified in OD-12 ([10_open_decisions.md](10_open_decisions.md)) and detailed in [05_data_model.md](05_data_model.md).
+A **Questionnaire** is composed of top-level **`pages[]`**, optional **`blocks[]`** (referencing `page_ids`), optional **`subscales[]`** (referencing `prompt_ids`), and the **Items, Questions, Prompts, Options, Messages, Contexts, Instructions, Placeholders, Helps, RegExes, Solutions** the pages and sections reference. The referenced reusable entities exist independently in the Library and may appear in many questionnaires. The pagination model is specified in OD-12 and the entity model is specified in OD-15 ([10_open_decisions.md](10_open_decisions.md)); body in [05a_reusable_entities.md](05a_reusable_entities.md).
 
 ## User roles
 
