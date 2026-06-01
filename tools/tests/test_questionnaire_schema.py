@@ -570,3 +570,51 @@ def test_option_inline_no_id_required(schema, registry):
         "content": {"en": {"status": "validated", "options": [{"index": 1, "text": "no"}, {"index": 2, "text": "yes"}]}}
     }
     assert list(v.iter_errors(inline)) == []
+
+
+# ---------- Question (refs-only) ----------
+
+def minimal_question() -> dict:
+    return {
+        "id": "q_aiss_2",
+        "prompt": {"ref": "pr_aiss_q_2@v26.0601"}
+    }
+
+
+def test_question_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Question"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(v.iter_errors(minimal_question())) == []
+
+
+def test_question_with_context_and_instruction(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Question"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    q = {
+        "id": "q_full",
+        "prompt":      {"ref": "pr_x@v26.0601"},
+        "context":     {"ref": "ctx_intro@v26.0601"},
+        "instruction": {"ref": "ins_likert@v26.0601"}
+    }
+    assert list(v.iter_errors(q)) == []
+
+
+def test_question_rejects_inline_prompt(schema, registry):
+    """Question is strict refs-only — no inline content allowed."""
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Question"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {"id": "q_inline", "prompt": {"id": "pr_x", "content": {"en": {"status": "validated", "text": "..."}}}}
+    errors = list(v.iter_errors(bad))
+    assert len(errors) >= 1
+
+
+def test_question_inline_form(schema, registry):
+    """QuestionInline omits id but has the same shape otherwise."""
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["QuestionInline"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    inline = {"prompt": {"ref": "pr_x@v26.0601"}}
+    assert list(v.iter_errors(inline)) == []

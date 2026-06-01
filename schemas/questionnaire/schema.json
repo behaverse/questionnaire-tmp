@@ -386,6 +386,29 @@
     "PlaceholderId": { "type": "string", "pattern": "^ph_[a-z0-9_]+$",   "maxLength": 64 },
     "HelpId":        { "type": "string", "pattern": "^help_[a-z0-9_]+$", "maxLength": 64 },
     "RegExId":       { "type": "string", "pattern": "^rx_[a-z0-9_]+$",   "maxLength": 64 },
+    "Question": {
+      "type": "object",
+      "required": ["id", "prompt"],
+      "properties": {
+        "id":          { "$ref": "#/$defs/QuestionId" },
+        "prompt":      { "$ref": "#/$defs/PromptRef" },
+        "context":     { "$ref": "#/$defs/ContextRef" },
+        "instruction": { "$ref": "#/$defs/InstructionRef" },
+        "extensions":  { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "QuestionInline": {
+      "type": "object",
+      "required": ["prompt"],
+      "properties": {
+        "prompt":      { "$ref": "#/$defs/PromptRef" },
+        "context":     { "$ref": "#/$defs/ContextRef" },
+        "instruction": { "$ref": "#/$defs/InstructionRef" }
+      },
+      "additionalProperties": false
+    },
     "QuestionId":    { "type": "string", "pattern": "^q_[a-z0-9_]+$",    "maxLength": 64 },
     "ItemId":        { "type": "string", "pattern": "^it_[a-z0-9_]+$",   "maxLength": 64 },
     "SolutionId":    { "type": "string", "pattern": "^sol_[a-z0-9_]+$",  "maxLength": 64 },
