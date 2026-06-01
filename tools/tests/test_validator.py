@@ -86,3 +86,35 @@ def test_load_schema_raises_with_path_on_malformed_json(tmp_path):
     bad.write_text("{this is not json")
     with pytest.raises(ValueError, match=str(bad)):
         load_schema(bad)
+
+
+def test_walk_library_examples_finds_per_entity_files(tmp_path):
+    """Library example files under examples/library_examples/<type>/*.json validate against the right $def."""
+    import json
+    from tools.validate_schemas import walk_library_examples
+    schemas = tmp_path / "schemas"
+    q = schemas / "questionnaire"
+    (q / "examples" / "library_examples" / "messages").mkdir(parents=True)
+    schema = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://behaverse.org/schemas/questionnaire/v26.0601/schema.json",
+        "type": "object",
+        "$defs": {
+            "Message": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {"id": {"type": "string", "pattern": "^msg_"}}
+            }
+        }
+    }
+    (q / "schema.json").write_text(json.dumps(schema))
+    (q / "examples" / "library_examples" / "messages" / "msg_ok.json").write_text(
+        json.dumps({"id": "msg_ok"})
+    )
+    (q / "examples" / "library_examples" / "messages" / "msg_bad.json").write_text(
+        json.dumps({"id": "not_msg_prefix"})
+    )
+    results = walk_library_examples(schemas)
+    paths = {p.name: errors for (p, _, errors) in results}
+    assert paths["msg_ok.json"] == []
+    assert len(paths["msg_bad.json"]) >= 1

@@ -75,6 +75,55 @@ def validate_instance(schema: dict, instance: dict, registry: Registry | None = 
     ]
 
 
+LIBRARY_ENTITY_DIRS = {
+    "messages":     "Message",
+    "contexts":     "Context",
+    "instructions": "Instruction",
+    "prompts":      "Prompt",
+    "options":      "Option",
+    "placeholders": "Placeholder",
+    "helps":        "Help",
+    "regexes":      "RegEx",
+    "questions":    "Question",
+    "items":        "Item",
+    "solutions":    "Solution",
+}
+
+
+def walk_library_examples(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each file under schemas/questionnaire/examples/library_examples/<type>/*.json,
+    validate the file against the matching $def from schemas/questionnaire/schema.json.
+
+    Returns a list of (path, def_name, errors) tuples.
+    """
+    out = []
+    q_schema_path = schemas_root / "questionnaire" / "schema.json"
+    if not q_schema_path.is_file():
+        return out
+    schema = load_schema(q_schema_path)
+    library_root = schemas_root / "questionnaire" / "examples" / "library_examples"
+    if not library_root.is_dir():
+        return out
+    registry = build_registry(schemas_root)
+    defs = schema.get("$defs", {})
+    for type_dir in sorted(library_root.iterdir()):
+        if not type_dir.is_dir():
+            continue
+        def_name = LIBRARY_ENTITY_DIRS.get(type_dir.name)
+        if def_name is None:
+            continue
+        def_schema = defs.get(def_name)
+        if def_schema is None:
+            continue
+        # Build a standalone schema for this $def (so $refs resolve)
+        standalone = {**def_schema, "$defs": defs}
+        for example_path in sorted(type_dir.glob("*.json")):
+            instance = json.loads(example_path.read_text())
+            errors = validate_instance(standalone, instance, registry=registry)
+            out.append((example_path, def_name, errors))
+    return out
+
+
 def main(schemas_root: Path) -> None:
     """Validate every example in schemas_root/*/examples/ against the matching schema.
     Exits non-zero on failure.
@@ -103,10 +152,23 @@ def main(schemas_root: Path) -> None:
         else:
             print(f"PASS  {rel}")
 
+    # Validate per-entity library examples
+    lib_results = walk_library_examples(schemas_root)
+    for path, def_name, errs in lib_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (against $defs.{def_name})")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            print(f"PASS  {rel} (against $defs.{def_name})")
+
+    total = len(examples) + len(lib_results)
     if failed:
         print(f"\n{failed} example(s) failed.")
         sys.exit(1)
-    print(f"\nAll {len(examples)} example(s) passed.")
+    print(f"\nAll {total} example(s) passed.")
 
 
 def _cli() -> None:
