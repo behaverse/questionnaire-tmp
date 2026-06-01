@@ -1017,3 +1017,64 @@ def test_logic_missing_condition_fails(schema, registry):
     instance["logic"] = [{"type": "skip", "action": {"skip_to": "page_x"}}]
     errors = validate_instance(schema, instance, registry=registry)
     assert any("condition" in e for e in errors)
+
+
+# ---------- Scoring + Validation ----------
+
+def test_scoring_minimal(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["scoring"] = [{"id": "total", "formula": "sum(scl_total)"}]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_scoring_with_bands(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["scoring"] = [{
+        "id": "total", "name": "Total", "formula": "sum(scl_total)",
+        "range": [0, 27],
+        "interpretation": [
+            {"min": 0, "max": 4, "label": "None", "severity": "none"},
+            {"min": 20, "max": 27, "label": "Severe", "severity": "severe"}
+        ]
+    }]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_scoring_unbounded_band(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["scoring"] = [{
+        "id": "xs", "formula": "sum(scl_x)",
+        "interpretation": [{"min": None, "max": 5, "label": "Low"}]
+    }]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_cross_question_validation(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["validation"] = [{
+        "id": "v_x", "condition": "it_a == 1 && is_empty(it_b)",
+        "message": "Please complete b.", "targets": ["it_b"]
+    }]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_cross_validation_missing_message_fails(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["validation"] = [{"id": "v_x", "condition": "it_a == 1"}]
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("message" in e for e in errors)
+
+
+def test_option_with_per_question_validation(schema, registry):
+    """PerQuestionValidation lives on Option in v26.0601 (was on Question in v26.0528)."""
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Option"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    opt = {
+        "id": "opt_email",
+        "input_data_type": "text",
+        "measurement_type": "nominal",
+        "validation": {"format": "^\\S+@\\S+\\.\\S+$", "format_message": "Enter a valid email."},
+        "content": {"en": {"status": "validated", "label": "Email"}}
+    }
+    assert list(v.iter_errors(opt)) == []

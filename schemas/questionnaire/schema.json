@@ -25,7 +25,9 @@
     "subscales": { "type": "array", "items": { "$ref": "#/$defs/Subscale" } },
     "style":     { "$ref": "#/$defs/Style" },
     "flow":      { "$ref": "#/$defs/FlowInstrument" },
-    "logic":     { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
+    "logic":      { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
+    "scoring":    { "type": "array", "items": { "$ref": "#/$defs/ScoringDef" } },
+    "validation": { "type": "array", "items": { "$ref": "#/$defs/CrossQuestionValidationRule" } },
     "extensions": { "type": "object" }
   },
   "patternProperties": { "^x_": {} },
@@ -341,6 +343,7 @@
         "help":             { "oneOf": [{ "$ref": "#/$defs/HelpRef" },        { "$ref": "#/$defs/HelpInline" }] },
         "input_validation": { "oneOf": [{ "$ref": "#/$defs/RegExRef" },       { "type": "string", "minLength": 1 }] },
         "options":          { "type": "array", "items": { "$ref": "#/$defs/OptionChoiceStructural" }, "minItems": 2 },
+        "validation":       { "$ref": "#/$defs/PerQuestionValidation" },
         "content":          { "$ref": "#/$defs/OptionContent" },
         "extensions":       { "type": "object" }
       },
@@ -714,6 +717,97 @@
           },
           "additionalProperties": false
         }
+      },
+      "additionalProperties": false
+    },
+    "ScoringDef": {
+      "type": "object",
+      "required": ["id", "formula"],
+      "properties": {
+        "id":      { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+        "name":    { "type": "string" },
+        "formula": { "$ref": "#/$defs/Expression" },
+        "range": {
+          "type": "array",
+          "prefixItems": [{ "type": "number" }, { "type": "number" }],
+          "items": false,
+          "minItems": 2, "maxItems": 2
+        },
+        "interpretation": { "type": "array", "items": { "$ref": "#/$defs/InterpretationBand" } },
+        "translations":   { "$ref": "#/$defs/ScoringTranslations" }
+      },
+      "additionalProperties": false
+    },
+    "InterpretationBand": {
+      "type": "object",
+      "required": ["label"],
+      "properties": {
+        "min":      { "type": ["number", "null"] },
+        "max":      { "type": ["number", "null"] },
+        "label":    { "type": "string" },
+        "severity": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ScoringTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "name":   { "type": "string" },
+            "interpretation": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": { "label": { "type": "string" } },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "PerQuestionValidation": {
+      "type": "object",
+      "properties": {
+        "format": { "type": "string" },
+        "range": {
+          "type": "array",
+          "prefixItems": [
+            { "type": ["number", "null"] },
+            { "type": ["number", "null"] }
+          ],
+          "items": false,
+          "minItems": 2, "maxItems": 2
+        },
+        "length": {
+          "type": "array",
+          "prefixItems": [
+            { "type": ["integer", "null"] },
+            { "type": ["integer", "null"] }
+          ],
+          "items": false,
+          "minItems": 2, "maxItems": 2
+        },
+        "format_message": { "type": "string", "maxLength": 256 },
+        "range_message":  { "type": "string", "maxLength": 256 },
+        "length_message": { "type": "string", "maxLength": 256 }
+      },
+      "additionalProperties": false
+    },
+    "CrossQuestionValidationRule": {
+      "type": "object",
+      "required": ["id", "condition", "message"],
+      "properties": {
+        "id":        { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+        "condition": { "$ref": "#/$defs/Expression" },
+        "message":   { "type": "string", "maxLength": 256 },
+        "targets":   { "type": "array", "items": { "type": "string" } }
       },
       "additionalProperties": false
     }
