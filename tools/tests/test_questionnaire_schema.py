@@ -712,3 +712,102 @@ def test_solution_missing_expected_response_fails(schema, registry):
     bad = {"id": "sol_x", "prompt": {"ref": "pr_x@v26.0601"}}
     errors = list(v.iter_errors(bad))
     assert any("expected_response" in e.message for e in errors)
+
+
+# ---------- Page + PageElement ----------
+
+def page_with_saved_item_ref() -> dict:
+    return {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [
+                {"ref": "it_phq9_1@v26.0601", "required": True}
+            ]
+        }]
+    }
+
+
+def page_with_inline_item() -> dict:
+    return {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [{
+                "question": {"ref": "q_phq9_1@v26.0601"},
+                "option":   {"ref": "opt_phq9_freq_4@v26.0601"},
+                "required": True
+            }]
+        }]
+    }
+
+
+def page_with_message_ref() -> dict:
+    return {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [{"ref": "msg_welcome@v26.0601"}]
+        }]
+    }
+
+
+def test_page_with_saved_item_ref(schema, registry):
+    assert validate_instance(schema, page_with_saved_item_ref(), registry=registry) == []
+
+
+def test_page_with_inline_item(schema, registry):
+    assert validate_instance(schema, page_with_inline_item(), registry=registry) == []
+
+
+def test_page_with_message_ref(schema, registry):
+    assert validate_instance(schema, page_with_message_ref(), registry=registry) == []
+
+
+def test_page_element_required_override(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["pages"][0]["elements"][0]["required"] = False
+    instance["pages"][0]["elements"][0]["show_if"] = "x > 0"
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_page_element_with_id_override(schema, registry):
+    """Pre/post case — same Item used twice with id overrides."""
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [
+                {"ref": "it_sad@v26.0601", "id": "it_sad_pre"},
+                {"ref": "it_sad@v26.0601", "id": "it_sad_post"}
+            ]
+        }]
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_page_element_unknown_ref_prefix_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{
+            "id": "page_x",
+            "elements": [{"ref": "pr_promptref_at_page_level@v26.0601"}]
+        }]
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+def test_page_max_time_seconds(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["pages"][0]["max_time_seconds"] = 60
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_page_translations(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["pages"][0]["title"] = "Symptoms"
+    instance["pages"][0]["translations"] = {
+        "pt": {"status": "validated", "title": "Sintomas"}
+    }
+    assert validate_instance(schema, instance, registry=registry) == []

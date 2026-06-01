@@ -471,12 +471,62 @@
       "type": "object",
       "required": ["id", "elements"],
       "properties": {
-        "id":       { "$ref": "#/$defs/PageId" },
-        "elements": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/MessageRef" },
-          "minItems": 1,
-          "$comment": "Temporary: only MessageRef allowed at skeleton stage. Will be expanded to the four-branch oneOf in Task 12."
+        "id":               { "$ref": "#/$defs/PageId" },
+        "title":            { "type": "string" },
+        "description":      { "type": "string" },
+        "elements":         { "type": "array", "items": { "$ref": "#/$defs/PageElement" }, "minItems": 1 },
+        "show_if":          { "$ref": "#/$defs/Expression" },
+        "randomize":        { "type": "boolean", "default": false },
+        "max_time_seconds": { "type": ["number", "null"], "minimum": 0 },
+        "translations":     { "$ref": "#/$defs/PageTranslations" },
+        "extensions":       { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PageElement": {
+      "oneOf": [
+        { "$ref": "#/$defs/MessageRef" },
+        { "$ref": "#/$defs/PageElementSavedItem" },
+        { "$ref": "#/$defs/PageElementInlineItem" }
+      ],
+      "$comment": "Section will be added as a fourth branch in Task 13."
+    },
+    "PageElementSavedItem": {
+      "type": "object",
+      "required": ["ref"],
+      "properties": {
+        "ref":      { "type": "string", "pattern": "^it_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" },
+        "id":       { "type": "string", "pattern": "^it_[a-z0-9_]+$" },
+        "required": { "type": "boolean" },
+        "show_if":  { "$ref": "#/$defs/Expression" }
+      },
+      "additionalProperties": false
+    },
+    "PageElementInlineItem": {
+      "type": "object",
+      "required": ["question", "option"],
+      "properties": {
+        "id":       { "type": "string", "pattern": "^it_[a-z0-9_]+$" },
+        "question": { "oneOf": [{ "$ref": "#/$defs/QuestionRef" }, { "$ref": "#/$defs/QuestionInline" }] },
+        "option":   { "oneOf": [{ "$ref": "#/$defs/OptionRef" },   { "$ref": "#/$defs/OptionInline" }] },
+        "required": { "type": "boolean" },
+        "show_if":  { "$ref": "#/$defs/Expression" }
+      },
+      "additionalProperties": false
+    },
+    "PageTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "title":       { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
