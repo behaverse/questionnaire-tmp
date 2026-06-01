@@ -3,24 +3,36 @@
   "metadata": {
     "id": "qst_minimal",
     "title": "Minimal example",
-    "description": "Smallest valid questionnaire for schema CI.",
+    "description": "Smallest valid questionnaire for schema CI (v26.0601).",
     "language": "en"
   },
   "pages": [
     {
       "id": "page_only",
-      "entries": [
+      "elements": [
         {
-          "id": "q_feel_good",
-          "type": "radio",
-          "prompt": "How do you feel today?",
-          "properties": {
-            "option_set": {
-              "options": [
-                { "value": 0, "text": "Bad" },
-                { "value": 1, "text": "Neutral" },
-                { "value": 2, "text": "Good" }
-              ]
+          "question": {
+            "prompt": { "ref": "pr_feel_good@v26.0601" }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              { "index": 1, "value": 0 },
+              { "index": 2, "value": 1 },
+              { "index": 3, "value": 2 }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Feeling",
+                "options": [
+                  { "index": 1, "text": "Bad" },
+                  { "index": 2, "text": "Neutral" },
+                  { "index": 3, "text": "Good" }
+                ]
+              }
             }
           }
         }
