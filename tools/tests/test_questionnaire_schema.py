@@ -885,3 +885,69 @@ def test_section_with_message_ref(schema, registry):
         }]
     }
     assert validate_instance(schema, instance, registry=registry) == []
+
+
+# ---------- Block + Subscale ----------
+
+def test_block_minimal(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [
+            {"id": "page_a", "elements": [{"ref": "msg_x@v26.0601"}]},
+            {"id": "page_b", "elements": [{"ref": "msg_y@v26.0601"}]}
+        ],
+        "blocks": [
+            {"id": "blk_main", "page_ids": ["page_a", "page_b"]}
+        ]
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_block_id_pattern_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_a", "elements": [{"ref": "msg_x@v26.0601"}]}],
+        "blocks": [{"id": "BLOCK_X", "page_ids": ["page_a"]}]
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+def test_subscale_minimal(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "elements": [{"ref": "msg_x@v26.0601"}]}],
+        "subscales": [
+            {"id": "scl_total", "name": "Total", "prompt_ids": ["pr_a", "pr_b", "pr_c"]}
+        ]
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_subscale_with_weights(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "elements": [{"ref": "msg_x@v26.0601"}]}],
+        "subscales": [{
+            "id": "scl_w",
+            "name": "Weighted",
+            "prompt_ids": ["pr_a", "pr_b"],
+            "weight_per_prompt": {"pr_a": 1.0, "pr_b": 2.0}
+        }]
+    }
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_subscale_unknown_weight_key_fails(schema, registry):
+    instance = {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_x", "elements": [{"ref": "msg_x@v26.0601"}]}],
+        "subscales": [{
+            "id": "scl_w",
+            "name": "X",
+            "prompt_ids": ["pr_a"],
+            "weight_per_prompt": {"X_invalid_key": 1.0}
+        }]
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1

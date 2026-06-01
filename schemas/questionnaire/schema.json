@@ -21,6 +21,8 @@
       "items": { "$ref": "#/$defs/Page" },
       "minItems": 1
     },
+    "blocks":    { "type": "array", "items": { "$ref": "#/$defs/Block" } },
+    "subscales": { "type": "array", "items": { "$ref": "#/$defs/Subscale" } },
     "extensions": { "type": "object" }
   },
   "patternProperties": { "^x_": {} },
@@ -579,6 +581,83 @@
           "properties": {
             "status":      { "$ref": "#/$defs/ContentStatus" },
             "title":       { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Block": {
+      "type": "object",
+      "required": ["id", "page_ids"],
+      "properties": {
+        "id":           { "$ref": "#/$defs/BlockId" },
+        "title":        { "type": "string" },
+        "description":  { "type": "string" },
+        "page_ids":     {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PageId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "show_if":      { "$ref": "#/$defs/Expression" },
+        "randomize":    { "type": "boolean", "default": false },
+        "translations": { "$ref": "#/$defs/BlockTranslations" },
+        "extensions":   { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "BlockTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "title":       { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Subscale": {
+      "type": "object",
+      "required": ["id", "name", "prompt_ids"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/SubscaleId" },
+        "name":       { "type": "string" },
+        "description":{ "type": "string" },
+        "prompt_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PromptId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "weight_per_prompt": {
+          "type": "object",
+          "patternProperties": { "^pr_[a-z0-9_]+$": { "type": "number" } },
+          "additionalProperties": false
+        },
+        "translations": { "$ref": "#/$defs/SubscaleTranslations" },
+        "extensions":   { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "SubscaleTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "name":        { "type": "string" },
             "description": { "type": "string" }
           },
           "additionalProperties": false
