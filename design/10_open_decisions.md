@@ -14,6 +14,55 @@ OD-02 originally asked "Does the Web Viewer render canonical JSON directly, or t
 
 ---
 
+## OD-16 — Scoring semantics (reversed, subscales, per-item correctness)
+
+**Opened.** 2026-06-01 (deferred from OD-15 closure on 2026-05-31).
+
+**Context.** Schema 2 v26.0601 ships *shapes* for scoring — `Prompt.reversed`, `Prompt.construct`, `Subscale.prompt_ids` / `weight_per_prompt`, `ScoringDef.formula` / `range` / `interpretation`, `Solution.expected_response` — but does **not** yet specify the **runtime semantics**: when each piece is evaluated, what reads what, and what is persisted vs. derived. Until OD-16 resolves, viewers and the analysis layer have no shared contract; two implementations could produce different totals from the same response set.
+
+OD-01 already established that scoring formulas evaluate inside the WASM expression evaluator (OD-11), live in the viewer iff the deployment's `show_score` is true, and otherwise travel inert with the submission. OD-16 picks up from there.
+
+**Sub-questions to resolve.**
+
+- **16a — Reversed-value pipeline.** When a Prompt sets `reversed: true`, where is `value' = max + min − value` applied?
+  - (i) **Auto-applied by the evaluator** before any user formula sees the value. Formulas always read forward-scored values; authors set the flag once and stop thinking about direction. *(Recommended.)* Pros: every subscale `mean(prompt_ids)` is correct without per-author care; no risk of double-reversal. Cons: the canonical JSON's `responses[].value` and a `mean()` result are no longer trivially derivable from each other — analysts must re-apply the same rule, or read the post-reversal "scored value" the viewer emits.
+  - (ii) **Metadata only**; formulas must call an explicit `reverse(prompt_id)` helper. Pros: pure transparency. Cons: every author has to remember; one missed call silently corrupts a subscale total.
+  - (iii) **Analysis-layer only**: viewer never reverses; downstream tools handle it. Pros: viewer stays dumb. Cons: live `show_score` formulas in the viewer produce wrong totals.
+
+- **16b — Subscale auto-derivation from `construct`.** When several Prompts share the same `construct`, should the Library / Editor auto-create the corresponding `Subscale` entry?
+  - (i) **Never.** Subscales must be explicitly authored with their `prompt_ids` list. Pros: canonical JSON is deterministic; renaming a `construct` value never silently changes a subscale total. Cons: tedious for instruments with many subscales.
+  - (ii) **Editor-assisted, never automatic.** Editor offers a "fill from constructs" action; once accepted, the result is canonical JSON with explicit `prompt_ids`. *(Recommended.)* Pros: ergonomic without spooky action; canonical JSON remains the source of truth.
+  - (iii) **Implicit at read time.** If `subscales[]` is empty, viewers and the analysis layer auto-group by `construct`. Pros: zero authoring. Cons: rename-spookiness; two consumers of the same JSON can disagree if one ignores the implicit rule.
+
+- **16c — Per-item correctness for Solution-bearing Items.** When an Item references a `Solution` (sol_*), is correctness materialised on the response, or recomputed each time?
+  - (i) **Recompute on read** (raw response only). Pros: minimal payload; no risk of stale correctness if the Solution is corrected post-hoc. Cons: every consumer needs the Solution at hand.
+  - (ii) **Persist `correct: bool` alongside `value`** at submission time. *(Recommended.)* Pros: response is self-describing for downstream tools; the analysis layer doesn't need to dereference Library entries. Cons: if the Solution is later corrected, the stored value goes stale (mitigated by re-running a small recompute job — or by treating Solutions as version-pinned per OD-06 already).
+  - (iii) **Both** — persist `correct` and re-verify on read. Pros: defence-in-depth. Cons: complexity for marginal benefit.
+
+- **16d — Where do `Subscale` and `ScoringDef` evaluate?** OD-01 settled formula evaluation in principle. To make 16a/16b coherent we need to be explicit:
+  - (i) **Viewer-side via WASM evaluator** when `show_score` is true; otherwise inert metadata travelling with the submission. *(Recommended — restates OD-01 for this scope.)*
+  - (ii) Always offline (analysis layer only).
+  - (iii) Always live in viewer regardless of `show_score`.
+
+- **16e — Formula vocabulary.** `ScoringDef.formula` is a string today. What can it reference?
+  - (i) **Prompt values + Subscale results + literals + a fixed function set** (`sum`, `mean`, `count`, `if`, basic arithmetic, comparison). Subscales referenced by `id`. *(Recommended.)* Pros: matches the WASM evaluator's existing surface; predictable. Cons: no escape hatch.
+  - (ii) The above + arbitrary JS expressions. Pros: maximal expressiveness. Cons: hard to validate, hard to port across viewers.
+
+- **16f — `InterpretationBand` boundary semantics.** When the schema declares `min` and `max` on a band:
+  - (i) **`min` inclusive, `max` inclusive** (closed intervals). Adjacent bands MUST NOT overlap; the Library rejects overlaps. *(Recommended.)* Pros: matches how clinical cutoffs are usually written ("score 5–9 = mild").
+  - (ii) `min` inclusive, `max` exclusive (half-open). Pros: half-open intervals tile naturally. Cons: cognitively foreign to the questionnaire audience.
+
+**Knock-ons.**
+
+- Once 16a is settled, the response schema (Schema 5) must specify whether `responses[].value` is the raw or the post-reversal value, or both (e.g., `value` + `scored_value`).
+- Once 16c is settled, the response schema may grow a `correct` field on each item.
+- Once 16e is settled, the WASM evaluator's function table is the contract — and Schema 2 needs a `formula_language_version` so future expansions are not silently breaking.
+- The Importer (13_importers.md) needs to know how to migrate legacy `survey_database` `reversed` flags (already 1:1 to `Prompt.reversed`, but per 16a it now has a runtime contract).
+
+**Resolution criterion.** All six sub-questions answered; recommended-defaults locked in unless flagged for grilling.
+
+---
+
 ## Resolution log
 
 A decision moves out of this document and into the relevant design doc once resolved. The original entry is summarised here; the full body lives in the linked doc.
