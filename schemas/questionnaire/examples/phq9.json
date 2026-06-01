@@ -5,7 +5,7 @@
     "title": "Patient Health Questionnaire-9",
     "short_title": "PHQ-9",
     "description": "Self-report measure of depression severity over the past 2 weeks.",
-    "version": "v26.0528",
+    "version": "v26.0601",
     "language": "en",
     "available_languages": ["en", "pt"],
     "authors": [
@@ -44,113 +44,49 @@
       }
     }
   },
-  "flow": {
-    "allow_back": true,
-    "require_complete": false
-  },
-  "style": {
-    "progress_bar": true,
-    "question_numbering": "sequential"
-  },
+  "flow": { "allow_back": true },
+  "style": { "progress_bar": true, "question_numbering": "sequential" },
   "pages": [
     {
       "id": "page_items",
-      "title": "Symptoms over the past 2 weeks",
-      "entries": [
+      "title": "Over the last 2 weeks, how often have you been bothered by any of the following problems?",
+      "elements": [
         {
-          "id": "sec_phq9",
-          "title": "Over the last 2 weeks, how often have you been bothered by any of the following problems?",
-          "shared_option_set": {
-            "id": "os_phq9_likert",
+          "id": "sec_phq9_matrix",
+          "shared_option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "dimension": "frequency",
             "options": [
-              { "value": 0, "text": "Not at all" },
-              { "value": 1, "text": "Several days" },
-              { "value": 2, "text": "More than half the days" },
-              { "value": 3, "text": "Nearly every day" }
-            ]
+              { "index": 1, "value": 0 },
+              { "index": 2, "value": 1 },
+              { "index": 3, "value": 2 },
+              { "index": 4, "value": 3 }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "PHQ-9 frequency",
+                "options": [
+                  { "index": 1, "text": "Not at all" },
+                  { "index": 2, "text": "Several days" },
+                  { "index": 3, "text": "More than half the days" },
+                  { "index": 4, "text": "Nearly every day" }
+                ]
+              }
+            }
           },
-          "questions": [
-            { "id": "q_phq9_1", "type": "radio", "prompt": "Little interest or pleasure in doing things.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_2", "type": "radio", "prompt": "Feeling down, depressed, or hopeless.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_3", "type": "radio", "prompt": "Trouble falling or staying asleep, or sleeping too much.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_4", "type": "radio", "prompt": "Feeling tired or having little energy.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_5", "type": "radio", "prompt": "Poor appetite or overeating.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_6", "type": "radio", "prompt": "Feeling bad about yourself.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_7", "type": "radio", "prompt": "Trouble concentrating on things.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_8", "type": "radio", "prompt": "Moving or speaking so slowly that other people could have noticed.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}},
-            { "id": "q_phq9_9", "type": "radio", "prompt": "Thoughts that you would be better off dead, or of hurting yourself.",
-              "properties": { "option_set": {
-                "options": [
-                  { "value": 0, "text": "Not at all" },
-                  { "value": 1, "text": "Several days" },
-                  { "value": 2, "text": "More than half the days" },
-                  { "value": 3, "text": "Nearly every day" }
-                ]
-              }}}
+          "elements": [
+            { "question": { "prompt": { "ref": "pr_phq9_1@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_2@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_3@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_4@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_5@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_6@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_7@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_8@v26.0601" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_9@v26.0601" } } }
           ],
           "style": { "layout": "matrix" }
         }
@@ -161,9 +97,9 @@
     {
       "id": "scl_phq9_total",
       "name": "PHQ-9 Total",
-      "question_ids": [
-        "q_phq9_1", "q_phq9_2", "q_phq9_3", "q_phq9_4", "q_phq9_5",
-        "q_phq9_6", "q_phq9_7", "q_phq9_8", "q_phq9_9"
+      "prompt_ids": [
+        "pr_phq9_1", "pr_phq9_2", "pr_phq9_3", "pr_phq9_4", "pr_phq9_5",
+        "pr_phq9_6", "pr_phq9_7", "pr_phq9_8", "pr_phq9_9"
       ]
     }
   ],
@@ -174,11 +110,11 @@
       "formula": "sum(scl_phq9_total)",
       "range": [0, 27],
       "interpretation": [
-        { "min": 0,  "max": 4,  "label": "None to minimal",      "severity": "none" },
-        { "min": 5,  "max": 9,  "label": "Mild",                  "severity": "mild" },
-        { "min": 10, "max": 14, "label": "Moderate",              "severity": "moderate" },
-        { "min": 15, "max": 19, "label": "Moderately severe",     "severity": "moderately_severe" },
-        { "min": 20, "max": 27, "label": "Severe",                "severity": "severe" }
+        { "min": 0,  "max": 4,  "label": "None to minimal",  "severity": "none" },
+        { "min": 5,  "max": 9,  "label": "Mild",              "severity": "mild" },
+        { "min": 10, "max": 14, "label": "Moderate",          "severity": "moderate" },
+        { "min": 15, "max": 19, "label": "Moderately severe", "severity": "moderately_severe" },
+        { "min": 20, "max": 27, "label": "Severe",            "severity": "severe" }
       ]
     }
   ]
