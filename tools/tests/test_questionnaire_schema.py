@@ -234,3 +234,41 @@ def test_context_id_pattern(schema, registry):
     bad["id"] = "ctxintro"  # missing underscore
     errors = list(validator.iter_errors(bad))
     assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
+
+
+# ---------- Instruction ----------
+
+def minimal_instruction() -> dict:
+    return {
+        "id": "ins_likert",
+        "dimension": "agreement",
+        "content": {
+            "en": { "status": "validated", "text": "Rate each on the 7-point scale." }
+        }
+    }
+
+
+def test_instruction_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Instruction"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(validator.iter_errors(minimal_instruction())) == []
+
+
+def test_instruction_dimension_optional(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Instruction"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    inst = minimal_instruction()
+    del inst["dimension"]
+    assert list(validator.iter_errors(inst)) == []
+
+
+def test_instruction_dimension_pattern(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Instruction"], "$defs": schema["$defs"]}
+    validator = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    inst = minimal_instruction()
+    inst["dimension"] = "Agreement"  # uppercase rejected
+    errors = list(validator.iter_errors(inst))
+    assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
