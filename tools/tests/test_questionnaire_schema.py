@@ -272,3 +272,67 @@ def test_instruction_dimension_pattern(schema, registry):
     inst["dimension"] = "Agreement"  # uppercase rejected
     errors = list(validator.iter_errors(inst))
     assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
+
+
+# ---------- Prompt ----------
+
+def minimal_prompt() -> dict:
+    return {
+        "id": "pr_test_1",
+        "content": {
+            "en": { "status": "validated", "text": "How do you feel?" }
+        }
+    }
+
+
+def test_prompt_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(v.iter_errors(minimal_prompt())) == []
+
+
+def test_prompt_full_metadata(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    p = {
+        "id": "pr_aiss_q_2",
+        "name": "cold_water",
+        "construct": "sensation_seeking",
+        "dimension": "similarity",
+        "topics": ["risk_taking", "novelty_seeking"],
+        "reversed": True,
+        "content": {
+            "en": { "status": "validated", "text": "When the water is very cold..." }
+        }
+    }
+    assert list(v.iter_errors(p)) == []
+
+
+def test_prompt_reversed_defaults_false_when_absent(schema, registry):
+    """Absent reversed is fine — schema doesn't enforce a default at validation time."""
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    assert list(v.iter_errors(minimal_prompt())) == []
+
+
+def test_prompt_construct_pattern(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    p = minimal_prompt()
+    p["construct"] = "Sensation-Seeking"  # hyphens / uppercase rejected
+    errors = list(v.iter_errors(p))
+    assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
+
+
+def test_prompt_topics_must_be_strings(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    p = minimal_prompt()
+    p["topics"] = [{"name": "foo"}]
+    errors = list(v.iter_errors(p))
+    assert any("string" in e.message.lower() or "not of type" in e.message.lower() for e in errors)

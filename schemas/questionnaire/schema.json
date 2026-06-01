@@ -135,6 +135,56 @@
       "additionalProperties": false,
       "minProperties": 1
     },
+    "Prompt": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/PromptId" },
+        "name":       {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$",
+          "maxLength": 64
+        },
+        "construct":  {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$",
+          "maxLength": 64
+        },
+        "dimension":  {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$",
+          "maxLength": 64
+        },
+        "topics": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+        },
+        "reversed": {
+          "type": "boolean",
+          "default": false
+        },
+        "content":    { "$ref": "#/$defs/PromptContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PromptContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
     "MessageId":     { "type": "string", "pattern": "^msg_[a-z0-9_]+$",  "maxLength": 64 },
     "ContextId":     { "type": "string", "pattern": "^ctx_[a-z0-9_]+$",  "maxLength": 64 },
     "InstructionId": { "type": "string", "pattern": "^ins_[a-z0-9_]+$",  "maxLength": 64 },
