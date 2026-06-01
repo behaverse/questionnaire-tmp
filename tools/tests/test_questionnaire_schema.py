@@ -951,3 +951,37 @@ def test_subscale_unknown_weight_key_fails(schema, registry):
     }
     errors = validate_instance(schema, instance, registry=registry)
     assert len(errors) >= 1
+
+
+# ---------- Style + Flow ----------
+
+def test_style_at_root(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["style"] = {"progress_bar": True, "question_numbering": "sequential"}
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_style_x_prefix_allowed(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["style"] = {"x_theme_id": "behaverse_default"}
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_style_unknown_field_rejected(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["style"] = {"unknown": True}
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+def test_flow_at_root(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["flow"] = {"allow_back": False, "max_time_seconds": 600, "randomize_pages": True}
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_flow_unknown_key_rejected(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["flow"] = {"randomize_questions_in_page": ["page_x"]}  # removed in OD-15
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1

@@ -23,6 +23,8 @@
     },
     "blocks":    { "type": "array", "items": { "$ref": "#/$defs/Block" } },
     "subscales": { "type": "array", "items": { "$ref": "#/$defs/Subscale" } },
+    "style":     { "$ref": "#/$defs/Style" },
+    "flow":      { "$ref": "#/$defs/FlowInstrument" },
     "extensions": { "type": "object" }
   },
   "patternProperties": { "^x_": {} },
@@ -480,6 +482,7 @@
         "show_if":          { "$ref": "#/$defs/Expression" },
         "randomize":        { "type": "boolean", "default": false },
         "max_time_seconds": { "type": ["number", "null"], "minimum": 0 },
+        "style":            { "$ref": "#/$defs/Style" },
         "translations":     { "$ref": "#/$defs/PageTranslations" },
         "extensions":       { "type": "object" }
       },
@@ -509,6 +512,7 @@
         "elements":      { "type": "array", "items": { "$ref": "#/$defs/SectionElement" }, "minItems": 1 },
         "show_if":       { "$ref": "#/$defs/Expression" },
         "randomize":     { "type": "boolean", "default": false },
+        "style":         { "$ref": "#/$defs/Style" },
         "translations":  { "$ref": "#/$defs/SectionTranslations" },
         "extensions":    { "type": "object" }
       },
@@ -603,6 +607,7 @@
         },
         "show_if":      { "$ref": "#/$defs/Expression" },
         "randomize":    { "type": "boolean", "default": false },
+        "style":        { "$ref": "#/$defs/Style" },
         "translations": { "$ref": "#/$defs/BlockTranslations" },
         "extensions":   { "type": "object" }
       },
@@ -663,6 +668,31 @@
           "additionalProperties": false
         }
       },
+      "additionalProperties": false
+    },
+    "Style": {
+      "type": "object",
+      "properties": {
+        "progress_bar":         { "type": "boolean" },
+        "question_numbering":   { "enum": ["sequential", "per_page", "none"] },
+        "label_visible":        { "type": "boolean" },
+        "layout":               { "type": "string" },
+        "anchors_visible_only": { "type": "boolean" },
+        "multiline":            { "type": "boolean" },
+        "icon":                 { "type": "string" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "FlowInstrument": {
+      "type": "object",
+      "properties": {
+        "allow_back":       { "type": "boolean" },
+        "require_complete": { "type": "boolean" },
+        "randomize_pages":  { "type": "boolean" },
+        "max_time_seconds": { "type": ["number", "null"], "minimum": 0 }
+      },
+      "patternProperties": { "^x_": {} },
       "additionalProperties": false
     }
   }
