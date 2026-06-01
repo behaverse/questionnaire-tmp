@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "@vocab":        "https://behaverse.org/schemas/questionnaire#",
+    "questionnaire": "https://behaverse.org/schemas/questionnaire#",
+    "instrument":    "https://behaverse.org/schemas/instrument#",
+    "schema":        "http://schema.org/",
+    "dc":            "http://purl.org/dc/terms/",
+
+    "id":        "@id",
+
+    "metadata":  { "@id": "instrument:metadata", "@context": "https://behaverse.org/schemas/instrument/context.jsonld" },
+    "style":     { "@id": "questionnaire:style" },
+    "flow":      { "@id": "questionnaire:flow" },
+    "pages":     { "@id": "questionnaire:pages", "@container": "@list" },
+    "blocks":    { "@id": "questionnaire:blocks", "@container": "@set" },
+    "subscales": { "@id": "questionnaire:subscales", "@container": "@set" },
+    "logic":     { "@id": "questionnaire:logic", "@container": "@set" },
+    "scoring":   { "@id": "questionnaire:scoring", "@container": "@set" },
+    "validation": { "@id": "questionnaire:validation", "@container": "@set" },
+
+    "entries":      { "@id": "questionnaire:entries", "@container": "@list" },
+    "questions":    { "@id": "questionnaire:questions", "@container": "@list" },
+    "page_ids":     { "@id": "questionnaire:page_ids", "@container": "@set" },
+    "question_ids": { "@id": "questionnaire:question_ids", "@container": "@set" },
+
+    "ref":            { "@id": "questionnaire:ref", "@type": "@id" },
+    "condition":      { "@id": "questionnaire:condition" },
+    "action":         { "@id": "questionnaire:action" },
+    "formula":        { "@id": "questionnaire:formula" },
+    "interpretation": { "@id": "questionnaire:interpretation", "@container": "@list" }
+  }
+}

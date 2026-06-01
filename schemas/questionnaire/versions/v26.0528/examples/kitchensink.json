@@ -1,0 +1,230 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "id": "qst_kitchensink",
+    "title": "Kitchen Sink",
+    "description": "Synthetic questionnaire that exercises every $def in Schema 2 for CI coverage.",
+    "version": "v26.0528",
+    "language": "en",
+    "available_languages": ["en", "pt", "pt-BR"],
+    "translations": {
+      "pt": {
+        "status": "validated",
+        "fields": { "title": "Pia da Cozinha" }
+      }
+    }
+  },
+  "style": {
+    "progress_bar": true,
+    "question_numbering": "sequential",
+    "x_theme_id": "default"
+  },
+  "flow": {
+    "allow_back": true,
+    "require_complete": false,
+    "randomize_pages": false,
+    "max_time_seconds": 900
+  },
+  "pages": [
+    {
+      "id": "page_intro",
+      "title": "Introduction",
+      "max_time_seconds": 60,
+      "entries": [
+        {
+          "id": "q_intro_display",
+          "type": "display",
+          "prompt": "Welcome",
+          "properties": {
+            "media": { "url": "https://example.org/intro.mp4", "kind": "video" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_text_inputs",
+      "title": "Text inputs",
+      "entries": [
+        {
+          "id": "q_name",
+          "type": "text",
+          "prompt": "Your name?",
+          "validation": { "length": [1, 100] },
+          "properties": { "placeholder": "Full name" }
+        },
+        {
+          "id": "q_essay",
+          "type": "textarea",
+          "prompt": "Anything else?",
+          "required": false,
+          "properties": { "rows": 5 }
+        }
+      ]
+    },
+    {
+      "id": "page_choices",
+      "title": "Choices",
+      "randomize": true,
+      "entries": [
+        {
+          "id": "sec_likert",
+          "title": "Likert items",
+          "randomize": true,
+          "shared_option_set": {
+            "id": "os_likert5",
+            "options": [
+              { "value": 1, "text": "Strongly disagree" },
+              { "value": 2, "text": "Disagree" },
+              { "value": 3, "text": "Neutral" },
+              { "value": 4, "text": "Agree" },
+              { "value": 5, "text": "Strongly agree" }
+            ]
+          },
+          "questions": [
+            {
+              "id": "q_agree_1", "type": "radio", "prompt": "I enjoy challenges.",
+              "translations": { "pt": { "status": "validated", "fields": { "prompt": "Eu gosto de desafios." } } },
+              "properties": { "option_set": {
+                "options": [
+                  { "value": 1, "text": "Strongly disagree" },
+                  { "value": 2, "text": "Disagree" },
+                  { "value": 3, "text": "Neutral" },
+                  { "value": 4, "text": "Agree" },
+                  { "value": 5, "text": "Strongly agree" }
+                ]
+              }}
+            },
+            { "ref": "q_neuroticism_1@v26.0528" },
+            { "ref": "q_neuroticism_2@v26.0528", "required": false, "show_if": "q_agree_1 > 3" }
+          ],
+          "style": { "layout": "matrix" }
+        },
+        {
+          "id": "q_topics", "type": "checkbox", "prompt": "Topics of interest:",
+          "properties": {
+            "option_set": {
+              "options": [
+                { "value": "a", "text": "Art" },
+                { "value": "b", "text": "Books" },
+                { "value": "c", "text": "Cinema" }
+              ]
+            },
+            "min_selected": 1, "max_selected": 3
+          }
+        },
+        {
+          "id": "q_pref", "type": "ranking", "prompt": "Rank these in preference order:",
+          "properties": { "option_set": {
+            "options": [
+              { "value": "x", "text": "X" },
+              { "value": "y", "text": "Y" },
+              { "value": "z", "text": "Z" }
+            ]
+          }}
+        }
+      ]
+    },
+    {
+      "id": "page_scalars",
+      "title": "Scalars",
+      "entries": [
+        {
+          "id": "q_mood", "type": "slider", "prompt": "How is your mood now?",
+          "properties": {
+            "min": 0, "max": 100, "step": 1, "default": 50,
+            "anchors": [
+              { "value": 0, "label": "Worst" },
+              { "value": 50, "label": "Neutral" },
+              { "value": 100, "label": "Best" }
+            ]
+          }
+        },
+        {
+          "id": "q_dob", "type": "date", "prompt": "Date of birth?",
+          "properties": { "granularity": "date", "min": "1900-01-01" }
+        }
+      ]
+    },
+    {
+      "id": "page_meta",
+      "title": "Meta",
+      "entries": [
+        {
+          "id": "q_upload", "type": "file", "prompt": "Upload a screenshot:",
+          "required": false,
+          "properties": { "accept": ["image/png", "image/jpeg"], "max_size_mb": 5 }
+        },
+        {
+          "id": "q_nback",
+          "type": "https://behaverse.org/types/n_back",
+          "prompt": "N-back task",
+          "properties": { "n": 2, "trials": 20 }
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "blk_main",
+      "title": "Part A: Main",
+      "page_ids": ["page_text_inputs", "page_choices", "page_scalars"],
+      "randomize": false
+    }
+  ],
+  "subscales": [
+    {
+      "id": "scl_agreeable",
+      "name": "Agreeableness",
+      "question_ids": ["q_agree_1"],
+      "weight_per_question": { "q_agree_1": 1.0 }
+    }
+  ],
+  "logic": [
+    {
+      "id": "skip_essay_if_short",
+      "type": "skip",
+      "condition": "length(q_name) < 5",
+      "action": { "skip_to": "page_choices" }
+    },
+    {
+      "type": "visibility",
+      "condition": "q_mood < 30",
+      "action": { "target_id": "q_essay", "show": true }
+    },
+    {
+      "type": "piping",
+      "condition": "true",
+      "action": { "field_path": "pages.page_meta.entries.0.prompt", "source": "q_name" }
+    },
+    {
+      "type": "branch",
+      "condition": "q_dob == ''",
+      "action": { "skip_to": "page_meta" }
+    }
+  ],
+  "scoring": [
+    {
+      "id": "agreeable_score",
+      "name": "Agreeableness score",
+      "formula": "mean(scl_agreeable)",
+      "range": [1, 5],
+      "interpretation": [
+        { "min": 1.0, "max": 2.0, "label": "Low" },
+        { "min": 2.0, "max": 4.0, "label": "Moderate" },
+        { "min": 4.0, "max": 5.0, "label": "High" }
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "id": "v_name_topics",
+      "condition": "length(q_name) > 0 && is_empty(q_topics)",
+      "message": "If you entered a name, please pick at least one topic.",
+      "targets": ["q_topics"]
+    }
+  ],
+  "extensions": {
+    "study_notes": "Synthetic instrument for CI; not for production use."
+  },
+  "x_origin": "synthetic"
+}
