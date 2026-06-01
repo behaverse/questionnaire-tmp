@@ -336,3 +336,38 @@ def test_prompt_topics_must_be_strings(schema, registry):
     p["topics"] = [{"name": "foo"}]
     errors = list(v.iter_errors(p))
     assert any("string" in e.message.lower() or "not of type" in e.message.lower() for e in errors)
+
+
+# ---------- Placeholder + Help ----------
+
+def test_placeholder_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Placeholder"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    p = {"id": "ph_year", "content": {"en": {"status": "validated", "text": "e.g. 2026"}}}
+    assert list(v.iter_errors(p)) == []
+
+
+def test_placeholder_inline_no_id(schema, registry):
+    """Inline form omits id."""
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["PlaceholderInline"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    p = {"content": {"en": {"status": "validated", "text": "e.g. 5"}}}
+    assert list(v.iter_errors(p)) == []
+
+
+def test_help_minimal(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["Help"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    h = {"id": "help_orcid", "content": {"en": {"status": "validated", "text": "ORCID is a 16-digit identifier."}}}
+    assert list(v.iter_errors(h)) == []
+
+
+def test_help_inline_no_id(schema, registry):
+    from jsonschema import Draft202012Validator
+    s = {**schema["$defs"]["HelpInline"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    h = {"content": {"en": {"status": "validated", "text": "Help text."}}}
+    assert list(v.iter_errors(h)) == []

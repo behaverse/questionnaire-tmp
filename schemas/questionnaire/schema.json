@@ -185,6 +185,80 @@
       "additionalProperties": false,
       "minProperties": 1
     },
+    "Placeholder": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/PlaceholderId" },
+        "content":    { "$ref": "#/$defs/PlaceholderContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PlaceholderInline": {
+      "type": "object",
+      "required": ["content"],
+      "properties": {
+        "content":    { "$ref": "#/$defs/PlaceholderContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PlaceholderContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "Help": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/HelpId" },
+        "content":    { "$ref": "#/$defs/HelpContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "HelpInline": {
+      "type": "object",
+      "required": ["content"],
+      "properties": {
+        "content":    { "$ref": "#/$defs/HelpContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "HelpContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
     "MessageId":     { "type": "string", "pattern": "^msg_[a-z0-9_]+$",  "maxLength": 64 },
     "ContextId":     { "type": "string", "pattern": "^ctx_[a-z0-9_]+$",  "maxLength": 64 },
     "InstructionId": { "type": "string", "pattern": "^ins_[a-z0-9_]+$",  "maxLength": 64 },
