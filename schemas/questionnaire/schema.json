@@ -25,6 +25,7 @@
     "subscales": { "type": "array", "items": { "$ref": "#/$defs/Subscale" } },
     "style":     { "$ref": "#/$defs/Style" },
     "flow":      { "$ref": "#/$defs/FlowInstrument" },
+    "logic":     { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
     "extensions": { "type": "object" }
   },
   "patternProperties": { "^x_": {} },
@@ -693,6 +694,27 @@
         "max_time_seconds": { "type": ["number", "null"], "minimum": 0 }
       },
       "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "LogicRule": {
+      "type": "object",
+      "required": ["type", "condition", "action"],
+      "properties": {
+        "id":        { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+        "type":      { "enum": ["skip", "visibility", "piping", "branch"] },
+        "condition": { "$ref": "#/$defs/Expression" },
+        "action": {
+          "type": "object",
+          "properties": {
+            "skip_to":    { "type": "string" },
+            "show":       { "type": "boolean" },
+            "target_id":  { "type": "string" },
+            "field_path": { "type": "string" },
+            "source":     { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
       "additionalProperties": false
     }
   }

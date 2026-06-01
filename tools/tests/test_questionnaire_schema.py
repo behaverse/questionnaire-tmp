@@ -985,3 +985,35 @@ def test_flow_unknown_key_rejected(schema, registry):
     instance["flow"] = {"randomize_questions_in_page": ["page_x"]}  # removed in OD-15
     errors = validate_instance(schema, instance, registry=registry)
     assert len(errors) >= 1
+
+
+# ---------- LogicRule ----------
+
+def test_logic_skip_rule(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["logic"] = [
+        {"type": "skip", "condition": "it_phq9_1 > 2", "action": {"skip_to": "page_followup"}}
+    ]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_logic_visibility_rule(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["logic"] = [
+        {"type": "visibility", "condition": "it_x == 1", "action": {"target_id": "it_x", "show": False}}
+    ]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_logic_unknown_type_fails(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["logic"] = [{"type": "magic", "condition": "true", "action": {}}]
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
+
+
+def test_logic_missing_condition_fails(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["logic"] = [{"type": "skip", "action": {"skip_to": "page_x"}}]
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("condition" in e for e in errors)
