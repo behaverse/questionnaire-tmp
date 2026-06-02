@@ -1,54 +1,53 @@
 # Questionnaire Definition Schema
 
-Schema 2 of the questionnaire-apps ecosystem. Structural specification of a questionnaire — pages, blocks, sections, items (Question + Option), logic, scoring.
+Schema 2 of the questionnaire-apps ecosystem. Structural specification of a questionnaire — pages, blocks, sections, items (Question + Option), logic, and named score declarations referencing external Scorer entities.
 
-**Current version:** v26.0601 (per OD-15, resolved 2026-05-31)
-**Spec:** [docs/superpowers/specs/2026-06-01-schema-2-v26.0601-design.md](../../docs/superpowers/specs/2026-06-01-schema-2-v26.0601-design.md)
-**Entity model:** [design/05a_reusable_entities.md](../../design/05a_reusable_entities.md)
+**Current version:** v26.0602 (per OD-16, resolved 2026-06-02)
+**Spec:** [docs/superpowers/specs/2026-06-02-schema-2-v26.0602-design.md](../../docs/superpowers/specs/2026-06-02-schema-2-v26.0602-design.md)
+**Authoritative entity model:** [design/05a_reusable_entities.md](../../design/05a_reusable_entities.md) (OD-15)
+**Authoritative scoring model:** [design/05b_scoring.md](../../design/05b_scoring.md) (OD-16)
 **Embeds:** [Schema 1 — Instrument Metadata v26.0528](../instrument/) at `metadata`
 
 ## Files
 
 | File | Purpose |
 |---|---|
-| `schema.json` | Current JSON Schema (Draft 2020-12) at v26.0601 |
-| `context.jsonld` | JSON-LD context (`content` uses `@container: @language`) |
+| `schema.json` | Current JSON Schema (Draft 2020-12) at v26.0602 |
+| `context.jsonld` | JSON-LD context (Scorer vocab; `content` uses `@container: @language`) |
 | `examples/minimal.json` | Smallest valid questionnaire |
-| `examples/phq9.json` | Realistic PHQ-9 with matrix Section + `shared_option` |
-| `examples/kitchensink.json` | Exercises every v26.0601 $def |
-| `examples/library_examples/` | Per-entity Library examples (15 files across 11 entity types) |
+| `examples/phq9.json` | Realistic PHQ-9 with matrix Section + `scores[]` referencing `scr_phq9` |
+| `examples/kitchensink.json` | Exercises every v26.0602 $def including nested JSON Pointer paths |
+| `examples/library_examples/` | Per-entity Library examples (17 files across 13 entity types) |
 | `versions/v26.0528/` | Archived v26.0528 schema, context, and examples |
+| `versions/v26.0601/` | Archived v26.0601 schema, context, examples, CHANGELOG, README |
 | `CHANGELOG.md` | Version history |
 
-## Eleven reusable entity types
+## Eleven content-bearing + procedural entities
 
 **Content-bearing:**
-- Message (`msg_`) — standalone participant text
-- Context (`ctx_`) — background paragraph framing a Question
-- Instruction (`ins_`) — how-to-respond text
-- Prompt (`pr_`) — the stem text the participant reads
-- Option (`opt_`) — response-options spec (determines the UI input widget)
-- Placeholder (`ph_`) — hint text inside an input field
-- Help (`help_`) — tooltip / "?" content
-- RegEx (`rx_`) — reusable validation patterns
+- Message (`msg_`), Context (`ctx_`), Instruction (`ins_`), Prompt (`pr_`), Option (`opt_`), Placeholder (`ph_`), Help (`help_`), RegEx (`rx_`)
+- Subscale (`scl_`) — pure label entity per OD-16; carries only `id`, `name`, `description`, `content`. Membership lives on `Prompt.subscales[]`.
 
 **Ref-binding:**
-- Question (`q_`) — Prompt + optional Context + optional Instruction (refs only)
-- Item (`it_`) — Question + Option (refs only); the participant-administered unit
-- Solution (`sol_`) — correct-response record for items with a right answer (hybrid: refs + `expected_response` value)
+- Question (`q_`), Item (`it_`), Solution (`sol_`)
 
-## Content model
+**Procedural (new in v26.0602):**
+- Scorer (`scr_`) — versioned scoring procedure. Declares inputs schema, output schema, conformant implementations (WASM / HTTP / Python / R), and test cases.
 
-All content-bearing entities carry text in a **`content` language-keyed map**:
+## Scoring model (per OD-16)
+
+Scoring logic lives in the Scorer entity, not in the Questionnaire JSON. The Questionnaire declares named scores via:
 
 ```jsonc
-"content": {
-  "en": { "status": "validated", "text": "..." },
-  "pt": { "status": "validated", "text": "..." }
-}
+"scores": [
+  { "id": "phq9_total",    "scorer": "scr_phq9@v26.0602", "path": "/total" },
+  { "id": "phq9_severity", "scorer": "scr_phq9@v26.0602", "path": "/severity" }
+]
 ```
 
-Each language entry has a `status` (`draft` / `complete` / `validated`) and the translatable fields for that language. The canonical language is whichever key matches the instrument's `metadata.language`.
+Each score declaration references a JSON Pointer path into the Scorer's structured output. LogicRule conditions and display layers consume scores by id; the engine resolves them by invoking the Scorer (or hitting cache, keyed by scorer + input hash).
+
+The `lock_show_score_timing: true` flag at the root prevents deployments from overriding the canonical show-score timing — used for clinically-sensitive instruments.
 
 ## UI input widget derivation
 
@@ -60,8 +59,11 @@ The viewer picks the rendered widget from the Option's `(input_data_type, measur
 python tools/validate_schemas.py
 ```
 
+The validator walks every example under `examples/` and `examples/library_examples/`, verifies each library entity against its `$def`, and cross-checks every `scores[]` entry's JSON Pointer path against the referenced Scorer's `output_schema`. Scorer conformance testing (running test cases against actual implementations) is stubbed with `SKIPPED` lines until the runner is built.
+
 ## See also
 
 - [VERSIONING.md](../VERSIONING.md) — CalVer policy
 - [schemas/instrument/](../instrument/) — Schema 1 (unchanged at v26.0528)
 - [design/05a_reusable_entities.md](../../design/05a_reusable_entities.md) — authoritative entity model
+- [design/05b_scoring.md](../../design/05b_scoring.md) — authoritative scoring model

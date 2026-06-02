@@ -2,6 +2,40 @@
 
 This schema uses Calendar Versioning (`vYY.MMDD`) per the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning).
 
+## [v26.0602] — 2026-06-02
+
+### Changed (severity: breaking — per OD-16 resolved 2026-06-02)
+
+- **Scoring runtime semantics pivoted to external Scorer entity.** Schema 2 no longer carries an in-JSON formula language for scoring. A new procedural Library entity `Scorer` (`scr_*`) owns the procedure; the Questionnaire declares scores by id via `scores[]: { id, scorer, path, name?, description? }` referencing JSON Pointer paths into the Scorer's structured output.
+- **`ScoringDef` removed** — replaced by `scores[]` entries referencing a Scorer.
+- **`InterpretationBand` removed** — bands live inside the Scorer's `output_schema`.
+- **`Subscale` shape narrowed** — entity now carries only `id`, `name`, `description`, `content`. `prompt_ids` and `weight_per_prompt` removed.
+- **Subscale membership moved to the Prompt** — `Prompt.subscales: string[]` (multi-valued, references `scl_*` ids).
+- **Questionnaire's top-level `subscales[]` block removed** — Subscale entities still exist in the Library; the Questionnaire just doesn't enumerate them.
+- **New top-level `scores[]`** — array of `Score` entries.
+- **New top-level `lock_show_score_timing: boolean`** — default `false`; when `true`, deployments cannot override the canonical show-score timing per OD-16 §4.4.
+- **Cross-schema `$ref` to Schema 1 v26.0528 unchanged.**
+
+### Added
+- `$defs.Scorer` — versioned scoring procedure with inputs schema, output schema, implementations (WASM/HTTP/Python/R), and test cases.
+- `$defs.ScorerImplementation` — implementation reference with `kind` discriminator.
+- `$defs.ScorerTestCase` — input/expected pair for conformance testing.
+- `$defs.Score` — JSON Pointer reference into a Scorer's output.
+- `examples/library_examples/subscales/` and `examples/library_examples/scorers/` directories with at least one example each.
+- Validator extension `check_score_paths` (publish-time gate) and `check_scorer_conformance` (stub for future implementation).
+
+### Migrated
+- v26.0601 `ScoringDef` entries → v26.0602 `scores[]` entries (each `ScoringDef` maps to one or more `Score` entries plus a new Scorer entity).
+- v26.0601 `InterpretationBand` entries → fields in the corresponding Scorer's `output_schema`.
+- v26.0601 `Subscale.prompt_ids` → `Prompt.subscales[]` on each referenced Prompt.
+- v26.0601 `Subscale.weight_per_prompt` → encoded in the Scorer implementation (not in the schema).
+
+### Deferred
+- Scorer conformance-test execution against live implementations (validator currently stubs with `SKIPPED`).
+- Composite-scorer batteries combining outputs across instruments (single-instrument scorers ship in this version; cross-instrument composites are a future use case enabled by the contract).
+
+**Severity:** `breaking` (analytically distinct from v26.0601).
+
 ## [v26.0601] — 2026-06-01
 
 ### Changed (severity: breaking — per OD-15 resolved 2026-05-31)
