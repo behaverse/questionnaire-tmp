@@ -1,0 +1,12 @@
+{
+  "id": "pr_aiss_q_2",
+  "name": "cold_water",
+  "construct": "sensation_seeking",
+  "dimension": "similarity",
+  "topics": ["risk_taking", "novelty_seeking"],
+  "reversed": true,
+  "content": {
+    "en": { "status": "validated", "text": "When the water is very cold, I prefer not to swim even if it is a hot day." },
+    "pt": { "status": "validated", "text": "Quando a água está muito fria, prefiro não nadar mesmo num dia quente." }
+  }
+}

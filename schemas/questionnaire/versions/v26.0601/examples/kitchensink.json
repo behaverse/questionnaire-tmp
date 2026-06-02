@@ -1,0 +1,160 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "id": "qst_kitchensink",
+    "title": "Kitchen Sink",
+    "description": "Synthetic questionnaire exercising every v26.0601 $def for CI coverage.",
+    "version": "v26.0601",
+    "language": "en",
+    "available_languages": ["en", "pt"]
+  },
+  "style": { "progress_bar": true, "question_numbering": "sequential", "x_theme_id": "default" },
+  "flow": { "allow_back": true, "require_complete": false, "randomize_pages": false, "max_time_seconds": 900 },
+  "pages": [
+    {
+      "id": "page_intro",
+      "title": "Introduction",
+      "max_time_seconds": 60,
+      "elements": [
+        { "ref": "msg_aiss_welcome@v26.0601" }
+      ]
+    },
+    {
+      "id": "page_text_inputs",
+      "elements": [
+        {
+          "question": { "prompt": { "ref": "pr_name@v26.0601" } },
+          "option": {
+            "input_data_type": "text",
+            "measurement_type": "nominal",
+            "validation": { "length": [1, 100] },
+            "content": { "en": { "status": "validated", "label": "Name" } }
+          }
+        },
+        {
+          "question": { "prompt": { "ref": "pr_essay@v26.0601" } },
+          "option": {
+            "input_data_type": "text",
+            "measurement_type": "nominal",
+            "content": { "en": { "status": "validated", "label": "Essay" } }
+          },
+          "required": false
+        },
+        {
+          "question": { "prompt": { "ref": "pr_year_born@v26.0601" } },
+          "option": {
+            "input_data_type": "text",
+            "measurement_type": "interval",
+            "input_validation": { "ref": "rx_year_4digit@v26.0601" },
+            "placeholder": { "ref": "ph_hours_per_week@v26.0601" },
+            "content": { "en": { "status": "validated", "label": "Year of birth" } }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_choices",
+      "randomize": true,
+      "elements": [
+        {
+          "id": "sec_likert",
+          "shared_option": { "ref": "opt_agreement_7@v26.0601" },
+          "elements": [
+            { "question": { "ref": "q_aiss_2@v26.0601" } },
+            { "ref": "it_aiss_2@v26.0601", "required": false, "show_if": "true" }
+          ],
+          "style": { "layout": "matrix" }
+        },
+        {
+          "question": {
+            "prompt": { "ref": "pr_topics@v26.0601" }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "nominal",
+            "selection": "multiple",
+            "min_selected": 1,
+            "max_selected": 3,
+            "options": [
+              { "index": 1, "value": "art" },
+              { "index": 2, "value": "books" },
+              { "index": 3, "value": "cinema" }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Topics",
+                "options": [
+                  { "index": 1, "text": "Art" },
+                  { "index": 2, "text": "Books" },
+                  { "index": 3, "text": "Cinema" }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_scalars",
+      "elements": [
+        {
+          "question": { "prompt": { "ref": "pr_mood@v26.0601" } },
+          "option": {
+            "input_data_type": "number",
+            "measurement_type": "interval",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "content": { "en": { "status": "validated", "label": "Mood" } }
+          }
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "blk_main",
+      "title": "Part A",
+      "page_ids": ["page_text_inputs", "page_choices", "page_scalars"],
+      "randomize": false
+    }
+  ],
+  "subscales": [
+    {
+      "id": "scl_agreeable",
+      "name": "Agreeableness",
+      "prompt_ids": ["pr_aiss_q_2"],
+      "weight_per_prompt": { "pr_aiss_q_2": 1.0 }
+    }
+  ],
+  "logic": [
+    { "id": "skip_essay_if_short", "type": "skip", "condition": "length(it_name) < 5", "action": { "skip_to": "page_choices" } },
+    { "type": "visibility", "condition": "it_mood < 30", "action": { "target_id": "it_essay", "show": true } },
+    { "type": "piping", "condition": "true", "action": { "field_path": "pages.page_scalars.elements.0.label", "source": "it_name" } },
+    { "type": "branch", "condition": "it_year_born == ''", "action": { "skip_to": "page_scalars" } }
+  ],
+  "scoring": [
+    {
+      "id": "agreeable_score",
+      "name": "Agreeableness score",
+      "formula": "mean(scl_agreeable)",
+      "range": [-1, 1],
+      "interpretation": [
+        { "min": -1.0, "max": -0.3, "label": "Low" },
+        { "min": -0.3, "max":  0.3, "label": "Mid" },
+        { "min":  0.3, "max":  1.0, "label": "High" }
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "id": "v_name_topics",
+      "condition": "length(it_name) > 0 && is_empty(it_topics)",
+      "message": "If you entered a name, please pick at least one topic.",
+      "targets": ["it_topics"]
+    }
+  ],
+  "extensions": { "study_notes": "Synthetic instrument for CI; not for production use." },
+  "x_origin": "synthetic"
+}

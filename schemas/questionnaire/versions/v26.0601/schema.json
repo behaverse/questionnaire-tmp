@@ -1,0 +1,815 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/questionnaire/v26.0601/schema.json",
+  "title": "Questionnaire Definition",
+  "description": "Schema 2 v26.0601 per OD-15. See docs/superpowers/specs/2026-06-01-schema-2-v26.0601-design.md.",
+  "type": "object",
+  "required": ["metadata", "pages"],
+  "properties": {
+    "@context": {
+      "type": "string",
+      "default": "https://behaverse.org/schemas/questionnaire/context.jsonld"
+    },
+    "metadata": {
+      "allOf": [
+        { "$ref": "https://behaverse.org/schemas/instrument/v26.0528/schema.json" },
+        { "type": "object", "properties": { "id": { "pattern": "^qst_[a-z0-9_]+$" } } }
+      ]
+    },
+    "pages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Page" },
+      "minItems": 1
+    },
+    "blocks":    { "type": "array", "items": { "$ref": "#/$defs/Block" } },
+    "subscales": { "type": "array", "items": { "$ref": "#/$defs/Subscale" } },
+    "style":     { "$ref": "#/$defs/Style" },
+    "flow":      { "$ref": "#/$defs/FlowInstrument" },
+    "logic":      { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
+    "scoring":    { "type": "array", "items": { "$ref": "#/$defs/ScoringDef" } },
+    "validation": { "type": "array", "items": { "$ref": "#/$defs/CrossQuestionValidationRule" } },
+    "extensions": { "type": "object" }
+  },
+  "patternProperties": { "^x_": {} },
+  "additionalProperties": false,
+  "$defs": {
+    "LanguageCode": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$"
+    },
+    "Version": {
+      "type": "string",
+      "pattern": "^v\\d{2}\\.\\d{4}(\\.dev\\d+)?$"
+    },
+    "Expression": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "$comment": "Expression grammar defined by the WASM evaluator (OD-11)."
+    },
+    "ContentStatus": {
+      "enum": ["draft", "complete", "validated"]
+    },
+    "Message": {
+      "type": "object",
+      "required": ["id", "type", "content"],
+      "properties": {
+        "id":   { "$ref": "#/$defs/MessageId" },
+        "type": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "content": { "$ref": "#/$defs/MessageContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "MessageContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "Context": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/ContextId" },
+        "content":    { "$ref": "#/$defs/ContextContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "ContextContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "Instruction": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/InstructionId" },
+        "dimension":  {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$",
+          "maxLength": 64
+        },
+        "content":    { "$ref": "#/$defs/InstructionContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "InstructionContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "Prompt": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/PromptId" },
+        "name":       {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$",
+          "maxLength": 64
+        },
+        "construct":  {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$",
+          "maxLength": 64
+        },
+        "dimension":  {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$",
+          "maxLength": 64
+        },
+        "topics": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+        },
+        "reversed": {
+          "type": "boolean",
+          "default": false
+        },
+        "content":    { "$ref": "#/$defs/PromptContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PromptContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "Placeholder": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/PlaceholderId" },
+        "content":    { "$ref": "#/$defs/PlaceholderContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PlaceholderInline": {
+      "type": "object",
+      "required": ["content"],
+      "properties": {
+        "content":    { "$ref": "#/$defs/PlaceholderContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PlaceholderContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "Help": {
+      "type": "object",
+      "required": ["id", "content"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/HelpId" },
+        "content":    { "$ref": "#/$defs/HelpContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "HelpInline": {
+      "type": "object",
+      "required": ["content"],
+      "properties": {
+        "content":    { "$ref": "#/$defs/HelpContent" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "HelpContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "text"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "text":   { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "RegEx": {
+      "type": "object",
+      "required": ["id", "regex", "example_input"],
+      "properties": {
+        "id":            { "$ref": "#/$defs/RegExId" },
+        "regex":         { "type": "string", "minLength": 1 },
+        "example_input": { "type": "string", "minLength": 1 },
+        "content":       { "$ref": "#/$defs/RegExContent" },
+        "extensions":    { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "RegExContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "description"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "description": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Option": {
+      "allOf": [
+        { "$ref": "#/$defs/OptionBase" },
+        {
+          "if": {
+            "type": "object",
+            "required": ["input_data_type"],
+            "properties": { "input_data_type": { "const": "choice" } }
+          },
+          "then": {
+            "required": ["selection", "options"]
+          }
+        }
+      ],
+      "required": ["id", "input_data_type", "measurement_type", "content"]
+    },
+    "OptionInline": {
+      "allOf": [
+        { "$ref": "#/$defs/OptionBase" },
+        {
+          "if": {
+            "type": "object",
+            "required": ["input_data_type"],
+            "properties": { "input_data_type": { "const": "choice" } }
+          },
+          "then": {
+            "required": ["selection", "options"]
+          }
+        }
+      ],
+      "required": ["input_data_type", "measurement_type", "content"]
+    },
+    "OptionBase": {
+      "type": "object",
+      "properties": {
+        "id":               { "$ref": "#/$defs/OptionId" },
+        "dimension":        { "type": "string", "pattern": "^[a-z][a-z0-9_]+$", "maxLength": 64 },
+        "input_data_type":  { "enum": ["choice", "number", "text"] },
+        "measurement_type": { "enum": ["nominal", "ordinal", "interval", "ratio"] },
+        "selection":        { "enum": ["single", "multiple"] },
+        "min":              { "type": "number" },
+        "max":              { "type": "number" },
+        "step":             { "type": "number", "exclusiveMinimum": 0 },
+        "min_selected":     { "type": "integer", "minimum": 0 },
+        "max_selected":     { "type": "integer", "minimum": 1 },
+        "placeholder":      { "oneOf": [{ "$ref": "#/$defs/PlaceholderRef" }, { "$ref": "#/$defs/PlaceholderInline" }] },
+        "help":             { "oneOf": [{ "$ref": "#/$defs/HelpRef" },        { "$ref": "#/$defs/HelpInline" }] },
+        "input_validation": { "oneOf": [{ "$ref": "#/$defs/RegExRef" },       { "type": "string", "minLength": 1 }] },
+        "options":          { "type": "array", "items": { "$ref": "#/$defs/OptionChoiceStructural" }, "minItems": 2 },
+        "validation":       { "$ref": "#/$defs/PerQuestionValidation" },
+        "content":          { "$ref": "#/$defs/OptionContent" },
+        "extensions":       { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "OptionChoiceStructural": {
+      "type": "object",
+      "required": ["index", "value"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 1 },
+        "value": { "type": ["string", "number", "boolean", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "OptionContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "label":  { "type": "string", "minLength": 1 },
+            "units":  { "type": "string", "minLength": 1 },
+            "options": { "type": "array", "items": { "$ref": "#/$defs/OptionChoiceContent" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "OptionChoiceContent": {
+      "type": "object",
+      "required": ["index", "text"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 1 },
+        "text":  { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "MessageId":     { "type": "string", "pattern": "^msg_[a-z0-9_]+$",  "maxLength": 64 },
+    "ContextId":     { "type": "string", "pattern": "^ctx_[a-z0-9_]+$",  "maxLength": 64 },
+    "InstructionId": { "type": "string", "pattern": "^ins_[a-z0-9_]+$",  "maxLength": 64 },
+    "PromptId":      { "type": "string", "pattern": "^pr_[a-z0-9_]+$",   "maxLength": 64 },
+    "OptionId":      { "type": "string", "pattern": "^opt_[a-z0-9_]+$",  "maxLength": 64 },
+    "PlaceholderId": { "type": "string", "pattern": "^ph_[a-z0-9_]+$",   "maxLength": 64 },
+    "HelpId":        { "type": "string", "pattern": "^help_[a-z0-9_]+$", "maxLength": 64 },
+    "RegExId":       { "type": "string", "pattern": "^rx_[a-z0-9_]+$",   "maxLength": 64 },
+    "Question": {
+      "type": "object",
+      "required": ["id", "prompt"],
+      "properties": {
+        "id":          { "$ref": "#/$defs/QuestionId" },
+        "prompt":      { "$ref": "#/$defs/PromptRef" },
+        "context":     { "$ref": "#/$defs/ContextRef" },
+        "instruction": { "$ref": "#/$defs/InstructionRef" },
+        "extensions":  { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "QuestionInline": {
+      "type": "object",
+      "required": ["prompt"],
+      "properties": {
+        "prompt":      { "$ref": "#/$defs/PromptRef" },
+        "context":     { "$ref": "#/$defs/ContextRef" },
+        "instruction": { "$ref": "#/$defs/InstructionRef" }
+      },
+      "additionalProperties": false
+    },
+    "Item": {
+      "type": "object",
+      "required": ["id", "question", "option"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/ItemId" },
+        "question":   { "$ref": "#/$defs/QuestionRef" },
+        "option":     { "$ref": "#/$defs/OptionRef" },
+        "extensions": { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "QuestionId":    { "type": "string", "pattern": "^q_[a-z0-9_]+$",    "maxLength": 64 },
+    "ItemId":        { "type": "string", "pattern": "^it_[a-z0-9_]+$",   "maxLength": 64 },
+    "SolutionId":    { "type": "string", "pattern": "^sol_[a-z0-9_]+$",  "maxLength": 64 },
+    "SubscaleId":    { "type": "string", "pattern": "^scl_[a-z0-9_]+$",  "maxLength": 64 },
+    "SectionId":     { "type": "string", "pattern": "^sec_[a-z0-9_]+$",  "maxLength": 64 },
+    "BlockId":       { "type": "string", "pattern": "^blk_[a-z0-9_]+$",  "maxLength": 64 },
+    "PageId":        { "type": "string", "pattern": "^page_[a-z0-9_]+$", "maxLength": 64 },
+    "PromptRef":      { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^pr_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "OptionRef":      { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^opt_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "ContextRef":     { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^ctx_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "InstructionRef": { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^ins_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "MessageRef":     { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^msg_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "PlaceholderRef": { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^ph_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "HelpRef":        { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^help_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "RegExRef":       { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^rx_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "QuestionRef":    { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^q_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "ItemRef":        { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string", "pattern": "^it_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" } }, "additionalProperties": false },
+    "Solution": {
+      "type": "object",
+      "required": ["id", "prompt", "expected_response"],
+      "properties": {
+        "id":                { "$ref": "#/$defs/SolutionId" },
+        "prompt":            { "$ref": "#/$defs/PromptRef" },
+        "option":            { "$ref": "#/$defs/OptionRef" },
+        "expected_response": { "type": ["string", "number", "boolean", "null"] },
+        "content":           { "$ref": "#/$defs/SolutionContent" },
+        "extensions":        { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "SolutionContent": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status", "description"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "description": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Page": {
+      "type": "object",
+      "required": ["id", "elements"],
+      "properties": {
+        "id":               { "$ref": "#/$defs/PageId" },
+        "title":            { "type": "string" },
+        "description":      { "type": "string" },
+        "elements":         { "type": "array", "items": { "$ref": "#/$defs/PageElement" }, "minItems": 1 },
+        "show_if":          { "$ref": "#/$defs/Expression" },
+        "randomize":        { "type": "boolean", "default": false },
+        "max_time_seconds": { "type": ["number", "null"], "minimum": 0 },
+        "style":            { "$ref": "#/$defs/Style" },
+        "translations":     { "$ref": "#/$defs/PageTranslations" },
+        "extensions":       { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "PageElement": {
+      "oneOf": [
+        { "$ref": "#/$defs/Section" },
+        { "$ref": "#/$defs/MessageRef" },
+        { "$ref": "#/$defs/PageElementSavedItem" },
+        { "$ref": "#/$defs/PageElementInlineItem" }
+      ]
+    },
+    "Section": {
+      "type": "object",
+      "required": ["id", "elements"],
+      "properties": {
+        "id":            { "$ref": "#/$defs/SectionId" },
+        "title":         { "type": "string" },
+        "shared_option": {
+          "oneOf": [
+            { "$ref": "#/$defs/OptionRef" },
+            { "$ref": "#/$defs/OptionInline" }
+          ]
+        },
+        "elements":      { "type": "array", "items": { "$ref": "#/$defs/SectionElement" }, "minItems": 1 },
+        "show_if":       { "$ref": "#/$defs/Expression" },
+        "randomize":     { "type": "boolean", "default": false },
+        "style":         { "$ref": "#/$defs/Style" },
+        "translations":  { "$ref": "#/$defs/SectionTranslations" },
+        "extensions":    { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "SectionElement": {
+      "oneOf": [
+        { "$ref": "#/$defs/MessageRef" },
+        { "$ref": "#/$defs/PageElementSavedItem" },
+        { "$ref": "#/$defs/SectionInlineItem" }
+      ]
+    },
+    "SectionInlineItem": {
+      "type": "object",
+      "required": ["question"],
+      "properties": {
+        "id":       { "type": "string", "pattern": "^it_[a-z0-9_]+$" },
+        "question": { "oneOf": [{ "$ref": "#/$defs/QuestionRef" }, { "$ref": "#/$defs/QuestionInline" }] },
+        "option":   { "oneOf": [{ "$ref": "#/$defs/OptionRef" },   { "$ref": "#/$defs/OptionInline" }] },
+        "required": { "type": "boolean" },
+        "show_if":  { "$ref": "#/$defs/Expression" }
+      },
+      "additionalProperties": false
+    },
+    "SectionTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "title":  { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "PageElementSavedItem": {
+      "type": "object",
+      "required": ["ref"],
+      "properties": {
+        "ref":      { "type": "string", "pattern": "^it_[a-z0-9_]+@v\\d{2}\\.\\d{4}(\\.dev\\d+)?$" },
+        "id":       { "type": "string", "pattern": "^it_[a-z0-9_]+$" },
+        "required": { "type": "boolean" },
+        "show_if":  { "$ref": "#/$defs/Expression" }
+      },
+      "additionalProperties": false
+    },
+    "PageElementInlineItem": {
+      "type": "object",
+      "required": ["question", "option"],
+      "properties": {
+        "id":       { "type": "string", "pattern": "^it_[a-z0-9_]+$" },
+        "question": { "oneOf": [{ "$ref": "#/$defs/QuestionRef" }, { "$ref": "#/$defs/QuestionInline" }] },
+        "option":   { "oneOf": [{ "$ref": "#/$defs/OptionRef" },   { "$ref": "#/$defs/OptionInline" }] },
+        "required": { "type": "boolean" },
+        "show_if":  { "$ref": "#/$defs/Expression" }
+      },
+      "additionalProperties": false
+    },
+    "PageTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "title":       { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Block": {
+      "type": "object",
+      "required": ["id", "page_ids"],
+      "properties": {
+        "id":           { "$ref": "#/$defs/BlockId" },
+        "title":        { "type": "string" },
+        "description":  { "type": "string" },
+        "page_ids":     {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PageId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "show_if":      { "$ref": "#/$defs/Expression" },
+        "randomize":    { "type": "boolean", "default": false },
+        "style":        { "$ref": "#/$defs/Style" },
+        "translations": { "$ref": "#/$defs/BlockTranslations" },
+        "extensions":   { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "BlockTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "title":       { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Subscale": {
+      "type": "object",
+      "required": ["id", "name", "prompt_ids"],
+      "properties": {
+        "id":         { "$ref": "#/$defs/SubscaleId" },
+        "name":       { "type": "string" },
+        "description":{ "type": "string" },
+        "prompt_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PromptId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "weight_per_prompt": {
+          "type": "object",
+          "patternProperties": { "^pr_[a-z0-9_]+$": { "type": "number" } },
+          "additionalProperties": false
+        },
+        "translations": { "$ref": "#/$defs/SubscaleTranslations" },
+        "extensions":   { "type": "object" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "SubscaleTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status":      { "$ref": "#/$defs/ContentStatus" },
+            "name":        { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Style": {
+      "type": "object",
+      "properties": {
+        "progress_bar":         { "type": "boolean" },
+        "question_numbering":   { "enum": ["sequential", "per_page", "none"] },
+        "label_visible":        { "type": "boolean" },
+        "layout":               { "type": "string" },
+        "anchors_visible_only": { "type": "boolean" },
+        "multiline":            { "type": "boolean" },
+        "icon":                 { "type": "string" }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "FlowInstrument": {
+      "type": "object",
+      "properties": {
+        "allow_back":       { "type": "boolean" },
+        "require_complete": { "type": "boolean" },
+        "randomize_pages":  { "type": "boolean" },
+        "max_time_seconds": { "type": ["number", "null"], "minimum": 0 }
+      },
+      "patternProperties": { "^x_": {} },
+      "additionalProperties": false
+    },
+    "LogicRule": {
+      "type": "object",
+      "required": ["type", "condition", "action"],
+      "properties": {
+        "id":        { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+        "type":      { "enum": ["skip", "visibility", "piping", "branch"] },
+        "condition": { "$ref": "#/$defs/Expression" },
+        "action": {
+          "type": "object",
+          "properties": {
+            "skip_to":    { "type": "string" },
+            "show":       { "type": "boolean" },
+            "target_id":  { "type": "string" },
+            "field_path": { "type": "string" },
+            "source":     { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "ScoringDef": {
+      "type": "object",
+      "required": ["id", "formula"],
+      "properties": {
+        "id":      { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+        "name":    { "type": "string" },
+        "formula": { "$ref": "#/$defs/Expression" },
+        "range": {
+          "type": "array",
+          "prefixItems": [{ "type": "number" }, { "type": "number" }],
+          "items": false,
+          "minItems": 2, "maxItems": 2
+        },
+        "interpretation": { "type": "array", "items": { "$ref": "#/$defs/InterpretationBand" } },
+        "translations":   { "$ref": "#/$defs/ScoringTranslations" }
+      },
+      "additionalProperties": false
+    },
+    "InterpretationBand": {
+      "type": "object",
+      "required": ["label"],
+      "properties": {
+        "min":      { "type": ["number", "null"] },
+        "max":      { "type": ["number", "null"] },
+        "label":    { "type": "string" },
+        "severity": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ScoringTranslations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" },
+            "name":   { "type": "string" },
+            "interpretation": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": { "label": { "type": "string" } },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "PerQuestionValidation": {
+      "type": "object",
+      "properties": {
+        "format": { "type": "string" },
+        "range": {
+          "type": "array",
+          "prefixItems": [
+            { "type": ["number", "null"] },
+            { "type": ["number", "null"] }
+          ],
+          "items": false,
+          "minItems": 2, "maxItems": 2
+        },
+        "length": {
+          "type": "array",
+          "prefixItems": [
+            { "type": ["integer", "null"] },
+            { "type": ["integer", "null"] }
+          ],
+          "items": false,
+          "minItems": 2, "maxItems": 2
+        },
+        "format_message": { "type": "string", "maxLength": 256 },
+        "range_message":  { "type": "string", "maxLength": 256 },
+        "length_message": { "type": "string", "maxLength": 256 }
+      },
+      "additionalProperties": false
+    },
+    "CrossQuestionValidationRule": {
+      "type": "object",
+      "required": ["id", "condition", "message"],
+      "properties": {
+        "id":        { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+        "condition": { "$ref": "#/$defs/Expression" },
+        "message":   { "type": "string", "maxLength": 256 },
+        "targets":   { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}
