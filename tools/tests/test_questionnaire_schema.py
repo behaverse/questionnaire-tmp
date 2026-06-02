@@ -9,6 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from jsonschema import Draft202012Validator
 
 from tools.validate_schemas import build_registry, load_schema, validate_instance
 
@@ -43,8 +44,8 @@ def minimal_message_ref() -> dict:
 
 # ---------- top-level smoke ----------
 
-def test_schema_id_is_v26_0601(schema):
-    assert schema["$id"].endswith("/questionnaire/v26.0601/schema.json")
+def test_schema_id_is_v26_0602(schema):
+    assert schema["$id"].endswith("/questionnaire/v26.0602/schema.json")
 
 
 def test_minimal_questionnaire_validates(schema, registry):
@@ -1078,3 +1079,156 @@ def test_option_with_per_question_validation(schema, registry):
         "content": {"en": {"status": "validated", "label": "Email"}}
     }
     assert list(v.iter_errors(opt)) == []
+
+
+# ---------- Scorer ----------
+
+def test_scorer_minimal_valid(schema):
+    sub = schema["$defs"]["Scorer"]
+    instance = {
+        "id": "scr_phq9",
+        "content": {"en": {"status": "validated", "name": "PHQ-9 Standard Scoring"}},
+        "inputs": {"type": "object", "properties": {}, "required": []},
+        "output_schema": {"type": "object", "properties": {"total": {"type": "integer"}}},
+        "implementations": [
+            {"kind": "http", "url": "https://scorer.example.org/phq9/v26.0602"}
+        ],
+        "test_cases": [
+            {"input": {"x": 1}, "expected": {"total": 0}}
+        ]
+    }
+    Draft202012Validator(sub).validate(instance)
+
+
+def test_scorer_id_pattern(schema):
+    sub = schema["$defs"]["Scorer"]
+    bad = {
+        "id": "q_phq9",  # wrong prefix
+        "content": {"en": {"status": "validated"}},
+        "inputs": {"type": "object"},
+        "output_schema": {"type": "object"},
+        "implementations": [{"kind": "http", "url": "https://x.example.org"}],
+        "test_cases": [{"input": {}, "expected": {}}]
+    }
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert any("scr_" in e.message or "pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
+
+
+def test_scorer_implementations_at_least_one(schema):
+    sub = schema["$defs"]["Scorer"]
+    bad = {
+        "id": "scr_phq9",
+        "content": {"en": {"status": "validated"}},
+        "inputs": {"type": "object"},
+        "output_schema": {"type": "object"},
+        "implementations": [],
+        "test_cases": [{"input": {}, "expected": {}}]
+    }
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert any("minItems" in e.message or "non-empty" in e.message.lower() for e in errors)
+
+
+def test_scorer_test_cases_at_least_one(schema):
+    sub = schema["$defs"]["Scorer"]
+    bad = {
+        "id": "scr_phq9",
+        "content": {"en": {"status": "validated"}},
+        "inputs": {"type": "object"},
+        "output_schema": {"type": "object"},
+        "implementations": [{"kind": "http", "url": "https://x.example.org"}],
+        "test_cases": []
+    }
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert any("minItems" in e.message or "non-empty" in e.message.lower() for e in errors)
+
+
+def test_scorer_impl_wasm(schema):
+    sub = schema["$defs"]["ScorerImplementation"]
+    Draft202012Validator(sub).validate({
+        "kind": "wasm",
+        "url": "https://x.example.org/s.wasm",
+        "sha256": "a" * 64
+    })
+
+
+def test_scorer_impl_wasm_requires_sha256(schema):
+    sub = schema["$defs"]["ScorerImplementation"]
+    bad = {"kind": "wasm", "url": "https://x.example.org/s.wasm"}
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    all_messages = [e.message for e in errors]
+    all_messages += [c.message for e in errors if hasattr(e, "context") for c in e.context]
+    assert any("sha256" in m for m in all_messages)
+
+
+def test_scorer_impl_http(schema):
+    sub = schema["$defs"]["ScorerImplementation"]
+    Draft202012Validator(sub).validate({"kind": "http", "url": "https://x.example.org/phq9"})
+
+
+def test_scorer_impl_python(schema):
+    sub = schema["$defs"]["ScorerImplementation"]
+    Draft202012Validator(sub).validate({
+        "kind": "python", "package": "behaverse-scorer-phq9==26.0602"
+    })
+
+
+def test_scorer_impl_r(schema):
+    sub = schema["$defs"]["ScorerImplementation"]
+    Draft202012Validator(sub).validate({
+        "kind": "r", "package": "behaverse-scorer-phq9"
+    })
+
+
+def test_scorer_impl_unknown_kind_rejected(schema):
+    sub = schema["$defs"]["ScorerImplementation"]
+    bad = {"kind": "ruby", "url": "https://x.example.org"}
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert len(errors) >= 1
+
+
+# ---------- Score ----------
+
+def test_score_minimal_valid(schema):
+    sub = schema["$defs"]["Score"]
+    Draft202012Validator(sub).validate({
+        "id": "phq9_total",
+        "scorer": "scr_phq9@v26.0602",
+        "path": "/total"
+    })
+
+
+def test_score_nested_path_valid(schema):
+    sub = schema["$defs"]["Score"]
+    Draft202012Validator(sub).validate({
+        "id": "phq9_band_label",
+        "scorer": "scr_phq9@v26.0602",
+        "path": "/band/label"
+    })
+
+
+def test_score_id_pattern(schema):
+    sub = schema["$defs"]["Score"]
+    bad = {"id": "PHQ9_total", "scorer": "scr_phq9@v26.0602", "path": "/total"}
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
+
+
+def test_score_scorer_must_be_pinned(schema):
+    sub = schema["$defs"]["Score"]
+    bad = {"id": "phq9_total", "scorer": "scr_phq9", "path": "/total"}
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
+
+
+def test_score_path_must_start_with_slash(schema):
+    sub = schema["$defs"]["Score"]
+    bad = {"id": "phq9_total", "scorer": "scr_phq9@v26.0602", "path": "total"}
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert any("pattern" in e.message.lower() or "does not match" in e.message.lower() for e in errors)
+
+
+def test_score_empty_pointer_rejected(schema):
+    sub = schema["$defs"]["Score"]
+    bad = {"id": "phq9_total", "scorer": "scr_phq9@v26.0602", "path": ""}
+    errors = list(Draft202012Validator(sub).iter_errors(bad))
+    assert len(errors) >= 1

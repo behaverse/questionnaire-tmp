@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://behaverse.org/schemas/questionnaire/v26.0601/schema.json",
+  "$id": "https://behaverse.org/schemas/questionnaire/v26.0602/schema.json",
   "title": "Questionnaire Definition",
-  "description": "Schema 2 v26.0601 per OD-15. See docs/superpowers/specs/2026-06-01-schema-2-v26.0601-design.md.",
+  "description": "Schema 2 v26.0602 per OD-15 + OD-16. See docs/superpowers/specs/2026-06-02-schema-2-v26.0602-design.md.",
   "type": "object",
   "required": ["metadata", "pages"],
   "properties": {
@@ -49,6 +49,21 @@
     },
     "ContentStatus": {
       "enum": ["draft", "complete", "validated"]
+    },
+    "ContentLanguageMap": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "$ref": "#/$defs/ContentStatus" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
     },
     "Message": {
       "type": "object",
@@ -717,6 +732,185 @@
           },
           "additionalProperties": false
         }
+      },
+      "additionalProperties": false
+    },
+    "Score": {
+      "type": "object",
+      "required": ["id", "scorer", "path"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "scorer": {
+          "type": "string",
+          "pattern": "^scr_[a-z0-9_]+@v\\d{2}\\.\\d{4}$"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^(/[^/]*)+$"
+        },
+        "name":        { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {}
+      }
+    },
+    "Scorer": {
+      "type": "object",
+      "required": ["id", "content", "inputs", "output_schema", "implementations", "test_cases"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^scr_[a-z0-9_]+$"
+        },
+        "name": { "type": "string" },
+        "content": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$": {
+              "type": "object",
+              "required": ["status"],
+              "properties": {
+                "status": { "enum": ["draft", "complete", "validated"] }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 1
+        },
+        "inputs": {
+          "type": "object",
+          "properties": {
+            "type":       { "const": "object" },
+            "properties": { "type": "object" },
+            "required":   { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["type"]
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "type":       { "const": "object" },
+            "properties": { "type": "object" }
+          },
+          "required": ["type"]
+        },
+        "implementations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["kind"],
+            "oneOf": [
+              {
+                "properties": {
+                  "kind":   { "const": "wasm" },
+                  "url":    { "type": "string", "format": "uri" },
+                  "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+                },
+                "required": ["kind", "url", "sha256"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind": { "const": "http" },
+                  "url":  { "type": "string", "format": "uri" }
+                },
+                "required": ["kind", "url"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind":    { "const": "python" },
+                  "package": { "type": "string" }
+                },
+                "required": ["kind", "package"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind":    { "const": "r" },
+                  "package": { "type": "string" }
+                },
+                "required": ["kind", "package"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "test_cases": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["input", "expected"],
+            "properties": {
+              "name":     { "type": "string" },
+              "input":    { "type": "object" },
+              "expected": { "type": "object" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "license": { "type": "string" },
+        "extensions": { "type": "object" }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {}
+      }
+    },
+    "ScorerImplementation": {
+      "type": "object",
+      "required": ["kind"],
+      "oneOf": [
+        {
+          "properties": {
+            "kind":   { "const": "wasm" },
+            "url":    { "type": "string", "format": "uri" },
+            "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+          },
+          "required": ["kind", "url", "sha256"],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "kind": { "const": "http" },
+            "url":  { "type": "string", "format": "uri" }
+          },
+          "required": ["kind", "url"],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "kind":    { "const": "python" },
+            "package": { "type": "string" }
+          },
+          "required": ["kind", "package"],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "kind":    { "const": "r" },
+            "package": { "type": "string" }
+          },
+          "required": ["kind", "package"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ScorerTestCase": {
+      "type": "object",
+      "required": ["input", "expected"],
+      "properties": {
+        "name":     { "type": "string" },
+        "input":    { "type": "object" },
+        "expected": { "type": "object" }
       },
       "additionalProperties": false
     },
