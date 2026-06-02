@@ -126,6 +126,95 @@ def walk_library_examples(schemas_root: Path) -> list[tuple[Path, str, list[str]
     return out
 
 
+def _walk_json_pointer(schema_node, pointer):
+    """Walk a JSON Pointer against a JSON Schema fragment. Returns the leaf
+    schema node, or None if the path doesn't resolve."""
+    if not pointer or not pointer.startswith("/"):
+        return None
+    parts = pointer.split("/")[1:]
+    node = schema_node
+    for p in parts:
+        # JSON Pointer escape decoding
+        p = p.replace("~1", "/").replace("~0", "~")
+        if not isinstance(node, dict):
+            return None
+        props = node.get("properties") if isinstance(node, dict) else None
+        if not props or p not in props:
+            return None
+        node = props[p]
+    return node
+
+
+def check_score_paths(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each questionnaire example, validate every scores[] entry's
+    scorer+path against the Scorer entities in library_examples/scorers/.
+
+    Returns a list of (path, kind, errors) tuples.
+    """
+    out = []
+    scorers_dir = schemas_root / "questionnaire" / "examples" / "library_examples" / "scorers"
+    scorers = {}
+    if scorers_dir.is_dir():
+        for sf in sorted(scorers_dir.glob("*.json")):
+            data = json.loads(sf.read_text())
+            scorers[data["id"]] = data
+    examples_dir = schemas_root / "questionnaire" / "examples"
+    if not examples_dir.is_dir():
+        return out
+    for q_path in sorted(examples_dir.glob("*.json")):
+        try:
+            instance = json.loads(q_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        scores = instance.get("scores", [])
+        if not scores:
+            continue
+        errs = []
+        for score in scores:
+            scorer_ref = score.get("scorer", "")
+            sid = scorer_ref.split("@")[0] if "@" in scorer_ref else scorer_ref
+            sc = scorers.get(sid)
+            if sc is None:
+                errs.append(f"UNRESOLVED_SCORER: {scorer_ref}")
+                continue
+            path = score.get("path", "")
+            target = _walk_json_pointer(sc.get("output_schema", {}), path)
+            if target is None:
+                errs.append(f"PATH_NOT_FOUND: {path} in {sid}")
+            elif isinstance(target, dict) and target.get("type") in ("object", "array"):
+                errs.append(f"PATH_NOT_LEAF: {path} in {sid} resolves to {target.get('type')}")
+        out.append((q_path, "score_paths", errs))
+    return out
+
+
+def check_scorer_conformance(schemas_root: Path) -> list[tuple[Path, list[dict]]]:
+    """Stub: returns SKIPPED for every (scorer, implementation, test_case) triple.
+
+    A future deliverable will execute test cases against actual WASM/HTTP/Python/R
+    implementations and report PASS/FAIL.
+    """
+    out = []
+    scorers_dir = schemas_root / "questionnaire" / "examples" / "library_examples" / "scorers"
+    if not scorers_dir.is_dir():
+        return out
+    for sf in sorted(scorers_dir.glob("*.json")):
+        try:
+            sc = json.loads(sf.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        statuses = []
+        for impl in sc.get("implementations", []):
+            for tc in sc.get("test_cases", []):
+                statuses.append({
+                    "implementation_kind": impl.get("kind"),
+                    "test_case_name": tc.get("name", "<unnamed>"),
+                    "status": "SKIPPED",
+                    "reason": "conformance runner not yet implemented",
+                })
+        out.append((sf, statuses))
+    return out
+
+
 def main(schemas_root: Path) -> None:
     """Validate every example in schemas_root/*/examples/ against the matching schema.
     Exits non-zero on failure.
@@ -165,6 +254,29 @@ def main(schemas_root: Path) -> None:
                 print(f"      {e}")
         else:
             print(f"PASS  {rel} (against $defs.{def_name})")
+
+    score_path_results = check_score_paths(schemas_root)
+    for path, _kind, errs in score_path_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (score paths)")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            try:
+                score_count = len(json.loads(path.read_text()).get("scores", []))
+            except (json.JSONDecodeError, OSError):
+                score_count = 0
+            if score_count:
+                print(f"PASS  {rel} (score paths: {score_count} verified)")
+
+    conf_results = check_scorer_conformance(schemas_root)
+    for sf, statuses in conf_results:
+        rel = sf.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        skipped_count = sum(1 for s in statuses if s["status"] == "SKIPPED")
+        if skipped_count:
+            print(f"SKIP  {rel} ({skipped_count} conformance check(s) — runner not yet implemented)")
 
     total = len(examples) + len(lib_results)
     if failed:
