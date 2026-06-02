@@ -112,7 +112,7 @@ Reusable entities below the questionnaire level (questions, option-sets, instruc
 
 **Purpose.** Complete structural specification. The source of truth for what a questionnaire is. Stored in the Library; produced by the Editor; consumed by viewers.
 
-**Current version: v26.0601** (per OD-15 resolved 2026-05-31). The authoritative entity model lives in [05a_reusable_entities.md](05a_reusable_entities.md). This section summarises the structure; see 05a for entity-by-entity field tables, examples, and the resolution log of the 23 OD-15 sub-questions.
+**Current version: v26.0601** (per OD-15 resolved 2026-05-31). The authoritative entity model lives in [05a_reusable_entities.md](05a_reusable_entities.md); the authoritative scoring model lives in [05b_scoring.md](05b_scoring.md) (per OD-16 resolved 2026-06-02). This section summarises the structure; see 05a for entity-by-entity field tables and the resolution log of the 23 OD-15 sub-questions, and 05b for scoring runtime semantics — `Scorer` entity, `scores[]` declarations, reversed-value pipeline, two-trigger evaluation. **Note:** OD-16 changes the Subscale entity shape (loses `prompt_ids` / `weight_per_prompt`; gains `Prompt.subscales[]` on the Prompt side) and introduces `Scorer` (`scr_*`); these changes will land in the next CalVer bump beyond v26.0601.
 
 **Eleven reusable entities in two categories:**
 

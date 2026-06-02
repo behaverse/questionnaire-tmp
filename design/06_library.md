@@ -37,23 +37,25 @@ The Library is the catalogue and repository of validated questionnaires, the reu
 
 ### 2. Reusable-component pool
 
-Per OD-15 (resolved 2026-05-31; full body in [05a_reusable_entities.md](05a_reusable_entities.md)), reusable entities are first-class citizens of the Library, split into **content-bearing** (text/numeric content with per-language `content` map) and **ref-binding** (named compositions of refs to other entities).
+Per OD-15 (resolved 2026-05-31; full body in [05a_reusable_entities.md](05a_reusable_entities.md)) and OD-16 (resolved 2026-06-02; full body in [05b_scoring.md](05b_scoring.md)), reusable entities are first-class citizens of the Library, split into **content-bearing** (text/numeric content with per-language `content` map), **ref-binding** (named compositions of refs to other entities), and **procedural** (executable scoring procedures).
 
 | Category | Entity | Prefix | What the Library exposes |
 |---|---|---|---|
 | Content-bearing | **Message** | `msg_` | Standalone participant-facing text (welcome, end, transitions). `type` string-array; `content` language map. |
 | Content-bearing | **Context** | `ctx_` | Background paragraphs that frame a Question. `content` language map. |
 | Content-bearing | **Instruction** | `ins_` | How-to-respond text. Optional `dimension`; `content` language map. |
-| Content-bearing | **Prompt** | `pr_` | The stem text the participant reads. `name`, `construct`, `dimension`, `topics[]`, `reversed`; `content` language map. |
+| Content-bearing | **Prompt** | `pr_` | The stem text the participant reads. `name`, `construct`, `dimension`, `topics[]`, `reversed`, `subscales[]` (per OD-16); `content` language map. |
 | Content-bearing | **Option** | `opt_` | Response-options spec: structural fields (input/measurement type, value/index, selection, min/max/step) + `content` language map (label, units, per-choice text). Determines the UI input widget. |
 | Content-bearing | **Placeholder** | `ph_` | Hint text inside an input field. `content` language map. |
 | Content-bearing | **Help** | `help_` | Tooltip / "?" content. `content` language map. |
 | Content-bearing | **RegEx** | `rx_` | Reusable validation patterns. `regex` + `example_input` (structural); optional `content.description` per language. |
+| Content-bearing (label) | **Subscale** | `scl_` | Per OD-16: pure grouping/labeling entity — `id`, `name`, `description`, `content` language map. No `prompt_ids` or `weight_per_prompt`; membership lives on Prompts (`Prompt.subscales[]`). |
 | Ref-binding | **Question** | `q_` | Refs-only composition: Prompt-ref + optional Context-ref + optional Instruction-ref. The "asking" half of an Item. |
 | Ref-binding | **Item** | `it_` | Refs-only composition: Question-ref + Option-ref. The participant-administered unit. Page elements reference saved Items (with `required` / `show_if` overrides per OD-05) or author Items inline. |
 | Ref-binding (hybrid) | **Solution** | `sol_` | Correct-response record: Prompt-ref + optional Option-ref + `expected_response` value (the hybrid exception — a binding entity that carries a value). |
+| Procedural | **Scorer** | `scr_` | Per OD-16: versioned scoring procedure. Declares input schema, output schema (structured), conformant implementations (WASM / HTTP / language packages), and test cases. The Library enforces that every implementation passes every test case at publish time. |
 
-The Library tracks **which questionnaires reference each entity**, so changes can be surfaced as breaking, additive, or corrective (CalVer severity tag per OD-06) and so analysts can find every study that used a particular Item, Prompt, or Option.
+The Library tracks **which questionnaires reference each entity**, so changes can be surfaced as breaking, additive, or corrective (CalVer severity tag per OD-06) and so analysts can find every study that used a particular Item, Prompt, Option, or Scorer.
 
 ### 3. Metadata and citation
 

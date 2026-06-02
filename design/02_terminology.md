@@ -17,7 +17,7 @@ All code, documentation, and interfaces in this ecosystem use the terms below co
 
 ## Content hierarchy
 
-Per OD-15 (resolved 2026-05-31; full body in [05a_reusable_entities.md](05a_reusable_entities.md)). The terms below replace the v26.0528 entity vocabulary.
+Per OD-15 (resolved 2026-05-31; full body in [05a_reusable_entities.md](05a_reusable_entities.md)) and OD-16 (resolved 2026-06-02; scoring-related entities and terms in [05b_scoring.md](05b_scoring.md)). The terms below replace the v26.0528 entity vocabulary.
 
 | Term | Meaning | Example |
 |---|---|---|
@@ -36,7 +36,10 @@ Per OD-15 (resolved 2026-05-31; full body in [05a_reusable_entities.md](05a_reus
 | **Help** | Tooltip / "?" content next to a field. Content-bearing entity (`help_*`). | "ORCID is a 16-digit identifier…" |
 | **RegEx** | Reusable validation pattern. Content-bearing entity (`rx_*`); carries `regex` + `example_input` (structural, not translatable) plus optional `content.description`. ECMAScript flavour. | `^(19\|20)\d{2}$` for four-digit year |
 | **Solution** | The correct response for a Prompt that has one. Hybrid ref-binding entity (`sol_*`) — refs Prompt + optional Option, carries an `expected_response` value. | The correct answer to an attention-check Item |
-| **Subscale** | A named subset of Prompts scored together. Carries a Construct (or explicit prompt_ids). Subscale ↔ Prompt is many-to-many. Scoring details deferred to a future OD. | "PHQ-9 Anxiety subscale" |
+| **Subscale** | Per OD-16: a Library entity (`scl_*`) carrying only `id`, `name`, `description`, and translatable `content`. Membership lives on the Prompt side: `Prompt.subscales: string[]` lists the Subscale ids the Prompt belongs to (multi-valued). No `prompt_ids` or `weight_per_prompt` on the Subscale entity. | "PHQ-9 Anxiety subscale" referenced by `Prompt.subscales: ["scl_phq9_anxiety"]` |
+| **Score** | Per OD-16: a named computed value declared in the Questionnaire's `scores[]: { id, scorer, path }`. Each entry references a JSON Pointer path into a Scorer's structured output. Consumable by LogicRule conditions and display layers. | `{id: "phq9_total", scorer: "scr_phq9@v26.0601", path: "/total"}` |
+| **Scorer** | Per OD-16: a Library entity (`scr_*`) representing a versioned scoring procedure. Declares input schema, output schema, conformant implementations (WASM / HTTP / language packages), and test cases. The same logical Scorer can have multiple implementations; all must pass the same test cases. | `scr_phq9@v26.0601` |
+| **`scored_value`** | Per OD-16 (16a): the post-reversal value per Item, computed by the viewer from `value` using the Prompt's `reversed` flag and the Option's range. Persisted alongside `value` in the response payload. Stored value wins on read. | `value: 2`, `scored_value: 4` (on a 1–5 reversed Likert) |
 | **Construct** | The psychometric concept a Prompt loads on (`depression`, `sensation_seeking`). Open vocabulary with curator registry. Lives on Prompt only. | `sensation_seeking` |
 | **Dimension** | The kind of judgment / scale (`agreement`, `frequency`, `duration`). Same concept on Prompt and Option; typically matches across a Prompt-Option pairing. Open vocabulary with curator registry. | `agreement` |
 | **Reversed** | A boolean on Prompt: when true, the Prompt is worded as the *opposite* of its Construct. Scoring applies `value' = max + min − value`. | "Are you feeling sad?" with construct `happiness` → `reversed: true` |
