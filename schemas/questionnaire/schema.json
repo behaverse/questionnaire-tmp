@@ -22,11 +22,9 @@
       "minItems": 1
     },
     "blocks":    { "type": "array", "items": { "$ref": "#/$defs/Block" } },
-    "subscales": { "type": "array", "items": { "$ref": "#/$defs/Subscale" } },
     "style":     { "$ref": "#/$defs/Style" },
     "flow":      { "$ref": "#/$defs/FlowInstrument" },
     "logic":      { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
-    "scoring":    { "type": "array", "items": { "$ref": "#/$defs/ScoringDef" } },
     "scores":     { "type": "array", "items": { "$ref": "#/$defs/Score" } },
     "lock_show_score_timing": { "type": "boolean", "default": false },
     "validation": { "type": "array", "items": { "$ref": "#/$defs/CrossQuestionValidationRule" } },
@@ -910,35 +908,6 @@
         "name":     { "type": "string" },
         "input":    { "type": "object" },
         "expected": { "type": "object" }
-      },
-      "additionalProperties": false
-    },
-    "ScoringDef": {
-      "type": "object",
-      "required": ["id", "formula"],
-      "properties": {
-        "id":      { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
-        "name":    { "type": "string" },
-        "formula": { "$ref": "#/$defs/Expression" },
-        "range": {
-          "type": "array",
-          "prefixItems": [{ "type": "number" }, { "type": "number" }],
-          "items": false,
-          "minItems": 2, "maxItems": 2
-        },
-        "interpretation": { "type": "array", "items": { "$ref": "#/$defs/InterpretationBand" } },
-        "translations":   { "$ref": "#/$defs/ScoringTranslations" }
-      },
-      "additionalProperties": false
-    },
-    "InterpretationBand": {
-      "type": "object",
-      "required": ["label"],
-      "properties": {
-        "min":      { "type": ["number", "null"] },
-        "max":      { "type": ["number", "null"] },
-        "label":    { "type": "string" },
-        "severity": { "type": "string" }
       },
       "additionalProperties": false
     },

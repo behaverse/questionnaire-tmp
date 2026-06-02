@@ -1021,35 +1021,7 @@ def test_logic_missing_condition_fails(schema, registry):
     assert any("condition" in e for e in errors)
 
 
-# ---------- Scoring + Validation ----------
-
-def test_scoring_minimal(schema, registry):
-    instance = page_with_saved_item_ref()
-    instance["scoring"] = [{"id": "total", "formula": "sum(scl_total)"}]
-    assert validate_instance(schema, instance, registry=registry) == []
-
-
-def test_scoring_with_bands(schema, registry):
-    instance = page_with_saved_item_ref()
-    instance["scoring"] = [{
-        "id": "total", "name": "Total", "formula": "sum(scl_total)",
-        "range": [0, 27],
-        "interpretation": [
-            {"min": 0, "max": 4, "label": "None", "severity": "none"},
-            {"min": 20, "max": 27, "label": "Severe", "severity": "severe"}
-        ]
-    }]
-    assert validate_instance(schema, instance, registry=registry) == []
-
-
-def test_scoring_unbounded_band(schema, registry):
-    instance = page_with_saved_item_ref()
-    instance["scoring"] = [{
-        "id": "xs", "formula": "sum(scl_x)",
-        "interpretation": [{"min": None, "max": 5, "label": "Low"}]
-    }]
-    assert validate_instance(schema, instance, registry=registry) == []
-
+# ---------- Validation ----------
 
 def test_cross_question_validation(schema, registry):
     instance = page_with_saved_item_ref()
@@ -1327,3 +1299,29 @@ def test_prompt_subscales_unique(schema, registry):
     }
     errors = list(v.iter_errors(bad))
     assert any("uniqueItems" in e.message or "unique" in e.message.lower() for e in errors)
+
+
+# ---------- Dissolved entities (OD-16) ----------
+
+def test_scoring_def_dissolved(schema):
+    assert "ScoringDef" not in schema["$defs"], "ScoringDef should be removed per OD-16"
+
+
+def test_interpretation_band_dissolved(schema):
+    assert "InterpretationBand" not in schema["$defs"], "InterpretationBand should be removed per OD-16"
+
+
+def test_root_subscales_block_dissolved(schema, registry):
+    # The top-level subscales[] block is gone per OD-16. Subscale entities still
+    # exist in the Library; membership lives on Prompt.subscales[].
+    instance = page_with_saved_item_ref()
+    instance["subscales"] = [{"id": "scl_x", "name": "X", "prompt_ids": ["pr_y"]}]
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("additional" in e.lower() or "subscales" in e for e in errors)
+
+
+def test_root_scoring_block_dissolved(schema, registry):
+    instance = page_with_saved_item_ref()
+    instance["scoring"] = [{"id": "scd_x", "formula": "..."}]
+    errors = validate_instance(schema, instance, registry=registry)
+    assert any("additional" in e.lower() or "scoring" in e for e in errors)
