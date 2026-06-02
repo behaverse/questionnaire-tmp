@@ -20,6 +20,45 @@ Body in [05b_scoring.md](05b_scoring.md). Pivoted away from in-JSON formula lang
 
 ---
 
+## OD-17 — Schema 5 (Response Data) shape
+
+**Opened.** 2026-06-02 (downstream of OD-16 resolution; now unblocked).
+
+**Context.** [Section §Schema 5 in 05_data_model.md](05_data_model.md) carries a sketch from the v26.0528 era. Several field names are stale (`question_id`, `question_type`, `response`) and the sketch predates OD-15 (Item entity) and OD-16 (scored_value, correct, external Scorer). The actual JSON Schema 5 file has never been authored. With v26.0602 shipped, Schema 5 is now writable but the shape needs design decisions first.
+
+The adopted basis is the [Behaverse Response Trial Format](https://behaverse.org/data-model/spec/trials/response.html) (BTF) — declared in [05_data_model.md](05_data_model.md) §"Adopted external standards" as the response-data standard. OD-17 settles how strictly Schema 5 binds to BTF vs. how much it extends.
+
+**Sub-questions.**
+
+- **17a — Relationship with BTF.** Is Schema 5 a *strict profile* of BTF (every Schema-5-valid document is also BTF-valid; differences via additive extensions only), or a *parallel format* with an adapter at the boundary (Schema 5 uses our v26.0602 vocabulary natively; an adapter translates to/from BTF when emitting to Behaverse)?
+  - (i) **Strict profile of BTF.** Same field names as BTF (`question_id`, `question_type`, `response`, `rt`, `trial_index`). Project-specific additions (e.g., `scored_value`, `correct`, Item ref instead of Question ref) live as BTF *extensions* under a namespace.
+  - (ii) **Parallel format with adapter.** *(Recommended.)* Schema 5 uses v26.0602-native names: `item` (CalVer-pinned ref), `value`, `scored_value`, `correct`. The Viewer Service includes an adapter that emits BTF when forwarding to Behaverse per OD-13's pluggable-sink contract. Pro: Schema 5 and Schema 2 share vocabulary, making round-trip analysis natural. Con: more code at the boundary; analysts who already speak BTF need to learn one new field-naming convention.
+
+- **17b — Per-response identifier convention.** Each response references the administered unit. Per OD-15 that unit is the **Item** (Question + Option). The sketch says `question_id`.
+  - (i) **`item: "it_X@vYY.MMDD"`.** *(Recommended.)* CalVer-pinned Item reference. Consistent with v26.0602; the Item version pins Question+Option versions transitively. LogicRule conditions reference items too, so consistency.
+  - (ii) **`question_id` + `option_id` separately.** Two fields. Pro: explicit. Con: redundant — the Item already binds them.
+  - (iii) **`prompt_id`.** Most fine-grained but loses the Option context.
+
+- **17c — Computed scores in payload.** Per OD-16, scores are computed by the external Scorer engine via on-demand invocation. When emitting a session batch, what does the payload carry?
+  - (i) **Nothing — recompute downstream.** Smallest payload. Analysts run the Scorer themselves.
+  - (ii) **Resolved `scores` map.** A flat object `{ "phq9_total": 12, "phq9_severity": "moderate" }` keyed by the `scores[]` ids declared in the Questionnaire. Pro: self-describing for offline analysis. Con: requires the viewer to have run the Scorer.
+  - (iii) **Full scorer-output objects, keyed by `scorer_ref`.** *(Recommended.)* `"scorer_outputs": { "scr_phq9@v26.0602": { "total": 12, "severity": "moderate", "band": {...}, "missing_count": 0 } }`. Pro: best-of-both — analysts get the full structured output without re-running the Scorer; can derive any declared Score id by walking the JSON Pointer. Con: largest payload (~200B–2KB per Scorer per session).
+  - The viewer only emits `scorer_outputs` for Scorers it actually invoked (i.e., when `show_score` was true or LogicRule branched on a score). For `show_score: false` deployments, the field may be absent and analysts compute scores downstream.
+
+- **17d — Per-item vs batched-session emission.** The sketch describes two modes (per-item streaming + batched-at-submission). OD-13's queued-forwarding model assumes per-item statements arrive at the Viewer Service over the session lifetime, with a final submission marker.
+  - (i) **Both modes coexist; per-item is the primary path.** *(Recommended.)* Schema 5 defines two top-level shapes — `Response` (per-item) and `SessionBatch` (the full session's responses + metadata) — with the latter being a wrapper around the former. The viewer always emits per-item; the SessionBatch is constructed at submission for offline export and reanalysis. Consistent with OD-13.
+  - (ii) Per-item only. SessionBatch derived offline at analysis time.
+  - (iii) Batched only. Throws out the streaming-resilience benefit OD-13 was built around.
+
+**Knock-ons.**
+
+- Schema 6 (Session Metadata) overlap: the SessionBatch carries session-level fields (`started_at`, `completed_at`, `submitted_at`, locale state). Some of these belong to Schema 6 conceptually. Decision: SessionBatch *embeds* a Schema 6 instance at `session`, rather than duplicating fields. Schema 6 authoring becomes a near-term sibling task.
+- Schema 4a (xAPI events) overlap: an `answered` xAPI statement carries similar per-item data. Decision: per-item Schema 5 emissions and xAPI `answered` statements are *two views of the same event* — the xAPI envelope wraps the Schema 5 response object as its `result.response` (or similar). Avoids duplication.
+
+**Resolution criterion.** Four sub-questions answered; the recommended-defaults locked unless flagged for grilling. Schema 5 spec + implementation follow.
+
+---
+
 ## Resolution log
 
 A decision moves out of this document and into the relevant design doc once resolved. The original entry is summarised here; the full body lives in the linked doc.
