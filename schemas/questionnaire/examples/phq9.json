@@ -5,7 +5,7 @@
     "title": "Patient Health Questionnaire-9",
     "short_title": "PHQ-9",
     "description": "Self-report measure of depression severity over the past 2 weeks.",
-    "version": "v26.0601",
+    "version": "v26.0602",
     "language": "en",
     "available_languages": ["en", "pt"],
     "authors": [
@@ -78,44 +78,28 @@
             }
           },
           "elements": [
-            { "question": { "prompt": { "ref": "pr_phq9_1@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_2@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_3@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_4@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_5@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_6@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_7@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_8@v26.0601" } } },
-            { "question": { "prompt": { "ref": "pr_phq9_9@v26.0601" } } }
+            { "question": { "prompt": { "ref": "pr_phq9_1@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_2@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_3@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_4@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_5@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_6@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_7@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_8@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_9@v26.0602" } } }
           ],
           "style": { "layout": "matrix" }
         }
       ]
     }
   ],
-  "subscales": [
-    {
-      "id": "scl_phq9_total",
-      "name": "PHQ-9 Total",
-      "prompt_ids": [
-        "pr_phq9_1", "pr_phq9_2", "pr_phq9_3", "pr_phq9_4", "pr_phq9_5",
-        "pr_phq9_6", "pr_phq9_7", "pr_phq9_8", "pr_phq9_9"
-      ]
-    }
+  "scores": [
+    { "id": "phq9_total",      "scorer": "scr_phq9@v26.0602", "path": "/total",
+      "name": "PHQ-9 Total" },
+    { "id": "phq9_severity",   "scorer": "scr_phq9@v26.0602", "path": "/severity",
+      "name": "PHQ-9 Severity Category" },
+    { "id": "phq9_band_label", "scorer": "scr_phq9@v26.0602", "path": "/band/label",
+      "name": "PHQ-9 Band Label" }
   ],
-  "scoring": [
-    {
-      "id": "total_score",
-      "name": "Total score",
-      "formula": "sum(scl_phq9_total)",
-      "range": [0, 27],
-      "interpretation": [
-        { "min": 0,  "max": 4,  "label": "None to minimal",  "severity": "none" },
-        { "min": 5,  "max": 9,  "label": "Mild",              "severity": "mild" },
-        { "min": 10, "max": 14, "label": "Moderate",          "severity": "moderate" },
-        { "min": 15, "max": 19, "label": "Moderately severe", "severity": "moderately_severe" },
-        { "min": 20, "max": 27, "label": "Severe",            "severity": "severe" }
-      ]
-    }
-  ]
+  "lock_show_score_timing": true
 }
