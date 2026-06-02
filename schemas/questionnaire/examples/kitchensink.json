@@ -3,8 +3,8 @@
   "metadata": {
     "id": "qst_kitchensink",
     "title": "Kitchen Sink",
-    "description": "Synthetic questionnaire exercising every v26.0601 $def for CI coverage.",
-    "version": "v26.0601",
+    "description": "Synthetic questionnaire exercising every v26.0602 $def for CI coverage.",
+    "version": "v26.0602",
     "language": "en",
     "available_languages": ["en", "pt"]
   },
@@ -16,14 +16,14 @@
       "title": "Introduction",
       "max_time_seconds": 60,
       "elements": [
-        { "ref": "msg_aiss_welcome@v26.0601" }
+        { "ref": "msg_aiss_welcome@v26.0602" }
       ]
     },
     {
       "id": "page_text_inputs",
       "elements": [
         {
-          "question": { "prompt": { "ref": "pr_name@v26.0601" } },
+          "question": { "prompt": { "ref": "pr_name@v26.0602" } },
           "option": {
             "input_data_type": "text",
             "measurement_type": "nominal",
@@ -32,7 +32,7 @@
           }
         },
         {
-          "question": { "prompt": { "ref": "pr_essay@v26.0601" } },
+          "question": { "prompt": { "ref": "pr_essay@v26.0602" } },
           "option": {
             "input_data_type": "text",
             "measurement_type": "nominal",
@@ -41,12 +41,12 @@
           "required": false
         },
         {
-          "question": { "prompt": { "ref": "pr_year_born@v26.0601" } },
+          "question": { "prompt": { "ref": "pr_year_born@v26.0602" } },
           "option": {
             "input_data_type": "text",
             "measurement_type": "interval",
-            "input_validation": { "ref": "rx_year_4digit@v26.0601" },
-            "placeholder": { "ref": "ph_hours_per_week@v26.0601" },
+            "input_validation": { "ref": "rx_year_4digit@v26.0602" },
+            "placeholder": { "ref": "ph_hours_per_week@v26.0602" },
             "content": { "en": { "status": "validated", "label": "Year of birth" } }
           }
         }
@@ -58,16 +58,16 @@
       "elements": [
         {
           "id": "sec_likert",
-          "shared_option": { "ref": "opt_agreement_7@v26.0601" },
+          "shared_option": { "ref": "opt_agreement_7@v26.0602" },
           "elements": [
-            { "question": { "ref": "q_aiss_2@v26.0601" } },
-            { "ref": "it_aiss_2@v26.0601", "required": false, "show_if": "true" }
+            { "question": { "ref": "q_aiss_2@v26.0602" } },
+            { "ref": "it_aiss_2@v26.0602", "required": false, "show_if": "true" }
           ],
           "style": { "layout": "matrix" }
         },
         {
           "question": {
-            "prompt": { "ref": "pr_topics@v26.0601" }
+            "prompt": { "ref": "pr_topics@v26.0602" }
           },
           "option": {
             "input_data_type": "choice",
@@ -99,7 +99,7 @@
       "id": "page_scalars",
       "elements": [
         {
-          "question": { "prompt": { "ref": "pr_mood@v26.0601" } },
+          "question": { "prompt": { "ref": "pr_mood@v26.0602" } },
           "option": {
             "input_data_type": "number",
             "measurement_type": "interval",
@@ -120,32 +120,16 @@
       "randomize": false
     }
   ],
-  "subscales": [
-    {
-      "id": "scl_agreeable",
-      "name": "Agreeableness",
-      "prompt_ids": ["pr_aiss_q_2"],
-      "weight_per_prompt": { "pr_aiss_q_2": 1.0 }
-    }
-  ],
   "logic": [
     { "id": "skip_essay_if_short", "type": "skip", "condition": "length(it_name) < 5", "action": { "skip_to": "page_choices" } },
     { "type": "visibility", "condition": "it_mood < 30", "action": { "target_id": "it_essay", "show": true } },
     { "type": "piping", "condition": "true", "action": { "field_path": "pages.page_scalars.elements.0.label", "source": "it_name" } },
     { "type": "branch", "condition": "it_year_born == ''", "action": { "skip_to": "page_scalars" } }
   ],
-  "scoring": [
-    {
-      "id": "agreeable_score",
-      "name": "Agreeableness score",
-      "formula": "mean(scl_agreeable)",
-      "range": [-1, 1],
-      "interpretation": [
-        { "min": -1.0, "max": -0.3, "label": "Low" },
-        { "min": -0.3, "max":  0.3, "label": "Mid" },
-        { "min":  0.3, "max":  1.0, "label": "High" }
-      ]
-    }
+  "scores": [
+    { "id": "ks_total",      "scorer": "scr_phq9@v26.0602", "path": "/total" },
+    { "id": "ks_severity",   "scorer": "scr_phq9@v26.0602", "path": "/severity" },
+    { "id": "ks_band_label", "scorer": "scr_phq9@v26.0602", "path": "/band/label" }
   ],
   "validation": [
     {
