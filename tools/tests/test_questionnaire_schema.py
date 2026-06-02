@@ -914,44 +914,45 @@ def test_block_id_pattern_fails(schema, registry):
     assert len(errors) >= 1
 
 
-def test_subscale_minimal(schema, registry):
-    instance = {
-        "metadata": base_metadata(),
-        "pages": [{"id": "page_x", "elements": [{"ref": "msg_x@v26.0601"}]}],
-        "subscales": [
-            {"id": "scl_total", "name": "Total", "prompt_ids": ["pr_a", "pr_b", "pr_c"]}
-        ]
+def test_subscale_minimal_valid(schema, registry):
+    s = {**schema["$defs"]["Subscale"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    v.validate({
+        "id": "scl_phq9_total",
+        "content": {"en": {"status": "validated", "name": "PHQ-9 Total"}}
+    })
+
+
+def test_subscale_id_pattern(schema, registry):
+    s = {**schema["$defs"]["Subscale"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {"id": "phq9_total", "content": {"en": {"status": "validated"}}}
+    errors = list(v.iter_errors(bad))
+    assert any("does not match" in e.message.lower() or "pattern" in e.message.lower() for e in errors)
+
+
+def test_subscale_rejects_prompt_ids(schema, registry):
+    s = {**schema["$defs"]["Subscale"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {
+        "id": "scl_phq9_total",
+        "content": {"en": {"status": "validated"}},
+        "prompt_ids": ["pr_phq9_1"]
     }
-    assert validate_instance(schema, instance, registry=registry) == []
+    errors = list(v.iter_errors(bad))
+    assert any("additional" in e.message.lower() or "prompt_ids" in e.message for e in errors)
 
 
-def test_subscale_with_weights(schema, registry):
-    instance = {
-        "metadata": base_metadata(),
-        "pages": [{"id": "page_x", "elements": [{"ref": "msg_x@v26.0601"}]}],
-        "subscales": [{
-            "id": "scl_w",
-            "name": "Weighted",
-            "prompt_ids": ["pr_a", "pr_b"],
-            "weight_per_prompt": {"pr_a": 1.0, "pr_b": 2.0}
-        }]
+def test_subscale_rejects_weight_per_prompt(schema, registry):
+    s = {**schema["$defs"]["Subscale"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {
+        "id": "scl_phq9_total",
+        "content": {"en": {"status": "validated"}},
+        "weight_per_prompt": [1, 1, 1]
     }
-    assert validate_instance(schema, instance, registry=registry) == []
-
-
-def test_subscale_unknown_weight_key_fails(schema, registry):
-    instance = {
-        "metadata": base_metadata(),
-        "pages": [{"id": "page_x", "elements": [{"ref": "msg_x@v26.0601"}]}],
-        "subscales": [{
-            "id": "scl_w",
-            "name": "X",
-            "prompt_ids": ["pr_a"],
-            "weight_per_prompt": {"X_invalid_key": 1.0}
-        }]
-    }
-    errors = validate_instance(schema, instance, registry=registry)
-    assert len(errors) >= 1
+    errors = list(v.iter_errors(bad))
+    assert any("additional" in e.message.lower() or "weight_per_prompt" in e.message for e in errors)
 
 
 # ---------- Style + Flow ----------
@@ -1232,3 +1233,97 @@ def test_score_empty_pointer_rejected(schema):
     bad = {"id": "phq9_total", "scorer": "scr_phq9@v26.0602", "path": ""}
     errors = list(Draft202012Validator(sub).iter_errors(bad))
     assert len(errors) >= 1
+
+
+# ---------- root: scores[] and lock_show_score_timing ----------
+
+def _minimal_valid() -> dict:
+    return {
+        "metadata": base_metadata(),
+        "pages": [{"id": "page_only", "elements": [minimal_message_ref()]}],
+    }
+
+
+def test_root_scores_array_valid(schema, registry):
+    instance = _minimal_valid()
+    instance["scores"] = [
+        {"id": "phq9_total", "scorer": "scr_phq9@v26.0602", "path": "/total"}
+    ]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_root_scores_duplicate_ids_allowed_by_schema(schema, registry):
+    # Score id uniqueness is a publish-time concern, NOT a schema-level concern.
+    # The schema accepts duplicates; the validator's cross-reference checker catches them later.
+    instance = _minimal_valid()
+    instance["scores"] = [
+        {"id": "phq9_total", "scorer": "scr_phq9@v26.0602", "path": "/total"},
+        {"id": "phq9_total", "scorer": "scr_phq9@v26.0602", "path": "/severity"}
+    ]
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_root_lock_show_score_timing_boolean(schema, registry):
+    instance = _minimal_valid()
+    instance["lock_show_score_timing"] = True
+    assert validate_instance(schema, instance, registry=registry) == []
+
+
+def test_root_lock_show_score_timing_optional(schema, registry):
+    # Field is optional; _minimal_valid() does not include it
+    assert validate_instance(schema, _minimal_valid(), registry=registry) == []
+
+
+# ---------- Prompt.subscales ----------
+
+def test_prompt_subscales_array(schema, registry):
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    v.validate({
+        "id": "pr_phq9_1",
+        "content": {"en": {"status": "validated", "text": "Little interest..."}},
+        "subscales": ["scl_phq9_total"]
+    })
+
+
+def test_prompt_subscales_multivalued(schema, registry):
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    v.validate({
+        "id": "pr_anxiety_1",
+        "content": {"en": {"status": "validated", "text": "..."}},
+        "subscales": ["scl_anxiety_total", "scl_general_distress"]
+    })
+
+
+def test_prompt_subscales_optional(schema, registry):
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    v.validate({
+        "id": "pr_demo_1",
+        "content": {"en": {"status": "validated", "text": "..."}}
+    })
+
+
+def test_prompt_subscales_pattern(schema, registry):
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {
+        "id": "pr_phq9_1",
+        "content": {"en": {"status": "validated"}},
+        "subscales": ["bad_scale_id"]
+    }
+    errors = list(v.iter_errors(bad))
+    assert any("does not match" in e.message.lower() or "pattern" in e.message.lower() for e in errors)
+
+
+def test_prompt_subscales_unique(schema, registry):
+    s = {**schema["$defs"]["Prompt"], "$defs": schema["$defs"]}
+    v = Draft202012Validator(s, registry=registry, format_checker=Draft202012Validator.FORMAT_CHECKER)
+    bad = {
+        "id": "pr_phq9_1",
+        "content": {"en": {"status": "validated"}},
+        "subscales": ["scl_x", "scl_x"]
+    }
+    errors = list(v.iter_errors(bad))
+    assert any("uniqueItems" in e.message or "unique" in e.message.lower() for e in errors)

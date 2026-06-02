@@ -27,6 +27,8 @@
     "flow":      { "$ref": "#/$defs/FlowInstrument" },
     "logic":      { "type": "array", "items": { "$ref": "#/$defs/LogicRule" } },
     "scoring":    { "type": "array", "items": { "$ref": "#/$defs/ScoringDef" } },
+    "scores":     { "type": "array", "items": { "$ref": "#/$defs/Score" } },
+    "lock_show_score_timing": { "type": "boolean", "default": false },
     "validation": { "type": "array", "items": { "$ref": "#/$defs/CrossQuestionValidationRule" } },
     "extensions": { "type": "object" }
   },
@@ -186,6 +188,14 @@
           "default": false
         },
         "content":    { "$ref": "#/$defs/PromptContent" },
+        "subscales": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^scl_[a-z0-9_]+(@v\\d{2}\\.\\d{4})?$"
+          },
+          "uniqueItems": true
+        },
         "extensions": { "type": "object" }
       },
       "patternProperties": { "^x_": {} },
@@ -651,24 +661,13 @@
     },
     "Subscale": {
       "type": "object",
-      "required": ["id", "name", "prompt_ids"],
+      "required": ["id", "content"],
       "properties": {
-        "id":         { "$ref": "#/$defs/SubscaleId" },
-        "name":       { "type": "string" },
-        "description":{ "type": "string" },
-        "prompt_ids": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/PromptId" },
-          "minItems": 1,
-          "uniqueItems": true
-        },
-        "weight_per_prompt": {
-          "type": "object",
-          "patternProperties": { "^pr_[a-z0-9_]+$": { "type": "number" } },
-          "additionalProperties": false
-        },
-        "translations": { "$ref": "#/$defs/SubscaleTranslations" },
-        "extensions":   { "type": "object" }
+        "id":          { "type": "string", "pattern": "^scl_[a-z0-9_]+$" },
+        "name":        { "type": "string" },
+        "description": { "type": "string" },
+        "content":     { "$ref": "#/$defs/ContentLanguageMap" },
+        "extensions":  { "type": "object" }
       },
       "patternProperties": { "^x_": {} },
       "additionalProperties": false
