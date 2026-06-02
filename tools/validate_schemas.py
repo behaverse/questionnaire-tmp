@@ -87,6 +87,8 @@ LIBRARY_ENTITY_DIRS = {
     "questions":    "Question",
     "items":        "Item",
     "solutions":    "Solution",
+    "subscales":    "Subscale",
+    "scorers":      "Scorer",
 }
 
 
