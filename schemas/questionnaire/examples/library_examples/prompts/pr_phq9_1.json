@@ -4,6 +4,7 @@
   "construct": "depression",
   "dimension": "frequency",
   "reversed": false,
+  "subscales": ["scl_phq9_total"],
   "content": {
     "en": { "status": "validated", "text": "Little interest or pleasure in doing things." }
   }
