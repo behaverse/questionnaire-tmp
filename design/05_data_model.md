@@ -36,6 +36,7 @@ All fields in data models owned by this project use **`snake_case`**. Fields inh
 | 4b | Behavioural Channels | Per-session attachments for continuous data (mouse, keyboard, future webcam/microphone) | `behaverse.org/schemas/questionnaire/channels/vYY.MMDD.json` |
 | 5 | Response Data | Participant answers per item / per session | `behaverse.org/schemas/questionnaire/response/vYY.MMDD.json` |
 | 6 | Session Metadata | Session-level tracking | `behaverse.org/schemas/questionnaire/session/vYY.MMDD.json` |
+| 7 | Viewer Conformance Manifest | Per-viewer declaration of supported features (schema versions, evaluator, widgets, channels, Scorer impl kinds, logic actions, locale switching, resume). Per OD-18c; consumed by the Viewer Service when generating Schema 3. | `behaverse.org/schemas/viewer_conformance/vYY.MMDD/schema.json` |
 
 ## Reusable-component model
 
@@ -137,14 +138,21 @@ Reusable entities below the questionnaire level (questions, option-sets, instruc
 
 ## Schema 3 — Questionnaire Runtime
 
-**Purpose.** Optimised for viewer rendering. Per OD-01 (resolved 2026-05-23 → S1 Pure custom), Schema 3 is a **flattened, denormalised view of Schema 2** produced by the Viewer Service (or computed client-side by the viewer) when minting a session:
+**Purpose.** Optimised for viewer rendering. The authoritative model lives in [05d_runtime.md](05d_runtime.md) (per OD-18 resolved 2026-06-03). This section is a summary; 05d carries the full sub-decision log, the runtime pipeline diagram, Schema 3 and Schema 7 skeletons, and the knock-on details.
 
-- Reusable-entity references (`ref: "q_x@v26.0523"`) resolved to inline question objects.
-- Translations applied for the participant's active locale; only the active-locale text is included.
-- Logic / validation / scoring blocks pass through unchanged for the viewer's WASM evaluator (OD-11) to consume.
-- Optional: scoring formulas may be stripped if the deployment's `show_score` is false (the formulas still travel with the submission, but the viewer never evaluates them).
+**Production.** Schema 3 is produced **server-side by the Viewer Service** at session-mint, via a shared Python denormaliser library (`behaverse-runtime-denormaliser`) also consumed by the Editor for preview. One canonical document per (qst@version, locale, viewer_conformance_hash, deployment_runtime_policy_hash); cached in a Postgres-backed table with LRU eviction and an admin purge API. Lazy generation on first session.
 
-The contract: Schema 3 must encode every Schema 2 feature the viewer's conformance manifest claims to support; nothing else.
+**Shape.** Flattened, denormalised view of Schema 2 with all Library refs inlined, single-locale text only, Scorer implementations pinned. Carries a `provenance` block (denormaliser version, all cache-key inputs, stripped Scorer refs) for analyst reproducibility.
+
+**Locale.** Single-locale by default; mid-session locale switch triggers re-mint. Deployment-config flag `pre_fetch_all_locales: true` flips to multi-locale for offline kiosks.
+
+**Viewer trim.** Each viewer publishes a **Conformance Manifest** (the new formal **Schema 7**) declaring its supported widgets, behavioural channels, Scorer impl kinds, LogicRule actions, evaluator language version, etc. The Viewer Service stores manifests in a viewer-registry table and trims Schema 3 to only the features the receiving viewer can render.
+
+**Scorer impl selection.** Deployment declares an ordered `scorer_impl_preference: ["wasm", "http", "python", "r"]`. Schema 3 generation picks the first kind in the intersection of (deployment preference, Scorer.implementations[], viewer.scorer_impl_kinds) and pins it into Schema 3 — e.g., `impl: { kind: "wasm", url: "...", sha256: "..." }`. Pre-flight error if no intersection exists.
+
+**Scoring stripping under `show_score: false`.** Selective graph walk: keep every Scorer reference that's transitively reachable from any `LogicRule.condition` or `LogicRule.action` (always-on branching); strip display-only Scorer refs. Stripped refs recorded in `Schema 3.provenance.stripped_scorer_refs`. Hard-mode deployment flag `disable_in_session_scoring: true` strips every Scorer ref AND every dependent LogicRule.
+
+**Schema-version compatibility.** Schema 3 is independent of Schema 2's CalVer — the viewer's conformance manifest declares which Schema 2 versions it accepts; the Viewer Service refuses to generate Schema 3 for unsupported pairings.
 
 ---
 
