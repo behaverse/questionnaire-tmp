@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/session/v26.0603/schema.json",
+  "title": "Behaverse Session Metadata",
+  "description": "Per OD-17g, carries per-session metadata including per-Scorer aggregate outputs.",
+  "type": "object",
+  "required": ["session_id", "session_index", "agent_id", "instrument_id", "instrument_version", "status", "started_at"],
+  "properties": {
+    "session_id":         { "type": "string", "format": "uuid" },
+    "session_index":      { "type": "integer", "minimum": 1 },
+    "agent_id":           { "type": "string" },
+    "instrument_id":      { "type": "string", "pattern": "^qst_[a-z0-9_]+$" },
+    "instrument_version": { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$" },
+    "status":             { "type": "string", "enum": ["not_started", "in_progress", "completed", "submitted", "forwarded", "validated", "abandoned"] },
+    "started_at":         { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/response/v26.0603/schema.json",
+  "title": "Behaverse Response Data",
+  "description": "Per OD-17 (resolved 2026-06-03), strict adherence to the BDM Response trial table with three documented deviations (see design/05c_bdm_alignment.md).",
+  "oneOf": [
+    { "$ref": "#/$defs/Response" },
+    { "$ref": "#/$defs/ResponseSet" }
+  ],
+  "$defs": {
+    "Response": {
+      "type": "object",
+      "required": ["response_id"],
+      "properties": {
+        "response_id": { "type": "integer" }
+      },
+      "additionalProperties": true
+    },
+    "ResponseSet": {
+      "type": "object",
+      "required": ["session_id", "responses"],
+      "properties": {
+        "session_id": { "type": "string", "format": "uuid" },
+        "responses": { "type": "array", "items": { "$ref": "#/$defs/Response" } }
+      },
+      "additionalProperties": true
+    }
+  }
+}
