@@ -18,6 +18,8 @@ from tools.validate_schemas import (
     check_scorer_conformance,
     check_stimulus_id_decomposable,
     check_scorer_outputs_against_schema,
+    check_pinned_scorer_consistency,
+    check_runtime_provenance_completeness,
 )
 
 
@@ -288,3 +290,74 @@ def test_check_scorer_outputs_reports_unresolved(tmp_path):
     results = check_scorer_outputs_against_schema(schemas)
     errs = results[0][2]
     assert any("UNRESOLVED_SCORER" in e for e in errs)
+
+
+def test_check_pinned_scorer_consistency_valid(tmp_path):
+    import json
+    from tools.validate_schemas import check_pinned_scorer_consistency
+    schemas = tmp_path / "schemas"
+    (schemas / "questionnaire" / "examples" / "library_examples" / "scorers").mkdir(parents=True)
+    (schemas / "questionnaire" / "examples" / "library_examples" / "scorers" / "scr_x.json").write_text(json.dumps({
+        "id": "scr_x",
+        "implementations": [{"kind": "wasm", "url": "x", "sha256": "a"}, {"kind": "http", "url": "y"}]
+    }))
+    (schemas / "runtime" / "examples").mkdir(parents=True)
+    (schemas / "runtime" / "examples" / "ok.json").write_text(json.dumps({
+        "scores": [{"id": "x", "scorer": "scr_x@v26.0603", "path": "/total", "impl": {"kind": "wasm"}}]
+    }))
+    results = check_pinned_scorer_consistency(schemas)
+    assert all(errs == [] for (_, _, errs) in results)
+
+
+def test_check_pinned_scorer_consistency_kind_mismatch(tmp_path):
+    import json
+    from tools.validate_schemas import check_pinned_scorer_consistency
+    schemas = tmp_path / "schemas"
+    (schemas / "questionnaire" / "examples" / "library_examples" / "scorers").mkdir(parents=True)
+    (schemas / "questionnaire" / "examples" / "library_examples" / "scorers" / "scr_x.json").write_text(json.dumps({
+        "id": "scr_x",
+        "implementations": [{"kind": "wasm"}]
+    }))
+    (schemas / "runtime" / "examples").mkdir(parents=True)
+    (schemas / "runtime" / "examples" / "bad.json").write_text(json.dumps({
+        "scores": [{"id": "x", "scorer": "scr_x@v26.0603", "path": "/total", "impl": {"kind": "http"}}]
+    }))
+    results = check_pinned_scorer_consistency(schemas)
+    errs = results[0][2]
+    assert any("IMPL_KIND_NOT_DECLARED" in e for e in errs)
+
+
+def test_check_runtime_provenance_completeness_valid(tmp_path):
+    import json
+    from tools.validate_schemas import check_runtime_provenance_completeness
+    schemas = tmp_path / "schemas"
+    (schemas / "runtime" / "examples").mkdir(parents=True)
+    (schemas / "runtime" / "examples" / "ok.json").write_text(json.dumps({
+        "provenance": {
+            "source_questionnaire_id":        "qst_x",
+            "source_questionnaire_version":   "v26.0602",
+            "locale":                         "en",
+            "viewer_conformance_hash":        "a" * 64,
+            "deployment_runtime_policy_hash": "b" * 64,
+            "generated_at":                   "2026-06-03T14:30:00Z",
+            "denormaliser_version":           "v26.0603"
+        }
+    }))
+    results = check_runtime_provenance_completeness(schemas)
+    assert all(errs == [] for (_, _, errs) in results)
+
+
+def test_check_runtime_provenance_completeness_missing_fields(tmp_path):
+    import json
+    from tools.validate_schemas import check_runtime_provenance_completeness
+    schemas = tmp_path / "schemas"
+    (schemas / "runtime" / "examples").mkdir(parents=True)
+    (schemas / "runtime" / "examples" / "bad.json").write_text(json.dumps({
+        "provenance": {
+            "source_questionnaire_id": "qst_x",
+            "locale":                  "en"
+        }
+    }))
+    results = check_runtime_provenance_completeness(schemas)
+    errs = results[0][2]
+    assert any("PROVENANCE_MISSING" in e for e in errs)

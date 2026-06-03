@@ -258,6 +258,79 @@ def check_scorer_outputs_against_schema(schemas_root: Path) -> list[tuple[Path, 
     return out
 
 
+def check_pinned_scorer_consistency(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each runtime example, verify scores[].impl matches one of the
+    referenced Scorer's implementations[]."""
+    out = []
+    scorers_dir = schemas_root / "questionnaire" / "examples" / "library_examples" / "scorers"
+    scorers = {}
+    if scorers_dir.is_dir():
+        for sf in sorted(scorers_dir.glob("*.json")):
+            try:
+                data = json.loads(sf.read_text())
+                scorers[data["id"]] = data
+            except (json.JSONDecodeError, OSError):
+                continue
+    runtime_examples = schemas_root / "runtime" / "examples"
+    if not runtime_examples.is_dir():
+        return out
+    for r_path in sorted(runtime_examples.glob("*.json")):
+        try:
+            instance = json.loads(r_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        scores = instance.get("scores", [])
+        if not scores:
+            continue
+        errs = []
+        for score in scores:
+            scorer_ref = score.get("scorer", "")
+            sid = scorer_ref.split("@")[0] if "@" in scorer_ref else scorer_ref
+            scorer = scorers.get(sid)
+            if scorer is None:
+                errs.append(f"UNRESOLVED_SCORER: {scorer_ref}")
+                continue
+            declared_kinds = {impl.get("kind") for impl in scorer.get("implementations", [])}
+            pinned = score.get("impl", {})
+            pinned_kind = pinned.get("kind")
+            if pinned_kind not in declared_kinds:
+                errs.append(
+                    f"IMPL_KIND_NOT_DECLARED: score '{score.get('id')}' pinned to "
+                    f"kind='{pinned_kind}', but {sid} only declares {sorted(declared_kinds)}"
+                )
+        out.append((r_path, "pinned_scorer", errs))
+    return out
+
+
+def check_runtime_provenance_completeness(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each runtime example, verify the provenance block has the required structure."""
+    out = []
+    runtime_examples = schemas_root / "runtime" / "examples"
+    if not runtime_examples.is_dir():
+        return out
+    required_fields = {
+        "source_questionnaire_id",
+        "source_questionnaire_version",
+        "locale",
+        "viewer_conformance_hash",
+        "deployment_runtime_policy_hash",
+        "generated_at",
+        "denormaliser_version",
+    }
+    for r_path in sorted(runtime_examples.glob("*.json")):
+        try:
+            instance = json.loads(r_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        prov = instance.get("provenance", {})
+        missing = required_fields - set(prov.keys())
+        errs = []
+        if missing:
+            errs.append(f"PROVENANCE_MISSING: {sorted(missing)}")
+        out.append((r_path, "provenance", errs))
+    return out
+
+
 def check_scorer_conformance(schemas_root: Path) -> list[tuple[Path, list[dict]]]:
     """Stub: returns SKIPPED for every (scorer, implementation, test_case) triple.
 
@@ -341,6 +414,33 @@ def main(schemas_root: Path) -> None:
                 score_count = 0
             if score_count:
                 print(f"PASS  {rel} (score paths: {score_count} verified)")
+
+    pinned_results = check_pinned_scorer_consistency(schemas_root)
+    for path, _kind, errs in pinned_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (pinned scorer consistency)")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            try:
+                has_scores = bool(json.loads(path.read_text()).get("scores"))
+            except (json.JSONDecodeError, OSError):
+                has_scores = False
+            if has_scores:
+                print(f"PASS  {rel} (pinned scorer consistency)")
+
+    prov_results = check_runtime_provenance_completeness(schemas_root)
+    for path, _kind, errs in prov_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (runtime provenance completeness)")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            print(f"PASS  {rel} (runtime provenance completeness)")
 
     stim_results = check_stimulus_id_decomposable(schemas_root)
     for path, _kind, errs in stim_results:
