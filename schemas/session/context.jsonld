@@ -1,5 +1,22 @@
 {
   "@context": {
-    "@vocab": "https://behaverse.org/schemas/session#"
+    "@vocab":       "https://behaverse.org/schemas/session#",
+    "schema":       "http://schema.org/",
+
+    "session_id":         { "@id": "https://behaverse.org/schemas/session#session_id", "@type": "@id" },
+    "session_index":      { "@id": "https://behaverse.org/schemas/session#session_index" },
+    "agent_id":           { "@id": "https://behaverse.org/data-model#agent_id" },
+    "instrument_id":      { "@id": "https://behaverse.org/data-model#instrument_id", "@type": "@id" },
+    "instrument_version": { "@id": "https://behaverse.org/schemas/session#instrument_version" },
+    "deployment_id":      { "@id": "https://behaverse.org/schemas/session#deployment_id" },
+    "status":             { "@id": "https://behaverse.org/schemas/session#status" },
+    "started_at":         { "@id": "https://behaverse.org/schemas/session#started_at" },
+    "completed_at":       { "@id": "https://behaverse.org/schemas/session#completed_at" },
+    "submitted_at":       { "@id": "https://behaverse.org/schemas/session#submitted_at" },
+    "forwarded_at":       { "@id": "https://behaverse.org/schemas/session#forwarded_at" },
+    "initial_locale":     { "@id": "https://behaverse.org/schemas/session#initial_locale" },
+    "last_active_locale": { "@id": "https://behaverse.org/schemas/session#last_active_locale" },
+    "device":             { "@id": "https://behaverse.org/schemas/session#device" },
+    "scorer_outputs":     { "@id": "https://behaverse.org/schemas/session#scorer_outputs" }
   }
 }
