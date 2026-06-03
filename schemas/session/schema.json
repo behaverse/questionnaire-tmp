@@ -2,17 +2,71 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://behaverse.org/schemas/session/v26.0603/schema.json",
   "title": "Behaverse Session Metadata",
-  "description": "Per OD-17g, carries per-session metadata including per-Scorer aggregate outputs.",
+  "description": "Per OD-17g, carries per-session metadata including per-Scorer aggregate outputs (scorer_outputs).",
   "type": "object",
-  "required": ["session_id", "session_index", "agent_id", "instrument_id", "instrument_version", "status", "started_at"],
+  "required": [
+    "session_id",
+    "session_index",
+    "agent_id",
+    "instrument_id",
+    "instrument_version",
+    "status",
+    "started_at"
+  ],
   "properties": {
-    "session_id":         { "type": "string", "format": "uuid" },
-    "session_index":      { "type": "integer", "minimum": 1 },
+    "session_id":         { "type": "string", "format": "uuid", "description": "Globally-unique UUID v4 (per OD-17h)." },
+    "session_index":      { "type": "integer", "minimum": 1, "description": "1-based per-agent ordering count (BDM-aligned per OD-17h)." },
     "agent_id":           { "type": "string" },
     "instrument_id":      { "type": "string", "pattern": "^qst_[a-z0-9_]+$" },
-    "instrument_version": { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$" },
-    "status":             { "type": "string", "enum": ["not_started", "in_progress", "completed", "submitted", "forwarded", "validated", "abandoned"] },
-    "started_at":         { "type": "string", "format": "date-time" }
+    "instrument_version": { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$", "description": "CalVer; pinned at session-mint per OD-14 sub-question 3." },
+    "deployment_id":      { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["not_started", "in_progress", "completed", "submitted", "forwarded", "validated", "abandoned"]
+    },
+    "started_at":         { "type": "string", "format": "date-time" },
+    "completed_at":       { "type": "string", "format": "date-time" },
+    "submitted_at":       { "type": "string", "format": "date-time", "description": "Viewer Service receipt timestamp (per OD-13)." },
+    "forwarded_at":       { "type": "string", "format": "date-time", "description": "Behaverse delivery receipt (per OD-13)." },
+    "forward_attempts":   { "type": "integer", "minimum": 0, "default": 0 },
+    "forward_failure_reason": { "type": "string" },
+    "initial_locale":     { "$ref": "#/$defs/Locale" },
+    "last_active_locale": { "$ref": "#/$defs/Locale" },
+    "device":             { "$ref": "#/$defs/Device" },
+    "scorer_outputs": {
+      "type": "object",
+      "description": "Per OD-17g: per-Scorer structured output. Keyed by CalVer-pinned Scorer ref. Each value conforms to the referenced Scorer entity's output_schema.",
+      "patternProperties": {
+        "^scr_[a-z0-9_]+@v\\d{2}\\.\\d{4}$": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "extensions":         { "type": "object" }
   },
-  "additionalProperties": true
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x_": {}
+  },
+  "$defs": {
+    "Locale": {
+      "type": "object",
+      "required": ["language"],
+      "properties": {
+        "language": { "type": "string", "description": "BCP-47 base (ISO 639-1)." },
+        "region":   { "type": ["string", "null"], "description": "Optional region subtag." }
+      },
+      "additionalProperties": false
+    },
+    "Device": {
+      "type": "object",
+      "properties": {
+        "user_agent":  { "type": "string" },
+        "platform":    { "type": "string" },
+        "device_type": { "type": "string", "enum": ["desktop", "tablet", "mobile", "kiosk", "other"] },
+        "viewport":    { "type": "string", "description": "e.g., \"1920x1080\"" },
+        "timezone":    { "type": "string", "description": "IANA tz name." }
+      },
+      "additionalProperties": false
+    }
+  }
 }
