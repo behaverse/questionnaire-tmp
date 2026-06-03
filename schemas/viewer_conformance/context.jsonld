@@ -1,1 +1,14 @@
-{ "@context": { "@vocab": "https://behaverse.org/schemas/viewer_conformance#" } }
+{
+  "@context": {
+    "@vocab":               "https://behaverse.org/schemas/viewer_conformance#",
+    "viewer_id":            { "@id": "https://behaverse.org/schemas/viewer_conformance#viewer_id" },
+    "viewer_version":       { "@id": "https://behaverse.org/schemas/viewer_conformance#viewer_version" },
+    "schema_support":       { "@id": "https://behaverse.org/schemas/viewer_conformance#schema_support" },
+    "evaluator":            { "@id": "https://behaverse.org/schemas/viewer_conformance#evaluator" },
+    "widgets":              { "@id": "https://behaverse.org/schemas/viewer_conformance#widgets", "@container": "@set" },
+    "behavioural_channels": { "@id": "https://behaverse.org/schemas/viewer_conformance#behavioural_channels", "@container": "@set" },
+    "scorer_impl_kinds":    { "@id": "https://behaverse.org/schemas/viewer_conformance#scorer_impl_kinds", "@container": "@set" },
+    "logic_actions":        { "@id": "https://behaverse.org/schemas/viewer_conformance#logic_actions", "@container": "@set" },
+    "viewer_url":           { "@id": "https://behaverse.org/schemas/viewer_conformance#viewer_url", "@type": "@id" }
+  }
+}

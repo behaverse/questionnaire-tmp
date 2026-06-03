@@ -1,1 +1,14 @@
-{ "@context": { "@vocab": "https://behaverse.org/schemas/runtime#" } }
+{
+  "@context": {
+    "@vocab":                  "https://behaverse.org/schemas/runtime#",
+    "provenance":              { "@id": "https://behaverse.org/schemas/runtime#provenance" },
+    "metadata":                { "@id": "https://behaverse.org/schemas/instrument#metadata" },
+    "pages":                   { "@id": "https://behaverse.org/schemas/questionnaire#pages", "@container": "@list" },
+    "blocks":                  { "@id": "https://behaverse.org/schemas/questionnaire#blocks", "@container": "@set" },
+    "scores":                  { "@id": "https://behaverse.org/schemas/questionnaire#scores", "@container": "@set" },
+    "impl":                    { "@id": "https://behaverse.org/schemas/runtime#impl" },
+    "source_questionnaire_id": { "@id": "https://behaverse.org/schemas/runtime#source_questionnaire_id", "@type": "@id" },
+    "viewer_conformance_hash": { "@id": "https://behaverse.org/schemas/runtime#viewer_conformance_hash" },
+    "denormaliser_version":    { "@id": "https://behaverse.org/schemas/runtime#denormaliser_version" }
+  }
+}
