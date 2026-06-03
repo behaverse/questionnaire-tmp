@@ -16,6 +16,8 @@ from tools.validate_schemas import (
     walk_library_examples,
     check_score_paths,
     check_scorer_conformance,
+    check_stimulus_id_decomposable,
+    check_scorer_outputs_against_schema,
 )
 
 
@@ -226,3 +228,63 @@ def test_check_scorer_conformance_skips_all(tmp_path):
     scorer_path, statuses = results[0]
     assert all(s["status"] == "SKIPPED" for s in statuses)
     assert len(statuses) == 2  # 1 impl × 2 test cases
+
+
+def test_check_stimulus_id_decomposable_passes_valid(tmp_path):
+    import json
+    schemas = tmp_path / "schemas"
+    (schemas / "response" / "examples").mkdir(parents=True)
+    (schemas / "response" / "examples" / "ok.json").write_text(json.dumps({
+        "responses": [
+            {"stimulus_id": "pr_phq9_1"},
+            {"stimulus_id": "ctx_intro+ins_likert+pr_phq9_2"},
+            {"stimulus_id": "msg_welcome"}
+        ]
+    }))
+    results = check_stimulus_id_decomposable(schemas)
+    assert all(errs == [] for (_, _, errs) in results)
+
+
+def test_check_stimulus_id_decomposable_reports_malformed(tmp_path):
+    import json
+    schemas = tmp_path / "schemas"
+    (schemas / "response" / "examples").mkdir(parents=True)
+    (schemas / "response" / "examples" / "bad.json").write_text(json.dumps({
+        "responses": [{"stimulus_id": "xyz_phq9_1"}]
+    }))
+    results = check_stimulus_id_decomposable(schemas)
+    errs = results[0][2]
+    assert any("STIMULUS_ID_MALFORMED" in e for e in errs)
+
+
+def test_check_scorer_outputs_validates(tmp_path):
+    import json
+    schemas = tmp_path / "schemas"
+    (schemas / "questionnaire" / "examples" / "library_examples" / "scorers").mkdir(parents=True)
+    (schemas / "questionnaire" / "examples" / "library_examples" / "scorers" / "scr_x.json").write_text(json.dumps({
+        "id": "scr_x",
+        "output_schema": {
+            "type": "object",
+            "properties": {"total": {"type": "integer"}},
+            "required": ["total"]
+        }
+    }))
+    (schemas / "session" / "examples").mkdir(parents=True)
+    (schemas / "session" / "examples" / "ok.json").write_text(json.dumps({
+        "scorer_outputs": {"scr_x@v26.0603": {"total": 5}}
+    }))
+    results = check_scorer_outputs_against_schema(schemas)
+    assert all(errs == [] for (_, _, errs) in results)
+
+
+def test_check_scorer_outputs_reports_unresolved(tmp_path):
+    import json
+    schemas = tmp_path / "schemas"
+    (schemas / "questionnaire" / "examples" / "library_examples" / "scorers").mkdir(parents=True)
+    (schemas / "session" / "examples").mkdir(parents=True)
+    (schemas / "session" / "examples" / "ok.json").write_text(json.dumps({
+        "scorer_outputs": {"scr_missing@v26.0603": {"total": 5}}
+    }))
+    results = check_scorer_outputs_against_schema(schemas)
+    errs = results[0][2]
+    assert any("UNRESOLVED_SCORER" in e for e in errs)

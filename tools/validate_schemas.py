@@ -187,6 +187,77 @@ def check_score_paths(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
     return out
 
 
+def check_stimulus_id_decomposable(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each Response example, verify stimulus_id parses into valid entity-id parts.
+
+    Valid prefixes: ctx_, ins_, pr_, msg_ (per OD-17f).
+    Returns a list of (path, kind, errors) tuples.
+    """
+    out = []
+    valid_prefixes = ("ctx_", "ins_", "pr_", "msg_")
+    response_examples = schemas_root / "response" / "examples"
+    if not response_examples.is_dir():
+        return out
+    for q_path in sorted(response_examples.glob("*.json")):
+        try:
+            instance = json.loads(q_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        rows = instance.get("responses", []) if "responses" in instance else [instance]
+        errs = []
+        for idx, row in enumerate(rows):
+            sid = row.get("stimulus_id", "")
+            if not sid:
+                continue
+            parts = sid.split("+")
+            for part in parts:
+                if not any(part.startswith(p) for p in valid_prefixes):
+                    errs.append(f"STIMULUS_ID_MALFORMED (row {idx}): '{sid}' contains '{part}' with invalid prefix")
+        out.append((q_path, "stimulus_id", errs))
+    return out
+
+
+def check_scorer_outputs_against_schema(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each Session example with scorer_outputs, validate each output object
+    against the referenced Scorer entity's output_schema.
+    """
+    out = []
+    scorers_dir = schemas_root / "questionnaire" / "examples" / "library_examples" / "scorers"
+    scorers = {}
+    if scorers_dir.is_dir():
+        for sf in sorted(scorers_dir.glob("*.json")):
+            try:
+                data = json.loads(sf.read_text())
+                scorers[data["id"]] = data
+            except (json.JSONDecodeError, OSError):
+                continue
+    session_examples = schemas_root / "session" / "examples"
+    if not session_examples.is_dir():
+        return out
+    for s_path in sorted(session_examples.glob("*.json")):
+        try:
+            instance = json.loads(s_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        outputs = instance.get("scorer_outputs", {})
+        if not outputs:
+            continue
+        errs = []
+        for ref, value in outputs.items():
+            sid = ref.split("@")[0]
+            scorer = scorers.get(sid)
+            if not scorer:
+                errs.append(f"UNRESOLVED_SCORER: {ref}")
+                continue
+            output_schema = scorer.get("output_schema", {})
+            try:
+                Draft202012Validator(output_schema).validate(value)
+            except Exception as e:
+                errs.append(f"OUTPUT_VALIDATION_FAILED for {ref}: {str(e)[:120]}")
+        out.append((s_path, "scorer_outputs", errs))
+    return out
+
+
 def check_scorer_conformance(schemas_root: Path) -> list[tuple[Path, list[dict]]]:
     """Stub: returns SKIPPED for every (scorer, implementation, test_case) triple.
 
@@ -270,6 +341,28 @@ def main(schemas_root: Path) -> None:
                 score_count = 0
             if score_count:
                 print(f"PASS  {rel} (score paths: {score_count} verified)")
+
+    stim_results = check_stimulus_id_decomposable(schemas_root)
+    for path, _kind, errs in stim_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (stimulus_id decomposition)")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            print(f"PASS  {rel} (stimulus_id decomposition)")
+
+    scorer_out_results = check_scorer_outputs_against_schema(schemas_root)
+    for path, _kind, errs in scorer_out_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (scorer_outputs)")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            print(f"PASS  {rel} (scorer_outputs)")
 
     conf_results = check_scorer_conformance(schemas_root)
     for sf, statuses in conf_results:
