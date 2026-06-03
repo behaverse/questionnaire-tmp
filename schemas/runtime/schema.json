@@ -6,9 +6,81 @@
   "type": "object",
   "required": ["provenance", "metadata", "pages"],
   "properties": {
-    "provenance": { "type": "object" },
-    "metadata":   { "type": "object" },
-    "pages":      { "type": "array", "minItems": 1, "items": { "type": "object" } }
+    "provenance":             { "$ref": "#/$defs/RuntimeProvenance" },
+    "metadata":               { "$ref": "#/$defs/EmbeddedInstrument" },
+    "locale":                 { "type": "string" },
+    "available_locales":      { "type": "array", "items": { "type": "string" } },
+    "style":                  { "type": "object" },
+    "flow":                   { "type": "object" },
+    "pages":                  { "type": "array", "minItems": 1, "items": { "type": "object" } },
+    "blocks":                 { "type": "array", "items": { "type": "object" } },
+    "scores":                 { "type": "array", "items": { "$ref": "#/$defs/PinnedScore" } },
+    "logic":                  { "type": "array", "items": { "type": "object" } },
+    "validation":             { "type": "array", "items": { "type": "object" } },
+    "lock_show_score_timing": { "type": "boolean", "default": false },
+    "extensions":             { "type": "object" }
   },
-  "additionalProperties": true
+  "additionalProperties": false,
+  "patternProperties": { "^x_": {} },
+  "$defs": {
+    "RuntimeProvenance": {
+      "type": "object",
+      "required": [
+        "source_questionnaire_id",
+        "source_questionnaire_version",
+        "locale",
+        "viewer_conformance_hash",
+        "deployment_runtime_policy_hash",
+        "generated_at",
+        "denormaliser_version"
+      ],
+      "properties": {
+        "source_questionnaire_id":       { "type": "string", "pattern": "^qst_[a-z0-9_]+$" },
+        "source_questionnaire_version":  { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$" },
+        "locale":                        { "type": "string" },
+        "viewer_conformance_hash":       { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "deployment_runtime_policy_hash":{ "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "generated_at":                  { "type": "string", "format": "date-time" },
+        "denormaliser_version":          { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$" },
+        "stripped_scorer_refs":          { "type": "array", "items": { "type": "string", "pattern": "^scr_[a-z0-9_]+@v\\d{2}\\.\\d{4}$" } },
+        "stripped_logic_rule_ids":       { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "EmbeddedInstrument": {
+      "type": "object",
+      "required": ["id", "title", "language"],
+      "properties": {
+        "id":          { "type": "string", "pattern": "^qst_[a-z0-9_]+$" },
+        "title":       { "type": "string" },
+        "description": { "type": "string" },
+        "language":    { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "PinnedScore": {
+      "type": "object",
+      "required": ["id", "scorer", "path", "impl"],
+      "properties": {
+        "id":          { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "scorer":      { "type": "string", "pattern": "^scr_[a-z0-9_]+@v\\d{2}\\.\\d{4}$" },
+        "path":        { "type": "string", "pattern": "^(/[^/]*)+$" },
+        "impl":        { "$ref": "#/$defs/PinnedScorerImpl" },
+        "name":        { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false,
+      "patternProperties": { "^x_": {} }
+    },
+    "PinnedScorerImpl": {
+      "type": "object",
+      "required": ["kind"],
+      "oneOf": [
+        { "properties": { "kind": { "const": "wasm" },   "url": { "type": "string", "format": "uri" }, "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }, "required": ["kind", "url", "sha256"], "additionalProperties": false },
+        { "properties": { "kind": { "const": "http" },   "url": { "type": "string", "format": "uri" } }, "required": ["kind", "url"], "additionalProperties": false },
+        { "properties": { "kind": { "const": "python" }, "package": { "type": "string" } }, "required": ["kind", "package"], "additionalProperties": false },
+        { "properties": { "kind": { "const": "r" },      "package": { "type": "string" } }, "required": ["kind", "package"], "additionalProperties": false }
+      ]
+    }
+  }
 }
