@@ -32,6 +32,50 @@ Body in [05d_runtime.md](05d_runtime.md). Six sub-decisions resolved (18a Produc
 
 ---
 
+## OD-19 — Schema 4a (xAPI Event Data) JSON Schema shape
+
+**Opened.** 2026-06-03 (downstream of OD-17/18; the data-schema family is now mostly settled and Schema 4a is the next gap).
+
+**Context.** [Section §Schema 4a in 05_data_model.md](05_data_model.md) has a thorough design sketch — 12 named verbs, custom extensions namespaced under `https://behaverse.org/xapi/extensions/`, NDJSON transport, batched 5s/20-statement emission, Object IRI pattern `https://behaverse.org/{entity-type}/{id}`. The standard is xAPI 2.0 (IEEE 9274.3.1-2023).
+
+What's *not* yet decided is the **JSON Schema shape** Schema 4a actually ships. Several design choices remain.
+
+**Sub-questions.**
+
+- **19a — xAPI 2.0 strict profile vs Behaverse-specific schema.** Two paths:
+  - (i) **Strict xAPI 2.0 Statement schema, extended via extension URIs only.** Reference the canonical xAPI 2.0 Statement JSON Schema (from the ADL spec) and constrain the verb/object/extension shapes Behaverse uses. Every Schema-4a-valid statement is also xAPI-2.0-valid. *(Recommended.)*
+  - (ii) **Behaverse-specific schema that subsets xAPI 2.0.** Author our own Statement schema with only the fields/verbs Behaverse uses. Cleaner, smaller; but every adopter has to learn our subset; loses round-trip xAPI compatibility.
+
+- **19b — Verb IRIs.** xAPI verbs are IRIs. Where do `initialized`, `launched`, `viewed`, `focused`, `answered`, `navigated`, `paused`, `resumed`, `completed`, `submitted`, `abandoned`, `recorded` resolve?
+  - (i) **Standard ADL verbs where available, Behaverse-namespaced otherwise.** *(Recommended.)* `http://adlnet.gov/expapi/verbs/answered`, `http://adlnet.gov/expapi/verbs/completed`, etc., for verbs in the ADL controlled vocabulary; `https://behaverse.org/xapi/verbs/recorded` (and similar) for project-specific verbs not in ADL.
+  - (ii) Behaverse-namespaced for all (avoids ADL dependency, loses interop).
+  - (iii) ADL only (rejects project-specific verbs like `recorded` for channel attachments; constrains us to the standard vocabulary).
+
+- **19c — Schema 5 wrapping mechanism on `answered` statements.** Per OD-17g, "xAPI `answered` statements wrap Schema 5 response objects rather than duplicating fields." How exactly?
+  - (i) **`result.extensions["https://behaverse.org/xapi/extensions/response"]` = the full Schema 5 Response row object.** *(Recommended.)* Single extension key carries the row; `result.response` (xAPI's standard field) carries a *short text representation* like `"Several days"` (the choice label) for casual readability.
+  - (ii) Split BDM/Schema 5 fields across multiple xAPI extensions, one per BDM column. Pro: each field is independently queryable. Con: large extension count; analyzer has to know which extensions to combine.
+  - (iii) Refer to the Schema 5 row by id only (`response_id`) and require the analyst to join against the Response data. Decouples but breaks single-source-of-truth on the event.
+
+- **19d — Statement-level vs batch schema (or both?).**
+  - (i) **Both: `Statement` $def and `StatementBatch` $def with root `oneOf`.** *(Recommended.)* Mirrors Schema 5's `Response` + `ResponseSet` pattern. Per-statement validation for streaming use; batched validation for the NDJSON file emission.
+  - (ii) Statement-only; batches are just multiple files concatenated.
+  - (iii) Batch-only; per-statement validation is implicit by validating a 1-statement batch.
+
+- **19e — Extension value type contracts.** Each extension key needs a documented value shape. Should the schema:
+  - (i) **Enforce types per known extension key via `patternProperties` or `properties` matched to extension IRIs.** Strict; helps catch typos and wrong types at validation. Closed set requires schema bump when adding new extensions.
+  - (ii) **Permit any extension key with `additionalProperties: true` under the project namespace; document expected shapes per key in a sidecar spec doc.** *(Recommended.)* xAPI extensions are open-by-design; over-validating defeats the model. Document the catalogue in 05_data_model.md or a dedicated extension index; the JSON Schema permits any value type per known key.
+
+**Knock-ons.**
+
+- **Verb registry**: a small JSON document (`xapi-verbs.json` or similar) listing the 12 verbs, their IRIs, and one-line descriptions. Possibly a sidecar in `schemas/events/`.
+- **Extension catalogue**: similarly, a documented list of all `https://behaverse.org/xapi/extensions/*` keys with their value shapes — for analyst consumption.
+- **Schema 4b (Behavioural Channels)**: per the sketch, Schema 4b is a sibling deliverable referenced by `recorded` statements. Not bundled here; future OD-20 if needed.
+- **Object IRI lookup**: validators can verify that a statement's `object.id` matches the `https://behaverse.org/{entity-type}/{id}` pattern for known entity types.
+
+**Resolution criterion.** Five sub-questions answered; Schema 4a spec + plan + implementation follow. Verb registry + extension catalogue ship alongside the schema.
+
+---
+
 ## Resolution log
 
 A decision moves out of this document and into the relevant design doc once resolved. The original entry is summarised here; the full body lives in the linked doc.
