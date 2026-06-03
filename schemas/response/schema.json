@@ -10,11 +10,98 @@
   "$defs": {
     "Response": {
       "type": "object",
-      "required": ["response_id"],
+      "required": [
+        "response_id",
+        "agent_id",
+        "session_index",
+        "instrument_id",
+        "multitask_type",
+        "block_index",
+        "block_type",
+        "transformation_name",
+        "trial_index",
+        "trial_start_datetime",
+        "stimulus_id",
+        "stimulus_type"
+      ],
       "properties": {
-        "response_id": { "type": "integer" }
+        "response_id":           { "type": "integer", "description": "Primary key, unique within a session's response set." },
+        "study_name":            { "type": "string" },
+        "group_name":            { "type": "string" },
+        "agent_id":              { "type": "string", "description": "Participant identifier." },
+        "session_index":         { "type": "integer", "minimum": 1, "description": "1-based per-agent ordering. Deviation D3 from BDM session_id." },
+        "session_id":            { "type": "string", "format": "uuid", "description": "Our UUID v4 (D3). Globally unique." },
+        "activity_index":        { "type": "integer", "minimum": 1 },
+        "language":              { "type": "string", "description": "BCP-47 base or full tag." },
+        "instrument_id":         { "type": "string", "pattern": "^qst_[a-z0-9_]+$" },
+        "instrument_repetition": { "type": "integer", "minimum": 0 },
+        "timeline_id":           { "type": "string", "description": "Our Block id (blk_...) when present (OD-17e)." },
+        "timeline_repetition":   { "type": "integer", "minimum": 0 },
+        "multitask_type":        { "type": "string", "enum": ["", "concurrent", "compound"] },
+        "task_index":            { "type": "integer", "minimum": 1 },
+        "job_type":              { "type": "string" },
+        "job_description":       { "type": "string" },
+        "job_repeat":            { "type": "string", "enum": ["new", "repeat", "switch"] },
+        "block_index":           { "type": "integer", "minimum": 1, "description": "Our Page order within questionnaire (OD-17e)." },
+        "block_name":            { "type": "string", "description": "Our Page id (page_...) when present." },
+        "block_type":            { "type": "string", "enum": ["tutorial", "practice", "test", "instruction"] },
+        "transformation_name":   { "type": "string", "description": "Required by BDM; default 'identity' for questionnaires." },
+        "trial_index":           { "type": "string", "description": "Item order within Page. BDM uses 'id' type." },
+        "episode_index":         { "type": "integer", "minimum": 1 },
+        "trial_start_datetime":  { "type": "string", "format": "date-time" },
+        "trial_seed":            { "type": "integer" },
+        "stimulus_index":        { "type": "array", "items": { "type": "integer" } },
+        "stimulus_id":           { "type": "string", "description": "Synthetic id concatenating Question-side entity ids. D1 deviation: string instead of BDM integer." },
+        "stimulus_type":         { "type": "string", "enum": ["text", "image", "audio", "video", "instruction", "composite"] },
+        "stimulus_onset":        { "type": "number", "description": "Seconds from trial start." },
+        "stimulus_panel_count":  { "type": "integer", "minimum": 1 },
+        "stimulus_structure":    { "type": "string" },
+        "stimulus_structure_source_type": { "type": "string" },
+        "stimulus_structure_source":      { "type": "string" },
+        "stimulus_set_size":     { "type": "integer", "minimum": 0 },
+        "stimulus_count":        { "type": "integer", "minimum": 0 },
+        "stimulus_source_type":  { "type": "string" },
+        "stimulus_source":       { "type": "string" },
+        "stimulus_index_in_source": { "type": "integer" },
+        "stimulus_position_index":  { "type": "integer" },
+        "stimulus_description":  { "type": "string" },
+        "stimulus_role":         { "type": "string" },
+        "option_source_type":    { "type": "string" },
+        "option_source":         { "type": "string" },
+        "option_count":          { "type": "integer", "minimum": 0 },
+        "option_id":             { "type": "string", "description": "Our Option id (opt_...). Deviation from BDM integer." },
+        "option_data_type":      { "type": "string", "enum": ["choice", "number", "text"] },
+        "measurement_type":      { "type": "string", "enum": ["nominal", "ordinal", "interval", "ratio"] },
+        "input_interface_type":  { "type": "string" },
+        "input_action_type":     { "type": "string" },
+        "input_count":           { "type": "integer", "minimum": 0 },
+        "expected_response_option_index": { "type": "integer" },
+        "expected_response_description":  { "type": "string" },
+        "response_structure":    { "type": "string" },
+        "response_count":        { "type": "integer", "minimum": 0 },
+        "response_option_index": { "type": "integer" },
+        "response_description":  { "type": "string" },
+        "response_numeric":      { "type": "number" },
+        "response_time":         { "type": "number" },
+        "response_datetime":     { "type": "string", "format": "date-time" },
+        "response_validation_time": { "type": "number" },
+        "response_initiation_time": { "type": "number" },
+        "response_skipped":      { "type": "boolean" },
+        "timed_out":             { "type": "boolean" },
+        "accuracy":              { "type": "number" },
+        "correct":               { "type": "boolean", "description": "Present only when Item has a Solution (per OD-16 16c)." },
+        "score":                 { "type": "number", "description": "Per-item scored_value (post-reversal applied per OD-16 16a)." },
+        "evaluation_label":      { "type": "string" },
+        "feedback_description":  { "type": "string" },
+        "outcome_description":   { "type": "string" },
+        "outcome_numeric":       { "type": "number" },
+        "additional_measures":   { "type": "string", "description": "JSON-stringified extras." },
+        "extensions":            { "type": "object" }
       },
-      "additionalProperties": true
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {}
+      }
     },
     "ResponseSet": {
       "type": "object",
@@ -23,7 +110,10 @@
         "session_id": { "type": "string", "format": "uuid" },
         "responses": { "type": "array", "items": { "$ref": "#/$defs/Response" } }
       },
-      "additionalProperties": true
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {}
+      }
     }
   }
 }
