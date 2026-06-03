@@ -26,6 +26,59 @@ Body across two docs: deviations-from-BDM tracker in [05c_bdm_alignment.md](05c_
 
 ---
 
+## OD-18 — Schema 3 (Questionnaire Runtime) shape and production model
+
+**Opened.** 2026-06-03 (downstream of OD-17; the data-schema family is now sufficiently locked to design the runtime view).
+
+**Context.** Per OD-01 (resolved 2026-05-23), **Schema 3 is a flattened, denormalised view of Schema 2** produced when a session is minted. Library refs resolved to inline objects, translations applied for the active locale, scoring formulas (now: Scorer refs, per OD-16) pass through to the viewer's WASM evaluator (OD-11). OD-01 said "must encode every Schema 2 feature the viewer's conformance manifest claims to support; nothing else." The conformance manifest concept exists conceptually but isn't yet designed; Schema 3's shape, where it's produced, and how it integrates with deployment-time choices need settling.
+
+The post-v26.0602/OD-17 reality changes some details from OD-01's framing:
+- "Scoring formulas" no longer exist; scoring is by external Scorer reference (per OD-16).
+- Stripping "scoring formulas if show_score is false" now means selectively dropping Scorer references that are *only* used for display (vs. those also driving LogicRule branching).
+- Schema 5/6 are already authored; Schema 3 plays into a now-clearer data pipeline.
+
+**Sub-questions to resolve.**
+
+- **18a — Where does Schema 3 get produced?**
+  - (i) **Viewer Service (server-side); cached per (qst@version, locale, viewer_conformance_hash, deployment_config_hash).** *(Recommended.)* One source of truth; consistent across viewers; supports deployment-time feature gating.
+  - (ii) Client-side by the viewer at session-start; viewer fetches Schema 2 + library entities, denormalises locally.
+  - (iii) Hybrid — Service-produced with viewer fallback.
+
+- **18b — Locale handling: single-locale or multi-locale runtime?**
+  - (i) **Single-locale: Schema 3 includes only the active locale's text; mid-session language switching triggers a re-mint.** *(Recommended.)* Smaller payload; simpler viewer; aligns with OD-14 last-active-locale persistence on resume.
+  - (ii) Multi-locale: all available locales travel; viewer switches client-side without re-mint. Bigger payload; faster switch.
+  - (iii) Single primary + on-demand fetch for others.
+
+- **18c — Conformance manifest shape.**
+  - (i) **Per-viewer JSON document declaring supported features**: schema_version, evaluator language version, widget kinds (radio/checkbox/slider/...), behavioural channel kinds (mouse/keyboard/...), scorer impl kinds (wasm/http/python/r), max session duration, etc. Published at a stable URL per viewer release. Viewer Service hashes it as part of cache key. *(Recommended.)*
+  - (ii) Implicit/no manifest; Viewer Service emits everything; viewer silently ignores what it can't render.
+  - (iii) Per-deployment minimal-feature-set declared at deployment creation; Service trims accordingly.
+
+- **18d — Scorer implementation selection in Schema 3.**
+  - (i) **Schema 3 pins ONE implementation per Scorer ref** (selected by Viewer Service from the deployment config + viewer conformance manifest). E.g., for `scr_phq9@v26.0602`, the runtime carries `{ kind: "wasm", url: "...", sha256: "..." }` chosen from the Scorer's `implementations[]`. *(Recommended.)*
+  - (ii) Schema 3 lists all available implementations; the viewer picks at runtime.
+  - (iii) Schema 3 keeps the Scorer ref unchanged; implementation selection is a separate runtime concern.
+
+- **18e — Scoring stripping under `show_score: false`.**
+  - (i) **Selective stripping via graph walk**: keep every Scorer reference that's transitively reachable from a LogicRule.condition (branching is always-on); strip references that are reachable only from `scores[]` declarations used by display. *(Recommended.)* When `show_score: true`, no stripping.
+  - (ii) Keep all Scorer refs regardless of `show_score`.
+  - (iii) Strip all Scorer refs when `show_score: false`; the post-session analysis pipeline computes scores. Loses branching capability under show_score: false.
+
+- **18f — Cache key and invalidation.**
+  - (i) **Key: `(qst_id, qst_version, locale, viewer_conformance_hash, deployment_config_hash, show_score)`**; invalidate on deployment-config change, on library-entity republish for any pinned ref, on viewer-conformance change. *(Recommended.)*
+  - (ii) Key by `(qst_id, qst_version, locale)` only; ignore deployment/viewer changes (simpler but produces wrong runtime when feature support shifts).
+
+**Knock-ons.**
+
+- The "conformance manifest" needs its own small schema (call it Schema 3 sidecar or Schema 7) — a JSON document each viewer publishes describing what it supports. Likely lives at a stable URL per viewer release; published as part of the viewer's release artefact.
+- OD-13's outbox model is unaffected — Schema 3 is upstream of response data; submission carries Schema 5 / Schema 6.
+- Schema 3 ships a `provenance` block: `{ source_questionnaire_id, source_version, generated_at, locale, viewer_conformance_hash, scorer_impl_choices }` so the analyst can re-derive the exact runtime used.
+- The viewer's WASM evaluator (OD-11) gains a `score(id)` host function (per OD-16 §3 architecture); Schema 3 must include enough info for the evaluator to look up the score: each score id maps to `{ scorer_impl, path }`.
+
+**Resolution criterion.** Six sub-questions answered; Schema 3 spec + plan follow, alongside the conformance-manifest sidecar.
+
+---
+
 ## Resolution log
 
 A decision moves out of this document and into the relevant design doc once resolved. The original entry is summarised here; the full body lives in the linked doc.
