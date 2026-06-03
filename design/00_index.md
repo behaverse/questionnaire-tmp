@@ -4,7 +4,7 @@ This folder is the **single authoritative source** for what the Questionnaire Ap
 
 **Companion folder.** Roadmap, MVP scope, and phasing live in [../plan/](../plan/00_index.md). Design describes *what the system is*; plan describes *how and when it gets built*. The two folders are deliberately separate.
 
-**Last revised.** 2026-06-02 (OD-16 resolved + implemented in Schema 2 v26.0602; **OD-17 opened** — Schema 5 (Response Data) shape: BTF relationship, per-response identifier, computed-scores in payload, per-item vs batched emission; body in [10_open_decisions.md](10_open_decisions.md) §"OD-17"). 15 prior ODs resolved (OD-16 resolved 2026-06-02; OD-15 resolved 2026-05-31; OD-01, OD-12, OD-13 resolved 2026-05-23; OD-05/06/07/09/10/11/14 resolved 2026-05-21; OD-03/04/08 resolved 2026-05-15). Versioning aligned with the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning) — Calendar Versioning (`vYY.MMDD`) replaces SemVer across schemas, questionnaires, and reusable entities.
+**Last revised.** 2026-06-03 (**OD-17 resolved** — Schema 5 Response Data shape; strict adherence to BDM Response trial table with three documented deviations; deviations + proposed upstream BDM changes in [05c_bdm_alignment.md](05c_bdm_alignment.md), Resolution-log row in [10_open_decisions.md](10_open_decisions.md). Six sub-decisions resolved). All 16 originally-tracked open decisions now resolved (OD-17 resolved 2026-06-03; OD-16 resolved 2026-06-02; OD-15 resolved 2026-05-31; OD-01, OD-12, OD-13 resolved 2026-05-23; OD-05/06/07/09/10/11/14 resolved 2026-05-21; OD-03/04/08 resolved 2026-05-15). Versioning aligned with the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning) — Calendar Versioning (`vYY.MMDD`) replaces SemVer across schemas, questionnaires, and reusable entities.
 
 ## Reading order
 
@@ -17,6 +17,7 @@ This folder is the **single authoritative source** for what the Questionnaire Ap
 | 05 | [05_data_model.md](05_data_model.md) | Canonical schemas (definition, metadata, response, event, session) | Draft |
 | 05a | [05a_reusable_entities.md](05a_reusable_entities.md) | OD-15 (resolved 2026-05-31) — Schema 2 reusable-entity model: 11 entities in two categories; Item / Question / Option / Solution / etc.; `content` language map; widget derivation from Option | Live |
 | 05b | [05b_scoring.md](05b_scoring.md) | OD-16 (resolved 2026-06-02) — Schema 2 scoring runtime semantics: external `Scorer` Library entity, structured output + JSON Pointer paths, reversed-value pipeline, two-trigger evaluation, per-item correctness | Live |
+| 05c | [05c_bdm_alignment.md](05c_bdm_alignment.md) | OD-17 (resolved 2026-06-03) — BDM alignment & proposed upstream changes: per-deviation log (stimulus_id typing; session-level scorer outputs; session_id naming) with copy-pasteable BDM change proposals | Live |
 | 06 | [06_library.md](06_library.md) | Library component — catalogue, reusable components, peer review | Draft |
 | 07 | [07_editor.md](07_editor.md) | Editor component — authoring, translations, logic, version control | Draft |
 | 08 | [08_viewer.md](08_viewer.md) | Viewer family — Web, Native (Godot) | Draft |

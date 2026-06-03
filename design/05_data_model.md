@@ -223,65 +223,70 @@ Channels that are not enabled produce no attachment and no `recorded` xAPI state
 
 ## Schema 5 — Response Data
 
-**Purpose.** Participant answers to questions, in a standardised analysis-ready format.
+**Purpose.** Participant answers to questions, in a standardised analysis-ready tabular format.
 
-**Basis.** [Behaverse Response Trial Format](https://behaverse.org/data-model/spec/trials/response.html).
+**Basis.** [Behaverse Data Model (BDM) — Response trial table](https://github.com/behaverse/data-model/blob/main/spec/trials/1-response.qmd). Per OD-17 (resolved 2026-06-03), Schema 5 is **strict adherence to BDM** with three local deviations documented in [05c_bdm_alignment.md](05c_bdm_alignment.md). The nested-JSON sketch in earlier revisions of this section is **non-canonical** and superseded by what follows.
 
-**Two emission modes:**
+**Shape.** One row per response. Tabular (CSV-friendly). BDM defines 75 columns across categories: Key / Context / Task / Stimulus / Option / Input / Expectation / Response / Evaluation / Feedback / Outcome / Accessory. Schema 5 ships those columns natively.
 
-1. **Per item.** A single response object emitted as soon as a question is answered. Useful for streaming dashboards and resilience to mid-session drop-outs.
-2. **Batched per session.** All responses, plus computed scores and metadata, emitted once at submission. Useful for offline collection.
+**Mapping table — project concepts → BDM columns.**
 
-Both modes coexist. A viewer may emit per-item statements *and* a final batched submission; deployment configuration decides.
+| BDM column | Our v26.0602 concept | Notes |
+|---|---|---|
+| `response_id` | Per-row primary key | Generated at row creation |
+| `agent_id` | participant identifier | (from Schema 6 / Identity sibling project) |
+| `session_index` | Our integer per-agent session ordering | **Renamed from BDM's `session_id`** — see deviation D3 in 05c_bdm_alignment.md |
+| `session_id` (our extension) | Our UUID v4 session handle | Sidecar — not standard BDM yet; see D3 |
+| `instrument_id` | Our Questionnaire `metadata.id` (`qst_…`) | |
+| `block_index`, `block_name`, `block_type` | Our **Page** (per OD-12 — *not* our Block) | See OD-17e for the inversion explanation |
+| `timeline_id`, `timeline_repetition` | Our **Block** (cross-page wrapper) | Per OD-17e |
+| `trial_index` | Item order within the Page | |
+| `stimulus_id` | Synthetic id concatenating Question-side entity ids: `(ctx_X+)?(ins_Y+)?pr_Z` in canonical order; for Messages: the `msg_…` id directly | Per OD-17f; **string type** — see deviation D1 in 05c_bdm_alignment.md |
+| `stimulus_description` | Concatenated text content of Context + Instruction + Prompt in active locale (or Message text for Message rows) | |
+| `stimulus_type` | enum — e.g., `text` for Prompts, `instruction` for Messages | |
+| `option_id` | Our Option id (`opt_…`) | |
+| `option_data_type`, `measurement_type` | From our Option's `input_data_type` / `measurement_type` | |
+| `option_count` | Number of choices in the Option (for choice-typed Options) | |
+| `expected_response_option_index`, `expected_response_description` | From our Solution's `expected_response` for Solution-bearing Items | |
+| `response_option_index`, `response_description`, `response_numeric` | Participant's actual answer (multiple representations) | |
+| `response_time`, `response_datetime`, `response_initiation_time`, `response_validation_time` | Timing | |
+| `response_skipped`, `timed_out` | Booleans | |
+| `correct` | Per-item correct boolean for Solution-bearing Items (per OD-16 16c); **omitted** when no Solution | |
+| `score` | Per-item `scored_value` (post-reversal per OD-16 16a) | |
+| `accuracy`, `evaluation_label` | Optional, derived | |
+| `language` | Active locale at moment of response (BCP-47 base) | Per "Locale resolution" below |
+| `additional_measures` | Project extras (Item id reference for joins, etc.) as JSON-stringified | BDM-defined escape hatch |
 
-**Per-item response (sketch):**
+**Emission model.** Per-row at response time (BDM is tabular by construction). A session's complete response set is its accumulated rows in the CSV. The OD-13 forwarding pipeline carries rows; submission marks the session's row set as complete. No separate "session batch" structure is needed — `session_index` / `session_id` group rows by session naturally.
 
-```jsonc
-{
-  "trial_type":   "questionnaire_response",
-  "trial_index":  1,
-  "time_elapsed": 3500,
-  "session_id":   "550e8400-…",
-  "questionnaire_id": "qst_phq9",
-  "question_id":  "q_depression_1",
-  "question_type": "radio",
-  "response":     1,
-  "response_text": "Several days",
-  "rt":           4200,
-  "locale":       { "language": "en", "region": null }
-}
-```
+**Per-questionnaire scorer outputs do NOT live here.** Per OD-17g, aggregate scoring outputs (e.g., `phq9_total`, `phq9_severity`) live in **Schema 6's `scorer_outputs`** field — session-level facts, not per-row. Putting them on every Response row would repeat ×N redundantly and conflict with BDM's row-level semantics. See 05c_bdm_alignment.md D2 — BDM has no session-level scoring table; proposing one upstream.
 
-**Session batch (sketch):**
-
-```jsonc
-{
-  "session_id":             "550e8400-…",
-  "questionnaire_id":       "qst_phq9",
-  "questionnaire_version":  "v26.0523",
-  "status":                 "completed",
-  "started_at":             "2026-02-06T14:30:00Z",
-  "completed_at":           "2026-02-06T14:42:15Z",
-  "initial_locale":         { "language": "en", "region": null },
-  "responses":              [ /* per-item objects */ ],
-  "computed_scores":        { "total_score": 8 },
-  "device_info":            { "platform": "web", "device_type": "desktop", "viewport": "1920x1080" }
-}
-```
-
-Each per-item response carries the `locale` *active at the time of the answer* — this supports mid-session language switching (per "Locale resolution" below). The session-level `initial_locale` records the language at session start, for convenience in analyses that treat language as a session-level attribute.
-
-**Export formats** for researcher analysis: CSV wide, CSV long (tidy), SPSS `.sav` (with variable/value labels), R `.rds`, JSON. Codebook generation accompanies tabular exports.
+**Export formats** for researcher analysis: CSV (BDM-native), Parquet, SPSS `.sav` (with variable/value labels), R `.rds`, JSON. Codebook generation accompanies tabular exports.
 
 ---
 
 ## Schema 6 — Session Metadata
 
-**Purpose.** Identifies a single attempt at a questionnaire and ties responses, events, and (where applicable) Participant Platform assignments together.
+**Purpose.** Identifies a single attempt at a questionnaire and ties responses, events, and (where applicable) Participant Platform assignments together. Also carries session-level facts that don't fit BDM's per-row Response shape (notably per-questionnaire scorer outputs per OD-16 / OD-17g).
 
-**Required fields:** `session_id` (UUID v4), `questionnaire_id`, `questionnaire_version` (pinned at session-mint per OD-14 sub-question 3), `status`, `started_at`.
+**Required fields:** `session_id` (UUID v4 — our globally-unique handle), `session_index` (integer, BDM-aligned per-agent ordering count, 1-based), `agent_id` (participant identifier), `instrument_id` (our `qst_…`), `instrument_version` (CalVer, pinned at session-mint per OD-14 sub-question 3), `status`, `started_at`.
 
-**Recommended fields:** `deployment_id`, `participant_id`, `completed_at`, `submitted_at` (Viewer Service receipt), `forwarded_at` (Behaverse delivery receipt — see OD-13), `forward_attempts` (integer, default 0), `forward_failure_reason` (last error message if any), `initial_locale` (`{ language, region }`), `last_active_locale` (`{ language, region }` — persisted per OD-14 sub-question 6; equal to `initial_locale` until the participant switches mid-session), `device` (user-agent, platform, device type, viewport, timezone).
+**Recommended fields:** `deployment_id`, `completed_at`, `submitted_at` (Viewer Service receipt), `forwarded_at` (Behaverse delivery receipt — see OD-13), `forward_attempts` (integer, default 0), `forward_failure_reason` (last error message if any), `initial_locale` (`{ language, region }`), `last_active_locale` (`{ language, region }` — persisted per OD-14 sub-question 6; equal to `initial_locale` until the participant switches mid-session), `device` (user-agent, platform, device type, viewport, timezone), `scorer_outputs` (per OD-17g — object keyed by CalVer-pinned Scorer ref, each value the full structured output the Scorer produced; only present for Scorers actually invoked in this session).
+
+**`scorer_outputs` shape.**
+
+```jsonc
+"scorer_outputs": {
+  "scr_phq9@v26.0602": {
+    "total":         12,
+    "severity":      "moderate",
+    "band":          { "min": 10, "max": 14, "label": "Moderate Depression" },
+    "missing_count": 0
+  }
+}
+```
+
+One entry per Scorer invoked in the session. Keyed by CalVer-pinned Scorer reference. Value conforms to the Scorer entity's `output_schema`. See [05b_scoring.md](05b_scoring.md) §4.5 for the Scorer contract. The deviation log in [05c_bdm_alignment.md](05c_bdm_alignment.md) D2 tracks the proposal to add a BDM session-level scoring table that would host this natively.
 
 **Resumable-state shape** (per OD-14, resolved 2026-05-21): the viewer's local resumable store mirrors a subset of Schema 6 plus the per-question answer values. The minimum durable state for a `persistence=persisted` session is:
 
