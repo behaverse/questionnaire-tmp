@@ -1,0 +1,14 @@
+{
+  "viewer_id":      "minimal-viewer",
+  "viewer_version": "v26.0603",
+  "schema_support": {
+    "questionnaire": ["v26.0602"],
+    "instrument":    ["v26.0528"]
+  },
+  "evaluator": {
+    "language_version": "v1.0",
+    "functions":        ["if", "and", "or", "not", "==", "!=", ">=", "<=", "score"]
+  },
+  "widgets":           ["choice.ordinal.single"],
+  "scorer_impl_kinds": ["wasm"]
+}

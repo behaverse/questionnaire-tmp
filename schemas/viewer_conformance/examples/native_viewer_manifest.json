@@ -1,0 +1,30 @@
+{
+  "viewer_id":      "behaverse-native-viewer",
+  "viewer_version": "v26.0603",
+  "viewer_url":     "https://viewers.behaverse.org/native-viewer/v26.0603/conformance.json",
+  "schema_support": {
+    "questionnaire": ["v26.0528", "v26.0601", "v26.0602"],
+    "instrument":    ["v26.0528"],
+    "runtime":       ["v26.0603"],
+    "response":      ["v26.0603"],
+    "session":       ["v26.0603"]
+  },
+  "evaluator": {
+    "language_version": "v1.0",
+    "functions":        ["if", "and", "or", "not", "==", "!=", ">=", "<=", "+", "-", "*", "/", "score"]
+  },
+  "widgets": [
+    "choice.ordinal.single",
+    "choice.nominal.single",
+    "choice.nominal.multiple",
+    "number.interval.single",
+    "number.ratio.single",
+    "text.nominal.single"
+  ],
+  "behavioural_channels": ["response_time", "mouse", "keyboard", "webcam", "microphone"],
+  "scorer_impl_kinds":    ["wasm"],
+  "logic_actions":        ["skip", "visibility", "piping", "branch"],
+  "locale_switching":     false,
+  "resume":               true,
+  "max_session_duration_minutes": 180
+}
