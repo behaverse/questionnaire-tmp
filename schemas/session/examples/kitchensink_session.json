@@ -1,0 +1,29 @@
+{
+  "session_id":         "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+  "session_index":      5,
+  "agent_id":           "agent_099",
+  "instrument_id":      "qst_phq9",
+  "instrument_version": "v26.0602",
+  "deployment_id":      "dep_phq9_multisite_2026",
+  "status":             "abandoned",
+  "started_at":         "2026-06-03T10:00:00Z",
+  "forward_attempts":   3,
+  "forward_failure_reason": "connection timeout",
+  "initial_locale":     { "language": "en", "region": "US" },
+  "last_active_locale": { "language": "pt", "region": "PT" },
+  "device": {
+    "user_agent":  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15",
+    "platform":    "web",
+    "device_type": "mobile",
+    "viewport":    "390x844",
+    "timezone":    "America/New_York"
+  },
+  "scorer_outputs": {
+    "scr_phq9@v26.0602": {
+      "total":         6,
+      "severity":      "mild",
+      "band":          { "min": 5, "max": 9, "label": "Mild Depression" },
+      "missing_count": 4
+    }
+  }
+}

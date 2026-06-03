@@ -1,0 +1,31 @@
+{
+  "session_id":         "550e8400-e29b-41d4-a716-446655440001",
+  "session_index":      1,
+  "agent_id":           "agent_042",
+  "instrument_id":      "qst_phq9",
+  "instrument_version": "v26.0602",
+  "deployment_id":      "dep_phq9_study_2026",
+  "status":             "completed",
+  "started_at":         "2026-06-03T14:30:00Z",
+  "completed_at":       "2026-06-03T14:34:30Z",
+  "submitted_at":       "2026-06-03T14:34:32Z",
+  "forwarded_at":       "2026-06-03T14:34:35Z",
+  "forward_attempts":   0,
+  "initial_locale":     { "language": "en", "region": null },
+  "last_active_locale": { "language": "en", "region": null },
+  "device": {
+    "user_agent":  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
+    "platform":    "web",
+    "device_type": "desktop",
+    "viewport":    "1920x1080",
+    "timezone":    "Europe/Lisbon"
+  },
+  "scorer_outputs": {
+    "scr_phq9@v26.0602": {
+      "total":         12,
+      "severity":      "moderate",
+      "band":          { "min": 10, "max": 14, "label": "Moderate Depression" },
+      "missing_count": 0
+    }
+  }
+}
