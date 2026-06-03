@@ -1,0 +1,23 @@
+{
+  "provenance": {
+    "source_questionnaire_id":        "qst_minimal",
+    "source_questionnaire_version":   "v26.0602",
+    "locale":                         "en",
+    "viewer_conformance_hash":        "0000000000000000000000000000000000000000000000000000000000000000",
+    "deployment_runtime_policy_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "generated_at":                   "2026-06-03T14:30:00Z",
+    "denormaliser_version":           "v26.0603"
+  },
+  "metadata": {
+    "id":       "qst_minimal",
+    "title":    "Minimal Questionnaire",
+    "language": "en"
+  },
+  "locale": "en",
+  "pages": [
+    {
+      "id": "page_only",
+      "elements": []
+    }
+  ]
+}

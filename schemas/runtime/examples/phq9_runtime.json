@@ -1,0 +1,201 @@
+{
+  "provenance": {
+    "source_questionnaire_id":        "qst_phq9",
+    "source_questionnaire_version":   "v26.0602",
+    "locale":                         "en",
+    "viewer_conformance_hash":        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "deployment_runtime_policy_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "generated_at":                   "2026-06-03T14:30:00Z",
+    "denormaliser_version":           "v26.0603"
+  },
+  "metadata": {
+    "id":          "qst_phq9",
+    "title":       "Patient Health Questionnaire-9",
+    "description": "PHQ-9: Nine-item depression severity measure.",
+    "language":    "en"
+  },
+  "locale": "en",
+  "pages": [
+    {
+      "id": "page_phq9",
+      "elements": [
+        {
+          "id": "item_phq9_1",
+          "question": {
+            "prompt":       { "content": { "en": "Little interest or pleasure in doing things" } },
+            "instruction":  { "content": { "en": "Over the last 2 weeks, how often have you been bothered by this?" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_2",
+          "question": {
+            "prompt":       { "content": { "en": "Feeling down, depressed, or hopeless" } },
+            "instruction":  { "content": { "en": "Over the last 2 weeks, how often have you been bothered by this?" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_3",
+          "question": {
+            "prompt": { "content": { "en": "Trouble falling or staying asleep, or sleeping too much" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_4",
+          "question": {
+            "prompt": { "content": { "en": "Feeling tired or having little energy" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_5",
+          "question": {
+            "prompt": { "content": { "en": "Poor appetite or overeating" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_6",
+          "question": {
+            "prompt": { "content": { "en": "Feeling bad about yourself — or that you are a failure or have let yourself or your family down" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_7",
+          "question": {
+            "prompt": { "content": { "en": "Trouble concentrating on things, such as reading the newspaper or watching television" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_8",
+          "question": {
+            "prompt": { "content": { "en": "Moving or speaking so slowly that other people could have noticed — or being so fidgety or restless that you have been moving around a lot more than usual" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        },
+        {
+          "id": "item_phq9_9",
+          "question": {
+            "prompt": { "content": { "en": "Thoughts that you would be better off dead, or of hurting yourself in some way" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all" } },
+              { "value": 1, "label": { "en": "Several days" } },
+              { "value": 2, "label": { "en": "More than half the days" } },
+              { "value": 3, "label": { "en": "Nearly every day" } }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "scores": [
+    {
+      "id":     "phq9_total",
+      "scorer": "scr_phq9@v26.0602",
+      "path":   "/total",
+      "impl":   { "kind": "wasm", "url": "https://behaverse.org/scorers/phq9/v26.0602/scorer.wasm", "sha256": "0000000000000000000000000000000000000000000000000000000000000000" }
+    },
+    {
+      "id":     "phq9_severity",
+      "scorer": "scr_phq9@v26.0602",
+      "path":   "/severity",
+      "impl":   { "kind": "wasm", "url": "https://behaverse.org/scorers/phq9/v26.0602/scorer.wasm", "sha256": "0000000000000000000000000000000000000000000000000000000000000000" }
+    },
+    {
+      "id":     "phq9_band_label",
+      "scorer": "scr_phq9@v26.0602",
+      "path":   "/band/label",
+      "impl":   { "kind": "wasm", "url": "https://behaverse.org/scorers/phq9/v26.0602/scorer.wasm", "sha256": "0000000000000000000000000000000000000000000000000000000000000000" }
+    }
+  ],
+  "lock_show_score_timing": true
+}

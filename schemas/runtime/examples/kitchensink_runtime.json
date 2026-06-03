@@ -1,0 +1,91 @@
+{
+  "provenance": {
+    "source_questionnaire_id":        "qst_phq9",
+    "source_questionnaire_version":   "v26.0602",
+    "locale":                         "en",
+    "viewer_conformance_hash":        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "deployment_runtime_policy_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "generated_at":                   "2026-06-03T14:30:00Z",
+    "denormaliser_version":           "v26.0603",
+    "stripped_scorer_refs":           ["scr_optional@v26.0602"],
+    "stripped_logic_rule_ids":        ["rule_dropped"]
+  },
+  "metadata": {
+    "id":          "qst_phq9",
+    "title":       "Patient Health Questionnaire-9 (Kitchen Sink)",
+    "description": "Extended PHQ-9 runtime exercising every optional field.",
+    "language":    "en"
+  },
+  "locale":            "en",
+  "available_locales": ["en", "pt"],
+  "style": {
+    "theme": "default"
+  },
+  "flow": {
+    "navigation": "linear"
+  },
+  "blocks": [
+    {
+      "id":       "blk_main",
+      "page_ids": ["page_1"]
+    }
+  ],
+  "pages": [
+    {
+      "id": "page_1",
+      "elements": [
+        {
+          "id": "item_phq9_1",
+          "question": {
+            "prompt": { "content": { "en": "Little interest or pleasure in doing things" } }
+          },
+          "option": {
+            "input_data_type":  "integer",
+            "measurement_type": "ordinal",
+            "selection":        "single",
+            "choices": [
+              { "value": 0, "label": { "en": "Not at all",             "pt": "De forma alguma" } },
+              { "value": 1, "label": { "en": "Several days",           "pt": "Vários dias" } },
+              { "value": 2, "label": { "en": "More than half the days","pt": "Mais de metade dos dias" } },
+              { "value": 3, "label": { "en": "Nearly every day",       "pt": "Quase todos os dias" } }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_followup",
+      "elements": []
+    }
+  ],
+  "scores": [
+    {
+      "id":     "phq9_total",
+      "scorer": "scr_phq9@v26.0602",
+      "path":   "/total",
+      "impl":   { "kind": "wasm", "url": "https://behaverse.org/scorers/phq9/v26.0602/scorer.wasm", "sha256": "0000000000000000000000000000000000000000000000000000000000000000" }
+    },
+    {
+      "id":     "phq9_severity",
+      "scorer": "scr_phq9@v26.0602",
+      "path":   "/severity",
+      "impl":   { "kind": "http", "url": "https://scorer.behaverse.org/phq9/v26.0602" }
+    },
+    {
+      "id":     "phq9_band_label",
+      "scorer": "scr_phq9@v26.0602",
+      "path":   "/band/label",
+      "impl":   { "kind": "python", "package": "behaverse-scorer-phq9==26.0602" }
+    }
+  ],
+  "logic": [
+    {
+      "id":        "rule_1",
+      "condition": "phq9_total >= 10",
+      "action":    { "type": "branch", "target_page": "page_followup" }
+    }
+  ],
+  "validation":             [],
+  "lock_show_score_timing": true,
+  "extensions":             {}
+}
