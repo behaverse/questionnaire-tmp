@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/viewer_conformance/v26.0603/schema.json",
+  "title": "Behaverse Viewer Conformance Manifest",
+  "description": "Per OD-18c (resolved 2026-06-03), per-viewer feature declaration consumed by Viewer Service for runtime trimming.",
+  "type": "object",
+  "required": ["viewer_id", "viewer_version", "schema_support", "evaluator", "widgets", "scorer_impl_kinds"],
+  "properties": {
+    "viewer_id":         { "type": "string" },
+    "viewer_version":    { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$" },
+    "schema_support":    { "type": "object" },
+    "evaluator":         { "type": "object" },
+    "widgets":           { "type": "array", "minItems": 1 },
+    "scorer_impl_kinds": { "type": "array", "minItems": 1 }
+  },
+  "additionalProperties": true
+}
