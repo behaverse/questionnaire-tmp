@@ -1,0 +1,14 @@
+{
+  "response_id":          1,
+  "agent_id":             "agent_001",
+  "session_index":        1,
+  "instrument_id":        "qst_phq9",
+  "multitask_type":       "",
+  "block_index":          1,
+  "block_type":           "test",
+  "transformation_name":  "identity",
+  "trial_index":          "1",
+  "trial_start_datetime": "2026-06-03T14:30:00Z",
+  "stimulus_id":          "pr_phq9_1",
+  "stimulus_type":        "text"
+}
