@@ -212,3 +212,103 @@ def test_response_x_prefixed_extension_allowed(schema):
         "stimulus_id": "pr_x", "stimulus_type": "text",
         "x_lab_field": "ok"
     })
+
+
+# ---------- ResponseSet wrapper ----------
+
+def _minimal_response():
+    """Build a minimal valid Response dict (all 12 required fields)."""
+    return {
+        "response_id":          1,
+        "agent_id":             "agent_001",
+        "session_index":        1,
+        "instrument_id":        "qst_phq9",
+        "multitask_type":       "",
+        "block_index":          1,
+        "block_type":           "test",
+        "transformation_name":  "identity",
+        "trial_index":          "1",
+        "trial_start_datetime": "2026-06-03T14:30:00Z",
+        "stimulus_id":          "pr_phq9_1",
+        "stimulus_type":        "text"
+    }
+
+
+def _response_set_validator(schema):
+    """Return a validator that can resolve $refs within the ResponseSet $def.
+
+    Extracting the $def sub-schema loses the $defs context needed to resolve
+    '$ref: #/$defs/Response' inside ResponseSet.responses.items.  Instead we
+    build a thin wrapper schema that embeds $defs from the parent and delegates
+    to ResponseSet via $ref so resolution always succeeds.
+    """
+    wrapper = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$defs":   schema["$defs"],
+        "$ref":    "#/$defs/ResponseSet",
+    }
+    return Draft202012Validator(wrapper)
+
+
+def test_response_set_minimal_valid(schema):
+    instance = {
+        "session_id": "550e8400-e29b-41d4-a716-446655440000",
+        "responses":  [_minimal_response()]
+    }
+    _response_set_validator(schema).validate(instance)
+
+
+def test_response_set_multiple_responses(schema):
+    r = _minimal_response()
+    instance = {
+        "session_id": "550e8400-e29b-41d4-a716-446655440000",
+        "responses":  [r, {**r, "response_id": 2, "trial_index": "2"}]
+    }
+    _response_set_validator(schema).validate(instance)
+
+
+def test_response_set_requires_session_id(schema):
+    bad = {"responses": [_minimal_response()]}
+    errors = list(_response_set_validator(schema).iter_errors(bad))
+    assert any("session_id" in e.message for e in errors)
+
+
+def test_response_set_requires_responses(schema):
+    bad = {"session_id": "550e8400-e29b-41d4-a716-446655440000"}
+    errors = list(_response_set_validator(schema).iter_errors(bad))
+    assert any("responses" in e.message for e in errors)
+
+
+def test_response_set_rejects_unknown_property(schema):
+    bad = {
+        "session_id": "550e8400-e29b-41d4-a716-446655440000",
+        "responses":  [_minimal_response()],
+        "unknown_field": "extra"
+    }
+    errors = list(_response_set_validator(schema).iter_errors(bad))
+    assert any(
+        "additional" in e.message.lower() or "does not match" in e.message.lower()
+        for e in errors
+    )
+
+
+def test_response_set_x_extension_allowed(schema):
+    instance = {
+        "session_id": "550e8400-e29b-41d4-a716-446655440000",
+        "responses":  [_minimal_response()],
+        "x_lab_extra": "ok"
+    }
+    _response_set_validator(schema).validate(instance)
+
+
+def test_root_oneOf_response_branch(schema):
+    """Root schema oneOf accepts a single Response object."""
+    Draft202012Validator(schema).validate(_minimal_response())
+
+
+def test_root_oneOf_response_set_branch(schema):
+    """Root schema oneOf accepts a ResponseSet object."""
+    Draft202012Validator(schema).validate({
+        "session_id": "550e8400-e29b-41d4-a716-446655440000",
+        "responses":  [_minimal_response()]
+    })
