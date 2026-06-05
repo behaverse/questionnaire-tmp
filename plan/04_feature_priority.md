@@ -103,14 +103,24 @@ The Library data model supports all of these from MVP (Phase 1); they are simply
 
 ## Cross-cutting non-feature work
 
-| Work item | Phase | Notes |
-|---|---|---|
-| Migrate `survey_database/` content into the Library | Phase 1 | Population of MVP catalogue |
-| Canonical Schema 2 (Questionnaire Definition) authoring | Phase 1 | JSON Schema 2020-12 published at `behaverse.org/schemas/questionnaire/definition/vYY.MMDD.json` per the CalVer policy. Biggest single payoff; unblocks Library validation, Web Viewer rendering, Editor authoring, migration ETL. |
-| WASM expression evaluator (OD-11) | Phase 2 | Independent project. Rust or AssemblyScript module embedded by Web Viewer, Native Viewer, and Editor preview. Ships with a normative test suite. |
-| OD-10 lifecycle state machine grilling | Phase 1+ | Resolve `draft → in_review → published → withdrawn` permission details before `design/06_library.md`'s permission table is fully finalised. Not gating MVP but needed before published-content can flow through the contribution workflow. |
+| Work item | Phase | Status (2026-06-05) | Notes |
+|---|---|---|---|
+| Canonical schema family authoring (Schemas 1, 2, 3, 4a, 4b, 5, 6, 7) | Phase 1 | ✅ Done | All 8 schemas authored, tagged, validated. Biggest single payoff; unblocks Library validation, Web Viewer rendering, Editor authoring, migration ETL. |
+| Migrate `survey_database/` content into the Library | Phase 1 | ❌ Not started | Population of MVP catalogue (793 Prompts, 64 questionnaires, 30 Contexts, 22 Instructions, 100 Messages, 35 Solutions). Per `design/13_importers.md`. |
+| `behaverse-runtime-denormaliser` Python library (OD-18) | Phase 2 | ❌ Not started | Shared library consumed by Viewer Service (server-side Schema 3 minting) and Editor (preview). Implements the OD-18 §4.1 algorithm. |
+| WASM expression evaluator (OD-11 + OD-16) | Phase 2 | ❌ Not started | Independent project. Rust or AssemblyScript module embedded by Web Viewer, Native Viewer, and Editor preview. Gains a `score(id)` host function per OD-16 §3. Ships with a normative test suite. |
+| Scorer conformance runner (OD-16) | Phase 2 | ❌ Not started | Turns the `check_scorer_conformance` SKIP stub (currently in `tools/validate_schemas.py`) into a real test runner that executes each Scorer's `test_cases[]` against every conformant implementation. |
+| CSV serializer for Schema 5 → BDM CSV (OD-17) | Phase 2 | ❌ Not started | Walks Schema 5 `responses[]` rows and emits BDM Response trial table CSV. |
+| BDM upstream change handoff | Anytime | ❌ Not started | Six deviation entries D1–D6 in [../design/05c_bdm_alignment.md](../design/05c_bdm_alignment.md). Can be proposed to BDM at any time by a focused agent. |
+| EEG / webcam / microphone schemas under `schemas/recordings/` | Phase 6 | ❌ Not started | Deferred from OD-20 (resolved 2026-06-05; mouse + keyboard shipped, others deferred). |
+| OD-10 lifecycle state machine sub-questions | Phase 1+ | ⏳ Pending | Resolve `draft → in_review → published → withdrawn` permission details before `design/06_library.md`'s permission table is fully finalised. Not gating MVP but needed before published-content can flow through the contribution workflow. |
 
-*All originally-tracked open decisions have been resolved.* Summary:
+*All 20 originally-tracked open decisions have been resolved.* Summary by date:
+
 - *2026-05-15:* OD-02 (merged into OD-01), OD-03 (Editor preview), OD-04 (backend stack), OD-08 (identity).
 - *2026-05-21:* OD-05 (override rules — B), OD-06 (deprecation — A), OD-07 (channel defaults), OD-09 (DB-driven scheduler), OD-10 (single Library, all lifecycle), OD-11 (WASM evaluator), OD-14 (session resume semantics).
 - *2026-05-23:* OD-13 (queued forwarding via Postgres outbox), OD-01 (S1 — Pure custom canonical + Web Viewer renderer; no SurveyJS dependency), OD-12 (five-concept pagination model).
+- *2026-05-31:* OD-15 (Schema 2 reusable-entity pivot).
+- *2026-06-02:* OD-16 (external Scorer Library entity; per-trial `correct`+`score`).
+- *2026-06-03:* OD-17 (Schema 5 strict BDM Response + Schema 6 session metadata), OD-18 (Schema 3 Runtime + Schema 7 Conformance Manifest).
+- *2026-06-05:* OD-19 (BDM Events vocabulary — `bdm:` namespace), OD-20 (Schema 4b family per source).
