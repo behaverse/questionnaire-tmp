@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-06-05T14:30:00Z",
+  "actor": {
+    "objectType": "bdm:Agent",
+    "id": "agent_001"
+  },
+  "verb": "bdm:initialized",
+  "object": {
+    "objectType": "bdm:RuntimeInstance",
+    "id": "rt_550e8400-e29b"
+  }
+}

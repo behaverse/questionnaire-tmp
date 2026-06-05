@@ -1,0 +1,182 @@
+{
+  "batch_id": "phq9_trial_1",
+  "events": [
+    {
+      "timestamp": "2026-06-05T14:30:00.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_started",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_phq9_item_1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:trial_index": "1",
+          "bdm:block_index": 0,
+          "bdm:session_id": "session_abc123",
+          "bdm:activity_index": 0,
+          "bdm:runtime_id": "rt_550e8400-e29b"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:00.120Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Screen",
+        "id": "screen_phq9_item_1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:runtime_id": "rt_550e8400-e29b"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:00.250Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Stimulus",
+        "id": "pr_phq9_1",
+        "name": "Little interest or pleasure in doing things"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:00.310Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Option",
+        "id": "opt_phq9_freq_group"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:02.840Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_001"
+      },
+      "verb": "bdm:clicked",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "radio_1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:02.845Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_001"
+      },
+      "verb": "bdm:selected",
+      "object": {
+        "objectType": "bdm:Option",
+        "id": "opt_phq9_freq_4",
+        "name": "Nearly every day"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:03.210Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_001"
+      },
+      "verb": "bdm:clicked",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "next_button"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:03.215Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_ended",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_phq9_item_1"
+      },
+      "result": {
+        "extensions": {
+          "bdm:response_id": "R_phq9_1",
+          "bdm:response_description": "Nearly every day",
+          "bdm:response_numeric": 3,
+          "bdm:response_option_index": 3,
+          "bdm:response_time": 3.215
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:30:03.300Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_001"
+      },
+      "verb": "bdm:navigated",
+      "object": {
+        "objectType": "bdm:Screen",
+        "id": "screen_phq9_item_2",
+        "name": "PHQ-9 Item 2"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_abc123",
+          "bdm:runtime_id": "rt_550e8400-e29b"
+        }
+      }
+    }
+  ]
+}
