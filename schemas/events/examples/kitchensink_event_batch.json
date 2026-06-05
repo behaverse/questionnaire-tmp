@@ -1,0 +1,860 @@
+{
+  "batch_id": "kitchensink_all_verbs",
+  "events": [
+    {
+      "timestamp": "2026-06-05T15:00:00.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:initialized",
+      "object": {
+        "objectType": "bdm:RuntimeInstance",
+        "id": "rt_ks_001"
+      },
+      "context": {
+        "extensions": {
+          "bdm:runtime_id": "rt_ks_001",
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:00.200Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:ConsentForm",
+        "id": "consent_form_v1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:00.350Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:got_focus",
+      "object": {
+        "objectType": "bdm:Window",
+        "id": "window_main"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:04.120Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:clicked",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "checkbox_consent_agree"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:04.125Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:selected",
+      "object": {
+        "objectType": "bdm:Option",
+        "id": "opt_consent_yes",
+        "name": "I agree to participate"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:05.800Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:consented",
+      "object": {
+        "objectType": "bdm:Consent",
+        "id": "consent_record_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:consent_text_hash": "sha256-3a7bd3e2360a3d29eea436fcfb7e44c735d117c42d1c1835420b6b9942dd4f1b",
+          "bdm:consent_scope": "study_data_collection"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:06.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:started",
+      "object": {
+        "objectType": "bdm:RuntimeInstance",
+        "id": "rt_ks_001"
+      },
+      "context": {
+        "extensions": {
+          "bdm:runtime_id": "rt_ks_001",
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:06.200Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Screen",
+        "id": "screen_instructions",
+        "name": "Task Instructions"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:runtime_id": "rt_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:15.500Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:navigated",
+      "object": {
+        "objectType": "bdm:Screen",
+        "id": "screen_test_block_1",
+        "name": "Test Block 1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:runtime_id": "rt_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:15.600Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:recording_started",
+      "object": {
+        "objectType": "bdm:Recording",
+        "id": "recording_mouse_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:recording_modality": "mouse",
+          "bdm:sample_rate": 30,
+          "bdm:recording_scope": "runtime"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:runtime_id": "rt_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:16.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_started",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_ks_1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:trial_index": "1",
+          "bdm:block_index": 0,
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:16.100Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Stimulus",
+        "id": "stimulus_ks_text_1",
+        "name": "Describe your experience"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:16.200Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:got_focus",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "textfield_response_1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:17.800Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:typed",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "textfield_response_1"
+      },
+      "result": {
+        "extensions": {
+          "bdm:typed_text": "Feeling well rested",
+          "bdm:key_sequence": ["F", "e", "e", "l", "i", "n", "g", " ", "w", "e", "l", "l"]
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:18.900Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:lost_focus",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "textfield_response_1"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:19.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_ended",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_ks_1"
+      },
+      "result": {
+        "extensions": {
+          "bdm:response_id": "R_ks_1",
+          "bdm:response_description": "Feeling well rested",
+          "bdm:response_time": 2.900
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:19.100Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_started",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_ks_2"
+      },
+      "context": {
+        "extensions": {
+          "bdm:trial_index": "2",
+          "bdm:block_index": 0,
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:19.200Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Stimulus",
+        "id": "stimulus_ks_slider_1",
+        "name": "Rate your mood"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:19.300Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Panel",
+        "id": "panel_mood_matrix"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:21.500Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:adjusted",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "slider_mood_rating"
+      },
+      "result": {
+        "extensions": {
+          "bdm:current_value": 5
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:22.100Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:adjusted",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "slider_mood_rating"
+      },
+      "result": {
+        "extensions": {
+          "bdm:current_value": 7,
+          "bdm:previous_value": 5
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:23.000Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:drag_and_dropped",
+      "object": {
+        "objectType": "bdm:Option",
+        "id": "opt_category_high"
+      },
+      "result": {
+        "extensions": {
+          "bdm:drag_source": "panel_options_pool",
+          "bdm:drop_target": "panel_high_zone"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:23.800Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:deselected",
+      "object": {
+        "objectType": "bdm:Option",
+        "id": "opt_category_high"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:30.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:state_changed",
+      "object": {
+        "objectType": "bdm:Timer",
+        "id": "timer_trial_ks_2"
+      },
+      "result": {
+        "extensions": {
+          "bdm:state": "expired"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:30.010Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_ended",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_ks_2"
+      },
+      "result": {
+        "extensions": {
+          "bdm:response_id": "R_ks_2",
+          "bdm:response_time": 10.910,
+          "bdm:timed_out": true
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:35.000Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:lost_focus",
+      "object": {
+        "objectType": "bdm:Window",
+        "id": "window_main"
+      },
+      "result": {
+        "extensions": {
+          "bdm:focus_loss_reason": "tab_switch"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:00:35.050Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:paused",
+      "object": {
+        "objectType": "bdm:RuntimeInstance",
+        "id": "rt_ks_001"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:runtime_id": "rt_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:12.300Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:resumed",
+      "object": {
+        "objectType": "bdm:RuntimeInstance",
+        "id": "rt_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:pause_duration": 37.250
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:runtime_id": "rt_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:12.400Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:got_focus",
+      "object": {
+        "objectType": "bdm:Window",
+        "id": "window_main"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:12.500Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:recording_started",
+      "object": {
+        "objectType": "bdm:Recording",
+        "id": "recording_eeg_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:recording_modality": "eeg",
+          "bdm:sample_rate": 500,
+          "bdm:recording_scope": "block"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:block_index": 1
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:13.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_started",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_ks_3"
+      },
+      "context": {
+        "extensions": {
+          "bdm:trial_index": "3",
+          "bdm:block_index": 1,
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:13.100Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Stimulus",
+        "id": "stimulus_ks_nback_T",
+        "name": "letter_T"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "3"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:13.612Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_001"
+      },
+      "verb": "bdm:key_pressed",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "keyboard"
+      },
+      "result": {
+        "extensions": {
+          "bdm:key": "ArrowLeft",
+          "bdm:key_code": 37
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "3"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:14.100Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_ended",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_ks_3"
+      },
+      "result": {
+        "extensions": {
+          "bdm:response_id": "R_ks_3",
+          "bdm:response_description": "ArrowLeft",
+          "bdm:response_time": 0.512,
+          "bdm:correct": true
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:trial_index": "3"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:14.200Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:recording_ended",
+      "object": {
+        "objectType": "bdm:Recording",
+        "id": "recording_eeg_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:recording_url": "https://storage.behaverse.org/recordings/eeg_ks_001.edf",
+          "bdm:sha256": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+          "bdm:duration": 1.200
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:block_index": 1
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:14.300Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:state_changed",
+      "object": {
+        "objectType": "bdm:LocaleSwitch",
+        "id": "locale_switch_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:state": "changed",
+          "bdm:previous_locale": "en",
+          "bdm:current_locale": "fr"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:15.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:completed",
+      "object": {
+        "objectType": "bdm:RuntimeInstance",
+        "id": "rt_ks_001"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:runtime_id": "rt_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:15.200Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Feedback",
+        "id": "feedback_score_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:feedback_kind": "score"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:16.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:recording_ended",
+      "object": {
+        "objectType": "bdm:Recording",
+        "id": "recording_mouse_ks_001"
+      },
+      "result": {
+        "extensions": {
+          "bdm:recording_url": "https://storage.behaverse.org/recordings/mouse_ks_001.json",
+          "bdm:sha256": "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3",
+          "bdm:duration": 75.400
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:16.100Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:submitted",
+      "object": {
+        "objectType": "bdm:RuntimeInstance",
+        "id": "rt_ks_001"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_001",
+          "bdm:runtime_id": "rt_ks_001"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T15:01:17.000Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_ks_002"
+      },
+      "verb": "bdm:abandoned",
+      "object": {
+        "objectType": "bdm:RuntimeInstance",
+        "id": "rt_ks_002"
+      },
+      "result": {
+        "extensions": {
+          "bdm:abandon_reason": "participant_withdrew",
+          "bdm:abandon_at_trial": "5"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_ks_002",
+          "bdm:runtime_id": "rt_ks_002"
+        }
+      }
+    }
+  ]
+}

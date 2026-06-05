@@ -1,0 +1,95 @@
+{
+  "batch_id": "nback_trial_47",
+  "events": [
+    {
+      "timestamp": "2026-06-05T14:35:00.000Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_started",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_nback_47"
+      },
+      "context": {
+        "extensions": {
+          "bdm:block_index": 2,
+          "bdm:block_type": "test",
+          "bdm:trial_index": "47",
+          "bdm:session_id": "session_nback_001",
+          "bdm:runtime_id": "rt_nback_run1"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:35:00.050Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:presented",
+      "object": {
+        "objectType": "bdm:Stimulus",
+        "id": "stimulus_letter_T",
+        "name": "letter_T"
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_nback_001",
+          "bdm:trial_index": "47"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:35:00.482Z",
+      "actor": {
+        "objectType": "bdm:Agent",
+        "id": "agent_001"
+      },
+      "verb": "bdm:key_pressed",
+      "object": {
+        "objectType": "bdm:UIComponent",
+        "id": "keyboard"
+      },
+      "result": {
+        "extensions": {
+          "bdm:key": "ArrowLeft",
+          "bdm:key_code": 37
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_nback_001",
+          "bdm:trial_index": "47"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-06-05T14:35:01.050Z",
+      "actor": {
+        "objectType": "bdm:Engine",
+        "id": "behaverse-web-viewer@v26.0603"
+      },
+      "verb": "bdm:trial_ended",
+      "object": {
+        "objectType": "bdm:Trial",
+        "id": "trial_nback_47"
+      },
+      "result": {
+        "extensions": {
+          "bdm:response_description": "ArrowLeft",
+          "bdm:response_time": 0.432,
+          "bdm:correct": true,
+          "bdm:response_id": "R_47"
+        }
+      },
+      "context": {
+        "extensions": {
+          "bdm:session_id": "session_nback_001",
+          "bdm:trial_index": "47"
+        }
+      }
+    }
+  ]
+}
