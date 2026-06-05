@@ -1,1 +1,17 @@
-{ "@context": { "@vocab": "https://behaverse.org/schemas/events#" } }
+{
+  "@context": {
+    "@vocab":     "https://behaverse.org/schemas/events#",
+    "bdm":        "https://behaverse.org/data-model/vocab/",
+    "xapi":       "https://w3id.org/xapi/",
+    "schema":     "http://schema.org/",
+    "as2":        "https://www.w3.org/ns/activitystreams#",
+    "actor":      { "@id": "https://behaverse.org/data-model/vocab/actor" },
+    "verb":       { "@id": "https://behaverse.org/data-model/vocab/verb", "@type": "@id" },
+    "object":     { "@id": "https://behaverse.org/data-model/vocab/object" },
+    "objectType": { "@id": "@type" },
+    "result":     { "@id": "https://behaverse.org/data-model/vocab/result" },
+    "context":    { "@id": "https://behaverse.org/data-model/vocab/context" },
+    "extensions": { "@id": "https://behaverse.org/data-model/vocab/extensions" },
+    "events":     { "@id": "https://behaverse.org/schemas/events#events", "@container": "@list" }
+  }
+}
