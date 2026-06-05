@@ -38,6 +38,46 @@ Body in [05e_events_vocabulary.md](05e_events_vocabulary.md). The initial framin
 
 ---
 
+## OD-20 — Schema 4b (Behavioural Channels) shape
+
+**Opened.** 2026-06-05 (Schema 4a v26.0605 just shipped; Schema 4b is the natural sibling — the schema for the *captured-data files* that `bdm:recording_started`/`bdm:recording_ended` events reference via `bdm:recording_url`).
+
+**Context.** [Section §Schema 4b in 05_data_model.md](05_data_model.md) sketches the channels (mouse, keyboard, webcam, microphone) with file formats (JSON Lines for mouse/keyboard; WebM for webcam; WAV/Opus for microphone). OD-07 (resolved) settled the privacy/default-state matrix: response time on by default; mouse/keyboard opt-in per deployment; webcam/microphone opt-in plus per-session participant consent. OD-19 added EEG as a recording source and renamed `channel` → `source` in the manifest extensions.
+
+What's not yet decided is the **per-source content schema** — what the captured file *contains*.
+
+**Sub-questions.**
+
+- **20a — Schema architecture: one polymorphic schema vs family per source.**
+  - (i) **Family per source** (`schemas/recordings/mouse/`, `schemas/recordings/keyboard/`, `schemas/recordings/eeg/`, etc.). Each source has its own JSON Schema validating its content shape. Mirrors how Schema 5 vs Schema 6 are separate schemas for distinct data shapes. *(Recommended.)*
+  - (ii) One Schema 4b with `oneOf` across source types. Single schema, polymorphic. Simpler folder layout; harder to evolve sources independently.
+  - (iii) Skip per-source content schemas; validate only the *manifest* (the `bdm:recording_url` + `bdm:recording_sha256` + `bdm:duration` + `bdm:sample_rate` + `bdm:source` extensions on Schema 4a events). Defer per-source content validation to downstream tooling. Smallest scope.
+
+- **20b — Sources to ship in this initial release.**
+  - (i) **Mouse + Keyboard only.** JSON Lines format, structured sample schemas. The two most-implemented channels. *(Recommended for MVP.)*
+  - (ii) Mouse + Keyboard + EEG. Adds EEG (Parquet or EDF format); requires domain modelling.
+  - (iii) All five (mouse, keyboard, EEG, webcam, microphone). Webcam/microphone are binary media files — schemas validate only the side-car manifest, not the bytes.
+
+- **20c — Mouse sample schema.** Each row of the mouse JSONL file.
+  - (i) **`{t, x, y, button_state}`** — minimal sample shape. `t` in seconds (float, full precision) from recording start; `x`/`y` in viewport pixels; `button_state` enum (`up`, `left_down`, `right_down`, `middle_down`). *(Recommended.)*
+  - (ii) Add wheel events: `{t, x, y, button_state, wheel_dx?, wheel_dy?}`.
+  - (iii) Richer: also pressure (stylus), screen DPI, multi-touch fingers.
+
+- **20d — Keyboard sample schema.** Each row of the keyboard JSONL file.
+  - (i) **`{t, key, key_code, action, modifiers}`** where `action` ∈ `down`/`up`; `modifiers` is array of `shift`/`ctrl`/`alt`/`meta` if held. *(Recommended.)*
+  - (ii) Same as (i) plus the full text content of the focused input at this moment (for typed-input paradigms).
+  - (iii) Simpler: just `{t, key, action}`.
+
+- **20e — Per-source manifest sidecar vs embedded.**
+  - (i) **Manifest in the Schema 4a `bdm:recording_ended` event extensions only** (`bdm:source`, `bdm:sample_rate`, `bdm:duration`, `bdm:recording_url`, `bdm:recording_sha256`). No separate manifest file. *(Recommended.)*
+  - (ii) A sidecar JSON manifest file alongside the data file (e.g., `mouse_session-xyz.manifest.json` next to `mouse_session-xyz.jsonl`). Adds discoverability when the data file is moved without the event stream.
+
+- **20f — File naming convention.** Per [05_data_model.md](05_data_model.md) §"File naming": `{dep-id}_{session-id}_{channel}.{ext}` (e.g., `dep_a1b2_550e8400_mouse.jsonl.gz`). Confirm `.jsonl` (uncompressed) vs `.jsonl.gz` (gzipped) default. Recommendation: `.jsonl.gz` default for mouse/keyboard (high-cardinality data; compression is meaningful).
+
+**Resolution criterion.** Six sub-questions answered; Schema 4b spec + plan + implementation follow.
+
+---
+
 ## Resolution log
 
 A decision moves out of this document and into the relevant design doc once resolved. The original entry is summarised here; the full body lives in the linked doc.
