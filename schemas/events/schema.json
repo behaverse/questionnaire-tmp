@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/events/v26.0605/schema.json",
+  "title": "Behaverse Event Data (BDM Events extension)",
+  "description": "Per OD-19 (resolved 2026-06-05), BDM Events vocabulary covering questionnaires, cognitive tasks, and video games under a single bdm: namespace.",
+  "oneOf": [
+    { "$ref": "#/$defs/Event" },
+    { "$ref": "#/$defs/EventBatch" }
+  ],
+  "$defs": {
+    "Event": {
+      "type": "object",
+      "required": ["actor", "verb", "object", "timestamp"],
+      "properties": {
+        "timestamp": { "type": "string", "format": "date-time" },
+        "actor":     { "type": "object" },
+        "verb":      { "type": "string" },
+        "object":    { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "EventBatch": {
+      "type": "object",
+      "required": ["events"],
+      "properties": {
+        "events": { "type": "array", "items": { "$ref": "#/$defs/Event" }, "minItems": 1 }
+      },
+      "additionalProperties": true
+    }
+  }
+}
