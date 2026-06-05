@@ -1,20 +1,10 @@
-# 05e — BDM Events vocabulary (proposal)
+# 05e — BDM Events vocabulary
 
-**Status.** **DRAFT — REVISION 4 (2026-06-05).** All open questions from revisions 1-3 resolved by user review; pending one final pass from the user before locking. Once locked, this document becomes the authoritative vocabulary inventory; the resolutions feed into OD-19 closure and the BDM upstream change handoff. Sibling of [05a_reusable_entities.md](05a_reusable_entities.md), [05b_scoring.md](05b_scoring.md), [05c_bdm_alignment.md](05c_bdm_alignment.md), [05d_runtime.md](05d_runtime.md).
+**Status.** **LIVE — OD-19 resolved 2026-06-05.** This document is the authoritative body for the OD-19 resolution; the Resolution-log row in [10_open_decisions.md](10_open_decisions.md) points here. Sibling of [05a_reusable_entities.md](05a_reusable_entities.md), [05b_scoring.md](05b_scoring.md), [05c_bdm_alignment.md](05c_bdm_alignment.md), [05d_runtime.md](05d_runtime.md). Resolved across four revision rounds (drafts 1-4 between 2026-06-04 and 2026-06-05); see §8 for the resolution log of the 10 + 8 + 26 + 17 review questions answered.
 
 This document specifies the **events vocabulary** that our project's Schema 4a (and, by upstream extension proposal, BDM's Events spec) uses to describe what happens during an *agent's* (human participant, AI agent, etc.) interaction with a questionnaire, cognitive task, or other instrument. It is intended to cover **multiple domains** under a single coherent vocabulary, so the same downstream analytics tooling can process all of them.
 
-**Revision 4 (2026-06-05) — addresses revision-3 review:**
-- Added `bdm:consented` (agent interaction, audit-trail event when an agent commits to consent) — per Q1.
-- Added `bdm:typed` (agent interaction, text input commit carrying keystroke sequence + final text) — per Q2.
-- Dropped `bdm:changed` (ambiguous with `selected`/`deselected`); replaced with `bdm:adjusted` for continuous values (slider, numeric spinner) — per Q3.
-- Added `bdm:got_focus` and `bdm:lost_focus` (agent interactions; covers both input-control focus and window/tab focus) — per Q9.
-- `bdm:Runtime` → `bdm:Engine` (better describes the role — the engine that runs the instrument) — per Q10.
-- Recording lifecycle clarified: recordings scope to any time interval (whole RuntimeInstance, a block, a trial, or a sub-trial window like "stimulus-onset → response"); multiple recordings per RuntimeInstance permitted — per Q5.
-- New object types: `bdm:ConsentForm` (the form presented), `bdm:Consent` (the consent record committed to), `bdm:Window` (for window-level focus events).
-- Verb count: 24 (was 20). Actor type count: 5 (renamed Runtime → Engine).
-
-All revision-3 open questions resolved; revision 4 closes them and is ready for the user's final pass.
+The locked vocabulary: **24 verbs across 6 layers; 15 object types; 5 actor types; ~50 extension keys**. The BDM upstream change proposal — adding the `bdm:` namespace plus the full vocabulary inventory plus the `agent` → `actor` field rename plus the session/activity/runtime_instance scoping hierarchy — is logged as deviations D4, D5, and D6 in [05c_bdm_alignment.md](05c_bdm_alignment.md).
 
 The document has four parts:
 

@@ -15,8 +15,11 @@ The structure of this document is operational: each entry should be copy-pasteab
 | D1 | `Response.stimulus_id` | integer | string (synthetic id, e.g. `pr_phq9_1+ctx_phq9_intro+ins_likert_4`) | Integer FK into a separate Stimulus dictionary table is unergonomic for questionnaire data where stimuli are textual compositions of (Context, Instruction, Prompt). Synthetic string id is deterministic and self-describing. | Relax `stimulus_id` typing from `integer` to `string \| integer`, OR document a string-form convention for questionnaire instruments. |
 | D2 | Scorer output location | (no BDM-defined home) | Our Schema 6 `scorer_outputs` field (keyed by CalVer-pinned `scr_…@vYY.MMDD`) | BDM has no session-level aggregate-scoring table. Per-questionnaire scorer outputs (e.g., `phq9_total: 12`, `phq9_severity: "moderate"`) are session-level facts that shouldn't repeat ×N on every Response row. | Add a BDM session-level "scoring outputs" table (or extend the existing session-metadata table) that holds aggregated scoring outputs per (session, scorer). Suggested column shape: `agent_id`, `session_id`/`session_index`, `scorer_id`, `scorer_version`, `output` (JSON), `computed_at`. |
 | D3 | `Response.session_id` naming | column name `session_id`, typed `integer`, description text calls it "session_index" | Our `session_id` is UUID v4 (globally-unique session identity); we use a separate `session_index` column for the integer per-agent ordering. | Two-part change: (a) rename BDM's current `session_id` column to `session_index` to match its own description text; (b) add a new `session_id` column typed `string` (UUID v4) for globally-unique session identity. (a) is mechanical naming cleanup; (b) extends BDM with a globally-unique handle that downstream tooling needs anyway. |
+| D4 | BDM Events vocabulary | BDM Events spec uses CURIE prefixes `xapi:`, `schema:`, `as2:` and gives an example verb `xapi:completed` but does not define a project-canonical events vocabulary. | We define our own `bdm:` namespace with a canonical Events vocabulary: 24 verbs across 6 layers, 15 object types, 5 actor types, ~50 extension keys (see [05e_events_vocabulary.md](05e_events_vocabulary.md)). Single-namespace replaces juggling xAPI/Schema.org/AS2. | Add the `bdm:` prefix definition to BDM's `@context` (suggested base URI: `https://behaverse.org/data-model/vocab/`). Register the full 05e vocabulary upstream as BDM-canonical Events vocabulary — verbs, object types, actor types, extension keys. Designed to cover questionnaires, cognitive tasks, and video games. |
+| D5 | BDM Events base structure: `agent` field | BDM Events spec field name `agent` (defined as "extends xapi:actor") | We use `actor` as the field name (matching xAPI 2.0 terminology, where `Agent` is one *type* of Actor). | Rename BDM's Events-spec field `agent` → `actor` to align with xAPI terminology. The valid `Agent` type CURIE remains; it becomes one possible value of `actor.objectType` (alongside `Group`, `Engine`, `Orchestrator`, `Researcher` per 05e §3.1). |
+| D6 | Scoping hierarchy in events | BDM Events spec has a `context` field but no documented sub-fields for Activity vs RuntimeInstance distinction; our prior D3 already addressed `session_id` semantics. | We add scoping context keys: `bdm:session_id` (study session), `bdm:activity_id` / `bdm:activity_index` (planned interaction, e.g., "complete PHQ-9"), `bdm:runtime_id` (specific runtime execution that distinguishes restarts). These form the hierarchy: Session → Activity → RuntimeInstance → Block → Trial. | Document the scoping hierarchy in BDM Events spec. The four-level hierarchy (`session_id`, `activity_id`, `activity_index`, `runtime_id`) lets analysts filter and group events at any level. Activity vs RuntimeInstance distinction is important for restartable instruments and for distinguishing the *plan* from the *execution*. |
 
-Three deviations currently open. None are blocking; all have local workarounds documented below.
+Six deviations currently open. None are blocking; all have local workarounds documented below.
 
 ---
 
@@ -124,6 +127,64 @@ Both are emitted in Schema 6. In Schema 5 (Response) rows, `session_index` is th
 (b) **Add `session_id` as a new column** typed `string` (UUID v4 by convention) for globally-unique session identity. Required where session-level cross-system linkage is needed; optional in pure local-CSV settings. This serves downstream tools (databases, longitudinal linkage, audit trails) that need a stable handle independent of agent-scoped ordering.
 
 Together, (a) and (b) keep BDM's per-agent ordering semantic (now correctly named) and add the globally-unique-identity semantic that BDM lacks today.
+
+---
+
+## D4 — BDM Events vocabulary (`bdm:` namespace + 24 verbs + 15 object types + 5 actor types + extension keys)
+
+**BDM (current).** The Events spec example uses `verb: "xapi:completed"` — i.e., verbs drawn from the pre-imported `xapi:`, `schema:`, `as2:` prefixes. There is no project-canonical events vocabulary documented in BDM; each consumer picks CURIEs from those three external vocabularies (or its own).
+
+**Our usage.** OD-19 (resolved 2026-06-05) defines a complete Behaverse-canonical events vocabulary under a new `bdm:` namespace. See [05e_events_vocabulary.md](05e_events_vocabulary.md) for the full body. Summary:
+
+- **24 verbs** across 6 layers: RuntimeInstance lifecycle (7), Presentation (1 polymorphic), Agent interactions (10), System events (3), Recording lifecycle (2), Navigation (1).
+- **15 object types**: `RuntimeInstance`, `Screen`, `Panel`, `Stimulus`, `Option`, `Trial`, `UIComponent`, `Window`, `Feedback`, `ConsentForm`, `Consent`, `Recording`, `Timer`, `Scorer`, `LocaleSwitch`.
+- **5 actor types**: `Agent`, `Group`, `Engine`, `Orchestrator`, `Researcher`.
+- **~50 extension keys** spanning response data, scoping/hierarchy, environment, interaction-specific, lifecycle/navigation, feedback, consent, recording, state-change.
+
+**Why we deviate.** Mixing xAPI/Schema.org/AS2 namespaces in BDM Events creates inconsistency (some verbs from one source, some from another), forces analysts to learn three vocabularies, and creates redundancies when concepts overlap across them. A single `bdm:` namespace gives Behaverse complete control over semantics, consistent naming, and one vocabulary to learn. Crucially, the vocabulary is designed to cover **multiple domains** — questionnaires, cognitive tasks, and (looking ahead) video games — under one consistent set of verbs, so the same downstream analytics tooling can process all of them.
+
+**Proposed upstream change.** Add the `bdm:` prefix to BDM's Events `@context` (suggested expansion: `https://behaverse.org/data-model/vocab/`). Register the full 24-verb / 15-object-type / 5-actor-type / extension-key inventory upstream as the canonical BDM Events vocabulary. The full inventory is documented in [05e_events_vocabulary.md](05e_events_vocabulary.md) §2 (verbs), §3 (object types + actor types), §4 (extension keys), with worked use cases in §6 covering consent flows, single/multi-select questionnaires, text inputs, tab-switch handling, cognitive task trials, and concurrent multi-source recordings.
+
+---
+
+## D5 — BDM Events base structure: `agent` field rename → `actor`
+
+**BDM (current).**
+```yaml
+- variable_name: agent
+  data_type: str | dict
+  description: The person or software that performed the action described by the event. Same as schema:agent, extends xapi:actor.
+```
+
+**Our usage.** OD-19 uses `actor` as the field name on each event, matching xAPI 2.0 terminology where `Agent` is one *type* of Actor (alongside `Group`, and our domain-specific types `Engine` / `Orchestrator` / `Researcher`).
+
+**Why we deviate.** BDM's own description acknowledges the field "extends xapi:actor" — i.e., the underlying concept is xAPI's Actor. Naming the field `agent` is semantically inconsistent: an Agent is a specific *type* of Actor, not the umbrella category. Renaming to `actor` aligns the field name with the concept it represents and matches xAPI conventions cleanly.
+
+**Proposed upstream change.** Rename BDM's Events-spec field `agent` → `actor`. Mechanical naming cleanup; no semantic change. The `Agent` CURIE type remains valid (it's now one possible value of `actor.objectType` rather than the field name itself). This rename pairs cleanly with the actor-type vocabulary introduced in D4 (`Agent` / `Group` / `Engine` / `Orchestrator` / `Researcher`).
+
+---
+
+## D6 — Scoping hierarchy: Activity vs RuntimeInstance distinction
+
+**BDM (current).** BDM Response columns include `agent_id`, `session_id` (integer ordering, per D3), `activity_index`, `instrument_id`, `instrument_repetition`, `timeline_id`, `timeline_repetition`, `block_index`, `trial_index`. Events spec carries a `context` field but does not document a canonical sub-field set for the runtime-execution distinction.
+
+**Our usage.** OD-19 introduces a four-level scoping hierarchy in events `context.extensions`:
+
+```
+Study session (bdm:session_id, optional, set by orchestrator)
+  └ Activity (bdm:activity_id / bdm:activity_index — what is planned)
+      └ RuntimeInstance (bdm:runtime_id — one specific runtime execution)
+          └ Block (bdm:block_index / bdm:block_name / bdm:block_type)
+              └ Trial (bdm:trial_index, one Schema 5 Response row)
+```
+
+The key new distinction is **Activity vs RuntimeInstance**:
+- **Activity** = the *planned* interaction (e.g., "complete the PHQ-9"). Identified by `bdm:activity_id`; its order within the session by `bdm:activity_index`.
+- **RuntimeInstance** = one specific *runtime execution* of an Activity. Distinguishes restarts: if the same Activity is restarted twice, there are two RuntimeInstances. Identified by `bdm:runtime_id`.
+
+**Why we deviate.** BDM doesn't document a clean separation between "what was planned" and "what was actually executed (possibly multiple times)". `instrument_repetition` in BDM Response captures repetition counts but doesn't give each repetition a stable handle for cross-event grouping. Adding `runtime_id` as a stable identifier per runtime execution lets analysts group all events from one execution cleanly, distinct from re-runs.
+
+**Proposed upstream change.** Document the four-level scoping hierarchy in BDM Events spec context. The four context keys (`session_id`, `activity_id`, `activity_index`, `runtime_id`) form a hierarchy that lets analysts filter and group events at any level. Activity vs RuntimeInstance distinction is critical for restartable instruments and for connecting *planning* metadata (which Activity was scheduled) with *execution* metadata (which RuntimeInstance(s) actually ran).
 
 ---
 
