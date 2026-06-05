@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/recordings/keyboard/v26.0605/schema.json",
+  "title": "Behaverse Keyboard Recording Sample",
+  "description": "Per OD-20 (resolved 2026-06-05), one sample of a keyboard recording (one JSONL line). Schema 4b family member for the 'keyboard' source. The captured file (typically .jsonl.gz) contains many such samples in temporal order; this schema validates each sample independently.",
+  "type": "object",
+  "required": ["t", "key", "key_code", "action", "modifiers"],
+  "properties": {
+    "t": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Seconds from recording start (float, full precision)."
+    },
+    "key": {
+      "type": "string",
+      "description": "Canonical key name (e.g., 'ArrowLeft', 'Enter', 'a')."
+    },
+    "key_code": {
+      "type": "integer",
+      "description": "OS/browser key code."
+    },
+    "action": {
+      "type": "string",
+      "enum": ["down", "up"],
+      "description": "Keystroke direction."
+    },
+    "modifiers": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["shift", "ctrl", "alt", "meta"] },
+      "uniqueItems": true,
+      "description": "Modifier keys held at sample time."
+    }
+  },
+  "additionalProperties": false
+}

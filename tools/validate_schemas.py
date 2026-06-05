@@ -32,17 +32,28 @@ def load_schema(path: Path) -> dict:
 def discover_examples(schemas_root: Path) -> list[tuple[str, Path]]:
     """Yield (schema_name, example_path) for every example file.
 
-    schema_name is the directory under schemas/ ("instrument" or "questionnaire").
+    schema_name is the directory under schemas/ ("instrument" or "questionnaire"),
+    or "recordings/{source}" for the two-level recordings family (Schema 4b).
     """
     out = []
     for schema_dir in sorted(schemas_root.iterdir()):
         if not schema_dir.is_dir():
             continue
         examples_dir = schema_dir / "examples"
-        if not examples_dir.is_dir():
-            continue
-        for example in sorted(examples_dir.glob("*.json")):
-            out.append((schema_dir.name, example))
+        if examples_dir.is_dir():
+            for example in sorted(examples_dir.glob("*.json")):
+                out.append((schema_dir.name, example))
+        else:
+            # Two-level case: schemas/recordings/{source}/examples/
+            for sub_dir in sorted(schema_dir.iterdir()):
+                if not sub_dir.is_dir():
+                    continue
+                sub_examples_dir = sub_dir / "examples"
+                if not sub_examples_dir.is_dir():
+                    continue
+                schema_name = f"{schema_dir.name}/{sub_dir.name}"
+                for example in sorted(sub_examples_dir.glob("*.json")):
+                    out.append((schema_name, example))
     return out
 
 
@@ -53,11 +64,21 @@ def build_registry(schemas_root: Path) -> Registry:
         if not schema_dir.is_dir():
             continue
         schema_path = schema_dir / "schema.json"
-        if not schema_path.is_file():
-            continue
-        schema = load_schema(schema_path)
-        resource = Resource(contents=schema, specification=DRAFT202012)
-        registry = registry.with_resource(uri=schema["$id"], resource=resource)
+        if schema_path.is_file():
+            schema = load_schema(schema_path)
+            resource = Resource(contents=schema, specification=DRAFT202012)
+            registry = registry.with_resource(uri=schema["$id"], resource=resource)
+        else:
+            # Two-level case: schemas/recordings/{source}/schema.json
+            for sub_dir in sorted(schema_dir.iterdir()):
+                if not sub_dir.is_dir():
+                    continue
+                sub_schema_path = sub_dir / "schema.json"
+                if not sub_schema_path.is_file():
+                    continue
+                schema = load_schema(sub_schema_path)
+                resource = Resource(contents=schema, specification=DRAFT202012)
+                registry = registry.with_resource(uri=schema["$id"], resource=resource)
     return registry
 
 

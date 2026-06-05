@@ -1,0 +1,7 @@
+{
+  "t": 12.847,
+  "key": "ArrowLeft",
+  "key_code": 37,
+  "action": "down",
+  "modifiers": ["shift", "ctrl"]
+}

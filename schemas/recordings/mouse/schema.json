@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://behaverse.org/schemas/recordings/mouse/v26.0605/schema.json",
+  "title": "Behaverse Mouse Recording Sample",
+  "description": "Per OD-20 (resolved 2026-06-05), one sample of a mouse recording (one JSONL line). Schema 4b family member for the 'mouse' source. The captured file (typically .jsonl.gz) contains many such samples in temporal order; this schema validates each sample independently.",
+  "type": "object",
+  "required": ["t", "x", "y", "button_state"],
+  "properties": {
+    "t": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Seconds from recording start (float, full precision)."
+    },
+    "x": {
+      "type": "integer",
+      "description": "Horizontal position in viewport pixels."
+    },
+    "y": {
+      "type": "integer",
+      "description": "Vertical position in viewport pixels."
+    },
+    "button_state": {
+      "type": "string",
+      "enum": ["up", "left_down", "right_down", "middle_down"],
+      "description": "Mouse button state at sample time."
+    }
+  },
+  "additionalProperties": false
+}
