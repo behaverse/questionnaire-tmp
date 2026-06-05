@@ -12,20 +12,96 @@
       "type": "object",
       "required": ["actor", "verb", "object", "timestamp"],
       "properties": {
-        "timestamp": { "type": "string", "format": "date-time" },
-        "actor":     { "type": "object" },
-        "verb":      { "type": "string" },
-        "object":    { "type": "object" }
+        "version":    { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$" },
+        "timestamp":  { "type": "string", "format": "date-time" },
+        "stored":     { "type": "string", "format": "date-time" },
+        "updated":    { "type": "string", "format": "date-time" },
+        "actor":      { "$ref": "#/$defs/Actor" },
+        "verb":       { "$ref": "#/$defs/Verb" },
+        "object":     { "$ref": "#/$defs/EventObject" },
+        "result":     { "$ref": "#/$defs/Result" },
+        "context":    { "$ref": "#/$defs/Context" },
+        "authority":  { "type": "object" },
+        "attachments":{ "type": "array", "items": { "type": "object" } }
       },
-      "additionalProperties": true
+      "additionalProperties": false,
+      "patternProperties": { "^x_": {} }
     },
     "EventBatch": {
       "type": "object",
       "required": ["events"],
       "properties": {
-        "events": { "type": "array", "items": { "$ref": "#/$defs/Event" }, "minItems": 1 }
+        "batch_id": { "type": "string" },
+        "events":   { "type": "array", "items": { "$ref": "#/$defs/Event" }, "minItems": 1 }
+      },
+      "additionalProperties": false,
+      "patternProperties": { "^x_": {} }
+    },
+    "Actor": {
+      "type": "object",
+      "required": ["objectType", "id"],
+      "properties": {
+        "objectType": {
+          "type": "string",
+          "enum": ["bdm:Agent", "bdm:Group", "bdm:Engine", "bdm:Orchestrator", "bdm:Researcher"]
+        },
+        "id":   { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "Verb": {
+      "type": "string",
+      "enum": [
+        "bdm:initialized", "bdm:started", "bdm:paused", "bdm:resumed",
+        "bdm:completed", "bdm:submitted", "bdm:abandoned",
+        "bdm:presented",
+        "bdm:clicked", "bdm:drag_and_dropped", "bdm:key_pressed", "bdm:typed",
+        "bdm:selected", "bdm:deselected", "bdm:adjusted",
+        "bdm:got_focus", "bdm:lost_focus", "bdm:consented",
+        "bdm:trial_started", "bdm:trial_ended", "bdm:state_changed",
+        "bdm:recording_started", "bdm:recording_ended",
+        "bdm:navigated"
+      ]
+    },
+    "EventObject": {
+      "type": "object",
+      "required": ["objectType", "id"],
+      "properties": {
+        "objectType": {
+          "type": "string",
+          "enum": [
+            "bdm:RuntimeInstance", "bdm:Screen", "bdm:Panel", "bdm:Stimulus",
+            "bdm:Option", "bdm:Trial", "bdm:UIComponent", "bdm:Window",
+            "bdm:Feedback", "bdm:ConsentForm", "bdm:Consent",
+            "bdm:Recording", "bdm:Timer", "bdm:Scorer", "bdm:LocaleSwitch"
+          ]
+        },
+        "id":   { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "extensions": { "$ref": "#/$defs/BDMExtensions" }
       },
       "additionalProperties": true
+    },
+    "Context": {
+      "type": "object",
+      "properties": {
+        "extensions": { "$ref": "#/$defs/BDMExtensions" }
+      },
+      "additionalProperties": true
+    },
+    "BDMExtensions": {
+      "type": "object",
+      "patternProperties": {
+        "^bdm:[a-z][a-z0-9_]*$": {}
+      },
+      "additionalProperties": false
     }
   }
 }
