@@ -5,7 +5,7 @@
   "description": "21-item self-report measure of depression severity in adults.",
   "version": "v26.0528",
   "language": "en",
-  "author": [
+  "authors": [
     { "name": "Aaron T. Beck", "affiliation": "University of Pennsylvania" },
     { "name": "Robert A. Steer" },
     { "name": "Gregory K. Brown" }

@@ -2,7 +2,7 @@
 
 Schema 1 of the questionnaire-apps ecosystem. Bibliographic and psychometric properties for any instrument — questionnaires, cognitive tasks, behavioural paradigms.
 
-**Current version:** v26.0605
+**Current version:** v26.0528
 **Spec:** [docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md](../../docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md) §2
 
 ## Files
@@ -18,7 +18,7 @@ Schema 1 of the questionnaire-apps ecosystem. Bibliographic and psychometric pro
 ## Required fields
 
 Schema floor: `id`, `title`, `description`, `language` (BCP-47).
-Library publish layer additionally requires: `version`, `author` (≥1), `license`.
+Library publish layer additionally requires: `version`, `authors` (≥1), `license`.
 
 ## Preferred vocabularies
 

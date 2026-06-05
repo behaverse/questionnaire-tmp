@@ -6,7 +6,7 @@
   "version": "v26.0528",
   "language": "en",
   "available_languages": ["en"],
-  "author": [
+  "authors": [
     { "name": "Anthony G. Greenwald", "orcid": "0000-0001-7415-2785" },
     { "name": "Debbie E. McGhee" },
     { "name": "Jordan L. K. Schwartz" }

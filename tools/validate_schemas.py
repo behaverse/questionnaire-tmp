@@ -58,7 +58,12 @@ def discover_examples(schemas_root: Path) -> list[tuple[str, Path]]:
 
 
 def build_registry(schemas_root: Path) -> Registry:
-    """Register every schema's $id -> local file mapping so cross-schema $ref resolves."""
+    """Register every schema's $id -> local file mapping so cross-schema $ref resolves.
+
+    Also registers archived versioned schemas found under schemas/<name>/versions/<ver>/schema.json
+    so that cross-schema $refs pinned to older versions (e.g. Schema 2 v26.0602 -> Schema 1 v26.0528)
+    continue to resolve correctly after the live schema bumps its $id.
+    """
     registry = Registry()
     for schema_dir in sorted(schemas_root.iterdir()):
         if not schema_dir.is_dir():
@@ -68,6 +73,18 @@ def build_registry(schemas_root: Path) -> Registry:
             schema = load_schema(schema_path)
             resource = Resource(contents=schema, specification=DRAFT202012)
             registry = registry.with_resource(uri=schema["$id"], resource=resource)
+            # Register archived versions so pinned $refs still resolve.
+            versions_dir = schema_dir / "versions"
+            if versions_dir.is_dir():
+                for ver_dir in sorted(versions_dir.iterdir()):
+                    if not ver_dir.is_dir():
+                        continue
+                    archived_path = ver_dir / "schema.json"
+                    if not archived_path.is_file():
+                        continue
+                    archived_schema = load_schema(archived_path)
+                    archived_resource = Resource(contents=archived_schema, specification=DRAFT202012)
+                    registry = registry.with_resource(uri=archived_schema["$id"], resource=archived_resource)
         else:
             # Two-level case: schemas/recordings/{source}/schema.json
             for sub_dir in sorted(schema_dir.iterdir()):

@@ -76,7 +76,7 @@ These are deliberately not resolved in this document; they appear in [10_open_de
 
 **Related standards.** Schema.org `ScholarlyArticle`, Dublin Core, DataCite.
 
-Schema enforces a minimum-valid floor (id, title, description, language). The Library publish workflow layers additional requirements (version, authors ≥1, license) at promote-to-published time.
+Schema enforces a minimum-valid floor (id, title, description, language). The Library publish workflow layers additional requirements (version, author ≥1, license) at promote-to-published time.
 
 **Required fields.**
 
@@ -93,7 +93,7 @@ Schema enforces a minimum-valid floor (id, title, description, language). The Li
 |---|---|
 | `short_title` | Common abbreviation (e.g. "PHQ-9") |
 | `version` | Calendar version `vYY.MMDD` (per [Behaverse schemas versioning policy](https://behaverse.org/schemas/#versioning)); schema floor optional, required at Library publish |
-| `authors` | Each with `name`; optional `orcid`, `affiliation` |
+| `author` | Each with `name`; optional `orcid`, `affiliation` |
 | `publication` | At minimum `year` and `citation`; optional `doi`, `isbn`, `publisher`, `url`; optional in schema — if present, inner `year` and `citation` required |
 | `available_languages` | All ISO 639-1 codes with validated translations |
 | `classification` | `domain[]`, `population[]`, `tags[]`, `age_range`, `administration_mode[]` |

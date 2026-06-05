@@ -157,18 +157,18 @@ def test_version_semver_fails(schema):
     assert any("version" in e for e in errors)
 
 
-def test_authors_minimal(schema):
+def test_author_minimal(schema):
     instance = {
         "id": "qst_x", "title": "T", "description": "D", "language": "en",
-        "authors": [{"name": "Aaron T. Beck"}],
+        "author": [{"name": "Aaron T. Beck"}],
     }
     assert validate_instance(schema, instance) == []
 
 
-def test_authors_full(schema):
+def test_author_full(schema):
     instance = {
         "id": "qst_x", "title": "T", "description": "D", "language": "en",
-        "authors": [{
+        "author": [{
             "name": "Aaron T. Beck",
             "orcid": "0000-0001-2345-678X",
             "affiliation": "University of Pennsylvania",
@@ -178,19 +178,19 @@ def test_authors_full(schema):
     assert validate_instance(schema, instance) == []
 
 
-def test_authors_missing_name_fails(schema):
+def test_author_missing_name_fails(schema):
     instance = {
         "id": "qst_x", "title": "T", "description": "D", "language": "en",
-        "authors": [{"orcid": "0000-0001-2345-6789"}],
+        "author": [{"orcid": "0000-0001-2345-6789"}],
     }
     errors = validate_instance(schema, instance)
     assert any("name" in e for e in errors)
 
 
-def test_authors_bad_orcid_fails(schema):
+def test_author_bad_orcid_fails(schema):
     instance = {
         "id": "qst_x", "title": "T", "description": "D", "language": "en",
-        "authors": [{"name": "X", "orcid": "not-an-orcid"}],
+        "author": [{"name": "X", "orcid": "not-an-orcid"}],
     }
     errors = validate_instance(schema, instance)
     assert any("orcid" in e for e in errors)
@@ -199,7 +199,7 @@ def test_authors_bad_orcid_fails(schema):
 def test_author_bad_email_fails_with_format_checker(schema):
     instance = {
         "id": "qst_x", "title": "X", "description": "Y", "language": "en",
-        "authors": [{"name": "X", "email": "not-an-email"}],
+        "author": [{"name": "X", "email": "not-an-email"}],
     }
     errors = validate_instance(schema, instance)
     assert any("email" in e.lower() or "format" in e.lower() for e in errors)

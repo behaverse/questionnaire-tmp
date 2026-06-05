@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://behaverse.org/schemas/instrument/v26.0605/schema.json",
+  "$id": "https://behaverse.org/schemas/instrument/v26.0528/schema.json",
   "title": "Instrument Metadata",
   "description": "Bibliographic and psychometric properties for an instrument. See docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md §2.",
   "type": "object",
@@ -17,7 +17,7 @@
     "language": { "$ref": "#/$defs/LanguageCode" },
     "short_title": { "type": "string", "minLength": 1, "maxLength": 64 },
     "version": { "$ref": "#/$defs/Version" },
-    "author": {
+    "authors": {
       "type": "array",
       "items": { "$ref": "#/$defs/Author" }
     },

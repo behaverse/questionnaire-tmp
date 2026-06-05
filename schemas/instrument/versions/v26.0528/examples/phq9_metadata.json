@@ -6,7 +6,7 @@
   "version": "v26.0528",
   "language": "en",
   "available_languages": ["en", "pt", "pt-BR"],
-  "author": [
+  "authors": [
     { "name": "Robert L. Spitzer" },
     { "name": "Janet B. W. Williams" },
     { "name": "Kurt Kroenke" }
