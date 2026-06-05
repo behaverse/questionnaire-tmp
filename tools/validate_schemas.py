@@ -331,6 +331,80 @@ def check_runtime_provenance_completeness(schemas_root: Path) -> list[tuple[Path
     return out
 
 
+EVENTS_VERBS = {
+    "bdm:initialized", "bdm:started", "bdm:paused", "bdm:resumed",
+    "bdm:completed", "bdm:submitted", "bdm:abandoned",
+    "bdm:presented",
+    "bdm:clicked", "bdm:drag_and_dropped", "bdm:key_pressed", "bdm:typed",
+    "bdm:selected", "bdm:deselected", "bdm:adjusted",
+    "bdm:got_focus", "bdm:lost_focus", "bdm:consented",
+    "bdm:trial_started", "bdm:trial_ended", "bdm:state_changed",
+    "bdm:recording_started", "bdm:recording_ended",
+    "bdm:navigated"
+}
+
+EVENTS_OBJECT_TYPES = {
+    "bdm:RuntimeInstance", "bdm:Screen", "bdm:Panel", "bdm:Stimulus",
+    "bdm:Option", "bdm:Trial", "bdm:UIComponent", "bdm:Window",
+    "bdm:Feedback", "bdm:ConsentForm", "bdm:Consent",
+    "bdm:Recording", "bdm:Timer", "bdm:Scorer", "bdm:LocaleSwitch"
+}
+
+EVENTS_ACTOR_TYPES = {
+    "bdm:Agent", "bdm:Group", "bdm:Engine", "bdm:Orchestrator", "bdm:Researcher"
+}
+
+
+def check_event_vocabulary(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each Event example, verify verb / object.objectType / actor.objectType are in vocabulary."""
+    out = []
+    events_examples = schemas_root / "events" / "examples"
+    if not events_examples.is_dir():
+        return out
+    for q_path in sorted(events_examples.glob("*.json")):
+        try:
+            instance = json.loads(q_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        events_list = instance.get("events", []) if "events" in instance else [instance]
+        errs = []
+        for idx, ev in enumerate(events_list):
+            v = ev.get("verb", "")
+            if v and v not in EVENTS_VERBS:
+                errs.append(f"VERB_NOT_IN_VOCABULARY (event {idx}): '{v}'")
+            obj_type = ev.get("object", {}).get("objectType", "")
+            if obj_type and obj_type not in EVENTS_OBJECT_TYPES:
+                errs.append(f"OBJECT_TYPE_NOT_IN_VOCABULARY (event {idx}): '{obj_type}'")
+            actor_type = ev.get("actor", {}).get("objectType", "")
+            if actor_type and actor_type not in EVENTS_ACTOR_TYPES:
+                errs.append(f"ACTOR_TYPE_NOT_IN_VOCABULARY (event {idx}): '{actor_type}'")
+        out.append((q_path, "event_vocabulary", errs))
+    return out
+
+
+def check_event_extension_key_prefixes(schemas_root: Path) -> list[tuple[Path, str, list[str]]]:
+    """For each Event example, verify all result.extensions and context.extensions keys are bdm:*-prefixed."""
+    out = []
+    events_examples = schemas_root / "events" / "examples"
+    if not events_examples.is_dir():
+        return out
+    for q_path in sorted(events_examples.glob("*.json")):
+        try:
+            instance = json.loads(q_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        events_list = instance.get("events", []) if "events" in instance else [instance]
+        errs = []
+        for idx, ev in enumerate(events_list):
+            for section in ("result", "context"):
+                ext = ev.get(section, {}).get("extensions", {})
+                for key in ext:
+                    if not key.startswith("bdm:"):
+                        errs.append(f"EXTENSION_KEY_PREFIX (event {idx}, {section}.extensions): '{key}' not bdm:-prefixed")
+        out.append((q_path, "event_extension_prefixes", errs))
+    return out
+
+
 def check_scorer_conformance(schemas_root: Path) -> list[tuple[Path, list[dict]]]:
     """Stub: returns SKIPPED for every (scorer, implementation, test_case) triple.
 
@@ -463,6 +537,28 @@ def main(schemas_root: Path) -> None:
                 print(f"      {e}")
         else:
             print(f"PASS  {rel} (scorer_outputs)")
+
+    event_vocab_results = check_event_vocabulary(schemas_root)
+    for path, _kind, errs in event_vocab_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (event vocabulary)")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            print(f"PASS  {rel} (event vocabulary)")
+
+    event_ext_results = check_event_extension_key_prefixes(schemas_root)
+    for path, _kind, errs in event_ext_results:
+        rel = path.relative_to(schemas_root.parent if schemas_root.parent.name else schemas_root)
+        if errs:
+            failed += 1
+            print(f"FAIL  {rel} (event extension prefixes)")
+            for e in errs:
+                print(f"      {e}")
+        else:
+            print(f"PASS  {rel} (event extension prefixes)")
 
     conf_results = check_scorer_conformance(schemas_root)
     for sf, statuses in conf_results:

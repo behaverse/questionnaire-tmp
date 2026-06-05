@@ -20,6 +20,8 @@ from tools.validate_schemas import (
     check_scorer_outputs_against_schema,
     check_pinned_scorer_consistency,
     check_runtime_provenance_completeness,
+    check_event_vocabulary,
+    check_event_extension_key_prefixes,
 )
 
 
@@ -361,3 +363,80 @@ def test_check_runtime_provenance_completeness_missing_fields(tmp_path):
     results = check_runtime_provenance_completeness(schemas)
     errs = results[0][2]
     assert any("PROVENANCE_MISSING" in e for e in errs)
+
+
+def test_check_event_vocabulary_passes_valid(tmp_path):
+    import json
+    from tools.validate_schemas import check_event_vocabulary
+    schemas = tmp_path / "schemas"
+    (schemas / "events" / "examples").mkdir(parents=True)
+    (schemas / "events" / "examples" / "ok.json").write_text(json.dumps({
+        "events": [{
+            "timestamp": "2026-06-05T14:30:00Z",
+            "actor": {"objectType": "bdm:Agent", "id": "a1"},
+            "verb": "bdm:initialized",
+            "object": {"objectType": "bdm:RuntimeInstance", "id": "rt1"}
+        }]
+    }))
+    results = check_event_vocabulary(schemas)
+    assert all(errs == [] for (_, _, errs) in results)
+
+
+def test_check_event_vocabulary_reports_bad_verb(tmp_path):
+    import json
+    from tools.validate_schemas import check_event_vocabulary
+    schemas = tmp_path / "schemas"
+    (schemas / "events" / "examples").mkdir(parents=True)
+    (schemas / "events" / "examples" / "bad.json").write_text(json.dumps({
+        "timestamp": "2026-06-05T14:30:00Z",
+        "actor": {"objectType": "bdm:Agent", "id": "a1"},
+        "verb": "bdm:floogled",
+        "object": {"objectType": "bdm:RuntimeInstance", "id": "rt1"}
+    }))
+    results = check_event_vocabulary(schemas)
+    errs = results[0][2]
+    assert any("VERB_NOT_IN_VOCABULARY" in e for e in errs)
+
+
+def test_check_event_vocabulary_reports_bad_object_type(tmp_path):
+    import json
+    from tools.validate_schemas import check_event_vocabulary
+    schemas = tmp_path / "schemas"
+    (schemas / "events" / "examples").mkdir(parents=True)
+    (schemas / "events" / "examples" / "bad.json").write_text(json.dumps({
+        "timestamp": "2026-06-05T14:30:00Z",
+        "actor": {"objectType": "bdm:Agent", "id": "a1"},
+        "verb": "bdm:initialized",
+        "object": {"objectType": "bdm:Widget", "id": "w1"}
+    }))
+    results = check_event_vocabulary(schemas)
+    errs = results[0][2]
+    assert any("OBJECT_TYPE_NOT_IN_VOCABULARY" in e for e in errs)
+
+
+def test_check_event_extension_key_prefixes_passes_valid(tmp_path):
+    import json
+    from tools.validate_schemas import check_event_extension_key_prefixes
+    schemas = tmp_path / "schemas"
+    (schemas / "events" / "examples").mkdir(parents=True)
+    (schemas / "events" / "examples" / "ok.json").write_text(json.dumps({
+        "events": [{
+            "result": {"extensions": {"bdm:response_id": 42, "bdm:response_time": 4.2}},
+            "context": {"extensions": {"bdm:session_id": "s1"}}
+        }]
+    }))
+    results = check_event_extension_key_prefixes(schemas)
+    assert all(errs == [] for (_, _, errs) in results)
+
+
+def test_check_event_extension_key_prefixes_reports_non_bdm(tmp_path):
+    import json
+    from tools.validate_schemas import check_event_extension_key_prefixes
+    schemas = tmp_path / "schemas"
+    (schemas / "events" / "examples").mkdir(parents=True)
+    (schemas / "events" / "examples" / "bad.json").write_text(json.dumps({
+        "result": {"extensions": {"xapi:response_id": 42}}
+    }))
+    results = check_event_extension_key_prefixes(schemas)
+    errs = results[0][2]
+    assert any("EXTENSION_KEY_PREFIX" in e for e in errs)
