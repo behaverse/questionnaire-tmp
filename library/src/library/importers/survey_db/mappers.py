@@ -41,3 +41,49 @@ def map_solution(row: dict) -> dict:
     return {"id": canonical_id("solution", row["question_id"]),
             "prompt": {"ref": canonical_id("prompt", row["question_id"]) + "@PENDING"},
             "expected_response": row["expected_response"]}
+
+def _first(rows, key):
+    for r in rows:
+        if r.get(key) not in (None, ""):
+            return r[key]
+    return None
+
+def map_option(option_id: str, rows: list[dict]) -> dict:
+    head = rows[0]
+    out = {"id": canonical_id("option", option_id),
+           "input_data_type": head.get("input_data_type"),
+           "measurement_type": head.get("measurement_type")}
+    if head.get("dimension"): out["dimension"] = head["dimension"]
+    for legacy, canon in (("min_value", "min"), ("max_value", "max"), ("step", "step")):
+        v = _first(rows, legacy)
+        if v is not None: out[canon] = v
+    if _first(rows, "placeholder_id"):
+        out["placeholder"] = {"ref": canonical_id("placeholder", _first(rows, "placeholder_id")) + "@PENDING"}
+    if _first(rows, "help_id"):
+        out["help"] = {"ref": canonical_id("help", _first(rows, "help_id")) + "@PENDING"}
+    if _first(rows, "input_validation"):
+        out["input_validation"] = {"ref": canonical_id("regex", _first(rows, "input_validation")) + "@PENDING"}
+
+    is_choice = (head.get("input_data_type") == "choice")
+    units = _first(rows, "units")
+    if is_choice:
+        out["selection"] = "single"
+        out["options"] = [{"index": r["index"], "value": r.get("value")} for r in rows if r.get("index") is not None]
+    # per-language content: label/units + per-choice text
+    langs = LANGS_FULL
+    content = {}
+    for lang in langs:
+        entry = {}
+        if units and lang == "en":
+            entry["units"] = units  # units stored once; legacy has a single units column
+        if is_choice:
+            opts = [{"index": r["index"], "text": r.get(f"text_{lang}")} for r in rows
+                    if r.get("index") is not None and r.get(f"text_{lang}")]
+            if opts:
+                entry["options"] = opts
+        if entry:
+            entry["status"] = "complete"
+            content[lang] = entry
+    if content:
+        out["content"] = content
+    return out
