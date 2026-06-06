@@ -4,7 +4,7 @@ This roadmap sequences the work needed to deliver the ecosystem described in [..
 
 It is a sequencing document, not a calendar. Dates are intentionally absent until the team commits to them at MVP planning.
 
-**Last revised.** 2026-06-05.
+**Last revised.** 2026-06-06.
 
 ## Sequencing rationale
 
@@ -18,7 +18,7 @@ This sequence is captured below.
 
 Detailed in [02_mvp_scope.md](02_mvp_scope.md).
 
-### Status as of 2026-06-05
+### Status as of 2026-06-06
 
 **Schema-authoring portion: complete.** All 8 data-model schemas authored, tagged, validated:
 
@@ -33,11 +33,11 @@ Detailed in [02_mvp_scope.md](02_mvp_scope.md).
 | 6 Session Metadata | `session-v26.0603` | OD-17 |
 | 7 Viewer Conformance Manifest | `viewer_conformance-v26.0603` | OD-18 |
 
-All 20 originally-tracked open decisions resolved (Resolution log in [../design/10_open_decisions.md](../design/10_open_decisions.md)). Six BDM-deviation entries D1–D6 in [../design/05c_bdm_alignment.md](../design/05c_bdm_alignment.md) await upstream handoff.
+All 20 originally-tracked open decisions resolved (Resolution log in [../design/10_open_decisions.md](../design/10_open_decisions.md)). The six BDM-deviation entries D1–D6 in [../design/05c_bdm_alignment.md](../design/05c_bdm_alignment.md) have been drafted and **filed as issues upstream** in `behaverse/data-model`.
 
-**Library-implementation portion: not started.** Library catalogue, REST API, contribution workflow, content seeded from `survey_database/` — pending.
+**Library-implementation portion: Library Core + legacy importer built ✅** (merged to `master`, under `library/`). The Library Core exposes the public read API (catalogue list/detail/versions/definition, reusable entities, dependency-graph `dependents`, full-text search, facets) over Git-ingested canonical JSON, with storage Approach C (`jsonb` + derived index). The importer converts the full `survey_database/` catalogue into canonical Schema 2 JSON + provenance + loss report; its smoke test validates every artifact against the schemas and ingests all 64 questionnaires into Postgres with zero errors. 86 library + 308 schema tests pass. **Still pending:** contribution/review workflow + DOI (needs auth/Identity, OD-08), community signals (Identity), the Library web UI (sub-project 5), and deployment + persistent content seeding + public schema hosting.
 
-**Gate to leave Phase 1.** Schemas published ✅. The Library exposes a working public read API ❌. At least one researcher (the owner) can search, view, and download a questionnaire definition ❌. Schema-publishing gate met; remaining gates depend on the Library implementation.
+**Gate to leave Phase 1.** Schemas authored ✅ (public hosting at `behaverse.org/schemas/` pending). Library public read API works ✅ (built + tested; a deployed instance is an ops step). A researcher can search/view/download a definition ✅ at the API level — the web-UI surface (sub-project 5) is not built. Net: the buildable Phase-1 capabilities are in; a *shipped* MVP additionally needs deployment + the web UI + public schema hosting.
 
 ## Phase 2 — Web Viewer + Deployments
 
@@ -45,7 +45,7 @@ All 20 originally-tracked open decisions resolved (Resolution log in [../design/
 
 **Key deliverables.**
 
-- **`behaverse-runtime-denormaliser` Python library** (per OD-18). Shared by Viewer Service and Editor preview to produce Schema 3 runtimes from Schema 2 sources.
+- **`questionnaire-runtime-denormaliser` Python library** (per OD-18; renamed from `behaverse-runtime-denormaliser` per [../design/14_repository_topology.md](../design/14_repository_topology.md)). Shared by Viewer Service and Editor preview to produce Schema 3 runtimes from Schema 2 sources.
 - **Viewer Service / Orchestrator core**: Postgres-backed `runtime_cache` table with 5-tuple cache key (per OD-18f); admin purge API; viewer-registry table storing Schema 7 manifests; `/sessions/new` endpoint that mints Schema 3 runtimes; OD-13 queued-forwarding outbox with TLS+SHA-256 hop signing and pluggable Behaverse sink.
 - **Web Viewer** rendering Schema 3 runtimes (per OD-01, resolved 2026-05-23 → S1 Pure custom — custom React + TypeScript renderer, no SurveyJS dependency). Publishes a Schema 7 conformance manifest.
 - **Session resume semantics** (OD-14) implemented in the Web Viewer.
@@ -123,9 +123,9 @@ All 20 originally-tracked open decisions resolved (Resolution log in [../design/
 ## Cross-cutting tasks running through every phase
 
 - **Open-decision resolution.** All 20 originally-tracked design decisions are resolved (Resolution log in `design/10_open_decisions.md`). New ODs are opened as implementation surfaces new questions; they follow the same resolve-then-document pattern.
-- **BDM upstream change handoff.** Six deviations (D1–D6) catalogued in [../design/05c_bdm_alignment.md](../design/05c_bdm_alignment.md) ready for a focused agent to propose upstream to BDM. Can happen anytime; not phase-gated.
+- **BDM upstream change handoff.** ✅ Done — the six deviations (D1–D6) in [../design/05c_bdm_alignment.md](../design/05c_bdm_alignment.md) were drafted and filed as issues upstream in `behaverse/data-model`. The deviation log in 05c stays until BDM merges each change.
 - **Documentation.** Every component's first release is accompanied by user docs in addition to the design docs.
-- **Migration of existing content.** The 793 Prompts / 64 questionnaires / 30 Contexts / 22 Instructions / 100 Messages / 35 Solutions in `survey_database/` are imported into the Library during or just after the Library implementation. Per [../design/13_importers.md](../design/13_importers.md).
+- **Migration of existing content.** ✅ The importer (`library/src/library/importers/survey_db/`) converts the 793 Prompts / 64 questionnaires / 30 Contexts / 22 Instructions / 100 Messages / 35 Solutions in `survey_database/` into canonical Schema 2 JSON (+ provenance + loss report), proven end-to-end (validates + ingests in test). Persistent seeding into a deployed Library instance is pending. Per [../design/13_importers.md](../design/13_importers.md).
 - **Tech-stack decisions** were resolved as OD-04 on 2026-05-15: Python + FastAPI for all four project backends; PostgreSQL as the default storage engine (SQLite permitted for single-machine self-hosted deployments). Per-component variation requires an explicit OD-change.
 
 ## What is intentionally not in this roadmap

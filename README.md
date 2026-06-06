@@ -1,8 +1,8 @@
 # Questionnaire Apps
 
-This repository holds the design and (eventually) the implementation of the **Questionnaire Apps Ecosystem** — an open, modular platform for designing, distributing, and analysing psychological-research questionnaires.
+This repository holds the design and implementation of the **Questionnaire Apps Ecosystem** — an open, modular platform for designing, distributing, and analysing psychological-research questionnaires.
 
-**Status (2026-05-23):** Design phase complete — all 13 originally-tracked design decisions are resolved (see [design/10_open_decisions.md](design/10_open_decisions.md) Resolution log). Implementation has not yet begun. Versioning aligned with the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning) (Calendar Versioning `vYY.MMDD`).
+**Status (2026-06-06):** Design complete — all 20 originally-tracked design decisions resolved (see [design/10_open_decisions.md](design/10_open_decisions.md)) and all 8 data-model schemas authored/tagged/validated. **Implementation underway:** the **Library Core** (catalogue + ingestion + public read API) and the **legacy `survey_database/` importer** are built, tested, and merged (`library/`; 86 library + 308 schema tests pass). Repo topology is locked ([design/14_repository_topology.md](design/14_repository_topology.md)); the multi-repo split is deferred and an interim backup lives in the private `behaverse/questionnaire-tmp`. See [HANDOFF.md](HANDOFF.md) for the full status and what's next. Versioning per the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning) (CalVer `vYY.MMDD`).
 
 ## Start here
 
@@ -19,6 +19,10 @@ The design folder is the single authoritative source. The plan folder records ro
 | [HANDOFF.md](HANDOFF.md) | Navigation aid for a new agent / contributor — current status, conventions, anti-patterns, suggested next work. |
 | [design/](design/) | The authoritative design: vision, terminology, use cases, architecture, data model, per-component specs, open decisions. |
 | [plan/](plan/) | The roadmap and phasing: MVP scope, use-case priority, feature priority. |
+| [schemas/](schemas/) | The 8 implemented canonical JSON Schemas (+ archived `versions/`, `CHANGELOG`, `examples/`). |
+| [tools/](tools/) | Schema validator + tests (`validate_schemas.py`). |
+| [library/](library/) | **The built Library Core + legacy importer** (Python/FastAPI/PostgreSQL). Will become `behaverse/questionnaire-library-service` at the repo split. |
+| [docs/superpowers/](docs/superpowers/) | Implementation specs + plans (one pair per build). |
 | [archive_do_not_edit/](archive_do_not_edit/) | Earlier scattered specs, superseded by `design/` and `plan/`. Do not edit; do not cite as authoritative. |
 | [qv_godot/](qv_godot/) | Godot-based survey runner — **prototype**, reference-only. Predates the current design. |
 | [survey_database/](survey_database/) | Python/SQLite survey database — **prototype**, reference-only. Contains 59 questionnaires and 792 questions to be migrated into the Library during MVP. |

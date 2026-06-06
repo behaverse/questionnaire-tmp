@@ -2,7 +2,7 @@
 
 The MVP boundary: what the first deliverable contains, and what it deliberately does not.
 
-**Last revised.** 2026-06-05.
+**Last revised.** 2026-06-06.
 
 ## MVP outcome
 
@@ -33,15 +33,17 @@ All 8 data-model schemas are authored, validated, tagged. The schema-authoring p
 
 Validator (`tools/validate_schemas.py`) walks every schema's examples and runs 9 cross-checks. 308 tests pass; 43 examples validate.
 
-### Library — STATUS: not started ❌
+### Library — STATUS: Core + importer built ✅; web UI + contribution workflow + deployment pending
 
-- Catalogue with metadata, full item listing, version history per `design/06_library.md`.
-- Reusable-component pool — per OD-15 (resolved 2026-05-31), 11 entity types: Message, Context, Instruction, Prompt, Option, Placeholder, Help, RegEx (content-bearing) + Question, Item, Solution (ref-binding). Plus Subscale (label) and Scorer (procedural) per OD-16/17. Each with cross-reference tracking.
-- Search by keyword, domain, population, language, item count, license tag (per the controlled vocabulary in `design/11_content_licensing.md`).
-- Public read REST API (list, detail, version, definition, search).
-- Authenticated write surface for submitting / promoting new versions (via the GitHub-backed contribution workflow defined in `design/06_library.md`).
-- Migrated content: the 793 Prompts, 64 questionnaires, 30 Contexts, 22 Instructions, 100 Messages, 35 Solutions from `survey_database/`, normalised into Schema 2 v26.0602 entities (per `design/13_importers.md`).
-- Authentication of Library writers (per OD-08, resolved 2026-05-15: federates against the Identity sibling project; until that sibling exists, a minimal-viable Identity service stood up alongside MVP is acceptable).
+**Built + merged** (`library/`, 2026-06-05/06): the **Library Core** (catalogue + Git-backed ingestion + public read API: list/detail/versions/definition, reusable entities, dependency-graph `dependents`, full-text search, facets, withdrawn→410) and the **legacy `survey_database/` importer** (canonical JSON + provenance + loss report; converts all content, validates, ingests). **Not yet built:** the authenticated write surface + contribution/review workflow + DOI (need auth/Identity, OD-08), community signals (Identity), the **web interface** (sub-project 5), and deployment + persistent content seeding + public schema hosting. The original capability list below, with build status:
+
+- Catalogue with metadata, full item listing, version history per `design/06_library.md`. ✅ (read API)
+- Reusable-component pool — 11 entity types + Subscale + Scorer, with cross-reference tracking. ✅ (ingested + catalogued; `dependents` endpoint).
+- Search by keyword, domain, population, language, item count, license tag. ✅ (full-text search + facets + filters).
+- Public read REST API (list, detail, version, definition, search). ✅.
+- Authenticated write surface for submitting / promoting new versions (GitHub-backed contribution workflow). ❌ — content enters via Git-backed ingestion only; the authenticated write surface + contribution workflow are sub-project 3 (need auth).
+- Migrated content: the 793 Prompts, 64 questionnaires, etc. from `survey_database/`, normalised into Schema 2 v26.0602 entities (per `design/13_importers.md`). ✅ importer built + proven (converts all, validates, ingests in test); persistent seeding into a deployed instance pending.
+- Authentication of Library writers (per OD-08). ❌ deferred — out of Library-Core scope; needs the Identity sibling (or a minimal-viable Identity).
 
 ### Open decisions resolved by MVP exit
 
@@ -55,7 +57,7 @@ All 20 originally-tracked open decisions are now resolved. The full Resolution l
 - *2026-06-03:* OD-17 (Schema 5 strict BDM Response adherence + Schema 6 session metadata), OD-18 (Schema 3 Runtime production model + new Schema 7 Conformance Manifest).
 - *2026-06-05:* OD-19 (BDM Events vocabulary — `bdm:` namespace with 24 verbs / 15 object types / 5 actor types), OD-20 (Schema 4b family per source, mouse + keyboard MVP).
 
-No design decision blocks the start of MVP implementation. **The remaining MVP work is the Library implementation and content import.**
+No design decision blocks MVP implementation. **The Library Core + content importer are built; the remaining MVP work is the Library web UI (sub-project 5), the contribution workflow (sub-project 3, needs auth), and deployment + persistent content seeding + public schema hosting.**
 
 ## Out of scope for MVP
 
@@ -79,13 +81,13 @@ No design decision blocks the start of MVP implementation. **The remaining MVP w
 
 ## Definition of done for MVP
 
-| Criterion | How verified | Status (2026-06-05) |
+| Criterion | How verified | Status (2026-06-06) |
 |---|---|---|
-| Canonical schemas published at `behaverse.org/schemas/` and resolvable | `GET https://behaverse.org/schemas/questionnaire/definition/vYY.MMDD.json` returns the schema (calendar version per the [Behaverse schemas versioning policy](https://behaverse.org/schemas/#versioning)). | ✅ Schemas authored + tagged locally. Public hosting at `behaverse.org/schemas/` is a separate publish step. |
-| Every artefact in the Library validates against its schema | A validation pass over the full catalogue runs in CI with zero failures. | ⏳ Validator harness works locally; Library/CI integration pending. |
-| Library catalogue is seeded with all content from `survey_database/` | Item counts match: ≥ 64 questionnaires, ≥ 793 Prompts (plus the Options, Contexts, Instructions, Messages, Solutions they reference). | ❌ Library not built; import not started. |
-| Library public read API is documented and reachable | `GET /questionnaires`, `GET /questionnaires/{id}`, `GET /search` return correct responses; an OpenAPI document is available. | ❌ Library not built. |
-| A researcher can search the catalogue and download a definition end-to-end | Manual walkthrough with one of the seeded instruments. | ❌ Depends on Library. |
-| Authoritative location for the design is `design/`; for the plan is `plan/`. Old scattered docs are archived. | The verification steps in `archive_do_not_edit/README.md` (post-archive) report no surviving root-level spec files. | ✅ Done. |
+| Canonical schemas published at `behaverse.org/schemas/` and resolvable | `GET https://behaverse.org/schemas/questionnaire/definition/vYY.MMDD.json` returns the schema. | ⏳ Schemas authored + tagged; public hosting at `behaverse.org/schemas/` is a separate publish step (pending). |
+| Every artefact in the Library validates against its schema | A validation pass over the full catalogue runs with zero failures. | ✅ The importer smoke test validates every produced artifact against the schemas, and the Library validates each on ingest. |
+| Library catalogue is seeded with all content from `survey_database/` | Item counts match: ≥ 64 questionnaires, ≥ 793 Prompts (plus the entities they reference). | ⏳ Importer built + proven (converts all, validates, ingests all 64 questionnaires into Postgres in test). Persistent seeding into a *deployed* Library instance is pending. |
+| Library public read API is documented and reachable | `GET /v1/questionnaires`, `/v1/questionnaires/{id}`, `/v1/search` return correct responses; OpenAPI available. | ✅ Built + tested (auto OpenAPI). A deployed instance is an ops step. |
+| A researcher can search the catalogue and download a definition end-to-end | Manual walkthrough with one of the seeded instruments. | ⏳ Works at the API level (tested); the web-UI surface (sub-project 5) is not built. |
+| Authoritative location for the design is `design/`; for the plan is `plan/`. Old scattered docs are archived. | No surviving root-level spec files. | ✅ Done. |
 
-When all six criteria are satisfied, MVP is shipped and Phase 2 begins. Current state: **schema-authoring portion shipped; Library implementation is the gating remaining work.**
+Current state: **schemas authored + Library Core + importer built and proven in test.** What remains for a *shipped* MVP: deploy a Library instance with the content persistently seeded, host the schemas publicly, and build the web UI (sub-project 5). Then Phase 2 begins.
