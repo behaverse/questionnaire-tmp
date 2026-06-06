@@ -42,15 +42,15 @@ def _normalize_license(raw: str | None, loss, source: str) -> str:
         if loss:
             loss.add("approximated", source, f"license {raw!r} -> {mapped!r}")
         return mapped
-    # Heuristics for common patterns
+    # Heuristics for common patterns — MIT first (its text contains "Copyright")
+    if "mit" in lower:
+        if loss:
+            loss.add("warning", source, f"license {raw!r} appears MIT — mapped to 'unknown' pending curator review")
+        return "unknown"
     if "copyright" in lower or "©" in lower or "all rights" in lower:
         if loss:
             loss.add("approximated", source, f"license {raw!r} -> 'proprietary_restricted' (copyright text)")
         return "proprietary_restricted"
-    if "mit" in lower:
-        if loss:
-            loss.add("approximated", source, f"license {raw!r} -> 'cc0' (MIT-like permissive)")
-        return "cc0"
     # Unknown / freeform text
     if loss:
         loss.add("approximated", source, f"license {raw!r} -> 'unknown' (unrecognized)")
@@ -136,11 +136,13 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
         if year:
             meta["publication"] = {"year": year, "citation": ref_str}
         else:
-            # Store citation as extension to avoid losing it, but don't emit publication
-            # (year is required; omitting the block is better than a schema error)
+            # Year not extractable: preserve the raw reference as an x_ extension key
+            # (instrument schema allows ^x_-prefixed keys via patternProperties; year is
+            # required by the publication block so we cannot emit that block without it)
+            meta["x_source_reference"] = ref_str
             if loss:
-                loss.add("approximated", f"surveys.{s.get('survey_id') or qid}.reference",
-                         f"year not extractable from reference {ref_str!r} — publication block omitted")
+                loss.add("warning", f"surveys.{s.get('survey_id') or qid}.reference",
+                         f"year not extractable from {ref_str!r} — stored as x_source_reference; publication block omitted")
 
     langs = _split(s.get("validated_languages"))
     if langs:

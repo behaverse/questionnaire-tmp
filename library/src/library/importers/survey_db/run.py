@@ -58,6 +58,24 @@ def import_survey_db(sqlite_path, out_dir, release: str, imported_at: str) -> Im
 
     comps = db.compositions()
     surveys = db.surveys()
+
+    # Fix 3: log currently-silent drops/approximations (spec §8)
+    for c in comps:
+        qname = c.get("questionnaire") or "<unknown>"
+        if c.get("condition"):
+            loss.add("approximated", f"compositions.{qname}.condition",
+                     "JMESPath condition copied verbatim to show_if; needs OD-11 evaluator translation")
+        if c.get("condition_tmp"):
+            loss.add("dropped", f"compositions.{qname}.condition_tmp",
+                     "legacy condition draft dropped")
+        if c.get("comment"):
+            loss.add("dropped", f"compositions.{qname}.comment",
+                     "authoring comment dropped")
+    for survey_id, srow in surveys.items():
+        if srow.get("scoring_reference"):
+            loss.add("dropped", f"surveys.{survey_id}.scoring_reference",
+                     "scoring citation/URL not mapped (no Scorer; OD-16)")
+
     qids = sorted({c["questionnaire"] for c in comps if c.get("questionnaire")})
     for qid in qids:
         header = next((c for c in comps if c["questionnaire"] == qid and c["element_type"] == "header"), None)

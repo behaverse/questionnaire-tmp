@@ -31,11 +31,16 @@ def map_prompt(row: dict, loss=None) -> dict:
     if row.get("dimension"):
         # dimension may contain "; " separators — take the first meaningful piece
         dim_raw = row["dimension"]
-        dim = _sanitize_identifier(dim_raw.split(";")[0].strip())
+        first_part = dim_raw.split(";")[0].strip()
+        dim = _sanitize_identifier(first_part)
         if dim and dim != dim_raw:
             if loss:
-                loss.add("approximated", f"prompts.{row['prompt_id']}.dimension",
-                         f"sanitized {dim_raw!r} -> {dim!r} to match ^[a-z][a-z0-9_]+$")
+                if ";" in dim_raw:
+                    loss.add("approximated", f"prompts.{row['prompt_id']}.dimension",
+                             f"truncated multi-part value {dim_raw!r} -> {dim!r} (only first segment kept)")
+                else:
+                    loss.add("approximated", f"prompts.{row['prompt_id']}.dimension",
+                             f"sanitized {dim_raw!r} -> {dim!r} to match ^[a-z][a-z0-9_]+$")
         if dim:
             out["dimension"] = dim
     topics = _split(row.get("topics"))
@@ -60,11 +65,16 @@ def map_instruction(row: dict, loss=None) -> dict | None:
     out = {"id": canonical_id("instruction", row["instruction_id"]), "content": simple_content(row, LANGS_FULL)}
     if row.get("dimension"):
         dim_raw = row["dimension"]
-        dim = _sanitize_identifier(dim_raw.split(";")[0].strip())
+        first_part = dim_raw.split(";")[0].strip()
+        dim = _sanitize_identifier(first_part)
         if dim and dim != dim_raw:
             if loss:
-                loss.add("approximated", f"instructions.{row['instruction_id']}.dimension",
-                         f"sanitized {dim_raw!r} -> {dim!r} to match ^[a-z][a-z0-9_]+$")
+                if ";" in dim_raw:
+                    loss.add("approximated", f"instructions.{row['instruction_id']}.dimension",
+                             f"truncated multi-part value {dim_raw!r} -> {dim!r} (only first segment kept)")
+                else:
+                    loss.add("approximated", f"instructions.{row['instruction_id']}.dimension",
+                             f"sanitized {dim_raw!r} -> {dim!r} to match ^[a-z][a-z0-9_]+$")
         if dim:
             out["dimension"] = dim
     return out
@@ -151,11 +161,16 @@ def map_option(option_id: str, rows: list[dict], loss=None) -> dict | None:
 
     if head.get("dimension"):
         dim_raw = head["dimension"]
-        dim = _sanitize_identifier(dim_raw.split(";")[0].strip())
+        first_part = dim_raw.split(";")[0].strip()
+        dim = _sanitize_identifier(first_part)
         if dim and dim != dim_raw:
             if loss:
-                loss.add("approximated", f"options.{option_id}.dimension",
-                         f"sanitized {dim_raw!r} -> {dim!r} to match ^[a-z][a-z0-9_]+$")
+                if ";" in dim_raw:
+                    loss.add("approximated", f"options.{option_id}.dimension",
+                             f"truncated multi-part value {dim_raw!r} -> {dim!r} (only first segment kept)")
+                else:
+                    loss.add("approximated", f"options.{option_id}.dimension",
+                             f"sanitized {dim_raw!r} -> {dim!r} to match ^[a-z][a-z0-9_]+$")
         if dim:
             out["dimension"] = dim
 
