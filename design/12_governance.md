@@ -22,6 +22,14 @@ Three sibling projects operate under the same organisation:
 
 Each project has its own roadmap, its own release cadence, and its own implementation stack. They coordinate via cross-project contracts (below); they do not merge plans.
 
+## Repository topology
+
+The ecosystem's source is split across **multiple repositories** under the existing **`github.com/behaverse`** org (multi-repo, `questionnaire-` name prefix). The full catalogue, rationale, and local-folder migration map are in [14_repository_topology.md](14_repository_topology.md); the locked highlights:
+
+- **Design/plan** → `questionnaire-system`; **canonical schemas + validator** → `questionnaire-schemas` (migrating into `behaverse/schemas` post-MVP); **Library backend** → `questionnaire-library-service`, with canonical content in `questionnaire-library-content`.
+- Each component / shared library gets its own `questionnaire-<component>` repo. **Identity** is a shared sibling at `behaverse/identity`.
+- Conventions mirror `behaverse/schemas` (CalVer + per-schema `versions/` + `CHANGELOG.md` + `VERSIONING.md`); schemas licensed **CC BY 4.0**.
+
 ## Cross-project contracts
 
 ### With Behaverse

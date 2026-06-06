@@ -77,7 +77,7 @@ The licensing posture above governs **content** in the Library. The project's ow
 | Artefact | License |
 |---|---|
 | Design documents (this folder and [../plan/](../plan/)) | CC BY 4.0 |
-| Canonical JSON Schemas (published at `behaverse.org/schemas/`) | CC0 |
+| Canonical JSON Schemas (published at `behaverse.org/schemas/`) | CC BY 4.0 (consistent with [`behaverse/schemas`](https://github.com/behaverse/schemas); see [14_repository_topology.md](14_repository_topology.md) §8) |
 | Software (Library, Editor, Viewer Service, Viewers, Participant Platform) | To be confirmed; default expectation is a permissive open-source license (Apache 2.0 or MIT) |
 | Migration tooling | Same license as the software |
 

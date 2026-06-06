@@ -140,7 +140,7 @@ Reusable entities below the questionnaire level (questions, option-sets, instruc
 
 **Purpose.** Optimised for viewer rendering. The authoritative model lives in [05d_runtime.md](05d_runtime.md) (per OD-18 resolved 2026-06-03). This section is a summary; 05d carries the full sub-decision log, the runtime pipeline diagram, Schema 3 and Schema 7 skeletons, and the knock-on details.
 
-**Production.** Schema 3 is produced **server-side by the Viewer Service** at session-mint, via a shared Python denormaliser library (`behaverse-runtime-denormaliser`) also consumed by the Editor for preview. One canonical document per (qst@version, locale, viewer_conformance_hash, deployment_runtime_policy_hash); cached in a Postgres-backed table with LRU eviction and an admin purge API. Lazy generation on first session.
+**Production.** Schema 3 is produced **server-side by the Viewer Service** at session-mint, via a shared Python denormaliser library (`questionnaire-runtime-denormaliser`) also consumed by the Editor for preview. One canonical document per (qst@version, locale, viewer_conformance_hash, deployment_runtime_policy_hash); cached in a Postgres-backed table with LRU eviction and an admin purge API. Lazy generation on first session.
 
 **Shape.** Flattened, denormalised view of Schema 2 with all Library refs inlined, single-locale text only, Scorer implementations pinned. Carries a `provenance` block (denormaliser version, all cache-key inputs, stripped Scorer refs) for analyst reproducibility.
 

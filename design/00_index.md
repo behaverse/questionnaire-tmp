@@ -29,6 +29,7 @@ This folder is the **single authoritative source** for what the Questionnaire Ap
 | 11 | [11_content_licensing.md](11_content_licensing.md) | Licensing posture for Library content; question-vs-questionnaire model | Draft |
 | 12 | [12_governance.md](12_governance.md) | Operating organisation, sibling projects, cross-project contracts | Draft |
 | 13 | [13_importers.md](13_importers.md) | Migration assistance from foreign formats; provenance | Draft |
+| 14 | [14_repository_topology.md](14_repository_topology.md) | Repository topology — `behaverse` org, multi-repo split, names, folder migration | Locked |
 
 ## What lives here vs. in plan/
 
@@ -48,7 +49,7 @@ If you find yourself wanting to add a "Phase 2" tag inside a design doc — it b
 - **Researchers evaluating fit.** Read 01 → 03 → 06 → 09. About 40 minutes.
 - **Developers picking up a component.** Read 02 → 04 → 05 → the component-specific doc (06–09, 08a) → 10.
 - **Anyone resolving an open question.** Start at 10 (the open-decisions log), then back up to the docs that reference it.
-- **Anyone evaluating legal / operational fit.** Read 11 (content licensing) and 12 (governance).
+- **Anyone evaluating legal / operational fit.** Read 11 (content licensing), 12 (governance), and 14 (repository topology).
 
 ## Document conventions
 

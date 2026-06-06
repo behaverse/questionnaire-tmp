@@ -104,7 +104,7 @@ OD-18 settles all of these.
 **Resolved (i) + (c).**
 
 - Schema 3 is produced **server-side by the Viewer Service** at session-mint. Cached per (qst@version, locale, viewer_conformance_hash, deployment_runtime_policy_hash). Single HTTP round-trip from the viewer to fetch the runtime; one canonical document per cache key.
-- The denormaliser algorithm is packaged as a **shared Python library** (working name: `behaverse-runtime-denormaliser`) consumed by both the Viewer Service (production runtime gen at session-mint) and the Editor (preview rendering per OD-03). Single source of truth; both consumers produce identical Schema 3 for the same inputs.
+- The denormaliser algorithm is packaged as a **shared Python library** (working name: `questionnaire-runtime-denormaliser`) consumed by both the Viewer Service (production runtime gen at session-mint) and the Editor (preview rendering per OD-03). Single source of truth; both consumers produce identical Schema 3 for the same inputs.
 - Client-side denormalisation (option ii) rejected: ~30 HTTP round-trips per session, no central deployment-policy enforcement, harder cache sharing across participants.
 - Offline-capable lab kiosks: runtime fetched once at session-mint while online, then held locally for the duration of the session. WASM-embedded Scorers handle in-session scoring offline.
 
