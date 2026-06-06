@@ -18,7 +18,11 @@ def test_reconstruct_metadata_and_elements():
     assert q["metadata"]["classification"]["domain"] == ["risk", "novelty"]
     assert q["metadata"]["available_languages"] == ["en", "pt"]
     assert q["metadata"]["provenance"]["source"] == "survey_db_sqlite"
-    assert q["metadata"]["provenance"]["source_header_id"] == "aiss"
+    # NOTE: source_header_id / source_questionnaire_id were removed from the provenance block
+    # because the instrument schema has additionalProperties: false on provenance.
+    # The instrument schema allows only: source, source_version, imported_at, imported_by,
+    # import_loss_report_url, importer_version.
+    assert "imported_at" in q["metadata"]["provenance"]
     els = q["pages"][0]["elements"]
     assert els[0]["ref"] == "msg_intro@v26.0606"          # message element
     item = els[1]
@@ -28,5 +32,9 @@ def test_reconstruct_metadata_and_elements():
 
 def test_build_provenance_fields():
     p = build_provenance("x_aiss", "aiss", "2026-06-06T00:00:00Z")
-    assert p["source"] == "survey_db_sqlite" and p["source_questionnaire_id"] == "x_aiss"
+    assert p["source"] == "survey_db_sqlite"
     assert p["imported_at"] == "2026-06-06T00:00:00Z" and p["importer_version"].startswith("survey-db-importer")
+    # Confirms only schema-allowed fields are present (additionalProperties: false)
+    allowed = {"source", "source_version", "imported_at", "imported_by",
+               "import_loss_report_url", "importer_version"}
+    assert set(p.keys()) <= allowed
