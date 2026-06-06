@@ -39,3 +39,11 @@ def test_withdrawn_definition_410(seeded):
 def test_definition_unknown_404(seeded):
     r = TestClient(create_app()).get("/v1/questionnaires/qst_nope/versions/v26.0601/definition")
     assert r.status_code == 404
+
+def test_withdrawn_excluded_from_listing(seeded):
+    item = TestClient(create_app()).get("/v1/questionnaires").json()["items"][0]
+    with psycopg.connect(seeded) as c:
+        withdraw_entity(c, item["id"], item["version"], datetime(2026, 6, 5, tzinfo=timezone.utc))
+        c.commit()
+    listed = TestClient(create_app()).get("/v1/questionnaires").json()
+    assert all(i["id"] != item["id"] for i in listed["items"])

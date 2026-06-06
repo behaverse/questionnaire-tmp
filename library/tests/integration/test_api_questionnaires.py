@@ -32,3 +32,9 @@ def test_detail_and_versions(client):
 
 def test_unknown_404(client):
     assert client.get("/v1/questionnaires/qst_nope").status_code == 404
+
+def test_404_uses_error_envelope(client):
+    r = client.get("/v1/questionnaires/qst_nope")
+    assert r.status_code == 404
+    body = r.json()
+    assert body["error"]["code"] == "not_found" and "message" in body["error"]

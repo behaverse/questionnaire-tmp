@@ -42,3 +42,9 @@ def withdraw_entity(conn: psycopg.Connection, entity_id: str, version: str, when
         "UPDATE entity SET status='withdrawn', content_json=NULL, withdrawn_at=%s "
         "WHERE id=%s AND version=%s", (when, entity_id, version)
     )
+    # keep the derived index consistent: withdrawn entries must drop out of
+    # published listings/search (which all filter catalogue_entry.status='published')
+    conn.execute(
+        "UPDATE catalogue_entry SET status='withdrawn' WHERE id=%s AND version=%s",
+        (entity_id, version)
+    )
