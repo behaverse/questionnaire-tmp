@@ -1,11 +1,16 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from .deps import get_conn
 from ..models import Paginated, EntitySummary
+from ..entity_types import ENTITY_TYPES
+
+_VALID_FACET_TYPES = {"domain", "population", "administration_mode", "tag"}
 
 router = APIRouter()
 
 @router.get("/search", response_model=Paginated)
 def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
+    if type is not None and type not in ENTITY_TYPES:
+        raise HTTPException(status_code=422, detail=f"unknown type: {type!r}; must be one of {ENTITY_TYPES}")
     where = ["status='published'", "search_tsv @@ websearch_to_tsquery('english', %s)"]
     params: list = [q]
     if type:
@@ -22,6 +27,8 @@ def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offs
 
 @router.get("/facets")
 def facets(facet_type: str, conn=Depends(get_conn)):
+    if facet_type not in _VALID_FACET_TYPES:
+        raise HTTPException(status_code=422, detail=f"unknown facet_type: {facet_type!r}; must be one of {sorted(_VALID_FACET_TYPES)}")
     rows = conn.execute(
         "SELECT value, count(*) FROM facet WHERE facet_type=%s GROUP BY value ORDER BY count(*) DESC",
         (facet_type,)).fetchall()

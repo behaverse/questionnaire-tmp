@@ -25,3 +25,17 @@ def test_search_returns_results(client):
 def test_facets_endpoint(client):
     r = client.get("/v1/facets", params={"facet_type": "domain"})
     assert r.status_code == 200 and "values" in r.json()
+
+def test_search_invalid_type_returns_422(client):
+    """type not in ENTITY_TYPES should return 422 with error envelope."""
+    r = client.get("/v1/search", params={"q": "test", "type": "notatype"})
+    assert r.status_code == 422
+    body = r.json()
+    assert "error" in body and body["error"]["code"] == "unprocessable"
+
+def test_facets_invalid_facet_type_returns_422(client):
+    """facet_type not in allowed set should return 422 with error envelope."""
+    r = client.get("/v1/facets", params={"facet_type": "notafacet"})
+    assert r.status_code == 422
+    body = r.json()
+    assert "error" in body and body["error"]["code"] == "unprocessable"
