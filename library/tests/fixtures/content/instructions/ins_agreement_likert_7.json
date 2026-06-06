@@ -1,0 +1,8 @@
+{
+  "id": "ins_agreement_likert_7",
+  "dimension": "agreement",
+  "content": {
+    "en": { "status": "validated", "text": "Indicate how strongly you agree or disagree with each statement using the 7-point scale." },
+    "pt": { "status": "validated", "text": "Indique o quanto concorda ou discorda de cada afirmação usando a escala de 7 pontos." }
+  }
+}

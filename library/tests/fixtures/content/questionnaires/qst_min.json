@@ -1,0 +1,43 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "id": "qst_min",
+    "version": "v26.0601",
+    "title": "Minimal example",
+    "description": "Smallest valid questionnaire for the Library Core fixture (v26.0601).",
+    "language": "en"
+  },
+  "pages": [
+    {
+      "id": "page_only",
+      "elements": [
+        {
+          "question": {
+            "prompt": { "ref": "pr_aiss_q_2@v26.0601" }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              { "index": 1, "value": 0 },
+              { "index": 2, "value": 1 },
+              { "index": 3, "value": 2 }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Feeling",
+                "options": [
+                  { "index": 1, "text": "Bad" },
+                  { "index": 2, "text": "Neutral" },
+                  { "index": 3, "text": "Good" }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

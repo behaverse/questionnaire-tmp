@@ -1,0 +1,5 @@
+{
+  "id": "q_aiss_2",
+  "prompt":      { "ref": "pr_aiss_q_2@v26.0601" },
+  "instruction": { "ref": "ins_agreement_likert_7@v26.0601" }
+}
