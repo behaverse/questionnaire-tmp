@@ -1,9 +1,11 @@
 from fastapi import FastAPI
-from . import questionnaires
+from . import questionnaires, entities, search
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Questionnaire Library", version="v1")
     app.include_router(questionnaires.router, prefix="/v1")
+    app.include_router(entities.router, prefix="/v1")
+    app.include_router(search.router, prefix="/v1")
 
     @app.get("/healthz")
     def healthz():

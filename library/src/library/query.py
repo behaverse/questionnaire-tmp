@@ -29,3 +29,14 @@ def get_versions(conn: psycopg.Connection, entity_id: str) -> list[dict]:
         "WHERE id=%s ORDER BY version DESC", (entity_id,)).fetchall()
     cols = ["id", "version", "entity_type", "title", "status", "effective_license"]
     return [dict(zip(cols, r)) for r in rows]
+
+def dependents_of(conn: psycopg.Connection, to_id: str, to_version: str, limit: int, offset: int) -> tuple[list[dict], int]:
+    total = conn.execute(
+        "SELECT count(*) FROM entity_ref WHERE to_id=%s AND to_version=%s", (to_id, to_version)).fetchone()[0]
+    rows = conn.execute(
+        "SELECT DISTINCT r.from_id AS id, r.from_version AS version, c.entity_type, c.title, c.status, c.effective_license "
+        "FROM entity_ref r JOIN catalogue_entry c ON c.id=r.from_id AND c.version=r.from_version "
+        "WHERE r.to_id=%s AND r.to_version=%s ORDER BY r.from_id LIMIT %s OFFSET %s",
+        (to_id, to_version, limit, offset)).fetchall()
+    cols = ["id", "version", "entity_type", "title", "status", "effective_license"]
+    return [dict(zip(cols, r)) for r in rows], total
