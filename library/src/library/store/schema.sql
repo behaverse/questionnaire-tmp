@@ -39,13 +39,15 @@ CREATE INDEX IF NOT EXISTS catalogue_tsv_gin ON catalogue_entry USING gin (searc
 CREATE TABLE IF NOT EXISTS entity_ref (
   from_id text NOT NULL, from_version text NOT NULL,
   to_id text NOT NULL, to_version text NOT NULL, ref_kind text NOT NULL,
-  PRIMARY KEY (from_id, from_version, to_id, to_version, ref_kind)
+  PRIMARY KEY (from_id, from_version, to_id, to_version, ref_kind),
+  FOREIGN KEY (from_id, from_version) REFERENCES entity (id, version) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS entity_ref_to_idx ON entity_ref (to_id, to_version);
 
 CREATE TABLE IF NOT EXISTS facet (
   id text NOT NULL, version text NOT NULL,
   facet_type text NOT NULL, value text NOT NULL,
-  PRIMARY KEY (id, version, facet_type, value)
+  PRIMARY KEY (id, version, facet_type, value),
+  FOREIGN KEY (id, version) REFERENCES entity (id, version) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS facet_lookup_idx ON facet (facet_type, value);
