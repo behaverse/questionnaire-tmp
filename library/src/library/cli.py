@@ -14,7 +14,7 @@ def main(argv=None) -> int:
     ing = sub.add_parser("ingest")
     ing.add_argument("content_dir", nargs="?", default=str(s.content_dir))
     ing.add_argument("--release", default=None)
-    ing.add_argument("--commit", default="")
+    ing.add_argument("--commit", default=None)
     args = p.parse_args(argv)
     with psycopg.connect(s.database_url) as conn:
         if args.cmd == "migrate":
@@ -24,7 +24,6 @@ def main(argv=None) -> int:
             rep = ingest_tree(conn, Path(args.content_dir), args.commit,
                               registry=build_registry(s.schemas_dir), schemas_dir=s.schemas_dir,
                               release=args.release)
-            conn.commit()
             print(f"ingested={rep.ingested} skipped={rep.skipped} errors={len(rep.errors)}")
     return 0
 

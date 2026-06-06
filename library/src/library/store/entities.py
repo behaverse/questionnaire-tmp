@@ -19,11 +19,14 @@ def get_entity(conn: psycopg.Connection, entity_id: str, version: str) -> dict |
     return dict(zip(cols, row))
 
 
-def upsert_entity(conn: psycopg.Connection, art: Artifact, source_commit: str) -> None:
+def upsert_entity(conn: psycopg.Connection, art: Artifact, source_commit: str) -> bool:
+    """Insert the entity. Returns True if a new row was inserted, False if an
+    identical row already existed (idempotent no-op). Raises ImmutabilityError if a
+    row with the same (id, version) exists with different content."""
     existing = get_entity(conn, art.id, art.version)
     if existing is not None:
         if existing["content_json"] == art.data:
-            return  # idempotent no-op
+            return False
         raise ImmutabilityError(f"{art.id}@{art.version} already ingested with different content")
     conn.execute(
         "INSERT INTO entity (id, version, entity_type, severity, license, content_json, source_commit) "
@@ -31,6 +34,7 @@ def upsert_entity(conn: psycopg.Connection, art: Artifact, source_commit: str) -
         (art.id, art.version, art.entity_type, art.data.get("severity"),
          art.data.get("license"), Jsonb(art.data), source_commit),
     )
+    return True
 
 
 def withdraw_entity(conn: psycopg.Connection, entity_id: str, version: str, when: datetime) -> None:
