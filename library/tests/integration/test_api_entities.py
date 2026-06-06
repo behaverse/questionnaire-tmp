@@ -30,3 +30,44 @@ def test_dependents(client):
     r = client.get(f"/v1/entities/option/{opt['id']}/versions/{opt['version']}/dependents")
     assert r.status_code == 200
     assert any(d["id"].startswith("it_") or d["id"].startswith("qst_") for d in r.json()["items"])
+
+def test_entity_detail_latest(client):
+    """GET /v1/entities/{etype}/{eid} returns latest published version."""
+    opt = client.get("/v1/entities/option").json()["items"][0]
+    r = client.get(f"/v1/entities/option/{opt['id']}")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["id"] == opt["id"]
+    assert body["entity_type"] == "option"
+
+def test_entity_detail_specific_version(client):
+    """GET /v1/entities/{etype}/{eid}/versions/{version} returns that version's summary."""
+    opt = client.get("/v1/entities/option").json()["items"][0]
+    r = client.get(f"/v1/entities/option/{opt['id']}/versions/{opt['version']}")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["id"] == opt["id"]
+    assert body["version"] == opt["version"]
+
+def test_entity_detail_unknown_id_404(client):
+    r = client.get("/v1/entities/option/opt_does_not_exist")
+    assert r.status_code == 404
+
+def test_entity_version_unknown_404(client):
+    opt = client.get("/v1/entities/option").json()["items"][0]
+    r = client.get(f"/v1/entities/option/{opt['id']}/versions/v00.0000")
+    assert r.status_code == 404
+
+def test_alias_questions(client):
+    """GET /v1/questions is an alias for GET /v1/entities/question."""
+    r_alias = client.get("/v1/questions")
+    r_direct = client.get("/v1/entities/question")
+    assert r_alias.status_code == 200
+    assert r_alias.json()["total"] == r_direct.json()["total"]
+
+def test_alias_options(client):
+    """GET /v1/options is an alias for GET /v1/entities/option."""
+    r_alias = client.get("/v1/options")
+    r_direct = client.get("/v1/entities/option")
+    assert r_alias.status_code == 200
+    assert r_alias.json()["total"] == r_direct.json()["total"]

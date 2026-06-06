@@ -38,3 +38,52 @@ def test_404_uses_error_envelope(client):
     assert r.status_code == 404
     body = r.json()
     assert body["error"]["code"] == "not_found" and "message" in body["error"]
+
+def test_specific_version(client):
+    """GET /v1/questionnaires/{qid}/versions/{version} returns that version's EntitySummary."""
+    qid = client.get("/v1/questionnaires").json()["items"][0]["id"]
+    vs = client.get(f"/v1/questionnaires/{qid}/versions").json()
+    version = vs[0]["version"]
+    r = client.get(f"/v1/questionnaires/{qid}/versions/{version}")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["id"] == qid and body["version"] == version
+
+def test_specific_version_404(client):
+    """Non-existent version returns 404."""
+    qid = client.get("/v1/questionnaires").json()["items"][0]["id"]
+    r = client.get(f"/v1/questionnaires/{qid}/versions/v00.0000")
+    assert r.status_code == 404
+
+def test_filter_domain_match(client):
+    """domain=wellbeing should return qst_min (enriched fixture)."""
+    r = client.get("/v1/questionnaires", params={"domain": "wellbeing"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["total"] >= 1
+    assert any(item["id"] == "qst_min" for item in body["items"])
+
+def test_filter_domain_no_match(client):
+    """domain=nonexistent should return empty list."""
+    r = client.get("/v1/questionnaires", params={"domain": "nonexistent"})
+    assert r.status_code == 200
+    assert r.json()["total"] == 0
+
+def test_filter_language(client):
+    """language=en should return qst_min."""
+    r = client.get("/v1/questionnaires", params={"language": "en"})
+    assert r.status_code == 200
+    assert r.json()["total"] >= 1
+    assert any(item["id"] == "qst_min" for item in r.json()["items"])
+
+def test_filter_min_items_excludes(client):
+    """min_items=5 should exclude qst_min (item_count=1)."""
+    r = client.get("/v1/questionnaires", params={"min_items": 5})
+    assert r.status_code == 200
+    assert all(item["id"] != "qst_min" for item in r.json()["items"])
+
+def test_sort_title(client):
+    """sort=title should succeed and return results."""
+    r = client.get("/v1/questionnaires", params={"sort": "title"})
+    assert r.status_code == 200
+    assert "items" in r.json()

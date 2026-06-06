@@ -4,24 +4,68 @@ def latest_versions_cte() -> str:
     return ("WITH latest AS (SELECT id, max(version) AS version FROM catalogue_entry "
             "WHERE status='published' GROUP BY id)")
 
+_VALID_SORTS = {"relevance", "title", "recency"}
+
 def list_entries(conn: psycopg.Connection, entity_type: str, *, q: str | None,
-                 limit: int, offset: int) -> tuple[list[dict], int]:
+                 limit: int, offset: int,
+                 domain: str | None = None, population: str | None = None,
+                 language: str | None = None, license: str | None = None,
+                 min_items: int | None = None, max_items: int | None = None,
+                 sort: str | None = None) -> tuple[list[dict], int]:
     where = ["c.entity_type=%s", "c.status='published'"]
     params: list = [entity_type]
     if q:
         where.append("c.search_tsv @@ websearch_to_tsquery('english', %s)")
         params.append(q)
+    if domain is not None:
+        where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version AND f.facet_type='domain' AND f.value=%s)")
+        params.append(domain)
+    if population is not None:
+        where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version AND f.facet_type='population' AND f.value=%s)")
+        params.append(population)
+    if language is not None:
+        where.append("c.language=%s")
+        params.append(language)
+    if license is not None:
+        where.append("c.effective_license=%s")
+        params.append(license)
+    if min_items is not None:
+        where.append("c.item_count >= %s")
+        params.append(min_items)
+    if max_items is not None:
+        where.append("c.item_count <= %s")
+        params.append(max_items)
     sql_where = " AND ".join(where)
+    # Determine ORDER BY
+    effective_sort = sort or ("relevance" if q else "title")
+    if effective_sort == "relevance" and q:
+        order_by = "ts_rank(c.search_tsv, websearch_to_tsquery('english', %s)) DESC"
+        order_params: list = [q]
+    elif effective_sort == "recency":
+        order_by = "c.version DESC NULLS LAST"
+        order_params = []
+    else:
+        order_by = "c.title NULLS LAST"
+        order_params = []
     total = conn.execute(
         f"{latest_versions_cte()} SELECT count(*) FROM catalogue_entry c JOIN latest l "
         f"ON c.id=l.id AND c.version=l.version WHERE {sql_where}", params).fetchone()[0]
     rows = conn.execute(
         f"{latest_versions_cte()} SELECT c.id, c.version, c.entity_type, c.title, c.status, c.effective_license "
         f"FROM catalogue_entry c JOIN latest l ON c.id=l.id AND c.version=l.version "
-        f"WHERE {sql_where} ORDER BY c.title NULLS LAST LIMIT %s OFFSET %s",
-        params + [limit, offset]).fetchall()
+        f"WHERE {sql_where} ORDER BY {order_by} LIMIT %s OFFSET %s",
+        params + order_params + [limit, offset]).fetchall()
     cols = ["id", "version", "entity_type", "title", "status", "effective_license"]
     return [dict(zip(cols, r)) for r in rows], total
+
+def get_version(conn: psycopg.Connection, entity_id: str, version: str) -> dict | None:
+    row = conn.execute(
+        "SELECT id, version, entity_type, title, status, effective_license FROM catalogue_entry "
+        "WHERE id=%s AND version=%s", (entity_id, version)).fetchone()
+    if row is None:
+        return None
+    cols = ["id", "version", "entity_type", "title", "status", "effective_license"]
+    return dict(zip(cols, row))
 
 def get_versions(conn: psycopg.Connection, entity_id: str) -> list[dict]:
     rows = conn.execute(

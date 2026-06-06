@@ -6,12 +6,41 @@ from ..entity_types import ENTITY_TYPES
 
 router = APIRouter()
 
+@router.get("/questions", response_model=Paginated)
+def list_questions(q: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
+    rows, total = query.list_entries(conn, "question", q=q, limit=limit, offset=offset)
+    return Paginated(items=[EntitySummary(**r) for r in rows], total=total, limit=limit, offset=offset)
+
+@router.get("/options", response_model=Paginated)
+def list_options(q: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
+    rows, total = query.list_entries(conn, "option", q=q, limit=limit, offset=offset)
+    return Paginated(items=[EntitySummary(**r) for r in rows], total=total, limit=limit, offset=offset)
+
 @router.get("/entities/{etype}", response_model=Paginated)
 def list_entities(etype: str, q: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
     if etype not in ENTITY_TYPES:
         raise HTTPException(status_code=404, detail="unknown entity type")
     rows, total = query.list_entries(conn, etype, q=q, limit=limit, offset=offset)
     return Paginated(items=[EntitySummary(**r) for r in rows], total=total, limit=limit, offset=offset)
+
+@router.get("/entities/{etype}/{eid}", response_model=EntitySummary)
+def get_entity(etype: str, eid: str, conn=Depends(get_conn)):
+    if etype not in ENTITY_TYPES:
+        raise HTTPException(status_code=404, detail="unknown entity type")
+    versions = query.get_versions(conn, eid)
+    published = [v for v in versions if v["status"] == "published"]
+    if not published:
+        raise HTTPException(status_code=404, detail="entity not found")
+    return EntitySummary(**max(published, key=lambda v: v["version"]))
+
+@router.get("/entities/{etype}/{eid}/versions/{version}", response_model=EntitySummary)
+def get_entity_version(etype: str, eid: str, version: str, conn=Depends(get_conn)):
+    if etype not in ENTITY_TYPES:
+        raise HTTPException(status_code=404, detail="unknown entity type")
+    row = query.get_version(conn, eid, version)
+    if row is None:
+        raise HTTPException(status_code=404, detail="entity version not found")
+    return EntitySummary(**row)
 
 @router.get("/entities/{etype}/{eid}/versions/{version}/dependents", response_model=Paginated)
 def dependents(etype: str, eid: str, version: str, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
