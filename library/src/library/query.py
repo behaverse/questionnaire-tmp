@@ -109,7 +109,10 @@ def list_cards(conn: psycopg.Connection, entity_type: str, *, q: str | None,
         where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version "
                      "AND f.facet_type='population' AND f.value=%s)"); params.append(population)
     if language is not None:
-        where.append("c.language=%s"); params.append(language)
+        # match any questionnaire AVAILABLE in this language (not just its primary language);
+        # fall back to the primary language column when available_languages is unset.
+        where.append("(c.available_languages @> ARRAY[%s] OR c.language = %s)")
+        params.append(language); params.append(language)
     if license is not None:
         where.append("c.effective_license=%s"); params.append(license)
     if min_items is not None:

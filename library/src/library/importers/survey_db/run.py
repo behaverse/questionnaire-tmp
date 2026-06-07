@@ -34,7 +34,13 @@ def import_survey_db(sqlite_path, out_dir, release: str, imported_at: str) -> Im
         write_entity(out, entity_type, _pin_pending(obj, release))
         counts[entity_type] = counts.get(entity_type, 0) + 1
 
-    for row in db.prompts(): emit("prompt", mappers.map_prompt(row, loss))
+    prompt_langs: dict[str, set[str]] = {}
+    for row in db.prompts():
+        mapped = mappers.map_prompt(row, loss)
+        emit("prompt", mapped)
+        # record which languages this prompt actually carries text in, so questionnaire
+        # reconstruction can advertise only fully-translated languages
+        prompt_langs[row["prompt_id"]] = set(mapped.get("content", {}).keys())
     for row in db.contexts():
         result = mappers.map_context(row, loss)
         if result is not None:
@@ -83,7 +89,7 @@ def import_survey_db(sqlite_path, out_dir, release: str, imported_at: str) -> Im
         survey = surveys.get(hid)
         if survey is None:
             loss.add("warning", f"questionnaire.{qid}", f"header_id {hid!r} has no survey metadata")
-        q = reconstruct(qid, comps, survey, release, imported_at, loss)
+        q = reconstruct(qid, comps, survey, release, imported_at, loss, prompt_langs)
         emit("questionnaire", q)
 
     used_headers = {(next((c for c in comps if c["questionnaire"] == q and c["element_type"] == "header"), {}) or {}).get("header_id") for q in qids}

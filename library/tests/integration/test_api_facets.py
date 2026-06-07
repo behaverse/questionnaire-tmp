@@ -24,6 +24,11 @@ def test_language_facet(client):
     assert body["facet_type"] == "language"
     assert any(v["value"] == "en" and v["count"] >= 1 for v in body["values"])
 
+def test_language_facet_counts_available_languages(client):
+    # qst_min is available in en + pt -> the facet surfaces pt too (not just the primary 'en').
+    vals = {v["value"] for v in client.get("/v1/facets", params={"facet_type": "language"}).json()["values"]}
+    assert "pt" in vals
+
 def test_license_facet_endpoint_ok(client):
     r = client.get("/v1/facets", params={"facet_type": "license"})
     assert r.status_code == 200

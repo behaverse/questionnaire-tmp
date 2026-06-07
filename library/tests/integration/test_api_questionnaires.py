@@ -76,6 +76,12 @@ def test_filter_language(client):
     assert r.json()["total"] >= 1
     assert any(item["id"] == "qst_min" for item in r.json()["items"])
 
+def test_filter_by_available_language(client):
+    """language=pt should return qst_min via available_languages (its primary language is en)."""
+    r = client.get("/v1/questionnaires", params={"language": "pt"})
+    assert r.status_code == 200
+    assert any(item["id"] == "qst_min" for item in r.json()["items"])
+
 def test_filter_min_items_excludes(client):
     """min_items=5 should exclude qst_min (item_count=1)."""
     r = client.get("/v1/questionnaires", params={"min_items": 5})

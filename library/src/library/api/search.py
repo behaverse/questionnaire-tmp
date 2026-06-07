@@ -5,7 +5,7 @@ from ..entity_types import ENTITY_TYPES
 from ..query import _CARD_COLS
 
 _TABLE_FACETS = {"domain", "population", "administration_mode", "tag"}
-_COLUMN_FACETS = {"language": "language", "license": "effective_license"}
+_COLUMN_FACETS = {"license": "effective_license"}  # language handled separately (array column)
 
 router = APIRouter()
 
@@ -39,6 +39,15 @@ def facets(facet_type: str, conn=Depends(get_conn)):
         rows = conn.execute(
             "SELECT value, count(*) FROM facet WHERE facet_type=%s GROUP BY value ORDER BY count(*) DESC",
             (facet_type,)).fetchall()
+    elif facet_type == "language":
+        # count by the languages a questionnaire is AVAILABLE in (unnest available_languages),
+        # falling back to the primary language when available_languages is unset.
+        rows = conn.execute(
+            "SELECT lang, count(*) FROM catalogue_entry c, "
+            "unnest(coalesce(c.available_languages, ARRAY[c.language])) AS lang "
+            "WHERE c.status='published' AND c.entity_type='questionnaire' AND lang IS NOT NULL "
+            "GROUP BY lang ORDER BY count(*) DESC"
+        ).fetchall()
     elif facet_type in _COLUMN_FACETS:
         col = _COLUMN_FACETS[facet_type]   # fixed allow-list value, not user input -> safe to interpolate
         rows = conn.execute(
@@ -46,6 +55,6 @@ def facets(facet_type: str, conn=Depends(get_conn)):
             f"WHERE status='published' AND {col} IS NOT NULL GROUP BY {col} ORDER BY count(*) DESC"
         ).fetchall()
     else:
-        allowed = sorted(_TABLE_FACETS | set(_COLUMN_FACETS))
+        allowed = sorted(_TABLE_FACETS | set(_COLUMN_FACETS) | {"language"})
         raise HTTPException(status_code=422, detail=f"unknown facet_type: {facet_type!r}; must be one of {allowed}")
     return {"facet_type": facet_type, "values": [{"value": v, "count": c} for v, c in rows]}

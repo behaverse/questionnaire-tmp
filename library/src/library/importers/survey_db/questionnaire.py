@@ -1,5 +1,5 @@
 import re
-from .ids import canonical_id
+from .ids import canonical_id, LANGS_FULL
 from .mappers import _split
 from .provenance import build_provenance
 
@@ -68,14 +68,35 @@ def _coerce_version(v: str | None, release: str, loss, qid: str) -> str:
     return release
 
 def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
-                imported_at: str, loss=None) -> dict:
+                imported_at: str, loss=None, prompt_langs: dict | None = None) -> dict:
     rows = [c for c in comp_rows if c["questionnaire"] == qid]
     header = next((c for c in rows if c["element_type"] == "header"), None)
     raw_version = next((c.get("version") for c in rows if c.get("version")), None)
     version = _coerce_version(raw_version, release, loss, qid)
     s = survey_row or {}
+
+    # Languages are derived from the actual imported content, not the survey's mostly-empty
+    # `validated_languages` column. A language is "available" only when EVERY item (prompt)
+    # the questionnaire references carries text in it (complete coverage); partially
+    # translated languages are not advertised as available. `prompt_langs` maps a legacy
+    # prompt_id to the set of languages present in its content map.
+    ref_prompt_ids = [c["prompt_id"] for c in rows
+                      if c["element_type"] == "question" and c.get("prompt_id")]
+    available_languages = None
+    if prompt_langs is not None and ref_prompt_ids:
+        per_prompt = [prompt_langs.get(pid, set()) for pid in ref_prompt_ids]
+        common = set.intersection(*per_prompt) if per_prompt else set()
+        ordered = [lang for lang in LANGS_FULL if lang in common]
+        if ordered:
+            available_languages = ordered
+    primary_language = (
+        "en" if available_languages and "en" in available_languages
+        else available_languages[0] if available_languages
+        else "en"
+    )
+
     meta = {"id": canonical_id("questionnaire", qid), "version": version,
-            "title": s.get("title") or qid, "language": "en"}
+            "title": s.get("title") or qid, "language": primary_language}
     if s.get("variant"):
         variant = str(s["variant"])
         if len(variant) > 64:
@@ -144,9 +165,14 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
                 loss.add("warning", f"surveys.{s.get('survey_id') or qid}.reference",
                          f"year not extractable from {ref_str!r} — stored as x_source_reference; publication block omitted")
 
-    langs = _split(s.get("validated_languages"))
-    if langs:
-        meta["available_languages"] = langs
+    # available_languages comes from content coverage (computed above). Preserve the survey's
+    # own validated-languages claim as provenance (x_ extension) without trusting it as the
+    # source of truth — it is empty for most instruments and can disagree with the content.
+    if available_languages:
+        meta["available_languages"] = available_languages
+    validated = _split(s.get("validated_languages"))
+    if validated:
+        meta["x_validated_languages"] = validated
 
     # provenance: use the instrument schema's allowed fields only
     # (additionalProperties: false — our custom fields go into the importer's x_ extension)

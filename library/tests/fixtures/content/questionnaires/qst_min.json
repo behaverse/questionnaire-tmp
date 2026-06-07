@@ -6,6 +6,7 @@
     "title": "Minimal example",
     "description": "Smallest valid questionnaire for the Library Core fixture (v26.0601).",
     "language": "en",
+    "available_languages": ["en", "pt"],
     "classification": { "domain": ["wellbeing"], "population": ["adults"], "administration_mode": ["self_report"] },
     "psychometrics": { "item_count": 1, "estimated_minutes": 1 }
   },
