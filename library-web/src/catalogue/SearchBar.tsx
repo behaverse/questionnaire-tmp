@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function SearchBar({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const [text, setText] = useState(value)
+  const onChangeRef = useRef(onChange)
+  useEffect(() => { onChangeRef.current = onChange })
+
   useEffect(() => setText(value), [value])
+
   useEffect(() => {
-    const id = setTimeout(() => { if (text !== value) onChange(text) }, 300)
+    const id = setTimeout(() => { if (text !== value) onChangeRef.current(text) }, 300)
     return () => clearTimeout(id)
-  }, [text, value, onChange])
+  }, [text, value])
+
   return (
     <input
       type="search"

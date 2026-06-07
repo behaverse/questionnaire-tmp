@@ -37,6 +37,7 @@ describe('CataloguePage', () => {
     vi.mocked(api.listQuestionnaires).mockResolvedValue({ items: [card], total: 1, limit: 20, offset: 0 })
     setup()
     await waitFor(() => expect(screen.getByText('PHQ-9')).toBeInTheDocument())
+    expect(screen.getAllByText('depression').length).toBeGreaterThan(0)
   })
 
   it('shows the empty state when there are no results', async () => {
