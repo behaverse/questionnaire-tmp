@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from .deps import get_conn
 from .resolve import resolve_definition
 from .. import query
-from ..models import Paginated, EntitySummary, CatalogueCard, PaginatedCards
+from ..models import Paginated, EntitySummary, CatalogueCard, PaginatedCards, VersionInfo
 from ..query import _VALID_SORTS
 
 router = APIRouter()
@@ -36,12 +36,12 @@ def detail(qid: str, conn=Depends(get_conn)):
         raise HTTPException(status_code=404, detail="questionnaire not found")
     return EntitySummary(**max(published, key=lambda v: v["version"]))
 
-@router.get("/questionnaires/{qid}/versions", response_model=list[EntitySummary])
+@router.get("/questionnaires/{qid}/versions", response_model=list[VersionInfo])
 def versions(qid: str, conn=Depends(get_conn)):
-    vs = query.get_versions(conn, qid)
+    vs = query.get_version_history(conn, qid)
     if not vs:
         raise HTTPException(status_code=404, detail="questionnaire not found")
-    return [EntitySummary(**v) for v in vs]
+    return [VersionInfo(**v) for v in vs]
 
 @router.get("/questionnaires/{qid}/versions/{version}", response_model=EntitySummary)
 def get_version(qid: str, version: str, conn=Depends(get_conn)):

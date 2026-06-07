@@ -132,6 +132,14 @@ def list_cards(conn: psycopg.Connection, entity_type: str, *, q: str | None,
         params + order_params + [limit, offset]).fetchall()
     return [dict(zip(_CARD_COLS, r)) for r in rows], total
 
+def get_version_history(conn: psycopg.Connection, entity_id: str) -> list[dict]:
+    rows = conn.execute(
+        "SELECT c.id, c.version, c.status, e.severity, e.ingested_at "
+        "FROM catalogue_entry c JOIN entity e ON e.id=c.id AND e.version=c.version "
+        "WHERE c.id=%s ORDER BY c.version DESC", (entity_id,)).fetchall()
+    return [{"id": r[0], "version": r[1], "status": r[2], "severity": r[3],
+             "date": r[4].date().isoformat() if r[4] else None} for r in rows]
+
 def dependents_of(conn: psycopg.Connection, to_id: str, to_version: str, limit: int, offset: int) -> tuple[list[dict], int]:
     total = conn.execute(
         "SELECT count(*) FROM entity_ref WHERE to_id=%s AND to_version=%s", (to_id, to_version)).fetchone()[0]

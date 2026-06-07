@@ -35,3 +35,10 @@ class PaginatedCards(BaseModel):
     total: int
     limit: int
     offset: int
+
+class VersionInfo(BaseModel):
+    id: str
+    version: str
+    status: str
+    severity: str | None = None
+    date: str | None = None
