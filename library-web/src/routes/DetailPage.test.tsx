@@ -56,4 +56,11 @@ describe('DetailPage', () => {
     setup()
     await waitFor(() => expect(screen.getByText(/not found/i)).toBeInTheDocument())
   })
+
+  it('shows not-found when the id is unknown (versions 404)', async () => {
+    vi.mocked(api.versions).mockRejectedValue(new ApiError(404, 'not_found', 'nope'))
+    vi.mocked(api.resolvedDefinition).mockRejectedValue(new ApiError(404, 'not_found', 'nope'))
+    setup()
+    await waitFor(() => expect(screen.getByText(/not found/i)).toBeInTheDocument())
+  })
 })

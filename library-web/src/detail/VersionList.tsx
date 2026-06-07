@@ -11,7 +11,7 @@ export function VersionList({ id, versions, current }: { id: string; versions: V
         return (
           <li
             key={v.version}
-            className={`flex flex-wrap items-center gap-2.5 py-2.5 first:pt-0 ${isCurrent ? '' : ''}`}
+            className="flex flex-wrap items-center gap-2.5 py-2.5 first:pt-0"
           >
             <Link
               to={`/q/${id}/${v.version}`}

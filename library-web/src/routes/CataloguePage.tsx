@@ -8,6 +8,7 @@ import { Pagination } from '../catalogue/Pagination'
 import { Skeleton } from '../components/Skeleton'
 import { EmptyState } from '../components/EmptyState'
 import { ErrorState } from '../components/ErrorState'
+import { ApiError } from '../api/client'
 
 const FACET_DEFS: { key: FacetKey; title: string }[] = [
   { key: 'domain', title: 'Domain' },
@@ -64,7 +65,9 @@ export function CataloguePage() {
           {list.isLoading && (
             <div className="space-y-6 pt-2">{[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-24 w-full" />)}</div>
           )}
-          {list.isError && <ErrorState message="Could not load questionnaires." onRetry={() => list.refetch()} />}
+          {list.isError && (list.error instanceof ApiError && list.error.status === 422
+            ? <ErrorState message="Invalid search or filter — try adjusting or clearing your filters." onRetry={clearAll} />
+            : <ErrorState message="Could not load questionnaires." onRetry={() => list.refetch()} />)}
           {list.isSuccess && list.data.total === 0 && (
             <EmptyState message="No questionnaires match these filters." actionLabel="Clear filters" onAction={clearAll} />
           )}

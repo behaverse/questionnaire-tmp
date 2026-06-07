@@ -38,7 +38,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 export function DetailPage() {
   const { id = '', version } = useParams()
   const versionsQ = useVersions(id)
-  const latest = version ?? versionsQ.data?.find((v) => v.status === 'published')?.version
+  const latest = version ?? versionsQ.data?.find((v) => v.status === 'published')?.version ?? versionsQ.data?.[0]?.version
   const defQ = useResolvedDefinition(id, latest, true)
   const [lang, setLang] = useState<string | null>(null)
 
@@ -63,7 +63,8 @@ export function DetailPage() {
   }
   const navItems = SECTIONS.filter((s) => present[s.id as keyof typeof present])
 
-  if (defQ.error instanceof ApiError && defQ.error.status === 404) return <NotFoundPage />
+  const notFound = (e: unknown): e is ApiError => e instanceof ApiError && e.status === 404
+  if (notFound(versionsQ.error) || notFound(defQ.error)) return <NotFoundPage />
   if (defQ.error instanceof ApiError && defQ.error.status === 410) {
     return (
       <main className="mx-auto max-w-2xl px-6 py-24 text-center">
@@ -75,14 +76,17 @@ export function DetailPage() {
       </main>
     )
   }
+  const networkError =
+    (versionsQ.isError && !(versionsQ.error instanceof ApiError)) ||
+    (defQ.isError && !(defQ.error instanceof ApiError))
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
       {(versionsQ.isLoading || defQ.isLoading) && (
         <div className="space-y-4"><Skeleton className="h-12 w-1/2" /><Skeleton className="h-44 w-full" /></div>
       )}
-      {defQ.isError && !(defQ.error instanceof ApiError) && (
-        <ErrorState message="Could not load this questionnaire." onRetry={() => defQ.refetch()} />
+      {networkError && (
+        <ErrorState message="Could not load this questionnaire." onRetry={() => { void versionsQ.refetch(); void defQ.refetch() }} />
       )}
       {defQ.isSuccess && meta && model && latest && (
         <div className="flex gap-12">

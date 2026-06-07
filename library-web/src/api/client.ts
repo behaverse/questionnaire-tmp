@@ -46,8 +46,6 @@ export function rawDefinitionUrl(id: string, version: string): string {
 export const api = {
   listQuestionnaires: (p: QuestionnaireQuery) =>
     get<Paginated<CatalogueCard>>('/v1/questionnaires', p),
-  search: (p: { q: string; limit?: number; offset?: number }) =>
-    get<Paginated<CatalogueCard>>('/v1/search', p),
   resolvedDefinition: (id: string, version: string) =>
     get<ResolvedDefinition>(`/v1/questionnaires/${id}/versions/${version}/definition`, { resolved: true }),
   versions: (id: string) =>

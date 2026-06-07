@@ -51,4 +51,11 @@ describe('CataloguePage', () => {
     setup()
     await waitFor(() => expect(screen.getByText(/Retry/i)).toBeInTheDocument())
   })
+
+  it('shows an invalid-filter message on a 422', async () => {
+    const { ApiError } = await import('../api/client')
+    vi.mocked(api.listQuestionnaires).mockRejectedValue(new ApiError(422, 'unprocessable', 'bad'))
+    setup()
+    await waitFor(() => expect(screen.getByText(/invalid search or filter/i)).toBeInTheDocument())
+  })
 })
