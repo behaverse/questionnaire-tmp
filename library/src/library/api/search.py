@@ -1,29 +1,38 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from .deps import get_conn
-from ..models import Paginated, EntitySummary
+from ..models import PaginatedCards, CatalogueCard
 from ..entity_types import ENTITY_TYPES
 
 _VALID_FACET_TYPES = {"domain", "population", "administration_mode", "tag"}
 
 router = APIRouter()
 
-@router.get("/search", response_model=Paginated)
+@router.get("/search", response_model=PaginatedCards)
 def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
     if type is not None and type not in ENTITY_TYPES:
         raise HTTPException(status_code=422, detail=f"unknown type: {type!r}; must be one of {ENTITY_TYPES}")
-    where = ["status='published'", "search_tsv @@ websearch_to_tsquery('english', %s)"]
+    where = ["c.status='published'", "c.search_tsv @@ websearch_to_tsquery('english', %s)"]
     params: list = [q]
     if type:
-        where.append("entity_type=%s"); params.append(type)
+        where.append("c.entity_type=%s"); params.append(type)
     w = " AND ".join(where)
-    total = conn.execute(f"SELECT count(*) FROM catalogue_entry WHERE {w}", params).fetchone()[0]
+    total = conn.execute(f"SELECT count(*) FROM catalogue_entry c WHERE {w}", params).fetchone()[0]
     rows = conn.execute(
-        f"SELECT id, version, entity_type, title, status, effective_license FROM catalogue_entry "
-        f"WHERE {w} ORDER BY ts_rank(search_tsv, websearch_to_tsquery('english', %s)) DESC LIMIT %s OFFSET %s",
+        "SELECT c.id, c.version, c.entity_type, c.title, c.short_title, c.description, "
+        "c.status, c.effective_license, c.language, c.available_languages, "
+        "c.item_count, c.estimated_minutes, "
+        "COALESCE((SELECT array_agg(value ORDER BY value) FROM facet f "
+        " WHERE f.id=c.id AND f.version=c.version AND f.facet_type='domain'), '{}') AS domain, "
+        "COALESCE((SELECT array_agg(value ORDER BY value) FROM facet f "
+        " WHERE f.id=c.id AND f.version=c.version AND f.facet_type='population'), '{}') AS population "
+        f"FROM catalogue_entry c WHERE {w} "
+        "ORDER BY ts_rank(c.search_tsv, websearch_to_tsquery('english', %s)) DESC LIMIT %s OFFSET %s",
         params + [q, limit, offset]).fetchall()
-    cols = ["id", "version", "entity_type", "title", "status", "effective_license"]
-    items = [EntitySummary(**dict(zip(cols, r))) for r in rows]
-    return Paginated(items=items, total=total, limit=limit, offset=offset)
+    cols = ["id", "version", "entity_type", "title", "short_title", "description", "status",
+            "effective_license", "language", "available_languages", "item_count",
+            "estimated_minutes", "domain", "population"]
+    items = [CatalogueCard(**dict(zip(cols, r))) for r in rows]
+    return PaginatedCards(items=items, total=total, limit=limit, offset=offset)
 
 @router.get("/facets")
 def facets(facet_type: str, conn=Depends(get_conn)):

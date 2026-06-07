@@ -3,12 +3,12 @@ from fastapi.responses import JSONResponse
 from .deps import get_conn
 from .resolve import resolve_definition
 from .. import query
-from ..models import Paginated, EntitySummary
+from ..models import Paginated, EntitySummary, CatalogueCard, PaginatedCards
 from ..query import _VALID_SORTS
 
 router = APIRouter()
 
-@router.get("/questionnaires", response_model=Paginated)
+@router.get("/questionnaires", response_model=PaginatedCards)
 def list_questionnaires(
     q: str | None = None,
     domain: str | None = None,
@@ -22,12 +22,12 @@ def list_questionnaires(
     offset: int = 0,
     conn=Depends(get_conn),
 ):
-    rows, total = query.list_entries(
+    rows, total = query.list_cards(
         conn, "questionnaire", q=q, limit=limit, offset=offset,
         domain=domain, population=population, language=language, license=license,
         min_items=min_items, max_items=max_items, sort=sort,
     )
-    return Paginated(items=[EntitySummary(**r) for r in rows], total=total, limit=limit, offset=offset)
+    return PaginatedCards(items=[CatalogueCard(**r) for r in rows], total=total, limit=limit, offset=offset)
 
 @router.get("/questionnaires/{qid}", response_model=EntitySummary)
 def detail(qid: str, conn=Depends(get_conn)):
