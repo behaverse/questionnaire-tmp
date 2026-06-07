@@ -19,6 +19,6 @@ describe('ResultRow', () => {
     expect(screen.getByText(/Patient Health Questionnaire-9/)).toBeInTheDocument()
     expect(screen.getByText(/9 items/)).toBeInTheDocument()
     expect(screen.getByText(/CC BY/)).toBeInTheDocument()
-    expect(screen.getAllByText(/depression/).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/depression/)).toHaveLength(2) // description text + domain badge
   })
 })
