@@ -31,6 +31,7 @@ function Item({ item, hideOptions = false }: { item: ItemT; hideOptions?: boolea
         {item.reversed && <Badge>reversed</Badge>}
       </div>
       {item.context && <p className="ml-6 mt-1 text-sm italic text-slate-500">{item.context}</p>}
+      {item.instruction && <p className="ml-6 mt-1 text-sm text-slate-500">{item.instruction}</p>}
       {!hideOptions && <div className="ml-6"><Options options={item.options} /></div>}
     </div>
   )

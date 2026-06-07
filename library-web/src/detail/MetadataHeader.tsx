@@ -37,7 +37,7 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
               aria-label="Version"
               className="rounded border border-slate-300 px-2 py-1 text-sm"
               value={version}
-              onChange={(e) => navigate(`/q/${meta.id}/${e.target.value}`)}
+              onChange={(e) => { if (e.target.value !== version) navigate(`/q/${meta.id}/${e.target.value}`) }}
             >
               {allVersions.map((v) => <option key={v.version} value={v.version}>{v.version}{v.status !== 'published' ? ` (${v.status})` : ''}</option>)}
             </select>

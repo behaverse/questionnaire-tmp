@@ -36,4 +36,14 @@ describe('ItemsBlock', () => {
     render(<ItemsBlock model={model} />)
     expect(screen.getByText('Yes')).toBeInTheDocument()
   })
+
+  it('renders an item instruction when present', () => {
+    const m: RenderModel = {
+      pages: [{ id: 'p', blocks: [
+        { kind: 'item', number: 1, stem: 'Stem', instruction: 'Pick one option', required: false, options: [], unresolved: false },
+      ] }],
+    }
+    render(<ItemsBlock model={m} />)
+    expect(screen.getByText('Pick one option')).toBeInTheDocument()
+  })
 })
