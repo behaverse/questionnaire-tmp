@@ -57,4 +57,35 @@ describe('buildRenderModel', () => {
     const section = model.pages[0].blocks[2] as any
     expect(section.items[0].stem).toBe('Item A')    // pt missing -> falls back to en
   })
+
+  it('handles a section without a shared option, using each item\'s own option', () => {
+    const d: ResolvedDefinition = {
+      metadata: { id: 'q', title: 'Q', version: 'v', language: 'en' },
+      pages: [{ elements: [
+        { id: 'sec', elements: [
+          { question: { prompt: { content: { en: { text: 'Only item' } } } },
+            option: { content: { en: { options: [{ index: 1, text: 'A' }] } } } },
+        ] },
+      ] }],
+    }
+    const m = buildRenderModel(d, 'en')
+    const sec = m.pages[0].blocks[0] as any
+    expect(sec.kind).toBe('section')
+    expect(sec.sharedOptions).toEqual([])
+    expect(sec.items[0].stem).toBe('Only item')
+    expect(sec.items[0].options.map((o: any) => o.text)).toEqual(['A']) // per-item option used
+  })
+
+  it('numbers items continuously across pages', () => {
+    const d: ResolvedDefinition = {
+      metadata: { id: 'q', title: 'Q', version: 'v', language: 'en' },
+      pages: [
+        { elements: [{ question: { prompt: { content: { en: { text: 'P1' } } } } }] },
+        { elements: [{ question: { prompt: { content: { en: { text: 'P2' } } } } }] },
+      ],
+    }
+    const m = buildRenderModel(d, 'en')
+    expect((m.pages[0].blocks[0] as any).number).toBe(1)
+    expect((m.pages[1].blocks[0] as any).number).toBe(2)
+  })
 })

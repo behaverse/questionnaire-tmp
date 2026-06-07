@@ -62,7 +62,8 @@ export function buildRenderModel(def: ResolvedDefinition, lang: string): RenderM
   }
 
   function block(el: DefElement): Block {
-    if (el.elements && (el.shared_option || el.id)) {
+    // In Schema-2 only a Section carries a nested elements[] array (matrix or grouped items).
+    if (el.elements) {
       // Section (matrix): shared option once, child items beneath
       return {
         kind: 'section',
