@@ -33,6 +33,8 @@ def test_search_card_has_enriched_fields(client):
                 if i["id"] == "qst_min")
     assert card["item_count"] == 1
     assert card["domain"] == ["wellbeing"]
+    assert card["language"] == "en"
+    assert card["population"] == ["adults"]
 
 def test_list_filters_still_work(client):
     body = client.get("/v1/questionnaires", params={"domain": "wellbeing"}).json()

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from .deps import get_conn
 from ..models import PaginatedCards, CatalogueCard
 from ..entity_types import ENTITY_TYPES
+from ..query import _CARD_COLS
 
 _VALID_FACET_TYPES = {"domain", "population", "administration_mode", "tag"}
 
@@ -28,10 +29,7 @@ def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offs
         f"FROM catalogue_entry c WHERE {w} "
         "ORDER BY ts_rank(c.search_tsv, websearch_to_tsquery('english', %s)) DESC LIMIT %s OFFSET %s",
         params + [q, limit, offset]).fetchall()
-    cols = ["id", "version", "entity_type", "title", "short_title", "description", "status",
-            "effective_license", "language", "available_languages", "item_count",
-            "estimated_minutes", "domain", "population"]
-    items = [CatalogueCard(**dict(zip(cols, r))) for r in rows]
+    items = [CatalogueCard(**dict(zip(_CARD_COLS, r))) for r in rows]
     return PaginatedCards(items=items, total=total, limit=limit, offset=offset)
 
 @router.get("/facets")
