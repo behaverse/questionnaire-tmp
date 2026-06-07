@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { api, ApiError, rawDefinitionUrl } from './client'
+import { api, rawDefinitionUrl } from './client'
 
 beforeEach(() => { vi.restoreAllMocks() })
 

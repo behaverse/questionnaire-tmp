@@ -1,3 +1,7 @@
+// Hand-written response types for the Library Core read API.
+// Maintained by hand; diff against library-web/openapi.snapshot.json when the API changes.
+// (CatalogueCard / Paginated / VersionInfo mirror the Pydantic models in library/src/library/models.py.)
+
 export interface CatalogueCard {
   id: string
   version: string
