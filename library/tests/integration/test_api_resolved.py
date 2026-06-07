@@ -38,7 +38,7 @@ def test_resolved_unknown_ref_marks_unresolved(client, pg_url):
     with psycopg.connect(pg_url) as c:
         c.execute("UPDATE entity SET content_json = jsonb_set(content_json, "
                   "'{pages,0,elements,0,question,prompt,ref}', '\"pr_missing@v26.0601\"') "
-                  "WHERE id='qst_min'")
+                  "WHERE id='qst_min' AND version='v26.0601'")
         c.commit()
     r = client.get("/v1/questionnaires/qst_min/versions/v26.0601/definition",
                    params={"resolved": "true"})

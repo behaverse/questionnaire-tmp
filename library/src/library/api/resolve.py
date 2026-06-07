@@ -9,6 +9,7 @@ def _entity_content(conn: psycopg.Connection, ref_str: str) -> dict | None:
         eid, ver = parse_ref(ref_str)
     except ValueError:
         return None
+    # one point-read per ref; fine for current questionnaire sizes — batch with WHERE (id,version) IN (...) if profiling shows a problem
     row = conn.execute(
         "SELECT content_json FROM entity WHERE id=%s AND version=%s", (eid, ver)
     ).fetchone()
@@ -25,6 +26,8 @@ def resolve_definition(conn: psycopg.Connection, definition: dict) -> dict:
     not resolve get `_unresolved: True`. Resolution recurses into merged content, so a
     saved Item ref's nested Prompt/Option refs resolve too. References are hard-pinned and
     acyclic (CalVer), so this terminates."""
+    # no cycle guard: hard-pinned CalVer refs are acyclic (an entity can only reference
+    # equal/earlier-dated entities, enforced at ingest)
     def walk(node):
         if isinstance(node, dict):
             merged = dict(node)

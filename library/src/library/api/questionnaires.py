@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 from .deps import get_conn
+from .resolve import resolve_definition
 from .. import query
 from ..models import Paginated, EntitySummary
 from ..query import _VALID_SORTS
@@ -62,6 +63,5 @@ def definition(qid: str, version: str, resolved: bool = False, conn=Depends(get_
             "error": {"code": "gone", "message": "withdrawn",
                       "withdrawn_at": withdrawn_at.isoformat() if withdrawn_at else None}})
     if resolved:
-        from .resolve import resolve_definition
         return resolve_definition(conn, content_json)
     return content_json
