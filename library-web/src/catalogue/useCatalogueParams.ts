@@ -17,7 +17,7 @@ export interface CatalogueParams {
 }
 
 function read(sp: URLSearchParams): CatalogueParams {
-  const page = Number(sp.get('page') ?? '1')
+  const page = Math.floor(Number(sp.get('page') ?? '1'))
   return {
     q: sp.get('q') || undefined,
     domain: sp.get('domain') || undefined,

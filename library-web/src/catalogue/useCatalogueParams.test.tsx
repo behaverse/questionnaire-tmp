@@ -36,6 +36,21 @@ describe('useCatalogueParams', () => {
     expect(result.current.params.domain).toBeUndefined()
   })
 
+  it('setPage updates the page and offset', () => {
+    const { result } = renderHook(() => useCatalogueParams(), { wrapper: wrapper('/') })
+    act(() => result.current.setPage(3))
+    expect(result.current.params.page).toBe(3)
+    expect(result.current.offset).toBe(40) // (3 - 1) * 20
+  })
+
+  it('toggleFacet replaces a different selected value', () => {
+    const { result } = renderHook(() => useCatalogueParams(), {
+      wrapper: wrapper('/?domain=depression'),
+    })
+    act(() => result.current.toggleFacet('domain', 'anxiety'))
+    expect(result.current.params.domain).toBe('anxiety') // replaced, not appended
+  })
+
   it('clearAll resets everything', () => {
     const { result } = renderHook(() => useCatalogueParams(), {
       wrapper: wrapper('/?q=x&domain=y&page=4'),
