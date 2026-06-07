@@ -46,4 +46,19 @@ describe('ItemsBlock', () => {
     render(<ItemsBlock model={m} />)
     expect(screen.getByText('Pick one option')).toBeInTheDocument()
   })
+
+  it('flags content shown in a fallback language with the language code + explanation', () => {
+    const m: RenderModel = {
+      pages: [{ id: 'p', blocks: [
+        { kind: 'message', text: 'Please answer the following.', unresolved: false, fallbackLang: 'en' },
+        { kind: 'item', number: 1, stem: 'Combien de fois…', required: false,
+          instruction: 'Choose one', instructionFallbackLang: 'en', options: [], unresolved: false },
+      ] }],
+    }
+    render(<ItemsBlock model={m} />)
+    // a small language-code marker is shown for both the untranslated message and instruction
+    const tags = screen.getAllByText('en')
+    expect(tags.length).toBe(2)
+    expect(tags[0]).toHaveAttribute('title', expect.stringMatching(/no translation in the selected language/i))
+  })
 })

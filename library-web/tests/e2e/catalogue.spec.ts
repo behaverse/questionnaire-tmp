@@ -11,9 +11,9 @@ test('search → open a questionnaire → see items → download JSON', async ({
   await expect(firstResult).toBeVisible()
   await firstResult.click()
 
-  // detail page shows a heading and an Items section
+  // detail page shows a heading and a Content section
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Items' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Content' })).toBeVisible()
 
   // download triggers a file
   const [download] = await Promise.all([

@@ -7,34 +7,60 @@ export interface ItemBlock {
   kind: 'item'
   number: number
   stem: string
+  stemFallbackLang?: string
   context?: string
+  contextFallbackLang?: string
   instruction?: string
+  instructionFallbackLang?: string
   required: boolean
   options: OptionChoice[]
+  optionsFallbackLang?: string
   dimension?: string
   reversed?: boolean
   subscales?: string[]
   unresolved: boolean
 }
-export interface MessageBlock { kind: 'message'; text: string; unresolved: boolean }
-export interface SectionBlock { kind: 'section'; id?: string; sharedOptions: OptionChoice[]; items: ItemBlock[] }
+export interface MessageBlock { kind: 'message'; text: string; unresolved: boolean; fallbackLang?: string }
+export interface SectionBlock {
+  kind: 'section'
+  id?: string
+  sharedOptions: OptionChoice[]
+  sharedOptionsFallbackLang?: string
+  items: ItemBlock[]
+}
 export type Block = ItemBlock | MessageBlock | SectionBlock
 export interface RenderPage { id?: string; title?: string; blocks: Block[] }
 export interface RenderModel { pages: RenderPage[] }
 
-function pick(content: Record<string, LangContent> | undefined, lang: string, primary: string): LangContent | undefined {
-  if (!content) return undefined
-  return content[lang] ?? content[primary] ?? content[Object.keys(content)[0]]
+// Pick the best language for a content map and report which language was actually used:
+// requested language -> the questionnaire's primary language -> the first language present.
+function pick(
+  content: Record<string, LangContent> | undefined, lang: string, primary: string,
+): [LangContent | undefined, string | undefined] {
+  if (!content) return [undefined, undefined]
+  if (content[lang]) return [content[lang], lang]
+  if (content[primary]) return [content[primary], primary]
+  const first = Object.keys(content)[0]
+  return first !== undefined ? [content[first], first] : [undefined, undefined]
 }
 
-function optionsOf(option: ResolvedOption | undefined, lang: string, primary: string): OptionChoice[] {
-  const c = pick(option?.content, lang, primary)
-  if (!c?.options) return []
-  return c.options.map((o) => ({
+// When a piece of text was shown in a language other than the one requested, return that
+// language code (so the UI can flag it as a fallback); otherwise undefined.
+function fallback(used: string | undefined, requested: string): string | undefined {
+  return used && used !== requested ? used : undefined
+}
+
+function optionsOf(
+  option: ResolvedOption | undefined, lang: string, primary: string,
+): [OptionChoice[], string | undefined] {
+  const [c, used] = pick(option?.content, lang, primary)
+  if (!c?.options) return [[], undefined]
+  const choices = c.options.map((o) => ({
     index: o.index,
     text: o.text ?? '',
     value: option?.options?.find((v) => v.index === o.index)?.value,
   }))
+  return [choices, used]
 }
 
 export function buildRenderModel(def: ResolvedDefinition, lang: string): RenderModel {
@@ -44,16 +70,23 @@ export function buildRenderModel(def: ResolvedDefinition, lang: string): RenderM
   function item(el: DefElement, sharedOption?: ResolvedOption): ItemBlock {
     counter += 1
     const prompt = el.question?.prompt
-    const stemC = pick(prompt?.content, lang, primary)
+    const [stemC, stemLang] = pick(prompt?.content, lang, primary)
+    const [ctxC, ctxLang] = pick(el.question?.context?.content, lang, primary)
+    const [insC, insLang] = pick(el.question?.instruction?.content, lang, primary)
     const option = el.option ?? sharedOption
+    const [options, optLang] = optionsOf(option, lang, primary)
     return {
       kind: 'item',
       number: counter,
       stem: stemC?.text ?? '',
-      context: pick(el.question?.context?.content, lang, primary)?.text,
-      instruction: pick(el.question?.instruction?.content, lang, primary)?.text,
+      stemFallbackLang: fallback(stemLang, lang),
+      context: ctxC?.text,
+      contextFallbackLang: ctxC?.text ? fallback(ctxLang, lang) : undefined,
+      instruction: insC?.text,
+      instructionFallbackLang: insC?.text ? fallback(insLang, lang) : undefined,
       required: el.required ?? false,
-      options: optionsOf(option, lang, primary),
+      options,
+      optionsFallbackLang: options.length ? fallback(optLang, lang) : undefined,
       dimension: prompt?.dimension,
       reversed: prompt?.reversed,
       subscales: prompt?.subscales,
@@ -65,17 +98,24 @@ export function buildRenderModel(def: ResolvedDefinition, lang: string): RenderM
     // In Schema-2 only a Section carries a nested elements[] array (matrix or grouped items).
     if (el.elements) {
       // Section (matrix): shared option once, child items beneath
+      const [sharedOptions, sharedLang] = optionsOf(el.shared_option, lang, primary)
       return {
         kind: 'section',
         id: el.id,
-        sharedOptions: optionsOf(el.shared_option, lang, primary),
+        sharedOptions,
+        sharedOptionsFallbackLang: sharedOptions.length ? fallback(sharedLang, lang) : undefined,
         items: el.elements.map((child) => item(child, el.shared_option)),
       }
     }
     if (el.question) return item(el)
     // message (has content, no question)
-    const c = pick(el.content, lang, primary)
-    return { kind: 'message', text: c?.text ?? '', unresolved: el._unresolved === true }
+    const [c, msgLang] = pick(el.content, lang, primary)
+    return {
+      kind: 'message',
+      text: c?.text ?? '',
+      unresolved: el._unresolved === true,
+      fallbackLang: c?.text ? fallback(msgLang, lang) : undefined,
+    }
   }
 
   const pages: RenderPage[] = (def.pages ?? []).map((p: DefPage) => ({

@@ -58,6 +58,28 @@ describe('buildRenderModel', () => {
     expect(section.items[0].stem).toBe('Item A')    // pt missing -> falls back to en
   })
 
+  it('records the fallback language on content shown in a different language than requested', () => {
+    const model = buildRenderModel(def, 'pt')
+    // the welcome message exists only in en/pt; requesting pt shows pt -> no fallback flag
+    expect((model.pages[0].blocks[0] as any).fallbackLang).toBeUndefined()
+    // the section's first item stem exists only in en; requesting pt falls back to en -> flagged
+    const section = model.pages[0].blocks[2] as any
+    expect(section.items[0].stemFallbackLang).toBe('en')
+    // item 1 stem has pt -> no fallback
+    expect((model.pages[0].blocks[1] as any).stemFallbackLang).toBeUndefined()
+  })
+
+  it('flags an English-only message when a non-English language is selected', () => {
+    const enOnly: ResolvedDefinition = {
+      metadata: { id: 'q', title: 'Q', version: 'v', language: 'en', available_languages: ['en', 'fr'] },
+      pages: [{ elements: [{ content: { en: { text: 'Please answer the following.' } } }] }],
+    }
+    const m = buildRenderModel(enOnly, 'fr')
+    expect((m.pages[0].blocks[0] as any)).toMatchObject({
+      kind: 'message', text: 'Please answer the following.', fallbackLang: 'en',
+    })
+  })
+
   it('handles a section without a shared option, using each item\'s own option', () => {
     const d: ResolvedDefinition = {
       metadata: { id: 'q', title: 'Q', version: 'v', language: 'en' },

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useResolvedDefinition, useVersions } from '../api/queries'
-import { ApiError, rawDefinitionUrl } from '../api/client'
+import { ApiError, resolvedDefinitionUrl } from '../api/client'
 import { buildRenderModel } from '../definition/renderModel'
 import { MetadataHeader } from '../detail/MetadataHeader'
 import { ItemsBlock } from '../detail/ItemsBlock'
@@ -18,7 +18,7 @@ const SECTIONS = [
   { id: 'classification', label: 'Classification' },
   { id: 'psychometrics', label: 'Psychometrics' },
   { id: 'citation', label: 'Authors & citation' },
-  { id: 'items', label: 'Items' },
+  { id: 'items', label: 'Content' },
   { id: 'scores', label: 'Scores' },
   { id: 'versions', label: 'Versions' },
 ]
@@ -26,7 +26,7 @@ const SECTIONS = [
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section id={id} className="scroll-mt-24 border-t border-rule pt-7">
-      <h2 className="mb-4 flex items-baseline gap-2.5 font-sans text-[13px] font-semibold uppercase tracking-[0.13em] text-ink-faint">
+      <h2 className="mb-4 flex items-center gap-2.5 font-sans text-[13px] font-semibold uppercase tracking-[0.13em] text-ink-faint">
         <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent/70" />
         {title}
       </h2>
@@ -97,13 +97,13 @@ export function DetailPage() {
               allVersions={versionsQ.data ?? []}
               lang={effectiveLang}
               onLang={setLang}
-              onDownload={() => { void downloadJson(rawDefinitionUrl(id, latest), definitionFilename(id, latest)).catch((e) => console.error(e)) }}
+              onDownload={() => { void downloadJson(resolvedDefinitionUrl(id, latest), definitionFilename(id, latest)).catch((e) => console.error(e)) }}
             />
             {present.description && <Section id="description" title="Description"><p className="max-w-2xl text-[15px] leading-7 text-ink-soft">{meta.description}</p></Section>}
             {present.classification && <Section id="classification" title="Classification"><ClassificationBlock meta={meta} /></Section>}
             {present.psychometrics && <Section id="psychometrics" title="Psychometrics"><PsychometricsBlock meta={meta} /></Section>}
             {present.citation && <Section id="citation" title="Authors & citation"><CitationBlock meta={meta} /></Section>}
-            <Section id="items" title="Items"><ItemsBlock model={model} /></Section>
+            <Section id="items" title="Content"><ItemsBlock model={model} /></Section>
             {present.scores && <Section id="scores" title="Scores"><ScoresBlock scores={defQ.data.scores} /></Section>}
             {present.versions && <Section id="versions" title="Versions"><VersionList id={id} versions={versionsQ.data ?? []} current={latest} /></Section>}
           </div>

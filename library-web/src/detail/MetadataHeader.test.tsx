@@ -19,7 +19,21 @@ describe('MetadataHeader', () => {
     )
     expect(screen.getByRole('heading', { name: /PHQ-9/ })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /download json/i })).toBeInTheDocument()
-    expect(screen.getByLabelText(/language/i)).toBeInTheDocument()
+    // language is a dropdown (scales to many languages) listing each available language
+    const select = screen.getByLabelText(/language/i)
+    expect(select).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: 'Portuguese' })).toBeInTheDocument()
+  })
+
+  it('fires onLang with the chosen language when a different option is selected', async () => {
+    const onLang = vi.fn()
+    render(
+      <MemoryRouter>
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" onLang={onLang} onDownload={() => {}} />
+      </MemoryRouter>,
+    )
+    await userEvent.selectOptions(screen.getByLabelText(/language/i), 'pt')
+    expect(onLang).toHaveBeenCalledWith('pt')
   })
 
   it('fires onDownload when the button is clicked', async () => {

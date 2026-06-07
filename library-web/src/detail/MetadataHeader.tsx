@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import type { DefMetadata, VersionInfo } from '../api/types'
-import { Badge } from '../components/Badge'
 import { licenseLabel, languageLabel } from '../lib/labels'
 
 export interface MetadataHeaderProps {
@@ -13,7 +12,7 @@ export interface MetadataHeaderProps {
 }
 
 const selectCls =
-  'cursor-pointer appearance-none rounded-md border border-rule bg-paper-raised px-2.5 py-1 text-sm text-ink shadow-card transition-colors hover:border-ink-faint/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
+  'cursor-pointer rounded-md border border-rule bg-paper-raised px-2.5 py-1 text-sm text-ink shadow-card transition-colors hover:border-ink-faint/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
 
 export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDownload }: MetadataHeaderProps) {
   const navigate = useNavigate()
@@ -30,7 +29,11 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
         <p className="mt-1.5 font-serif text-lg text-ink-faint">{meta.short_title}</p>
       )}
       <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
-        {meta.license && <Badge>{licenseLabel(meta.license)}</Badge>}
+        {meta.license && (
+          <span className="text-sm text-ink-soft">
+            <span className="text-ink-faint">License:</span> {licenseLabel(meta.license)}
+          </span>
+        )}
         {meta.publication?.doi && (
           <a
             className="inline-flex items-center gap-1 font-mono text-[13px] text-accent underline-offset-2 transition-opacity hover:underline"

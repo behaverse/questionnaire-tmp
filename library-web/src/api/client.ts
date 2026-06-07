@@ -43,6 +43,12 @@ export function rawDefinitionUrl(id: string, version: string): string {
   return `${BASE_URL}/v1/questionnaires/${id}/versions/${version}/definition`
 }
 
+// Self-contained export: the definition with referenced entity content (item text, option
+// labels, messages) inlined, so the downloaded file is readable/usable on its own.
+export function resolvedDefinitionUrl(id: string, version: string): string {
+  return `${rawDefinitionUrl(id, version)}?resolved=true`
+}
+
 export const api = {
   listQuestionnaires: (p: QuestionnaireQuery) =>
     get<Paginated<CatalogueCard>>('/v1/questionnaires', p),

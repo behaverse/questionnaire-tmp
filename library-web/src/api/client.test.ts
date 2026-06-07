@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { api, rawDefinitionUrl } from './client'
+import { api, rawDefinitionUrl, resolvedDefinitionUrl } from './client'
 
 beforeEach(() => { vi.restoreAllMocks() })
 
@@ -33,5 +33,11 @@ describe('api client', () => {
 
   it('rawDefinitionUrl points at the unresolved definition', () => {
     expect(rawDefinitionUrl('qst_x', 'v26.0601')).toContain('/v1/questionnaires/qst_x/versions/v26.0601/definition')
+  })
+
+  it('resolvedDefinitionUrl requests the content-inlined (self-contained) definition', () => {
+    const url = resolvedDefinitionUrl('qst_x', 'v26.0601')
+    expect(url).toContain('/v1/questionnaires/qst_x/versions/v26.0601/definition')
+    expect(url).toContain('resolved=true')
   })
 })
