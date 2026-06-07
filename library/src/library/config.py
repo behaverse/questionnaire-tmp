@@ -14,7 +14,7 @@ class Settings:
 
 def get_settings() -> Settings:
     raw = os.environ.get("LIBRARY_CORS_ORIGINS")
-    origins = tuple(o.strip() for o in raw.split(",") if o.strip()) if raw else ("http://localhost:5173",)
+    origins = tuple(o.strip() for o in raw.split(",") if o.strip()) if raw is not None else ("http://localhost:5173",)
     return Settings(
         database_url=os.environ.get("DATABASE_URL", "postgresql://localhost/library"),
         content_dir=Path(os.environ.get("CONTENT_DIR") or REPO_ROOT / "schemas/questionnaire/examples/library_examples"),
