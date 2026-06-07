@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useResolvedDefinition, useVersions } from '../api/queries'
 import { ApiError, rawDefinitionUrl } from '../api/client'
@@ -39,12 +39,26 @@ export function DetailPage() {
   const defQ = useResolvedDefinition(id, latest, true)
   const [lang, setLang] = useState<string | null>(null)
 
+  useEffect(() => { setLang(null) }, [id])
+
   const meta = defQ.data?.metadata
   const effectiveLang = lang ?? meta?.language ?? 'en'
   const model = useMemo(
     () => (defQ.data ? buildRenderModel(defQ.data, effectiveLang) : null),
     [defQ.data, effectiveLang],
   )
+
+  const scores = defQ.data?.scores
+  const present = {
+    description: !!meta?.description,
+    classification: !!meta?.classification,
+    psychometrics: !!meta?.psychometrics,
+    citation: !!(meta?.authors || meta?.publication),
+    items: true,
+    scores: !!(scores && scores.length),
+    versions: (versionsQ.data ?? []).length > 0,
+  }
+  const navItems = SECTIONS.filter((s) => present[s.id as keyof typeof present])
 
   if (defQ.error instanceof ApiError && defQ.error.status === 404) return <NotFoundPage />
   if (defQ.error instanceof ApiError && defQ.error.status === 410) {
@@ -75,15 +89,15 @@ export function DetailPage() {
               onLang={setLang}
               onDownload={() => { void downloadJson(rawDefinitionUrl(id, latest), definitionFilename(id, latest)).catch((e) => console.error(e)) }}
             />
-            {meta.description && <Section id="description" title="Description"><p className="text-slate-700">{meta.description}</p></Section>}
-            <Section id="classification" title="Classification"><ClassificationBlock meta={meta} /></Section>
-            <Section id="psychometrics" title="Psychometrics"><PsychometricsBlock meta={meta} /></Section>
-            <Section id="citation" title="Authors & citation"><CitationBlock meta={meta} /></Section>
+            {present.description && <Section id="description" title="Description"><p className="text-slate-700">{meta.description}</p></Section>}
+            {present.classification && <Section id="classification" title="Classification"><ClassificationBlock meta={meta} /></Section>}
+            {present.psychometrics && <Section id="psychometrics" title="Psychometrics"><PsychometricsBlock meta={meta} /></Section>}
+            {present.citation && <Section id="citation" title="Authors & citation"><CitationBlock meta={meta} /></Section>}
             <Section id="items" title="Items"><ItemsBlock model={model} /></Section>
-            <Section id="scores" title="Scores"><ScoresBlock scores={defQ.data.scores} /></Section>
-            <Section id="versions" title="Versions"><VersionList id={id} versions={versionsQ.data ?? []} current={latest} /></Section>
+            {present.scores && <Section id="scores" title="Scores"><ScoresBlock scores={defQ.data.scores} /></Section>}
+            {present.versions && <Section id="versions" title="Versions"><VersionList id={id} versions={versionsQ.data ?? []} current={latest} /></Section>}
           </div>
-          <SectionNav items={SECTIONS} />
+          <SectionNav items={navItems} />
         </div>
       )}
     </main>
