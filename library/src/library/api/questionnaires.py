@@ -50,7 +50,7 @@ def get_version(qid: str, version: str, conn=Depends(get_conn)):
     return EntitySummary(**row)
 
 @router.get("/questionnaires/{qid}/versions/{version}/definition")
-def definition(qid: str, version: str, conn=Depends(get_conn)):
+def definition(qid: str, version: str, resolved: bool = False, conn=Depends(get_conn)):
     row = conn.execute(
         "SELECT status, content_json, withdrawn_at FROM entity WHERE id=%s AND version=%s",
         (qid, version)).fetchone()
@@ -61,4 +61,7 @@ def definition(qid: str, version: str, conn=Depends(get_conn)):
         return JSONResponse(status_code=410, content={
             "error": {"code": "gone", "message": "withdrawn",
                       "withdrawn_at": withdrawn_at.isoformat() if withdrawn_at else None}})
+    if resolved:
+        from .resolve import resolve_definition
+        return resolve_definition(conn, content_json)
     return content_json
