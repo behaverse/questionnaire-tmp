@@ -4,7 +4,8 @@ from ..models import PaginatedCards, CatalogueCard
 from ..entity_types import ENTITY_TYPES
 from ..query import _CARD_COLS
 
-_VALID_FACET_TYPES = {"domain", "population", "administration_mode", "tag"}
+_TABLE_FACETS = {"domain", "population", "administration_mode", "tag"}
+_COLUMN_FACETS = {"language": "language", "license": "effective_license"}
 
 router = APIRouter()
 
@@ -34,9 +35,17 @@ def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offs
 
 @router.get("/facets")
 def facets(facet_type: str, conn=Depends(get_conn)):
-    if facet_type not in _VALID_FACET_TYPES:
-        raise HTTPException(status_code=422, detail=f"unknown facet_type: {facet_type!r}; must be one of {sorted(_VALID_FACET_TYPES)}")
-    rows = conn.execute(
-        "SELECT value, count(*) FROM facet WHERE facet_type=%s GROUP BY value ORDER BY count(*) DESC",
-        (facet_type,)).fetchall()
+    if facet_type in _TABLE_FACETS:
+        rows = conn.execute(
+            "SELECT value, count(*) FROM facet WHERE facet_type=%s GROUP BY value ORDER BY count(*) DESC",
+            (facet_type,)).fetchall()
+    elif facet_type in _COLUMN_FACETS:
+        col = _COLUMN_FACETS[facet_type]   # fixed allow-list value, not user input -> safe to interpolate
+        rows = conn.execute(
+            f"SELECT {col}, count(*) FROM catalogue_entry "
+            f"WHERE status='published' AND {col} IS NOT NULL GROUP BY {col} ORDER BY count(*) DESC"
+        ).fetchall()
+    else:
+        allowed = sorted(_TABLE_FACETS | set(_COLUMN_FACETS))
+        raise HTTPException(status_code=422, detail=f"unknown facet_type: {facet_type!r}; must be one of {allowed}")
     return {"facet_type": facet_type, "values": [{"value": v, "count": c} for v, c in rows]}
