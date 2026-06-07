@@ -12,30 +12,43 @@ export interface MetadataHeaderProps {
   onDownload: () => void
 }
 
+const selectCls =
+  'cursor-pointer appearance-none rounded-md border border-rule bg-paper-raised px-2.5 py-1 text-sm text-ink shadow-card transition-colors hover:border-ink-faint/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
+
 export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDownload }: MetadataHeaderProps) {
   const navigate = useNavigate()
   const langs = meta.available_languages ?? (meta.language ? [meta.language] : [])
   return (
-    <header className="border-b border-slate-200 pb-6">
-      <h1 className="text-2xl font-semibold text-slate-900">{meta.title}</h1>
-      {meta.short_title && meta.short_title !== meta.title && (
-        <p className="mt-0.5 text-slate-500">{meta.short_title}</p>
+    <header className="border-b border-rule pb-7">
+      {meta.id && (
+        <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">{meta.id}</p>
       )}
-      <div className="mt-3 flex flex-wrap items-center gap-2">
+      <h1 className="font-serif text-[32px] font-semibold leading-[1.12] tracking-tightish text-ink sm:text-[38px]">
+        {meta.title}
+      </h1>
+      {meta.short_title && meta.short_title !== meta.title && (
+        <p className="mt-1.5 font-serif text-lg text-ink-faint">{meta.short_title}</p>
+      )}
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
         {meta.license && <Badge>{licenseLabel(meta.license)}</Badge>}
         {meta.publication?.doi && (
-          <a className="text-sm text-accent hover:underline" href={`https://doi.org/${meta.publication.doi}`} target="_blank" rel="noreferrer">
+          <a
+            className="inline-flex items-center gap-1 font-mono text-[13px] text-accent underline-offset-2 transition-opacity hover:underline"
+            href={`https://doi.org/${meta.publication.doi}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             doi:{meta.publication.doi}
           </a>
         )}
       </div>
-      <div className="mt-4 flex flex-wrap items-center gap-3">
+      <div className="mt-6 flex flex-wrap items-center gap-3">
         {allVersions.length > 0 && (
-          <label className="text-sm text-slate-600">
-            Version{' '}
+          <label className="inline-flex items-center gap-1.5 text-sm text-ink-soft">
+            <span className="text-[11px] font-medium uppercase tracking-[0.1em] text-ink-faint">Version</span>
             <select
               aria-label="Version"
-              className="rounded border border-slate-300 px-2 py-1 text-sm"
+              className={selectCls}
               value={version}
               onChange={(e) => { if (e.target.value !== version) navigate(`/q/${meta.id}/${e.target.value}`) }}
             >
@@ -44,11 +57,11 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
           </label>
         )}
         {langs.length > 1 && (
-          <label className="text-sm text-slate-600">
-            Language{' '}
+          <label className="inline-flex items-center gap-1.5 text-sm text-ink-soft">
+            <span className="text-[11px] font-medium uppercase tracking-[0.1em] text-ink-faint">Language</span>
             <select
               aria-label="Language"
-              className="rounded border border-slate-300 px-2 py-1 text-sm"
+              className={selectCls}
               value={lang}
               onChange={(e) => onLang(e.target.value)}
             >
@@ -56,7 +69,13 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
             </select>
           </label>
         )}
-        <button className="rounded bg-accent px-3 py-1.5 text-sm font-medium text-white hover:opacity-90" onClick={onDownload}>
+        <button
+          className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent"
+          onClick={onDownload}
+        >
+          <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
+            <path d="M8 2v8m0 0L5 7m3 3 3-3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
           Download JSON
         </button>
       </div>

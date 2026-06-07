@@ -6,10 +6,13 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
   render() {
     if (this.state.error) {
       return (
-        <div className="mx-auto max-w-2xl p-10 text-center">
-          <h1 className="text-xl font-semibold text-slate-900">Something went wrong</h1>
-          <p className="mt-2 text-slate-600">{this.state.error.message}</p>
-          <button className="mt-4 rounded bg-accent px-4 py-2 text-white" onClick={() => location.reload()}>
+        <div className="mx-auto max-w-2xl px-6 py-20 text-center">
+          <h1 className="font-serif text-2xl font-semibold text-ink">Something went wrong</h1>
+          <p className="mt-2.5 text-ink-soft">{this.state.error.message}</p>
+          <button
+            className="mt-5 inline-flex items-center rounded-lg bg-ink px-4 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent"
+            onClick={() => location.reload()}
+          >
             Reload
           </button>
         </div>

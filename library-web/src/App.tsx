@@ -9,7 +9,7 @@ import { NotFoundPage } from './routes/NotFoundPage'
 export default function App() {
   const location = useLocation()
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50">
+    <div className="flex min-h-screen flex-col bg-paper text-ink">
       <Header />
       <div className="flex-1">
         <ErrorBoundary key={location.pathname}>

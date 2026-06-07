@@ -25,8 +25,11 @@ const SECTIONS = [
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-6 border-t border-slate-200 pt-6">
-      <h2 className="mb-3 text-lg font-semibold text-slate-800">{title}</h2>
+    <section id={id} className="scroll-mt-24 border-t border-rule pt-7">
+      <h2 className="mb-4 flex items-baseline gap-2.5 font-sans text-[13px] font-semibold uppercase tracking-[0.13em] text-ink-faint">
+        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent/70" />
+        {title}
+      </h2>
       {children}
     </section>
   )
@@ -63,24 +66,27 @@ export function DetailPage() {
   if (defQ.error instanceof ApiError && defQ.error.status === 404) return <NotFoundPage />
   if (defQ.error instanceof ApiError && defQ.error.status === 410) {
     return (
-      <main className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <h1 className="text-2xl font-semibold text-slate-900">Withdrawn</h1>
-        <p className="mt-2 text-slate-600">This questionnaire version has been removed from the library; its definition is no longer available.</p>
+      <main className="mx-auto max-w-2xl px-6 py-24 text-center">
+        <span aria-hidden className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-amber-800 ring-1 ring-inset ring-amber-200">
+          Removed entry
+        </span>
+        <h1 className="mt-5 font-serif text-3xl font-semibold text-ink">Withdrawn</h1>
+        <p className="mt-3 leading-relaxed text-ink-soft">This questionnaire version has been removed from the library; its definition is no longer available.</p>
       </main>
     )
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-8">
+    <main className="mx-auto max-w-6xl px-6 py-10">
       {(versionsQ.isLoading || defQ.isLoading) && (
-        <div className="space-y-4"><Skeleton className="h-10 w-1/2" /><Skeleton className="h-40 w-full" /></div>
+        <div className="space-y-4"><Skeleton className="h-12 w-1/2" /><Skeleton className="h-44 w-full" /></div>
       )}
       {defQ.isError && !(defQ.error instanceof ApiError) && (
         <ErrorState message="Could not load this questionnaire." onRetry={() => defQ.refetch()} />
       )}
       {defQ.isSuccess && meta && model && latest && (
-        <div className="flex gap-10">
-          <div className="min-w-0 flex-1 space-y-8">
+        <div className="flex gap-12">
+          <div className="min-w-0 flex-1 space-y-9">
             <MetadataHeader
               meta={meta}
               version={latest}
@@ -89,7 +95,7 @@ export function DetailPage() {
               onLang={setLang}
               onDownload={() => { void downloadJson(rawDefinitionUrl(id, latest), definitionFilename(id, latest)).catch((e) => console.error(e)) }}
             />
-            {present.description && <Section id="description" title="Description"><p className="text-slate-700">{meta.description}</p></Section>}
+            {present.description && <Section id="description" title="Description"><p className="max-w-2xl text-[15px] leading-7 text-ink-soft">{meta.description}</p></Section>}
             {present.classification && <Section id="classification" title="Classification"><ClassificationBlock meta={meta} /></Section>}
             {present.psychometrics && <Section id="psychometrics" title="Psychometrics"><PsychometricsBlock meta={meta} /></Section>}
             {present.citation && <Section id="citation" title="Authors & citation"><CitationBlock meta={meta} /></Section>}

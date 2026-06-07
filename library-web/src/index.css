@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: theme('fontFamily.sans');
+    color: theme('colors.ink.DEFAULT');
+    /* Faint warm paper tint with an almost-imperceptible vertical gradient. */
+    background-color: theme('colors.paper.DEFAULT');
+    font-feature-settings: 'cv05' 1, 'ss01' 1;
+  }
+
+  /* Serif display for the main headings — characterful, scholarly. */
+  h1,
+  h2,
+  h3 {
+    font-family: theme('fontFamily.serif');
+    font-optical-sizing: auto;
+    letter-spacing: theme('letterSpacing.tightish');
+  }
+
+  ::selection {
+    background-color: rgba(58, 76, 181, 0.16);
+    color: theme('colors.ink.DEFAULT');
+  }
+
+  /* A single, consistent focus ring across every interactive element. */
+  :where(a, button, input, select, [tabindex]):focus-visible {
+    outline: 2px solid theme('colors.accent.DEFAULT');
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  /* Hairline rule used between catalogue rows and detail sections. */
+  .rule-hairline {
+    border-color: theme('colors.rule.DEFAULT');
+  }
+}

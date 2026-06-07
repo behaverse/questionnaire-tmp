@@ -13,13 +13,24 @@ export function SearchBar({ value, onChange }: { value: string; onChange: (v: st
   }, [text, value])
 
   return (
-    <input
-      type="search"
-      aria-label="Search questionnaires"
-      placeholder="Search questionnaires…"
-      className="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-      value={text}
-      onChange={(e) => setText(e.target.value)}
-    />
+    <div className="group relative">
+      <svg
+        aria-hidden
+        viewBox="0 0 20 20"
+        fill="none"
+        className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-ink-faint transition-colors group-focus-within:text-accent"
+      >
+        <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" strokeWidth="1.6" />
+        <path d="m13 13 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      </svg>
+      <input
+        type="search"
+        aria-label="Search questionnaires"
+        placeholder="Search questionnaires…"
+        className="w-full rounded-lg border border-rule bg-paper-raised py-2.5 pl-10 pr-4 text-sm text-ink shadow-card transition-colors placeholder:text-ink-faint hover:border-ink-faint/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+    </div>
   )
 }
