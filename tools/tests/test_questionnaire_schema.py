@@ -1,4 +1,4 @@
-"""Tests for schemas/questionnaire/schema.json (v26.0601 per OD-15).
+"""Tests for schemas/questionnaire/schema.json (v26.0609 per OD-15).
 
 The new entity model: 11 reusable entities in two categories (content-bearing
 and ref-binding). Page elements use a four-branch oneOf. Content lives in a
@@ -1325,3 +1325,22 @@ def test_root_scoring_block_dissolved(schema, registry):
     instance["scoring"] = [{"id": "scd_x", "formula": "..."}]
     errors = validate_instance(schema, instance, registry=registry)
     assert any("additional" in e.lower() or "scoring" in e for e in errors)
+
+
+# ---------- v26.0609 breaking rename: authors → author ----------
+
+def test_authors_plural_rejected_at_v26_0609(schema, registry):
+    """The instrument schema renamed 'authors' (plural) to 'author' (singular) in v26.0609.
+    A questionnaire whose metadata uses the old 'authors' key must fail validation because
+    the instrument schema's root uses additionalProperties:false.
+    """
+    instance = {
+        "metadata": {
+            **base_metadata(),
+            "instrument_id": "inst_test",
+            "authors": [{"name": "X"}],  # OLD plural key — must be rejected
+        },
+        "pages": [{"id": "page_only", "elements": [minimal_message_ref()]}],
+    }
+    errors = validate_instance(schema, instance, registry=registry)
+    assert len(errors) >= 1
