@@ -4,3 +4,8 @@ __pycache__/
 .venv/
 *.egg-info/
 content/
+
+# generated schema README artifacts (built from README.md)
+schemas/*/README.html
+schemas/*/README_files/
+schemas/*/versions/*/README_files/
