@@ -1,0 +1,9 @@
+{
+  "id": "help_orcid_format",
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "**ORCID** is a 16-digit identifier in the form `0000-0000-0000-0000`. Find or register yours at [orcid.org](https://orcid.org)."
+    }
+  }
+}

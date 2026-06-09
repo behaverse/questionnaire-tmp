@@ -1,0 +1,9 @@
+{
+  "id": "ctx_physical_activity_definition",
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "When we ask about 'physical activity' in the next questions, we mean any movement that increases your heart rate beyond resting."
+    }
+  }
+}

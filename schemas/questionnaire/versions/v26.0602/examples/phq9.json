@@ -5,12 +5,10 @@
     "title": "Patient Health Questionnaire-9",
     "short_title": "PHQ-9",
     "description": "Self-report measure of depression severity over the past 2 weeks.",
-    "version": "v26.0609",
+    "version": "v26.0602",
     "language": "en",
     "available_languages": ["en", "pt"],
-    "instrument_id": "inst_phq9",
-    "variant": "base",
-    "author": [
+    "authors": [
       { "name": "Robert L. Spitzer" },
       { "name": "Janet B. W. Williams" },
       { "name": "Kurt Kroenke" }

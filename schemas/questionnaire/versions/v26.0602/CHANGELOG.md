@@ -2,15 +2,6 @@
 
 This schema uses Calendar Versioning (`vYY.MMDD`) per the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning).
 
-## [v26.0609] — 2026-06-09
-
-### Changed (severity: breaking)
-
-- **Retargeted the embedded Instrument Metadata `$ref`** from `instrument/v26.0528` to `instrument/v26.0609`. This adopts the optional `instrument_id` + `variant` fields AND the `authors`→`author` rename that Schema 1 made at v26.0605. Questionnaire instances must now use `author` (singular); imported `survey_db` content emits no author field and is unaffected.
-- Property URIs otherwise stable.
-
-**Severity:** `breaking` (the `authors`→`author` rename propagates to Schema 2).
-
 ## [v26.0602] — 2026-06-02
 
 ### Changed (severity: breaking — per OD-16 resolved 2026-06-02)

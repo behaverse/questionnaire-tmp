@@ -1,0 +1,90 @@
+{
+  "id": "scr_phq9",
+  "name": "PHQ-9 Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "PHQ-9 Standard Scoring",
+      "description": "Implements the standard PHQ-9 scoring per Kroenke, Spitzer & Williams (2001). Total = sum of nine items (0-3 each); severity bands at 0-4 (Minimal), 5-9 (Mild), 10-14 (Moderate), 15-19 (Moderately Severe), 20-27 (Severe)."
+    }
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^pr_phq9_[1-9]$": { "type": "integer", "minimum": 0, "maximum": 3 }
+        }
+      }
+    },
+    "required": ["scored_responses"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "total":         { "type": "integer", "minimum": 0, "maximum": 27 },
+      "severity":      { "type": "string", "enum": ["minimal","mild","moderate","mod_severe","severe"] },
+      "band": {
+        "type": "object",
+        "properties": {
+          "min":   { "type": "integer" },
+          "max":   { "type": "integer" },
+          "label": { "type": "string" }
+        },
+        "required": ["min", "max", "label"]
+      },
+      "missing_count": { "type": "integer", "minimum": 0, "maximum": 9 }
+    },
+    "required": ["total", "severity", "band", "missing_count"]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/phq9/v26.0602/scorer.wasm",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "kind": "http",
+      "url": "https://scorer.behaverse.org/phq9/v26.0602"
+    },
+    {
+      "kind": "python",
+      "package": "behaverse-scorer-phq9==26.0602"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "moderate-no-missing",
+      "input": {
+        "scored_responses": {
+          "pr_phq9_1": 1, "pr_phq9_2": 2, "pr_phq9_3": 1,
+          "pr_phq9_4": 2, "pr_phq9_5": 1, "pr_phq9_6": 1,
+          "pr_phq9_7": 2, "pr_phq9_8": 1, "pr_phq9_9": 1
+        }
+      },
+      "expected": {
+        "total":         12,
+        "severity":      "moderate",
+        "band":          { "min": 10, "max": 14, "label": "Moderate Depression" },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "minimal-floor",
+      "input": {
+        "scored_responses": {
+          "pr_phq9_1": 0, "pr_phq9_2": 0, "pr_phq9_3": 0,
+          "pr_phq9_4": 0, "pr_phq9_5": 0, "pr_phq9_6": 0,
+          "pr_phq9_7": 0, "pr_phq9_8": 0, "pr_phq9_9": 0
+        }
+      },
+      "expected": {
+        "total":         0,
+        "severity":      "minimal",
+        "band":          { "min": 0, "max": 4, "label": "Minimal Depression" },
+        "missing_count": 0
+      }
+    }
+  ]
+}

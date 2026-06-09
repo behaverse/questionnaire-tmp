@@ -1,0 +1,11 @@
+{
+  "id": "pr_phq9_1",
+  "name": "interest_pleasure",
+  "construct": "depression",
+  "dimension": "frequency",
+  "reversed": false,
+  "subscales": ["scl_phq9_total"],
+  "content": {
+    "en": { "status": "validated", "text": "Little interest or pleasure in doing things." }
+  }
+}

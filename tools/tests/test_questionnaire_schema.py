@@ -44,8 +44,8 @@ def minimal_message_ref() -> dict:
 
 # ---------- top-level smoke ----------
 
-def test_schema_id_is_v26_0602(schema):
-    assert schema["$id"].endswith("/questionnaire/v26.0602/schema.json")
+def test_schema_id_is_v26_0609(schema):
+    assert schema["$id"].endswith("/questionnaire/v26.0609/schema.json")
 
 
 def test_minimal_questionnaire_validates(schema, registry):

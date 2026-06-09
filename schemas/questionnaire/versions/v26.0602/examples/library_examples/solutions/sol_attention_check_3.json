@@ -1,0 +1,12 @@
+{
+  "id": "sol_attention_check_3",
+  "prompt": { "ref": "pr_attention_check_3@v26.0601" },
+  "option": { "ref": "opt_agreement_7@v26.0601" },
+  "expected_response": 4,
+  "content": {
+    "en": {
+      "status": "validated",
+      "description": "Attention check: 'Please select 4 (the middle option)'. Failed responses flag the session for review."
+    }
+  }
+}

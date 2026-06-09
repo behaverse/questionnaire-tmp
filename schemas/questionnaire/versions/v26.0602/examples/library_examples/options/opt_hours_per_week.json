@@ -1,0 +1,13 @@
+{
+  "id": "opt_hours_per_week",
+  "dimension": "duration",
+  "input_data_type": "number",
+  "measurement_type": "ratio",
+  "min": 0,
+  "max": 168,
+  "step": 1,
+  "placeholder": { "ref": "ph_hours_per_week@v26.0601" },
+  "content": {
+    "en": { "status": "validated", "label": "Hours per week (0–168)", "units": "h/week" }
+  }
+}

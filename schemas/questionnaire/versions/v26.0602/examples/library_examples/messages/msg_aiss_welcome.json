@@ -1,0 +1,14 @@
+{
+  "id": "msg_aiss_welcome",
+  "type": ["welcome", "purpose"],
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please answer how much each statement applies to you. There are no right or wrong answers."
+    },
+    "pt": {
+      "status": "validated",
+      "text": "Por favor, indique o quanto cada afirmação se aplica a si. Não há respostas certas ou erradas."
+    }
+  }
+}

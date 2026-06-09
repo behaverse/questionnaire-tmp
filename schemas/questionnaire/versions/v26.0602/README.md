@@ -2,25 +2,24 @@
 
 Schema 2 of the questionnaire-apps ecosystem. Structural specification of a questionnaire — pages, blocks, sections, items (Question + Option), logic, and named score declarations referencing external Scorer entities.
 
-**Current version:** v26.0609 (retargets instrument/v26.0609; `instrument_id`/`variant` + `author` rename)
+**Current version:** v26.0602 (per OD-16, resolved 2026-06-02)
 **Spec:** [docs/superpowers/specs/2026-06-02-schema-2-v26.0602-design.md](../../docs/superpowers/specs/2026-06-02-schema-2-v26.0602-design.md)
 **Authoritative entity model:** [design/05a_reusable_entities.md](../../design/05a_reusable_entities.md) (OD-15)
 **Authoritative scoring model:** [design/05b_scoring.md](../../design/05b_scoring.md) (OD-16)
-**Embeds:** [Schema 1 — Instrument Metadata v26.0609](../instrument/) at `metadata`
+**Embeds:** [Schema 1 — Instrument Metadata v26.0528](../instrument/) at `metadata`
 
 ## Files
 
 | File | Purpose |
 |---|---|
-| `schema.json` | Current JSON Schema (Draft 2020-12) at v26.0609 |
+| `schema.json` | Current JSON Schema (Draft 2020-12) at v26.0602 |
 | `context.jsonld` | JSON-LD context (Scorer vocab; `content` uses `@container: @language`) |
 | `examples/minimal.json` | Smallest valid questionnaire |
 | `examples/phq9.json` | Realistic PHQ-9 with matrix Section + `scores[]` referencing `scr_phq9` |
-| `examples/kitchensink.json` | Exercises every v26.0609 $def including nested JSON Pointer paths |
+| `examples/kitchensink.json` | Exercises every v26.0602 $def including nested JSON Pointer paths |
 | `examples/library_examples/` | Per-entity Library examples (17 files across 13 entity types) |
 | `versions/v26.0528/` | Archived v26.0528 schema, context, and examples |
 | `versions/v26.0601/` | Archived v26.0601 schema, context, examples, CHANGELOG, README |
-| `versions/v26.0602/` | Archived v26.0602 schema, context, examples, CHANGELOG, README |
 | `CHANGELOG.md` | Version history |
 
 ## Eleven content-bearing + procedural entities
@@ -65,6 +64,6 @@ The validator walks every example under `examples/` and `examples/library_exampl
 ## See also
 
 - [VERSIONING.md](../VERSIONING.md) — CalVer policy
-- [schemas/instrument/](../instrument/) — Schema 1 (now at v26.0609)
+- [schemas/instrument/](../instrument/) — Schema 1 (unchanged at v26.0528)
 - [design/05a_reusable_entities.md](../../design/05a_reusable_entities.md) — authoritative entity model
 - [design/05b_scoring.md](../../design/05b_scoring.md) — authoritative scoring model

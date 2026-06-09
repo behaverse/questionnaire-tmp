@@ -1,0 +1,12 @@
+{
+  "id": "scl_phq9_total",
+  "name": "PHQ-9 Total",
+  "description": "Items 1-9 of the Patient Health Questionnaire-9; conceptually one composite scale measuring depression severity.",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "PHQ-9 Total",
+      "description": "Sum of nine items measuring depressive symptom severity over the past two weeks."
+    }
+  }
+}
