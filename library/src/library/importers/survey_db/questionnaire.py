@@ -1,6 +1,6 @@
 import re
 from .ids import canonical_id, LANGS_FULL
-from .mappers import _split
+from .mappers import _split, _sanitize_identifier
 from .provenance import build_provenance
 
 def _ref(entity_type, legacy_id, version):
@@ -173,6 +173,11 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
     validated = _split(s.get("validated_languages"))
     if validated:
         meta["x_validated_languages"] = validated
+
+    hid = (header or {}).get("header_id")
+    if hid:
+        meta["instrument_id"] = "inst_" + _sanitize_identifier(hid)   # 'asrs' -> 'inst_asrs'
+    meta["variant"] = "base"   # legacy data has no per-form labels (OD-21); real labels via hand-authoring
 
     # provenance: use the instrument schema's allowed fields only
     # (additionalProperties: false — our custom fields go into the importer's x_ extension)

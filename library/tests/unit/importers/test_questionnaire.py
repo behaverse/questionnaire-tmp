@@ -78,3 +78,18 @@ def test_build_provenance_fields():
     allowed = {"source", "source_version", "imported_at", "imported_by",
                "import_loss_report_url", "importer_version"}
     assert set(p.keys()) <= allowed
+
+
+def test_reconstruct_emits_instrument_id_and_variant():
+    # the header element's header_id ('aiss') becomes the family key; variant defaults to 'base'
+    q = reconstruct("x_aiss", COMPS, SURVEY, release="v26.0606", imported_at="2026-06-06T00:00:00Z",
+                    prompt_langs={"aiss_q_1": {"en"}})
+    assert q["metadata"]["instrument_id"] == "inst_aiss"
+    assert q["metadata"]["variant"] == "base"
+
+def test_reconstruct_no_header_id_means_no_instrument_id():
+    comps = [c for c in COMPS if c["element_type"] != "header"]  # drop the header row
+    q = reconstruct("x_aiss", comps, {"survey_id": "aiss", "title": "AISS", "description": "d", "license": None},
+                    release="v26.0606", imported_at="2026-06-06T00:00:00Z", prompt_langs={"aiss_q_1": {"en"}})
+    assert "instrument_id" not in q["metadata"]
+    assert q["metadata"]["variant"] == "base"
