@@ -2,7 +2,7 @@
 
 Schema 1 of the questionnaire-apps ecosystem. Bibliographic and psychometric properties for any instrument — questionnaires, cognitive tasks, behavioural paradigms.
 
-**Current version:** v26.0609
+**Current version:** v26.0605
 **Spec:** [docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md](../../docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md) §2
 
 ## Files
