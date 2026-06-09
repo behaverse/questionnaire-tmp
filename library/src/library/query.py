@@ -93,12 +93,10 @@ def _card_select(extra_where: str) -> str:
         f"WHERE {extra_where}"
     )
 
-def list_cards(conn: psycopg.Connection, entity_type: str, *, q: str | None,
-               limit: int, offset: int,
-               domain: str | None = None, population: str | None = None,
-               language: str | None = None, license: str | None = None,
-               min_items: int | None = None, max_items: int | None = None,
-               sort: str | None = None) -> tuple[list[dict], int]:
+def _card_where_sort(entity_type, *, q, domain, population, language, license,
+                     min_items, max_items, instrument, sort):
+    """Build the WHERE clause + params + ORDER BY for an enriched catalogue-card query.
+    Shared by list_cards (flat, paginated) and _all_matching_cards (all rows, grouped)."""
     where = ["c.entity_type=%s", "c.status='published'"]
     params: list = [entity_type]
     if q:
@@ -110,12 +108,14 @@ def list_cards(conn: psycopg.Connection, entity_type: str, *, q: str | None,
         where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version "
                      "AND f.facet_type='population' AND f.value=%s)"); params.append(population)
     if language is not None:
-        # match any questionnaire AVAILABLE in this language (not just its primary language);
-        # fall back to the primary language column when available_languages is unset.
+        # match any questionnaire AVAILABLE in this language (not just its primary), with
+        # a fallback to the primary-language column when available_languages is unset.
         where.append("(c.available_languages @> ARRAY[%s] OR c.language = %s)")
         params.append(language); params.append(language)
     if license is not None:
         where.append("c.effective_license=%s"); params.append(license)
+    if instrument is not None:
+        where.append("c.instrument_id=%s"); params.append(instrument)
     if min_items is not None:
         where.append("c.item_count >= %s"); params.append(min_items)
     if max_items is not None:
@@ -128,6 +128,17 @@ def list_cards(conn: psycopg.Connection, entity_type: str, *, q: str | None,
         order_by = "c.version DESC NULLS LAST"; order_params = []
     else:
         order_by = "c.title NULLS LAST"; order_params = []
+    return sql_where, params, order_by, order_params
+
+def list_cards(conn: psycopg.Connection, entity_type: str, *, q: str | None,
+               limit: int, offset: int,
+               domain: str | None = None, population: str | None = None,
+               language: str | None = None, license: str | None = None,
+               min_items: int | None = None, max_items: int | None = None,
+               sort: str | None = None) -> tuple[list[dict], int]:
+    sql_where, params, order_by, order_params = _card_where_sort(
+        entity_type, q=q, domain=domain, population=population, language=language,
+        license=license, min_items=min_items, max_items=max_items, instrument=None, sort=sort)
     total = conn.execute(
         f"{latest_versions_cte()} SELECT count(*) FROM catalogue_entry c "
         f"JOIN latest l ON c.id=l.id AND c.version=l.version WHERE {sql_where}", params).fetchone()[0]
@@ -159,35 +170,9 @@ def _all_matching_cards(conn: psycopg.Connection, *, q, domain, population, lang
                         instrument, min_items, max_items, sort) -> list[dict]:
     """Every latest-published questionnaire card matching the filters (no pagination), with
     instrument_id/variant included — grouping is done in Python (catalogue-scale data)."""
-    where = ["c.entity_type=%s", "c.status='published'"]
-    params: list = ["questionnaire"]
-    if q:
-        where.append("c.search_tsv @@ websearch_to_tsquery('english', %s)"); params.append(q)
-    if domain is not None:
-        where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version "
-                     "AND f.facet_type='domain' AND f.value=%s)"); params.append(domain)
-    if population is not None:
-        where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version "
-                     "AND f.facet_type='population' AND f.value=%s)"); params.append(population)
-    if language is not None:
-        where.append("(c.available_languages @> ARRAY[%s] OR c.language = %s)")
-        params.append(language); params.append(language)
-    if license is not None:
-        where.append("c.effective_license=%s"); params.append(license)
-    if instrument is not None:
-        where.append("c.instrument_id=%s"); params.append(instrument)
-    if min_items is not None:
-        where.append("c.item_count >= %s"); params.append(min_items)
-    if max_items is not None:
-        where.append("c.item_count <= %s"); params.append(max_items)
-    sql_where = " AND ".join(where)
-    effective_sort = sort or ("relevance" if q else "title")
-    if effective_sort == "relevance" and q:
-        order_by = "ts_rank(c.search_tsv, websearch_to_tsquery('english', %s)) DESC"; order_params: list = [q]
-    elif effective_sort == "recency":
-        order_by = "c.version DESC NULLS LAST"; order_params = []
-    else:
-        order_by = "c.title NULLS LAST"; order_params = []
+    sql_where, params, order_by, order_params = _card_where_sort(
+        "questionnaire", q=q, domain=domain, population=population, language=language,
+        license=license, min_items=min_items, max_items=max_items, instrument=instrument, sort=sort)
     rows = conn.execute(f"{_card_select(sql_where)} ORDER BY {order_by}", params + order_params).fetchall()
     return [dict(zip(_CARD_COLS, r)) for r in rows]
 
