@@ -53,7 +53,7 @@ export function DetailPage() {
 
   const scores = defQ.data?.scores
   const present = {
-    description: !!meta?.description,
+    description: !!meta?.description && meta.description !== meta.title,
     classification: !!meta?.classification,
     psychometrics: !!meta?.psychometrics,
     citation: !!(meta?.authors || meta?.publication),

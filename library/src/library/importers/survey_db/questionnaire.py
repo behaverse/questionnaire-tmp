@@ -109,10 +109,13 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
     # description is required by instrument schema; synthesize if missing
     desc = s.get("description")
     if not desc:
-        desc = f"Imported from survey_db: {s.get('title') or qid}"
+        # No source description: the instrument schema requires one, so fall back to the
+        # title. The web UI suppresses a description that merely repeats the title, so these
+        # render as title-only (no meaningless synthetic prose).
+        desc = s.get("title") or qid
         if loss:
             loss.add("warning", f"surveys.{s.get('survey_id') or qid}.description",
-                     f"NULL description -> synthesized: {desc!r}")
+                     f"NULL description -> using title as description: {desc!r}")
     meta["description"] = desc
 
     raw_license = s.get("license")

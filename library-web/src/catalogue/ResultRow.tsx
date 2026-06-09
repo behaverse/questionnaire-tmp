@@ -38,7 +38,7 @@ export function ResultRow({ card }: { card: CatalogueCard }) {
         )}
       </Link>
       <p className="mt-1 font-mono text-xs text-ink-faint">{card.id}</p>
-      {card.description && (
+      {card.description && card.description !== card.title && (
         <p className="mt-1.5 line-clamp-2 max-w-2xl text-sm leading-relaxed text-ink-soft">{card.description}</p>
       )}
       <dl className="mt-3 space-y-1 text-sm">
