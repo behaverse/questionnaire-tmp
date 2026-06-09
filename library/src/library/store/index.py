@@ -17,13 +17,14 @@ def rebuild_index_for(conn: psycopg.Connection, art: Artifact, effective_license
     desc = m.get("description", "")
     conn.execute(
         "INSERT INTO catalogue_entry (id, version, entity_type, status, title, short_title, description, "
-        "language, available_languages, item_count, estimated_minutes, effective_license, search_tsv) "
-        "VALUES (%s,%s,%s,'published',%s,%s,%s,%s,%s,%s,%s,%s, "
+        "language, available_languages, item_count, estimated_minutes, effective_license, instrument_id, search_tsv) "
+        "VALUES (%s,%s,%s,'published',%s,%s,%s,%s,%s,%s,%s,%s,%s, "
         "setweight(to_tsvector('english', coalesce(%s,'')), 'A') || "
         "setweight(to_tsvector('english', coalesce(%s,'')), 'C'))",
         (art.id, art.version, art.entity_type, title, m.get("short_title"), desc,
          m.get("language"), m.get("available_languages"),
          psy.get("item_count"), psy.get("estimated_minutes"), effective_license,
+         m.get("instrument_id"),
          title, desc),
     )
 

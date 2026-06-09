@@ -30,11 +30,13 @@ CREATE TABLE IF NOT EXISTS catalogue_entry (
   title text, short_title text, description text,
   language text, available_languages text[],
   item_count int, estimated_minutes int, effective_license text,
+  instrument_id text,
   search_tsv tsvector,
   PRIMARY KEY (id, version),
   FOREIGN KEY (id, version) REFERENCES entity (id, version) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS catalogue_tsv_gin ON catalogue_entry USING gin (search_tsv);
+CREATE INDEX IF NOT EXISTS catalogue_instrument_idx ON catalogue_entry (instrument_id);
 
 CREATE TABLE IF NOT EXISTS entity_ref (
   from_id text NOT NULL, from_version text NOT NULL,
