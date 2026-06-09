@@ -76,7 +76,8 @@ export function CataloguePage() {
               <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.12em] text-ink-faint">
                 {list.data.total} result{list.data.total === 1 ? '' : 's'}
               </p>
-              <div>{list.data.items.map((c) => <ResultRow key={`${c.id}@${c.version}`} card={c} />)}</div>
+              {/* E2 will replace this with grouped rendering */}
+              <div>{list.data.items.flatMap((g) => g.forms).map((c) => <ResultRow key={`${c.id}@${c.version}`} card={c} />)}</div>
               <Pagination page={params.page} total={list.data.total} limit={limit} onPage={setPage} />
             </>
           )}

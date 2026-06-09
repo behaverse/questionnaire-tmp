@@ -15,6 +15,12 @@ const card = {
   title: 'PHQ-9', short_title: null, description: 'Depression.', status: 'published',
   effective_license: 'cc_by', language: 'en', available_languages: ['en'],
   item_count: 9, estimated_minutes: 5, domain: ['depression'], population: ['adults'],
+  instrument_id: 'inst_phq9', variant: null,
+}
+
+const group = {
+  instrument_id: 'inst_phq9', title: 'PHQ-9', form_count: 1,
+  languages: ['en'], domain: ['depression'], forms: [card],
 }
 
 function setup(path = '/') {
@@ -34,7 +40,7 @@ beforeEach(() => {
 
 describe('CataloguePage', () => {
   it('renders results from the API', async () => {
-    vi.mocked(api.listQuestionnaires).mockResolvedValue({ items: [card], total: 1, limit: 20, offset: 0 })
+    vi.mocked(api.listQuestionnaires).mockResolvedValue({ items: [group], total: 1, limit: 20, offset: 0 })
     setup()
     await waitFor(() => expect(screen.getByText('PHQ-9')).toBeInTheDocument())
     expect(screen.getAllByText('depression').length).toBeGreaterThan(0)

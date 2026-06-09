@@ -17,6 +17,18 @@ export interface CatalogueCard {
   estimated_minutes: number | null
   domain: string[]
   population: string[]
+  instrument_id: string | null
+  variant: string | null
+}
+
+// A group of forms that share an instrument_id (the unit /v1/questionnaires now returns).
+export interface InstrumentGroup {
+  instrument_id: string | null
+  title: string | null
+  form_count: number
+  languages: string[]
+  domain: string[]
+  forms: CatalogueCard[]
 }
 
 export interface Paginated<T> { items: T[]; total: number; limit: number; offset: number }

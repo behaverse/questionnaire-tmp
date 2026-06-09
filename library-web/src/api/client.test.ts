@@ -40,4 +40,12 @@ describe('api client', () => {
     expect(url).toContain('/v1/questionnaires/qst_x/versions/v26.0601/definition')
     expect(url).toContain('resolved=true')
   })
+
+  it('listQuestionnaires returns instrument groups', async () => {
+    const group = { instrument_id: 'inst_asrs', title: 'ASRS-v1.1', form_count: 2, languages: ['en'], domain: ['adhd'], forms: [] }
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ items: [group], total: 1, limit: 20, offset: 0 }) } as Response))
+    const res = await api.listQuestionnaires({})
+    expect(res.items[0].form_count).toBe(2)
+    expect(res.items[0].instrument_id).toBe('inst_asrs')
+  })
 })

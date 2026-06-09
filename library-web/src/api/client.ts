@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import type {
-  CatalogueCard, Paginated, VersionInfo, FacetResponse, ResolvedDefinition,
+  InstrumentGroup, Paginated, VersionInfo, FacetResponse, ResolvedDefinition,
 } from './types'
 
 export const BASE_URL: string =
@@ -36,6 +36,7 @@ async function get<T>(path: string, params?: Params): Promise<T> {
 
 export type QuestionnaireQuery = {
   q?: string; domain?: string; population?: string; language?: string; license?: string
+  instrument?: string
   min_items?: number; max_items?: number; sort?: string; limit?: number; offset?: number
 }
 
@@ -51,7 +52,7 @@ export function resolvedDefinitionUrl(id: string, version: string): string {
 
 export const api = {
   listQuestionnaires: (p: QuestionnaireQuery) =>
-    get<Paginated<CatalogueCard>>('/v1/questionnaires', p),
+    get<Paginated<InstrumentGroup>>('/v1/questionnaires', p),
   resolvedDefinition: (id: string, version: string) =>
     get<ResolvedDefinition>(`/v1/questionnaires/${id}/versions/${version}/definition`, { resolved: true }),
   versions: (id: string) =>

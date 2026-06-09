@@ -10,6 +10,7 @@ const card: CatalogueCard = {
   description: 'Self-report depression severity.', status: 'published',
   effective_license: 'cc_by', language: 'en', available_languages: ['en', 'pt'],
   item_count: 9, estimated_minutes: 5, domain: ['depression'], population: ['adults'],
+  instrument_id: 'inst_phq9', variant: null,
 }
 
 describe('ResultRow', () => {
