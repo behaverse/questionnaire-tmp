@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS catalogue_entry (
   language text, available_languages text[],
   item_count int, estimated_minutes int, effective_license text,
   instrument_id text,
+  variant text,
   search_tsv tsvector,
   PRIMARY KEY (id, version),
   FOREIGN KEY (id, version) REFERENCES entity (id, version) ON DELETE CASCADE

@@ -27,11 +27,27 @@ class CatalogueCard(BaseModel):
     available_languages: list[str] | None = None
     item_count: int | None = None
     estimated_minutes: int | None = None
+    instrument_id: str | None = None
+    variant: str | None = None
     domain: list[str] = []
     population: list[str] = []
 
 class PaginatedCards(BaseModel):
     items: list[CatalogueCard]
+    total: int
+    limit: int
+    offset: int
+
+class InstrumentGroup(BaseModel):
+    instrument_id: str | None = None
+    title: str | None = None
+    form_count: int
+    languages: list[str] = []
+    domain: list[str] = []
+    forms: list[CatalogueCard]
+
+class PaginatedGroups(BaseModel):
+    items: list[InstrumentGroup]
     total: int
     limit: int
     offset: int

@@ -22,7 +22,7 @@ def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offs
     rows = conn.execute(
         "SELECT c.id, c.version, c.entity_type, c.title, c.short_title, c.description, "
         "c.status, c.effective_license, c.language, c.available_languages, "
-        "c.item_count, c.estimated_minutes, "
+        "c.item_count, c.estimated_minutes, c.instrument_id, c.variant, "
         "COALESCE((SELECT array_agg(value ORDER BY value) FROM facet f "
         " WHERE f.id=c.id AND f.version=c.version AND f.facet_type='domain'), '{}') AS domain, "
         "COALESCE((SELECT array_agg(value ORDER BY value) FROM facet f "

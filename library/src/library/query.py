@@ -76,14 +76,15 @@ def get_versions(conn: psycopg.Connection, entity_id: str) -> list[dict]:
 
 _CARD_COLS = ["id", "version", "entity_type", "title", "short_title", "description",
               "status", "effective_license", "language", "available_languages",
-              "item_count", "estimated_minutes", "domain", "population"]
+              "item_count", "estimated_minutes", "instrument_id", "variant",
+              "domain", "population"]
 
 def _card_select(extra_where: str) -> str:
     return (
         f"{latest_versions_cte()} "
         "SELECT c.id, c.version, c.entity_type, c.title, c.short_title, c.description, "
         "c.status, c.effective_license, c.language, c.available_languages, "
-        "c.item_count, c.estimated_minutes, "
+        "c.item_count, c.estimated_minutes, c.instrument_id, c.variant, "
         "COALESCE((SELECT array_agg(value ORDER BY value) FROM facet f "
         " WHERE f.id=c.id AND f.version=c.version AND f.facet_type='domain'), '{}') AS domain, "
         "COALESCE((SELECT array_agg(value ORDER BY value) FROM facet f "
@@ -153,3 +154,65 @@ def dependents_of(conn: psycopg.Connection, to_id: str, to_version: str, limit: 
         (to_id, to_version, limit, offset)).fetchall()
     cols = ["id", "version", "entity_type", "title", "status", "effective_license"]
     return [dict(zip(cols, r)) for r in rows], total
+
+def _all_matching_cards(conn: psycopg.Connection, *, q, domain, population, language, license,
+                        instrument, min_items, max_items, sort) -> list[dict]:
+    """Every latest-published questionnaire card matching the filters (no pagination), with
+    instrument_id/variant included — grouping is done in Python (catalogue-scale data)."""
+    where = ["c.entity_type=%s", "c.status='published'"]
+    params: list = ["questionnaire"]
+    if q:
+        where.append("c.search_tsv @@ websearch_to_tsquery('english', %s)"); params.append(q)
+    if domain is not None:
+        where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version "
+                     "AND f.facet_type='domain' AND f.value=%s)"); params.append(domain)
+    if population is not None:
+        where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version "
+                     "AND f.facet_type='population' AND f.value=%s)"); params.append(population)
+    if language is not None:
+        where.append("(c.available_languages @> ARRAY[%s] OR c.language = %s)")
+        params.append(language); params.append(language)
+    if license is not None:
+        where.append("c.effective_license=%s"); params.append(license)
+    if instrument is not None:
+        where.append("c.instrument_id=%s"); params.append(instrument)
+    if min_items is not None:
+        where.append("c.item_count >= %s"); params.append(min_items)
+    if max_items is not None:
+        where.append("c.item_count <= %s"); params.append(max_items)
+    sql_where = " AND ".join(where)
+    effective_sort = sort or ("relevance" if q else "title")
+    if effective_sort == "relevance" and q:
+        order_by = "ts_rank(c.search_tsv, websearch_to_tsquery('english', %s)) DESC"; order_params: list = [q]
+    elif effective_sort == "recency":
+        order_by = "c.version DESC NULLS LAST"; order_params = []
+    else:
+        order_by = "c.title NULLS LAST"; order_params = []
+    rows = conn.execute(f"{_card_select(sql_where)} ORDER BY {order_by}", params + order_params).fetchall()
+    return [dict(zip(_CARD_COLS, r)) for r in rows]
+
+
+def list_instrument_groups(conn: psycopg.Connection, *, q, domain, population, language, license,
+                           instrument, min_items, max_items, sort, limit, offset):
+    """Collapse matching questionnaire forms into instrument groups. A questionnaire with no
+    instrument_id is its own singleton group (grouped on COALESCE(instrument_id, id))."""
+    cards = _all_matching_cards(conn, q=q, domain=domain, population=population, language=language,
+                                license=license, instrument=instrument, min_items=min_items,
+                                max_items=max_items, sort=sort)
+    groups: dict[str, dict] = {}
+    order: list[str] = []
+    for c in cards:
+        key = c["instrument_id"] or c["id"]
+        g = groups.get(key)
+        if g is None:
+            g = {"instrument_id": c["instrument_id"], "title": c["title"],
+                 "forms": [], "_langs": set(), "_domains": set()}
+            groups[key] = g; order.append(key)
+        g["forms"].append(c)
+        for lang in (c.get("available_languages") or []): g["_langs"].add(lang)
+        for d in (c.get("domain") or []): g["_domains"].add(d)
+    out = [{"instrument_id": groups[k]["instrument_id"], "title": groups[k]["title"],
+            "form_count": len(groups[k]["forms"]), "forms": groups[k]["forms"],
+            "languages": sorted(groups[k]["_langs"]), "domain": sorted(groups[k]["_domains"])}
+           for k in order]
+    return out[offset:offset + limit], len(out)
