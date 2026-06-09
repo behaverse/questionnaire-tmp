@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from .deps import get_conn
 from .resolve import resolve_definition
 from .. import query
-from ..models import Paginated, EntitySummary, CatalogueCard, PaginatedCards, VersionInfo, InstrumentGroup, PaginatedGroups
+from ..models import EntitySummary, CatalogueCard, VersionInfo, InstrumentGroup, PaginatedGroups
 
 router = APIRouter()
 
