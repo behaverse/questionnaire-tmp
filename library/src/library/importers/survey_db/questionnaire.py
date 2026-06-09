@@ -176,7 +176,12 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
 
     hid = (header or {}).get("header_id")
     if hid:
-        meta["instrument_id"] = "inst_" + _sanitize_identifier(hid)   # 'asrs' -> 'inst_asrs'
+        slug = _sanitize_identifier(hid)
+        if slug:
+            meta["instrument_id"] = "inst_" + slug   # 'asrs' -> 'inst_asrs'
+        elif loss:
+            loss.add("dropped", f"questionnaire.{qid}.instrument_id",
+                     f"header_id {hid!r} sanitized to empty; instrument_id omitted")
     meta["variant"] = "base"   # legacy data has no per-form labels (OD-21); real labels via hand-authoring
 
     # provenance: use the instrument schema's allowed fields only
