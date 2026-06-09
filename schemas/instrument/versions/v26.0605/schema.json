@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://behaverse.org/schemas/instrument/v26.0609/schema.json",
+  "$id": "https://behaverse.org/schemas/instrument/v26.0605/schema.json",
   "title": "Instrument Metadata",
   "description": "Bibliographic and psychometric properties for an instrument. See docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md §2.",
   "type": "object",
@@ -16,20 +16,6 @@
     "description": { "type": "string", "minLength": 1, "maxLength": 2048 },
     "language": { "$ref": "#/$defs/LanguageCode" },
     "short_title": { "type": "string", "minLength": 1, "maxLength": 64 },
-    "instrument_id": {
-      "type": "string",
-      "pattern": "^inst_[a-z0-9_]+$",
-      "minLength": 3,
-      "maxLength": 64,
-      "description": "Family this instrument/form belongs to (groups variant forms; e.g. the ASRS full form + screener share inst_asrs). Optional; absent means a standalone instrument."
-    },
-    "variant": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 64,
-      "default": "base",
-      "description": "Human-readable label distinguishing this form within its instrument family (e.g. 'Screener - Part A'). Defaults to 'base' for the primary/only form."
-    },
     "version": { "$ref": "#/$defs/Version" },
     "author": {
       "type": "array",

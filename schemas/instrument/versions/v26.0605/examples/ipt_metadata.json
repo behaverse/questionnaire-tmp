@@ -1,0 +1,33 @@
+{
+  "id": "tsk_iat",
+  "title": "Implicit Association Test",
+  "short_title": "IAT",
+  "description": "Behavioural paradigm measuring implicit associations between target concepts and attributes through reaction-time differences in categorisation tasks.",
+  "version": "v26.0528",
+  "language": "en",
+  "available_languages": ["en"],
+  "author": [
+    { "name": "Anthony G. Greenwald", "orcid": "0000-0001-7415-2785" },
+    { "name": "Debbie E. McGhee" },
+    { "name": "Jordan L. K. Schwartz" }
+  ],
+  "publication": {
+    "year": 1998,
+    "citation": "Greenwald AG, McGhee DE, Schwartz JLK. Measuring individual differences in implicit cognition: The Implicit Association Test. J Pers Soc Psychol. 1998;74(6):1464-1480.",
+    "doi": "10.1037/0022-3514.74.6.1464"
+  },
+  "license": "cc_by",
+  "classification": {
+    "domain": ["implicit_cognition", "social_psychology"],
+    "population": ["adults"],
+    "age_range": [16, 99],
+    "administration_mode": ["performance"]
+  },
+  "psychometrics": {
+    "estimated_minutes": 10,
+    "reliability": [
+      { "type": "test_retest", "value": 0.56, "citation": "Bar-Anan & Nosek 2014" }
+    ]
+  },
+  "x_internal_notes": "Multiple variants exist (race, gender, age, etc.); each is its own concrete instrument referencing this paradigm."
+}

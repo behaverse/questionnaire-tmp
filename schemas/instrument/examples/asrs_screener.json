@@ -1,0 +1,8 @@
+{
+  "id": "asrs_screener",
+  "title": "ASRS-v1.1",
+  "description": "Adult ADHD Self-Report Scale - Part A screener (6-item).",
+  "language": "en",
+  "instrument_id": "inst_asrs",
+  "variant": "Screener - Part A"
+}

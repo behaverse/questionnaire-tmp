@@ -1,0 +1,52 @@
+{
+  "id": "qst_phq9",
+  "title": "Patient Health Questionnaire-9",
+  "short_title": "PHQ-9",
+  "description": "Self-report measure of depression severity over the past 2 weeks.",
+  "version": "v26.0528",
+  "language": "en",
+  "available_languages": ["en", "pt", "pt-BR"],
+  "author": [
+    { "name": "Robert L. Spitzer" },
+    { "name": "Janet B. W. Williams" },
+    { "name": "Kurt Kroenke" }
+  ],
+  "publication": {
+    "year": 2001,
+    "citation": "Kroenke K, Spitzer RL, Williams JBW. The PHQ-9: Validity of a brief depression severity measure. J Gen Intern Med. 2001;16:606-613.",
+    "doi": "10.1046/j.1525-1497.2001.016009606.x"
+  },
+  "license": "proprietary_open_redistribution",
+  "rights_holder": "Pfizer Inc.",
+  "classification": {
+    "domain": ["depression", "screening"],
+    "population": ["adults"],
+    "age_range": [18, 99],
+    "administration_mode": ["self_report"]
+  },
+  "psychometrics": {
+    "item_count": 9,
+    "estimated_minutes": 5,
+    "reliability": [
+      { "type": "cronbach_alpha", "value": 0.89, "population": "primary_care", "sample_size": 6000 }
+    ]
+  },
+  "translations": {
+    "pt": {
+      "status": "validated",
+      "fields": {
+        "title": "Questionário sobre Saúde do Paciente-9",
+        "short_title": "PHQ-9",
+        "description": "Medida de autorrelato de gravidade de depressão nas últimas 2 semanas."
+      }
+    },
+    "pt-BR": {
+      "status": "validated",
+      "fields": {
+        "title": "Questionário sobre Saúde do Paciente-9",
+        "short_title": "PHQ-9",
+        "description": "Autorrelato de gravidade da depressão nas últimas duas semanas."
+      }
+    }
+  }
+}

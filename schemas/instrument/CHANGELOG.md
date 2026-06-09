@@ -2,6 +2,16 @@
 
 This schema uses Calendar Versioning (`vYY.MMDD`) per the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning).
 
+## [v26.0609] - 2026-06-09
+
+### Added (severity: additive)
+
+- **`instrument_id`** (optional, `^inst_[a-z0-9_]+$`): groups questionnaire forms under one instrument family (e.g. the ASRS full form + screener share `inst_asrs`). Sourced from the legacy `header_id`.
+- **`variant`** (optional, default `"base"`): human-readable label distinguishing a form within its instrument family.
+- Property URIs remain stable; existing v26.0605 instances validate unchanged (both fields optional).
+
+**Severity:** `additive`.
+
 ## [v26.0605] — 2026-06-05
 
 ### Changed (severity: breaking)

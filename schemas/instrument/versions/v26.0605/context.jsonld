@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@vocab":     "https://behaverse.org/schemas/instrument#",
+    "instrument": "https://behaverse.org/schemas/instrument#",
+    "schema":     "http://schema.org/",
+    "dc":         "http://purl.org/dc/terms/",
+    "datacite":   "http://datacite.org/schema/kernel-4#",
+    "xsd":        "http://www.w3.org/2001/XMLSchema#",
+
+    "id":                  "@id",
+    "title":               { "@id": "dc:title" },
+    "short_title":         { "@id": "schema:alternateName" },
+    "description":         { "@id": "dc:description" },
+    "language":            { "@id": "dc:language" },
+    "available_languages": { "@id": "schema:inLanguage", "@container": "@set" },
+    "version":             { "@id": "schema:version" },
+    "authors":             { "@id": "schema:author", "@container": "@list" },
+    "publication":         { "@id": "schema:isBasedOn" },
+    "license":             { "@id": "dc:license" },
+    "license_notes":       { "@id": "schema:usageInfo" },
+    "rights_holder":       { "@id": "schema:copyrightHolder" },
+    "request_url":         { "@id": "schema:url", "@type": "@id" },
+    "classification":      { "@id": "schema:about" },
+    "psychometrics":       { "@id": "instrument:psychometrics" },
+    "usage":               { "@id": "instrument:usage" },
+    "provenance":          { "@id": "instrument:provenance" },
+    "timestamps":          { "@id": "instrument:timestamps" },
+    "translations":        { "@id": "instrument:translations" }
+  }
+}
