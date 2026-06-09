@@ -3,7 +3,7 @@ import { useMemo, useCallback } from 'react'
 
 export const LIMIT = 20
 
-export type FacetKey = 'domain' | 'population' | 'language' | 'license'
+export type FacetKey = 'domain' | 'population' | 'language' | 'license' | 'instrument'
 export type ScalarKey = 'q' | 'sort'
 
 export interface CatalogueParams {
@@ -12,6 +12,7 @@ export interface CatalogueParams {
   population?: string
   language?: string
   license?: string
+  instrument?: string
   sort?: string
   page: number
 }
@@ -24,6 +25,7 @@ function read(sp: URLSearchParams): CatalogueParams {
     population: sp.get('population') || undefined,
     language: sp.get('language') || undefined,
     license: sp.get('license') || undefined,
+    instrument: sp.get('instrument') || undefined,
     sort: sp.get('sort') || undefined,
     page: Number.isFinite(page) && page >= 1 ? page : 1,
   }

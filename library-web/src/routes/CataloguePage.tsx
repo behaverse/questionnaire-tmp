@@ -1,6 +1,6 @@
 import { useCatalogueParams, type FacetKey } from '../catalogue/useCatalogueParams'
 import { useQuestionnaires, useFacets } from '../api/queries'
-import { ResultRow } from '../catalogue/ResultRow'
+import { CatalogueGroup } from '../catalogue/CatalogueGroup'
 import { FacetSidebar, type FacetGroup } from '../catalogue/FacetSidebar'
 import { SearchBar } from '../catalogue/SearchBar'
 import { SortSelect } from '../catalogue/SortSelect'
@@ -13,6 +13,7 @@ import { ApiError } from '../api/client'
 const FACET_DEFS: { key: FacetKey; title: string }[] = [
   { key: 'domain', title: 'Domain' },
   { key: 'population', title: 'Population' },
+  { key: 'instrument', title: 'Instrument' },
   { key: 'language', title: 'Language' },
   { key: 'license', title: 'License' },
 ]
@@ -21,17 +22,19 @@ export function CataloguePage() {
   const { params, offset, limit, setParam, toggleFacet, setPage, clearAll } = useCatalogueParams()
   const list = useQuestionnaires({
     q: params.q, domain: params.domain, population: params.population,
-    language: params.language, license: params.license, sort: params.sort,
-    limit, offset,
+    language: params.language, license: params.license, instrument: params.instrument,
+    sort: params.sort, limit, offset,
   })
 
   const domain = useFacets('domain')
   const population = useFacets('population')
+  const instrument = useFacets('instrument')
   const language = useFacets('language')
   const license = useFacets('license')
   const facetData: Record<FacetKey, { value: string; count: number }[]> = {
     domain: domain.data?.values ?? [],
     population: population.data?.values ?? [],
+    instrument: instrument.data?.values ?? [],
     language: language.data?.values ?? [],
     license: license.data?.values ?? [],
   }
@@ -57,7 +60,7 @@ export function CataloguePage() {
       <div className="flex gap-10">
         <FacetSidebar
           groups={groups}
-          selected={{ domain: params.domain, population: params.population, language: params.language, license: params.license }}
+          selected={{ domain: params.domain, population: params.population, instrument: params.instrument, language: params.language, license: params.license }}
           onToggle={toggleFacet}
           onClear={clearAll}
         />
@@ -76,8 +79,7 @@ export function CataloguePage() {
               <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.12em] text-ink-faint">
                 {list.data.total} result{list.data.total === 1 ? '' : 's'}
               </p>
-              {/* E2 will replace this with grouped rendering */}
-              <div>{list.data.items.flatMap((g) => g.forms).map((c) => <ResultRow key={`${c.id}@${c.version}`} card={c} />)}</div>
+              <div>{list.data.items.map((g) => <CatalogueGroup key={g.instrument_id ?? g.forms[0].id} group={g} />)}</div>
               <Pagination page={params.page} total={list.data.total} limit={limit} onPage={setPage} />
             </>
           )}

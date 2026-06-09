@@ -9,7 +9,7 @@ describe('FacetSidebar', () => {
     render(
       <FacetSidebar
         groups={[{ key: 'domain', title: 'Domain', values: [{ value: 'depression', count: 3 }] }]}
-        selected={{ domain: undefined, population: undefined, language: undefined, license: undefined }}
+        selected={{ domain: undefined, population: undefined, instrument: undefined, language: undefined, license: undefined }}
         onToggle={onToggle}
         onClear={() => {}}
       />,
