@@ -5,7 +5,7 @@ from ..entity_types import ENTITY_TYPES
 from ..query import _CARD_COLS
 
 _TABLE_FACETS = {"domain", "population", "administration_mode", "tag"}
-_COLUMN_FACETS = {"license": "effective_license"}  # language handled separately (array column)
+_COLUMN_FACETS = {"license": "effective_license", "instrument": "instrument_id"}  # language handled separately (array column)
 
 router = APIRouter()
 

@@ -20,8 +20,8 @@ def client(pg_url, monkeypatch):
     return TestClient(create_app())
 
 def test_list_card_has_enriched_fields(client):
-    card = next(i for i in client.get("/v1/questionnaires").json()["items"]
-                if i["id"] == "qst_min")
+    body = client.get("/v1/questionnaires").json()
+    card = next(f for g in body["items"] for f in g["forms"] if f["id"] == "qst_min")
     assert card["description"].startswith("Smallest valid questionnaire")
     assert card["item_count"] == 1
     assert card["language"] == "en"
@@ -38,5 +38,5 @@ def test_search_card_has_enriched_fields(client):
 
 def test_list_filters_still_work(client):
     body = client.get("/v1/questionnaires", params={"domain": "wellbeing"}).json()
-    assert any(i["id"] == "qst_min" for i in body["items"])
+    assert any(f["id"] == "qst_min" for g in body["items"] for f in g["forms"])
     assert client.get("/v1/questionnaires", params={"min_items": 5}).json()["total"] == 0

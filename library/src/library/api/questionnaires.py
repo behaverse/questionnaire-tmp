@@ -3,31 +3,26 @@ from fastapi.responses import JSONResponse
 from .deps import get_conn
 from .resolve import resolve_definition
 from .. import query
-from ..models import Paginated, EntitySummary, CatalogueCard, PaginatedCards, VersionInfo
-from ..query import _VALID_SORTS
+from ..models import Paginated, EntitySummary, CatalogueCard, PaginatedCards, VersionInfo, InstrumentGroup, PaginatedGroups
 
 router = APIRouter()
 
-@router.get("/questionnaires", response_model=PaginatedCards)
+@router.get("/questionnaires", response_model=PaginatedGroups)
 def list_questionnaires(
-    q: str | None = None,
-    domain: str | None = None,
-    population: str | None = None,
-    language: str | None = None,
-    license: str | None = None,
-    min_items: int | None = None,
-    max_items: int | None = None,
-    sort: str | None = None,
-    limit: int = Query(20, le=100),
-    offset: int = 0,
-    conn=Depends(get_conn),
+    q: str | None = None, domain: str | None = None, population: str | None = None,
+    language: str | None = None, license: str | None = None, instrument: str | None = None,
+    min_items: int | None = None, max_items: int | None = None, sort: str | None = None,
+    limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn),
 ):
-    rows, total = query.list_cards(
-        conn, "questionnaire", q=q, limit=limit, offset=offset,
-        domain=domain, population=population, language=language, license=license,
-        min_items=min_items, max_items=max_items, sort=sort,
+    groups, total = query.list_instrument_groups(
+        conn, q=q, domain=domain, population=population, language=language, license=license,
+        instrument=instrument, min_items=min_items, max_items=max_items, sort=sort,
+        limit=limit, offset=offset,
     )
-    return PaginatedCards(items=[CatalogueCard(**r) for r in rows], total=total, limit=limit, offset=offset)
+    return PaginatedGroups(
+        items=[InstrumentGroup(**{**g, "forms": [CatalogueCard(**f) for f in g["forms"]]}) for g in groups],
+        total=total, limit=limit, offset=offset,
+    )
 
 @router.get("/questionnaires/{qid}", response_model=EntitySummary)
 def detail(qid: str, conn=Depends(get_conn)):

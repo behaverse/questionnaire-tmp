@@ -37,3 +37,7 @@ def test_license_facet_endpoint_ok(client):
 def test_unknown_facet_still_422(client):
     r = client.get("/v1/facets", params={"facet_type": "nope"})
     assert r.status_code == 422
+
+def test_instrument_facet_endpoint_ok(client):
+    r = client.get("/v1/facets", params={"facet_type": "instrument"})
+    assert r.status_code == 200 and r.json()["facet_type"] == "instrument"
