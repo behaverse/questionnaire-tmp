@@ -100,6 +100,8 @@ Schema enforces a minimum-valid floor (id, title, description, language). The Li
 | `psychometrics` | `item_count`, `estimated_minutes`, `reliability[]`, `validity[]`, `norms[]` |
 | `license` | Controlled-vocabulary tag from [11_content_licensing.md](11_content_licensing.md) (e.g. `public_domain`, `cc_by`, `proprietary_open_redistribution`, `proprietary_restricted`, `unknown`, `mixed_see_components`). May also carry `license_notes`, `rights_holder`, `request_url`. |
 | `usage` | `requires_permission`, `cost`, `clinical_use_only`, `training_required` |
+| `instrument_id` | Family slug grouping variant forms of the same instrument (e.g., `inst_asrs` for all four ASRS forms). Pattern `^inst_[a-z0-9_]+$`; optional — absent means a standalone questionnaire with no family affiliation. Sourced from the legacy `header_id` during `survey_db` import. Added in Schema 1 `v26.0609` (severity `additive`; per OD-21). |
+| `variant` | Human-readable label distinguishing this form within its instrument family (e.g., `"Screener — Part A"`). Defaults to `"base"` for the primary or only form. Meaningful only when `instrument_id` is present; the Library treats absent and `"base"` identically. Added in Schema 1 `v26.0609` (per OD-21). |
 | `provenance` | (Imported content only.) `source`, `source_version`, `imported_at`, `imported_by`, `import_loss_report_url`, `importer_version`. See [13_importers.md](13_importers.md). |
 | `timestamps` | `created`, `modified`, `published` (ISO 8601) |
 
@@ -107,13 +109,28 @@ The structure of `psychometrics.reliability[]` and `psychometrics.validity[]` fo
 
 Reusable entities below the questionnaire level (questions, option-sets, instructions, prompts) also carry their own `license` tag. The **effective composite license** for a questionnaire is computed at display time from the maximum-restriction across its components and its own tag; both per-component and effective-composite are surfaced in the Library UI.
 
+### Instrument → forms relationship (OD-21)
+
+One instrument family groups one or more questionnaire *forms* under a shared `instrument_id`. A form is any Questionnaire whose `metadata.instrument_id` matches the family slug. `variant` distinguishes forms within the family; the default value `"base"` is used when only one form exists or when legacy data carries no per-form label.
+
+| Concept | Represented as |
+|---|---|
+| Instrument family | Shared `instrument_id` slug (`inst_<name>`) on each member Questionnaire's metadata |
+| Member form | Any Questionnaire with that `instrument_id` in its `metadata` |
+| Form label | `variant` string (default `"base"`); e.g. `"Screener — Part A"` |
+| Singleton | A Questionnaire with no `instrument_id` — treated as its own one-form family by the Library catalogue |
+
+`instrument_id` is **not** a new Library entity type; no separate Instrument row exists. The Library groups forms at query time using `instrument_id` as the grouping key (NULLs do not collapse together). A future Instrument entity could adopt the slug as its id without a breaking change to questionnaire metadata. The `survey_db` importer populates `instrument_id` from the legacy `header_id` field (all forms under the same survey header share the same slug); imported forms all receive `variant: "base"` because the legacy data carries no per-form variant labels.
+
+**Current schema version:** Schema 1 `v26.0609` (severity `additive` over `v26.0605`). The `v26.0605` schema is archived under `schemas/instrument/versions/v26.0605/` and remains resolvable.
+
 ---
 
 ## Schema 2 — Questionnaire Definition (Canonical)
 
 **Purpose.** Complete structural specification. The source of truth for what a questionnaire is. Stored in the Library; produced by the Editor; consumed by viewers.
 
-**Current version: v26.0602** (per OD-15 resolved 2026-05-31 and OD-16 resolved 2026-06-02). The authoritative entity model lives in [05a_reusable_entities.md](05a_reusable_entities.md); the authoritative scoring model lives in [05b_scoring.md](05b_scoring.md). This section summarises the structure; see 05a for entity-by-entity field tables and the OD-15 resolution log, and 05b for scoring runtime semantics — the `Scorer` Library entity (`scr_*`), `scores[]` declarations with JSON Pointer paths, reversed-value pipeline, two-trigger evaluation. v26.0602 landed the OD-16 changes: added `Scorer` + `scores[]` + `Prompt.subscales[]` + `lock_show_score_timing`; narrowed `Subscale` to a label entity; removed `ScoringDef`, `InterpretationBand`, and the Questionnaire's top-level `subscales[]` / `scoring[]` blocks. Severity: `breaking`.
+**Current version: v26.0609** (per OD-21 resolved 2026-06-09; previous was v26.0602 per OD-15 + OD-16). The authoritative entity model lives in [05a_reusable_entities.md](05a_reusable_entities.md); the authoritative scoring model lives in [05b_scoring.md](05b_scoring.md). This section summarises the structure; see 05a for entity-by-entity field tables and the OD-15 resolution log, and 05b for scoring runtime semantics — the `Scorer` Library entity (`scr_*`), `scores[]` declarations with JSON Pointer paths, reversed-value pipeline, two-trigger evaluation. v26.0602 landed the OD-16 changes: added `Scorer` + `scores[]` + `Prompt.subscales[]` + `lock_show_score_timing`; narrowed `Subscale` to a label entity; removed `ScoringDef`, `InterpretationBand`, and the Questionnaire's top-level `subscales[]` / `scoring[]` blocks. v26.0609 (severity `breaking`) retargets the `metadata` `$ref` from `instrument/v26.0528` → `instrument/v26.0609`, pulling in the two new optional fields (`instrument_id`, `variant`) and bundling the `authors`→`author` rename from the intervening instrument schema versions. v26.0602 archived under `schemas/questionnaire/versions/v26.0602/`.
 
 **Eleven reusable entities in two categories:**
 
@@ -130,9 +147,9 @@ Reusable entities below the questionnaire level (questions, option-sets, instruc
 
 **Section's `shared_option`** for matrix layouts; inner Items omit their `option` and inherit.
 
-**`metadata` field** still embeds Schema 1 (Instrument) via cross-schema `$ref`. Schema 1 is unchanged at v26.0528.
+**`metadata` field** embeds Schema 1 (Instrument Metadata) via cross-schema `$ref`. As of Schema 2 `v26.0609`, the `$ref` targets Schema 1 `v26.0609` (which adds the optional `instrument_id` + `variant` fields and renames `authors` → `author`). Earlier Schema 2 instances pinned `instrument/v26.0528`.
 
-**Versioning:** the bump from v26.0528 to v26.0601 is `breaking` per CalVer severity policy. The v26.0528 schema is archived under `schemas/questionnaire/versions/v26.0528/`; published v26.0528 instances remain valid until re-authored.
+**Versioning:** the bump from v26.0528 to v26.0601 is `breaking` per CalVer severity policy. The v26.0528 schema is archived under `schemas/questionnaire/versions/v26.0528/`; published v26.0528 instances remain valid until re-authored. The bump from v26.0602 to v26.0609 is also `breaking` (the `authors`→`author` rename in the embedded Schema 1). Schema 2 v26.0602 is archived under `schemas/questionnaire/versions/v26.0602/`.
 
 ---
 
@@ -365,6 +382,7 @@ Recapitulated from [02_terminology.md](02_terminology.md):
 | Entity | Format | Example |
 |---|---|---|
 | Questionnaire | `qst_{slug}` | `qst_phq9` |
+| Instrument family | `inst_{slug}` | `inst_asrs` |
 | Question | `q_{slug}` | `q_depression_1` |
 | Option-set | `os_{slug}` | `os_likert5_agree` |
 | Instruction | `ins_{slug}` | `ins_consent_v1` |
