@@ -22,7 +22,7 @@ export function CatalogueGroup({ group }: { group: InstrumentGroup }) {
           {group.title ?? group.instrument_id}
         </span>
         <span className="font-sans text-sm font-medium text-accent">
-          {group.form_count} forms <span aria-hidden="true">{open ? '▾' : '▸'}</span>
+          {group.form_count} variants <span aria-hidden="true">{open ? '▾' : '▸'}</span>
         </span>
       </button>
       <p className="mt-1 font-mono text-xs text-ink-faint">

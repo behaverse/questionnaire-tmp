@@ -17,13 +17,13 @@ describe('CatalogueGroup', () => {
     const g: InstrumentGroup = { instrument_id: null, title: 'ASRS-v1.1', form_count: 1, languages: ['en'], domain: ['adhd'], forms: [form('qst_x_asrs')] }
     render(<MemoryRouter><CatalogueGroup group={g} /></MemoryRouter>)
     expect(screen.getByRole('link', { name: /ASRS-v1.1/ })).toHaveAttribute('href', '/q/qst_x_asrs')
-    expect(screen.queryByRole('button', { name: /forms/i })).toBeNull()
+    expect(screen.queryByRole('button', { name: /variants/i })).toBeNull()
   })
 
   it('collapses a multi-form group and expands to its forms on click', async () => {
     const g: InstrumentGroup = { instrument_id: 'inst_asrs', title: 'ASRS-v1.1', form_count: 2, languages: ['en'], domain: ['adhd'], forms: [form('qst_x_asrs'), form('qst_asrs_a')] }
     render(<MemoryRouter><CatalogueGroup group={g} /></MemoryRouter>)
-    const toggle = screen.getByRole('button', { name: /2 forms/i })
+    const toggle = screen.getByRole('button', { name: /2 variants/i })
     expect(screen.queryByText('qst_asrs_a')).toBeNull() // collapsed
     await userEvent.click(toggle)
     expect(screen.getByText('qst_x_asrs')).toBeInTheDocument()
