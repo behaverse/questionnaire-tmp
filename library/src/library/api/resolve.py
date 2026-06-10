@@ -1,5 +1,5 @@
 import psycopg
-from ..refs import parse_ref
+from ..refs import parse_ref, extract_refs
 
 
 def _entity_content(conn: psycopg.Connection, ref_str: str) -> dict | None:
@@ -16,6 +16,51 @@ def _entity_content(conn: psycopg.Connection, ref_str: str) -> dict | None:
     if row is None or row[0] is None:
         return None
     return row[0]
+
+
+def _scorer_refs(node) -> list[str]:
+    """Collect every scores[].scorer "id@version" string (bare strings, not {ref} objects)."""
+    out: list[str] = []
+
+    def walk(n):
+        if isinstance(n, dict):
+            scorer = n.get("scorer")
+            if isinstance(scorer, str) and "@" in scorer:
+                out.append(scorer)
+            for v in n.values():
+                walk(v)
+        elif isinstance(n, list):
+            for x in n:
+                walk(x)
+
+    walk(node)
+    return out
+
+
+def build_resolution_bundle(conn, definition: dict) -> dict:
+    """Return {"definition": <un-resolved Schema 2>, "entities": {"id@ver": <raw body>}}.
+    Transitively collects every {ref} target AND every scores[].scorer target. Withdrawn /
+    missing entities are omitted (the consumer's resolve_entity returns None for them).
+    Hard-pinned CalVer refs are acyclic, so the fixed-point loop terminates."""
+    entities: dict = {}
+    seen: set[str] = set()
+    frontier: set[str] = set()
+    for r in extract_refs(definition):
+        frontier.add(f"{r.to_id}@{r.to_version}")
+    frontier.update(_scorer_refs(definition))
+    while frontier:
+        ref = frontier.pop()
+        if ref in seen:
+            continue
+        seen.add(ref)
+        body = _entity_content(conn, ref)
+        if body is None:
+            continue
+        entities[ref] = body
+        for r in extract_refs(body):
+            frontier.add(f"{r.to_id}@{r.to_version}")
+        frontier.update(_scorer_refs(body))
+    return {"definition": definition, "entities": entities}
 
 
 def resolve_definition(conn: psycopg.Connection, definition: dict) -> dict:

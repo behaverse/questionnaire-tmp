@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 from .deps import get_conn
-from .resolve import resolve_definition
+from .resolve import resolve_definition, build_resolution_bundle
 from .. import query
 from ..models import EntitySummary, CatalogueCard, VersionInfo, InstrumentGroup, PaginatedGroups
 
@@ -60,3 +60,18 @@ def definition(qid: str, version: str, resolved: bool = False, conn=Depends(get_
     if resolved:
         return resolve_definition(conn, content_json)
     return content_json
+
+
+@router.get("/questionnaires/{qid}/versions/{version}/resolution-bundle")
+def resolution_bundle(qid: str, version: str, conn=Depends(get_conn)):
+    row = conn.execute(
+        "SELECT status, content_json, withdrawn_at FROM entity WHERE id=%s AND version=%s",
+        (qid, version)).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="not found")
+    status, content_json, withdrawn_at = row
+    if status == "withdrawn" or content_json is None:
+        return JSONResponse(status_code=410, content={
+            "error": {"code": "gone", "message": "withdrawn",
+                      "withdrawn_at": withdrawn_at.isoformat() if withdrawn_at else None}})
+    return build_resolution_bundle(conn, content_json)
