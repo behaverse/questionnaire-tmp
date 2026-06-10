@@ -3,8 +3,10 @@ import type {
   InstrumentGroup, Paginated, VersionInfo, FacetResponse, ResolvedDefinition,
 } from './types'
 
+// Default: same-origin (empty base → relative /v1 resolved against window.location.origin in get()).
+// Production (Vercel) needs no env var. Local dev sets VITE_API_BASE_URL via .env.development → the API on :8000.
 export const BASE_URL: string =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? 'http://localhost:8000'
+  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ?? ''
 
 export class ApiError extends Error {
   constructor(public status: number, public code: string, message: string) {
