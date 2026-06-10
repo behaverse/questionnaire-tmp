@@ -96,7 +96,7 @@ def _card_select(extra_where: str) -> str:
 def _card_where_sort(entity_type, *, q, domain, population, language, license,
                      min_items, max_items, instrument, sort):
     """Build the WHERE clause + params + ORDER BY for an enriched catalogue-card query.
-    Shared by list_cards (flat, paginated) and _all_matching_cards (all rows, grouped)."""
+    Used by _all_matching_cards (all rows), which powers the instrument-grouped list."""
     where = ["c.entity_type=%s", "c.status='published'"]
     params: list = [entity_type]
     if q:
@@ -129,23 +129,6 @@ def _card_where_sort(entity_type, *, q, domain, population, language, license,
     else:
         order_by = "c.title NULLS LAST"; order_params = []
     return sql_where, params, order_by, order_params
-
-def list_cards(conn: psycopg.Connection, entity_type: str, *, q: str | None,
-               limit: int, offset: int,
-               domain: str | None = None, population: str | None = None,
-               language: str | None = None, license: str | None = None,
-               min_items: int | None = None, max_items: int | None = None,
-               sort: str | None = None) -> tuple[list[dict], int]:
-    sql_where, params, order_by, order_params = _card_where_sort(
-        entity_type, q=q, domain=domain, population=population, language=language,
-        license=license, min_items=min_items, max_items=max_items, instrument=None, sort=sort)
-    total = conn.execute(
-        f"{latest_versions_cte()} SELECT count(*) FROM catalogue_entry c "
-        f"JOIN latest l ON c.id=l.id AND c.version=l.version WHERE {sql_where}", params).fetchone()[0]
-    rows = conn.execute(
-        f"{_card_select(sql_where)} ORDER BY {order_by} LIMIT %s OFFSET %s",
-        params + order_params + [limit, offset]).fetchall()
-    return [dict(zip(_CARD_COLS, r)) for r in rows], total
 
 def get_version_history(conn: psycopg.Connection, entity_id: str) -> list[dict]:
     rows = conn.execute(
