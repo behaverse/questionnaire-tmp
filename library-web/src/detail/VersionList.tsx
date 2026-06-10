@@ -27,7 +27,11 @@ export function VersionList({ id, versions, current }: { id: string; versions: V
             {isCurrent && (
               <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
             )}
-            {v.date && <span className="font-mono text-xs text-ink-faint">{v.date}</span>}
+            {v.date && (
+              <span className="font-mono text-xs text-ink-faint">
+                <span className="text-ink-faint/70">added</span> {v.date}
+              </span>
+            )}
             <span className="flex-1" />
             {v.severity && <Badge>{v.severity}</Badge>}
             {v.status !== 'published' && <Badge tone="warn">{v.status}</Badge>}

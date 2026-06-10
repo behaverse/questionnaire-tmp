@@ -95,10 +95,12 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
         else "en"
     )
 
+    # strip stray whitespace/newlines from legacy free-text titles (some carry trailing "\n\n")
+    title = (s.get("title") or qid).strip() or qid
     meta = {"id": canonical_id("questionnaire", qid), "version": version,
-            "title": s.get("title") or qid, "language": primary_language}
-    if s.get("variant"):
-        variant = str(s["variant"])
+            "title": title, "language": primary_language}
+    variant = str(s.get("variant") or "").strip()
+    if variant:
         if len(variant) > 64:
             if loss:
                 loss.add("approximated", f"surveys.{s.get('survey_id') or qid}.variant",
@@ -107,12 +109,12 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
         meta["short_title"] = variant
 
     # description is required by instrument schema; synthesize if missing
-    desc = s.get("description")
+    desc = (s.get("description") or "").strip()
     if not desc:
         # No source description: the instrument schema requires one, so fall back to the
         # title. The web UI suppresses a description that merely repeats the title, so these
         # render as title-only (no meaningless synthetic prose).
-        desc = s.get("title") or qid
+        desc = title
         if loss:
             loss.add("warning", f"surveys.{s.get('survey_id') or qid}.description",
                      f"NULL description -> using title as description: {desc!r}")
