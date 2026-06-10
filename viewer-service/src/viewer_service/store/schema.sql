@@ -31,3 +31,43 @@ CREATE TABLE IF NOT EXISTS runtime_cache (
 );
 CREATE INDEX IF NOT EXISTS runtime_cache_lru ON runtime_cache (last_accessed_at);
 CREATE INDEX IF NOT EXISTS runtime_cache_dep ON runtime_cache (deployment_id);
+
+CREATE TABLE IF NOT EXISTS session (
+  session_id             text PRIMARY KEY,
+  session_index          bigint NOT NULL,
+  deployment_id          text NOT NULL,
+  viewer_id              text NOT NULL,
+  viewer_version         text NOT NULL,
+  agent_id               text NOT NULL,
+  instrument_id          text NOT NULL,
+  instrument_version     text NOT NULL,
+  status                 text NOT NULL,
+  token_hash             text NOT NULL,
+  initial_locale         text NOT NULL,
+  last_active_locale     text NOT NULL,
+  started_at             timestamptz NOT NULL DEFAULT now(),
+  completed_at           timestamptz,
+  submitted_at           timestamptz,
+  forwarded_at           timestamptz,
+  forward_attempts       int NOT NULL DEFAULT 0,
+  forward_failure_reason text,
+  device                 jsonb
+);
+CREATE INDEX IF NOT EXISTS session_token_idx ON session (token_hash);
+CREATE INDEX IF NOT EXISTS session_deployment_idx ON session (deployment_id);
+
+CREATE TABLE IF NOT EXISTS outbox (
+  id              bigserial PRIMARY KEY,
+  session_id      text NOT NULL REFERENCES session (session_id),
+  kind            text NOT NULL,
+  payload         jsonb NOT NULL,
+  payload_sha256  text NOT NULL,
+  status          text NOT NULL DEFAULT 'pending',
+  attempts        int NOT NULL DEFAULT 0,
+  last_error      text,
+  next_attempt_at timestamptz NOT NULL DEFAULT now(),
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  forwarded_at    timestamptz
+);
+CREATE INDEX IF NOT EXISTS outbox_due_idx ON outbox (status, next_attempt_at);
+CREATE INDEX IF NOT EXISTS outbox_session_idx ON outbox (session_id);
