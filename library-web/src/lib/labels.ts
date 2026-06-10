@@ -11,7 +11,7 @@ const LICENSE_LABELS: Record<string, string> = {
 }
 
 const LANGUAGE_LABELS: Record<string, string> = {
-  en: 'English', fr: 'French', de: 'German', lb: 'Luxembourgish',
+  en: 'English', fr: 'French', de: 'German', lu: 'Luxembourgish',
   pt: 'Portuguese', es: 'Spanish', it: 'Italian',
 }
 

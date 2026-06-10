@@ -12,6 +12,7 @@ describe('labels', () => {
   it('humanises ISO language codes', () => {
     expect(languageLabel('en')).toBe('English')
     expect(languageLabel('pt')).toBe('Portuguese')
+    expect(languageLabel('lu')).toBe('Luxembourgish') // project uses 'lu', not ISO 'lb'
     expect(languageLabel('zz')).toBe('zz')
   })
 })
