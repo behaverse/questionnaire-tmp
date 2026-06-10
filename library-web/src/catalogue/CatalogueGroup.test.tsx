@@ -5,10 +5,10 @@ import { MemoryRouter } from 'react-router-dom'
 import { CatalogueGroup } from './CatalogueGroup'
 import type { InstrumentGroup, CatalogueCard } from '../api/types'
 
-const form = (id: string): CatalogueCard => ({
+const form = (id: string, item_count = 6): CatalogueCard => ({
   id, version: 'v26.0606', entity_type: 'questionnaire', title: 'ASRS-v1.1', short_title: null,
   description: null, status: 'published', effective_license: 'unknown', language: 'en',
-  available_languages: ['en'], item_count: 6, estimated_minutes: null, domain: ['adhd'],
+  available_languages: ['en'], item_count, estimated_minutes: null, domain: ['adhd'],
   population: [], instrument_id: 'inst_asrs', variant: 'base',
 })
 
@@ -28,5 +28,16 @@ describe('CatalogueGroup', () => {
     await userEvent.click(toggle)
     expect(screen.getByText('qst_x_asrs')).toBeInTheDocument()
     expect(screen.getByText('qst_asrs_a')).toBeInTheDocument()
+  })
+
+  it('shows a metadata block (Domain / Items / License) on the collapsed family card', () => {
+    const g: InstrumentGroup = { instrument_id: 'inst_asrs', title: 'ASRS-v1.1', form_count: 2, languages: ['en'], domain: ['adhd'], forms: [form('qst_x_asrs', 6), form('qst_asrs_a', 18)] }
+    render(<MemoryRouter><CatalogueGroup group={g} /></MemoryRouter>)
+    // collapsed: only the family header's metadata block is present (forms not yet rendered)
+    expect(screen.getByText('Domain')).toBeInTheDocument()
+    expect(screen.getByText('adhd')).toBeInTheDocument()
+    expect(screen.getByText('Items')).toBeInTheDocument()
+    expect(screen.getByText('6, 18')).toBeInTheDocument() // distinct item counts across variants, sorted + joined
+    expect(screen.getByText('License')).toBeInTheDocument()
   })
 })

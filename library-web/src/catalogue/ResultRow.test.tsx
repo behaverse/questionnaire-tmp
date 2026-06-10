@@ -19,7 +19,8 @@ describe('ResultRow', () => {
     expect(screen.getByRole('link')).toHaveAttribute('href', '/q/qst_phq9')
     expect(screen.getByText(/Patient Health Questionnaire-9/)).toBeInTheDocument()
     expect(screen.getByText('qst_phq9')).toBeInTheDocument() // id shown to disambiguate same-titled variants
-    expect(screen.getByText(/9 items/)).toBeInTheDocument()
+    expect(screen.getByText('Items')).toBeInTheDocument()
+    expect(screen.getByText('9 · ~5 min')).toBeInTheDocument() // bare count (no "items" suffix) + estimated minutes under the Items label
     expect(screen.getByText(/CC BY/)).toBeInTheDocument()
     expect(screen.getAllByText(/depression/)).toHaveLength(2) // description text + Domain value
   })

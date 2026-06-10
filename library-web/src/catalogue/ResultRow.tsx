@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { CatalogueCard } from '../api/types'
 import { licenseLabel, languageLabel } from '../lib/labels'
+import { MetaRows } from './MetaRows'
 
 export function ResultRow({ card }: { card: CatalogueCard }) {
   const languages = (
@@ -11,16 +12,16 @@ export function ResultRow({ card }: { card: CatalogueCard }) {
         : []
   ).map(languageLabel)
 
-  const length: string[] = []
-  if (card.item_count != null) length.push(`${card.item_count} items`)
-  if (card.estimated_minutes != null) length.push(`~${card.estimated_minutes} min`)
+  const items: string[] = []
+  if (card.item_count != null) items.push(`${card.item_count}`)
+  if (card.estimated_minutes != null) items.push(`~${card.estimated_minutes} min`)
 
   const rows: { label: string; value: string }[] = []
   if (languages.length) rows.push({ label: 'Languages', value: languages.join(', ') })
   rows.push({ label: 'License', value: licenseLabel(card.effective_license) })
   if (card.domain.length) rows.push({ label: 'Domain', value: card.domain.join(', ') })
   if (card.population.length) rows.push({ label: 'Population', value: card.population.join(', ') })
-  if (length.length) rows.push({ label: 'Length', value: length.join(' · ') })
+  if (items.length) rows.push({ label: 'Items', value: items.join(' · ') })
 
   return (
     <article className="group relative border-b border-rule py-6 pl-6 pr-4 transition-colors first:border-t hover:bg-paper-raised">
@@ -41,16 +42,7 @@ export function ResultRow({ card }: { card: CatalogueCard }) {
       {card.description && card.description !== card.title && (
         <p className="mt-1.5 line-clamp-2 max-w-2xl text-sm leading-relaxed text-ink-soft">{card.description}</p>
       )}
-      <dl className="mt-3 space-y-1 text-sm">
-        {rows.map((row) => (
-          <div key={row.label} className="flex gap-3">
-            <dt className="w-[5.5rem] shrink-0 pt-px font-sans text-xs font-normal text-ink-faint/80">
-              {row.label}
-            </dt>
-            <dd className="text-ink-soft">{row.value}</dd>
-          </div>
-        ))}
-      </dl>
+      <MetaRows rows={rows} />
     </article>
   )
 }
