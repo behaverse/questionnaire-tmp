@@ -25,3 +25,15 @@ def validate_manifest(manifest: dict, schemas_dir: Path) -> None:
     """Validate a viewer conformance manifest against Schema 7. Raises ValidationError."""
     sd = str(schemas_dir)
     Draft202012Validator(_schema(sd, "viewer_conformance"), registry=_registry(sd)).validate(manifest)
+
+
+def validate_response(payload: dict, schemas_dir: Path) -> None:
+    """Validate a submission body against Schema 5 (response). Raises ValidationError."""
+    sd = str(schemas_dir)
+    Draft202012Validator(_schema(sd, "response"), registry=_registry(sd)).validate(payload)
+
+
+def validate_events(payload: dict, schemas_dir: Path) -> None:
+    """Validate a submission body against Schema 4a (events). Raises ValidationError."""
+    sd = str(schemas_dir)
+    Draft202012Validator(_schema(sd, "events"), registry=_registry(sd)).validate(payload)
