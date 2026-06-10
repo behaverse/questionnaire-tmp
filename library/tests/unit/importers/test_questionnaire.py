@@ -96,6 +96,13 @@ def test_reconstruct_no_header_id_means_no_instrument_id():
     assert q["metadata"]["variant"] == "base"
 
 
+def test_reconstruct_sets_item_count_from_question_elements():
+    # COMPS has one question element -> item_count 1 (legacy data only encodes count in the title text)
+    q = reconstruct("x_aiss", COMPS, SURVEY, release="v26.0606", imported_at="2026-06-06T00:00:00Z",
+                    prompt_langs={"aiss_q_1": {"en"}})
+    assert q["metadata"]["psychometrics"]["item_count"] == 1
+
+
 def test_reconstruct_degenerate_header_id_omits_instrument_id():
     # a header_id that sanitizes to empty must NOT emit an invalid 'inst_' value
     comps = [dict(c, header_id="---") if c["element_type"] == "header" else c for c in COMPS]

@@ -108,6 +108,11 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
             variant = variant[:64]
         meta["short_title"] = variant
 
+    # item_count = the number of question elements (legacy data only encodes it in the title text)
+    item_count = len(ref_prompt_ids)
+    if item_count:
+        meta["psychometrics"] = {"item_count": item_count}
+
     # description is required by instrument schema; synthesize if missing
     desc = (s.get("description") or "").strip()
     if not desc:
