@@ -3,17 +3,19 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 
-_CODE_FOR = {400: "bad_request", 404: "not_found", 410: "gone",
-             422: "unprocessable", 502: "upstream_unavailable"}
+_CODE_FOR = {400: "bad_request", 401: "unauthorized", 404: "not_found", 410: "gone",
+             422: "unprocessable", 502: "upstream_unavailable", 503: "service_unavailable"}
 
 
 def create_app() -> FastAPI:
-    from . import viewers, deployments, runtime, admin
+    from . import viewers, deployments, runtime, admin, sessions, submission
     app = FastAPI(title="Questionnaire Viewer Service", version="v1")
     app.include_router(viewers.router, prefix="/v1")
     app.include_router(deployments.router, prefix="/v1")
     app.include_router(runtime.router, prefix="/v1")
     app.include_router(admin.router, prefix="/v1")
+    app.include_router(sessions.router, prefix="/v1")
+    app.include_router(submission.router, prefix="/v1")
 
     @app.get("/healthz")
     def healthz():

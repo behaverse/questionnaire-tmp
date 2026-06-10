@@ -39,5 +39,5 @@ def _truncate(request):
         return
     url = request.getfixturevalue("pg_url")
     with psycopg.connect(url) as c:
-        c.execute("TRUNCATE deployment, viewer_registry, runtime_cache CASCADE")
+        c.execute("TRUNCATE deployment, viewer_registry, runtime_cache, session, outbox CASCADE")
         c.commit()
