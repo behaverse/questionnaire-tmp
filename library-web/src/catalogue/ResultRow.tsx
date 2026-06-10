@@ -39,6 +39,11 @@ export function ResultRow({ card }: { card: CatalogueCard }) {
           <span className="ml-2 font-sans text-sm font-normal text-ink-faint">({card.short_title})</span>
         )}
       </Link>
+      {card.variant && card.variant !== 'base' && (
+        <span className="ml-2 inline-block rounded bg-paper-sunken px-1.5 py-0.5 align-middle font-sans text-xs font-medium text-ink-soft">
+          {card.variant}
+        </span>
+      )}
       <p className="mt-1 font-mono text-xs text-ink-faint">{card.id}</p>
       {card.description && card.description !== card.title && (
         <p className="mt-1.5 line-clamp-2 max-w-2xl text-sm leading-relaxed text-ink-soft">{card.description}</p>

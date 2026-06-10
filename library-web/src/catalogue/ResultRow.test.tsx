@@ -32,4 +32,14 @@ describe('ResultRow', () => {
     expect(screen.getByText('License')).toBeInTheDocument()
     expect(screen.getByText('Domain')).toBeInTheDocument()
   })
+
+  it('shows a variant tag when the form has a non-base variant', () => {
+    render(<MemoryRouter><ResultRow card={{ ...card, variant: 'Part A screener' }} /></MemoryRouter>)
+    expect(screen.getByText('Part A screener')).toBeInTheDocument()
+  })
+
+  it('shows no variant tag for the default "base" variant', () => {
+    render(<MemoryRouter><ResultRow card={{ ...card, variant: 'base' }} /></MemoryRouter>)
+    expect(screen.queryByText('base')).toBeNull()
+  })
 })
