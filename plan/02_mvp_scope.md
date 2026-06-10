@@ -2,7 +2,7 @@
 
 The MVP boundary: what the first deliverable contains, and what it deliberately does not.
 
-**Last revised.** 2026-06-06.
+**Last revised.** 2026-06-06 (schema-hosting decision added 2026-06-10: schemas kept in-repo; public hosting at `behaverse.org/schemas/` deferred — see "Schema hosting" below).
 
 ## MVP outcome
 
@@ -14,7 +14,11 @@ A researcher can:
 4. Download its canonical JSON.
 5. Access the same content through the public REST API.
 
-The schemas the Library validates against are published at `behaverse.org/schemas/` and validate every artefact the Library stores.
+The schemas the Library validates against live in this repo (`schemas/`) — the source of truth — and validate every artefact the Library stores.
+
+### Schema hosting — kept in-repo for now (owner decision, 2026-06-10)
+
+The schemas are **kept here, in `schemas/`**; we are **not** publishing them to `behaverse.org/schemas/` as part of the MVP. Their canonical `$id`/`$ref` URLs (`https://behaverse.org/schemas/<name>/<version>/schema.json`) remain unchanged — they are stable *identifiers* that the validator resolves locally via a URI→file registry (`tools/validate_schemas.py`), so nothing needs them to be publicly live. Public hosting at `behaverse.org/schemas/`, and the eventual migration into `behaverse/schemas`, stay as the documented post-MVP end-state ([../design/14_repository_topology.md](../design/14_repository_topology.md) §8, [../design/12_governance.md](../design/12_governance.md)); they are **out of MVP scope**.
 
 ## In scope
 
@@ -35,7 +39,7 @@ Validator (`tools/validate_schemas.py`) walks every schema's examples and runs 9
 
 ### Library — STATUS: Core + importer built ✅; web UI + contribution workflow + deployment pending
 
-**Built + merged** (`library/`, 2026-06-05/06): the **Library Core** (catalogue + Git-backed ingestion + public read API: list/detail/versions/definition, reusable entities, dependency-graph `dependents`, full-text search, facets, withdrawn→410) and the **legacy `survey_database/` importer** (canonical JSON + provenance + loss report; converts all content, validates, ingests). **Not yet built:** the authenticated write surface + contribution/review workflow + DOI (need auth/Identity, OD-08), community signals (Identity), the **web interface** (sub-project 5), and deployment + persistent content seeding + public schema hosting. The original capability list below, with build status:
+**Built + merged** (`library/`, 2026-06-05/06): the **Library Core** (catalogue + Git-backed ingestion + public read API: list/detail/versions/definition, reusable entities, dependency-graph `dependents`, full-text search, facets, withdrawn→410) and the **legacy `survey_database/` importer** (canonical JSON + provenance + loss report; converts all content, validates, ingests). **Not yet built:** the authenticated write surface + contribution/review workflow + DOI (need auth/Identity, OD-08), community signals (Identity), the **web interface** (sub-project 5), and deployment + persistent content seeding (public schema hosting at `behaverse.org/schemas/` is **deferred** — schemas kept in-repo for now; see "Schema hosting" above). The original capability list below, with build status:
 
 - Catalogue with metadata, full item listing, version history per `design/06_library.md`. ✅ (read API)
 - Reusable-component pool — 11 entity types + Subscale + Scorer, with cross-reference tracking. ✅ (ingested + catalogued; `dependents` endpoint).
@@ -57,7 +61,7 @@ All 20 originally-tracked open decisions are now resolved. The full Resolution l
 - *2026-06-03:* OD-17 (Schema 5 strict BDM Response adherence + Schema 6 session metadata), OD-18 (Schema 3 Runtime production model + new Schema 7 Conformance Manifest).
 - *2026-06-05:* OD-19 (BDM Events vocabulary — `bdm:` namespace with 24 verbs / 15 object types / 5 actor types), OD-20 (Schema 4b family per source, mouse + keyboard MVP).
 
-No design decision blocks MVP implementation. **The Library Core + content importer are built; the remaining MVP work is the Library web UI (sub-project 5), the contribution workflow (sub-project 3, needs auth), and deployment + persistent content seeding + public schema hosting.**
+No design decision blocks MVP implementation. **The Library Core + content importer are built; the remaining MVP work is the Library web UI (sub-project 5), the contribution workflow (sub-project 3, needs auth), and deployment + persistent content seeding.** (Public schema hosting at `behaverse.org/schemas/` is **deferred** — schemas kept in-repo for now, owner decision 2026-06-10.)
 
 ## Out of scope for MVP
 
@@ -83,11 +87,11 @@ No design decision blocks MVP implementation. **The Library Core + content impor
 
 | Criterion | How verified | Status (2026-06-06) |
 |---|---|---|
-| Canonical schemas published at `behaverse.org/schemas/` and resolvable | `GET https://behaverse.org/schemas/questionnaire/definition/vYY.MMDD.json` returns the schema. | ⏳ Schemas authored + tagged; public hosting at `behaverse.org/schemas/` is a separate publish step (pending). |
+| Canonical schemas present + resolvable | The validator resolves every `$id` (`behaverse.org/schemas/…`) to a local schema file in `schemas/`. | ✅ Schemas in-repo + validated locally. **Public hosting at `behaverse.org/schemas/` deferred** — out of MVP scope (owner decision 2026-06-10); revisited post-MVP. |
 | Every artefact in the Library validates against its schema | A validation pass over the full catalogue runs with zero failures. | ✅ The importer smoke test validates every produced artifact against the schemas, and the Library validates each on ingest. |
 | Library catalogue is seeded with all content from `survey_database/` | Item counts match: ≥ 64 questionnaires, ≥ 793 Prompts (plus the entities they reference). | ⏳ Importer built + proven (converts all, validates, ingests all 64 questionnaires into Postgres in test). Persistent seeding into a *deployed* Library instance is pending. |
 | Library public read API is documented and reachable | `GET /v1/questionnaires`, `/v1/questionnaires/{id}`, `/v1/search` return correct responses; OpenAPI available. | ✅ Built + tested (auto OpenAPI). A deployed instance is an ops step. |
 | A researcher can search the catalogue and download a definition end-to-end | Manual walkthrough with one of the seeded instruments. | ⏳ Works at the API level (tested); the web-UI surface (sub-project 5) is not built. |
 | Authoritative location for the design is `design/`; for the plan is `plan/`. Old scattered docs are archived. | No surviving root-level spec files. | ✅ Done. |
 
-Current state: **schemas authored + Library Core + importer built and proven in test.** What remains for a *shipped* MVP: deploy a Library instance with the content persistently seeded, host the schemas publicly, and build the web UI (sub-project 5). Then Phase 2 begins.
+Current state: **schemas authored + Library Core + importer built and proven in test.** What remains for a *shipped* MVP: deploy a Library instance with the content persistently seeded, and build the web UI (sub-project 5). (Public schema hosting at `behaverse.org/schemas/` is **deferred** — schemas kept in-repo for now; not an MVP step.) Then Phase 2 begins.
