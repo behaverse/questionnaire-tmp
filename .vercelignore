@@ -1,0 +1,19 @@
+# Vercel only needs: library-web/ (SPA build) + library/ (the API package via requirements.txt) + api/ + vercel.json.
+# Exclude everything else from the deployment upload to keep the build lean.
+.venv
+node_modules
+content
+survey_database
+survey_system
+qv_godot
+archive_do_not_edit
+survey_database_2025.zip
+docs
+design
+plan
+schemas
+tools
+library/tests
+HANDOFF.md
+my_comments.md
+TOFIX.md
