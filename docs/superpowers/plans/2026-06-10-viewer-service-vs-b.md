@@ -1164,7 +1164,7 @@ def _response_set(sid):
         "multitask_type": "", "block_index": 1, "block_type": "instruction",
         "transformation_name": "identity", "trial_index": "0",
         "trial_start_datetime": "2026-06-10T12:00:00Z", "stimulus_id": "it_1",
-        "stimulus_type": "question"}]}
+        "stimulus_type": "instruction"}]}   # valid Schema 5 enum value
 
 
 def test_submit_responses_enqueues(session):
