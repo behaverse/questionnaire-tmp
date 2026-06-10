@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import type { FacetKey } from './useCatalogueParams'
+import type { FacetValue } from '../api/types'
 import { licenseLabel, languageLabel } from '../lib/labels'
 
 export interface FacetGroup {
   key: FacetKey
   title: string
-  values: { value: string; count: number }[]
+  values: FacetValue[]
 }
 
 export interface FacetSidebarProps {
@@ -64,7 +65,7 @@ function FacetGroupSection({
                     checked={active}
                     onChange={() => onToggle(group.key, v.value)}
                   />
-                  <span className={`flex-1 ${active ? 'font-medium' : ''}`}>{display(group.key, v.value)}</span>
+                  <span className={`flex-1 ${active ? 'font-medium' : ''}`}>{v.label ?? display(group.key, v.value)}</span>
                   <span className="font-mono text-[11px] tabular-nums text-ink-faint">{v.count}</span>
                 </label>
               </li>

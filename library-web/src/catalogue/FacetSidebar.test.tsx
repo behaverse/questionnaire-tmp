@@ -65,6 +65,20 @@ describe('FacetSidebar', () => {
     expect(screen.queryByText(/unknown|Unknown/)).toBeNull()
   })
 
+  it('renders a value label (instrument name) instead of the raw value when provided', async () => {
+    render(
+      <FacetSidebar
+        groups={[{ key: 'instrument', title: 'Instrument', values: [{ value: 'inst_acs', count: 2, label: 'Attentional Control Scale' }] }]}
+        selected={noSelection}
+        onToggle={() => {}}
+        onClear={() => {}}
+      />,
+    )
+    await userEvent.click(screen.getByRole('button', { name: /Instrument/ }))
+    expect(screen.getByText('Attentional Control Scale')).toBeInTheDocument()
+    expect(screen.queryByText('inst_acs')).toBeNull()
+  })
+
   it('reflects open/closed state via aria-expanded on the header button', async () => {
     render(
       <FacetSidebar groups={groups} selected={noSelection} onToggle={() => {}} onClear={() => {}} />,

@@ -5,7 +5,7 @@ from ..entity_types import ENTITY_TYPES
 from ..query import _CARD_COLS
 
 _TABLE_FACETS = {"domain", "population", "administration_mode", "tag"}
-_COLUMN_FACETS = {"license": "effective_license", "instrument": "instrument_id"}  # language handled separately (array column)
+_COLUMN_FACETS = {"license": "effective_license"}  # language + instrument handled separately
 
 router = APIRouter()
 
@@ -48,6 +48,17 @@ def facets(facet_type: str, conn=Depends(get_conn)):
             "WHERE c.status='published' AND c.entity_type='questionnaire' AND lang IS NOT NULL "
             "GROUP BY lang ORDER BY count(*) DESC"
         ).fetchall()
+    elif facet_type == "instrument":
+        # label each instrument family by its (shared) title, so the UI shows readable names
+        # (e.g. "Attentional Control Scale") instead of the inst_* slug. All forms of a family
+        # share the survey title, so min(title) is that name.
+        rows = conn.execute(
+            "SELECT instrument_id, min(title) AS label, count(*) FROM catalogue_entry "
+            "WHERE status='published' AND entity_type='questionnaire' AND instrument_id IS NOT NULL "
+            "GROUP BY instrument_id ORDER BY min(title)"
+        ).fetchall()
+        return {"facet_type": facet_type,
+                "values": [{"value": v, "label": lbl, "count": c} for v, lbl, c in rows]}
     elif facet_type in _COLUMN_FACETS:
         col = _COLUMN_FACETS[facet_type]   # fixed allow-list value, not user input -> safe to interpolate
         rows = conn.execute(
@@ -55,6 +66,6 @@ def facets(facet_type: str, conn=Depends(get_conn)):
             f"WHERE status='published' AND {col} IS NOT NULL GROUP BY {col} ORDER BY count(*) DESC"
         ).fetchall()
     else:
-        allowed = sorted(_TABLE_FACETS | set(_COLUMN_FACETS) | {"language"})
+        allowed = sorted(_TABLE_FACETS | set(_COLUMN_FACETS) | {"language", "instrument"})
         raise HTTPException(status_code=422, detail=f"unknown facet_type: {facet_type!r}; must be one of {allowed}")
     return {"facet_type": facet_type, "values": [{"value": v, "count": c} for v, c in rows]}

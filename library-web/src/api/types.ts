@@ -41,7 +41,7 @@ export interface VersionInfo {
   date: string | null
 }
 
-export interface FacetValue { value: string; count: number }
+export interface FacetValue { value: string; count: number; label?: string }
 export interface FacetResponse { facet_type: string; values: FacetValue[] }
 
 // Resolved Schema-2 definition (only the fields the UI reads; unknown keys allowed).

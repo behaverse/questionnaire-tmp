@@ -9,6 +9,7 @@ import { Skeleton } from '../components/Skeleton'
 import { EmptyState } from '../components/EmptyState'
 import { ErrorState } from '../components/ErrorState'
 import { ApiError } from '../api/client'
+import type { FacetValue } from '../api/types'
 
 const FACET_DEFS: { key: FacetKey; title: string }[] = [
   { key: 'domain', title: 'Domain' },
@@ -31,7 +32,7 @@ export function CataloguePage() {
   const instrument = useFacets('instrument')
   const language = useFacets('language')
   const license = useFacets('license')
-  const facetData: Record<FacetKey, { value: string; count: number }[]> = {
+  const facetData: Record<FacetKey, FacetValue[]> = {
     domain: domain.data?.values ?? [],
     population: population.data?.values ?? [],
     instrument: instrument.data?.values ?? [],

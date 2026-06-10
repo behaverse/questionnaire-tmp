@@ -41,3 +41,17 @@ def test_unknown_facet_still_422(client):
 def test_instrument_facet_endpoint_ok(client):
     r = client.get("/v1/facets", params={"facet_type": "instrument"})
     assert r.status_code == 200 and r.json()["facet_type"] == "instrument"
+
+def test_instrument_facet_labels_by_title(client, pg_url):
+    # the instrument facet labels each family by its (shared) title, so the UI shows the
+    # instrument name (e.g. "Attentional Control Scale") instead of the inst_* slug.
+    import psycopg
+    with psycopg.connect(pg_url) as c:
+        c.execute(
+            "UPDATE catalogue_entry SET instrument_id='inst_acs', title='Attentional Control Scale' "
+            "WHERE entity_type='questionnaire' "
+            "AND id IN (SELECT id FROM catalogue_entry WHERE entity_type='questionnaire' LIMIT 1)")
+        c.commit()
+    body = client.get("/v1/facets", params={"facet_type": "instrument"}).json()
+    match = [v for v in body["values"] if v["value"] == "inst_acs"]
+    assert match and match[0]["label"] == "Attentional Control Scale"
