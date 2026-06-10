@@ -16,7 +16,7 @@ export class ApiError extends Error {
 type Params = Record<string, string | number | boolean | undefined | null>
 
 async function get<T>(path: string, params?: Params): Promise<T> {
-  const url = new URL(BASE_URL + path)
+  const url = new URL(BASE_URL + path, window.location.origin)
   if (params) for (const [k, v] of Object.entries(params)) {
     if (v !== undefined && v !== null) url.searchParams.set(k, String(v))
   }

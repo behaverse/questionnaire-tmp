@@ -48,4 +48,16 @@ describe('api client', () => {
     expect(res.items[0].form_count).toBe(2)
     expect(res.items[0].instrument_id).toBe('inst_asrs')
   })
+
+  it('resolves relative paths same-origin when VITE_API_BASE_URL is empty', async () => {
+    vi.resetModules()
+    vi.stubEnv('VITE_API_BASE_URL', '')
+    const { api: sameOrigin } = await import('./client')
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ items: [], total: 0, limit: 20, offset: 0 }) } as Response)
+    vi.stubGlobal('fetch', fetchMock)
+    await sameOrigin.listQuestionnaires({})
+    const calledUrl = (fetchMock.mock.calls[0][0] as URL).toString()
+    expect(calledUrl).toBe(`${window.location.origin}/v1/questionnaires`)
+    vi.unstubAllEnvs(); vi.resetModules()
+  })
 })
