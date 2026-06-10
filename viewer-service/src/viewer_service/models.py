@@ -13,3 +13,14 @@ class RuntimeRequest(BaseModel):
     viewer_id: str
     viewer_version: str
     locale: str | None = None
+
+
+class SessionNew(BaseModel):
+    deployment_id: str
+    viewer_id: str
+    viewer_version: str
+    locale: str | None = None
+
+
+class LocaleSwitch(BaseModel):
+    locale: str
