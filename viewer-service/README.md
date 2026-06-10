@@ -14,6 +14,12 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 | `POST /deployments` | Create a minimal deployment (questionnaire_ref + runtime_policy + locales). |
 | `GET /deployments/{id}` | Fetch a deployment. |
 | `POST /deployments/{id}/runtime` | Mint (or return cached) Schema 3 for `{viewer_id, viewer_version, locale?}`. |
+| `POST /v1/sessions/new` | Mint a session for a deployment → `{session_id, session_token, runtime}`. |
+| `GET /v1/sessions/{id}` | (Bearer session token) status + last_active_locale + outbox counts (resume read). |
+| `GET /v1/sessions/{id}/runtime` | (token) Schema 3 runtime in the session's last_active_locale. |
+| `POST /v1/sessions/{id}/locale` | (token) switch locale → re-minted runtime. |
+| `POST /v1/sessions/{id}/responses` · `/events` | (token) submit Schema 5 / Schema 4a → enqueued to the outbox (202). |
+| `POST /v1/sessions/{id}/complete` | (token) mark the session submitted. |
 | `DELETE /runtime_cache[?deployment_id=]` | Admin purge (OD-18f). |
 | `GET /healthz` | Health. |
 
@@ -36,3 +42,17 @@ Tests (testcontainers needs the Docker config override, same as `library/`):
 ```bash
 DOCKER_CONFIG=/tmp/lib_docker pytest -q
 ```
+
+## Forwarding worker (OD-13)
+
+Submissions are buffered in a durable Postgres `outbox` and shipped to Behaverse by a
+separate worker:
+
+```bash
+export BEHAVERSE_BASE_URL=https://behaverse.example/ingest
+export BEHAVERSE_BEARER_TOKEN=...
+viewer-service forward-worker --once          # one batch (cron / scheduled invoke)
+viewer-service forward-worker --loop --interval 5   # daemon
+```
+
+A session reaches `forwarded` once it is `submitted` and all its outbox rows are forwarded.
