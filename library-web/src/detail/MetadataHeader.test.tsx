@@ -46,4 +46,13 @@ describe('MetadataHeader', () => {
     await userEvent.click(screen.getByRole('button', { name: /download json/i }))
     expect(onDownload).toHaveBeenCalled()
   })
+
+  it('shows the variant tag when the form has a non-base variant', () => {
+    render(
+      <MemoryRouter>
+        <MetadataHeader meta={{ ...meta, variant: 'Part A screener' }} version="v26.0602" allVersions={[]} lang="en" onLang={() => {}} onDownload={() => {}} />
+      </MemoryRouter>,
+    )
+    expect(screen.getByText('Part A screener')).toBeInTheDocument()
+  })
 })

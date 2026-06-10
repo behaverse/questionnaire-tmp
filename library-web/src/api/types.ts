@@ -102,6 +102,7 @@ export interface DefMetadata {
   id: string
   title: string
   short_title?: string
+  variant?: string | null
   description?: string
   version: string
   language?: string

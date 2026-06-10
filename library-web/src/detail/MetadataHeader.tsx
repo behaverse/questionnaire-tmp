@@ -28,6 +28,13 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
       {meta.short_title && meta.short_title !== meta.title && (
         <p className="mt-1.5 font-serif text-lg text-ink-faint">{meta.short_title}</p>
       )}
+      {meta.variant && meta.variant !== 'base' && (
+        <p className="mt-2">
+          <span className="inline-block rounded bg-paper-sunken px-2 py-0.5 font-sans text-sm font-medium text-ink-soft">
+            {meta.variant}
+          </span>
+        </p>
+      )}
       <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
         {meta.license && (
           <span className="text-sm text-ink-soft">
