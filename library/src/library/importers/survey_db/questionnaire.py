@@ -99,14 +99,14 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
     title = (s.get("title") or qid).strip() or qid
     meta = {"id": canonical_id("questionnaire", qid), "version": version,
             "title": title, "language": primary_language}
-    variant = str(s.get("variant") or "").strip()
-    if variant:
-        if len(variant) > 64:
+    short_title_src = str(s.get("variant") or "").strip()
+    if short_title_src:
+        if len(short_title_src) > 64:
             if loss:
                 loss.add("approximated", f"surveys.{s.get('survey_id') or qid}.variant",
-                         f"variant truncated from {len(variant)} to 64 chars for short_title")
-            variant = variant[:64]
-        meta["short_title"] = variant
+                         f"variant truncated from {len(short_title_src)} to 64 chars for short_title")
+            short_title_src = short_title_src[:64]
+        meta["short_title"] = short_title_src
 
     # item_count = the number of question elements (legacy data only encodes it in the title text)
     item_count = len(ref_prompt_ids)
