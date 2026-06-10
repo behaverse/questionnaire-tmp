@@ -18,14 +18,14 @@ This sequence is captured below.
 
 Detailed in [02_mvp_scope.md](02_mvp_scope.md).
 
-### Status as of 2026-06-06
+### Status as of 2026-06-10
 
 **Schema-authoring portion: complete.** All 8 data-model schemas authored, tagged, validated:
 
 | Schema | Tag | OD |
 |---|---|---|
-| 1 Instrument Metadata | `instrument-v26.0605` | (renamed `authors` → `author` 2026-06-05) |
-| 2 Questionnaire Definition | `v26.0602` | OD-15, OD-16 |
+| 1 Instrument Metadata | `instrument-v26.0609` | `authors`→`author`; + `instrument_id`/`variant` (OD-21) |
+| 2 Questionnaire Definition | `v26.0609` | OD-15, OD-16; retargets Schema 1 v26.0609 (OD-21) |
 | 3 Questionnaire Runtime | `runtime-v26.0603` | OD-18 |
 | 4a Event Data | `events-v26.0605` | OD-19 |
 | 4b Behavioural Channels — Mouse + Keyboard | `recordings-v26.0605` | OD-20 (EEG / webcam / microphone deferred) |
@@ -35,11 +35,13 @@ Detailed in [02_mvp_scope.md](02_mvp_scope.md).
 
 All 20 originally-tracked open decisions resolved (Resolution log in [../design/10_open_decisions.md](../design/10_open_decisions.md)). The six BDM-deviation entries D1–D6 in [../design/05c_bdm_alignment.md](../design/05c_bdm_alignment.md) have been drafted and **filed as issues upstream** in `behaverse/data-model`.
 
-**Library-implementation portion: Library Core + legacy importer built ✅** (merged to `master`, under `library/`). The Library Core exposes the public read API (catalogue list/detail/versions/definition, reusable entities, dependency-graph `dependents`, full-text search, facets) over Git-ingested canonical JSON, with storage Approach C (`jsonb` + derived index). The importer converts the full `survey_database/` catalogue into canonical Schema 2 JSON + provenance + loss report; its smoke test validates every artifact against the schemas and ingests all 64 questionnaires into Postgres with zero errors. 86 library + 308 schema tests pass. **Still pending:** contribution/review workflow + DOI (needs auth/Identity, OD-08), community signals (Identity), the Library web UI (sub-project 5), and deployment + persistent content seeding. (Public schema hosting at `behaverse.org/schemas/` is **deferred** — schemas kept in-repo for now, owner decision 2026-06-10; see [02_mvp_scope.md](02_mvp_scope.md) §"Schema hosting".)
+**Library-implementation portion: Library Core + legacy importer + web UI built ✅** (merged to `master`, under `library/` + `library-web/`). The Library Core exposes the public read API (catalogue list/detail/versions/definition, reusable entities, dependency-graph `dependents`, full-text search, facets) over Git-ingested canonical JSON, with storage Approach C (`jsonb` + derived index). The importer converts the full `survey_database/` catalogue into canonical Schema 2 JSON + provenance + loss report; its smoke test validates every artifact and ingests all 64 questionnaires into Postgres with zero errors. The **Library web UI** (sub-project 5) — a Vite/React/TS read-only catalogue SPA (search → view → download), with instrument-family grouping (OD-21) — is built + merged. 121 library + 309 schema + 59 frontend tests pass. **Still pending:** contribution/review workflow + DOI (needs auth/Identity, OD-08) and community signals (Identity) — both deferred (need Identity). (Public schema hosting at `behaverse.org/schemas/` is **deferred** — schemas kept in-repo, owner decision 2026-06-10; see [02_mvp_scope.md](02_mvp_scope.md) §"Schema hosting".)
 
-**Gate to leave Phase 1.** Schemas authored ✅ (kept in-repo; public hosting at `behaverse.org/schemas/` **deferred** — owner decision 2026-06-10). Library public read API works ✅ (built + tested; a deployed instance is an ops step). A researcher can search/view/download a definition ✅ at the API level — the web-UI surface (sub-project 5) is not built. Net: the buildable Phase-1 capabilities are in; a *shipped* MVP additionally needs deployment + the web UI.
+**Gate to leave Phase 1 — the *build* is complete; only deployment remains.** Schemas authored ✅ (kept in-repo; behaverse.org hosting deferred). Library read API ✅ built + tested. **Library web UI ✅ built + merged.** A researcher can search/view/download end-to-end ✅ at the API + (local) web-UI level. The **one remaining Phase-1 item is the ops step: deploy a Library + web-UI instance and seed the content persistently** so the Library is genuinely *operational*. **In progress (2026-06-10):** MVP deployment to **Supabase (managed Postgres, EU) + Vercel** (FastAPI serverless + the SPA static, same-origin). Once deployed, Phase 1 is shipped and **Phase 2 is the next priority** (see below).
 
 ## Phase 2 — Web Viewer + Deployments
+
+> **Status (2026-06-10): NEXT PRIORITY** — Phase 1's build is complete; once the MVP is deployed, Phase 2 is the next work, to be **delegated to a new agent**. Recommended starting point: the **`questionnaire-runtime-denormaliser`** (the shared Schema 2 → Schema 3 dependency everything else needs). See the Phase-2 delegation brief in `HANDOFF.md`.
 
 **Outcome.** A questionnaire from the Library can be deployed for anonymous online use; participants complete it; responses and xAPI events flow into Behaverse; the researcher can export the data.
 
