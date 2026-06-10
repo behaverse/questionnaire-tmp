@@ -16,12 +16,13 @@ export function ResultRow({ card }: { card: CatalogueCard }) {
   if (card.item_count != null) items.push(`${card.item_count}`)
   if (card.estimated_minutes != null) items.push(`~${card.estimated_minutes} min`)
 
+  // order matches the instrument-family card: Domain, Items, Languages, License (+ Population when present)
   const rows: { label: string; value: string }[] = []
+  if (card.domain.length) rows.push({ label: 'Domain', value: card.domain.join(', ') })
+  if (items.length) rows.push({ label: 'Items', value: items.join(' · ') })
   if (languages.length) rows.push({ label: 'Languages', value: languages.join(', ') })
   rows.push({ label: 'License', value: licenseLabel(card.effective_license) })
-  if (card.domain.length) rows.push({ label: 'Domain', value: card.domain.join(', ') })
   if (card.population.length) rows.push({ label: 'Population', value: card.population.join(', ') })
-  if (items.length) rows.push({ label: 'Items', value: items.join(' · ') })
 
   return (
     <article className="group relative border-b border-rule py-6 pl-6 pr-4 transition-colors first:border-t hover:bg-paper-raised">
