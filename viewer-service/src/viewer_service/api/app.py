@@ -8,7 +8,7 @@ _CODE_FOR = {400: "bad_request", 401: "unauthorized", 404: "not_found", 410: "go
 
 
 def create_app() -> FastAPI:
-    from . import viewers, deployments, runtime, admin, sessions, submission, export
+    from . import viewers, deployments, runtime, admin, sessions, submission, export, themes, metrics
     app = FastAPI(title="Questionnaire Viewer Service", version="v1")
     app.include_router(viewers.router, prefix="/v1")
     app.include_router(deployments.router, prefix="/v1")
@@ -17,6 +17,8 @@ def create_app() -> FastAPI:
     app.include_router(sessions.router, prefix="/v1")
     app.include_router(submission.router, prefix="/v1")
     app.include_router(export.router, prefix="/v1")
+    app.include_router(themes.router, prefix="/v1")
+    app.include_router(metrics.router, prefix="/v1")
 
     @app.get("/healthz")
     def healthz():

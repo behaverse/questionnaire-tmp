@@ -7,6 +7,7 @@ from . import deployments as deploy_svc
 from .store import sessions as session_store
 from .store import deployments as dep_store
 from .store import viewers as viewer_store
+from .store import themes as themes_store
 
 
 def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_version: str,
@@ -28,7 +29,8 @@ def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_ver
         instrument_version=qst_version, status="in_progress", token_hash=tokens.hash_token(token),
         initial_locale=locale, last_active_locale=locale)
     conn.commit()
-    return {"session_id": session_id, "session_token": token, "runtime": runtime}
+    theme = themes_store.get_theme(conn, deployment["theme_id"]) if deployment.get("theme_id") else None
+    return {"session_id": session_id, "session_token": token, "runtime": runtime, "theme": theme}
 
 
 def session_runtime(conn, session: dict) -> dict:

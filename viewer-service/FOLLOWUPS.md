@@ -52,3 +52,15 @@
 - **VS-E (next):** monitoring dashboard (UC-12) + theme infrastructure (UC-13 infra).
 - **Deferred:** Behaverse reconciliation + the `validated` session state (reconciliation needs a
   Behaverse query endpoint that doesn't exist yet; `validated` is a no-op stub).
+
+## VS-E follow-ups
+
+- **SSE dashboard transport.** The metrics endpoint is a pollable JSON snapshot; add the 08a SSE
+  stream when a dashboard UI consumes it.
+- **Abandonment hotspots.** Per-question drop-off (Phase-5 dashboard) needs event-level telemetry.
+- **Theme editor (Phase 6, UC-13).** No logo-upload / colour-picker / custom-CSS-authoring UI,
+  accessibility-conformance UI, or theme versioning; `POST /themes` is a raw create (unauthenticated).
+- **Theme application.** VS-E returns the bundle at session-mint; applying it (+ the R18 style/flow
+  overrides) is the Web Viewer's job.
+- **Viewer Service is now feature-complete for Phase 2 (VS-A..E).** Remaining Phase-2 gate work is
+  non-VS: the Web Viewer, the WASM expression evaluator, and the Scorer conformance runner.

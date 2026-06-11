@@ -42,3 +42,12 @@ class SessionNew(BaseModel):
 
 class LocaleSwitch(BaseModel):
     locale: str
+
+
+class ThemeCreate(BaseModel):
+    name: str
+    palette: dict
+    typography: dict
+    spacing: dict | None = None
+    logo_url: str | None = None
+    custom_css: str | None = None

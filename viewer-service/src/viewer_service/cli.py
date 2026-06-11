@@ -29,8 +29,10 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     cmd = argv[0]
     if cmd == "migrate":
+        from .themes import seed_builtin_themes
         with psycopg.connect(get_settings().database_url) as conn:
             apply_schema(conn)
+            seed_builtin_themes(conn)
             conn.commit()
         print("schema applied")
         return 0
