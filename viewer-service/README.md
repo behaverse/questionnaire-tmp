@@ -15,6 +15,8 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 | `GET /v1/deployments` | List deployment summaries. |
 | `PATCH /v1/deployments/{id}` | Narrow update — `active_until` and/or `quota` only. |
 | `GET /v1/deployments/{id}/export.csv` | Stream a BDM-native CSV of all collected responses for the deployment (UC-11). |
+| `GET /v1/deployments/{id}/metrics` | Per-deployment monitoring snapshot (UC-12): active/completion/quota/recent + forwarding alert. |
+| `POST /v1/themes` · `GET /v1/themes` · `GET /v1/themes/{id}` | Theme infrastructure (UC-13 infra): create (WCAG-AA-checked), list, get. |
 | `GET /deployments/{id}` | Fetch a deployment. |
 | `POST /deployments/{id}/runtime` | Mint (or return cached) Schema 3 for `{viewer_id, viewer_version, locale?}`. |
 | `POST /v1/sessions/new` | Mint a session for a deployment → `{session_id, session_token, runtime}`. |
@@ -59,6 +61,14 @@ viewer-service forward-worker --loop --interval 5   # daemon
 ```
 
 A session reaches `forwarded` once it is `submitted` and all its outbox rows are forwarded.
+
+## Monitoring & theming (VS-E)
+
+`GET /deployments/{id}/metrics` returns a JSON snapshot (poll it; SSE is deferred until a dashboard
+UI exists). `/themes` stores theme bundles; `POST /themes` runs a WCAG-AA check (palette text colours
+>= 4.5:1 vs background + base_size >= 14) and blocks save on failure. `viewer-service migrate` seeds
+the built-in themes (`default`, `institutional_blue`, `institutional_green`). `/sessions/new` returns
+the deployment's resolved `theme` bundle (or null) for the viewer to apply.
 
 ## Deployment modes & lifecycle (VS-C)
 
