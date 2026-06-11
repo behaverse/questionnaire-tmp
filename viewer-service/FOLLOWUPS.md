@@ -39,3 +39,16 @@
   would need careful in-flight-session semantics.
 - **Style/flow override application.** Overrides are stored + validated, but applying them to the
   runtime (resolving instrument vs deployment values per R18) is a Web Viewer / runtime concern.
+
+## VS-D follow-ups
+
+- **Events export.** Only response data (Schema 5) is exported; a Schema 4a events export is later.
+- **Other formats + codebook.** Parquet / SPSS `.sav` / R `.rds` / JSON exports and the accompanying
+  codebook (variable/value labels) are post-MVP (CSV is the Phase-2 format per OD-17 / 05_data_model).
+- **Large-export streaming.** `iter_response_rows` iterates the result set; for very large deployments,
+  switch to a server-side (named) cursor / `fetchmany` batching.
+- **Per-session export + filtering.** Whole-deployment raw dump only; per-session export and
+  filtering/aggregation are later.
+- **VS-E (next):** monitoring dashboard (UC-12) + theme infrastructure (UC-13 infra).
+- **Deferred:** Behaverse reconciliation + the `validated` session state (reconciliation needs a
+  Behaverse query endpoint that doesn't exist yet; `validated` is a no-op stub).

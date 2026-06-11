@@ -14,6 +14,7 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 | `POST /deployments` | Create a minimal deployment (questionnaire_ref + runtime_policy + locales). |
 | `GET /v1/deployments` | List deployment summaries. |
 | `PATCH /v1/deployments/{id}` | Narrow update — `active_until` and/or `quota` only. |
+| `GET /v1/deployments/{id}/export.csv` | Stream a BDM-native CSV of all collected responses for the deployment (UC-11). |
 | `GET /deployments/{id}` | Fetch a deployment. |
 | `POST /deployments/{id}/runtime` | Mint (or return cached) Schema 3 for `{viewer_id, viewer_version, locale?}`. |
 | `POST /v1/sessions/new` | Mint a session for a deployment → `{session_id, session_token, runtime}`. |
