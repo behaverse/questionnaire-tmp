@@ -71,3 +71,19 @@ CREATE TABLE IF NOT EXISTS outbox (
 );
 CREATE INDEX IF NOT EXISTS outbox_due_idx ON outbox (status, next_attempt_at);
 CREATE INDEX IF NOT EXISTS outbox_session_idx ON outbox (session_id);
+
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS mode_preset                 text;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS dimensions                  jsonb;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS active_from                 timestamptz;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS active_until                timestamptz;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS quota                       jsonb;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS style_overrides             jsonb;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS flow_overrides              jsonb;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS redirect_url                text;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS confirmation_message        jsonb;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS randomization_seed_strategy text;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS channels                    jsonb;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS created_by                  text;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS consent_text_ref            text;
+
+ALTER TABLE session ADD COLUMN IF NOT EXISTS ephemeral boolean NOT NULL DEFAULT false;
