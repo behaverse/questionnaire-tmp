@@ -6,17 +6,18 @@ _INSERT_COLS = ("session_id", "session_index", "deployment_id", "viewer_id", "vi
                 "initial_locale", "last_active_locale")
 
 
-def insert_session(conn: psycopg.Connection, **fields) -> None:
-    cols = ", ".join(_INSERT_COLS)
-    placeholders = ", ".join(["%s"] * len(_INSERT_COLS))
+def insert_session(conn: psycopg.Connection, ephemeral: bool = False, **fields) -> None:
+    cols = ", ".join(_INSERT_COLS + ("ephemeral",))
+    placeholders = ", ".join(["%s"] * (len(_INSERT_COLS) + 1))
     conn.execute(f"INSERT INTO session ({cols}) VALUES ({placeholders})",
-                 tuple(fields[c] for c in _INSERT_COLS))
+                 tuple(fields[c] for c in _INSERT_COLS) + (ephemeral,))
 
 
 _SELECT_COLS = ("session_id", "session_index", "deployment_id", "viewer_id", "viewer_version",
                 "agent_id", "instrument_id", "instrument_version", "status", "token_hash",
                 "initial_locale", "last_active_locale", "started_at", "completed_at",
-                "submitted_at", "forwarded_at", "forward_attempts", "forward_failure_reason")
+                "submitted_at", "forwarded_at", "forward_attempts", "forward_failure_reason",
+                "ephemeral")
 
 
 def _row_to_dict(row) -> dict:
@@ -53,3 +54,8 @@ def set_forwarded(conn: psycopg.Connection, session_id: str) -> None:
 def set_failure_reason(conn: psycopg.Connection, session_id: str, reason: str) -> None:
     conn.execute("UPDATE session SET forward_failure_reason=%s WHERE session_id=%s",
                  (reason, session_id))
+
+
+def count_for_deployment(conn: psycopg.Connection, deployment_id: str) -> int:
+    return conn.execute("SELECT count(*) FROM session WHERE deployment_id=%s",
+                        (deployment_id,)).fetchone()[0]

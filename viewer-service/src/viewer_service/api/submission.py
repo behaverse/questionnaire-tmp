@@ -9,26 +9,28 @@ from .. import submission as submission_svc
 router = APIRouter()
 
 
-def _enqueue(session_id: str, kind: str, payload: dict, conn):
+def _enqueue(session_id: str, kind: str, payload: dict, conn, ephemeral: bool):
     try:
-        oid = submission_svc.submit(conn, session_id, kind, payload, get_settings().schemas_dir)
+        oid = submission_svc.submit(conn, session_id, kind, payload, get_settings().schemas_dir, ephemeral)
     except submission_svc.OutboxFull:
         return JSONResponse(status_code=503, content={"error": {
             "code": "service_unavailable", "message": "submission queue is full; try again later"}})
     except ValidationError as e:
         return JSONResponse(status_code=422, content={"error": {
             "code": "invalid_submission", "message": e.message}})
+    if oid is None:
+        return JSONResponse(status_code=202, content={"ephemeral": True})
     return JSONResponse(status_code=202, content={"enqueued": oid})
 
 
 @router.post("/sessions/{session_id}/responses")
 def responses(session_id: str, payload: dict, session=Depends(require_session), conn=Depends(get_conn)):
-    return _enqueue(session_id, "responses", payload, conn)
+    return _enqueue(session_id, "responses", payload, conn, session["ephemeral"])
 
 
 @router.post("/sessions/{session_id}/events")
 def events(session_id: str, payload: dict, session=Depends(require_session), conn=Depends(get_conn)):
-    return _enqueue(session_id, "events", payload, conn)
+    return _enqueue(session_id, "events", payload, conn, session["ephemeral"])
 
 
 @router.post("/sessions/{session_id}/complete")

@@ -26,3 +26,16 @@
 - **Forwarder concurrency.** A single `forward-worker` is assumed; `FOR UPDATE SKIP LOCKED` makes
   multiple workers safe, but that hasn't been load-tested.
 - **mTLS / E2E encryption.** Deferred per OD-13 (TLS + SHA-256 + bearer ship now).
+
+## VS-C follow-ups
+
+- **Ephemeral session TTL purge.** Demo sessions skip the outbox + refuse resume, but their
+  `session` rows are not yet purged; add an age-based sweeper before production.
+- **Per-condition quota.** Only a per-deployment `max_sessions` cap exists; per-condition caps
+  need Participant-Platform condition assignment (Phase 5).
+- **Non-`none`-auth presets.** access_code / platform_study / embedded / kiosk / preview are
+  rejected at create until Identity/Platform/host integration lands (OD-08).
+- **Full deployment update.** Only `active_until` + `quota` are mutable via PATCH; broader edits
+  would need careful in-flight-session semantics.
+- **Style/flow override application.** Overrides are stored + validated, but applying them to the
+  runtime (resolving instrument vs deployment values per R18) is a Web Viewer / runtime concern.
