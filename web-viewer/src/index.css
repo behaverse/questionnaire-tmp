@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --qv-primary: #1a5fb4;
+  --qv-secondary: #613583;
+  --qv-success: #26734d;
+  --qv-warning: #8f6000;
+  --qv-error: #a51d2d;
+  --qv-background: #ffffff;
+  --qv-font-family: Inter, system-ui, sans-serif;
+  --qv-base-size: 16px;
+  --qv-space-unit: 8px;
+}
+html { font-size: var(--qv-base-size); }
+body { font-family: var(--qv-font-family); background: var(--qv-background); }
+
+@keyframes qv-step-in  { from { opacity: 0; transform: translateY(1.25rem) } to { opacity: 1; transform: none } }
+@keyframes qv-step-out { to   { opacity: 0; transform: translateY(-1.25rem) } }
+.qv-step-enter { animation: qv-step-in 220ms ease-out both; }
+.qv-step-leave { animation: qv-step-out 200ms ease-in both; }
+@media (prefers-reduced-motion: reduce) {
+  .qv-step-enter, .qv-step-leave { animation: none; }
+}
