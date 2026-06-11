@@ -1,7 +1,9 @@
 import uuid
+from datetime import datetime, timezone
 
 from .runtime import mint_runtime
 from . import tokens
+from . import deployments as deploy_svc
 from .store import sessions as session_store
 from .store import deployments as dep_store
 from .store import viewers as viewer_store
@@ -9,18 +11,22 @@ from .store import viewers as viewer_store
 
 def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_version: str,
                 requested_locale: str | None) -> dict:
-    """Mint the runtime (VS-A), allocate a session + opaque token, persist the session."""
+    """Gate against the active window + quota, mint the runtime, allocate session + token."""
+    session_count = session_store.count_for_deployment(conn, deployment["deployment_id"])
+    deploy_svc.check_deployable(deployment, datetime.now(timezone.utc), session_count)
     runtime = mint_runtime(conn, deployment, viewer, requested_locale)
     locale = runtime["locale"]
     session_id = str(uuid.uuid4())
     token = tokens.mint_token()
     agent_id = "agent_" + uuid.uuid4().hex[:8]
     qst_id, _, qst_version = deployment["questionnaire_ref"].partition("@")
+    ephemeral = (deployment.get("dimensions") or {}).get("persistence") == "ephemeral"
     session_store.insert_session(
-        conn, session_id=session_id, session_index=1, deployment_id=deployment["deployment_id"],
-        viewer_id=viewer_id, viewer_version=viewer_version, agent_id=agent_id,
-        instrument_id=qst_id, instrument_version=qst_version, status="in_progress",
-        token_hash=tokens.hash_token(token), initial_locale=locale, last_active_locale=locale)
+        conn, ephemeral=ephemeral, session_id=session_id, session_index=1,
+        deployment_id=deployment["deployment_id"], viewer_id=viewer_id,
+        viewer_version=viewer_version, agent_id=agent_id, instrument_id=qst_id,
+        instrument_version=qst_version, status="in_progress", token_hash=tokens.hash_token(token),
+        initial_locale=locale, last_active_locale=locale)
     conn.commit()
     return {"session_id": session_id, "session_token": token, "runtime": runtime}
 
