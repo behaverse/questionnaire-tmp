@@ -41,23 +41,23 @@ All 20 originally-tracked open decisions resolved (Resolution log in [../design/
 
 ## Phase 2 — Web Viewer + Deployments
 
-> **Status (2026-06-10): NEXT PRIORITY** — Phase 1's build is complete; once the MVP is deployed, Phase 2 is the next work, to be **delegated to a new agent**. Recommended starting point: the **`questionnaire-runtime-denormaliser`** (the shared Schema 2 → Schema 3 dependency everything else needs). See the Phase-2 delegation brief in `HANDOFF.md`.
+> **Status (2026-06-11): IN PROGRESS — backend complete.** The denormaliser + the full Viewer Service (VS-A..E) are built, tested, and merged. The remaining gate-critical work is the participant-facing **Web Viewer** + its embedded **WASM evaluator**. The "Web Viewer — START HERE" delegation brief is in `HANDOFF.md`.
 
 **Outcome.** A questionnaire from the Library can be deployed for anonymous online use; participants complete it; responses and xAPI events flow into Behaverse; the researcher can export the data.
 
 **Key deliverables.**
 
-- **`questionnaire-runtime-denormaliser` Python library** (per OD-18; renamed from `behaverse-runtime-denormaliser` per [../design/14_repository_topology.md](../design/14_repository_topology.md)). Shared by Viewer Service and Editor preview to produce Schema 3 runtimes from Schema 2 sources.
-- **Viewer Service / Orchestrator core**: Postgres-backed `runtime_cache` table with 5-tuple cache key (per OD-18f); admin purge API; viewer-registry table storing Schema 7 manifests; `/sessions/new` endpoint that mints Schema 3 runtimes; OD-13 queued-forwarding outbox with TLS+SHA-256 hop signing and pluggable Behaverse sink.
-- **Web Viewer** rendering Schema 3 runtimes (per OD-01, resolved 2026-05-23 → S1 Pure custom — custom React + TypeScript renderer, no SurveyJS dependency). Publishes a Schema 7 conformance manifest.
-- **Session resume semantics** (OD-14) implemented in the Web Viewer.
-- **WASM expression evaluator** with `score(id)` host function (per OD-11 + OD-16 §3 architecture). Evaluates `LogicRule.condition` expressions; invokes Scorers for branching-required scores. Embedded by Web Viewer, Native Viewer, Editor.
-- **Scorer conformance runner** turning the existing `check_scorer_conformance` SKIP stub into a real test runner (per OD-16).
-- **CSV serializer** for Schema 5 → BDM-compliant CSV (per OD-17).
-- **Anonymous-link deployment mode** (UC-04).
-- **Demo mode** (UC-08).
-- **Researcher response export** (UC-11).
-- **Researcher monitoring dashboard, minimal version** (UC-12).
+- ✅ **`questionnaire-runtime-denormaliser` Python library** (per OD-18). Built + merged 2026-06-10 (`questionnaire-runtime-denormaliser/`, 56 tests).
+- ✅ **Viewer Service / Orchestrator** (per OD-18f/OD-13/OD-14): `runtime_cache` 5-tuple cache + admin purge; viewer-registry (Schema 7); `/sessions/new` minting Schema 3; OD-13 queued-forwarding outbox + SHA-256 + pluggable Behaverse sink; sessions/resume/locale; deployment management & lifecycle. Built + merged 2026-06-10/11 as **VS-A..E** (`viewer-service/`, 116 tests).
+- ❌ **Web Viewer** rendering Schema 3 runtimes (per OD-01 → S1 Pure custom: custom React + TypeScript, no SurveyJS). Publishes a Schema 7 conformance manifest. **← NEXT (gate-critical).**
+- ❌ **Session resume semantics** (OD-14) implemented in the Web Viewer (the Viewer-Service-side resume rules are built; the client side is part of the Web Viewer).
+- ❌ **WASM expression evaluator** with `score(id)` host function (per OD-11 + OD-16 §3). Evaluates `LogicRule.condition`; invokes Scorers for branching-required scores. Embedded by Web Viewer, Native Viewer, Editor. **← gate-critical, shared.**
+- ❌ **Scorer conformance runner** turning the `check_scorer_conformance` SKIP stub into a real test runner (per OD-16).
+- ✅ **CSV serializer** for Schema 5 → BDM-compliant CSV (per OD-17). Built in VS-D (`viewer-service` `export_csv` + `GET /deployments/{id}/export.csv`).
+- ✅ **Anonymous-link deployment mode** (UC-04) — VS-C.
+- ✅ **Demo mode** (UC-08) — VS-C (ephemeral deployments).
+- ✅ **Researcher response export** (UC-11) — VS-D (the CSV export endpoint). *Web-Viewer-collected data is the end-to-end proof, pending the viewer.*
+- ✅ **Researcher monitoring dashboard, minimal version** (UC-12) — VS-E (`GET /deployments/{id}/metrics`; SSE/UI deferred).
 
 **Gate to leave Phase 2.** End-to-end pipeline works: Library → deployment → Web Viewer (rendering Schema 3) → emitted bdm: events (Schema 4a) + responses (Schema 5) + session metadata (Schema 6) → Viewer Service → Behaverse (`forwarded` state confirmed) → export. UC-04, UC-08, UC-11 satisfied.
 
