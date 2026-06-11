@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "typecheck": "tsc -b",
+    "build": "tsc -b && tsc -p tsconfig.test.json && vite build",
+    "typecheck": "tsc -b && tsc -p tsconfig.test.json",
     "preview": "vite preview --port 4174",
     "test": "vitest run && node scripts/validate-manifest.mjs",
     "test:watch": "vitest"
