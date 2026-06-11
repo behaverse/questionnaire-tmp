@@ -87,3 +87,14 @@ ALTER TABLE deployment ADD COLUMN IF NOT EXISTS created_by                  text
 ALTER TABLE deployment ADD COLUMN IF NOT EXISTS consent_text_ref            text;
 
 ALTER TABLE session ADD COLUMN IF NOT EXISTS ephemeral boolean NOT NULL DEFAULT false;
+
+CREATE TABLE IF NOT EXISTS theme (
+  theme_id    text PRIMARY KEY,
+  name        text NOT NULL,
+  palette     jsonb NOT NULL,
+  typography  jsonb NOT NULL,
+  spacing     jsonb,
+  logo_url    text,
+  custom_css  text,
+  created_at  timestamptz NOT NULL DEFAULT now()
+);
