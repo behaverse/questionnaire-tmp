@@ -1,6 +1,8 @@
 mod value;
 pub use value::Value;
 
+mod lexer;
+
 pub fn version() -> &'static str { "0.1.0" }
 
 #[cfg(test)]
