@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { StepRenderer } from '../renderer'
 import { isItem } from '../renderer/guards'
 import { mergeOptions } from '../renderer/merge'
@@ -12,7 +12,9 @@ import { pipedText } from '../logic/piping'
 import { validateStep } from '../logic/validation'
 import { visibleEntries } from '../logic/visibility'
 import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
-import { completeSession, mintSession, parseParams, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { completeSession, getRuntime, getSession, mintSession, parseParams, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { getResumeStore } from '../resume/store'
+import { firstUnansweredStep, resolveResume } from '../resume/resolve'
 import { ErrorScreen } from './chrome/ErrorScreen'
 import { NavButtons } from './chrome/NavButtons'
 import { ProgressBar } from './chrome/ProgressBar'
@@ -58,6 +60,8 @@ export function App() {
   const bootStarted = useRef(false)
   const stepContainer = useRef<HTMLDivElement | null>(null)
   const pipeline = useRef<Pipeline | null>(null)
+  const store = getResumeStore()
+  const [demoCleared, setDemoCleared] = useState(false)
   const params = parseParams(window.location.search)
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
 
@@ -122,10 +126,27 @@ export function App() {
         dispatch({ type: 'boot_error', kind: 'invalid_link', code: 'missing_deployment_param' })
         return
       }
+      const evaluator = await loadEvaluator()
+      const outcome = await resolveResume(params.vsBaseUrl, params.deploymentId, store, { getSession, getRuntime })
+      if (outcome.kind === 'retry') { dispatch({ type: 'boot_error', kind: 'failed', code: 'resume_unreachable' }); return }
+      if (outcome.kind === 'completed') { dispatch({ type: 'completed' }); return }
+      if (outcome.kind === 'resume') {
+        const { record, runtime } = outcome
+        applyTheme(null)
+        buildPipeline(evaluator, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
+        const steps = flattenSteps(runtime)
+        const p = pipeline.current!
+        const resumeBindings = makeBindings(record.answers, runtime, nullResolver)
+        const land = firstUnansweredStep(steps, p.programs, p.evaluator, resumeBindings, record.answers)
+        dispatch({ type: 'rehydrate', session: { id: record.sessionId, token: record.token }, runtime, theme: null, steps, answers: record.answers, stepIndex: land, visited: record.visited })
+        document.title = runtime.metadata.title
+        document.documentElement.lang = record.lastActiveLocale
+        return
+      }
+      if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
       const res = await mintSession(params.vsBaseUrl, params.deploymentId, params.locale)
       if (res.ok) {
         applyTheme(res.theme as Theme)
-        const evaluator = await loadEvaluator()
         buildPipeline(evaluator, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
         dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
         document.title = res.runtime.metadata.title
@@ -360,6 +381,16 @@ export function App() {
       </main>
     )
   }
+  if (state.phase === 'completed') {
+    return (
+      <main className="min-h-screen grid place-items-center px-6 font-theme text-center">
+        <div className="qv-step-enter max-w-md space-y-3">
+          <h1 className="text-3xl font-semibold">{t(locale, 'completed_title')}</h1>
+          <p className="text-lg text-slate-600">{t(locale, 'completed_body')}</p>
+        </div>
+      </main>
+    )
+  }
 
   const step = state.steps[state.stepIndex]
   if (!step) return null
@@ -390,6 +421,11 @@ export function App() {
   const errorMessages = Object.fromEntries(state.validationErrors.map((e) => [e.key, e.message]))
   return (
     <main className="min-h-screen font-theme">
+      {demoCleared && (
+        <div role="status" className="fixed inset-x-0 top-0 z-10 bg-amber-100 px-4 py-2 text-center text-sm text-amber-900">
+          {t(locale, 'demo_cleared')}
+        </div>
+      )}
       <ProgressBar locale={locale} current={state.stepIndex + 1} total={state.steps.length} indeterminate={hasBranching} />
       <div ref={stepContainer} className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 py-24">
         <StepTransition stepKey={state.stepIndex}>

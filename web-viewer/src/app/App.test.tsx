@@ -3,16 +3,23 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { App } from './App'
 import mini from '../fixtures/mini.json'
+import { makeFakeStore } from '../resume/store'
 
 vi.mock('../logic/evaluator', async (orig) => {
   const actual = await orig<typeof import('../logic/evaluator')>()
   return { ...actual, loadEvaluator: async () => actual.makeFakeEvaluator((globalThis as Record<string, unknown>).__evalTable as never ?? {}) }
 })
 
+let fakeStore = makeFakeStore()
+vi.mock('../resume/store', async (orig) => {
+  const actual = await orig<typeof import('../resume/store')>()
+  return { ...actual, getResumeStore: () => fakeStore }
+})
+
 function setUrl(qs: string) { window.history.replaceState(null, '', `/${qs}`) }
 const mintOk = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: mini, theme: { palette: { primary: '#112233' } }, ephemeral: false }
 
-afterEach(() => { vi.unstubAllGlobals(); (globalThis as Record<string, unknown>).__evalTable = {} })
+afterEach(() => { vi.unstubAllGlobals(); (globalThis as Record<string, unknown>).__evalTable = {}; fakeStore = makeFakeStore() })
 
 test('boots a session, applies the theme, renders step 1 (message) then navigates', async () => {
   setUrl('?deployment=dpl_1')
@@ -363,4 +370,41 @@ test('reversed item carries a post-reversal score in the posted row', async () =
   expect(itemRows).toHaveLength(1)
   expect(itemRows[0].response_numeric).toBe(1)
   expect(itemRows[0].score).toBe(5)
+})
+
+// WV-E — resume on boot --------------------------------------------------------------------------
+test('reload with a stored in_progress session resumes prior answers + lands on first unanswered', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore([{ deploymentId: 'dpl_1', sessionId: 's1', token: 't1', lastActiveLocale: 'en',
+    answers: { it_1: 0 }, stepIndex: 1, visited: [0], updatedAt: 'x' }])
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/s1')) return new Response(JSON.stringify({ status: 'in_progress', last_active_locale: 'en', agent_id: 'agent_r', session_index: 1 }), { status: 200 })
+    if (String(url).endsWith('/sessions/s1/runtime')) return new Response(JSON.stringify(mini), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  expect(await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })).toBeInTheDocument()
+  expect(fetchMock.mock.calls.some(([u]) => String(u).endsWith('/sessions/new'))).toBe(false)
+})
+test('stored session already completed → already-completed screen, store cleared', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore([{ deploymentId: 'dpl_1', sessionId: 's1', token: 't1', lastActiveLocale: 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: 'x' }])
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ status: 'submitted', last_active_locale: 'en', agent_id: 'agent_r', session_index: 1 }), { status: 200 })))
+  render(<App />)
+  expect(await screen.findByRole('heading', { name: /already completed|thank you/i })).toBeInTheDocument()
+  expect(await fakeStore.get('dpl_1')).toBeNull()
+})
+test('ephemeral 409 on resume → wipes store, mints fresh, shows demo notice', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore([{ deploymentId: 'dpl_1', sessionId: 's1', token: 't1', lastActiveLocale: 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: 'x' }])
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/s1')) return new Response('{"error":{"code":"ephemeral_no_resume"}}', { status: 409 })
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  expect(await screen.findByText(/demo|prior session/i)).toBeInTheDocument()
+  expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
 })
