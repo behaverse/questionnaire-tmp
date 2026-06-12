@@ -100,6 +100,10 @@ The Web Viewer supports two declared presentation modes, selected by `style.x_pr
 
 Because the mode is declared, deterministic data (an `^x_` extension — no schema change), it sits within the cross-viewer visual-fidelity contract: every conforming viewer renders the same mode the same way, or declares non-support in its conformance manifest. The Native Viewer must implement the same semantics or declare non-support.
 
+### Logic evaluation
+
+The Web Viewer evaluates all four declared logic actions — **skip**, **visibility**, **piping**, and **branch** — together with per-question and cross-question `show_if` predicates, using the OD-11 expression evaluator (see [15_expression_language.md](15_expression_language.md)). At answer-commit the viewer computes `reversed_value` (producing the post-reversal `scored_value`) and, for Solution-bearing items, the per-item `correct` flag. Navigation follows a graph walk: skip and branch actions jump forward over intervening steps, hidden steps are silently bypassed, and Back retraces the participant's visited path rather than the raw step sequence. **External Scorer execution and in-session score display are deferred** to the Scorer-conformance track (OD-16); until then, `score(id)` resolves to an unavailable sentinel and score-gated branches do not fire.
+
 ### Behavioural channels
 
 Per OD-07 (resolved 2026-05-21), the deployment-level default-state matrix is:
