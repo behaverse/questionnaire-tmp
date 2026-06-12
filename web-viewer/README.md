@@ -1,0 +1,91 @@
+# questionnaire-web-viewer (WV-A: shell + renderer)
+
+Participant-facing **custom React/TS viewer** (OD-01 S1) that renders **Schema 3
+runtimes** minted by the Viewer Service. The default presentation is a
+Typeform-like **focus mode** — one question per view, auto-advance on single
+choice. This is stage **WV-A** of WV-A..F: app shell, session bootstrap, and the
+full Schema 3 renderer; submission (WV-B), logic/branching (WV-C/D), and resume
+(WV-E) come later. Spec: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md`.
+
+## Dev quickstart (no backend)
+
+```bash
+cd web-viewer
+npm install
+npm run dev
+```
+
+Then open a bundled fixture — renderer work needs no Postgres/VS:
+
+- `http://localhost:5173/?fixture=mini` — 2 pages of radios
+- `http://localhost:5173/?fixture=matrix` — Section + shared_option matrix
+- `http://localhost:5173/?fixture=widgets` — every supported widget triple + Message + an unsupported combo
+
+## URL contract
+
+| Param | Required | Meaning |
+|---|---|---|
+| `deployment` | yes | Deployment id to mint a session against. |
+| `locale` | no | Requested locale (BCP-47); VS resolves it against the deployment's locales. |
+| `viewer_url` | no | VS base URL override; default `VITE_VS_BASE_URL`, else `http://localhost:8001`. |
+| `fixture` | dev only | Render a bundled fixture runtime; no network. |
+
+## Presentation modes
+
+- **focus** (default): one step per view, keyboard shortcuts, auto-advance after a
+  single-choice answer.
+- **classic**: all questions of a page at once — set `style.x_presentation: "classic"`
+  on the questionnaire or via deployment style.
+- `style.x_auto_advance: false` disables single-choice auto-advance in focus mode.
+
+## Running against a live Viewer Service
+
+1. Start Postgres and the **Library** (see `library/README.md` / `HANDOFF.md`:
+   `python -m library.cli migrate`, ingest content, then
+   `uvicorn library.api.app:create_app --factory --port 8000`).
+2. Migrate + run the **Viewer Service** on :8001:
+
+   ```bash
+   export DATABASE_URL=postgresql://postgres:pg@localhost:55432/viewer_service
+   viewer-service migrate
+   export LIBRARY_BASE_URL=http://localhost:8000
+   export VS_CORS_ORIGINS=http://localhost:5173
+   uvicorn viewer_service.api.app:create_app --factory --port 8001
+   ```
+
+3. Register this viewer's Schema 7 manifest:
+
+   ```bash
+   curl -X POST http://localhost:8001/v1/viewers \
+     -H 'content-type: application/json' -d @manifest.json
+   ```
+
+4. Create an `anonymous_link` deployment for a questionnaire in the Library:
+
+   ```bash
+   curl -X POST http://localhost:8001/v1/deployments \
+     -H 'content-type: application/json' -d '{
+       "questionnaire_ref": "qst_example@v26.0606",
+       "runtime_policy": {"scorer_impl_preference": ["wasm"]},
+       "default_locale": "en",
+       "available_locales": ["en"]
+     }'   # → {"deployment_id": "dep_..."}
+   ```
+
+5. Open `http://localhost:5173/?deployment=<dep_id>`.
+
+## Caveats (WV-A)
+
+- The session token is held **in memory only** — a refresh restarts the session
+  (resume is WV-E).
+- Answers are not submitted yet (submission is WV-B).
+- No logic/branching — the manifest declares no `logic_actions` (WV-C/D), so the
+  VS mint pre-flight rejects questionnaires that need them.
+
+## Tests
+
+```bash
+npm test            # vitest (73 tests) + Schema 7 manifest validation
+npm run typecheck
+npm run build
+```

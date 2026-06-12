@@ -18,9 +18,12 @@ class Settings:
     outbox_hard_threshold: int = 1_000_000
     forward_max_attempts: int = 8
     forward_batch_size: int = 50
+    cors_origins: tuple[str, ...] = ()
 
 
 def get_settings() -> Settings:
+    raw = os.environ.get("VS_CORS_ORIGINS")
+    origins = tuple(o.strip() for o in raw.split(",") if o.strip()) if raw is not None else ()
     return Settings(
         database_url=os.environ.get("DATABASE_URL", "postgresql://localhost/viewer_service"),
         library_base_url=os.environ.get("LIBRARY_BASE_URL", "http://localhost:8000"),
@@ -33,4 +36,5 @@ def get_settings() -> Settings:
         outbox_hard_threshold=int(os.environ.get("OUTBOX_HARD_THRESHOLD", "1000000")),
         forward_max_attempts=int(os.environ.get("FORWARD_MAX_ATTEMPTS", "8")),
         forward_batch_size=int(os.environ.get("FORWARD_BATCH_SIZE", "50")),
+        cors_origins=origins,
     )

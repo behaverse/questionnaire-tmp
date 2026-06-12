@@ -1,0 +1,27 @@
+{
+  "provenance": { "source_questionnaire_id": "qst_matrix", "source_questionnaire_version": "v26.0609", "locale": "en", "viewer_conformance_hash": "0000000000000000000000000000000000000000000000000000000000000000", "deployment_runtime_policy_hash": "0000000000000000000000000000000000000000000000000000000000000000", "generated_at": "2026-06-11T00:00:00Z", "denormaliser_version": "v26.0610" },
+  "metadata": { "id": "qst_matrix", "title": "Matrix Demo", "language": "en" },
+  "locale": "en",
+  "pages": [
+    { "id": "page_1", "elements": [
+      { "id": "sec_m",
+        "title": "Over the last 2 weeks…",
+        "shared_option": { "input_data_type": "choice", "measurement_type": "ordinal", "selection": "single",
+          "options": [ { "index": 1, "value": 0 }, { "index": 2, "value": 1 } ],
+          "content": { "en": { "options": [ { "index": 1, "text": "Not at all" }, { "index": 2, "text": "Several days" } ] } } },
+        "elements": [
+          { "id": "it_a", "required": true,
+            "question": { "prompt": { "content": { "en": { "text": "Row A" } } } },
+            "option": { "input_data_type": "choice", "measurement_type": "ordinal", "selection": "single",
+              "options": [ { "index": 1, "value": 0 }, { "index": 2, "value": 1 } ],
+              "content": { "en": { "options": [ { "index": 1, "text": "Not at all" }, { "index": 2, "text": "Several days" } ] } } } },
+          { "id": "it_b", "required": true,
+            "question": { "prompt": { "content": { "en": { "text": "Row B" } } } },
+            "option": { "input_data_type": "choice", "measurement_type": "ordinal", "selection": "single",
+              "options": [ { "index": 1, "value": 0 }, { "index": 2, "value": 1 } ],
+              "content": { "en": { "options": [ { "index": 1, "text": "Not at all" }, { "index": 2, "text": "Several days" } ] } } } }
+        ]
+      }
+    ] }
+  ]
+}

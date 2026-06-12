@@ -1,0 +1,56 @@
+import { initialState, reducer } from './session'
+import { flattenSteps } from './steps'
+import type { Runtime } from '../renderer/types'
+
+const opt = {
+  input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
+  options: [{ index: 1, value: 0 }],
+  content: { en: { options: [{ index: 1, text: 'A' }] } },
+}
+const runtime: Runtime = {
+  provenance: {}, metadata: { id: 'qst_x', title: 'T', language: 'en' }, locale: 'en',
+  pages: [
+    { id: 'p1', elements: [{ id: 'it_1', question: { prompt: { content: { en: { text: 'Q1' } } } }, option: opt, required: true }] },
+    { id: 'p2', elements: [{ id: 'it_2', question: { prompt: { content: { en: { text: 'Q2' } } } }, option: opt }] },
+  ],
+}
+const booted = reducer(initialState, {
+  type: 'boot_success',
+  session: { id: 's1', token: 't1' }, runtime, theme: null, steps: flattenSteps(runtime),
+})
+
+test('boot_success → ready at step 0', () => {
+  expect(booted.phase).toBe('ready')
+  expect(booted.stepIndex).toBe(0)
+})
+test('next blocked by required gating, records stepErrors', () => {
+  const s = reducer(booted, { type: 'next' })
+  expect(s.stepIndex).toBe(0)
+  expect(s.stepErrors).toEqual(['it_1'])
+})
+test('answer clears that error; next then advances', () => {
+  let s = reducer(booted, { type: 'next' })
+  s = reducer(s, { type: 'answer', key: 'it_1', value: 0 })
+  expect(s.stepErrors).toEqual([])
+  s = reducer(s, { type: 'next' })
+  expect(s.stepIndex).toBe(1)
+})
+test('next past the last step → finished', () => {
+  let s = reducer(booted, { type: 'answer', key: 'it_1', value: 0 })
+  s = reducer(s, { type: 'next' })
+  s = reducer(s, { type: 'next' })
+  expect(s.phase).toBe('finished')
+})
+test('back preserves answers and never goes below 0', () => {
+  let s = reducer(booted, { type: 'answer', key: 'it_1', value: 0 })
+  s = reducer(s, { type: 'next' })
+  s = reducer(s, { type: 'back' })
+  expect(s.stepIndex).toBe(0)
+  expect(s.answers).toEqual({ it_1: 0 })
+  expect(reducer(s, { type: 'back' }).stepIndex).toBe(0)
+})
+test('boot_error → error phase with kind/code', () => {
+  const s = reducer(initialState, { type: 'boot_error', kind: 'closed', code: 'gone' })
+  expect(s.phase).toBe('error')
+  expect(s.error).toEqual({ kind: 'closed', code: 'gone' })
+})
