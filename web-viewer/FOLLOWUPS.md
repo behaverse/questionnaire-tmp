@@ -10,3 +10,5 @@
 - `keyHints` letter shortcuts are intentionally suppressed inside Sections (App enables them only for single-item steps) — revisit if plain sections appear in focus mode.
 - StepTransition uses an eslint-suppressed closure pattern — consider the useRef idiom if it grows.
 - `applyTheme` does not clear vars set by a previously applied theme — irrelevant until themes can switch mid-session.
+- Gating residual: a required choice item whose locale texts are missing (mergeOptions throw) still gates Next (needs locale-aware renderability check) — unreachable with denormaliser-produced runtimes, fix with WV-D validation work.
+- First-render focus: the step-heading focus effect also fires on the initial step — review whether initial autofocus is wanted once real participants test it.

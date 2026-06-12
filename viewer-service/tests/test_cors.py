@@ -10,20 +10,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 
-def _make_client(pg_url: str) -> TestClient:
-    """Helper: build a fresh app + client bound to pg_url."""
-    import importlib
-    import viewer_service.api.app as _app_mod
-
-    # Force a fresh import of create_app so middleware registration re-runs.
-    importlib.reload(_app_mod)
-    from viewer_service.api.app import create_app
-
-    import os
-    os.environ["DATABASE_URL"] = pg_url
-    return TestClient(create_app())
-
-
 def test_cors_preflight_allows_configured_origin(pg_url, monkeypatch):
     monkeypatch.setenv("VS_CORS_ORIGINS", "http://localhost:5173")
     monkeypatch.setenv("DATABASE_URL", pg_url)

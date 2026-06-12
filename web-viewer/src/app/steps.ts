@@ -34,14 +34,14 @@ function answered(v: AnswerValue | undefined): boolean {
 
 export function requiredUnanswered(step: Step, answers: Record<string, AnswerValue>): string[] {
   const missing: string[] = []
-  const visit = (el: RuntimeElement, key: string) => {
-    if (isSection(el)) {
-      el.elements.forEach((c, j) => visit(c, elementKey(c, sectionChildFallback(key, j))))
-    } else if (isItem(el) && el.required && !answered(answers[key])) {
+  const visit = (el: RuntimeElement, key: string, depth: number) => {
+    if (isSection(el) && depth === 0) {
+      el.elements.forEach((c, j) => visit(c, elementKey(c, sectionChildFallback(key, j)), depth + 1))
+    } else if (isItem(el) && el.required && deriveWidget(el.option) !== null && !answered(answers[key])) {
       missing.push(key)
     }
   }
-  for (const { key, element } of step.elements) visit(element, key)
+  for (const { key, element } of step.elements) visit(element, key, 0)
   return missing
 }
 

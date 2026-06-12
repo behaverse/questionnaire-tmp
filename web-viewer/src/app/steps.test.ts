@@ -1,5 +1,5 @@
 import { flattenSteps, requiredUnanswered, isSingleChoiceItem } from './steps'
-import type { Runtime } from '../renderer/types'
+import type { Runtime, SectionElement } from '../renderer/types'
 
 const opt = {
   input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
@@ -46,4 +46,37 @@ test('isSingleChoiceItem: true for choice.*.single item steps only', () => {
   expect(isSingleChoiceItem(steps[1])).toBe(true)
   expect(isSingleChoiceItem(steps[0])).toBe(false)
   expect(isSingleChoiceItem(steps[2])).toBe(false)
+})
+
+// I2 — renderability-aware gating
+test('required item with unsupported widget (date) does not gate Next', () => {
+  const unsupportedOpt = {
+    input_data_type: 'date', measurement_type: 'ratio', selection: 'single',
+    options: [{ index: 1, value: 0 }],
+    content: { en: { options: [{ index: 1, text: 'A' }] } },
+  }
+  const rt: Runtime = {
+    provenance: {}, metadata: { id: 'q', title: 'T', language: 'en' }, locale: 'en', style: {},
+    pages: [{ id: 'p1', elements: [
+      { id: 'it_unsup', required: true,
+        question: { prompt: { content: { en: { text: 'Date?' } } } },
+        option: unsupportedOpt },
+    ] }],
+  }
+  const steps = flattenSteps(rt)
+  expect(requiredUnanswered(steps[0], {})).toEqual([])
+})
+test('required item inside a nested section (depth>0) does not gate Next', () => {
+  const innerSection: SectionElement = {
+    id: 'sec_inner', shared_option: opt, elements: [item('inner_it', true)],
+  }
+  const outerSection: SectionElement = {
+    id: 'sec_outer', shared_option: opt, elements: [innerSection],
+  }
+  const rt: Runtime = {
+    provenance: {}, metadata: { id: 'q', title: 'T', language: 'en' }, locale: 'en', style: {},
+    pages: [{ id: 'p1', elements: [outerSection] }],
+  }
+  const steps = flattenSteps(rt)
+  expect(requiredUnanswered(steps[0], {})).toEqual([])
 })

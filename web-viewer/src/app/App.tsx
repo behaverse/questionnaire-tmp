@@ -23,6 +23,7 @@ export function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const autoTimer = useRef<number | null>(null)
   const bootStarted = useRef(false)
+  const stepContainer = useRef<HTMLDivElement | null>(null)
   const params = parseParams(window.location.search)
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
 
@@ -30,11 +31,10 @@ export function App() {
     if (state.phase !== 'booting') return
     if (bootStarted.current) return
     bootStarted.current = true
-    let cancelled = false
     async function boot() {
       if (import.meta.env.DEV && params.fixture && FIXTURES[params.fixture]) {
         const runtime = (await FIXTURES[params.fixture]()).default as Runtime
-        if (!cancelled) dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
+        dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
         return
       }
       if (!params.deploymentId) {
@@ -42,7 +42,6 @@ export function App() {
         return
       }
       const res = await mintSession(params.vsBaseUrl, params.deploymentId, params.locale)
-      if (cancelled) return
       if (res.ok) {
         applyTheme(res.theme as Theme)
         dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
@@ -53,14 +52,13 @@ export function App() {
       }
     }
     void boot()
-    return () => { cancelled = true }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase])
 
   useEffect(() => {
     if (state.phase !== 'ready') return
     function onKey(e: KeyboardEvent) {
-      if (e.key !== 'Enter' || e.target instanceof HTMLTextAreaElement) return
+      if (e.key !== 'Enter' || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLButtonElement) return
       clearAuto()
       dispatch({ type: 'next' })
     }
@@ -68,6 +66,26 @@ export function App() {
     return () => window.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase])
+
+  // I1: focus the incoming step heading after StepTransition's 200ms swap
+  useEffect(() => {
+    if (state.phase !== 'ready') return
+    const timer = window.setTimeout(() => {
+      const heading = stepContainer.current?.querySelector<HTMLElement>('h2[tabindex="-1"]')
+      heading?.focus()
+    }, 250)
+    return () => window.clearTimeout(timer)
+  }, [state.phase, state.stepIndex])
+
+  // I1: on gating failure, focus the first failing widget
+  useEffect(() => {
+    if (state.stepErrors.length === 0) return
+    const widget = stepContainer.current?.querySelector<HTMLElement>('input, [role="radiogroup"] input')
+    widget?.focus()
+  }, [state.stepErrors])
+
+  // minor: unmount cleanup for the auto-advance timer
+  useEffect(() => () => clearAuto(), [])
 
   function clearAuto() {
     if (autoTimer.current !== null) { window.clearTimeout(autoTimer.current); autoTimer.current = null }
@@ -105,7 +123,7 @@ export function App() {
   return (
     <main className="min-h-screen font-theme">
       <ProgressBar locale={locale} current={state.stepIndex + 1} total={state.steps.length} />
-      <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 py-24">
+      <div ref={stepContainer} className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 py-24">
         <StepTransition stepKey={state.stepIndex}>
           <StepRenderer
             elements={step.elements}
