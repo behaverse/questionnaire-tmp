@@ -1,0 +1,23 @@
+{
+  "viewer_id": "behaverse-web-viewer",
+  "viewer_version": "v26.0612",
+  "schema_support": {
+    "questionnaire": ["v26.0609"],
+    "instrument": ["v26.0609"],
+    "runtime": ["v26.0603"],
+    "response": ["v26.0603"],
+    "session": ["v26.0603"]
+  },
+  "evaluator": { "language_version": "v26.0612", "functions": ["length", "is_empty", "not_empty", "count", "contains", "score"] },
+  "logic_actions": ["skip", "visibility", "piping", "branch"],
+  "widgets": [
+    "choice.nominal.single", "choice.ordinal.single", "choice.interval.single", "choice.ratio.single",
+    "choice.nominal.multiple",
+    "number.ratio", "number.interval",
+    "text.nominal", "text.interval", "text.ratio"
+  ],
+  "scorer_impl_kinds": ["wasm"],
+  "behavioural_channels": [],
+  "locale_switching": false,
+  "resume": false
+}
