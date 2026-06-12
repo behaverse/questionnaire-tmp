@@ -1,0 +1,35 @@
+{
+  "conditions": [
+    { "expr": "true", "vars": {}, "scores": {}, "expect": true },
+    { "expr": "false", "vars": {}, "scores": {}, "expect": false },
+    { "expr": "phq9_total >= 10", "vars": {}, "scores": { "phq9_total": 12 }, "expect": true },
+    { "expr": "phq9_total >= 10", "vars": {}, "scores": { "phq9_total": 4 }, "expect": false },
+    { "expr": "score('phq9_total') >= 10", "vars": {}, "scores": { "phq9_total": 12 }, "expect": true },
+    { "expr": "it_mood < 30", "vars": { "it_mood": 20 }, "scores": {}, "expect": true },
+    { "expr": "it_year_born == ''", "vars": { "it_year_born": "" }, "scores": {}, "expect": true },
+    { "expr": "it_year_born == ''", "vars": { "it_year_born": "1990" }, "scores": {}, "expect": false },
+    { "expr": "length(it_name) < 5", "vars": { "it_name": "Ada" }, "scores": {}, "expect": true },
+    { "expr": "length(it_name) > 0 && is_empty(it_topics)", "vars": { "it_name": "Ada", "it_topics": [] }, "scores": {}, "expect": true },
+    { "expr": "length(it_name) > 0 && is_empty(it_topics)", "vars": { "it_name": "Ada", "it_topics": [1] }, "scores": {}, "expect": false },
+    { "expr": "1 + 2 * 3 == 7", "vars": {}, "scores": {}, "expect": true },
+    { "expr": "(1 + 2) * 3 == 9", "vars": {}, "scores": {}, "expect": true },
+    { "expr": "5 / 0 == 0", "vars": {}, "scores": {}, "expect": false },
+    { "expr": "'a' < 'b'", "vars": {}, "scores": {}, "expect": true },
+    { "expr": "2 in [1, 2, 3]", "vars": {}, "scores": {}, "expect": true },
+    { "expr": "9 in [1, 2, 3]", "vars": {}, "scores": {}, "expect": false },
+    { "expr": "count(it_topics) == 2", "vars": { "it_topics": ["a", "b"] }, "scores": {}, "expect": true },
+    { "expr": "contains('hello world', 'world')", "vars": {}, "scores": {}, "expect": true },
+    { "expr": "not_empty(it_name)", "vars": { "it_name": "x" }, "scores": {}, "expect": true },
+    { "expr": "1 == '1'", "vars": {}, "scores": {}, "expect": false },
+    { "expr": "false && (5 / 0 == 0)", "vars": {}, "scores": {}, "expect": false }
+  ],
+  "reversed_value": [
+    { "value": 1, "min": 0, "max": 6, "expect": 5 },
+    { "value": 4, "min": 1, "max": 5, "expect": 2 }
+  ],
+  "compare_solution": [
+    { "cmp": "equals", "response": 3, "expected": 3, "expect": true },
+    { "cmp": "set_equals", "response": [1, 2], "expected": [2, 1], "expect": true },
+    { "cmp": "matches_regex", "response": "ab12", "expected": "^[a-z]+\\d+$", "expect": true }
+  ]
+}
