@@ -99,6 +99,26 @@ The Schema 7 **manifest** now declares `logic_actions: [skip, visibility, piping
 branch]` and an `evaluator` block (`v26.0612`), so the Viewer Service **no longer
 strips logic** from minted runtimes for this viewer.
 
+## Resume + locale (WV-E)
+
+Per-question state **persists to IndexedDB** (DB `behaverse-web-viewer`, store
+`resume`, keyed by deployment) — including the **session token** — so a reload
+**resumes prior answers** and lands on the **first unanswered visible question**
+in the **last-active locale**. The WV-A in-memory-token caveat is **now
+RESOLVED**.
+
+- A `LocaleSwitcher` (shown only when there is **>1 `available_locales`**) swaps
+  runtime text via `POST /sessions/{id}/locale` with **answers intact**; the
+  active locale is part of the persisted state.
+- **Demo / ephemeral deployments never persist** and show a "this is a demo —
+  prior session cleared" notice on return.
+- A **completed** session shows **"already completed"** rather than restarting.
+
+**Token posture**: the persisted token is **anonymous / opaque / origin-scoped**
+(IndexedDB is same-origin), so storing it is acceptable for anonymous
+deployments — revisit when authenticated deployments arrive (see FOLLOWUPS).
+**Multi-tab** writes are **last-writer-wins** (no cross-tab coordination yet).
+
 ## Running against a live Viewer Service
 
 1. Start Postgres and the **Library** (see `library/README.md` / `HANDOFF.md`:
@@ -137,11 +157,11 @@ strips logic** from minted runtimes for this viewer.
 
 ## Caveats
 
-- The session token is held **in memory only** — a refresh restarts the session
-  (resume is WV-E).
+- ~~The session token is held **in memory only** — a refresh restarts the
+  session (resume is WV-E).~~ **RESOLVED (WV-E)**: token + answers persist to
+  IndexedDB; a reload resumes — see "Resume + locale (WV-E)" above.
 - Submission exists as of WV-B, but the submission queue is **in-memory** — a
-  refresh loses any not-yet-sent rows/events until WV-E resume + durability
-  land.
+  refresh loses any not-yet-sent rows/events; offline/PWA queue-and-sync is WV-F.
 - Logic/branching is live (WV-D, see above); `score(id)` is still null (external
   Scorer deferred), so score-gated branches do not fire yet.
 
