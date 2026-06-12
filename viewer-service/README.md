@@ -40,6 +40,7 @@ pip install -e .[dev]
 export DATABASE_URL=postgresql://postgres:pg@localhost:55432/viewer_service
 viewer-service migrate
 export LIBRARY_BASE_URL=http://localhost:8000          # a running Library
+export VS_CORS_ORIGINS=http://localhost:5173           # allow the web-viewer dev server
 uvicorn viewer_service.api.app:create_app --factory --reload
 ```
 

@@ -1,7 +1,9 @@
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
+from ..config import get_settings
 
 _CODE_FOR = {400: "bad_request", 401: "unauthorized", 404: "not_found", 410: "gone",
              422: "unprocessable", 502: "upstream_unavailable", 503: "service_unavailable"}
@@ -10,6 +12,14 @@ _CODE_FOR = {400: "bad_request", 401: "unauthorized", 404: "not_found", 410: "go
 def create_app() -> FastAPI:
     from . import viewers, deployments, runtime, admin, sessions, submission, export, themes, metrics
     app = FastAPI(title="Questionnaire Viewer Service", version="v1")
+    origins = list(get_settings().cors_origins)
+    if origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=origins,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
     app.include_router(viewers.router, prefix="/v1")
     app.include_router(deployments.router, prefix="/v1")
     app.include_router(runtime.router, prefix="/v1")
