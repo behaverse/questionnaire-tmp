@@ -373,10 +373,10 @@ test('reversed item carries a post-reversal score in the posted row', async () =
 })
 
 // WV-E — resume on boot --------------------------------------------------------------------------
-test('reload with a stored in_progress session resumes prior answers + lands on first unanswered', async () => {
+test('reload with a stored in_progress session resumes prior answers + lands at the saved position', async () => {
   setUrl('?deployment=dpl_1')
   fakeStore = makeFakeStore([{ deploymentId: 'dpl_1', sessionId: 's1', token: 't1', lastActiveLocale: 'en',
-    answers: { it_1: 0 }, stepIndex: 1, visited: [0], updatedAt: 'x' }])
+    answers: { it_1: 0 }, stepIndex: 2, visited: [0, 1], updatedAt: 'x' }])
   const fetchMock = vi.fn().mockImplementation(async (url: string) => {
     if (String(url).endsWith('/sessions/s1')) return new Response(JSON.stringify({ status: 'in_progress', last_active_locale: 'en', agent_id: 'agent_r', session_index: 1 }), { status: 200 })
     if (String(url).endsWith('/sessions/s1/runtime')) return new Response(JSON.stringify(mini), { status: 200 })

@@ -143,7 +143,7 @@ export function App() {
         const steps = flattenSteps(runtime)
         const p = pipeline.current!
         const resumeBindings = makeBindings(record.answers, runtime, nullResolver)
-        const land = firstUnansweredStep(steps, p.programs, p.evaluator, resumeBindings, record.answers)
+        const land = firstUnansweredStep(steps, p.programs, p.evaluator, resumeBindings, record.answers, record.stepIndex)
         dispatch({ type: 'rehydrate', session: { id: record.sessionId, token: record.token }, runtime, theme: null, steps, answers: record.answers, stepIndex: land, visited: record.visited })
         document.title = runtime.metadata.title
         document.documentElement.lang = record.lastActiveLocale

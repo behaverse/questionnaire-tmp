@@ -33,13 +33,15 @@ export async function resolveResume(vs: string, deploymentId: string, store: Res
   return { kind: 'resume', record: { ...record, lastActiveLocale: s.lastActiveLocale, agentId: s.agentId, sessionIndex: s.sessionIndex }, runtime }
 }
 
-/** OD-14 case 1: first step with a required, visible, unanswered element; else the last step index. */
-export function firstUnansweredStep(steps: Step[], programs: Programs, ev: LogicEvaluator, bindings: Bindings, answers: Record<string, AnswerValue>): number {
+/** OD-14 case 1: first step with a required, visible, unanswered element; else the saved position
+ *  (clamped to the step range). For an all-optional questionnaire there is no required-unanswered
+ *  step, so the participant resumes where they left off rather than being flung to the last step. */
+export function firstUnansweredStep(steps: Step[], programs: Programs, ev: LogicEvaluator, bindings: Bindings, answers: Record<string, AnswerValue>, savedStepIndex = 0): number {
   for (let i = 0; i < steps.length; i++) {
     const visible = visibleEntries(steps[i], programs, ev, bindings)
     if (visible.length === 0) continue
     const visibleStep: Step = { pageId: steps[i].pageId, elements: visible.map((e) => ({ key: e.key, element: e.element })) }
     if (requiredUnanswered(visibleStep, answers).length > 0) return i
   }
-  return Math.max(0, steps.length - 1)
+  return Math.min(Math.max(0, savedStepIndex), Math.max(0, steps.length - 1))
 }

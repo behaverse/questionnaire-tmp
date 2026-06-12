@@ -71,9 +71,25 @@ test('firstUnansweredStep lands on the first required+visible+unanswered step', 
   const steps = flattenSteps(rt)   // focus mode → 2 steps
   const ev = makeFakeEvaluator()
   const programs = collectPrograms(rt, ev)
-  const land = (answers: Record<string, unknown>) =>
-    firstUnansweredStep(steps, programs, ev, makeBindings(answers as never, rt, nullResolver), answers as never)
+  const land = (answers: Record<string, unknown>, saved = 0) =>
+    firstUnansweredStep(steps, programs, ev, makeBindings(answers as never, rt, nullResolver), answers as never, saved)
   expect(land({})).toBe(0)
   expect(land({ it_1: 0 })).toBe(1)
-  expect(land({ it_1: 0, it_2: 0 })).toBe(1)   // all answered → last step index (steps.length-1 = 1)
+  // all required answered → resume at the SAVED position, not the last step (OD-14 case 1 fallback)
+  expect(land({ it_1: 0, it_2: 0 }, 0)).toBe(0)
+  expect(land({ it_1: 0, it_2: 0 }, 1)).toBe(1)
+})
+test('firstUnansweredStep: all-optional questionnaire resumes at the saved position, not the last step', () => {
+  const opt = { input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
+    options: [{ index: 1, value: 0 }], content: { en: { options: [{ index: 1, text: 'A' }] } } }
+  const item = (id: string) => ({ id, question: { prompt: { content: { en: { text: id } } } }, option: opt })  // no `required`
+  const rt: Runtime = { provenance: {}, metadata: { id: 'q', title: 'T', language: 'en' }, locale: 'en',
+    pages: [{ id: 'p1', elements: [item('it_1')] }, { id: 'p2', elements: [item('it_2')] }, { id: 'p3', elements: [item('it_3')] }] } as never
+  const steps = flattenSteps(rt)   // 3 steps, none required
+  const ev = makeFakeEvaluator()
+  const programs = collectPrograms(rt, ev)
+  const land = firstUnansweredStep(steps, programs, ev, makeBindings({ it_1: 0, it_2: 0 } as never, rt, nullResolver), { it_1: 0, it_2: 0 } as never, 2)
+  expect(land).toBe(2)   // saved on the 3rd step → resume there (NOT flung to last = also 2 here, so use a clamped case)
+  const clamped = firstUnansweredStep(steps, programs, ev, makeBindings({} as never, rt, nullResolver), {} as never, 99)
+  expect(clamped).toBe(2)   // saved index out of range → clamped to last
 })
