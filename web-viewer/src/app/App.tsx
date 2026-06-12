@@ -84,6 +84,11 @@ export function App() {
     widget?.focus()
   }, [state.stepErrors])
 
+  // TEMPORARY until the WV-B finishing flow lands (next task): complete immediately.
+  useEffect(() => {
+    if (state.phase === 'finishing') dispatch({ type: 'submitted' })
+  }, [state.phase])
+
   // minor: unmount cleanup for the auto-advance timer
   useEffect(() => () => clearAuto(), [])
 
@@ -103,6 +108,8 @@ export function App() {
   }
 
   if (state.phase === 'booting') return <main className="min-h-screen font-theme" aria-busy="true" />
+  // TEMPORARY until the WV-B finishing flow lands (next task): complete immediately.
+  if (state.phase === 'finishing') return <main className="min-h-screen font-theme" aria-busy="true" />
   if (state.phase === 'error' && state.error) {
     return <ErrorScreen locale={locale} kind={state.error.kind} code={state.error.code} onRetry={() => { bootStarted.current = false; dispatch({ type: 'retry' }) }} />
   }

@@ -14,6 +14,9 @@ const STRINGS = {
     retry: 'Try again',
     finished_title: 'Thank you!',
     finished_body: 'You have reached the end of this questionnaire.',
+    submitting: 'Submitting your responses…',
+    submit_failed_title: 'Submission problem',
+    submit_failed_body: 'Your answers are held in this tab but could not be submitted. Check your connection and try again.',
     unsupported: 'This element cannot be displayed by this viewer.',
   },
   pt: {
@@ -31,6 +34,9 @@ const STRINGS = {
     retry: 'Tentar novamente',
     finished_title: 'Obrigado!',
     finished_body: 'Chegou ao fim deste questionário.',
+    submitting: 'A enviar as suas respostas…',
+    submit_failed_title: 'Problema no envio',
+    submit_failed_body: 'As suas respostas estão guardadas neste separador mas não foi possível enviá-las. Verifique a ligação e tente novamente.',
     unsupported: 'Este elemento não pode ser apresentado por este visualizador.',
   },
 } as const
