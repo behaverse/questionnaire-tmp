@@ -1,4 +1,4 @@
 target/
-web/pkg/
+web/pkg*/
 web/node_modules/
 Cargo.lock

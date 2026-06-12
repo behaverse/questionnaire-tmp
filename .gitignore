@@ -12,5 +12,5 @@ schemas/*/versions/*/README_files/
 .vercel
 
 # wasm-pack output and JS deps
-questionnaire-expression-evaluator/web/pkg/
+questionnaire-expression-evaluator/web/pkg*/
 questionnaire-expression-evaluator/web/node_modules/

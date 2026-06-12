@@ -8,3 +8,4 @@ vite.config.js
 src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
+src/logic/wasm/
