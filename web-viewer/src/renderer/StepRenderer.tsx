@@ -12,19 +12,20 @@ export type StepRendererProps = {
   answers: Record<string, AnswerValue>
   onAnswer: (key: string, value: AnswerValue) => void
   requiredErrors: string[]
+  errorMessages?: Record<string, string>
   strings: RendererStrings
   keyHints?: boolean
 }
 
-export function StepRenderer({ elements, locale, answers, onAnswer, requiredErrors, strings, keyHints = false }: StepRendererProps) {
+export function StepRenderer({ elements, locale, answers, onAnswer, requiredErrors, errorMessages = {}, strings, keyHints = false }: StepRendererProps) {
   return (
     <div className="space-y-10">
       {elements.map(({ key, element }) => {
         if (isItem(element)) {
-          return <ItemRenderer key={key} answerKey={key} element={element} locale={locale} value={answers[key] ?? null} onAnswer={onAnswer} keyHints={keyHints} showRequiredError={requiredErrors.includes(key)} requiredErrorText={strings.required} unsupportedNotice={strings.unsupported} />
+          return <ItemRenderer key={key} answerKey={key} element={element} locale={locale} value={answers[key] ?? null} onAnswer={onAnswer} keyHints={keyHints} showRequiredError={requiredErrors.includes(key)} requiredErrorText={strings.required} errorMessage={errorMessages[key]} unsupportedNotice={strings.unsupported} />
         }
         if (isSection(element)) {
-          return <SectionRenderer key={key} sectionKey={key} section={element} locale={locale} answers={answers} onAnswer={onAnswer} requiredErrors={requiredErrors} strings={strings} />
+          return <SectionRenderer key={key} sectionKey={key} section={element} locale={locale} answers={answers} onAnswer={onAnswer} requiredErrors={requiredErrors} errorMessages={errorMessages} strings={strings} />
         }
         if (isMessage(element)) return <MessageBlock key={key} element={element} locale={locale} />
         return <UnsupportedElement key={key} id={key} reason="unknown element shape" notice={strings.unsupported} />

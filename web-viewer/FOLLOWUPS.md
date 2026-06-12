@@ -20,3 +20,9 @@
 - Retry after a finishing failure re-emits `bdm:completed` (one per attempt before the single `bdm:submitted`) — schema-legal and arguably faithful; revisit if analysts object.
 - `flushKeepalive` can double-send the item that was in flight at pagehide (it is still queued until acknowledged) — second flavour of the optimistic-keepalive note above; the all-attempts model tolerates duplicates.
 - Finishing effect's 10 s timeout timer is not cleared on early idle (dangling, harmless).
+- **External Scorer execution + in-session score display** (OD-16 Scorer track): `score(id)` resolves to an unavailable sentinel (null) until the Scorer host lands — score-gated branches and any in-session score readout are inert by design until then.
+- **`randomize` (Page/Section) is unimplemented** — needs a seeded-RNG determinism decision (reproducible order per session/agent) before it can ship; deferred.
+- **Piping v1 covers prompt-text only**, matched by `field_path` prefix — richer field targeting (non-prompt content, sub-fields) is later work.
+- **Multi-rule visibility precedence is first-firing-wins**; the spec's "`show:true` force-show override" is an untested edge case (no fixture has two rules targeting one element) — revisit if that ever occurs.
+- The `next` reducer action is **retained for the degenerate no-pipeline safety path** but does NOT push the visited stack — harmless and unreachable once a pipeline is built (App always builds one).
+- The evaluator wasm **rebuilds on every `npm run build`** (~6 s) — cache the `build:evaluator` output if CI build time becomes a concern.

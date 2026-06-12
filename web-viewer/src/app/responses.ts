@@ -3,6 +3,8 @@ import { isItem, isMessage, isSection } from '../renderer/guards'
 import { elementKey, pageElementFallback, sectionChildFallback } from '../renderer/keys'
 import { mergeOptions } from '../renderer/merge'
 import type { AnswerValue, ContentEntity, ItemElement, Runtime, RuntimeElement } from '../renderer/types'
+import { scoredValueFor, solutionCorrect } from '../logic/scoring'
+import type { LogicEvaluator } from '../logic/types'
 
 export type SessionIdentity = {
   sessionId: string
@@ -26,6 +28,7 @@ export type RowContext = {
   responseId: number
   timing: RowTiming
   attempt?: { revises: number; revision: number }
+  scoring?: { evaluator: LogicEvaluator }
 }
 export type Schema5Row = Record<string, unknown>
 
@@ -150,6 +153,17 @@ export function buildItemRow(ctx: RowContext, el: ItemElement, answer: AnswerVal
     row.response_description = answer
   }
   if (Object.keys(extras).length > 0) row.additional_measures = JSON.stringify(extras)
+  if (ctx.scoring) {
+    // Schema 5 `score` = per-item POST-REVERSAL value (OD-16 16a). Only emit for reversed prompts
+    // (a non-reversed item's scored value equals its raw value, already in response_numeric/_option_index).
+    const prompt = el.question.prompt as { reversed?: boolean } | undefined
+    if (prompt?.reversed && typeof answer === 'number') {
+      const sv = scoredValueFor(el.option as never, prompt as never, answer, ctx.scoring.evaluator)
+      if (typeof sv === 'number') row.score = sv
+    }
+    const correct = solutionCorrect(el as never, answer, ctx.scoring.evaluator)
+    if (correct !== null) row.correct = correct
+  }
   return row
 }
 

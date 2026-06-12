@@ -17,10 +17,11 @@ export type ItemRendererProps = {
   keyHints?: boolean
   showRequiredError?: boolean
   requiredErrorText?: string
+  errorMessage?: string
   unsupportedNotice?: string
 }
 
-export function ItemRenderer({ answerKey, element, locale, value, onAnswer, keyHints = false, showRequiredError = false, requiredErrorText = '', unsupportedNotice = '' }: ItemRendererProps) {
+export function ItemRenderer({ answerKey, element, locale, value, onAnswer, keyHints = false, showRequiredError = false, requiredErrorText = '', errorMessage, unsupportedNotice = '' }: ItemRendererProps) {
   const prompt = element.question.prompt?.content?.[locale]?.text ?? ''
   const context = element.question.context?.content?.[locale]?.text
   const instruction = element.question.instruction?.content?.[locale]?.text
@@ -48,8 +49,11 @@ export function ItemRenderer({ answerKey, element, locale, value, onAnswer, keyH
   }
 
   const errorId = `${answerKey}-error`
+  // A validation message (errorMessage) overrides the generic required text and shows even when the
+  // key is not in stepErrors; a key in stepErrors with no message falls back to the generic text.
+  const shownError = errorMessage ?? (showRequiredError ? requiredErrorText : undefined)
   return (
-    <fieldset aria-describedby={showRequiredError ? errorId : undefined} className="space-y-5">
+    <fieldset aria-describedby={shownError ? errorId : undefined} className="space-y-5">
       <legend className="sr-only">{prompt}</legend>
       <div className="space-y-2">
         <h2 tabIndex={-1} className="text-2xl font-semibold leading-snug sm:text-3xl">{prompt}</h2>
@@ -57,8 +61,8 @@ export function ItemRenderer({ answerKey, element, locale, value, onAnswer, keyH
         {instruction && <p className="text-sm italic text-slate-500">{instruction}</p>}
       </div>
       {widget}
-      {showRequiredError && (
-        <p id={errorId} className="font-medium text-error" role="alert">{requiredErrorText}</p>
+      {shownError && (
+        <p id={errorId} className="font-medium text-error" role="alert">{shownError}</p>
       )}
     </fieldset>
   )

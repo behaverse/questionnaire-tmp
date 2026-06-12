@@ -4,6 +4,7 @@ import Ajv2020 from 'ajv/dist/2020'
 import addFormats from 'ajv-formats'
 import { buildRuntimeIndex, buildItemRow, buildMessageRow, stimulusFor } from './responses'
 import type { Runtime, ItemElement } from '../renderer/types'
+import { makeFakeEvaluator } from '../logic/evaluator'
 
 const schema = JSON.parse(readFileSync(new URL('../../../schemas/response/schema.json', import.meta.url), 'utf8'))
 const ajv = new Ajv2020({ strict: false }); addFormats(ajv)
@@ -121,4 +122,25 @@ test('x_summary_rt off: timing fields without response_time', () => {
   assertValid(row)
   expect(row.response_time).toBeUndefined()
   expect(row.response_datetime).toBe(timing.responseAt)
+})
+test('buildItemRow includes post-reversal score and Solution correct when scoring is provided', () => {
+  const ev = makeFakeEvaluator()
+  const idx = buildRuntimeIndex(runtime)
+  const revItem = { ...item,
+    question: { ...item.question, prompt: { ...item.question.prompt, reversed: true } },
+    option: { ...opt, options: [{ index: 1, value: 0 }, { index: 2, value: 6 }] },
+    solution: { expected_response: 0 } }
+  const row = buildItemRow(
+    { identity, index: idx.get('it_1')!, responseId: 1, timing, scoring: { evaluator: ev } },
+    revItem as never, 0, 'en')
+  assertValid(row)
+  expect(row.score).toBe(6)        // reversed 0 in 0..6 → 6 (Schema 5 `score` field)
+  expect(row.correct).toBe(true)   // raw value 0 vs expected 0 → equals true (correct uses raw value)
+})
+test('no scoring context → no score/correct fields', () => {
+  const idx = buildRuntimeIndex(runtime)
+  const row = buildItemRow({ identity, index: idx.get('it_1')!, responseId: 1, timing }, item, 0, 'en')
+  assertValid(row)
+  expect(row.score).toBeUndefined()
+  expect(row.correct).toBeUndefined()
 })

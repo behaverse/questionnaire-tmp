@@ -2,7 +2,16 @@ import { useEffect, useReducer, useRef } from 'react'
 import { StepRenderer } from '../renderer'
 import { isItem } from '../renderer/guards'
 import { mergeOptions } from '../renderer/merge'
-import type { AnswerValue, Runtime } from '../renderer/types'
+import type { AnswerValue, ItemElement, Runtime, RuntimeElement } from '../renderer/types'
+import { collectPrograms, type Programs } from '../logic/compile'
+import { loadEvaluator } from '../logic/evaluator'
+import { makeBindings } from '../logic/bindings'
+import { nullResolver } from '../logic/scoring'
+import { nextStepIndex } from '../logic/navigation'
+import { pipedText } from '../logic/piping'
+import { validateStep } from '../logic/validation'
+import { visibleEntries } from '../logic/visibility'
+import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
 import { completeSession, mintSession, parseParams, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
 import { ErrorScreen } from './chrome/ErrorScreen'
 import { NavButtons } from './chrome/NavButtons'
@@ -23,6 +32,7 @@ const FIXTURES: Record<string, () => Promise<{ default: unknown }>> = {
   mini: () => import('../fixtures/mini.json'),
   matrix: () => import('../fixtures/matrix.json'),
   widgets: () => import('../fixtures/widgets.json'),
+  branch: () => import('../fixtures/branch.json'),
 }
 const AUTO_ADVANCE_MS = 400
 
@@ -35,6 +45,9 @@ type Pipeline = {
   engine: ReturnType<typeof engineActor>
   agent: ReturnType<typeof agentActor>
   summaryRt: boolean
+  evaluator: LogicEvaluator
+  programs: Programs
+  resolver: ScoreResolver
 }
 
 export function App() {
@@ -50,7 +63,11 @@ export function App() {
 
   const nowIso = () => new Date().toISOString()
 
+  const bindings = (): Bindings =>
+    makeBindings(stateRef.current.answers, stateRef.current.runtime ?? ({ pages: [] } as never), pipeline.current!.resolver)
+
   function buildPipeline(
+    evaluator: LogicEvaluator,
     sessionId: string,
     token: string,
     agentId: string,
@@ -81,6 +98,9 @@ export function App() {
       engine: engineActor(`${VIEWER_ID}@${VIEWER_VERSION}`),
       agent: agentActor(agentId),
       summaryRt: (runtime.style as Record<string, unknown> | undefined)?.x_summary_rt !== false,
+      evaluator,
+      programs: collectPrograms(runtime, evaluator),
+      resolver: nullResolver,
     }
     batcher.add(ev.initialized(pipeline.current.engine, sessionId, nowIso()))
     batcher.add(ev.started(pipeline.current.engine, sessionId, nowIso()))
@@ -93,7 +113,8 @@ export function App() {
     async function boot() {
       if (import.meta.env.DEV && params.fixture && FIXTURES[params.fixture]) {
         const runtime = (await FIXTURES[params.fixture]()).default as Runtime
-        buildPipeline('fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
+        const evaluator = await loadEvaluator()
+        buildPipeline(evaluator, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
         dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
         return
       }
@@ -104,7 +125,8 @@ export function App() {
       const res = await mintSession(params.vsBaseUrl, params.deploymentId, params.locale)
       if (res.ok) {
         applyTheme(res.theme as Theme)
-        buildPipeline(res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
+        const evaluator = await loadEvaluator()
+        buildPipeline(evaluator, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
         dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
         document.title = res.runtime.metadata.title
         document.documentElement.lang = res.runtime.locale ?? 'en'
@@ -137,12 +159,12 @@ export function App() {
     return () => window.clearTimeout(timer)
   }, [state.phase, state.stepIndex])
 
-  // I1: on gating failure, focus the first failing widget
+  // I1: on gating OR validation failure, focus the first failing widget
   useEffect(() => {
-    if (state.stepErrors.length === 0) return
+    if (state.stepErrors.length === 0 && state.validationErrors.length === 0) return
     const widget = stepContainer.current?.querySelector<HTMLElement>('input, [role="radiogroup"] input')
     widget?.focus()
-  }, [state.stepErrors])
+  }, [state.stepErrors, state.validationErrors])
 
   // Step-shown effect: emit trialStarted + presented events for each entry on the current step
   useEffect(() => {
@@ -256,6 +278,9 @@ export function App() {
       dispatch({ type: 'next' })            // reducer applies gating / no-op safety
       return
     }
+    // F2: cross-validation + per-question validation — block advance, surface messages, focus offender.
+    const verrors = validateStep(step, p.programs, p.evaluator, s.answers, p.resolver.score, locale)
+    if (verrors.length > 0) { dispatch({ type: 'validation_errors', errors: verrors }); return }
     if (source !== 'auto') p.batcher.add(ev.clicked(p.agent, 'next_button', { sessionId: p.identity.sessionId }, nowIso()))
     for (const entry of stepEntries(step)) {
       const index = p.index.get(entry.key)
@@ -283,7 +308,7 @@ export function App() {
       if (answer === null && attempt.kind === 'first') continue       // untouched optional question → no row in WV-B
       const responseId = p.clock.allocateResponseId()
       const row = buildItemRow(
-        { identity: p.identity, index, responseId, timing, ...(attempt.kind === 'revision' ? { attempt: { revises: attempt.revises, revision: attempt.revision } } : {}) },
+        { identity: p.identity, index, responseId, timing, scoring: { evaluator: p.evaluator }, ...(attempt.kind === 'revision' ? { attempt: { revises: attempt.revises, revision: attempt.revision } } : {}) },
         entry.element, answer, locale,
       )
       if (entry.element.option.input_data_type === 'number') p.batcher.add(ev.adjusted(p.agent, entry.key, c, nowIso()))
@@ -298,7 +323,8 @@ export function App() {
         ...(timing.responseTimeS !== null ? { 'bdm:response_time': timing.responseTimeS } : {}),
       }, c, nowIso()))
     }
-    dispatch({ type: 'next' })
+    const target = nextStepIndex(s.steps, p.programs, p.evaluator, bindings(), s.stepIndex)
+    dispatch({ type: 'goto', index: target })
   }
 
   if (state.phase === 'booting') return <main className="min-h-screen font-theme" aria-busy="true" />
@@ -338,17 +364,42 @@ export function App() {
   const step = state.steps[state.stepIndex]
   if (!step) return null
   const keyHints = isSingleChoiceItem(step)
+
+  // Compute the visible (logic-gated) entries and apply prompt piping for top-level items.
+  const p = pipeline.current
+  const b = p ? bindings() : null
+  const renderEntries = p && b ? visibleEntries(step, p.programs, p.evaluator, b) : stepEntries(step)
+  const pipedElements: { key: string; element: RuntimeElement }[] = renderEntries.map((entry) => {
+    if (!p || !b || !isItem(entry.element)) return { key: entry.key, element: entry.element }
+    const idx = p.index.get(entry.key)
+    if (!idx) return { key: entry.key, element: entry.element }
+    const field = `pages.${idx.pageId}.elements.${Number(idx.trialIndex) - 1}.prompt`
+    const original = entry.element.question.prompt?.content?.[locale]?.text ?? ''
+    const piped = pipedText(field, original, p.programs, p.evaluator, b)
+    if (piped === original) return { key: entry.key, element: entry.element }
+    const el = entry.element as ItemElement
+    return {
+      key: entry.key,
+      element: { ...el, question: { ...el.question, prompt: { ...el.question.prompt, content: { ...el.question.prompt?.content, [locale]: { ...el.question.prompt?.content?.[locale], text: piped } } } } } as RuntimeElement,
+    }
+  })
+
+  // F4: under skip/branch logic the remaining total is unknown — show a bare counter.
+  const hasBranching = (p?.programs.rules ?? []).some((r) => r.type === 'skip' || r.type === 'branch')
+  // F3: prefer per-key validation messages in the required-error slot; keep generic required text otherwise.
+  const errorMessages = Object.fromEntries(state.validationErrors.map((e) => [e.key, e.message]))
   return (
     <main className="min-h-screen font-theme">
-      <ProgressBar locale={locale} current={state.stepIndex + 1} total={state.steps.length} />
+      <ProgressBar locale={locale} current={state.stepIndex + 1} total={state.steps.length} indeterminate={hasBranching} />
       <div ref={stepContainer} className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 py-24">
         <StepTransition stepKey={state.stepIndex}>
           <StepRenderer
-            elements={step.elements}
+            elements={pipedElements}
             locale={locale}
             answers={state.answers}
             onAnswer={handleAnswer}
-            requiredErrors={state.stepErrors}
+            requiredErrors={[...state.stepErrors, ...state.validationErrors.map((e) => e.key)]}
+            errorMessages={errorMessages}
             keyHints={keyHints}
             strings={{ required: t(locale, 'required_error'), unsupported: t(locale, 'unsupported') }}
           />

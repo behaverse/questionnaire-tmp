@@ -2,6 +2,7 @@ const STRINGS = {
   en: {
     next: 'Next', back: 'Back', enter_hint: 'press Enter ↵',
     progress: 'Question {i} of {n}',
+    progress_counter: 'Question {i}',
     required_error: 'Please answer this question to continue.',
     error_invalid_link_title: 'This link is not valid',
     error_invalid_link_body: 'Check that the address was copied completely, or contact the study team.',
@@ -22,6 +23,7 @@ const STRINGS = {
   pt: {
     next: 'Seguinte', back: 'Voltar', enter_hint: 'prima Enter ↵',
     progress: 'Pergunta {i} de {n}',
+    progress_counter: 'Pergunta {i}',
     required_error: 'Por favor responda a esta pergunta para continuar.',
     error_invalid_link_title: 'Esta ligação não é válida',
     error_invalid_link_body: 'Verifique se o endereço foi copiado na íntegra ou contacte a equipa do estudo.',

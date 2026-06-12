@@ -52,6 +52,7 @@ export type Runtime = {
   pages: RuntimePage[]
   scores?: unknown[]
   logic?: unknown[]
+  validation?: unknown[]
 }
 
 export type AnswerValue = number | string | (number | string)[] | null
