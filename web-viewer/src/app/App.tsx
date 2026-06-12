@@ -32,6 +32,7 @@ const FIXTURES: Record<string, () => Promise<{ default: unknown }>> = {
   mini: () => import('../fixtures/mini.json'),
   matrix: () => import('../fixtures/matrix.json'),
   widgets: () => import('../fixtures/widgets.json'),
+  branch: () => import('../fixtures/branch.json'),
 }
 const AUTO_ADVANCE_MS = 400
 

@@ -3,9 +3,9 @@
 Participant-facing **custom React/TS viewer** (OD-01 S1) that renders **Schema 3
 runtimes** minted by the Viewer Service. The default presentation is a
 Typeform-like **focus mode** — one question per view, auto-advance on single
-choice. This is stage **WV-A** of WV-A..F: app shell, session bootstrap, and the
-full Schema 3 renderer; submission (WV-B), logic/branching (WV-C/D), and resume
-(WV-E) come later. Spec: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md`.
+choice. Stages WV-A (shell + Schema 3 renderer), WV-B (submission), and WV-C/D
+(embedded expression evaluator + logic/branching/validation/scoring) are built;
+resume (WV-E) comes later. Spec: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md`.
 
 ## Dev quickstart (no backend)
 
@@ -20,6 +20,7 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
 - `http://localhost:5173/?fixture=mini` — 2 pages of radios
 - `http://localhost:5173/?fixture=matrix` — Section + shared_option matrix
 - `http://localhost:5173/?fixture=widgets` — every supported widget triple + Message + an unsupported combo
+- `http://localhost:5173/?fixture=branch` — a 3-page branch rule (`it_route == 1` skips to p3); proves in-browser logic
 
 ## URL contract
 
@@ -60,6 +61,43 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
   screen. A failure surfaces a **visible retry** — the participant is never
   silently dropped.
 - `style.x_summary_rt: false` strips RTs from emitted rows.
+
+## Logic (WV-D)
+
+Conditional logic runs entirely **in-browser** via the embedded
+`questionnaire-expression-evaluator` (the WV-C WASM evaluator). It is built
+`--target web` by `npm run build:evaluator` and runs **automatically** on
+`dev`/`build` (the `predev`/`prebuild` hooks) — this **requires `cargo` +
+`wasm-pack` on PATH** (`. "$HOME/.cargo/env"` first). The four logic actions:
+
+- **skip** — a fired rule jumps navigation forward to its `skip_to` page.
+- **branch** — same graph-walk jump, used for conditional routing.
+- **visibility** — `show_if`: a rule whose `condition` is false hides its
+  `target_id` element; hidden steps are skipped during navigation.
+- **piping** — answer/score values are spliced into prompt text (v1: prompt-text
+  only, matched by `field_path` prefix).
+
+**Graph-walk navigation**: Next applies the first forward-firing skip/branch
+rule, then scans to the next *visible* step (hidden steps are skipped). **Back
+retraces the actually-visited path** (a visited stack), not the linear order, so
+branches reverse correctly.
+
+**Validation** runs before advancing: per-question (range / length / format) and
+cross-question (condition) rules. A failing rule **blocks Next** and shows
+per-item messages.
+
+**Scoring at answer-commit**: `reversed_value` items emit the post-reversal
+`score` into the Schema 5 `Response`, and Solution-bearing items emit `correct`.
+The `score(id)` expression function resolves to an **unavailable sentinel** until
+the Scorer host lands — so **score-gated branches do not fire** (by design, not a
+bug).
+
+**Progress**: when the runtime carries branch/skip rules, the bar shows a **step
+counter** (current step, no fixed total — the total is path-dependent).
+
+The Schema 7 **manifest** now declares `logic_actions: [skip, visibility, piping,
+branch]` and an `evaluator` block (`v26.0612`), so the Viewer Service **no longer
+strips logic** from minted runtimes for this viewer.
 
 ## Running against a live Viewer Service
 
@@ -104,13 +142,13 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
 - Submission exists as of WV-B, but the submission queue is **in-memory** — a
   refresh loses any not-yet-sent rows/events until WV-E resume + durability
   land.
-- No logic/branching — the manifest declares no `logic_actions` (WV-C/D), so the
-  VS mint pre-flight rejects questionnaires that need them.
+- Logic/branching is live (WV-D, see above); `score(id)` is still null (external
+  Scorer deferred), so score-gated branches do not fire yet.
 
 ## Tests
 
 ```bash
-npm test            # vitest (110 tests) + Schema 7 manifest validation
-npm run typecheck
-npm run build
+npm test            # vitest (~145 tests) + Schema 7 manifest validation
+npm run typecheck   # tests mock loadEvaluator — no prior wasm build needed
+npm run build       # tsc + builds evaluator --target web + bundles the wasm
 ```
