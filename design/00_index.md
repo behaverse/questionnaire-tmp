@@ -30,6 +30,7 @@ This folder is the **single authoritative source** for what the Questionnaire Ap
 | 12 | [12_governance.md](12_governance.md) | Operating organisation, sibling projects, cross-project contracts | Draft |
 | 13 | [13_importers.md](13_importers.md) | Migration assistance from foreign formats; provenance | Draft |
 | 14 | [14_repository_topology.md](14_repository_topology.md) | Repository topology — `behaverse` org, multi-repo split, names, folder migration | Locked |
+| 15 | [15_expression_language.md](15_expression_language.md) | OD-11 — normative `Expression` grammar: value lattice, precedence, function set, determinism (code-point order, `/0`→Null, no dates/RNG), sentinel-Null error model + null-is-false truthiness, `score(id)` lookup, `reversed_value` + `compare_solution`; single WASM binary as the cross-viewer contract | Live |
 
 ## What lives here vs. in plan/
 
