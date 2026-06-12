@@ -4,6 +4,8 @@ pub use value::Value;
 mod lexer;
 mod ast;
 mod parser;
+mod eval;
+pub use eval::Bindings;
 
 pub fn version() -> &'static str { "0.1.0" }
 
