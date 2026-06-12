@@ -724,12 +724,12 @@ test('buildItemRow includes scored_value (reversed) and correct (solution) when 
   const row = buildItemRow({ identity, index: idx.get('it_1')!, responseId: 1, timing,
     scoring: { evaluator: ev } }, revItem as never, 0, 'en')
   assertValid(row)
-  expect(row.scored_value).toBe(6)       // reversed 0 in 0..6 → 6
-  expect(row.correct).toBe(false)        // value 0 vs expected 0 → equals true... wait scored? see note
+  expect(row.score).toBe(6)              // Schema 5 `score` = per-item post-reversal value; reversed 0 in 0..6 → 6
+  expect(row.correct).toBe(true)         // raw value 0 vs expected 0 → equals true (correct uses raw value, 05b 4.3)
 })
 ```
 
-NOTE on the assertion: `correct` compares the RAW `value` against `expected_response` per 05b 4.3 (`response.value`), so value 0 vs expected 0 → `true`. FIX the test's last line to `expect(row.correct).toBe(true)`. (`scored_value` is the reversed value; `correct` uses raw value.) Implement accordingly: scored_value via `scoredValueFor`, correct via `solutionCorrect(item, rawValue, ev)`.
+**Schema 5 home for the scored value:** Schema 5 has **no** `scored_value` field — it has a `score` field (number) documented as *"Per-item scored_value (post-reversal applied per OD-16 16a)."* So the post-reversal value goes in **`score`**, schema-legal, no `x_` needed. `correct` compares the RAW value against `expected_response` (05b 4.3), so value 0 vs expected 0 → `true`. Implement: `score` ← `scoredValueFor(...)` when reversed/bounded (omit if equal to raw? — set it whenever the prompt is reversed; for non-reversed items leave `score` unset, since OD-16 reserves it for the post-reversal value); `correct` ← `solutionCorrect(item, rawValue, ev)`.
 
 - [ ] **Step 2: Implement** — extend `RowContext` with an optional `scoring?: { evaluator: LogicEvaluator }`; in `buildItemRow`, after the existing field mapping, when `ctx.scoring` is present:
 
@@ -739,16 +739,20 @@ NOTE on the assertion: `correct` compares the RAW `value` against `expected_resp
 // in RowContext: scoring?: { evaluator: LogicEvaluator }
 // at the end of buildItemRow, before `return row`:
 if (ctx.scoring) {
-  const sv = scoredValueFor(el.option as never, el.question.prompt as never, answer, ctx.scoring.evaluator)
-  if (sv !== undefined) row.scored_value = sv as never
+  // Schema 5 `score` field carries the per-item POST-REVERSAL value (OD-16 16a). Only emit it for reversed prompts
+  // (a non-reversed item's scored value equals its raw value, already in response_numeric/_option_index).
+  if ((el.question.prompt as { reversed?: boolean } | undefined)?.reversed && typeof answer === 'number') {
+    const sv = scoredValueFor(el.option as never, el.question.prompt as never, answer, ctx.scoring.evaluator)
+    if (typeof sv === 'number') row.score = sv
+  }
   const correct = solutionCorrect(el as never, answer, ctx.scoring.evaluator)
   if (correct !== null) row.correct = correct
 }
 ```
 
-Confirm Schema 5 allows `scored_value`: check `schemas/response/schema.json` — it has `correct` + `score` but verify `scored_value`. **If `scored_value` is NOT in Schema 5**, carry it as `x_scored_value` (the `^x_` escape hatch) and note it as a follow-up (Schema 5 bump to add `scored_value` first-class, like the WV-B attempt fields). Report which path you took. (Likely `scored_value` is absent — Schema 5 is the BDM trial table; use `x_scored_value` and log the follow-up.)
+**Confirmed:** Schema 5's `score` field IS the home for the per-item post-reversal value (its description says so). Use `row.score` (a number). No `x_` field, no follow-up needed. `correct` is also a first-class Schema 5 boolean.
 
-- [ ] **Step 3:** the Ajv validation in the test will tell you immediately whether `scored_value` is legal. Make it green (using `x_scored_value` if needed). Full suite + typecheck. **Commit:** `git commit -am "feat(web-viewer): response rows carry scored_value + Solution correct (WV-D scoring)"`
+- [ ] **Step 3:** the Ajv validation in the test will tell you immediately whether `scored_value` is legal. Make it green (using `x_scored_value` if needed). Full suite + typecheck. **Commit:** `git commit -am "feat(web-viewer): response rows carry post-reversal score + Solution correct (WV-D scoring)"`
 
 ---
 
@@ -803,7 +807,7 @@ Then tests set `(globalThis as any).__evalTable` per case. Add:
 - **branch routing**: a runtime with `logic:[{type:'branch', condition:'route_b', action:{skip_to:'p3'}}]`; with `__evalTable={route_b:true}` answering the first step routes to p3 (assert p3's heading appears, p2 skipped); with `route_b:false` it goes to p2.
 - **show_if visibility**: an item with `show_if:'show_x'`; `{show_x:false}` → the item's step is skipped; flipping an earlier answer that sets `show_x:true` reveals it (drive via the table).
 - **validation block**: a cross-rule `{condition:'bad', ...}` with `{bad:true}` blocks advance and shows the message; `{bad:false}` advances.
-- **scored_value in the posted row**: a reversed item → the posted response row carries `scored_value`/`x_scored_value`.
+- **score in the posted row**: a reversed item → the posted response row carries the post-reversal `score`.
 
 (Reuse the WV-B `postCalls`/`respond202` helpers already in App.test.tsx.)
 
@@ -828,7 +832,7 @@ Then tests set `(globalThis as any).__evalTable` per case. Add:
 **Files:** modify `web-viewer/README.md`, `web-viewer/FOLLOWUPS.md`.
 
 - [ ] **Step 1: README** — add a "## Logic (WV-D)" section: the four logic actions + `show_if` + validation + scoring helpers, all via the embedded `questionnaire-expression-evaluator` (built `--target web` by `npm run build:evaluator`, auto-run on `dev`/`build`); the graph-walk navigation (skip/branch jump forward, hidden steps skipped, Back retraces visited path); `score(id)` resolves to null until the Scorer host lands (score-gated branches don't fire — by design); the dev requirement that cargo/wasm-pack be on PATH (`. "$HOME/.cargo/env"`) for the evaluator build. Update the manifest line (now declares logic).
-- [ ] **Step 2: FOLLOWUPS** — add: external Scorer execution + in-session score display (OD-16 Scorer track) — `score(id)` is null until then; `randomize` (Page/Section) needs a seeded-RNG determinism decision — deferred; piping v1 covers prompt-text only via `field_path` prefix match — richer field targeting later; `x_scored_value` should become first-class `scored_value` at the next Schema 5 CalVer (bundle with the WV-B `attempt_index` follow-up) IF the x_ path was taken; the evaluator is rebuilt on every `npm run build` (cache if it slows CI).
+- [ ] **Step 2: FOLLOWUPS** — add: external Scorer execution + in-session score display (OD-16 Scorer track) — `score(id)` is null until then; `randomize` (Page/Section) needs a seeded-RNG determinism decision — deferred; piping v1 covers prompt-text only via `field_path` prefix match — richer field targeting later; the evaluator is rebuilt on every `npm run build` (cache if it slows CI).
 - [ ] **Step 3: Full verification** (paste tails):
 
 ```bash
@@ -838,7 +842,7 @@ Then tests set `(globalThis as any).__evalTable` per case. Add:
 
 (`npm test` must NOT require the wasm — confirm it's green without a prior evaluator build, then `npm run build` proves the real wasm bundles.)
 
-- [ ] **Step 4: Live gate smoke** (extends WV-B's; proves logic flows end-to-end and the real WASM evaluates in-browser). Stand up the stack (Postgres :55435, library migrate/import/ingest, VS :8001 with `VS_CORS_ORIGINS`, register the **v26.0612** manifest, deploy a questionnaire **with a branch rule**). Use the kitchensink questionnaire if importable, else hand-craft a 2-page runtime with a branch (document which). `npm run dev` (builds the evaluator), drive a real chromium twice taking both branch paths, and assert `export.csv` shows the divergent page paths + `scored_value`/`x_scored_value` columns + the session `submitted`. If no branch-bearing questionnaire is importable from survey_db, note that and fall back to a fixture-mode visual confirmation of branching (`?fixture=` with a branch fixture you add) + the App integration tests as the branching evidence. Record the outcome honestly; clean up (kill servers, `docker rm -f`, temp dirs).
+- [ ] **Step 4: Live gate smoke** (extends WV-B's; proves logic flows end-to-end and the real WASM evaluates in-browser). Stand up the stack (Postgres :55435, library migrate/import/ingest, VS :8001 with `VS_CORS_ORIGINS`, register the **v26.0612** manifest, deploy a questionnaire **with a branch rule**). Use the kitchensink questionnaire if importable, else hand-craft a 2-page runtime with a branch (document which). `npm run dev` (builds the evaluator), drive a real chromium twice taking both branch paths, and assert `export.csv` shows the divergent page paths + the post-reversal `score` column + the session `submitted`. If no branch-bearing questionnaire is importable from survey_db, note that and fall back to a fixture-mode visual confirmation of branching (`?fixture=` with a branch fixture you add) + the App integration tests as the branching evidence. Record the outcome honestly; clean up (kill servers, `docker rm -f`, temp dirs).
 - [ ] **Step 5: Commit.** `git add web-viewer/README.md web-viewer/FOLLOWUPS.md && git commit -m "docs(web-viewer): WV-D logic docs; gate smoke recorded"`
 - [ ] **Step 6: Merge.** Use superpowers:finishing-a-development-branch — re-run Step 3 verification, merge `wv-d-web-viewer` to `master` `--no-ff` (`Merge wv-d-web-viewer: Web Viewer WV-D (logic, validation, in-session scoring)`), push, delete branch.
 
@@ -846,6 +850,6 @@ Then tests set `(globalThis as any).__evalTable` per case. Add:
 
 ## Self-review notes (done at planning time)
 
-- **Spec coverage:** §3 evaluator port → T1; §4 collectPrograms/visibility/piping → T2/T3/T5; §5 dynamic navigation → T4 (pure) + T9 (reducer visited-stack + App wiring); §6 validation → T6 + T9; §7 scoring (reversed/correct/null-resolver) → T7 + T8 (rows) + T9; §8 manifest → T10; §9 testing → engine units T2–T7, evaluator-adapter T1, App integration T9, manifest T10, live smoke T11. F1 (null resolver) → T7; F2 (port + injected fake) → T1/T9; F3 (no score display) → not built (correct); F4 (progress under branching) → T9 render note (counter, no false total — implement in App: when `programs.rules` has any skip/branch, show step counter without a percentage); F5 (piping) → T5 + T9.
+- **Spec coverage:** §3 evaluator port → T1; §4 collectPrograms/visibility/piping → T2/T3/T5; §5 dynamic navigation → T4 (pure) + T9 (reducer visited-stack + App wiring); §6 validation → T6 + T9; §7 scoring (reversed→Schema5 `score`/correct/null-resolver) → T7 + T8 (rows) + T9; §8 manifest → T10; §9 testing → engine units T2–T7, evaluator-adapter T1, App integration T9, manifest T10, live smoke T11. F1 (null resolver) → T7; F2 (port + injected fake) → T1/T9; F3 (no score display) → not built (correct); F4 (progress under branching) → T9 render note (counter, no false total — implement in App: when `programs.rules` has any skip/branch, show step counter without a percentage); F5 (piping) → T5 + T9.
 - **Type consistency:** `LogicEvaluator`/`Bindings`/`ScoreResolver`/`Programs`/`CompiledRule`/`ValidationError` defined in T1–T2/T6 and reused verbatim through T9; `visibleEntries` returns the same `StepEntry[]` shape `StepRenderer` consumes; `nextStepIndex` returns `number | null` matching the reducer `goto` action's `index: number | null`; `scoring:{evaluator}` added to `RowContext` (T8) is what App passes (T9).
-- **Known judgment calls / risks flagged for the implementer:** (a) `scored_value` may not be a Schema-5 field → T8 falls back to `x_scored_value` and logs a follow-up (the Ajv test decides). (b) the `loadEvaluator` dynamic import of `./wasm/...` must not break `tsc`/vitest — T1 Step 7 gives the ambient-declaration fix; tests never import it (App mocks `loadEvaluator`). (c) piping render-wiring is the fiddliest integration (mapping a rendered prompt to a `field_path`); T9 keeps it to prompt-text-only and documents the limitation; the `piping.ts` logic is independently unit-tested. (d) F4 progress: App shows a plain step counter when branch/skip rules exist (no misleading total).
+- **Known judgment calls / risks flagged for the implementer:** (a) the post-reversal value goes in Schema 5's `score` field (not `scored_value`, which doesn't exist) — confirmed in the schema. (b) the `loadEvaluator` dynamic import of `./wasm/...` must not break `tsc`/vitest — T1 Step 7 gives the ambient-declaration fix; tests never import it (App mocks `loadEvaluator`). (c) piping render-wiring is the fiddliest integration (mapping a rendered prompt to a `field_path`); T9 keeps it to prompt-text-only and documents the limitation; the `piping.ts` logic is independently unit-tested. (d) F4 progress: App shows a plain step counter when branch/skip rules exist (no misleading total).
