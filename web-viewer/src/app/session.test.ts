@@ -80,3 +80,14 @@ test('validation_errors sets the channel; answering a key clears its error', () 
   s = reducer(s, { type: 'answer', key: 'it_1', value: 0 })
   expect(s.validationErrors).toEqual([])
 })
+test('rehydrate restores answers/stepIndex/visited and goes ready', () => {
+  const s = reducer(initialState, { type: 'rehydrate', session: { id: 's1', token: 't1' },
+    runtime, theme: null, steps: flattenSteps(runtime), answers: { it_1: 0 }, stepIndex: 1, visited: [0] })
+  expect(s.phase).toBe('ready')
+  expect(s.answers).toEqual({ it_1: 0 })
+  expect(s.stepIndex).toBe(1)
+  expect(s.visited).toEqual([0])
+})
+test('completed action → completed phase', () => {
+  expect(reducer(booted, { type: 'completed' }).phase).toBe('completed')
+})

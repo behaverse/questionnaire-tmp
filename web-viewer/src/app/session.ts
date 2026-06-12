@@ -4,7 +4,7 @@ import type { Theme } from './theme'
 import { requiredUnanswered, type Step } from './steps'
 
 export type SessionState = {
-  phase: 'booting' | 'error' | 'ready' | 'finishing' | 'finished'
+  phase: 'booting' | 'error' | 'ready' | 'finishing' | 'finished' | 'completed'
   session: { id: string; token: string } | null
   runtime: Runtime | null
   theme: Theme
@@ -36,6 +36,8 @@ export type Action =
   | { type: 'submitted' }
   | { type: 'submit_failed' }
   | { type: 'submit_retry' }
+  | { type: 'rehydrate'; session: { id: string; token: string }; runtime: Runtime; theme: Theme; steps: Step[]; answers: Record<string, AnswerValue>; stepIndex: number; visited: number[] }
+  | { type: 'completed' }
 
 export function reducer(state: SessionState, action: Action): SessionState {
   switch (action.type) {
@@ -73,5 +75,11 @@ export function reducer(state: SessionState, action: Action): SessionState {
       return { ...state, submitError: true }
     case 'submit_retry':
       return { ...state, submitError: false }
+    case 'rehydrate':
+      return { ...state, phase: 'ready', session: action.session, runtime: action.runtime, theme: action.theme,
+               steps: action.steps, answers: action.answers, stepIndex: action.stepIndex, visited: action.visited,
+               stepErrors: [], validationErrors: [] }
+    case 'completed':
+      return { ...state, phase: 'completed' }
   }
 }
