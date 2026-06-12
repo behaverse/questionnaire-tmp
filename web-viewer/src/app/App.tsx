@@ -86,7 +86,7 @@ export function App() {
 
   if (state.phase === 'booting') return <main className="min-h-screen font-theme" aria-busy="true" />
   if (state.phase === 'error' && state.error) {
-    return <ErrorScreen locale={locale} kind={state.error.kind} code={state.error.code} onRetry={() => dispatch({ type: 'retry' })} />
+    return <ErrorScreen locale={locale} kind={state.error.kind} code={state.error.code} onRetry={() => { bootStarted.current = false; dispatch({ type: 'retry' }) }} />
   }
   if (state.phase === 'finished') {
     return (
@@ -100,6 +100,7 @@ export function App() {
   }
 
   const step = state.steps[state.stepIndex]
+  if (!step) return null
   const keyHints = isSingleChoiceItem(step)
   return (
     <main className="min-h-screen font-theme">

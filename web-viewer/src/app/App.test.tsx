@@ -17,6 +17,17 @@ test('boots a session, applies the theme, renders step 1 (message) then navigate
   await userEvent.click(screen.getByRole('button', { name: /next/i }))
   expect(await screen.findByRole('heading', { name: /Little interest/ })).toBeInTheDocument()
 })
+test('retry after a failed mint re-runs boot and recovers', async () => {
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn()
+    .mockResolvedValueOnce(new Response(JSON.stringify({ error: { code: 'boom' } }), { status: 500 }))
+    .mockResolvedValueOnce(new Response(JSON.stringify(mintOk), { status: 200 }))
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /try again/i }))
+  expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
+  expect(fetchMock).toHaveBeenCalledTimes(2)
+})
 test('required gating blocks Next and announces the error', async () => {
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 })))
