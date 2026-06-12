@@ -7,6 +7,9 @@ mod parser;
 mod eval;
 pub use eval::Bindings;
 
+mod helpers;
+pub use helpers::{reversed_value, compare_solution, Comparator};
+
 pub fn version() -> &'static str { "0.1.0" }
 
 #[cfg(test)]
