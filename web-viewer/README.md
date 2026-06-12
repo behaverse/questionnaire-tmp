@@ -165,10 +165,58 @@ deployments — revisit when authenticated deployments arrive (see FOLLOWUPS).
 - Logic/branching is live (WV-D, see above); `score(id)` is still null (external
   Scorer deferred), so score-gated branches do not fire yet.
 
+## Distribution (WV-F)
+
+> **WV-A..F is COMPLETE** — with WV-F the Web Viewer is feature-complete (renderer
+> library, PERF-01 overlap, iframe embedding, PWA shell, manifest-at-origin).
+
+- **Renderer library (OD-03):** `npm run build:lib` produces `dist-lib/renderer.js`
+  (ESM, React as a peer dependency — not bundled) + `dist-lib/renderer.css` + type
+  declarations. The Editor preview imports it as `@behaverse/questionnaire-renderer`
+  (the JS plus `@behaverse/questionnaire-renderer/renderer/style.css`). **The preview
+  IS the deployed renderer** — there is no separate rendering engine to keep in sync.
+
+- **iframe embedding:** a host page embeds the viewer in an
+  `<iframe src="…/?deployment=<id>">` and listens for `message` events:
+  - `behaverse:loaded` — `{type, sessionId}` once the session is minted and rendered
+  - `behaverse:completed` — `{type, sessionId}` when the participant finishes
+  - `behaverse:resize` — `{type, height}` on content height change, for auto-sizing
+
+  Optional `?embed_origin=https://host.example` restricts the postMessage target
+  origin (recommended in production; default posts to `'*'`). Host snippet:
+
+  ```html
+  <iframe id="qv" src="https://viewer.example/?deployment=dep_123&embed_origin=https://host.example"
+          style="width:100%;border:0"></iframe>
+  <script>
+    addEventListener('message', (e) => {
+      const d = e.data || {};
+      if (d.type === 'behaverse:resize') document.getElementById('qv').style.height = d.height + 'px';
+      if (d.type === 'behaverse:completed') console.log('done', d.sessionId);
+    });
+  </script>
+  ```
+
+- **PWA:** the viewer is installable (webmanifest + service worker). The SW precaches
+  the app shell **and** the evaluator WASM for fast repeat loads. Offline reality: a
+  **loaded** session survives a reload and submits-when-back-online (WV-B retry queue +
+  WV-E IndexedDB durability); a **first** visit still needs the network to mint a
+  session. The `/v1/` API is **NetworkOnly** — never cached.
+
+- **Manifest:** the Schema 7 conformance manifest is served at `/manifest.json`
+  (build-generated from `web-viewer/manifest.json`, declaring `resume` and
+  `locale_switching` true). Register it with the Viewer Service via
+  `POST /v1/viewers`.
+
+- **PERF-01:** see [PERF.md](PERF.md) — the interactive shell is ~81 KB gzip; the
+  evaluator WASM load overlaps the session mint and is SW-cached for repeat loads.
+
 ## Tests
 
 ```bash
-npm test            # vitest (~145 tests) + Schema 7 manifest validation
+npm test            # vitest (~173 tests) + Schema 7 manifest validation
 npm run typecheck   # tests mock loadEvaluator — no prior wasm build needed
 npm run build       # tsc + builds evaluator --target web + bundles the wasm
+npm run build:lib   # renderer library (OD-03) → dist-lib/ (ESM + dts + CSS)
+npm run test:lib    # renderer-library smoke (consumes the built dist-lib)
 ```

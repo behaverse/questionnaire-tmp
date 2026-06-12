@@ -31,3 +31,8 @@
 - **Multi-tab coordination is last-writer-wins** (WV-E): no cross-tab locking/broadcast; the most recent writer's state wins.
 - **Offline / PWA queue-and-sync is WV-F**: the in-memory submission queue still loses not-yet-sent rows/events on refresh until durable offline sync lands.
 - **No participant "start over" affordance** (WV-E): a deliberate self-service reset of the persisted resume state is deferred.
+- **Fully-lazy evaluator load** (WV-F, F3): the WASM load is overlapped with the mint (PERF-01) but not deferred until the first logic-requiring step — make it fully lazy if PERF profiling on real instruments demands it.
+- **npm publish of `@behaverse/questionnaire-renderer`** (WV-F): the renderer library is consumed by **local path** today; an actual npm publish happens at the deferred repo split (project_repo_topology) — until then the Editor imports it from the workspace.
+- **Offline-first MINT is out of scope** (WV-F): a first visit still needs the network to mint a session; truly offline-first kiosk operation is the **Native / Godot viewer's** domain, not the Web Viewer's.
+- **Renderer-lib ships precompiled CSS** (WV-F): `dist-lib/renderer.css` is shipped for drop-in use; an Editor whose own Tailwind build already generates the renderer's utility classes can **skip importing `renderer/style.css`** to avoid duplication.
+- **PWA icon is a single SVG** (WV-F): swap for a multi-size PNG icon set if app-store-install polish (richer install prompts / platform icon requirements) is wanted.
