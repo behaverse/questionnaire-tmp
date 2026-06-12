@@ -7,7 +7,10 @@ import { makeFakeStore } from '../resume/store'
 
 vi.mock('../logic/evaluator', async (orig) => {
   const actual = await orig<typeof import('../logic/evaluator')>()
-  return { ...actual, loadEvaluator: async () => actual.makeFakeEvaluator((globalThis as Record<string, unknown>).__evalTable as never ?? {}) }
+  return { ...actual, loadEvaluator: async () => {
+    ;((globalThis as Record<string, unknown>).__onLoadEvaluator as (() => void) | undefined)?.()
+    return actual.makeFakeEvaluator((globalThis as Record<string, unknown>).__evalTable as never ?? {})
+  } }
 })
 
 let fakeStore = makeFakeStore()
@@ -485,4 +488,21 @@ test('emits behaverse:completed to the host on finish (when framed)', async () =
   await userEvent.click(screen.getByRole('button', { name: /next/i }))
   await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
   expect(posts.some((e) => (e as { type: string }).type === 'behaverse:completed')).toBe(true)
+})
+
+// Task 3 — PERF-01 overlap
+test('boot kicks off the evaluator load before awaiting the mint (PERF-01 overlap)', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore()
+  const order: string[] = []
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) { order.push('mint'); return new Response(JSON.stringify(mintOk), { status: 200 }) }
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  ;(globalThis as Record<string, unknown>).__onLoadEvaluator = () => order.push('load')
+  render(<App />)
+  await screen.findByText(/Welcome\. Answer honestly\./)
+  expect(order[0]).toBe('load')
+  delete (globalThis as Record<string, unknown>).__onLoadEvaluator
 })

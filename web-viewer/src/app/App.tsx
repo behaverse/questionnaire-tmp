@@ -132,12 +132,14 @@ export function App() {
         dispatch({ type: 'boot_error', kind: 'invalid_link', code: 'missing_deployment_param' })
         return
       }
-      const evaluator = await loadEvaluator()
+      // PERF-01: kick off the (heavy) evaluator WASM load now, then await the network in parallel.
+      const evaluatorPromise = loadEvaluator()
       const outcome = await resolveResume(params.vsBaseUrl, params.deploymentId, store, { getSession, getRuntime })
       if (outcome.kind === 'retry') { dispatch({ type: 'boot_error', kind: 'failed', code: 'resume_unreachable' }); return }
       if (outcome.kind === 'completed') { dispatch({ type: 'completed' }); return }
       if (outcome.kind === 'resume') {
         const { record, runtime } = outcome
+        const evaluator = await evaluatorPromise
         ephemeralRef.current = false
         localeRef.current = record.lastActiveLocale
         applyTheme(null)
@@ -152,7 +154,7 @@ export function App() {
         return
       }
       if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
-      const res = await mintSession(params.vsBaseUrl, params.deploymentId, params.locale)
+      const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale)])
       if (res.ok) {
         ephemeralRef.current = res.ephemeral
         localeRef.current = res.runtime.locale ?? 'en'
