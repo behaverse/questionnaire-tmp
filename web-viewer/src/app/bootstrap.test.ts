@@ -1,4 +1,4 @@
-import { mintSession, parseParams } from './bootstrap'
+import { mintSession, parseParams, completeSession } from './bootstrap'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -11,7 +11,7 @@ test('parseParams reads deployment/locale/viewer_url/fixture', () => {
   expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null })
 })
 
-const ok = { session_id: 's1', session_token: 't1', runtime: { metadata: {} }, theme: null }
+const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null }
 
 test('mintSession posts viewer identity and returns the bundle', async () => {
   const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(ok), { status: 200 }))
@@ -35,4 +35,18 @@ test.each([
 test('network failure → failed/network', async () => {
   vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('fetch failed')))
   expect(await mintSession('http://vs:9', 'dpl_1', null)).toEqual({ ok: false, kind: 'failed', code: 'network' })
+})
+test('completeSession posts with the bearer token and reports success', async () => {
+  const fetchMock = vi.fn().mockResolvedValue(new Response('{"status":"submitted"}', { status: 200 }))
+  vi.stubGlobal('fetch', fetchMock)
+  expect(await completeSession('http://vs:9', 's1', 't1')).toBe(true)
+  const [url, init] = fetchMock.mock.calls[0]
+  expect(url).toBe('http://vs:9/v1/sessions/s1/complete')
+  expect((init as RequestInit).headers).toMatchObject({ authorization: 'Bearer t1' })
+})
+test('completeSession returns false on http error and on network failure', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 500 })))
+  expect(await completeSession('http://vs:9', 's1', 't1')).toBe(false)
+  vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('x')))
+  expect(await completeSession('http://vs:9', 's1', 't1')).toBe(false)
 })

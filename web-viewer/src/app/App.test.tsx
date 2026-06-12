@@ -5,7 +5,7 @@ import { App } from './App'
 import mini from '../fixtures/mini.json'
 
 function setUrl(qs: string) { window.history.replaceState(null, '', `/${qs}`) }
-const mintOk = { session_id: 's1', session_token: 't1', runtime: mini, theme: { palette: { primary: '#112233' } } }
+const mintOk = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: mini, theme: { palette: { primary: '#112233' } } }
 
 afterEach(() => vi.unstubAllGlobals())
 
