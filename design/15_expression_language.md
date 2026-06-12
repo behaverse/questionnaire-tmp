@@ -69,7 +69,7 @@ Parentheses override precedence at any level.
 - **Strings** are single-quoted (`'...'`), with exactly two escapes: `\'` (literal quote) and `\\` (literal backslash). No other escape is recognised.
 - **Booleans / null** are the bare keywords `true`, `false`, `null`.
 - **List literals** are `[a, b, c]` (a trailing comma is not required and not specially handled — an empty list is `[]`).
-- **Identifiers** are the canonical token `^[a-z][a-z0-9_]*$` — a lowercase letter followed by lowercase letters, digits, and underscores. Authored content and the schema's id patterns produce only this form; the canonical grammar reserves uppercase and leading underscores for future use.
+- **Identifiers** are the canonical token `^[a-z][a-z0-9_]*$` — a lowercase letter followed by lowercase letters, digits, and underscores. Authored content and the schema's id patterns produce only this form; the canonical grammar reserves uppercase and leading underscores for future use. (The reference lexer follows a *tolerant-reader, strict-producer* posture: it accepts a superset of this charset, but only the canonical form above is contract — the Editor validates ids against the schema, not the lexer.)
 
 ## Function set
 

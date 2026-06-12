@@ -27,3 +27,4 @@ Deferred work, in rough priority order. Nothing here blocks the current viewer g
 ## Integration
 
 - **Web Viewer wiring is WV-D.** Compiling runtime rules and driving `show_if` / branching / validation from this evaluator — plus applying `reversed_value` and `compare_solution` for `correct` — is the next Web Viewer task (WV-D). This crate is the dependency; WV-D is the consumer.
+- **WASM compile-once handle (WV-D-facing):** the JS surface exposes only `evaluate_condition(expr, …)` (compile+evaluate each call); the Rust `core` has `compile()→Program` for reuse but `web/` does not yet expose a reusable compiled-`Program` handle. Expressions are ≤1024 chars and the parser is trivial, so per-call recompilation is almost certainly negligible — but if WV-D profiling shows page-submit re-evaluation of many rules matters, add a thin wasm-bindgen `Program` wrapper (additive).
