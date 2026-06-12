@@ -62,8 +62,11 @@ export function App() {
   const pipeline = useRef<Pipeline | null>(null)
   const store = getResumeStore()
   const [demoCleared, setDemoCleared] = useState(false)
+  const ephemeralRef = useRef(false)
   const params = parseParams(window.location.search)
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
+  const localeRef = useRef(locale)
+  localeRef.current = locale
 
   const nowIso = () => new Date().toISOString()
 
@@ -132,6 +135,8 @@ export function App() {
       if (outcome.kind === 'completed') { dispatch({ type: 'completed' }); return }
       if (outcome.kind === 'resume') {
         const { record, runtime } = outcome
+        ephemeralRef.current = false
+        localeRef.current = record.lastActiveLocale
         applyTheme(null)
         buildPipeline(evaluator, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
         const steps = flattenSteps(runtime)
@@ -146,9 +151,14 @@ export function App() {
       if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
       const res = await mintSession(params.vsBaseUrl, params.deploymentId, params.locale)
       if (res.ok) {
+        ephemeralRef.current = res.ephemeral
+        localeRef.current = res.runtime.locale ?? 'en'
         applyTheme(res.theme as Theme)
         buildPipeline(evaluator, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
         dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
+        if (!res.ephemeral && !params.fixture && params.deploymentId) {
+          void store.put({ deploymentId: params.deploymentId, sessionId: res.session_id, token: res.session_token, lastActiveLocale: res.runtime.locale ?? 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: new Date().toISOString() })
+        }
         document.title = res.runtime.metadata.title
         document.documentElement.lang = res.runtime.locale ?? 'en'
       } else {
@@ -203,6 +213,18 @@ export function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase, state.stepIndex])
 
+  // WV-E: debounced resume persistence (skips ephemeral + fixture)
+  useEffect(() => {
+    if (state.phase !== 'ready' || ephemeralRef.current || params.fixture || !state.session || !params.deploymentId) return
+    const handle = window.setTimeout(() => {
+      void store.put({ deploymentId: params.deploymentId!, sessionId: state.session!.id, token: state.session!.token,
+        lastActiveLocale: localeRef.current, answers: state.answers, stepIndex: state.stepIndex, visited: state.visited,
+        updatedAt: new Date().toISOString() })
+    }, 500)
+    return () => window.clearTimeout(handle)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.phase, state.answers, state.stepIndex, state.visited])
+
   // Finishing effect: flush queue, call complete, transition to finished
   useEffect(() => {
     const p = pipeline.current
@@ -222,6 +244,7 @@ export function App() {
       pl.batcher.add(ev.submitted(pl.engine, pl.identity.sessionId, nowIso()))
       pl.batcher.flush()
       dispatch({ type: 'submitted' })
+      if (params.deploymentId) void store.clear(params.deploymentId)
     }
     void finish(p)
     return () => { cancelled = true }

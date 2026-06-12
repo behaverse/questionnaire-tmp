@@ -408,3 +408,38 @@ test('ephemeral 409 on resume → wipes store, mints fresh, shows demo notice', 
   expect(await screen.findByText(/demo|prior session/i)).toBeInTheDocument()
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
 })
+
+// WV-E — persistence + clear ---------------------------------------------------------------------
+test('answering persists a resume record to the store (non-ephemeral)', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore()
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await vi.waitFor(async () => {
+    const rec = await fakeStore.get('dpl_1')
+    expect(rec?.answers).toMatchObject({ it_1: 0 })
+    expect(rec?.token).toBe('t1')
+  }, { timeout: 2000 })
+})
+test('completion clears the store', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore()
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
+  expect(await fakeStore.get('dpl_1')).toBeNull()
+})
