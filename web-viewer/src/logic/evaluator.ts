@@ -43,13 +43,14 @@ export function wasmAdapter(exports: WasmExports): LogicEvaluator {
   }
 }
 
-/** Production: lazy-load the real WASM (built `--target web` into ./wasm). Browser only. */
+/** Production: lazy-load the real WASM (built `--target web` into ./wasm). Browser only.
+ *  Static-string dynamic import so Vite analyses it, code-splits the module, and emits the
+ *  `.wasm` asset (a variable path with @vite-ignore would NOT bundle → 404 in prod). The
+ *  module is absent during typecheck/tests (built only at `npm run build`); the ambient
+ *  declaration in wasm-ambient.d.ts satisfies tsc, and tests mock loadEvaluator so vitest
+ *  never resolves it. */
 export async function loadEvaluator(): Promise<LogicEvaluator> {
-  // vite-ignore: path resolved at runtime after wasm build step
-  const wasmPath = /* @vite-ignore */ './wasm/questionnaire_expr_web.js'
-  const mod = await import(/* @vite-ignore */ wasmPath)
-  await (mod as { default: (input?: unknown) => Promise<unknown> }).default(
-    new URL('./wasm/questionnaire_expr_web_bg.wasm', import.meta.url),
-  )
+  const mod = await import('./wasm/questionnaire_expr_web.js')
+  await mod.default()
   return wasmAdapter(mod as unknown as WasmExports)
 }
