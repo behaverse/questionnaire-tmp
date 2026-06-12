@@ -141,3 +141,103 @@ test('classic mode renders the whole page as one step', async () => {
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: /Little interest/ })).toBeInTheDocument()   // same step
 })
+
+// WV-B — submission pipeline
+function postCalls(fetchMock: ReturnType<typeof vi.fn>, suffix: string) {
+  return fetchMock.mock.calls.filter(([u]) => String(u).endsWith(suffix)).map(([, i]) => JSON.parse((i as RequestInit).body as string))
+}
+const respond202 = (fetchMock: ReturnType<typeof vi.fn>) =>
+  fetchMock.mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+
+test('walking the questionnaire submits message + item rows, events, then complete', async () => {
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.type(screen.getByRole('spinbutton'), '8')
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  expect(await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })).toBeInTheDocument()
+
+  const responses = postCalls(fetchMock, '/sessions/s1/responses')
+  expect(responses).toHaveLength(3)
+  expect(responses[0].responses[0]).toMatchObject({ stimulus_type: 'instruction', response_description: 'acknowledged', agent_id: 'agent_ab12' })
+  expect(responses[1].responses[0]).toMatchObject({ response_description: 'Not at all', response_numeric: 0 })
+  expect(responses[2].responses[0]).toMatchObject({ response_numeric: 8 })
+  expect(responses[1].responses[0].response_time).toBeGreaterThan(0)
+  expect(responses[1].responses[0].response_time).toBeLessThan(60)
+
+  const events = postCalls(fetchMock, '/sessions/s1/events').flatMap((b) => b.events)
+  const verbs = events.map((e: { verb: string }) => e.verb)
+  expect(verbs).toContain('bdm:initialized')
+  expect(verbs).toContain('bdm:trial_started')
+  expect(verbs).toContain('bdm:selected')
+  expect(verbs).toContain('bdm:trial_ended')
+  expect(verbs).toContain('bdm:completed')
+  expect(fetchMock.mock.calls.some(([u]) => String(u).endsWith('/sessions/s1/complete'))).toBe(true)
+})
+test('back-and-change emits an attempt row with x_response_revises', async () => {
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.click(screen.getByRole('button', { name: /back/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Several days/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  const rows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0])
+  const itemRows = rows.filter((r) => r.stimulus_type !== 'instruction')
+  expect(itemRows).toHaveLength(2)
+  expect(itemRows[1]).toMatchObject({ x_response_revision: 2, x_response_revises: itemRows[0].response_id, response_description: 'Several days' })
+})
+test('going back without changing the answer emits nothing new', async () => {
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.click(screen.getByRole('button', { name: /back/i }))
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  const itemRows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0]).filter((r) => r.stimulus_type !== 'instruction')
+  expect(itemRows).toHaveLength(1)
+})
+test('complete failure shows retry; retry completes', async () => {
+  setUrl('?deployment=dpl_1')
+  let failComplete = true
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    if (String(url).endsWith('/complete')) return failComplete ? new Response('{}', { status: 500 }) : new Response('{}', { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  expect(await screen.findByRole('heading', { name: /Submission problem/i }, { timeout: 3000 })).toBeInTheDocument()
+  failComplete = false
+  await userEvent.click(screen.getByRole('button', { name: /try again/i }))
+  expect(await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })).toBeInTheDocument()
+})
+test('x_summary_rt:false strips response_time from rows', async () => {
+  const noRt = { ...mini, style: { x_summary_rt: false } }
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify({ ...mintOk, runtime: noRt }), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  const rows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0])
+  expect(rows[0].response_time).toBeUndefined()
+  expect(rows[0].response_datetime).toBeDefined()
+})
