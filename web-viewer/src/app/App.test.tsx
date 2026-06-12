@@ -443,3 +443,25 @@ test('completion clears the store', async () => {
   await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
   expect(await fakeStore.get('dpl_1')).toBeNull()
 })
+
+// WV-E — locale switcher -------------------------------------------------------------------------
+test('locale switch swaps runtime text and preserves answers', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore()
+  const ptRuntime = { ...mini, locale: 'pt', available_locales: ['en', 'pt'],
+    pages: [{ id: 'page_1', elements: [
+      { id: 'msg_intro', content: { pt: { text: 'Bem-vindo. Responda honestamente.' } } },
+      mini.pages[0].elements[1],
+    ] }, mini.pages[1]] }
+  const enMint = { ...mintOk, runtime: { ...mini, available_locales: ['en', 'pt'] } }
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(enMint), { status: 200 })
+    if (String(url).endsWith('/locale')) return new Response(JSON.stringify({ runtime: ptRuntime }), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await screen.findByText(/Welcome\. Answer honestly\./)
+  await userEvent.selectOptions(screen.getByRole('combobox', { name: /language/i }), 'pt')
+  expect(await screen.findByText(/Bem-vindo/)).toBeInTheDocument()
+})

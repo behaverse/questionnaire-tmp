@@ -12,10 +12,11 @@ import { pipedText } from '../logic/piping'
 import { validateStep } from '../logic/validation'
 import { visibleEntries } from '../logic/visibility'
 import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
-import { completeSession, getRuntime, getSession, mintSession, parseParams, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { completeSession, getRuntime, getSession, mintSession, parseParams, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
 import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
 import { ErrorScreen } from './chrome/ErrorScreen'
+import { LocaleSwitcher } from './chrome/LocaleSwitcher'
 import { NavButtons } from './chrome/NavButtons'
 import { ProgressBar } from './chrome/ProgressBar'
 import { StepTransition } from './chrome/StepTransition'
@@ -277,6 +278,17 @@ export function App() {
     if (autoTimer.current !== null) { window.clearTimeout(autoTimer.current); autoTimer.current = null }
   }
 
+  async function handleLocale(l: string) {
+    const p = pipeline.current
+    if (!p || !state.session || l === locale) return
+    const rt = await switchLocale(params.vsBaseUrl, state.session.id, state.session.token, l)
+    if (!rt) return
+    p.programs = collectPrograms(rt, p.evaluator)     // rebuild logic programs for the new runtime text
+    localeRef.current = l
+    document.documentElement.lang = l
+    dispatch({ type: 'set_runtime', runtime: rt, steps: flattenSteps(rt) })
+  }
+
   function handleAnswer(key: string, value: AnswerValue) {
     const p = pipeline.current
     if (p) {
@@ -444,6 +456,7 @@ export function App() {
   const errorMessages = Object.fromEntries(state.validationErrors.map((e) => [e.key, e.message]))
   return (
     <main className="min-h-screen font-theme">
+      <LocaleSwitcher locale={locale} available={state.runtime?.available_locales ?? []} onSwitch={handleLocale} />
       {demoCleared && (
         <div role="status" className="fixed inset-x-0 top-0 z-10 bg-amber-100 px-4 py-2 text-center text-sm text-amber-900">
           {t(locale, 'demo_cleared')}

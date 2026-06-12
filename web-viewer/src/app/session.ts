@@ -37,6 +37,7 @@ export type Action =
   | { type: 'submit_failed' }
   | { type: 'submit_retry' }
   | { type: 'rehydrate'; session: { id: string; token: string }; runtime: Runtime; theme: Theme; steps: Step[]; answers: Record<string, AnswerValue>; stepIndex: number; visited: number[] }
+  | { type: 'set_runtime'; runtime: Runtime; steps: Step[] }
   | { type: 'completed' }
 
 export function reducer(state: SessionState, action: Action): SessionState {
@@ -79,6 +80,8 @@ export function reducer(state: SessionState, action: Action): SessionState {
       return { ...state, phase: 'ready', session: action.session, runtime: action.runtime, theme: action.theme,
                steps: action.steps, answers: action.answers, stepIndex: action.stepIndex, visited: action.visited,
                stepErrors: [], validationErrors: [] }
+    case 'set_runtime':
+      return { ...state, runtime: action.runtime, steps: action.steps }
     case 'completed':
       return { ...state, phase: 'completed' }
   }

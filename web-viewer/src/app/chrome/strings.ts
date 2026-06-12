@@ -22,6 +22,7 @@ const STRINGS = {
     submit_failed_title: 'Submission problem',
     submit_failed_body: 'Your answers are held in this tab but could not be submitted. Check your connection and try again.',
     unsupported: 'This element cannot be displayed by this viewer.',
+    language: 'Language',
   },
   pt: {
     next: 'Seguinte', back: 'Voltar', enter_hint: 'prima Enter ↵',
@@ -46,6 +47,7 @@ const STRINGS = {
     submit_failed_title: 'Problema no envio',
     submit_failed_body: 'As suas respostas estão guardadas neste separador mas não foi possível enviá-las. Verifique a ligação e tente novamente.',
     unsupported: 'Este elemento não pode ser apresentado por este visualizador.',
+    language: 'Idioma',
   },
 } as const
 

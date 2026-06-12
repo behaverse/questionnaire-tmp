@@ -91,3 +91,9 @@ test('rehydrate restores answers/stepIndex/visited and goes ready', () => {
 test('completed action → completed phase', () => {
   expect(reducer(booted, { type: 'completed' }).phase).toBe('completed')
 })
+test('set_runtime swaps runtime + steps, preserves answers/position', () => {
+  const answered = reducer(booted, { type: 'answer', key: 'it_1', value: 0 })
+  const s = reducer(answered, { type: 'set_runtime', runtime, steps: flattenSteps(runtime) })
+  expect(s.answers).toEqual({ it_1: 0 })
+  expect(s.runtime).toBe(runtime)
+})
