@@ -47,7 +47,8 @@ def get(session_id: str, session=Depends(require_session), conn=Depends(get_conn
     if session["ephemeral"]:
         return _ephemeral_409()
     return {"status": session["status"], "last_active_locale": session["last_active_locale"],
-            "outbox": outbox_store.counts_for_session(conn, session_id)}
+            "outbox": outbox_store.counts_for_session(conn, session_id),
+            "agent_id": session["agent_id"], "session_index": session["session_index"]}
 
 
 @router.get("/sessions/{session_id}/runtime")

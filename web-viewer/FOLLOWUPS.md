@@ -3,7 +3,9 @@
 - Renderer types are hand-written against the faithful projection; add a type-conformance test against the canonical runtime examples once they are regenerated (denormaliser follow-up).
 - `style.layout` refinements (dropdown / slider-like) unrendered until WV-D — base widgets shown meanwhile.
 - Matrix on very narrow viewports relies on horizontal scroll (contract-compliant); author-defined breakpoints remain a schema-reserved future.
-- Session token in memory only — refresh loses the session until WV-E resume lands.
+- Session token in memory only — refresh loses the session until WV-E resume lands. (~~"Answers are not submitted yet"~~ — resolved by WV-B; the remaining gap is the in-memory queue, see README caveats.)
+- `SubmissionQueue.flushKeepalive` is optimistic (clears the queue on pagehide without delivery confirmation) — acceptable while the page is being destroyed; revisit with WV-E IndexedDB durability.
+- Finishing flow's 10 s idle timeout is a soft heuristic; surface queue depth in the submitting screen if field reports show long drains.
 - Manifest `viewer_version` bump check (CI: manifest diff ⇒ version bump) deferred to WV-F.
 - ~~design/08_viewer.md presentation-modes note~~ — DONE at WV-A merge (design/08 §"Presentation modes").
 - **Date questions are not expressible** (owner note 2026-06-12): Schema 2's `input_data_type` is `choice|number|text`, so a date item renders the UnsupportedElement card (see the `widgets` fixture). Workaround: author as `text` + RegEx validation or `number` (year). Native date support = breaking Schema 2 bump (new OD) + §13 derivation row + widget + manifest addition — decide if/when a real instrument needs it.
@@ -15,3 +17,6 @@
 - Gating residual: a required choice item whose locale texts are missing (mergeOptions throw) still gates Next (needs locale-aware renderability check) — unreachable with denormaliser-produced runtimes, fix with WV-D validation work.
 - First-render focus: the step-heading focus effect also fires on the initial step — review whether initial autofocus is wanted once real participants test it.
 - **Schema 5 attempt fields** (owner, 2026-06-12): promote `x_response_revises`/`x_response_revision` to first-class Schema 5 fields (`response_revises`/`response_revision`, or BDM-style `attempt_index`) at the next Schema 5 CalVer boundary + file the matching BDM upstream change request (new D-entry in design/05c). Principle: ALL attempts are recorded — exact reproduction of what happened; dedup is analysis-side only.
+- Retry after a finishing failure re-emits `bdm:completed` (one per attempt before the single `bdm:submitted`) — schema-legal and arguably faithful; revisit if analysts object.
+- `flushKeepalive` can double-send the item that was in flight at pagehide (it is still queued until acknowledged) — second flavour of the optimistic-keepalive note above; the all-attempts model tolerates duplicates.
+- Finishing effect's 10 s timeout timer is not cleared on early idle (dangling, harmless).

@@ -35,11 +35,22 @@ test('answer clears that error; next then advances', () => {
   s = reducer(s, { type: 'next' })
   expect(s.stepIndex).toBe(1)
 })
-test('next past the last step → finished', () => {
+test('next past the last step → finishing', () => {
   let s = reducer(booted, { type: 'answer', key: 'it_1', value: 0 })
   s = reducer(s, { type: 'next' })
   s = reducer(s, { type: 'next' })
-  expect(s.phase).toBe('finished')
+  expect(s.phase).toBe('finishing')
+})
+test('submitted / submit_failed / submit_retry drive the finishing machine', () => {
+  let s = reducer(booted, { type: 'answer', key: 'it_1', value: 0 })
+  s = reducer(s, { type: 'next' }); s = reducer(s, { type: 'next' })
+  expect(s.phase).toBe('finishing')
+  expect(s.submitError).toBe(false)
+  expect(reducer(s, { type: 'submitted' }).phase).toBe('finished')
+  const failed = reducer(s, { type: 'submit_failed' })
+  expect(failed.phase).toBe('finishing')
+  expect(failed.submitError).toBe(true)
+  expect(reducer(failed, { type: 'submit_retry' }).submitError).toBe(false)
 })
 test('back preserves answers and never goes below 0', () => {
   let s = reducer(booted, { type: 'answer', key: 'it_1', value: 0 })

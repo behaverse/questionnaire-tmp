@@ -17,7 +17,7 @@ export function parseParams(search: string): Params {
   }
 }
 
-export type MintOk = { ok: true; session_id: string; session_token: string; runtime: Runtime; theme: Theme }
+export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme }
 export type MintErr = { ok: false; kind: 'invalid_link' | 'not_open' | 'closed' | 'failed'; code: string }
 export type MintResult = MintOk | MintErr
 
@@ -39,8 +39,19 @@ export async function mintSession(vsBaseUrl: string, deploymentId: string, local
   }
   if (resp.ok) {
     const body = await resp.json()
-    return { ok: true, session_id: body.session_id, session_token: body.session_token, runtime: body.runtime, theme: body.theme ?? null }
+    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null }
   }
   const code = await resp.json().then((b) => b?.error?.code ?? String(resp.status)).catch(() => String(resp.status))
   return { ok: false, kind: KIND_BY_STATUS[resp.status] ?? 'failed', code }
+}
+
+export async function completeSession(vsBaseUrl: string, sessionId: string, token: string): Promise<boolean> {
+  try {
+    const r = await fetch(`${vsBaseUrl}/v1/sessions/${sessionId}/complete`, {
+      method: 'POST', headers: { authorization: `Bearer ${token}` },
+    })
+    return r.ok
+  } catch {
+    return false
+  }
 }

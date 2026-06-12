@@ -38,6 +38,29 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
   on the questionnaire or via deployment style.
 - `style.x_auto_advance: false` disables single-choice auto-advance in focus mode.
 
+## Data emitted (WV-B)
+
+- **One Schema 5 `Response` row per attempt per item**, submitted when the
+  participant advances past the step (Next / auto-advance), not on every
+  keystroke.
+- **ALL attempts are kept.** Going Back and changing an answer produces a *new*
+  row carrying `x_response_revises` (the revised response id) and
+  `x_response_revision` (the attempt counter). Dedup is **analysis-side, never
+  storage-side** — the data is an exact reproduction of what happened.
+- **Messages/instructions are full trials**: a row with
+  `response_description: "acknowledged"`, `block_type: "instruction"`, and an
+  RT equal to the seconds until the participant pressed Next.
+- **ALL durations are in SECONDS** (Schema 5 / BDM convention) — `response_time`
+  values are single-digit-ish floats, not milliseconds.
+- **`bdm:` events** are batched every **5 s or 20 events** (whichever first)
+  using the trial_started / presented / selected / clicked / trial_ended /
+  completed / submitted grammar, plus a **keepalive flush on `pagehide`** so a
+  closing tab still delivers its tail.
+- **Finishing flow**: final queue flush → `POST .../complete` → thank-you
+  screen. A failure surfaces a **visible retry** — the participant is never
+  silently dropped.
+- `style.x_summary_rt: false` strips RTs from emitted rows.
+
 ## Running against a live Viewer Service
 
 1. Start Postgres and the **Library** (see `library/README.md` / `HANDOFF.md`:
@@ -74,18 +97,20 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
 
 5. Open `http://localhost:5173/?deployment=<dep_id>`.
 
-## Caveats (WV-A)
+## Caveats
 
 - The session token is held **in memory only** — a refresh restarts the session
   (resume is WV-E).
-- Answers are not submitted yet (submission is WV-B).
+- Submission exists as of WV-B, but the submission queue is **in-memory** — a
+  refresh loses any not-yet-sent rows/events until WV-E resume + durability
+  land.
 - No logic/branching — the manifest declares no `logic_actions` (WV-C/D), so the
   VS mint pre-flight rejects questionnaires that need them.
 
 ## Tests
 
 ```bash
-npm test            # vitest (73 tests) + Schema 7 manifest validation
+npm test            # vitest (110 tests) + Schema 7 manifest validation
 npm run typecheck
 npm run build
 ```

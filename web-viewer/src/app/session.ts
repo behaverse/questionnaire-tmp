@@ -4,7 +4,7 @@ import type { Theme } from './theme'
 import { requiredUnanswered, type Step } from './steps'
 
 export type SessionState = {
-  phase: 'booting' | 'error' | 'ready' | 'finished'
+  phase: 'booting' | 'error' | 'ready' | 'finishing' | 'finished'
   session: { id: string; token: string } | null
   runtime: Runtime | null
   theme: Theme
@@ -13,11 +13,13 @@ export type SessionState = {
   answers: Record<string, AnswerValue>
   stepErrors: string[]
   error: { kind: MintErr['kind']; code: string } | null
+  submitError: boolean
 }
 
 export const initialState: SessionState = {
   phase: 'booting', session: null, runtime: null, theme: null,
   steps: [], stepIndex: 0, answers: {}, stepErrors: [], error: null,
+  submitError: false,
 }
 
 export type Action =
@@ -27,6 +29,9 @@ export type Action =
   | { type: 'answer'; key: string; value: AnswerValue }
   | { type: 'next' }
   | { type: 'back' }
+  | { type: 'submitted' }
+  | { type: 'submit_failed' }
+  | { type: 'submit_retry' }
 
 export function reducer(state: SessionState, action: Action): SessionState {
   switch (action.type) {
@@ -45,10 +50,16 @@ export function reducer(state: SessionState, action: Action): SessionState {
       if (!step) return state
       const missing = requiredUnanswered(step, state.answers)
       if (missing.length > 0) return { ...state, stepErrors: missing }
-      if (state.stepIndex >= state.steps.length - 1) return { ...state, phase: 'finished', stepErrors: [] }
+      if (state.stepIndex >= state.steps.length - 1) return { ...state, phase: 'finishing', stepErrors: [] }
       return { ...state, stepIndex: state.stepIndex + 1, stepErrors: [] }
     }
     case 'back':
       return { ...state, stepIndex: Math.max(0, state.stepIndex - 1), stepErrors: [] }
+    case 'submitted':
+      return { ...state, phase: 'finished' }
+    case 'submit_failed':
+      return { ...state, submitError: true }
+    case 'submit_retry':
+      return { ...state, submitError: false }
   }
 }
