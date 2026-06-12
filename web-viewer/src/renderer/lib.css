@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --qv-primary: #1a5fb4;
+  --qv-secondary: #613583;
+  --qv-success: #26734d;
+  --qv-warning: #8f6000;
+  --qv-error: #a51d2d;
+  --qv-background: #ffffff;
+  --qv-font-family: Inter, system-ui, sans-serif;
+  --qv-base-size: 16px;
+  --qv-space-unit: 8px;
+}

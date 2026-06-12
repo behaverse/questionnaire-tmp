@@ -12,9 +12,20 @@
     "typecheck": "tsc -b && tsc -p tsconfig.test.json",
     "preview": "vite preview --port 4174",
     "test": "vitest run && node scripts/validate-manifest.mjs",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:lib": "vite build -c vite.config.lib.ts && tsc -p tsconfig.lib.json",
+    "test:lib": "npm run build:lib && vitest run -c vite.config.lib-test.ts"
+  },
+  "exports": {
+    ".": "./src/main.tsx",
+    "./renderer": { "types": "./dist-lib/lib.d.ts", "import": "./dist-lib/renderer.js" },
+    "./renderer/style.css": "./dist-lib/renderer.css"
   },
   "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
