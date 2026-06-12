@@ -65,3 +65,18 @@ test('boot_error → error phase with kind/code', () => {
   expect(s.phase).toBe('error')
   expect(s.error).toEqual({ kind: 'closed', code: 'gone' })
 })
+test('goto pushes current index to visited and sets target; back pops it', () => {
+  let s = reducer(booted, { type: 'goto', index: 3 })
+  expect(s.stepIndex).toBe(3); expect(s.visited).toEqual([0])
+  s = reducer(s, { type: 'goto', index: 5 }); expect(s.visited).toEqual([0, 3])
+  s = reducer(s, { type: 'back' }); expect(s.stepIndex).toBe(3); expect(s.visited).toEqual([0])
+})
+test('goto with index null → finishing', () => {
+  expect(reducer(booted, { type: 'goto', index: null }).phase).toBe('finishing')
+})
+test('validation_errors sets the channel; answering a key clears its error', () => {
+  let s = reducer(booted, { type: 'validation_errors', errors: [{ key: 'it_1', message: 'bad' }] })
+  expect(s.validationErrors).toEqual([{ key: 'it_1', message: 'bad' }])
+  s = reducer(s, { type: 'answer', key: 'it_1', value: 0 })
+  expect(s.validationErrors).toEqual([])
+})

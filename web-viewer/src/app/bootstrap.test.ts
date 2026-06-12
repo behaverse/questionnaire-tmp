@@ -21,7 +21,7 @@ test('mintSession posts viewer identity and returns the bundle', async () => {
   const [url, init] = fetchMock.mock.calls[0]
   expect(url).toBe('http://vs:9/v1/sessions/new')
   expect(JSON.parse((init as RequestInit).body as string)).toEqual({
-    deployment_id: 'dpl_1', viewer_id: 'behaverse-web-viewer', viewer_version: 'v26.0611', locale: 'pt',
+    deployment_id: 'dpl_1', viewer_id: 'behaverse-web-viewer', viewer_version: 'v26.0612', locale: 'pt',
   })
 })
 test.each([

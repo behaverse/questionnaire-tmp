@@ -4,10 +4,15 @@ import userEvent from '@testing-library/user-event'
 import { App } from './App'
 import mini from '../fixtures/mini.json'
 
+vi.mock('../logic/evaluator', async (orig) => {
+  const actual = await orig<typeof import('../logic/evaluator')>()
+  return { ...actual, loadEvaluator: async () => actual.makeFakeEvaluator((globalThis as Record<string, unknown>).__evalTable as never ?? {}) }
+})
+
 function setUrl(qs: string) { window.history.replaceState(null, '', `/${qs}`) }
 const mintOk = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: mini, theme: { palette: { primary: '#112233' } } }
 
-afterEach(() => vi.unstubAllGlobals())
+afterEach(() => { vi.unstubAllGlobals(); (globalThis as Record<string, unknown>).__evalTable = {} })
 
 test('boots a session, applies the theme, renders step 1 (message) then navigates', async () => {
   setUrl('?deployment=dpl_1')
@@ -240,4 +245,122 @@ test('x_summary_rt:false strips response_time from rows', async () => {
   const rows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0])
   expect(rows[0].response_time).toBeUndefined()
   expect(rows[0].response_datetime).toBeDefined()
+})
+
+// WV-D — logic engine integration ----------------------------------------------------------------
+function radioItem(id: string, prompt: string, extra: Record<string, unknown> = {}) {
+  return {
+    id, ...extra,
+    question: { prompt: { content: { en: { text: prompt } } } },
+    option: {
+      input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
+      options: [{ index: 1, value: 0 }, { index: 2, value: 1 }],
+      content: { en: { options: [{ index: 1, text: 'No' }, { index: 2, text: 'Yes' }] } },
+    },
+  }
+}
+function rtWith(pages: unknown[], extra: Record<string, unknown> = {}) {
+  return { ...mini, pages, ...extra }
+}
+function mintRuntime(fetchMock: ReturnType<typeof vi.fn>, runtime: unknown) {
+  fetchMock.mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify({ ...mintOk, runtime }), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+}
+
+test('branch routing skips a page when the branch condition fires', async () => {
+  const runtime = rtWith(
+    [
+      { id: 'p1', elements: [radioItem('it_1', 'Question one')] },
+      { id: 'p2', elements: [radioItem('it_2', 'Question two')] },
+      { id: 'p3', elements: [radioItem('it_3', 'Question three')] },
+    ],
+    { logic: [{ id: 'b', type: 'branch', condition: 'route_b', action: { skip_to: 'p3' } }] },
+  )
+  setUrl('?deployment=dpl_1')
+  ;(globalThis as Record<string, unknown>).__evalTable = { route_b: true }
+  const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
+  expect(await screen.findByRole('heading', { name: /Question three/, level: 2 }, { timeout: 2000 })).toBeInTheDocument()
+  expect(screen.queryByRole('heading', { name: /Question two/ })).not.toBeInTheDocument()
+})
+
+test('without the branch condition, the next page renders normally', async () => {
+  const runtime = rtWith(
+    [
+      { id: 'p1', elements: [radioItem('it_1', 'Question one')] },
+      { id: 'p2', elements: [radioItem('it_2', 'Question two')] },
+      { id: 'p3', elements: [radioItem('it_3', 'Question three')] },
+    ],
+    { logic: [{ id: 'b', type: 'branch', condition: 'route_b', action: { skip_to: 'p3' } }] },
+  )
+  setUrl('?deployment=dpl_1')
+  ;(globalThis as Record<string, unknown>).__evalTable = { route_b: false }
+  const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
+  expect(await screen.findByRole('heading', { name: /Question two/, level: 2 }, { timeout: 2000 })).toBeInTheDocument()
+})
+
+test('show_if:false on a step skips that step entirely', async () => {
+  const runtime = rtWith([
+    { id: 'p1', elements: [radioItem('it_1', 'Question one')] },
+    { id: 'p2', elements: [radioItem('it_2', 'Question two', { show_if: 'show_it' })] },
+    { id: 'p3', elements: [radioItem('it_3', 'Question three')] },
+  ])
+  setUrl('?deployment=dpl_1')
+  ;(globalThis as Record<string, unknown>).__evalTable = { show_it: false }
+  const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
+  expect(await screen.findByRole('heading', { name: /Question three/, level: 2 }, { timeout: 2000 })).toBeInTheDocument()
+  expect(screen.queryByRole('heading', { name: /Question two/ })).not.toBeInTheDocument()
+})
+
+test('cross-validation blocks Next, shows the message, and emits no row; clearing it advances', async () => {
+  const runtime = rtWith(
+    [
+      { id: 'p1', elements: [radioItem('it_1', 'Question one')] },
+      { id: 'p2', elements: [radioItem('it_2', 'Question two')] },
+    ],
+    { validation: [{ id: 'v', condition: 'bad', message: 'Please fix', targets: ['it_1'] }] },
+  )
+  setUrl('?deployment=dpl_1')
+  ;(globalThis as Record<string, unknown>).__evalTable = { bad: true }
+  const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
+  // auto-advance fires; with validation failing we stay on p1 with the message
+  expect(await screen.findByText('Please fix')).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /Question one/, level: 2 })).toBeInTheDocument()
+  const itemRows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0]).filter((r) => r.stimulus_type !== 'instruction')
+  expect(itemRows).toHaveLength(0)
+  // clear the cross-validation in-place (the evaluator captured this table object at boot) and advance
+  ;((globalThis as Record<string, unknown>).__evalTable as Record<string, boolean>).bad = false
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  expect(await screen.findByRole('heading', { name: /Question two/, level: 2 }, { timeout: 2000 })).toBeInTheDocument()
+})
+
+test('reversed item carries a post-reversal score in the posted row', async () => {
+  const reversed = {
+    id: 'it_r',
+    question: { prompt: { reversed: true, content: { en: { text: 'Reversed question' } } } },
+    option: {
+      input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
+      options: [{ index: 1, value: 0 }, { index: 2, value: 1 }, { index: 3, value: 2 }, { index: 4, value: 3 }, { index: 5, value: 4 }, { index: 6, value: 5 }, { index: 7, value: 6 }],
+      content: { en: { options: [{ index: 1, text: 'V0' }, { index: 2, text: 'V1' }, { index: 3, text: 'V2' }, { index: 4, text: 'V3' }, { index: 5, text: 'V4' }, { index: 6, text: 'V5' }, { index: 7, text: 'V6' }] } },
+    },
+  }
+  const runtime = rtWith([{ id: 'p1', elements: [reversed] }])
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('radio', { name: 'V1' }))   // raw value 1 → reversed 6+0-1 = 5
+  await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
+  const itemRows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0]).filter((r) => r.stimulus_type !== 'instruction')
+  expect(itemRows).toHaveLength(1)
+  expect(itemRows[0].response_numeric).toBe(1)
+  expect(itemRows[0].score).toBe(5)
 })

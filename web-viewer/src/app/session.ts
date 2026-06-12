@@ -10,15 +10,17 @@ export type SessionState = {
   theme: Theme
   steps: Step[]
   stepIndex: number
+  visited: number[]
   answers: Record<string, AnswerValue>
   stepErrors: string[]
+  validationErrors: { key: string; message: string }[]
   error: { kind: MintErr['kind']; code: string } | null
   submitError: boolean
 }
 
 export const initialState: SessionState = {
   phase: 'booting', session: null, runtime: null, theme: null,
-  steps: [], stepIndex: 0, answers: {}, stepErrors: [], error: null,
+  steps: [], stepIndex: 0, visited: [], answers: {}, stepErrors: [], validationErrors: [], error: null,
   submitError: false,
 }
 
@@ -28,6 +30,8 @@ export type Action =
   | { type: 'retry' }
   | { type: 'answer'; key: string; value: AnswerValue }
   | { type: 'next' }
+  | { type: 'goto'; index: number | null }
+  | { type: 'validation_errors'; errors: { key: string; message: string }[] }
   | { type: 'back' }
   | { type: 'submitted' }
   | { type: 'submit_failed' }
@@ -43,9 +47,10 @@ export function reducer(state: SessionState, action: Action): SessionState {
       return { ...initialState }
     case 'answer': {
       const answers = { ...state.answers, [action.key]: action.value }
-      return { ...state, answers, stepErrors: state.stepErrors.filter((k) => k !== action.key) }
+      return { ...state, answers, stepErrors: state.stepErrors.filter((k) => k !== action.key), validationErrors: state.validationErrors.filter((e) => e.key !== action.key) }
     }
     case 'next': {
+      // deprecated by WV-D goto (kept working for the no-pipeline/required-gating safety branch)
       const step = state.steps[state.stepIndex]
       if (!step) return state
       const missing = requiredUnanswered(step, state.answers)
@@ -53,8 +58,15 @@ export function reducer(state: SessionState, action: Action): SessionState {
       if (state.stepIndex >= state.steps.length - 1) return { ...state, phase: 'finishing', stepErrors: [] }
       return { ...state, stepIndex: state.stepIndex + 1, stepErrors: [] }
     }
-    case 'back':
-      return { ...state, stepIndex: Math.max(0, state.stepIndex - 1), stepErrors: [] }
+    case 'goto':
+      if (action.index === null) return { ...state, phase: 'finishing', stepErrors: [], validationErrors: [] }
+      return { ...state, visited: [...state.visited, state.stepIndex], stepIndex: action.index, stepErrors: [], validationErrors: [] }
+    case 'validation_errors':
+      return { ...state, validationErrors: action.errors }
+    case 'back': {
+      const prev = state.visited[state.visited.length - 1] ?? 0
+      return { ...state, stepIndex: prev, visited: state.visited.slice(0, -1), stepErrors: [], validationErrors: [] }
+    }
     case 'submitted':
       return { ...state, phase: 'finished' }
     case 'submit_failed':

@@ -3,7 +3,7 @@ import type { Runtime } from '../renderer/types'
 import type { Theme } from './theme'
 
 export const VIEWER_ID = 'behaverse-web-viewer'
-export const VIEWER_VERSION = 'v26.0611'
+export const VIEWER_VERSION = 'v26.0612'
 
 export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null }
 
