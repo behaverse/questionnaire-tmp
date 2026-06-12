@@ -23,7 +23,7 @@ const STRINGS = {
     error_invalid_link_title: 'Esta ligação não é válida',
     error_invalid_link_body: 'Verifique se o endereço foi copiado na íntegra ou contacte a equipa do estudo.',
     error_not_open_title: 'De momento não aceita respostas',
-    error_not_open_body: 'Este questionário não está aberto neste momento. Tente novamente mais tarde.',
+    error_not_open_body: 'Este questionário não está aberto neste momento. Tente novamente mais tarde ou contacte a equipa do estudo.',
     error_closed_title: 'Este questionário foi encerrado',
     error_closed_body: 'O período de recolha deste estudo terminou. Obrigado pelo seu interesse.',
     error_failed_title: 'Algo correu mal',

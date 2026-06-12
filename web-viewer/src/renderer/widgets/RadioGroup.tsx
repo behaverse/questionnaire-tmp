@@ -7,6 +7,7 @@ type Props = {
   choices: MergedChoice[]
   value: AnswerValue
   onChange: (value: number | string) => void
+  /** Window-level letter shortcuts — enable for at most ONE mounted RadioGroup at a time (focus-mode single-item steps). */
   keyHints?: boolean
 }
 
