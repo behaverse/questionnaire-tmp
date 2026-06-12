@@ -91,6 +91,15 @@ Deployment modes are **named presets** that resolve to specific combinations of 
 - Theming hooks: respect the deployment theme (logo, colours, fonts, optional custom CSS).
 - Localised UI chrome (navigation buttons, progress bar) in the active language.
 
+### Presentation modes
+
+The Web Viewer supports two declared presentation modes, selected by `style.x_presentation` (settable on the questionnaire's `style` or overridden per deployment):
+
+- **`focus`** (default) — one question per view, in the typeform.com mould (owner directive, 2026-06-11): a single centred column, large prompt typography, choice cards with letter-key hints, step transitions, and **auto-advance** after answering a single-choice question (disable with `style.x_auto_advance: false`; suppressed under `prefers-reduced-motion` for the transition, with screen-reader announcement before the advance). Pacing only: focus mode never reorders elements, splits a Section/matrix (a Section is one view), or substitutes widgets.
+- **`classic`** — authored page-at-a-time rendering: all of a page's elements together, as in the original page structure.
+
+Because the mode is declared, deterministic data (an `^x_` extension — no schema change), it sits within the cross-viewer visual-fidelity contract: every conforming viewer renders the same mode the same way, or declares non-support in its conformance manifest. The Native Viewer must implement the same semantics or declare non-support.
+
 ### Behavioural channels
 
 Per OD-07 (resolved 2026-05-21), the deployment-level default-state matrix is:
