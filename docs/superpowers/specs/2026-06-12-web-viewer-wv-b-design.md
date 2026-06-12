@@ -68,17 +68,19 @@ Per step/element:
 | `stimulus_type` | `"text"` (prompt-only Question) · `"composite"` (Question with Context and/or Instruction) · `"instruction"` (message). |
 | `stimulus_description` | Concatenated active-locale text of the parts (05c D1). |
 | `option_id` / `option_data_type` / `measurement_type` / `option_count` | From the element's Option (when present). |
-| `response_datetime` / `response_time` | Commit time / **milliseconds** from trial start (canonical response-example convention — see §9 flag F1). Omitted when `style.x_summary_rt: false`. |
+| `response_datetime` / `response_time` | Commit time / **seconds** from trial start (owner ruling 2026-06-12: ALL durations are in seconds, always — Schemas 4a/5 READMEs now state this; canonical examples corrected). Omitted when `style.x_summary_rt: false`. |
 
-Per widget kind: **choice.\*.single** → `response_option_index` (structural `index`), `response_numeric` (when the value is numeric), `response_description` (choice text). **choice.nominal.multiple** → `response_count`, `response_description` (selected texts, `"; "`-joined), `additional_measures` = JSON-stringified `{values: [...], indices: [...]}`. **number.\*** → `response_numeric`. **text.\*** → `response_description`. **Message** → `response_skipped: true`, no response fields (RT = time-on-step still emitted as `response_time`, matching the kitchen-sink example).
+Per widget kind: **choice.\*.single** → `response_option_index` (structural `index`), `response_numeric` (when the value is numeric), `response_description` (choice text). **choice.nominal.multiple** → `response_count`, `response_description` (selected texts, `"; "`-joined), `additional_measures` = JSON-stringified `{values: [...], indices: [...]}`. **number.\*** → `response_numeric`. **text.\*** → `response_description`. **Message** → a full trial row (owner ruling 2026-06-12): `response_description: "acknowledged"` (the participant's response to an instruction IS the Next press), `response_time` = seconds from the message becoming visible to the Next press, `input_action_type: "click"` (or `"key"` for Enter); `response_skipped` is NOT set (the canonical kitchen-sink example was corrected accordingly — `response_skipped` stays reserved for genuinely unanswered presented trials, e.g. future optional-question skips).
 
 ### 3.2 Matrix sections
 
 Each matrix **row** is its own Response row (it is its own Item): `trial_index` = the section's element position; `additional_measures` carries `{"row_index": j, "section_id": "sec_…"}`; `stimulus_id`/`option_*`/response fields from the row item + shared option. The section emits no row of its own.
 
-### 3.3 When rows are submitted — per-item on forward-advance, with revision rows
+### 3.3 When rows are submitted — per-item on forward-advance, ALL attempts kept
 
-A row is built and enqueued when the participant **advances forward past the step** (Next/Enter/auto-advance), i.e. at trial end — the earliest point its timing fields are complete. This makes partial data durable for abandoned sessions (the dashboard's abandonment metrics depend on it). If the participant goes **Back** and changes an answer, advancing again emits a **revision row**: same `stimulus_id`, a **new** `response_id`, `x_revises` = the original `response_id`, and `x_revision: n`. The outbox is append-only, so corrections supersede rather than replace; **export consumers keep, per `stimulus_id`, the row with the highest `response_datetime`** — documented in the README and noted for the VS-D export's future "deduped view" follow-up. Going Back without changing the answer emits nothing.
+A row is built and enqueued when the participant **advances forward past the step** (Next/Enter/auto-advance), i.e. at trial end — the earliest point its timing fields are complete. This makes partial data durable for abandoned sessions (the dashboard's abandonment metrics depend on it).
+
+**Every attempt is collected — never only the final answer** (owner ruling 2026-06-12: the record must allow exact reproduction of what happened). If the participant goes **Back** and changes an answer, advancing again emits a new row for the same `stimulus_id` with a **new** `response_id` plus two extension fields: `x_response_revises` = the superseded row's `response_id` and `x_response_revision: n` (1-based attempt counter; first answers carry neither). The `x_` prefix is forced by Schema 5's `additionalProperties: false` + `^x_` escape hatch — the owner's preferred plain names (`response_revises` / `response_revision`) or a BDM-style `attempt_index` require a **Schema 5 CalVer bump + a BDM upstream change request**, noted as follow-up §10. Going Back without changing the answer emits nothing (no new attempt occurred). Nothing is ever deduplicated viewer-side or VS-side; any "latest answer per stimulus" view is an analysis-time projection.
 
 ## 4 — Events (Schema 4a)
 
@@ -111,11 +113,16 @@ Last step advanced → phase `finishing` (new): final `trial_ended` + `bdm:compl
 ## 8 — Testing
 
 1. **Pure units**: `buildResponseRow` per widget kind + message + matrix row + revision (validate every produced row against `schemas/response/schema.json` with Ajv in the test — the same cross-schema trick as the manifest check); event builders against `schemas/events/schema.json`; batcher flush policy (fake timers); queue back-off/422-drop/keepalive (stubbed fetch).
-2. **App integration** (RTL): walk the mini fixture committing answers → assert the exact ordered POST bodies (responses then events then complete); Back-and-change → revision row; `x_summary_rt: false` strips RTs; 503 then success → eventual delivery; completion failure → retry UI.
+2. **App integration** (RTL): walk the mini fixture committing answers → assert the exact ordered POST bodies (responses then events then complete); Back-and-change → second attempt row carrying `x_response_revises`/`x_response_revision`; `x_summary_rt: false` strips RTs; 503 then success → eventual delivery; completion failure → retry UI.
 3. **Live smoke** (extends WV-A's): complete the AISS in a real browser against the local stack, then assert the rows in `export.csv` and the session reaching `submitted` — **the Phase-2 gate, exercised literally**.
 
-## 9 — Review flags for the owner (decide at spec review)
+## 9 — Owner rulings (2026-06-12, resolved at spec review)
 
-- **F1 — RT units are inconsistent in the canonical examples**: `schemas/response/examples/` uses **milliseconds** (`response_time: 5000` for a 5 s gap) while `schemas/events/examples/phq9_event_stream.json` uses **seconds** (`bdm:response_time: 3.215`). WV-B follows each example as-is (ms in rows, s in events). You own the BDM model — flag whether to unify (would be a schema-example correction, possibly a D-deviation note), and WV-B will follow.
-- **F2 — Revision policy** (§3.3): append-only revision rows with `x_revises`, export dedup by latest `response_datetime`. Alternative considered and rejected: submit only at `/complete` (loses abandonment data). Confirm you're happy with revision rows reaching Behaverse.
-- **F3 — Message rows**: messages emit `response_skipped: true` rows (canonical kitchen-sink behaviour) — confirms time-on-instruction lands in the trial table rather than only in events.
+- **F1 — Units**: **all durations are in seconds, always** (responses AND events AND any future field). Applied: WV-B emits seconds everywhere; `schemas/response/examples/` corrected from millisecond values (44 examples + 309 tests still green); units rule added to the Schema 5 + 4a READMEs. The published `schema.json` artifacts are untouched (numeric typing, no version bump).
+- **F2 — All attempts collected**: confirmed — exact-reproduction principle; §3.3 updated (attempt rows, nothing deduplicated). Preferred field names `response_revises`/`response_revision` (or `attempt_index`) need a Schema 5 bump + BDM upstream request → follow-up §10; until then the schema-legal `x_response_revises`/`x_response_revision` carry the data losslessly.
+- **F3 — Message/instruction trials**: messages ARE full trial rows with `response_time` = seconds until the participant presses Next, and now `response_description: "acknowledged"` instead of `response_skipped: true` (§3.1 updated; canonical kitchen-sink example corrected to match). `response_skipped` stays reserved for presented-but-unanswered question trials.
+
+## 10 — Follow-ups seeded by this spec
+
+- **Schema 5 bump (future)**: promote `x_response_revises`/`x_response_revision` to first-class fields — owner prefers `response_revises`/`response_revision`, or BDM-style `attempt_index` — bundled with a BDM upstream change request (new D-entry in design/05c). Do at the next natural Schema 5 CalVer boundary, not as a one-off bump.
+- **VS-D export follow-up**: document the all-attempts semantics in the export README; a "latest attempt per stimulus" convenience view is analysis-side, never storage-side.

@@ -1,5 +1,7 @@
 # Schema 4a — Event Data (BDM Events extension)
 
+**Units: all durations are in SECONDS, always** (e.g. `bdm:response_time`) — owner ruling 2026-06-12, consistent across Schemas 4a/4b/5.
+
 Per OD-19 (resolved 2026-06-05), BDM Events vocabulary covering questionnaires, cognitive tasks, and video games under a single `bdm:` namespace.
 
 **Current version:** v26.0605

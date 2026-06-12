@@ -4,6 +4,8 @@ Per OD-17 (resolved 2026-06-03), strict adherence to the [Behaverse Data Model (
 
 **Current version:** v26.0603
 
+**Units (owner ruling 2026-06-12): all durations are in SECONDS, always** — `response_time`, `response_validation_time`, `response_initiation_time`, `stimulus_onset`, and any future duration field. (The examples were corrected from millisecond values on 2026-06-12; the schema's numeric typing is unchanged.)
+
 ## Files
 
 | File | Purpose |

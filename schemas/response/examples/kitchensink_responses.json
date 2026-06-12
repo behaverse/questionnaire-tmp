@@ -24,9 +24,9 @@
       "stimulus_id": "msg_welcome",
       "stimulus_type": "instruction",
       "stimulus_description": "Welcome to the PHQ-9 questionnaire.",
-      "response_skipped": true,
       "response_datetime": "2026-06-03T10:00:05Z",
-      "response_time": 5000
+      "response_time": 5.0,
+      "response_description": "acknowledged"
     },
     {
       "response_id": 2,
@@ -58,7 +58,7 @@
       "response_option_index": 0,
       "response_description": "Not at all",
       "response_numeric": 0,
-      "response_time": 3200,
+      "response_time": 3.2,
       "response_datetime": "2026-06-03T10:00:13Z",
       "score": 0,
       "additional_measures": "{\"item_id\":\"it_phq9_1@v26.0602\"}"
@@ -97,7 +97,7 @@
       "response_option_index": 0,
       "response_description": "Not at all",
       "response_numeric": 0,
-      "response_time": 2100,
+      "response_time": 2.1,
       "response_datetime": "2026-06-03T10:00:47Z",
       "correct": true,
       "accuracy": 1.0,

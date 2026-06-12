@@ -14,3 +14,4 @@
 - `applyTheme` does not clear vars set by a previously applied theme — irrelevant until themes can switch mid-session.
 - Gating residual: a required choice item whose locale texts are missing (mergeOptions throw) still gates Next (needs locale-aware renderability check) — unreachable with denormaliser-produced runtimes, fix with WV-D validation work.
 - First-render focus: the step-heading focus effect also fires on the initial step — review whether initial autofocus is wanted once real participants test it.
+- **Schema 5 attempt fields** (owner, 2026-06-12): promote `x_response_revises`/`x_response_revision` to first-class Schema 5 fields (`response_revises`/`response_revision`, or BDM-style `attempt_index`) at the next Schema 5 CalVer boundary + file the matching BDM upstream change request (new D-entry in design/05c). Principle: ALL attempts are recorded — exact reproduction of what happened; dedup is analysis-side only.

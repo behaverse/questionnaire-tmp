@@ -25,7 +25,7 @@
       "response_option_index": 1,
       "response_description": "Several days",
       "response_numeric": 1,
-      "response_time": 3500,
+      "response_time": 3.5,
       "response_datetime": "2026-06-03T14:30:03Z",
       "score": 1
     },
@@ -53,7 +53,7 @@
       "response_option_index": 2,
       "response_description": "More than half the days",
       "response_numeric": 2,
-      "response_time": 4200,
+      "response_time": 4.2,
       "response_datetime": "2026-06-03T14:30:34Z",
       "score": 2
     },
@@ -81,7 +81,7 @@
       "response_option_index": 1,
       "response_description": "Several days",
       "response_numeric": 1,
-      "response_time": 2800,
+      "response_time": 2.8,
       "response_datetime": "2026-06-03T14:31:02Z",
       "score": 1
     },
@@ -109,7 +109,7 @@
       "response_option_index": 2,
       "response_description": "More than half the days",
       "response_numeric": 2,
-      "response_time": 3100,
+      "response_time": 3.1,
       "response_datetime": "2026-06-03T14:31:33Z",
       "score": 2
     },
@@ -137,7 +137,7 @@
       "response_option_index": 0,
       "response_description": "Not at all",
       "response_numeric": 0,
-      "response_time": 2500,
+      "response_time": 2.5,
       "response_datetime": "2026-06-03T14:32:02Z",
       "score": 0
     },
@@ -165,7 +165,7 @@
       "response_option_index": 1,
       "response_description": "Several days",
       "response_numeric": 1,
-      "response_time": 4900,
+      "response_time": 4.9,
       "response_datetime": "2026-06-03T14:32:34Z",
       "score": 1
     },
@@ -193,7 +193,7 @@
       "response_option_index": 2,
       "response_description": "More than half the days",
       "response_numeric": 2,
-      "response_time": 3700,
+      "response_time": 3.7,
       "response_datetime": "2026-06-03T14:33:03Z",
       "score": 2
     },
@@ -221,7 +221,7 @@
       "response_option_index": 1,
       "response_description": "Several days",
       "response_numeric": 1,
-      "response_time": 5000,
+      "response_time": 5.0,
       "response_datetime": "2026-06-03T14:33:35Z",
       "score": 1
     },
@@ -249,7 +249,7 @@
       "response_option_index": 2,
       "response_description": "More than half the days",
       "response_numeric": 2,
-      "response_time": 4600,
+      "response_time": 4.6,
       "response_datetime": "2026-06-03T14:34:04Z",
       "score": 2
     }
