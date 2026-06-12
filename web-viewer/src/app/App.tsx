@@ -13,6 +13,7 @@ import { validateStep } from '../logic/validation'
 import { visibleEntries } from '../logic/visibility'
 import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
 import { completeSession, getRuntime, getSession, mintSession, parseParams, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { isFramed, observeHeight, postToHost } from './embed'
 import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
 import { ErrorScreen } from './chrome/ErrorScreen'
@@ -68,6 +69,7 @@ export function App() {
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
   const localeRef = useRef(locale)
   localeRef.current = locale
+  const embedOrigin = new URLSearchParams(window.location.search).get('embed_origin') ?? '*'
 
   const nowIso = () => new Date().toISOString()
 
@@ -130,12 +132,14 @@ export function App() {
         dispatch({ type: 'boot_error', kind: 'invalid_link', code: 'missing_deployment_param' })
         return
       }
-      const evaluator = await loadEvaluator()
+      // PERF-01: kick off the (heavy) evaluator WASM load now, then await the network in parallel.
+      const evaluatorPromise = loadEvaluator()
       const outcome = await resolveResume(params.vsBaseUrl, params.deploymentId, store, { getSession, getRuntime })
       if (outcome.kind === 'retry') { dispatch({ type: 'boot_error', kind: 'failed', code: 'resume_unreachable' }); return }
       if (outcome.kind === 'completed') { dispatch({ type: 'completed' }); return }
       if (outcome.kind === 'resume') {
         const { record, runtime } = outcome
+        const evaluator = await evaluatorPromise
         ephemeralRef.current = false
         localeRef.current = record.lastActiveLocale
         applyTheme(null)
@@ -150,7 +154,7 @@ export function App() {
         return
       }
       if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
-      const res = await mintSession(params.vsBaseUrl, params.deploymentId, params.locale)
+      const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale)])
       if (res.ok) {
         ephemeralRef.current = res.ephemeral
         localeRef.current = res.runtime.locale ?? 'en'
@@ -169,6 +173,30 @@ export function App() {
     void boot()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase])
+
+  // Task 2 (embed): tell the host when the session is interactive — once, when first ready.
+  useEffect(() => {
+    if (state.phase === 'ready' && state.session) {
+      postToHost(window as never, { type: 'behaverse:loaded', sessionId: state.session.id }, embedOrigin)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.phase])
+
+  // Task 2 (embed): tell the host when the run completes.
+  useEffect(() => {
+    if (state.phase === 'finished') {
+      postToHost(window as never, { type: 'behaverse:completed', sessionId: state.session?.id ?? '' }, embedOrigin)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.phase])
+
+  // Task 2 (embed): when framed, report content-height changes so the host can resize the iframe.
+  useEffect(() => {
+    if (!isFramed(window as never) || typeof ResizeObserver === 'undefined') return
+    return observeHeight(document.documentElement, (h) =>
+      postToHost(window as never, { type: 'behaverse:resize', height: h }, embedOrigin))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (state.phase !== 'ready') return

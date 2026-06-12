@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-lib/
 *.tsbuildinfo
 vite.config.d.ts
 vite.config.js
@@ -9,3 +10,4 @@ src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
 src/logic/wasm/
+public/manifest.json

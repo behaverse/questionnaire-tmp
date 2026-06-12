@@ -15,3 +15,7 @@ for (const f of ['questionnaire_expr_web.js', 'questionnaire_expr_web_bg.wasm', 
   if (existsSync(src)) cpSync(src, join(dest, f))
 }
 console.log('evaluator wasm copied to src/logic/wasm/')
+
+// Keep the served Schema 7 manifest in sync with the canonical one (no manual copy to drift).
+cpSync(join(here, '..', 'manifest.json'), join(here, '..', 'public', 'manifest.json'))
+console.log('Schema 7 manifest copied to public/manifest.json')

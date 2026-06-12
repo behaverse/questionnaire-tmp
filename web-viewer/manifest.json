@@ -18,6 +18,6 @@
   ],
   "scorer_impl_kinds": ["wasm"],
   "behavioural_channels": [],
-  "locale_switching": false,
-  "resume": false
+  "locale_switching": true,
+  "resume": true
 }
