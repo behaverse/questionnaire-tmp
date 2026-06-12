@@ -84,7 +84,44 @@ fn order_compare(op: &BinOp, l: &Value, r: &Value) -> Value {
     }
 }
 
-pub(crate) fn call(_name: &str, _args: &[Expr], _b: &dyn Bindings) -> Value { Value::Null }
+pub(crate) fn call(name: &str, args: &[Expr], b: &dyn Bindings) -> Value {
+    match name {
+        "score" => {
+            match args.first() {
+                Some(Expr::Str(s)) => b.score(s),
+                Some(Expr::Ident(id)) => b.score(id),
+                _ => Value::Null,
+            }
+        }
+        "length" => match eval_arg(args, 0, b) {
+            Value::Str(s) => Value::Number(s.chars().count() as f64),
+            Value::List(l) => Value::Number(l.len() as f64),
+            _ => Value::Null,
+        },
+        "is_empty" => match args.len() { 1 => Value::Bool(eval_arg(args, 0, b).is_empty_value()), _ => Value::Null },
+        "not_empty" => match args.len() { 1 => Value::Bool(!eval_arg(args, 0, b).is_empty_value()), _ => Value::Null },
+        "count" => match eval_arg(args, 0, b) {
+            Value::List(l) => Value::Number(l.len() as f64),
+            Value::Null => Value::Number(0.0),
+            _ => Value::Number(1.0),
+        },
+        "contains" => {
+            if args.len() != 2 { return Value::Null; }
+            let hay = eval_arg(args, 0, b);
+            let needle = eval_arg(args, 1, b);
+            match (hay, needle) {
+                (Value::Str(h), Value::Str(n)) => Value::Bool(h.contains(&n)),
+                (Value::List(items), n) => Value::Bool(items.iter().any(|x| x.eq_value(&n))),
+                _ => Value::Null,
+            }
+        }
+        _ => Value::Null,
+    }
+}
+
+fn eval_arg(args: &[Expr], i: usize, b: &dyn Bindings) -> Value {
+    match args.get(i) { Some(e) => eval_expr(e, b), None => Value::Null }
+}
 
 #[cfg(test)]
 mod tests {
@@ -138,5 +175,32 @@ mod tests {
         assert!(matches!(ev("unbound_thing", &e), Value::Null));
         assert!(matches!(ev("2 in [1, 2, 3]", &e), Value::Bool(true)));
         assert!(matches!(ev("9 in [1, 2, 3]", &e), Value::Bool(false)));
+    }
+    #[test]
+    fn functions() {
+        let e = env(&[("s", Value::Str("héllo".into())), ("topics", Value::List(vec![])), ("name", Value::Str("Ada".into()))],
+                    &[("sc", Value::Number(7.0))]);
+        assert!(matches!(ev("length(s)", &e), Value::Number(n) if n == 5.0));
+        assert!(matches!(ev("length(missing)", &e), Value::Null));
+        assert!(matches!(ev("is_empty(topics)", &e), Value::Bool(true)));
+        assert!(matches!(ev("is_empty(name)", &e), Value::Bool(false)));
+        assert!(matches!(ev("not_empty(name)", &e), Value::Bool(true)));
+        assert!(matches!(ev("count(topics)", &e), Value::Number(n) if n == 0.0));
+        assert!(matches!(ev("count(name)", &e), Value::Number(n) if n == 1.0));
+        assert!(matches!(ev("contains('abcd', 'bc')", &e), Value::Bool(true)));
+        assert!(matches!(ev("contains([1, 2], 2)", &e), Value::Bool(true)));
+        assert!(matches!(ev("score('sc')", &e), Value::Number(n) if n == 7.0));
+        assert!(matches!(ev("score(sc)", &e), Value::Number(n) if n == 7.0));
+        assert!(matches!(ev("unknown_fn(1)", &e), Value::Null));
+    }
+    #[test]
+    fn canonical_validation_expression() {
+        let e = env(&[("it_name", Value::Str("Ada".into())), ("it_topics", Value::List(vec![]))], &[]);
+        assert!(matches!(ev("length(it_name) > 0 && is_empty(it_topics)", &e), Value::Bool(true)));
+    }
+    #[test]
+    fn explicit_score_form() {
+        let e = env(&[], &[("phq9_total", Value::Number(12.0))]);
+        assert!(matches!(ev("score('phq9_total') >= 10", &e), Value::Bool(true)));
     }
 }
