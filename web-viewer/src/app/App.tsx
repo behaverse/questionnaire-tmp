@@ -173,7 +173,7 @@ export function App() {
       const outcome = await Promise.race([pl.queue.idle().then(() => 'idle' as const), timeout])
       if (cancelled) return
       if (outcome === 'timeout') { dispatch({ type: 'submit_failed' }); return }
-      const ok = await completeSession(params.vsBaseUrl, pl.identity.sessionId, token)
+      const ok = pl.identity.sessionId === 'fixture' || (await completeSession(params.vsBaseUrl, pl.identity.sessionId, token))
       if (cancelled) return
       if (!ok) { dispatch({ type: 'submit_failed' }); return }
       pl.batcher.add(ev.submitted(pl.engine, pl.identity.sessionId, nowIso()))
@@ -193,8 +193,15 @@ export function App() {
       p.batcher.flush()
       p.queue.flushKeepalive()
     }
+    function onVisibility() {
+      if (document.visibilityState === 'hidden') onHide()
+    }
     window.addEventListener('pagehide', onHide)
-    return () => window.removeEventListener('pagehide', onHide)
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      window.removeEventListener('pagehide', onHide)
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
   }, [])
 
   // minor: unmount cleanup for the auto-advance timer
