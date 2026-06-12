@@ -1,0 +1,28 @@
+{
+  "provenance": { "source_questionnaire_id": "qst_widgets", "source_questionnaire_version": "v26.0609", "locale": "en", "viewer_conformance_hash": "0000000000000000000000000000000000000000000000000000000000000000", "deployment_runtime_policy_hash": "0000000000000000000000000000000000000000000000000000000000000000", "generated_at": "2026-06-11T00:00:00Z", "denormaliser_version": "v26.0610" },
+  "metadata": { "id": "qst_widgets", "title": "Widget Gallery", "language": "en" },
+  "locale": "en",
+  "pages": [
+    { "id": "page_1", "elements": [
+      { "id": "it_radio",
+        "question": { "prompt": { "content": { "en": { "text": "Radio question" } } } },
+        "option": { "input_data_type": "choice", "measurement_type": "ordinal", "selection": "single",
+          "options": [ { "index": 1, "value": 1 }, { "index": 2, "value": 2 } ],
+          "content": { "en": { "options": [ { "index": 1, "text": "Option A" }, { "index": 2, "text": "Option B" } ] } } } },
+      { "id": "it_multi",
+        "question": { "prompt": { "content": { "en": { "text": "Checkbox question" } } } },
+        "option": { "input_data_type": "choice", "measurement_type": "nominal", "selection": "multiple",
+          "options": [ { "index": 1, "value": "a" }, { "index": 2, "value": "b" } ],
+          "content": { "en": { "options": [ { "index": 1, "text": "Choice A" }, { "index": 2, "text": "Choice B" } ] } } } },
+      { "id": "it_num",
+        "question": { "prompt": { "content": { "en": { "text": "Number question" } } } },
+        "option": { "input_data_type": "number", "measurement_type": "ratio", "min": 0, "max": 10 } },
+      { "id": "it_text",
+        "question": { "prompt": { "content": { "en": { "text": "Text question" } } } },
+        "option": { "input_data_type": "text", "measurement_type": "nominal" } },
+      { "id": "it_date",
+        "question": { "prompt": { "content": { "en": { "text": "Date question" } } } },
+        "option": { "input_data_type": "date", "measurement_type": "interval" } }
+    ] }
+  ]
+}
