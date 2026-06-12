@@ -1,4 +1,4 @@
-import { mintSession, parseParams, completeSession } from './bootstrap'
+import { mintSession, parseParams, completeSession, getSession, getRuntime, switchLocale } from './bootstrap'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -11,7 +11,7 @@ test('parseParams reads deployment/locale/viewer_url/fixture', () => {
   expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null })
 })
 
-const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null }
+const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false }
 
 test('mintSession posts viewer identity and returns the bundle', async () => {
   const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(ok), { status: 200 }))
@@ -49,4 +49,28 @@ test('completeSession returns false on http error and on network failure', async
   expect(await completeSession('http://vs:9', 's1', 't1')).toBe(false)
   vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('x')))
   expect(await completeSession('http://vs:9', 's1', 't1')).toBe(false)
+})
+test('mintSession surfaces ephemeral from the response', async () => {
+  const body = { session_id: 's1', session_token: 't1', agent_id: 'agent_a', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: true }
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 200 })))
+  const res = await mintSession('http://vs:9', 'dpl_1', null)
+  expect(res).toMatchObject({ ok: true, ephemeral: true })
+})
+test('getSession returns status/locale/agent on 200, ephemeral on 409, invalid on 404, network on throw', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ status: 'in_progress', last_active_locale: 'pt', agent_id: 'agent_z', session_index: 1 }), { status: 200 })))
+  expect(await getSession('http://vs:9', 's1', 't1')).toEqual({ kind: 'ok', status: 'in_progress', lastActiveLocale: 'pt', agentId: 'agent_z', sessionIndex: 1 })
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{"error":{"code":"ephemeral_no_resume"}}', { status: 409 })))
+  expect(await getSession('http://vs:9', 's1', 't1')).toEqual({ kind: 'ephemeral' })
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 404 })))
+  expect(await getSession('http://vs:9', 's1', 't1')).toEqual({ kind: 'invalid' })
+  vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('x')))
+  expect(await getSession('http://vs:9', 's1', 't1')).toEqual({ kind: 'network' })
+})
+test('getRuntime fetches the resumed runtime; switchLocale posts the new locale', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ metadata: { id: 'qst_x' } }), { status: 200 })))
+  expect(await getRuntime('http://vs:9', 's1', 't1')).toMatchObject({ metadata: { id: 'qst_x' } })
+  const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ runtime: { metadata: { id: 'qst_x' } } }), { status: 200 }))
+  vi.stubGlobal('fetch', fetchMock)
+  expect(await switchLocale('http://vs:9', 's1', 't1', 'pt')).toMatchObject({ metadata: { id: 'qst_x' } })
+  expect(JSON.parse((fetchMock.mock.calls[0][1] as RequestInit).body as string)).toEqual({ locale: 'pt' })
 })
