@@ -19,7 +19,7 @@ vi.mock('../resume/store', async (orig) => {
 function setUrl(qs: string) { window.history.replaceState(null, '', `/${qs}`) }
 const mintOk = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: mini, theme: { palette: { primary: '#112233' } }, ephemeral: false }
 
-afterEach(() => { vi.unstubAllGlobals(); (globalThis as Record<string, unknown>).__evalTable = {}; fakeStore = makeFakeStore() })
+afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); (globalThis as Record<string, unknown>).__evalTable = {}; fakeStore = makeFakeStore() })
 
 test('boots a session, applies the theme, renders step 1 (message) then navigates', async () => {
   setUrl('?deployment=dpl_1')
@@ -464,4 +464,25 @@ test('locale switch swaps runtime text and preserves answers', async () => {
   await screen.findByText(/Welcome\. Answer honestly\./)
   await userEvent.selectOptions(screen.getByRole('combobox', { name: /language/i }), 'pt')
   expect(await screen.findByText(/Bem-vindo/)).toBeInTheDocument()
+})
+
+// Task 2 — iframe host events
+test('emits behaverse:completed to the host on finish (when framed)', async () => {
+  setUrl('?deployment=dpl_1')
+  fakeStore = makeFakeStore()
+  const posts: unknown[] = []
+  const parentSpy = { postMessage: (e: unknown) => posts.push(e) }
+  vi.spyOn(window, 'parent', 'get').mockReturnValue(parentSpy as never)
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  render(<App />)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
+  expect(posts.some((e) => (e as { type: string }).type === 'behaverse:completed')).toBe(true)
 })
