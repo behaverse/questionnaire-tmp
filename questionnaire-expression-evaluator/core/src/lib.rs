@@ -18,7 +18,7 @@ pub struct Program {
 const MAX_EXPR_LEN: usize = 1024; // mirrors schema Expression maxLength
 
 pub fn compile(expr: &str) -> Result<Program, ParseError> {
-    if expr.len() > MAX_EXPR_LEN {
+    if expr.chars().count() > MAX_EXPR_LEN {
         return Err(ParseError { offset: MAX_EXPR_LEN, message: "expression exceeds 1024 chars".into() });
     }
     Ok(Program { ast: parser::parse(expr)? })

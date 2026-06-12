@@ -93,18 +93,18 @@ pub(crate) fn call(name: &str, args: &[Expr], b: &dyn Bindings) -> Value {
                 _ => Value::Null,
             }
         }
-        "length" => match eval_arg(args, 0, b) {
+        "length" => { if args.len() != 1 { return Value::Null; } match eval_arg(args, 0, b) {
             Value::Str(s) => Value::Number(s.chars().count() as f64),
             Value::List(l) => Value::Number(l.len() as f64),
             _ => Value::Null,
-        },
+        } },
         "is_empty" => match args.len() { 1 => Value::Bool(eval_arg(args, 0, b).is_empty_value()), _ => Value::Null },
         "not_empty" => match args.len() { 1 => Value::Bool(!eval_arg(args, 0, b).is_empty_value()), _ => Value::Null },
-        "count" => match eval_arg(args, 0, b) {
+        "count" => { if args.len() != 1 { return Value::Null; } match eval_arg(args, 0, b) {
             Value::List(l) => Value::Number(l.len() as f64),
             Value::Null => Value::Number(0.0),
             _ => Value::Number(1.0),
-        },
+        } },
         "contains" => {
             if args.len() != 2 { return Value::Null; }
             let hay = eval_arg(args, 0, b);
