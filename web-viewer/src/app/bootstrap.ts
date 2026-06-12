@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import type { Runtime } from '../renderer/types'
 import type { Theme } from './theme'
 
@@ -8,11 +9,10 @@ export type Params = { deploymentId: string | null; locale: string | null; vsBas
 
 export function parseParams(search: string): Params {
   const q = new URLSearchParams(search)
-  const env = ((import.meta as unknown) as Record<string, unknown>)['env'] as Record<string, string | undefined> | undefined
   return {
     deploymentId: q.get('deployment'),
     locale: q.get('locale'),
-    vsBaseUrl: q.get('viewer_url') ?? env?.['VITE_VS_BASE_URL'] ?? 'http://localhost:8001',
+    vsBaseUrl: q.get('viewer_url') ?? import.meta.env.VITE_VS_BASE_URL ?? 'http://localhost:8001',
     fixture: q.get('fixture'),
   }
 }
