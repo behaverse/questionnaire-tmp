@@ -1,5 +1,5 @@
 import { deriveWidget } from '../renderer/derive'
-import { isItem, isSection } from '../renderer/guards'
+import { isItem, isMessage, isSection } from '../renderer/guards'
 import { elementKey, pageElementFallback, sectionChildFallback } from '../renderer/keys'
 import type { AnswerValue, Runtime, RuntimeElement } from '../renderer/types'
 
@@ -43,6 +43,35 @@ export function requiredUnanswered(step: Step, answers: Record<string, AnswerVal
   }
   for (const { key, element } of step.elements) visit(element, key, 0)
   return missing
+}
+
+export type StepEntry = {
+  key: string
+  element: RuntimeElement
+  kind: 'item' | 'message'
+  sectionKey?: string
+  rowIndex?: number
+}
+
+export function stepEntries(step: Step): StepEntry[] {
+  const out: StepEntry[] = []
+  for (const { key, element } of step.elements) {
+    if (isSection(element)) {
+      element.elements.forEach((c, j) => {
+        const childKey = elementKey(c, sectionChildFallback(key, j))
+        if (isItem(c) && deriveWidget(c.option) !== null) {
+          out.push({ key: childKey, element: c, kind: 'item', sectionKey: key, rowIndex: j })
+        } else if (isMessage(c)) {
+          out.push({ key: childKey, element: c, kind: 'message', sectionKey: key, rowIndex: j })
+        }
+      })
+    } else if (isItem(element)) {
+      if (deriveWidget(element.option) !== null) out.push({ key, element, kind: 'item' })
+    } else if (isMessage(element)) {
+      out.push({ key, element, kind: 'message' })
+    }
+  }
+  return out
 }
 
 export function isSingleChoiceItem(step: Step): boolean {

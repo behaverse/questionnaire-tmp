@@ -1,4 +1,4 @@
-import { flattenSteps, requiredUnanswered, isSingleChoiceItem } from './steps'
+import { flattenSteps, requiredUnanswered, isSingleChoiceItem, stepEntries } from './steps'
 import type { Runtime, SectionElement } from '../renderer/types'
 
 const opt = {
@@ -65,6 +65,20 @@ test('required item with unsupported widget (date) does not gate Next', () => {
   }
   const steps = flattenSteps(rt)
   expect(requiredUnanswered(steps[0], {})).toEqual([])
+})
+test('stepEntries: items and messages with gating-identical keys; sections expanded one level', () => {
+  const steps = flattenSteps(runtime())
+  expect(stepEntries(steps[0]).map((e) => [e.key, e.kind])).toEqual([['msg_intro', 'message']])
+  expect(stepEntries(steps[1]).map((e) => [e.key, e.kind])).toEqual([['it_1', 'item']])
+  expect(stepEntries(steps[2]).map((e) => [e.key, e.kind, e.sectionKey, e.rowIndex])).toEqual([
+    ['it_a', 'item', 'sec_m', 0],
+    ['sec_m__r1', 'item', 'sec_m', 1],
+  ])
+})
+test('stepEntries skips unrenderable items (deriveWidget null), matching gating', () => {
+  const dateItem = { id: 'it_d', question: { prompt: { content: { en: { text: 'D' } } } }, option: { input_data_type: 'date', measurement_type: 'interval' } }
+  const rt: Runtime = { provenance: {}, metadata: { id: 'qst_x', title: 'T', language: 'en' }, locale: 'en', pages: [{ id: 'p1', elements: [dateItem] }] }
+  expect(stepEntries(flattenSteps(rt)[0])).toEqual([])
 })
 test('required item inside a nested section (depth>0) does not gate Next', () => {
   const innerSection: SectionElement = {
