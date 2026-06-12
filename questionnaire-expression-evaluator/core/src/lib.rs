@@ -2,6 +2,8 @@ mod value;
 pub use value::Value;
 
 mod lexer;
+mod ast;
+mod parser;
 
 pub fn version() -> &'static str { "0.1.0" }
 
