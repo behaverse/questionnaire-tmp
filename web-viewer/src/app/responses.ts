@@ -101,7 +101,10 @@ function baseRow(ctx: RowContext, blockType: string): Schema5Row {
   }
 }
 
-const ctxKeyFallback = (ctx: RowContext) => `${ctx.index.pageId}__el${Number(ctx.index.trialIndex) - 1}`
+const ctxKeyFallback = (ctx: RowContext) =>
+  ctx.index.sectionId !== undefined && ctx.index.rowIndex !== undefined
+    ? sectionChildFallback(ctx.index.sectionId, ctx.index.rowIndex)
+    : pageElementFallback(ctx.index.pageId, Number(ctx.index.trialIndex) - 1)
 
 function safeMerge(opt: ItemElement['option'], locale: string) {
   try {
