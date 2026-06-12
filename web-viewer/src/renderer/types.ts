@@ -48,6 +48,7 @@ export type Runtime = {
   available_locales?: string[]
   style?: Record<string, unknown>
   flow?: Record<string, unknown>
+  blocks?: { id?: string; page_ids?: string[] }[]
   pages: RuntimePage[]
   scores?: unknown[]
   logic?: unknown[]
