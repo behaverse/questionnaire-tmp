@@ -17,7 +17,7 @@ export function parseParams(search: string): Params {
   }
 }
 
-export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme }
+export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean }
 export type MintErr = { ok: false; kind: 'invalid_link' | 'not_open' | 'closed' | 'failed'; code: string }
 export type MintResult = MintOk | MintErr
 
@@ -39,7 +39,7 @@ export async function mintSession(vsBaseUrl: string, deploymentId: string, local
   }
   if (resp.ok) {
     const body = await resp.json()
-    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null }
+    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false }
   }
   const code = await resp.json().then((b) => b?.error?.code ?? String(resp.status)).catch(() => String(resp.status))
   return { ok: false, kind: KIND_BY_STATUS[resp.status] ?? 'failed', code }
@@ -54,4 +54,37 @@ export async function completeSession(vsBaseUrl: string, sessionId: string, toke
   } catch {
     return false
   }
+}
+
+export type SessionState =
+  | { kind: 'ok'; status: string; lastActiveLocale: string; agentId: string; sessionIndex: number }
+  | { kind: 'ephemeral' } | { kind: 'invalid' } | { kind: 'network' }
+
+const authGet = (vs: string, path: string, token: string) =>
+  fetch(`${vs}/v1/sessions/${path}`, { headers: { authorization: `Bearer ${token}` } })
+
+export async function getSession(vs: string, id: string, token: string): Promise<SessionState> {
+  let r: Response
+  try { r = await authGet(vs, id, token) } catch { return { kind: 'network' } }
+  if (r.status === 409) return { kind: 'ephemeral' }
+  if (r.status === 401 || r.status === 404) return { kind: 'invalid' }
+  if (!r.ok) return { kind: 'network' }
+  const b = await r.json()
+  return { kind: 'ok', status: String(b.status), lastActiveLocale: String(b.last_active_locale ?? 'en'),
+           agentId: String(b.agent_id ?? 'agent_resumed'), sessionIndex: Number(b.session_index ?? 1) }
+}
+
+export async function getRuntime(vs: string, id: string, token: string): Promise<Runtime | null> {
+  try { const r = await authGet(vs, `${id}/runtime`, token); return r.ok ? ((await r.json()) as Runtime) : null }
+  catch { return null }
+}
+
+export async function switchLocale(vs: string, id: string, token: string, locale: string): Promise<Runtime | null> {
+  try {
+    const r = await fetch(`${vs}/v1/sessions/${id}/locale`, {
+      method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body: JSON.stringify({ locale }),
+    })
+    return r.ok ? ((await r.json()).runtime as Runtime) : null
+  } catch { return null }
 }

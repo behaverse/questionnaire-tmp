@@ -31,7 +31,7 @@ def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_ver
     conn.commit()
     theme = themes_store.get_theme(conn, deployment["theme_id"]) if deployment.get("theme_id") else None
     return {"session_id": session_id, "session_token": token, "runtime": runtime, "theme": theme,
-            "agent_id": agent_id, "session_index": 1}
+            "agent_id": agent_id, "session_index": 1, "ephemeral": ephemeral}
 
 
 def session_runtime(conn, session: dict) -> dict:

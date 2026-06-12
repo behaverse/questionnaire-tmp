@@ -60,3 +60,19 @@ def test_session_get_returns_agent_identity(setup):
     body = r.json()
     assert body["agent_id"].startswith("agent_")
     assert body["session_index"] == 1
+
+
+def test_mint_returns_ephemeral_false_for_anonymous(setup):
+    client, dep_id = setup
+    body = _new_session(client, dep_id).json()
+    assert body["ephemeral"] is False
+
+
+def test_mint_returns_ephemeral_true_for_demo(setup):
+    client, _ = setup
+    dep = client.post("/v1/deployments", json={
+        "questionnaire_ref": "qst_mini@v26.0609", "mode_preset": "demo",
+        "runtime_policy": {"scorer_impl_preference": ["wasm", "http"], "show_score": True},
+        "default_locale": "en", "available_locales": ["en"]}).json()
+    body = _new_session(client, dep["deployment_id"]).json()
+    assert body["ephemeral"] is True

@@ -26,3 +26,8 @@
 - **Multi-rule visibility precedence is first-firing-wins**; the spec's "`show:true` force-show override" is an untested edge case (no fixture has two rules targeting one element) — revisit if that ever occurs.
 - The `next` reducer action is **retained for the degenerate no-pipeline safety path** but does NOT push the visited stack — harmless and unreachable once a pipeline is built (App always builds one).
 - The evaluator wasm **rebuilds on every `npm run build`** (~6 s) — cache the `build:evaluator` output if CI build time becomes a concern.
+- **Session token persisted in IndexedDB** (WV-E, F1): currently safe because tokens are **anonymous / opaque / origin-scoped** — revisit the storage posture if **authenticated deployments** arrive.
+- **Theme is NOT re-fetched on resume** (WV-E): defaults are applied on a resumed session — small follow-up, or fold into WV-F.
+- **Multi-tab coordination is last-writer-wins** (WV-E): no cross-tab locking/broadcast; the most recent writer's state wins.
+- **Offline / PWA queue-and-sync is WV-F**: the in-memory submission queue still loses not-yet-sent rows/events on refresh until durable offline sync lands.
+- **No participant "start over" affordance** (WV-E): a deliberate self-service reset of the persisted resume state is deferred.

@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { StepRenderer } from '../renderer'
 import { isItem } from '../renderer/guards'
 import { mergeOptions } from '../renderer/merge'
@@ -12,8 +12,11 @@ import { pipedText } from '../logic/piping'
 import { validateStep } from '../logic/validation'
 import { visibleEntries } from '../logic/visibility'
 import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
-import { completeSession, mintSession, parseParams, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { completeSession, getRuntime, getSession, mintSession, parseParams, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { getResumeStore } from '../resume/store'
+import { firstUnansweredStep, resolveResume } from '../resume/resolve'
 import { ErrorScreen } from './chrome/ErrorScreen'
+import { LocaleSwitcher } from './chrome/LocaleSwitcher'
 import { NavButtons } from './chrome/NavButtons'
 import { ProgressBar } from './chrome/ProgressBar'
 import { StepTransition } from './chrome/StepTransition'
@@ -58,8 +61,13 @@ export function App() {
   const bootStarted = useRef(false)
   const stepContainer = useRef<HTMLDivElement | null>(null)
   const pipeline = useRef<Pipeline | null>(null)
+  const store = getResumeStore()
+  const [demoCleared, setDemoCleared] = useState(false)
+  const ephemeralRef = useRef(false)
   const params = parseParams(window.location.search)
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
+  const localeRef = useRef(locale)
+  localeRef.current = locale
 
   const nowIso = () => new Date().toISOString()
 
@@ -122,12 +130,36 @@ export function App() {
         dispatch({ type: 'boot_error', kind: 'invalid_link', code: 'missing_deployment_param' })
         return
       }
+      const evaluator = await loadEvaluator()
+      const outcome = await resolveResume(params.vsBaseUrl, params.deploymentId, store, { getSession, getRuntime })
+      if (outcome.kind === 'retry') { dispatch({ type: 'boot_error', kind: 'failed', code: 'resume_unreachable' }); return }
+      if (outcome.kind === 'completed') { dispatch({ type: 'completed' }); return }
+      if (outcome.kind === 'resume') {
+        const { record, runtime } = outcome
+        ephemeralRef.current = false
+        localeRef.current = record.lastActiveLocale
+        applyTheme(null)
+        buildPipeline(evaluator, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
+        const steps = flattenSteps(runtime)
+        const p = pipeline.current!
+        const resumeBindings = makeBindings(record.answers, runtime, nullResolver)
+        const land = firstUnansweredStep(steps, p.programs, p.evaluator, resumeBindings, record.answers, record.stepIndex)
+        dispatch({ type: 'rehydrate', session: { id: record.sessionId, token: record.token }, runtime, theme: null, steps, answers: record.answers, stepIndex: land, visited: record.visited })
+        document.title = runtime.metadata.title
+        document.documentElement.lang = record.lastActiveLocale
+        return
+      }
+      if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
       const res = await mintSession(params.vsBaseUrl, params.deploymentId, params.locale)
       if (res.ok) {
+        ephemeralRef.current = res.ephemeral
+        localeRef.current = res.runtime.locale ?? 'en'
         applyTheme(res.theme as Theme)
-        const evaluator = await loadEvaluator()
         buildPipeline(evaluator, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
         dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
+        if (!res.ephemeral && !params.fixture && params.deploymentId) {
+          void store.put({ deploymentId: params.deploymentId, sessionId: res.session_id, token: res.session_token, lastActiveLocale: res.runtime.locale ?? 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: new Date().toISOString() })
+        }
         document.title = res.runtime.metadata.title
         document.documentElement.lang = res.runtime.locale ?? 'en'
       } else {
@@ -182,6 +214,18 @@ export function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase, state.stepIndex])
 
+  // WV-E: debounced resume persistence (skips ephemeral + fixture)
+  useEffect(() => {
+    if (state.phase !== 'ready' || ephemeralRef.current || params.fixture || !state.session || !params.deploymentId) return
+    const handle = window.setTimeout(() => {
+      void store.put({ deploymentId: params.deploymentId!, sessionId: state.session!.id, token: state.session!.token,
+        lastActiveLocale: localeRef.current, answers: state.answers, stepIndex: state.stepIndex, visited: state.visited,
+        updatedAt: new Date().toISOString() })
+    }, 500)
+    return () => window.clearTimeout(handle)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.phase, state.answers, state.stepIndex, state.visited])
+
   // Finishing effect: flush queue, call complete, transition to finished
   useEffect(() => {
     const p = pipeline.current
@@ -201,6 +245,7 @@ export function App() {
       pl.batcher.add(ev.submitted(pl.engine, pl.identity.sessionId, nowIso()))
       pl.batcher.flush()
       dispatch({ type: 'submitted' })
+      if (params.deploymentId) void store.clear(params.deploymentId)
     }
     void finish(p)
     return () => { cancelled = true }
@@ -231,6 +276,17 @@ export function App() {
 
   function clearAuto() {
     if (autoTimer.current !== null) { window.clearTimeout(autoTimer.current); autoTimer.current = null }
+  }
+
+  async function handleLocale(l: string) {
+    const p = pipeline.current
+    if (!p || !state.session || l === locale) return
+    const rt = await switchLocale(params.vsBaseUrl, state.session.id, state.session.token, l)
+    if (!rt) return
+    p.programs = collectPrograms(rt, p.evaluator)     // rebuild logic programs for the new runtime text
+    localeRef.current = l
+    document.documentElement.lang = l
+    dispatch({ type: 'set_runtime', runtime: rt, steps: flattenSteps(rt) })
   }
 
   function handleAnswer(key: string, value: AnswerValue) {
@@ -360,6 +416,16 @@ export function App() {
       </main>
     )
   }
+  if (state.phase === 'completed') {
+    return (
+      <main className="min-h-screen grid place-items-center px-6 font-theme text-center">
+        <div className="qv-step-enter max-w-md space-y-3">
+          <h1 className="text-3xl font-semibold">{t(locale, 'completed_title')}</h1>
+          <p className="text-lg text-slate-600">{t(locale, 'completed_body')}</p>
+        </div>
+      </main>
+    )
+  }
 
   const step = state.steps[state.stepIndex]
   if (!step) return null
@@ -390,6 +456,12 @@ export function App() {
   const errorMessages = Object.fromEntries(state.validationErrors.map((e) => [e.key, e.message]))
   return (
     <main className="min-h-screen font-theme">
+      <LocaleSwitcher locale={locale} available={state.runtime?.available_locales ?? []} onSwitch={handleLocale} />
+      {demoCleared && (
+        <div role="status" className="fixed inset-x-0 top-0 z-10 bg-amber-100 px-4 py-2 text-center text-sm text-amber-900">
+          {t(locale, 'demo_cleared')}
+        </div>
+      )}
       <ProgressBar locale={locale} current={state.stepIndex + 1} total={state.steps.length} indeterminate={hasBranching} />
       <div ref={stepContainer} className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 py-24">
         <StepTransition stepKey={state.stepIndex}>
