@@ -11,7 +11,7 @@ export function CheckboxGroup({ label, choices, value, onChange }: Props) {
       {choices.map((c) => {
         const isOn = selected.includes(c.value)
         return (
-          <label key={c.index} className={`flex cursor-pointer items-center gap-3 rounded-xl border-2 px-4 py-3 text-lg transition-colors ${isOn ? 'border-primary bg-primary/5 text-primary' : 'border-slate-200 hover:border-slate-300'}`}>
+          <label key={c.index} data-selected={isOn} className="qv-option">
             <input type="checkbox" checked={isOn} onChange={() => toggle(c.value)} className="h-5 w-5 accent-[var(--qv-primary)]" />
             <span>{c.text}</span>
           </label>

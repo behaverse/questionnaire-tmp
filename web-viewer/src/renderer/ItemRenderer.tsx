@@ -56,9 +56,9 @@ export function ItemRenderer({ answerKey, element, locale, value, onAnswer, keyH
     <fieldset aria-describedby={shownError ? errorId : undefined} className="space-y-5">
       <legend className="sr-only">{prompt}</legend>
       <div className="space-y-2">
-        <h2 tabIndex={-1} className="text-2xl font-semibold leading-snug sm:text-3xl">{prompt}</h2>
-        {context && <p className="text-base text-slate-500">{context}</p>}
-        {instruction && <p className="text-sm italic text-slate-500">{instruction}</p>}
+        <h2 tabIndex={-1} className="qv-prompt">{prompt}</h2>
+        {context && <p className="qv-secondary text-base">{context}</p>}
+        {instruction && <p className="qv-secondary text-sm italic">{instruction}</p>}
       </div>
       {widget}
       {shownError && (

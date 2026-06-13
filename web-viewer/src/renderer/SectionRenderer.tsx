@@ -26,7 +26,7 @@ export function SectionRenderer({ sectionKey, section, locale, answers, onAnswer
   }
   return (
     <section className="space-y-8">
-      {section.title && <h2 tabIndex={-1} className="text-2xl font-semibold leading-snug sm:text-3xl">{section.title}</h2>}
+      {section.title && <h2 tabIndex={-1} className="qv-prompt">{section.title}</h2>}
       {section.elements.map((el, j) => {
         const key = elementKey(el, sectionChildFallback(sectionKey, j))
         if (isItem(el)) {

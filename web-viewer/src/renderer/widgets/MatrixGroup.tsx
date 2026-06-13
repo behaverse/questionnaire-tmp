@@ -26,7 +26,7 @@ export function MatrixGroup({ sectionKey, section, locale, answers, onAnswer, re
   const failing = rows.some((r) => requiredErrors.includes(r.key))
   return (
     <div className="space-y-3">
-      {section.title && <h2 tabIndex={-1} className="text-2xl font-semibold leading-snug sm:text-3xl">{section.title}</h2>}
+      {section.title && <h2 tabIndex={-1} className="qv-prompt">{section.title}</h2>}
       <div className="overflow-x-auto">
         <table className="w-full min-w-max border-separate border-spacing-y-1">
           <thead>

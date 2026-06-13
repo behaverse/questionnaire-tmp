@@ -33,12 +33,7 @@ export function RadioGroup({ name, label, choices, value, onChange, keyHints = f
       {choices.map((c, i) => {
         const selected = value === c.value
         return (
-          <label
-            key={c.index}
-            className={`flex cursor-pointer items-center gap-3 rounded-xl border-2 px-4 py-3 text-lg transition-colors ${
-              selected ? 'border-primary bg-primary/5 text-primary' : 'border-slate-200 hover:border-slate-300'
-            }`}
-          >
+          <label key={c.index} data-selected={selected} className="qv-option">
             <input
               type="radio"
               name={name}
@@ -47,9 +42,7 @@ export function RadioGroup({ name, label, choices, value, onChange, keyHints = f
               className="sr-only"
             />
             {keyHints && (
-              <span aria-hidden className={`grid h-6 w-6 shrink-0 place-items-center rounded border text-xs font-semibold ${selected ? 'border-primary' : 'border-slate-300 text-slate-500'}`}>
-                {LETTERS[i]}
-              </span>
+              <span aria-hidden className="qv-option-badge">{LETTERS[i]}</span>
             )}
             <span>{c.text}</span>
           </label>
