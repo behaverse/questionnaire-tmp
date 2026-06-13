@@ -115,9 +115,9 @@ The crate is `no_std`-friendly is **not** required (we target `wasm32-unknown-un
 `scorers/phq9/src/lib.rs` implements the procedure declared by `scr_phq9.json`:
 
 - **Input** (`inputs` schema): `{ "scored_responses": { "pr_phq9_1": int, … "pr_phq9_9": int } }` — values already post-reversal (the viewer applies reversal; the scorer trusts `scored_responses`).
-- **Output** (`output_schema`): `{ total: int 0..27, severity: enum, band: {min,max,label}, missing_count: int, items: [...] }`.
-- **Logic:** `missing_count` = count of the nine `pr_phq9_*` keys absent/null; `total` = sum of present values; `severity`/`band` from the standard bands (0–4 minimal, 5–9 mild, 10–14 moderate, 15–19 mod_severe, 20–27 severe); `items` = per-item `{id, value}` echo (matches the entity's `items` array shape).
-- **Errors:** out-of-range item value, non-integer, or unexpected key → `{"ok":false,"error": …}` (not a trap). The exact band edges + the `items` shape are pinned by the entity's `test_cases`, which the build's conformance test runs against the **built wasm**.
+- **Output** (`output_schema`, exactly): `{ total: int 0..27, severity: enum(minimal|mild|moderate|mod_severe|severe), band: {min:int, max:int, label:string}, missing_count: int 0..9 }`. **No `items` field** (the real entity's `output_schema` requires only these four).
+- **Logic:** `missing_count` = count of the nine `pr_phq9_*` keys absent/null; `total` = sum of present values; `severity`/`band` from the five standard bands — `0–4 minimal "Minimal Depression"`, `5–9 mild "Mild Depression"`, `10–14 moderate "Moderate Depression"`, `15–19 mod_severe "Moderately Severe Depression"`, `20–27 severe "Severe Depression"` (the band labels are pinned by the entity's `test_cases`, e.g. `{min:10,max:14,label:"Moderate Depression"}`).
+- **Errors:** out-of-range item value (outside 0–3), non-integer, or unexpected key → `{"ok":false,"error": …}` (not a trap). The exact band edges + labels are pinned by the entity's `test_cases`, which the build's conformance test runs against the **built wasm**.
 
 Built to `dist-wasm/phq9.wasm` via `scripts/build-phq9.mjs` (`cargo build -p phq9 --target wasm32-unknown-unknown --release`, then copy + optional `wasm-opt`).
 
