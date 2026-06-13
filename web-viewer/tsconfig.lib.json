@@ -5,7 +5,7 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist-lib",
-    "rootDir": "src"
+    "rootDir": "src/renderer"
   },
   "include": ["src/renderer"],
   "exclude": ["src/renderer/**/*.test.ts", "src/renderer/**/*.test.tsx"]
