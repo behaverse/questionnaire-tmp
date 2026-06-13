@@ -19,6 +19,8 @@ class Settings:
     forward_max_attempts: int = 8
     forward_batch_size: int = 50
     cors_origins: tuple[str, ...] = ()
+    scorer_dir: Path = REPO_ROOT / "questionnaire-scorer" / "dist-wasm"
+    public_base_url: str = ""
 
 
 def get_settings() -> Settings:
@@ -37,4 +39,6 @@ def get_settings() -> Settings:
         forward_max_attempts=int(os.environ.get("FORWARD_MAX_ATTEMPTS", "8")),
         forward_batch_size=int(os.environ.get("FORWARD_BATCH_SIZE", "50")),
         cors_origins=origins,
+        scorer_dir=Path(os.environ.get("VS_SCORER_DIR") or REPO_ROOT / "questionnaire-scorer" / "dist-wasm"),
+        public_base_url=os.environ.get("VS_PUBLIC_BASE", ""),
     )
