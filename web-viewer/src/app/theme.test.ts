@@ -1,22 +1,32 @@
-import { themeToCssVars } from './theme'
+import { applyTheme, bundleToThemeId } from './theme'
+import { getTheme } from '../theme/registry'
 
-const vsTheme = {
-  theme_id: 'default', name: 'Behaverse Default',
-  palette: { primary: '#1a5fb4', secondary: '#613583', success: '#26734d', warning: '#8f6000', error: '#a51d2d', background: '#ffffff' },
-  typography: { font_family: 'Georgia, serif', base_size: 18 },
-  spacing: { unit: 8 }, logo_url: null, custom_css: null,
-}
+afterEach(() => {
+  document.documentElement.removeAttribute('style')
+  document.documentElement.removeAttribute('data-card')
+  document.documentElement.removeAttribute('data-option-variant')
+  document.documentElement.removeAttribute('data-surface')
+})
 
-test('maps the VS theme bundle onto --qv-* vars', () => {
-  expect(themeToCssVars(vsTheme)).toEqual({
-    '--qv-primary': '#1a5fb4', '--qv-secondary': '#613583', '--qv-success': '#26734d',
-    '--qv-warning': '#8f6000', '--qv-error': '#a51d2d', '--qv-background': '#ffffff',
-    '--qv-font-family': 'Georgia, serif', '--qv-base-size': '18px', '--qv-space-unit': '8px',
-  })
+test('applyTheme(minimal) sets vars + structural attrs on <html>', () => {
+  applyTheme(getTheme('minimal'))
+  const el = document.documentElement
+  expect(el.style.getPropertyValue('--qv-prompt-color')).toBe('#18181b')
+  expect(el.style.getPropertyValue('--qv-card-padding')).toBe('0px')
+  expect(el.getAttribute('data-card')).toBe('off')
+  expect(el.getAttribute('data-option-variant')).toBe('borderless')
 })
-test('null theme → no overrides (index.css defaults stand)', () => {
-  expect(themeToCssVars(null)).toEqual({})
+test('applyTheme(sage) sets the coloured card surface + data-card=on', () => {
+  applyTheme(getTheme('sage'))
+  expect(document.documentElement.style.getPropertyValue('--qv-card-surface')).toBe('#D4E3CE')
+  expect(document.documentElement.getAttribute('data-card')).toBe('on')
 })
-test('partial theme maps only what it has', () => {
-  expect(themeToCssVars({ palette: { primary: '#000000' } })).toEqual({ '--qv-primary': '#000000' })
+test('bundleToThemeId returns the bundle theme_id when it names a built-in, else null', () => {
+  expect(bundleToThemeId({ theme_id: 'sage' })).toBe('sage')
+  expect(bundleToThemeId({ theme_id: 'corporate-blue' })).toBe(null)
+  expect(bundleToThemeId(null)).toBe(null)
+})
+test('applyTheme overlays a VS palette override on top of the base theme', () => {
+  applyTheme(getTheme('minimal'), { palette: { primary: '#0055ff' } })
+  expect(document.documentElement.style.getPropertyValue('--qv-primary')).toBe('#0055ff')
 })
