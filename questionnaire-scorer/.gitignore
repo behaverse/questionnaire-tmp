@@ -1,3 +1,4 @@
 /target
+/Cargo.lock
 host/node_modules
 host/dist
