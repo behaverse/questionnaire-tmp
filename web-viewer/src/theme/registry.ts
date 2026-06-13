@@ -1,10 +1,14 @@
 import type { ViewerTheme } from './types'
 import { minimal } from './themes/minimal'
+import { sage } from './themes/sage'
+import { artsy } from './themes/artsy'
 
 export const DEFAULT_THEME_ID = 'minimal'
 
 export const THEMES: Record<string, ViewerTheme> = {
   [minimal.id]: minimal,
+  [sage.id]: sage,
+  [artsy.id]: artsy,
 }
 
 export function getTheme(id?: string | null): ViewerTheme {

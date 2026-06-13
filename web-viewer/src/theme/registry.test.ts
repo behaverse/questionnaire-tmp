@@ -15,3 +15,9 @@ test('resolveThemeId precedence: param > bundle > default', () => {
   expect(resolveThemeId({ bundleId: 'minimal', themeParam: null })).toBe('minimal')
   expect(resolveThemeId({})).toBe('minimal')
 })
+test('sage and artsy are registered with their ids', () => {
+  expect(THEMES.sage?.name).toBe('Sage')
+  expect(THEMES.artsy?.name).toBe('Artsy')
+  expect(resolveThemeId({ themeParam: 'sage' })).toBe('sage')
+  expect(resolveThemeId({ bundleId: 'artsy' })).toBe('artsy')
+})
