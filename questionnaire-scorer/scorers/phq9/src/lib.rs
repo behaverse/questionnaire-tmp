@@ -20,11 +20,6 @@ pub fn score_phq9(input: &Value) -> Result<Value, String> {
         .get("scored_responses")
         .and_then(|v| v.as_object())
         .ok_or_else(|| "missing scored_responses object".to_string())?;
-    for k in sr.keys() {
-        if !KEYS.contains(&k.as_str()) {
-            return Err(format!("unexpected key: {k}"));
-        }
-    }
     let mut total: i64 = 0;
     let mut missing: i64 = 0;
     for key in KEYS {
@@ -100,9 +95,11 @@ mod tests {
         assert!(score_phq9(&full([4,0,0,0,0,0,0,0,0])).is_err());
     }
     #[test]
-    fn rejects_unexpected_key() {
-        let r = score_phq9(&json!({ "scored_responses": { "pr_phq9_1": 1, "bogus": 1 } }));
-        assert!(r.is_err());
+    fn ignores_unexpected_key() {
+        // A scorer MUST ignore scored_responses keys it does not recognise (host passes all answered prompts).
+        let out = score_phq9(&json!({ "scored_responses": { "pr_phq9_1": 2, "bogus": 99 } })).unwrap();
+        assert_eq!(out["total"], json!(2));
+        assert_eq!(out["missing_count"], json!(8));
     }
     #[test]
     fn rejects_missing_scored_responses() {

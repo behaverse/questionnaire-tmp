@@ -43,3 +43,9 @@ implements the five exports above is conformant.
 sha256 matches the entity's declared `wasm` impl sha256; every `test_case` returns
 `ok:true`, validates against `output_schema`, and deep-equals `expected`; and outputs are
 deterministic across repeated runs.
+
+## Input handling (convention)
+
+The host passes `scored_responses` for **all** answered prompts in the session. A conformant
+scorer MUST **ignore keys it does not recognise** (select only the prompt ids it scores) and
+treat its own absent keys as missing. A scorer must not error on unexpected `scored_responses` keys.
