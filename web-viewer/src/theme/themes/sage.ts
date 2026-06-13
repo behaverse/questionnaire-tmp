@@ -7,7 +7,7 @@ export const sage: ViewerTheme = {
   card: { enabled: true, surface: '#D4E3CE', border: '#BBD2B3', borderWidth: '1px', radius: '24px',
     shadow: '0 22px 50px -20px rgba(40,80,40,.30), 0 2px 8px rgba(40,80,40,.06)', padding: '2.75rem 2.75rem 2.25rem' },
   prompt: { fontFamily: 'Inter, system-ui, sans-serif', weight: 600, size: '2.05rem', color: '#243024', letterSpacing: '-0.015em' },
-  secondary: { color: '#566B52' },
+  secondary: { color: '#3F5138' },
   options: {
     variant: 'outline',
     surface: '#ffffff', border: '#C3D7BC', radius: '12px',
