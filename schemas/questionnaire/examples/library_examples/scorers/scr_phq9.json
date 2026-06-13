@@ -42,7 +42,7 @@
     {
       "kind": "wasm",
       "url": "https://behaverse.org/scorers/phq9/v26.0602/scorer.wasm",
-      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      "sha256": "6d6a7277d49fca54a13d8c18fdbf1424a745842ca0f82fb49fbffeba7707f3ae"
     },
     {
       "kind": "http",
