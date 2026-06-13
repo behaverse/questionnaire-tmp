@@ -12,6 +12,19 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def rewrite_scorer_urls(runtime: dict, public_base: str) -> None:
+    """Point each wasm scorer impl at the VS's own /v1/scorers/{ref}/impl.wasm endpoint
+    so the viewer fetches the bytes from us (hosting at behaverse.org is deferred). No-op
+    when public_base is empty; non-wasm impls are left untouched. sha256 is preserved."""
+    if not public_base:
+        return
+    base = public_base.rstrip("/")
+    for score in runtime.get("scores", []) or []:
+        impl = score.get("impl")
+        if isinstance(impl, dict) and impl.get("kind") == "wasm":
+            impl["url"] = f"{base}/v1/scorers/{score['scorer']}/impl.wasm"
+
+
 def mint_runtime(conn, deployment: dict, viewer: dict, requested_locale: str | None) -> dict:
     """The core flow: resolve locale → 5-tuple cache key → hit returns; miss fetches the
     Library bundle, denormalises, caches, returns. Raises denormaliser.PreflightError on a
@@ -43,5 +56,6 @@ def mint_runtime(conn, deployment: dict, viewer: dict, requested_locale: str | N
     prov = runtime["provenance"]
     assert prov["viewer_conformance_hash"] == viewer_hash, "viewer hash mismatch (bug)"
     assert prov["deployment_runtime_policy_hash"] == policy_hash, "policy hash mismatch (bug)"
+    rewrite_scorer_urls(runtime, settings.public_base_url)
     cache.put(conn, key, runtime, deployment["deployment_id"], cap=settings.runtime_cache_cap)
     return runtime
