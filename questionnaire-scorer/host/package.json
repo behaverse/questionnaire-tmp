@@ -1,0 +1,14 @@
+{
+  "name": "@behaverse/questionnaire-scorer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": { "scorer-conformance": "dist/cli.js" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "pretest": "node ../scripts/build-phq9.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": { "ajv": "^8.17.1" },
+  "devDependencies": { "typescript": "^5.6.0", "vitest": "^2.1.8", "@types/node": "^22.0.0" }
+}
