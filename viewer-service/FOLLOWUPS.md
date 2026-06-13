@@ -65,3 +65,4 @@
 - **Viewer Service is now feature-complete for Phase 2 (VS-A..E).** Remaining Phase-2 gate work is
   non-VS: the Web Viewer, the WASM expression evaluator, and the Scorer conformance runner.
 - **Scorer artifact storage:** SP2a serves scorer wasm from a VS-local dir (`VS_SCORER_DIR`) and rewrites `impl.url` at mint (`VS_PUBLIC_BASE`). Real storage belongs in the Library (`GET /v1/scorers/{id}/versions/{v}/impl.wasm`) — SP3.
+- **Scoring deploy config (SP2a):** in-session scoring requires the VS to (1) serve the scorer wasm — set `VS_SCORER_DIR` to a dir containing the binaries and `VS_SCORER_MAP` (JSON `{"scr_<id>@v<ver>": "<file>.wasm"}`) mapping each scorer ref to its file (default falls back to `<ref>.wasm`); and (2) rewrite impl URLs — set `VS_PUBLIC_BASE` to the VS's public base. Example for the reference PHQ-9: `VS_SCORER_DIR=…/questionnaire-scorer/dist-wasm VS_SCORER_MAP='{"scr_phq9@v26.0602":"phq9.wasm"}' VS_PUBLIC_BASE=https://<vs>`.

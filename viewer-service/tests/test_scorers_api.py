@@ -25,3 +25,22 @@ def test_bad_ref_is_404(tmp_path, monkeypatch):
     client = TestClient(create_app())
     r = client.get("/v1/scorers/..%2f..%2fetc/impl.wasm")
     assert r.status_code in (404, 400)
+
+
+def test_serves_via_ref_to_filename_map(tmp_path, monkeypatch):
+    wasm = b"\x00asm\x01\x00\x00\x00phq9"
+    (tmp_path / "phq9.wasm").write_bytes(wasm)
+    monkeypatch.setenv("VS_SCORER_DIR", str(tmp_path))
+    monkeypatch.setenv("VS_SCORER_MAP", '{"scr_phq9@v26.0602": "phq9.wasm"}')
+    client = TestClient(create_app())
+    r = client.get("/v1/scorers/scr_phq9@v26.0602/impl.wasm")
+    assert r.status_code == 200
+    assert r.content == wasm
+
+
+def test_map_value_cannot_escape_dir(tmp_path, monkeypatch):
+    monkeypatch.setenv("VS_SCORER_DIR", str(tmp_path))
+    monkeypatch.setenv("VS_SCORER_MAP", '{"scr_phq9@v26.0602": "../secret.wasm"}')
+    client = TestClient(create_app())
+    r = client.get("/v1/scorers/scr_phq9@v26.0602/impl.wasm")
+    assert r.status_code == 404

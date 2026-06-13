@@ -1,5 +1,5 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -21,11 +21,15 @@ class Settings:
     cors_origins: tuple[str, ...] = ()
     scorer_dir: Path = REPO_ROOT / "questionnaire-scorer" / "dist-wasm"
     public_base_url: str = ""
+    scorer_map: dict[str, str] = field(default_factory=dict)
 
 
 def get_settings() -> Settings:
     raw = os.environ.get("VS_CORS_ORIGINS")
     origins = tuple(o.strip() for o in raw.split(",") if o.strip()) if raw is not None else ()
+    import json
+    raw_map = os.environ.get("VS_SCORER_MAP")
+    scorer_map = json.loads(raw_map) if raw_map else {}
     return Settings(
         database_url=os.environ.get("DATABASE_URL", "postgresql://localhost/viewer_service"),
         library_base_url=os.environ.get("LIBRARY_BASE_URL", "http://localhost:8000"),
@@ -41,4 +45,5 @@ def get_settings() -> Settings:
         cors_origins=origins,
         scorer_dir=Path(os.environ.get("VS_SCORER_DIR") or REPO_ROOT / "questionnaire-scorer" / "dist-wasm"),
         public_base_url=os.environ.get("VS_PUBLIC_BASE", ""),
+        scorer_map=scorer_map,
     )
