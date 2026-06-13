@@ -7,6 +7,7 @@ import { collectPrograms, type Programs } from '../logic/compile'
 import { loadEvaluator } from '../logic/evaluator'
 import { makeBindings } from '../logic/bindings'
 import { nullResolver } from '../logic/scoring'
+import { compileScorers, makeScoreCache, type ScoreCache, type ScorerSet } from '../scoring/executor'
 import { nextStepIndex } from '../logic/navigation'
 import { pipedText } from '../logic/piping'
 import { validateStep } from '../logic/validation'
@@ -38,6 +39,8 @@ const FIXTURES: Record<string, () => Promise<{ default: unknown }>> = {
   matrix: () => import('../fixtures/matrix.json'),
   widgets: () => import('../fixtures/widgets.json'),
   branch: () => import('../fixtures/branch.json'),
+  phq9: () => import('../fixtures/phq9.json'),
+  branch_score: () => import('../fixtures/branch_score.json'),
 }
 const AUTO_ADVANCE_MS = 400
 
@@ -53,6 +56,7 @@ type Pipeline = {
   evaluator: LogicEvaluator
   programs: Programs
   resolver: ScoreResolver
+  cache: ScoreCache
 }
 
 export function App() {
@@ -79,6 +83,7 @@ export function App() {
 
   function buildPipeline(
     evaluator: LogicEvaluator,
+    scorerSet: ScorerSet,
     sessionId: string,
     token: string,
     agentId: string,
@@ -100,6 +105,7 @@ export function App() {
       ...(fetchImpl ? { fetchImpl } : {}),
     })
     const batcher = new EventBatcher(sessionId, (batch) => queue.enqueue('events', batch))
+    const cache = makeScoreCache(scorerSet, runtime)
     pipeline.current = {
       identity,
       index: buildRuntimeIndex(runtime),
@@ -111,7 +117,8 @@ export function App() {
       summaryRt: (runtime.style as Record<string, unknown> | undefined)?.x_summary_rt !== false,
       evaluator,
       programs: collectPrograms(runtime, evaluator),
-      resolver: nullResolver,
+      resolver: cache.resolver,
+      cache,
     }
     batcher.add(ev.initialized(pipeline.current.engine, sessionId, nowIso()))
     batcher.add(ev.started(pipeline.current.engine, sessionId, nowIso()))
@@ -124,8 +131,8 @@ export function App() {
     async function boot() {
       if (import.meta.env.DEV && params.fixture && FIXTURES[params.fixture]) {
         const runtime = (await FIXTURES[params.fixture]()).default as Runtime
-        const evaluator = await loadEvaluator()
-        buildPipeline(evaluator, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
+        const [evaluator, scorerSet] = await Promise.all([loadEvaluator(), compileScorers(runtime)])
+        buildPipeline(evaluator, scorerSet, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
         applyTheme(getTheme(resolveThemeId({ themeParam: params.theme })))
         dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
         return
@@ -142,10 +149,11 @@ export function App() {
       if (outcome.kind === 'resume') {
         const { record, runtime } = outcome
         const evaluator = await evaluatorPromise
+        const scorerSet = await compileScorers(runtime)
         ephemeralRef.current = false
         localeRef.current = record.lastActiveLocale
         applyTheme(getTheme(DEFAULT_THEME_ID))
-        buildPipeline(evaluator, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
+        buildPipeline(evaluator, scorerSet, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
         const steps = flattenSteps(runtime)
         const p = pipeline.current!
         const resumeBindings = makeBindings(record.answers, runtime, nullResolver)
@@ -158,11 +166,12 @@ export function App() {
       if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
       const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale)])
       if (res.ok) {
+        const scorerSet = await compileScorers(res.runtime)
         ephemeralRef.current = res.ephemeral
         localeRef.current = res.runtime.locale ?? 'en'
         const bundle = res.theme as Theme
         applyTheme(getTheme(resolveThemeId({ bundleId: bundleToThemeId(bundle) })), bundle)
-        buildPipeline(evaluator, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
+        buildPipeline(evaluator, scorerSet, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
         dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
         if (!res.ephemeral && !params.fixture && params.deploymentId) {
           void store.put({ deploymentId: params.deploymentId, sessionId: res.session_id, token: res.session_token, lastActiveLocale: res.runtime.locale ?? 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: new Date().toISOString() })
@@ -365,6 +374,7 @@ export function App() {
       dispatch({ type: 'next' })            // reducer applies gating / no-op safety
       return
     }
+    p.cache.refresh(s.answers, p.evaluator)
     // F2: cross-validation + per-question validation — block advance, surface messages, focus offender.
     const verrors = validateStep(step, p.programs, p.evaluator, s.answers, p.resolver.score, locale)
     if (verrors.length > 0) { dispatch({ type: 'validation_errors', errors: verrors }); return }
