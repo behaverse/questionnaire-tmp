@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* qv-theme:start — keep this block byte-identical in src/index.css and src/renderer/lib.css */
 :root {
-  --qv-primary: #1a5fb4;
+  --qv-primary: #18181b;
   --qv-secondary: #613583;
   --qv-success: #26734d;
   --qv-warning: #8f6000;
@@ -12,4 +13,117 @@
   --qv-font-family: Inter, system-ui, sans-serif;
   --qv-base-size: 16px;
   --qv-space-unit: 8px;
+  --qv-surface-bg: #ffffff;
+  --qv-surface-image: none;
+  --qv-surface-size: auto;
+  --qv-card-surface: transparent;
+  --qv-card-border: transparent;
+  --qv-card-border-width: 0px;
+  --qv-card-radius: 0px;
+  --qv-card-shadow: none;
+  --qv-card-padding: 0px;
+  --qv-prompt-font: var(--qv-font-family);
+  --qv-prompt-weight: 500;
+  --qv-prompt-size: 2.05rem;
+  --qv-prompt-color: #18181b;
+  --qv-prompt-spacing: -0.02em;
+  --qv-secondary-color: #71717a;
+  --qv-option-surface: transparent;
+  --qv-option-border: transparent;
+  --qv-option-radius: 10px;
+  --qv-option-hover-surface: #f4f4f5;
+  --qv-option-hover-border: transparent;
+  --qv-option-selected-surface: transparent;
+  --qv-option-selected-border: transparent;
+  --qv-option-selected-color: #18181b;
+  --qv-option-selected-shadow: inset 3px 0 0 #18181b;
+  --qv-badge-border: transparent;
+  --qv-badge-color: #a1a1aa;
+  --qv-badge-surface: transparent;
+  --qv-badge-radius: 7px;
+  --qv-badge-selected-border: transparent;
+  --qv-badge-selected-color: #18181b;
+  --qv-badge-selected-surface: transparent;
+  --qv-button-surface: #18181b;
+  --qv-button-color: #ffffff;
+  --qv-button-radius: 9px;
+  --qv-button-shadow: none;
+  --qv-button-font: var(--qv-font-family);
+  --qv-button-weight: 600;
+  --qv-step-in-ms: 220ms;
+  --qv-step-out-ms: 200ms;
+  --qv-step-ease: ease-out;
 }
+html { font-size: var(--qv-base-size); }
+body { font-family: var(--qv-font-family); background-color: var(--qv-surface-bg); background-image: var(--qv-surface-image); background-size: var(--qv-surface-size); }
+
+.qv-card {
+  background: var(--qv-card-surface);
+  border: var(--qv-card-border-width) solid var(--qv-card-border);
+  border-radius: var(--qv-card-radius);
+  box-shadow: var(--qv-card-shadow);
+  padding: var(--qv-card-padding);
+}
+.qv-prompt {
+  font-family: var(--qv-prompt-font);
+  font-weight: var(--qv-prompt-weight);
+  font-size: var(--qv-prompt-size);
+  color: var(--qv-prompt-color);
+  letter-spacing: var(--qv-prompt-spacing);
+  line-height: 1.2;
+}
+.qv-prompt:focus { outline: none; }
+.qv-secondary { color: var(--qv-secondary-color); }
+.qv-option {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 1rem; cursor: pointer; font-size: 1.125rem;
+  border: 2px solid var(--qv-option-border);
+  background: var(--qv-option-surface);
+  border-radius: var(--qv-option-radius);
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+.qv-option:hover { background: var(--qv-option-hover-surface); border-color: var(--qv-option-hover-border); }
+.qv-option[data-selected="true"] {
+  background: var(--qv-option-selected-surface);
+  border-color: var(--qv-option-selected-border);
+  color: var(--qv-option-selected-color);
+  box-shadow: var(--qv-option-selected-shadow);
+}
+[data-option-variant="brutal"] .qv-option:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 0 #1A1A1A; }
+.qv-option-badge {
+  display: grid; place-items: center; height: 1.5rem; width: 1.5rem; flex-shrink: 0;
+  font-size: 0.75rem; font-weight: 600;
+  border: 1px solid var(--qv-badge-border);
+  color: var(--qv-badge-color);
+  background: var(--qv-badge-surface);
+  border-radius: var(--qv-badge-radius);
+}
+[data-option-variant="brutal"] .qv-option-badge { border-width: 2px; }
+.qv-option[data-selected="true"] .qv-option-badge {
+  border-color: var(--qv-badge-selected-border);
+  color: var(--qv-badge-selected-color);
+  background: var(--qv-badge-selected-surface);
+}
+.qv-input {
+  border: 2px solid var(--qv-option-border);
+  border-radius: var(--qv-option-radius);
+  padding: 0.75rem 1rem; font-size: 1.125rem; background: #ffffff;
+}
+.qv-input:focus-visible { outline: none; border-color: var(--qv-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--qv-primary) 28%, transparent); }
+.qv-button {
+  background: var(--qv-button-surface); color: var(--qv-button-color);
+  border-radius: var(--qv-button-radius); box-shadow: var(--qv-button-shadow);
+  font-family: var(--qv-button-font); font-weight: var(--qv-button-weight);
+}
+.qv-button:focus-visible, .qv-focusable:focus-visible {
+  outline: none; box-shadow: 0 0 0 2px var(--qv-surface-bg), 0 0 0 4px var(--qv-primary);
+}
+
+@keyframes qv-step-in  { from { opacity: 0; transform: translateY(1rem) } to { opacity: 1; transform: none } }
+@keyframes qv-step-out { to   { opacity: 0; transform: translateY(-0.75rem) } }
+.qv-step-enter { animation: qv-step-in var(--qv-step-in-ms) var(--qv-step-ease) both; }
+.qv-step-leave { animation: qv-step-out var(--qv-step-out-ms) ease-in both; }
+@media (prefers-reduced-motion: reduce) {
+  .qv-step-enter, .qv-step-leave { animation: none; }
+}
+/* qv-theme:end */
