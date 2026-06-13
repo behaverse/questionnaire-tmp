@@ -90,6 +90,7 @@ body { font-family: var(--qv-font-family); background-color: var(--qv-surface-bg
   box-shadow: var(--qv-option-selected-shadow);
 }
 [data-option-variant="brutal"] .qv-option:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 0 #1A1A1A; }
+.qv-option:has(:focus-visible) { outline: 2px solid var(--qv-primary); outline-offset: 2px; }
 .qv-option-badge {
   display: grid; place-items: center; height: 1.5rem; width: 1.5rem; flex-shrink: 0;
   font-size: 0.75rem; font-weight: 600;
