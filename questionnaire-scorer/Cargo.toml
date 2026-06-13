@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = ["abi", "scorers/phq9"]
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+lto = true
+strip = true
