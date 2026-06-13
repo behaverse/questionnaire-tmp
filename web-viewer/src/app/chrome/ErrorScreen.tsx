@@ -11,7 +11,7 @@ export function ErrorScreen({ locale, kind, code, onRetry }: { locale: string; k
         <h1 className="text-2xl font-semibold">{t(locale, TITLE_KEY[kind])}</h1>
         <p className="text-slate-600">{t(locale, BODY_KEY[kind])}</p>
         {kind === 'failed' && (
-          <button onClick={onRetry} className="rounded-lg bg-primary px-5 py-2.5 text-white font-medium">
+          <button onClick={onRetry} className="qv-button qv-focusable px-5 py-2.5">
             {t(locale, 'retry')}
           </button>
         )}

@@ -27,8 +27,9 @@ import { buildItemRow, buildMessageRow, buildRuntimeIndex, stimulusFor } from '.
 import type { ElementIndex, SessionIdentity } from './responses'
 import { initialState, reducer } from './session'
 import { flattenSteps, isSingleChoiceItem, presentationMode, requiredUnanswered, stepEntries } from './steps'
-import { applyTheme } from './theme'
+import { applyTheme, bundleToThemeId } from './theme'
 import type { Theme } from './theme'
+import { getTheme, resolveThemeId, DEFAULT_THEME_ID } from '../theme/registry'
 import { SubmissionQueue } from './transport'
 import { TrialClock } from './trial'
 
@@ -125,6 +126,7 @@ export function App() {
         const runtime = (await FIXTURES[params.fixture]()).default as Runtime
         const evaluator = await loadEvaluator()
         buildPipeline(evaluator, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
+        applyTheme(getTheme(resolveThemeId({ themeParam: params.theme })))
         dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
         return
       }
@@ -142,7 +144,7 @@ export function App() {
         const evaluator = await evaluatorPromise
         ephemeralRef.current = false
         localeRef.current = record.lastActiveLocale
-        applyTheme(null)
+        applyTheme(getTheme(DEFAULT_THEME_ID))
         buildPipeline(evaluator, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
         const steps = flattenSteps(runtime)
         const p = pipeline.current!
@@ -158,7 +160,8 @@ export function App() {
       if (res.ok) {
         ephemeralRef.current = res.ephemeral
         localeRef.current = res.runtime.locale ?? 'en'
-        applyTheme(res.theme as Theme)
+        const bundle = res.theme as Theme
+        applyTheme(getTheme(resolveThemeId({ bundleId: bundleToThemeId(bundle) })), bundle)
         buildPipeline(evaluator, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
         dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
         if (!res.ephemeral && !params.fixture && params.deploymentId) {
@@ -491,32 +494,34 @@ export function App() {
         </div>
       )}
       <ProgressBar locale={locale} current={state.stepIndex + 1} total={state.steps.length} indeterminate={hasBranching} />
-      <div ref={stepContainer} className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 py-24">
+      <div ref={stepContainer} className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 pb-32 pt-16">
         <StepTransition stepKey={state.stepIndex}>
-          <StepRenderer
-            elements={pipedElements}
-            locale={locale}
-            answers={state.answers}
-            onAnswer={handleAnswer}
-            requiredErrors={[...state.stepErrors, ...state.validationErrors.map((e) => e.key)]}
-            errorMessages={errorMessages}
-            keyHints={keyHints}
-            strings={{ required: t(locale, 'required_error'), unsupported: t(locale, 'unsupported') }}
-          />
-          <NavButtons
-            locale={locale}
-            canBack={state.stepIndex > 0}
-            onBack={() => {
-              clearAuto()
-              const p = pipeline.current
-              if (p) {
-                p.batcher.add(ev.clicked(p.agent, 'back_button', { sessionId: p.identity.sessionId }, nowIso()))
-                p.batcher.add(ev.navigated(p.agent, `step_${state.stepIndex - 1}`, { sessionId: p.identity.sessionId }, nowIso()))
-              }
-              dispatch({ type: 'back' })
-            }}
-            onNext={() => advance('click')}
-          />
+          <div className="qv-card">
+            <StepRenderer
+              elements={pipedElements}
+              locale={locale}
+              answers={state.answers}
+              onAnswer={handleAnswer}
+              requiredErrors={[...state.stepErrors, ...state.validationErrors.map((e) => e.key)]}
+              errorMessages={errorMessages}
+              keyHints={keyHints}
+              strings={{ required: t(locale, 'required_error'), unsupported: t(locale, 'unsupported') }}
+            />
+            <NavButtons
+              locale={locale}
+              canBack={state.stepIndex > 0}
+              onBack={() => {
+                clearAuto()
+                const p = pipeline.current
+                if (p) {
+                  p.batcher.add(ev.clicked(p.agent, 'back_button', { sessionId: p.identity.sessionId }, nowIso()))
+                  p.batcher.add(ev.navigated(p.agent, `step_${state.stepIndex - 1}`, { sessionId: p.identity.sessionId }, nowIso()))
+                }
+                dispatch({ type: 'back' })
+              }}
+              onNext={() => advance('click')}
+            />
+          </div>
         </StepTransition>
       </div>
     </main>

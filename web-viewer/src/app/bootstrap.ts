@@ -5,7 +5,7 @@ import type { Theme } from './theme'
 export const VIEWER_ID = 'behaverse-web-viewer'
 export const VIEWER_VERSION = 'v26.0612'
 
-export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null }
+export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null }
 
 export function parseParams(search: string): Params {
   const q = new URLSearchParams(search)
@@ -14,6 +14,7 @@ export function parseParams(search: string): Params {
     locale: q.get('locale'),
     vsBaseUrl: q.get('viewer_url') ?? import.meta.env.VITE_VS_BASE_URL ?? 'http://localhost:8001',
     fixture: q.get('fixture'),
+    theme: q.get('theme'),
   }
 }
 
