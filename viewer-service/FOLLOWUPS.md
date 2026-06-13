@@ -64,3 +64,4 @@
   overrides) is the Web Viewer's job.
 - **Viewer Service is now feature-complete for Phase 2 (VS-A..E).** Remaining Phase-2 gate work is
   non-VS: the Web Viewer, the WASM expression evaluator, and the Scorer conformance runner.
+- **Scorer artifact storage:** SP2a serves scorer wasm from a VS-local dir (`VS_SCORER_DIR`) and rewrites `impl.url` at mint (`VS_PUBLIC_BASE`). Real storage belongs in the Library (`GET /v1/scorers/{id}/versions/{v}/impl.wasm`) — SP3.
