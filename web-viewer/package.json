@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "predev": "node scripts/build-evaluator.mjs",
+    "predev": "node scripts/build-scorer-host.mjs && node scripts/build-evaluator.mjs",
     "build": "tsc -b && tsc -p tsconfig.test.json && vite build",
-    "prebuild": "node scripts/build-evaluator.mjs",
+    "prebuild": "node scripts/build-scorer-host.mjs && node scripts/build-evaluator.mjs",
+    "pretest": "node scripts/build-scorer-host.mjs && node scripts/build-evaluator.mjs",
     "build:evaluator": "node scripts/build-evaluator.mjs",
     "typecheck": "tsc -b && tsc -p tsconfig.test.json",
     "preview": "vite preview --port 4174",

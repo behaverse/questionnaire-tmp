@@ -8,7 +8,7 @@ export type LocaleContent = {
   options?: { index: number; text: string }[]
 }
 export type ContentMap = Record<string, LocaleContent>
-export type ContentEntity = { id?: string; name?: string; content?: ContentMap }
+export type ContentEntity = { id?: string; name?: string; content?: ContentMap; reversed?: boolean }
 
 export type OptionEntity = {
   id?: string
@@ -50,7 +50,7 @@ export type Runtime = {
   flow?: Record<string, unknown>
   blocks?: { id?: string; page_ids?: string[] }[]
   pages: RuntimePage[]
-  scores?: unknown[]
+  scores?: import('../scoring/types').PinnedScore[]
   logic?: unknown[]
   validation?: unknown[]
 }

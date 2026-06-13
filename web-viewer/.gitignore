@@ -10,4 +10,6 @@ src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
 src/logic/wasm/
+src/scoring/vendor/
 public/manifest.json
+public/scorers/
