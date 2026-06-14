@@ -46,6 +46,8 @@ Pure, themed (uses `qv-*` theme classes / tokens). Props: the list of **display 
 
 **Display-score selection** (a small helper, e.g. `displayScores(runtime)`): the `PinnedScore`s in `runtime.scores` that carry a non-empty `name` (branching-only scores omit `name`). De-duplicated by `id`.
 
+> **Documented limitation (owner-acknowledged 2026-06-14).** "Named ⇒ displayed" is a **soft convention**, not an enforced flag — OD-16's `Score`/`PinnedScore` has no explicit `display` field. It is unambiguous for pure-display instruments (all scores named, e.g. PHQ-9 total/severity/band) and pure-branching setups, but a questionnaire that **mixes** display scores and internal branching-only scores **under `show_score=true`** can mis-show a named branching score or omit an unnamed display score (a *cosmetic* failure — never a branching/correctness bug — fixable by adding/removing a `name`). If this becomes a real problem in authoring, the remedy is an explicit `display?: boolean` on the Schema 2 `Score` (an additive CalVer bump + denormaliser passthrough). **This SP2b helper centralises the rule (`displayScores`) so switching to an explicit flag later is a one-function change.** This caveat is recorded in `web-viewer/FOLLOWUPS.md` during the build.
+
 ### Terminal display (`App.tsx` `finished` phase)
 When `runtime.provenance.show_score` is true and there are display scores: after the existing thank-you copy on the `finished` screen, render `<ScoreSummary>`. Before transitioning to `finished`, the finishing flow does a **final `cache.refresh(answers, evaluator)`** so the displayed values reflect all answers. Reads values via `pipeline.cache.resolver.score`.
 
