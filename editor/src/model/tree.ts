@@ -3,6 +3,10 @@ import type { Questionnaire, Block, Metadata } from './types'
 import { getAtPath, getContainer, type NodePath, pathKey } from './path'
 
 /** Two element-array paths are compatible; both `pages` arrays are compatible. */
+// NOTE: compatibility is keyed on the container array NAME (last path segment),
+// not the container's semantic kind. Any two `elements` arrays count as
+// compatible, so a section-child could move to page-level elements and vice
+// versa. The JSON Schema (validate step) is the backstop for structural legality.
 function compatible(a: NodePath, b: NodePath): boolean {
   const lastA = a[a.length - 1]
   const lastB = b[b.length - 1]
@@ -12,6 +16,11 @@ function compatible(a: NodePath, b: NodePath): boolean {
   return false
 }
 
+/**
+ * Move the item at `from` to position `to` within the array at `containerPath`.
+ * Remove-then-insert semantics: `to` is interpreted AFTER the item is removed
+ * (matching dnd-kit's `arrayMove`). E.g. [A,B,C,D] reorder(0,2) -> [B,C,A,D].
+ */
 export function reorder(model: Questionnaire, containerPath: NodePath, from: number, to: number): Questionnaire {
   return produce(model, (draft) => {
     const arr = getAtPath(draft, containerPath) as unknown[]
@@ -31,9 +40,10 @@ export function insertNode(model: Questionnaire, containerPath: NodePath, index:
   return produce(model, (draft) => {
     let arr = getAtPath(draft, containerPath) as unknown[] | undefined
     if (arr === undefined) {
-      // create the container (e.g. first block)
-      ;(draft as Record<string, unknown>)[containerPath[containerPath.length - 1] as string] = []
-      arr = getAtPath(draft, containerPath) as unknown[]
+      const parent = getAtPath(draft, containerPath.slice(0, -1)) as Record<string | number, unknown>
+      if (parent == null) throw new Error(`No parent for container ${pathKey(containerPath)}`)
+      parent[containerPath[containerPath.length - 1]] = []
+      arr = parent[containerPath[containerPath.length - 1]] as unknown[]
     }
     arr.splice(index, 0, node)
   })

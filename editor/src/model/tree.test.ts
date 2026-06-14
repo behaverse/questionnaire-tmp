@@ -67,3 +67,30 @@ test('block lifecycle: create, set pages, delete', () => {
   const removed = deleteBlock(assigned, 'blk_1')
   expect(removed.blocks?.length ?? 0).toBe(0)
 })
+
+test('insertNode creates a missing top-level container (blocks) on the root', () => {
+  const q = base()
+  delete q.blocks
+  const next = insertNode(q, ['blocks'], 0, { id: 'blk_x', page_ids: [q.pages[0].id] })
+  expect(next.blocks?.length).toBe(1)
+  expect(next.blocks?.[0].id).toBe('blk_x')
+})
+
+test('insertNode creates a missing nested container on its real parent (not the root)', () => {
+  const q = base()
+  // give page 0 a section that has no `elements` array yet
+  q.pages[0].elements.unshift({ id: 'sec_empty', title: 'S' } as never)
+  const next = insertNode(q, ['pages', 0, 'elements', 0, 'elements'], 0, { ref: 'msg_x@v26.0609' })
+  const sec = next.pages[0].elements[0] as { elements?: unknown[] }
+  expect(sec.elements?.length).toBe(1)
+  // root must NOT have grown a stray `elements` key
+  expect((next as Record<string, unknown>).elements).toBeUndefined()
+})
+
+test('reorder moves an item forward with arrayMove semantics', () => {
+  const q = JSON.parse(JSON.stringify(kitchensink)) as Questionnaire
+  const ids = q.pages.map((p) => p.id)
+  const next = reorder(q, ['pages'], 0, 2)
+  // [0,1,2,3] -> [1,2,0,3]
+  expect(next.pages.map((p) => p.id)).toEqual([ids[1], ids[2], ids[0], ids[3]])
+})
