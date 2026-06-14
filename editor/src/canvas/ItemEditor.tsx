@@ -57,7 +57,10 @@ export function ItemEditor({ path }: { path: NodePath }) {
     <div className="overflow-auto p-6">
       {promptRef && (
         <div className="mb-4">
-          <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Question</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Question</span>
+            <button onClick={() => pickInto('prompt', 'prompt')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick prompt</button>
+          </div>
           {poolPrompt ? (
             <div className="mt-2">
               <PromptEditor prompt={poolPrompt} locale={locale} onChange={(p) => upsertPoolEntity(promptRef, p)} />
@@ -72,12 +75,6 @@ export function ItemEditor({ path }: { path: NodePath }) {
       )}
       {question && (
         <div className="mb-4 space-y-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Question</span>
-              <button onClick={() => pickInto('prompt', 'prompt')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick prompt</button>
-            </div>
-          </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Context</span>

@@ -99,4 +99,5 @@ test('Pick prompt opens the picker; the onPick sets a Library ref', async () => 
   useEditorStore.getState().picker!.onPick('pr_lib@v26.0609')
   const q = (useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }).question
   expect(q.prompt.ref).toBe('pr_lib@v26.0609')
+  expect(useEditorStore.getState().pool['pr_p@v26.0609.dev1']).toBeUndefined()
 })
