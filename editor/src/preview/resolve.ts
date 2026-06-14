@@ -1,4 +1,6 @@
-export type EntityBody = Record<string, unknown>
+import type { EntityBody } from '../model/types'
+
+export type { EntityBody } from '../model/types'
 export type Lookup = (ref: string) => EntityBody | null
 export interface RefProblem { kind: 'unresolved_ref'; where: string }
 

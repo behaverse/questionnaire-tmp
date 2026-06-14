@@ -27,3 +27,9 @@ test('records null for an unresolvable ref without throwing', async () => {
   const map = await resolveEntities(model, fetchEntity)
   expect(map.get('pr_a@v1')).toBeNull()
 })
+
+test('a throwing fetchEntity is treated as unresolvable (never rejects)', async () => {
+  const throwing: FetchEntity = async () => { throw new Error('boom') }
+  const map = await resolveEntities(model, throwing)
+  expect(map.get('pr_a@v1')).toBeNull()
+})

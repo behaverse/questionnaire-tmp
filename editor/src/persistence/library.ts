@@ -1,5 +1,5 @@
 import type { Questionnaire } from '../model/types'
-import type { EntityBody } from '../preview/resolve'
+import type { EntityBody } from '../model/types'
 
 const DEFAULT_BASE = import.meta.env.VITE_LIBRARY_BASE_URL ?? 'https://questionnaire-library.vercel.app'
 

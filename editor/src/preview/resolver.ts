@@ -13,7 +13,9 @@ export async function resolveEntities(
 ): Promise<Map<string, EntityBody | null>> {
   let frontier = [...collectRefs(model)].filter((r) => !cache.has(r))
   while (frontier.length) {
-    await Promise.all(frontier.map(async (ref) => { cache.set(ref, await fetchEntity(ref)) }))
+    await Promise.all(frontier.map(async (ref) => {
+      cache.set(ref, await fetchEntity(ref).catch(() => null))
+    }))
     const next = new Set<string>()
     for (const ref of frontier) {
       const body = cache.get(ref)
