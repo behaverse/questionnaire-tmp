@@ -29,3 +29,20 @@ test('text option shows validation + placeholder fields', () => {
   expect(screen.getByLabelText(/validation regex/i)).toBeInTheDocument()
   expect(screen.getByLabelText(/placeholder/i)).toBeInTheDocument()
 })
+
+test('single-select choice does not show min/max selected', () => {
+  render(<OptionEditor option={choice()} locale="en" onChange={() => {}} />)
+  expect(screen.queryByLabelText(/min selected/i)).toBeNull()
+})
+
+test('multi-select choice shows min/max selected and edits them', async () => {
+  const multi: EditableOption = {
+    input_data_type: 'choice', measurement_type: 'nominal', selection: 'multiple',
+    options: [{ index: 1, value: 0 }, { index: 2, value: 1 }],
+    content: { en: { status: 'draft', options: [{ index: 1, text: 'A' }, { index: 2, text: 'B' }] } },
+  }
+  const onChange = vi.fn()
+  render(<OptionEditor option={multi} locale="en" onChange={onChange} />)
+  await userEvent.type(screen.getByLabelText(/max selected/i), '2')
+  expect(onChange.mock.calls.at(-1)![0].max_selected).toBe(2)
+})

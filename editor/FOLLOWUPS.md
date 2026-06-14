@@ -120,3 +120,10 @@ rendered below it, so those items can't be seen / deleted from the canvas while 
 is selected (they remain reachable + selectable via the structure tree). Convenience
 regression only (no data loss). Fix in **ED-C2**: render `<ItemEditor>` followed by the
 existing section element list for the shared-option-section branch.
+
+## (r) Multi-select with non-nominal measurement renders as "Unsupported"
+
+Choice `selection: multiple` with a non-`nominal` measurement type shows
+"Renders as: Unsupported" (the widget table only defines `choice.nominal.multiple`);
+the option is still Schema-2-valid. No inline guidance steers the author to `nominal`
+for multi-select — UX polish for a later stage.

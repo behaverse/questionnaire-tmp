@@ -1,7 +1,7 @@
 import { ChoiceRows } from './ChoiceRows'
 import { widgetLabel } from './widget'
 import {
-  setInputDataType, setMeasurementType, setSelection, setBounds, setLabel, setUnits,
+  setInputDataType, setMeasurementType, setSelection, setMinMaxSelected, setBounds, setLabel, setUnits,
   setInputValidation, setPlaceholderText, setHelpText,
   type EditableOption, type InputDataType, type MeasurementType,
 } from './ops'
@@ -41,6 +41,22 @@ export function OptionEditor({ option, locale, onChange }: { option: EditableOpt
               <option value="single">single</option><option value="multiple">multiple</option>
             </select>
           </label>
+        )}
+        {option.input_data_type === 'choice' && option.selection === 'multiple' && (
+          <>
+            <label className="text-sm">Min selected
+              <input type="number" aria-label="Min selected" min={0}
+                     value={option.min_selected === undefined ? '' : String(option.min_selected)}
+                     onChange={(e) => onChange(setMinMaxSelected(option, { min_selected: e.target.value === '' ? undefined : Number(e.target.value), max_selected: option.max_selected }))}
+                     className="ml-1 w-16 rounded border border-slate-300 px-1 py-0.5" />
+            </label>
+            <label className="text-sm">Max selected
+              <input type="number" aria-label="Max selected" min={1}
+                     value={option.max_selected === undefined ? '' : String(option.max_selected)}
+                     onChange={(e) => onChange(setMinMaxSelected(option, { min_selected: option.min_selected, max_selected: e.target.value === '' ? undefined : Number(e.target.value) }))}
+                     className="ml-1 w-16 rounded border border-slate-300 px-1 py-0.5" />
+            </label>
+          </>
         )}
         <span className="rounded bg-slate-100 px-2 py-1 text-xs text-slate-600">Renders as: <strong>{widgetLabel(option)}</strong></span>
       </div>
