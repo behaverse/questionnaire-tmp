@@ -5,6 +5,7 @@
   "description": "Package-internal tightening of Schema 3. NOT a canonical schema. Used only for denormaliser output validation in tests.",
   "type": "object",
   "required": ["provenance", "metadata", "locale", "pages"],
+  "patternProperties": { "^x_": {} },
   "properties": {
     "locale": { "type": "string", "minLength": 2 },
     "available_locales": { "type": "array", "items": { "type": "string" } },

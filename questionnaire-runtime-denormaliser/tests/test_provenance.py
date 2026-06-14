@@ -66,7 +66,7 @@ def test_empty_stripped_lists_are_omitted():
     assert "stripped_scorer_refs" not in rt["provenance"]
 
 
-def test_provenance_carries_show_score_flags():
+def test_show_score_flags_emitted_as_x_root_fields():
     ctx = Ctx(
         locale="en",
         runtime_policy=RuntimePolicy(
@@ -79,8 +79,9 @@ def test_provenance_carries_show_score_flags():
         resolve_entity=lambda ref: None,
     )
     ctx.available_locales = {"en"}
-    rt = assemble_runtime(_work(), ctx, generated_at="2026-06-10T00:00:00Z", denormaliser_version="v26.0610")
-    prov = rt["provenance"]
-    assert prov["show_score"] is True
-    assert prov["show_score_live"] is True
-    assert prov["lock_show_score_timing"] is False
+    rt = assemble_runtime(_work(), ctx, generated_at="2026-06-14T00:00:00Z", denormaliser_version="vX")
+    assert rt["x_show_score"] is True
+    assert rt["x_show_score_live"] is True
+    # flags must NOT appear in provenance (RuntimeProvenance has additionalProperties: false)
+    assert "show_score" not in rt["provenance"]
+    assert "show_score_live" not in rt["provenance"]
