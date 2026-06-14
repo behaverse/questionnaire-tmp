@@ -83,3 +83,47 @@ Cosmetic / edge-case items deferred:
 - the `resolving…` flag isn't reset on an ignored / unmounted resolve.
 
 All cosmetic / edge.
+
+# ED-C1 Follow-ups
+
+Known limitations and open items carried out of ED-C1 (inline Option editor).
+
+## (l) Primary-language content only
+
+ED-C1 edits the **primary language** (`metadata.language`) content only; per-locale option
+text / units beyond `metadata.language` is **ED-E** (translation interface).
+
+## (m) Choice `value` is numeric (or null) in the UI
+
+The choice `value` field accepts numbers (or null). String / boolean values exist in the
+schema but aren't surfaced in the editor yet.
+
+## (n) Referenced Options are read-only
+
+Editing a referenced Option (`{ref}`) or a saved-Item-ref is read-only until **ED-C3/C4**;
+the canvas shows a note for that case.
+
+## (o) New items require the entity pool
+
+Creating a brand-new item (and authoring its Prompt) requires the entity pool — **ED-C2**.
+
+## (p) Shared-option creation may be limited
+
+Section `shared_option` editing reuses the Option editor; creating a shared option where
+none exists may be limited (confirm behavior in a later pass).
+
+## (q) Shared-option section child-list hidden
+
+When a Section that carries a `shared_option` is selected, the Canvas shows the Option
+editor **alone** — the section's child item list (e.g. PHQ-9's 9 matrix items) is **not**
+rendered below it, so those items can't be seen / deleted from the canvas while the section
+is selected (they remain reachable + selectable via the structure tree). Convenience
+regression only (no data loss). Fix in **ED-C2**: render `<ItemEditor>` followed by the
+existing section element list for the shared-option-section branch.
+
+## (r) Multi-select with non-nominal measurement renders as "Unsupported"
+
+Choice `selection: multiple` with a non-`nominal` measurement type shows
+"Renders as: Unsupported" (the widget table only defines `choice.nominal.multiple`);
+the option is still Schema-2-valid. No inline guidance steers the author to `nominal`
+for multi-select — UX polish for a later stage.

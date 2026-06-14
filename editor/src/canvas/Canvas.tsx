@@ -2,6 +2,7 @@ import { useEditorStore } from '../state/store'
 import { getAtPath, nodeKind, pathKey, type NodePath } from '../model/path'
 import { insertNode, deleteNode } from '../model/tree'
 import type { Page, Questionnaire, Section } from '../model/types'
+import { ItemEditor } from './ItemEditor'
 
 function nextSectionId(model: Questionnaire): string {
   const used = new Set<string>()
@@ -18,6 +19,15 @@ export function Canvas() {
   if (!sel) return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree.</div>
 
   const kind = nodeKind(model, sel)
+
+  // Route inline items (question+inline option) and matrix sections (shared_option) to the Option editor.
+  const selNode = getAtPath(model, sel) as Record<string, unknown> | undefined
+  const isInlineItem = !!selNode && 'question' in selNode && 'option' in selNode
+    && typeof selNode.option === 'object' && selNode.option !== null && 'input_data_type' in (selNode.option as object)
+  const isSharedOptionSection = !!selNode && kind === 'section'
+    && 'shared_option' in selNode && typeof selNode.shared_option === 'object'
+  if (isInlineItem || isSharedOptionSection) return <ItemEditor path={sel} />
+
   if (kind !== 'page' && kind !== 'section' && kind !== 'questionnaire') {
     return <div className="overflow-auto p-6 text-slate-400">This node has no children. Editing item content arrives in ED-C.</div>
   }
