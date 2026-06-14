@@ -2,10 +2,12 @@
   "provenance": { "source_questionnaire_id": "qst_phq9_branch", "source_questionnaire_version": "v26.0602", "locale": "en", "viewer_conformance_hash": "0000000000000000000000000000000000000000000000000000000000000000", "deployment_runtime_policy_hash": "0000000000000000000000000000000000000000000000000000000000000000", "generated_at": "2026-06-13T00:00:00Z", "denormaliser_version": "v26.0610" },
   "metadata": { "id": "qst_phq9_branch", "title": "PHQ-9 with score-gated branch", "language": "en" },
   "locale": "en",
+  "x_show_score": true,
+  "x_show_score_live": true,
   "scores": [
-    { "id": "phq9_total",      "scorer": "scr_phq9@v26.0602", "path": "/total",       "impl": { "kind": "wasm", "url": "/scorers/phq9.wasm", "sha256": "d5a9aee827b03eb261de8c6ee6aec7d96682909e3ab47cad9361ed77943c505f" } },
-    { "id": "phq9_severity",   "scorer": "scr_phq9@v26.0602", "path": "/severity",    "impl": { "kind": "wasm", "url": "/scorers/phq9.wasm", "sha256": "d5a9aee827b03eb261de8c6ee6aec7d96682909e3ab47cad9361ed77943c505f" } },
-    { "id": "phq9_band_label", "scorer": "scr_phq9@v26.0602", "path": "/band/label",  "impl": { "kind": "wasm", "url": "/scorers/phq9.wasm", "sha256": "d5a9aee827b03eb261de8c6ee6aec7d96682909e3ab47cad9361ed77943c505f" } }
+    { "id": "phq9_total",      "scorer": "scr_phq9@v26.0602", "path": "/total",       "name": "PHQ-9 Total",  "impl": { "kind": "wasm", "url": "/scorers/phq9.wasm", "sha256": "d5a9aee827b03eb261de8c6ee6aec7d96682909e3ab47cad9361ed77943c505f" } },
+    { "id": "phq9_severity",   "scorer": "scr_phq9@v26.0602", "path": "/severity",    "name": "Severity",     "impl": { "kind": "wasm", "url": "/scorers/phq9.wasm", "sha256": "d5a9aee827b03eb261de8c6ee6aec7d96682909e3ab47cad9361ed77943c505f" } },
+    { "id": "phq9_band_label", "scorer": "scr_phq9@v26.0602", "path": "/band/label",  "name": "Band",         "impl": { "kind": "wasm", "url": "/scorers/phq9.wasm", "sha256": "d5a9aee827b03eb261de8c6ee6aec7d96682909e3ab47cad9361ed77943c505f" } }
   ],
   "logic": [
     { "id": "b_high_score", "type": "branch", "condition": "score('phq9_total') >= 10", "action": { "skip_to": "page_followup" } }
