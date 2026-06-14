@@ -45,3 +45,39 @@ test('edits a pool prompt via the PromptEditor', async () => {
   await userEvent.type(ta, '?')
   expect((useEditorStore.getState().pool[ref] as { content: { en: { text: string } } }).content.en.text).toMatch(/Q/)
 })
+
+test('Add context mints a pool context + sets question.context ref', async () => {
+  const ref = 'pr_p@v26.0609.dev1'
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'page_1', title: 'P', elements: [{ question: { prompt: { ref } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as import('../model/types').Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
+  useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Q' } } })
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  await userEvent.click(screen.getByRole('button', { name: /add context/i }))
+  const q = (useEditorStore.getState().model!.pages[0].elements[0] as { question: { context?: { ref: string } } }).question
+  expect(q.context?.ref).toMatch(/^ctx_new_\d+@v26\.0609\.dev1$/)
+  expect(useEditorStore.getState().pool[q.context!.ref]).toBeTruthy()
+})
+
+test('Remove context unsets the ref and drops the pool entity', async () => {
+  const ref = 'pr_p@v26.0609.dev1'
+  const ctxRef = 'ctx_x@v26.0609.dev1'
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'page_1', title: 'P', elements: [{ question: { prompt: { ref }, context: { ref: ctxRef } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as import('../model/types').Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
+  useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Q' } } })
+  useEditorStore.getState().upsertPoolEntity(ctxRef, { id: 'ctx_x', content: { en: { status: 'draft', text: 'C' } } })
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  await userEvent.click(screen.getByRole('button', { name: /remove context/i }))
+  const q = (useEditorStore.getState().model!.pages[0].elements[0] as { question: { context?: unknown } }).question
+  expect(q.context).toBeUndefined()
+  expect(useEditorStore.getState().pool[ctxRef]).toBeUndefined()
+})

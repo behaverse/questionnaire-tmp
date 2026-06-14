@@ -1,12 +1,16 @@
 import { useEditorStore } from '../state/store'
 import { getAtPath, type NodePath } from '../model/path'
-import { updateNodeProps } from '../model/tree'
+import { updateNodeProps, unsetNodeProp } from '../model/tree'
 import { OptionEditor } from '../option/OptionEditor'
 import type { EditableOption } from '../option/ops'
 import { PromptEditor, type PromptBody } from '../entity/PromptEditor'
+import { ContextEditor, type ContextBody } from '../entity/ContextEditor'
+import { InstructionEditor, type InstructionBody } from '../entity/InstructionEditor'
+import { buildContext, buildInstruction } from '../pool/newEntities'
+import { collectIds, draftVersion } from '../pool/mint'
 
 export function ItemEditor({ path }: { path: NodePath }) {
-  const { model, applyEdit, pool, upsertPoolEntity } = useEditorStore()
+  const { model, applyEdit, pool, upsertPoolEntity, removePoolEntity } = useEditorStore()
   if (!model) return null
   const node = getAtPath(model, path) as Record<string, unknown>
   const locale = String(model.metadata.language ?? 'en')
@@ -18,6 +22,21 @@ export function ItemEditor({ path }: { path: NodePath }) {
 
   const isInlineOption = !!option && typeof option === 'object' && 'input_data_type' in option
   const poolPrompt = promptRef ? (pool[promptRef] as PromptBody | undefined) : undefined
+
+  const question = node.question as Record<string, unknown> | undefined
+  const questionPath = [...path, 'question']
+  const ids = () => collectIds(model, pool)
+  const dv = () => draftVersion(model.metadata.version as string | undefined)
+
+  const ctxRef = (question?.context as { ref?: string } | undefined)?.ref
+  const insRef = (question?.instruction as { ref?: string } | undefined)?.ref
+  const poolCtx = ctxRef ? (pool[ctxRef] as ContextBody | undefined) : undefined
+  const poolIns = insRef ? (pool[insRef] as InstructionBody | undefined) : undefined
+
+  const addContext = () => { const { ref, body } = buildContext(ids(), dv(), locale); upsertPoolEntity(ref, body); applyEdit((m) => updateNodeProps(m, questionPath, { context: { ref } })) }
+  const removeContext = () => { applyEdit((m) => unsetNodeProp(m, questionPath, 'context')); if (ctxRef) removePoolEntity(ctxRef) }
+  const addInstruction = () => { const { ref, body } = buildInstruction(ids(), dv(), locale); upsertPoolEntity(ref, body); applyEdit((m) => updateNodeProps(m, questionPath, { instruction: { ref } })) }
+  const removeInstruction = () => { applyEdit((m) => unsetNodeProp(m, questionPath, 'instruction')); if (insRef) removePoolEntity(insRef) }
 
   return (
     <div className="overflow-auto p-6">
@@ -34,6 +53,30 @@ export function ItemEditor({ path }: { path: NodePath }) {
               <span className="ml-auto text-xs text-slate-400">fork to edit (ED-C4)</span>
             </div>
           )}
+        </div>
+      )}
+      {question && (
+        <div className="mb-4 space-y-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Context</span>
+              {!ctxRef && <button onClick={addContext} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add context</button>}
+              {ctxRef && poolCtx && <button onClick={removeContext} className="text-xs text-slate-400 hover:text-red-600">Remove context</button>}
+            </div>
+            {ctxRef && (poolCtx
+              ? <div className="mt-1"><ContextEditor context={poolCtx} locale={locale} onChange={(c) => upsertPoolEntity(ctxRef, c)} /></div>
+              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{ctxRef}</span> <span className="text-xs text-slate-400">— fork to edit (ED-C4)</span></div>)}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Instruction</span>
+              {!insRef && <button onClick={addInstruction} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add instruction</button>}
+              {insRef && poolIns && <button onClick={removeInstruction} className="text-xs text-slate-400 hover:text-red-600">Remove instruction</button>}
+            </div>
+            {insRef && (poolIns
+              ? <div className="mt-1"><InstructionEditor instruction={poolIns} locale={locale} onChange={(i) => upsertPoolEntity(insRef, i)} /></div>
+              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{insRef}</span> <span className="text-xs text-slate-400">— fork to edit (ED-C4)</span></div>)}
+          </div>
         </div>
       )}
       <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Response (Option)</span>
