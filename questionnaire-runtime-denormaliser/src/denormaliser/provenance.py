@@ -22,6 +22,9 @@ def assemble_runtime(work: dict, ctx: Ctx, *, generated_at: str, denormaliser_ve
         "deployment_runtime_policy_hash": canonical_hash(ctx.runtime_policy.to_canonical_dict()),
         "generated_at": generated_at,
         "denormaliser_version": denormaliser_version,
+        "show_score": ctx.runtime_policy.show_score,
+        "show_score_live": ctx.runtime_policy.show_score_live,
+        "lock_show_score_timing": ctx.runtime_policy.lock_show_score_timing,
     }
     if ctx.stripped_scorer_refs:
         provenance["stripped_scorer_refs"] = sorted(set(ctx.stripped_scorer_refs))

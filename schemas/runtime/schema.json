@@ -43,7 +43,10 @@
         "generated_at":                  { "type": "string", "format": "date-time" },
         "denormaliser_version":          { "type": "string", "pattern": "^v\\d{2}\\.\\d{4}$" },
         "stripped_scorer_refs":          { "type": "array", "items": { "type": "string", "pattern": "^scr_[a-z0-9_]+@v\\d{2}\\.\\d{4}$" } },
-        "stripped_logic_rule_ids":       { "type": "array", "items": { "type": "string" } }
+        "stripped_logic_rule_ids":       { "type": "array", "items": { "type": "string" } },
+        "show_score":                    { "type": "boolean", "default": false },
+        "show_score_live":               { "type": "boolean", "default": false },
+        "lock_show_score_timing":        { "type": "boolean", "default": false }
       },
       "additionalProperties": false
     },

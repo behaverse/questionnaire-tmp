@@ -64,3 +64,23 @@ def test_empty_stripped_lists_are_omitted():
     ctx.stripped_scorer_refs = []
     rt = assemble_runtime(_work(), ctx, generated_at="2026-06-10T00:00:00Z", denormaliser_version="v26.0610")
     assert "stripped_scorer_refs" not in rt["provenance"]
+
+
+def test_provenance_carries_show_score_flags():
+    ctx = Ctx(
+        locale="en",
+        runtime_policy=RuntimePolicy(
+            scorer_impl_preference=["wasm"],
+            show_score=True,
+            show_score_live=True,
+            lock_show_score_timing=False,
+        ),
+        viewer_manifest={"viewer_id": "web", "viewer_version": "v26.0610"},
+        resolve_entity=lambda ref: None,
+    )
+    ctx.available_locales = {"en"}
+    rt = assemble_runtime(_work(), ctx, generated_at="2026-06-10T00:00:00Z", denormaliser_version="v26.0610")
+    prov = rt["provenance"]
+    assert prov["show_score"] is True
+    assert prov["show_score_live"] is True
+    assert prov["lock_show_score_timing"] is False
