@@ -151,3 +151,28 @@ the editor. Promoting pool drafts to real Library versions needs Identity / writ
 
 New items are intentionally **invalid** until the prompt text is typed (the minted prompt
 starts with empty `content.<locale>.text`); this surfaces in the validation banner.
+
+# ED-C2b Follow-ups
+
+Known limitations and open items carried out of ED-C2b (Context / Instruction + Message authoring).
+
+## (w) Remove drops the pool entity — assumes per-add ownership
+
+Removing a Context / Instruction drops its pool entity; if the same entity were referenced
+elsewhere this would orphan that reference. Not a C2b scenario (each is minted per-add and
+referenced once); revisit if shared refs become possible.
+
+## (x) Message `type` is an open comma-tag vocabulary
+
+Message `type` is a free comma-tag input (open vocabulary); an empty tag list is **invalid**
+(Schema-2 `minItems: 1`) and banner-surfaced, not silently re-defaulted.
+
+## (y) Standalone Placeholder / Help / RegEx / Solution authoring isn't surfaced
+
+Standalone Placeholder / Help / RegEx / Solution authoring isn't surfaced (Placeholder /
+Help are inline-editable inside the Option editor); add if a need arises.
+
+## (z) ED-C1 (q) shared-option-section child list — still open
+
+ED-C1 FOLLOWUP (q) — the shared-option-section child list — is **still open**; not addressed
+in C2b.

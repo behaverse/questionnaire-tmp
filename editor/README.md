@@ -1,6 +1,6 @@
-# Questionnaire Editor — ED-A + ED-B + ED-C1 + ED-C2a
+# Questionnaire Editor — ED-A + ED-B + ED-C1 + ED-C2a + ED-C2b
 
-The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), **ED-C1** (inline Option editor), and **ED-C2a** (entity pool + new items) are shipped; see the decomposition table below.
+The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), and **ED-C2b** (Context / Instruction + Message authoring) are shipped; see the decomposition table below.
 
 ED-A is the structural foundation of the custom React + TypeScript questionnaire **Editor** — the authoring tool researchers use to create, adapt, version, and translate questionnaires, producing canonical Schema 2 JSON. ED-A ships a static SPA (Vite · React 19 · TypeScript · Tailwind; Zustand + Immer state; dnd-kit; Ajv in-browser validation) with **no backend**: it opens/creates/loads/saves a Schema-2 questionnaire, renders the five-concept structure tree (Block ▸ Page ▸ Section ▸ Item/Message) in a 3-pane shell, lets you restructure + edit metadata, validates, and exports canonical JSON that round-trips Schema-2-valid. Persistence is browser-local (IndexedDB autosave) plus file open/save and open-from-Library.
 
@@ -49,6 +49,14 @@ Selecting a page or section reveals a **`+ Add item`** action in the canvas. It 
 - **Pool persists in the draft** — the pool is autosaved alongside the model in IndexedDB and restored on reload (legacy drafts load with an empty pool).
 - **Export bundle** — a topbar **`Export bundle`** button emits a self-contained `{ questionnaire, entities }` JSON bundle (the pool is the `entities` map), the only way to carry pool entities out of the editor.
 
+## ED-C2b — Context / Instruction + Message authoring
+
+ED-C2b extends new-content authoring beyond Prompts to the remaining content-bearing entities, all minted as draft pool entities (`.devN`) that live-preview and ride along in the bundle export:
+
+- **Add Context / Instruction to a question** — selecting an inline item shows **`+ Add context`** and **`+ Add instruction`** sections in the canvas (between the Prompt block and the Option editor). Each mints a draft pool entity (`ctx_new_<n>` / `ins_new_<n>`) and points the `Question`'s `context` / `instruction` ref at it. Edit the per-locale text inline; an **Instruction** also carries a `dimension` (e.g. `agreement`), which is deleted from the body when cleared. **`Remove context` / `Remove instruction`** unsets the ref and drops the (per-add minted) pool entity.
+- **Add a standalone Message to a page** — selecting a page or section shows **`+ Add message`** beside `+ Add item`. It mints a draft `Message` (`msg_new_<n>`, default `type: ['information']`) and appends a `MessageRef` element, selecting it to open the **MessagePane**: a comma-separated `type`-tag input + per-locale **Message text** field.
+- **Live preview + bundle export** — Context / Instruction / Message all resolve through the same pool-first preview path and export inside the `{ questionnaire, entities }` bundle. Library-pinned (`{ref}`) Context / Instruction / Message bodies show a read-only "fork to edit (ED-C4)" note.
+
 ## Environment variables
 
 | Var | Default | Purpose |
@@ -80,11 +88,12 @@ Build order: **ED-A → ED-B → ED-C → ED-D → ED-E → ED-F**.
 - **Live WYSIWYG inline preview** (ED-B): the `▢ Preview` button opens a split-pane rendered by the Web Viewer renderer, with language / device / scope pickers and on-demand Library ref resolution.
 - **Edit an existing inline Option** (ED-C1): select an inline item or a matrix section's shared option → the type-aware Option editor (type triple, choice rows, numeric bounds, text validation, inline placeholder/help, derived-widget hint) opens in the canvas; edits round-trip valid + the preview updates live.
 - **Author new items + Prompts** (ED-C2a): `+ Add item` mints a draft Prompt into the local entity pool (`.devN` versions), edit its text + metadata (`PromptEditor`) in the canvas, see it live in the pool-resolved preview; the pool persists in the draft and exports as a `{questionnaire, entities}` bundle (`Export bundle`).
+- **Author new Context / Instruction / Message** (ED-C2b): add a Context and/or an Instruction (with a `dimension`) to a question, and standalone Messages (with `type` tags + text) to a page (`+ Add message`); all are draft pool entities that live-preview and ride along in the bundle export; remove drops the per-add pool entity.
 
 **Doesn't yet (deferred):**
-- Authoring new **Context / Instruction / Message** entities (beyond Prompts) → **ED-C2b**.
 - Pick-from-Library (embedded read-only browser) → **ED-C3**.
-- Forking / editing a **referenced** (Library-pinned) Option or saved-Item ref → **ED-C4** (read-only note for now).
+- Forking / editing a **referenced** (Library-pinned) Option / Prompt / Context / Instruction / Message or saved-Item ref → **ED-C4** (read-only note for now).
+- Standalone **Placeholder / Help / RegEx / Solution** editors (Placeholder / Help are inline-editable inside the Option editor) → later.
 - Live logic / branching / scoring / validation **in the preview** (the preview is static structural — every element renders unconditionally) → **ED-D**.
 - Logic / validation builders / scoring / `show_if` expressions (authoring) → **ED-D**.
 - Translation interface — multi-locale Option/Prompt text/units beyond `metadata.language` (locale indicator is inert) → **ED-E**.
