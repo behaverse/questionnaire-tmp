@@ -1,0 +1,107 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "id": "qst_phq9",
+    "title": "Patient Health Questionnaire-9",
+    "short_title": "PHQ-9",
+    "description": "Self-report measure of depression severity over the past 2 weeks.",
+    "version": "v26.0602",
+    "language": "en",
+    "available_languages": ["en", "pt"],
+    "instrument_id": "inst_phq9",
+    "variant": "base",
+    "author": [
+      { "name": "Robert L. Spitzer" },
+      { "name": "Janet B. W. Williams" },
+      { "name": "Kurt Kroenke" }
+    ],
+    "publication": {
+      "year": 2001,
+      "citation": "Kroenke K, Spitzer RL, Williams JBW. The PHQ-9: Validity of a brief depression severity measure. J Gen Intern Med. 2001;16:606-613.",
+      "doi": "10.1046/j.1525-1497.2001.016009606.x"
+    },
+    "license": "proprietary_open_redistribution",
+    "rights_holder": "Pfizer Inc.",
+    "classification": {
+      "domain": ["depression", "screening"],
+      "population": ["adults"],
+      "age_range": [18, 99],
+      "administration_mode": ["self_report"]
+    },
+    "psychometrics": {
+      "item_count": 9,
+      "estimated_minutes": 5,
+      "reliability": [
+        { "type": "cronbach_alpha", "value": 0.89, "population": "primary_care", "sample_size": 6000 }
+      ]
+    },
+    "translations": {
+      "pt": {
+        "status": "validated",
+        "fields": {
+          "title": "Questionário sobre Saúde do Paciente-9",
+          "short_title": "PHQ-9",
+          "description": "Medida de autorrelato de gravidade de depressão nas últimas 2 semanas."
+        }
+      }
+    }
+  },
+  "flow": { "allow_back": true },
+  "style": { "progress_bar": true, "question_numbering": "sequential" },
+  "pages": [
+    {
+      "id": "page_items",
+      "title": "Over the last 2 weeks, how often have you been bothered by any of the following problems?",
+      "elements": [
+        {
+          "id": "sec_phq9_matrix",
+          "shared_option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "dimension": "frequency",
+            "options": [
+              { "index": 1, "value": 0 },
+              { "index": 2, "value": 1 },
+              { "index": 3, "value": 2 },
+              { "index": 4, "value": 3 }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "PHQ-9 frequency",
+                "options": [
+                  { "index": 1, "text": "Not at all" },
+                  { "index": 2, "text": "Several days" },
+                  { "index": 3, "text": "More than half the days" },
+                  { "index": 4, "text": "Nearly every day" }
+                ]
+              }
+            }
+          },
+          "elements": [
+            { "question": { "prompt": { "ref": "pr_phq9_1@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_2@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_3@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_4@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_5@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_6@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_7@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_8@v26.0602" } } },
+            { "question": { "prompt": { "ref": "pr_phq9_9@v26.0602" } } }
+          ],
+          "style": { "layout": "matrix" }
+        }
+      ]
+    }
+  ],
+  "scores": [
+    { "id": "phq9_total",      "scorer": "scr_phq9@v26.0602", "path": "/total",
+      "name": "PHQ-9 Total" },
+    { "id": "phq9_severity",   "scorer": "scr_phq9@v26.0602", "path": "/severity",
+      "name": "PHQ-9 Severity Category" },
+    { "id": "phq9_band_label", "scorer": "scr_phq9@v26.0602", "path": "/band/label",
+      "name": "PHQ-9 Band Label" }
+  ],
+  "lock_show_score_timing": true
+}
