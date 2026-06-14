@@ -17,7 +17,7 @@ function nextSectionId(model: Questionnaire): string {
 }
 
 export function Canvas() {
-  const { model, selection, applyEdit, select, pool, upsertPoolEntity } = useEditorStore()
+  const { model, selection, applyEdit, select, pool, upsertPoolEntity, openPicker } = useEditorStore()
   if (!model) return null
   const sel = selection && getAtPath(model, selection) !== undefined ? selection : null
   if (!sel) return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree.</div>
@@ -66,17 +66,30 @@ export function Canvas() {
     select([...elementsPath, elements.length])
   }
 
+  const pickItem = () => openPicker('item', (ref) => {
+    applyEdit((m) => insertNode(m, elementsPath, elements.length, { ref }))
+    select([...elementsPath, elements.length])
+  })
+  const pickMessage = () => openPicker('message', (ref) => {
+    applyEdit((m) => insertNode(m, elementsPath, elements.length, { ref }))
+    select([...elementsPath, elements.length])
+  })
+
   return (
     <div className="overflow-auto p-6">
-      <div className="mb-4 flex items-center gap-2">
+      <div className="mb-4 flex flex-wrap items-center gap-2">
         <h2 className="text-lg font-medium text-slate-800">{node.title ?? (node as Page).id}</h2>
-        {(kind === 'page' || kind === 'section') && (
-          <button onClick={addItem} className="ml-auto rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add item</button>
-        )}
-        {(kind === 'page' || kind === 'section') && (
-          <button onClick={addMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add message</button>
-        )}
-        <button onClick={addSection} className={`${kind === 'page' || kind === 'section' ? '' : 'ml-auto '}rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50`}>+ Add section</button>
+        <div className="ml-auto flex flex-wrap items-center gap-2">
+          {(kind === 'page' || kind === 'section') && (
+            <>
+              <button onClick={addItem} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add item</button>
+              <button onClick={addMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add message</button>
+              <button onClick={pickItem} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Pick item</button>
+              <button onClick={pickMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Pick message</button>
+            </>
+          )}
+          <button onClick={addSection} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add section</button>
+        </div>
       </div>
       <ul className="space-y-2">
         {elements.map((el, i) => {

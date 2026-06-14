@@ -51,6 +51,11 @@ test('fetchEntityBody returns null on non-OK / error', async () => {
   expect(await fetchEntityBody('pr_x@v1', { baseUrl: 'http://lib', fetchImpl: miss })).toBeNull()
 })
 
+test('fetchEntityBody returns null on a network error', async () => {
+  const boom = (async () => { throw new Error('offline') }) as unknown as typeof fetch
+  expect(await fetchEntityBody('pr_x@v1', { baseUrl: 'http://lib', fetchImpl: boom })).toBeNull()
+})
+
 test('searchEntities queries /v1/entities/{etype} and returns items', async () => {
   const calls: string[] = []
   const fakeFetch = (async (url: string) => { calls.push(url); return { ok: true, json: async () => ({ items: [{ id: 'pr_a', version: 'v26.0609', title: null, entity_type: 'prompt' }], total: 1 }) } as Response }) as unknown as typeof fetch
