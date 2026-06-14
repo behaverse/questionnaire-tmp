@@ -7,6 +7,7 @@ import { MessagePane } from './MessagePane'
 import { collectIds, draftVersion } from '../pool/mint'
 import { buildNewItem } from '../pool/newItem'
 import { buildMessage } from '../pool/newEntities'
+import { UpgradeBadge } from '../library/UpgradeBadge'
 
 function nextSectionId(model: Questionnaire): string {
   const used = new Set<string>()
@@ -101,6 +102,7 @@ export function Canvas() {
                 className="flex items-center gap-2 rounded border border-slate-200 bg-white px-3 py-2 text-sm">
               <span className="text-slate-400">{k === 'section' ? '▦' : k === 'message' ? '✉' : '◉'}</span>
               <button className="truncate text-left hover:underline" onClick={() => select(path)}>{label}</button>
+              {typeof el.ref === 'string' && <UpgradeBadge refStr={el.ref} />}
               <span className="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-500">{k}</span>
               <button aria-label={`Delete ${label}`} onClick={() => applyEdit((m) => deleteNode(m, path))}
                       className="text-slate-400 hover:text-red-600">✕</button>

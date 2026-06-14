@@ -1,6 +1,7 @@
 import { useEditorStore } from '../state/store'
 import { getAtPath, type NodePath } from '../model/path'
 import { MessageEditor, type MessageBody } from '../entity/MessageEditor'
+import { UpgradeBadge } from '../library/UpgradeBadge'
 
 export function MessagePane({ path }: { path: NodePath }) {
   const { model, pool, upsertPoolEntity } = useEditorStore()
@@ -15,7 +16,7 @@ export function MessagePane({ path }: { path: NodePath }) {
         <div className="mt-2"><MessageEditor message={message} locale={locale} onChange={(m) => upsertPoolEntity(ref, m)} /></div>
       ) : (
         <div className="mt-2 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
-          <span className="font-mono">{ref}</span> <span className="text-xs text-slate-400">— fork to edit (ED-C4)</span>
+          <span className="font-mono">{ref}</span> {ref && <UpgradeBadge refStr={ref} />} <span className="text-xs text-slate-400">— fork to edit (ED-C4)</span>
         </div>
       )}
     </div>
