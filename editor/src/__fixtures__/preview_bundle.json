@@ -1,0 +1,13 @@
+{
+  "questionnaire": {
+    "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+    "metadata": { "id": "qst_preview_demo", "title": "Preview Demo", "description": "ED-B smoke", "version": "v26.0609", "language": "en", "available_languages": ["en"] },
+    "pages": [ { "id": "p1", "title": "Page 1", "elements": [ { "question": { "prompt": { "ref": "pr_demo@v26.0609" } }, "option": { "ref": "opt_yesno@v26.0609" }, "required": true } ] } ]
+  },
+  "entities": {
+    "prompt/pr_demo": { "id": "pr_demo", "content": { "en": { "status": "validated", "text": "Do you enjoy building editors?" } } },
+    "option/opt_yesno": { "id": "opt_yesno", "input_data_type": "choice", "measurement_type": "nominal", "selection": "single",
+      "options": [ { "index": 1, "value": 0 }, { "index": 2, "value": 1 } ],
+      "content": { "en": { "status": "validated", "options": [ { "index": 1, "text": "No" }, { "index": 2, "text": "Yes" } ] } } }
+  }
+}

@@ -1,8 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { Buffer } from 'node:buffer'
 
 const fixturePath = fileURLToPath(new URL('../../src/__fixtures__/kitchensink.json', import.meta.url))
+const bundle = JSON.parse(
+  readFileSync(new URL('../../src/__fixtures__/preview_bundle.json', import.meta.url), 'utf8'),
+) as { questionnaire: unknown; entities: Record<string, unknown> }
 
 test('open a file → select → export → screenshot', async ({ page }) => {
   await page.goto('/')
@@ -28,4 +32,30 @@ test('open a file → select → export → screenshot', async ({ page }) => {
   const path = await download.path()
   const json = JSON.parse(readFileSync(path!, 'utf8'))
   expect(json.metadata.id).toBeTruthy()
+})
+
+test('toggle preview → renders resolved content via the renderer', async ({ page }) => {
+  // stub the Library entity endpoint from the bundle's entities map
+  await page.route('**/v1/entities/**', async (route) => {
+    const url = new URL(route.request().url())
+    const m = url.pathname.match(/\/v1\/entities\/([^/]+)\/([^/]+)/)
+    const key = m ? `${m[1]}/${m[2]}` : ''
+    const body = bundle.entities[key]
+    if (body) await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(body) })
+    else await route.fulfill({ status: 404, body: '{}' })
+  })
+
+  await page.goto('/')
+  const qJson = JSON.stringify(bundle.questionnaire)
+  await page.setInputFiles('input[type=file]', { name: 'preview_demo.json', mimeType: 'application/json', buffer: Buffer.from(qJson) })
+  await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
+
+  await page.getByRole('button', { name: /preview/i }).click()
+  const preview = page.getByRole('region', { name: /preview/i })
+  // The renderer emits both an sr-only <legend> and a visible <h2 class="qv-prompt">
+  // with the prompt text; scope to the visible heading to avoid a strict-mode match.
+  await expect(preview.locator('h2.qv-prompt', { hasText: 'Do you enjoy building editors?' })).toBeVisible()
+  await expect(preview.getByText('Yes')).toBeVisible()
+
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-b-preview.png', fullPage: true })
 })

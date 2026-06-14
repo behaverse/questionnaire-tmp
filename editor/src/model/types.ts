@@ -1,6 +1,9 @@
 // Loose structural mirror of canonical Schema 2 (refs kept intact). The schema
 // is the source of truth for validation; these types exist for ergonomic editing.
 
+/** A resolved reusable-entity body (loose JSON object). */
+export type EntityBody = Record<string, unknown>
+
 export interface Metadata {
   id: string
   title?: string

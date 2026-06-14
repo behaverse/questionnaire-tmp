@@ -42,4 +42,44 @@ fixed), but selection is not index-stable. Consider moving to stable node ids fo
 `tests/e2e/screenshots/ed-a-workspace.png` is `.gitignore`d. It is produced by
 `npm run e2e` (requires `npx playwright install chromium`). If Playwright cannot run in a
 given environment, the screenshot must be (re)generated locally or in CI; the smoke spec +
-config are committed so the test exists regardless.
+config are committed so the test exists regardless. (ED-B adds a second gitignored
+screenshot, `tests/e2e/screenshots/ed-b-preview.png`, on the same terms.)
+
+# ED-B Follow-ups
+
+Known limitations and open items carried out of ED-B (inline preview).
+
+## (g) Library entity-body endpoint — unverified against the live API
+
+`fetchEntityBody` assumes `GET /v1/entities/{type}/{id}?version=` returns the entity body.
+Confirm this against the live API — the path shape, whether `version` is a query param vs a
+path segment vs ignored — and adjust `parseRef` / `fetchEntityBody`
+(`src/persistence/library.ts`) if the live contract differs.
+
+## (h) Preview resolution cache is in-memory only
+
+Resolved entity bodies are cached per `ref@version` in-memory for the session; they are
+**not persisted**. Large questionnaires re-resolve every ref on the first preview after a
+reload.
+
+## (i) Logic / scoring / validation are ignored in the preview
+
+`show_if` / logic / scoring / validation are **not evaluated** in the preview — every
+element renders unconditionally. This stays until **ED-D** wires the expression evaluator +
+logic engine into the preview.
+
+## (j) Renderer library is consumed from `web-viewer/dist-lib`
+
+The preview consumes the Web Viewer renderer from `web-viewer/dist-lib` via a Vite alias
+(built by the `ensure-renderer` prepare step). At the repo split this becomes the published
+`@behaverse/questionnaire-renderer` npm package.
+
+## (k) PreviewPane minor cleanups (from code review)
+
+Cosmetic / edge-case items deferred:
+- redundant `as FetchEntity` cast on the `fetchEntity` default prop;
+- a stale, out-of-range page selection renders an empty preview pane rather than falling
+  back to page 0;
+- the `resolving…` flag isn't reset on an ignored / unmounted resolve.
+
+All cosmetic / edge.
