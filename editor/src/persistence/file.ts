@@ -1,4 +1,4 @@
-import type { Questionnaire } from '../model/types'
+import type { Questionnaire, EntityBody } from '../model/types'
 import { parseQuestionnaire, serializeQuestionnaire } from '../model/serialize'
 
 function readFileText(file: File): Promise<string> {
@@ -29,6 +29,26 @@ export function exportToFile(model: Questionnaire): void {
   const a = document.createElement('a')
   a.href = url
   a.download = downloadFilename(model)
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+export function bundleData(model: Questionnaire, pool: Record<string, EntityBody>) {
+  return { questionnaire: model, entities: pool }
+}
+
+export function bundleFilename(model: Questionnaire): string {
+  const id = model.metadata?.id ?? 'questionnaire'
+  return `${id}.bundle.json`
+}
+
+/** Browser-only: download the {questionnaire, entities} bundle. */
+export function exportBundle(model: Questionnaire, pool: Record<string, EntityBody>): void {
+  const blob = new Blob([JSON.stringify(bundleData(model, pool), null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = bundleFilename(model)
   a.click()
   URL.revokeObjectURL(url)
 }

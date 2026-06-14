@@ -1,8 +1,9 @@
 import { useEditorStore } from '../state/store'
-import { exportToFile } from '../persistence/file'
+import { exportToFile, exportBundle } from '../persistence/file'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
   const { model, dirty, validation, previewOpen, togglePreview } = useEditorStore()
+  const pool = useEditorStore((s) => s.pool)
   if (!model) return null
   const invalid = validation && !validation.valid
   const doExport = () => {
@@ -20,6 +21,8 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
           ▢ Preview
         </button>
         <button onClick={doExport} className="rounded bg-slate-800 px-3 py-1 text-sm text-white">Export</button>
+        <button onClick={() => { if (model) exportBundle(model, pool) }}
+                className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">Export bundle</button>
       </div>
     </header>
   )
