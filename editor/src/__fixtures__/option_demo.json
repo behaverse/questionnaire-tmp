@@ -1,0 +1,10 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": { "id": "qst_option_demo", "title": "Option Demo", "description": "ED-C1 smoke", "version": "v26.0609", "language": "en" },
+  "pages": [ { "id": "page_1", "title": "Page 1", "elements": [
+    { "question": { "prompt": { "ref": "pr_demo@v26.0609" } }, "option": {
+      "input_data_type": "choice", "measurement_type": "ordinal", "selection": "single",
+      "options": [ { "index": 1, "value": 0 }, { "index": 2, "value": 1 } ],
+      "content": { "en": { "status": "draft", "label": "Agreement", "options": [ { "index": 1, "text": "Disagree" }, { "index": 2, "text": "Agree" } ] } } } }
+  ] } ]
+}

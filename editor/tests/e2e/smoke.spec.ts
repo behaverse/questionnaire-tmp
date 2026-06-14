@@ -59,3 +59,35 @@ test('toggle preview → renders resolved content via the renderer', async ({ pa
 
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-b-preview.png', fullPage: true })
 })
+
+test('select an inline item → Option editor → add a choice → screenshot', async ({ page }) => {
+  const fixture = readFileSync(
+    fileURLToPath(new URL('../../src/__fixtures__/option_demo.json', import.meta.url)),
+    'utf8',
+  )
+  await page.goto('/')
+  await page.setInputFiles('input[type=file]', {
+    name: 'option_demo.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(fixture),
+  })
+  await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
+
+  // select the inline item row in the tree (label is `inline · pr_demo@v26.0609`)
+  await page
+    .getByRole('navigation', { name: /structure/i })
+    .getByText(/pr_demo@v26\.0609/)
+    .click()
+
+  // the Option editor is shown in the canvas
+  await expect(page.getByText(/renders as/i)).toBeVisible()
+  // Playwright has no getByDisplayValue (Testing Library only); assert the choice
+  // label <input> by its aria-label + value instead.
+  await expect(page.getByLabel('Label for choice 1')).toHaveValue('Disagree')
+
+  await page.getByRole('button', { name: /add choice/i }).click()
+  // a third row appears
+  await expect(page.getByLabel('Label for choice 3')).toBeVisible()
+
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-c1-option-editor.png', fullPage: true })
+})
