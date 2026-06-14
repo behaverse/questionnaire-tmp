@@ -14,7 +14,7 @@ beforeEach(() => {
 test('with a page selected, shows its elements and an Add control', () => {
   useEditorStore.getState().select(['pages', 0])
   render(<Canvas />)
-  expect(screen.getByText(/add/i)).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /add section/i })).toBeInTheDocument()
   const firstEl = (phq9 as Questionnaire).pages[0].elements[0] as Record<string, unknown>
   if (typeof firstEl.ref === 'string') expect(screen.getByText(firstEl.ref)).toBeInTheDocument()
 })
@@ -39,4 +39,16 @@ test('deleting the selected node does not crash the canvas', () => {
   // It must not. The model still has the page.
   rerender(<Canvas />)
   expect(useEditorStore.getState().model!.pages[0]).toBeTruthy()
+})
+
+test('Add item mints a pool prompt and appends an inline item, then selects it', async () => {
+  useEditorStore.getState().select(['pages', 0])
+  render(<Canvas />)
+  const before = useEditorStore.getState().model!.pages[0].elements.length
+  await userEvent.click(screen.getByRole('button', { name: /add item/i }))
+  const st = useEditorStore.getState()
+  expect(st.model!.pages[0].elements.length).toBe(before + 1)
+  expect(Object.keys(st.pool).length).toBeGreaterThan(0)
+  const added = st.model!.pages[0].elements[before] as { question: { prompt: { ref: string } } }
+  expect(st.pool[added.question.prompt.ref]).toBeTruthy()
 })
