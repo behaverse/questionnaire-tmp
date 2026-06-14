@@ -1,26 +1,33 @@
 import { useEditorStore } from '../state/store'
 import { getAtPath, nodeKind, pathKey, type NodePath } from '../model/path'
 import { insertNode, deleteNode } from '../model/tree'
-import type { Page, Section } from '../model/types'
+import type { Page, Questionnaire, Section } from '../model/types'
 
-let sectionCounter = 0
+function nextSectionId(model: Questionnaire): string {
+  const used = new Set<string>()
+  JSON.stringify(model, (k, v) => { if (k === 'id' && typeof v === 'string') used.add(v); return v })
+  let n = 1
+  while (used.has(`sec_new_${n}`)) n++
+  return `sec_new_${n}`
+}
 
 export function Canvas() {
   const { model, selection, applyEdit, select } = useEditorStore()
   if (!model) return null
-  if (!selection) return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree.</div>
+  const sel = selection && getAtPath(model, selection) !== undefined ? selection : null
+  if (!sel) return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree.</div>
 
-  const kind = nodeKind(model, selection)
+  const kind = nodeKind(model, sel)
   if (kind !== 'page' && kind !== 'section' && kind !== 'questionnaire') {
     return <div className="overflow-auto p-6 text-slate-400">This node has no children. Editing item content arrives in ED-C.</div>
   }
 
-  const node = getAtPath(model, selection) as Page | Section
+  const node = getAtPath(model, sel) as Page | Section
   const elements = (node.elements ?? []) as Record<string, unknown>[]
-  const elementsPath: NodePath = [...selection, 'elements']
+  const elementsPath: NodePath = [...sel, 'elements']
 
   const addSection = () => {
-    const id = `sec_new_${++sectionCounter}`
+    const id = nextSectionId(model)
     const section: Section = { id, title: 'New section', elements: [] }
     applyEdit((m) => insertNode(m, elementsPath, elements.length, section))
   }

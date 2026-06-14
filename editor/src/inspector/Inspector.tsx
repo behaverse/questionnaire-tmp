@@ -8,7 +8,8 @@ import type { Block, Page, Section } from '../model/types'
 export function Inspector() {
   const { model, selection, applyEdit } = useEditorStore()
   if (!model) return null
-  const kind = selection ? nodeKind(model, selection) : 'questionnaire'
+  const sel = selection && getAtPath(model, selection) !== undefined ? selection : null
+  const kind = sel ? nodeKind(model, sel) : 'questionnaire'
 
   let body: JSX.Element
 
@@ -24,26 +25,26 @@ export function Inspector() {
       </div>
     )
   } else if (kind === 'page' || kind === 'section') {
-    const node = getAtPath(model, selection!) as Page | Section
+    const node = getAtPath(model, sel!) as Page | Section
     body = (
       <div className="space-y-3">
         <h3 className="text-sm font-semibold capitalize text-slate-700">{kind}</h3>
-        <TextField label={`${kind} title`} value={node.title ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, selection!, { title: v }))} />
-        <TextField label="Id" value={(node as Page).id ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, selection!, { id: v }))} />
+        <TextField label={`${kind} title`} value={node.title ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { title: v }))} />
+        <TextField label="Id" value={(node as Page).id ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { id: v }))} />
         <p className="text-xs text-slate-400">style / flow panels arrive with full coverage in later stages.</p>
       </div>
     )
   } else if (kind === 'block') {
-    const node = getAtPath(model, selection!) as Block
+    const node = getAtPath(model, sel!) as Block
     body = (
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-slate-700">Block</h3>
-        <TextField label="Block title" value={node.title ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, selection!, { title: v }))} />
+        <TextField label="Block title" value={node.title ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { title: v }))} />
         <p className="text-xs text-slate-400">Pages in this block: {node.page_ids.join(', ') || '(none)'}</p>
       </div>
     )
   } else {
-    const node = getAtPath(model, selection!) as Record<string, unknown>
+    const node = getAtPath(model, sel!) as Record<string, unknown>
     body = (
       <div className="space-y-3">
         <h3 className="text-sm font-semibold capitalize text-slate-700">{kind}</h3>

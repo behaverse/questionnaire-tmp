@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { Questionnaire } from '../model/types'
-import type { NodePath } from '../model/path'
+import { getAtPath, type NodePath } from '../model/path'
 import { validateQuestionnaire, type ValidationError } from '../model/validation'
 import type { Source } from './types'
 
@@ -15,6 +15,7 @@ interface EditorState {
   validation: { valid: boolean; errors: ValidationError[] } | null
   loadModel: (model: Questionnaire, source: Source) => void
   applyEdit: (fn: (model: Questionnaire) => Questionnaire) => void
+  revalidate: () => void
   select: (path: NodePath | null) => void
   toggleExpanded: (key: string) => void
   markSaved: () => void
@@ -31,10 +32,21 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   loadModel: (model, source) =>
     set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model) }),
   applyEdit: (fn) => {
-    const cur = get().model
+    const { model: cur, selection } = get()
     if (!cur) return
     const next = fn(cur)
-    set({ model: next, dirty: true, validation: validateQuestionnaire(next) })
+    const selectionValid = selection != null && getAtPath(next, selection) !== undefined
+    set({
+      model: next,
+      dirty: true,
+      validation: validateQuestionnaire(next),
+      selection: selectionValid ? selection : null,
+    })
+  },
+  revalidate: () => {
+    const cur = get().model
+    if (!cur) return
+    set({ validation: validateQuestionnaire(cur) })
   },
   select: (path) => set({ selection: path }),
   toggleExpanded: (key) => set((s) => ({ expanded: { ...s.expanded, [key]: !s.expanded[key] } })),

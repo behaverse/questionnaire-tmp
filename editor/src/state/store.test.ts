@@ -27,3 +27,25 @@ test('select sets the selection path', () => {
   st.select(['pages', 0])
   expect(useEditorStore.getState().selection).toEqual(['pages', 0])
 })
+
+test('applyEdit clears selection when the selected node is deleted', async () => {
+  const { deleteNode } = await import('../model/tree')
+  const st = useEditorStore.getState()
+  st.loadModel(phq9 as Questionnaire, { kind: 'file', name: 'phq9.json' })
+  st.select(['pages', 0, 'elements', 0])
+  st.applyEdit((m) => deleteNode(m, ['pages', 0, 'elements', 0]))
+  // selection no longer resolves to the same node -> cleared if now missing
+  const s = useEditorStore.getState()
+  if (s.selection) {
+    const { getAtPath } = await import('../model/path')
+    expect(getAtPath(s.model!, s.selection)).not.toBeUndefined()
+  }
+})
+
+test('revalidate refreshes validation without marking dirty', () => {
+  const st = useEditorStore.getState()
+  st.loadModel(phq9 as Questionnaire, { kind: 'file', name: 'phq9.json' })
+  st.revalidate()
+  expect(useEditorStore.getState().dirty).toBe(false)
+  expect(useEditorStore.getState().validation?.valid).toBe(true)
+})

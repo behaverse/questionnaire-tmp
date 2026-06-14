@@ -51,7 +51,7 @@ export function App() {
 
   return (
     <div className="flex h-full flex-col">
-      <Topbar onValidate={() => useEditorStore.getState().applyEdit((m) => m)} />
+      <Topbar onValidate={() => useEditorStore.getState().revalidate()} />
       {validation && !validation.valid && (
         <div role="alert" className="border-b border-red-200 bg-red-50 px-4 py-1 text-xs text-red-700">
           {validation.errors.length} validation issue(s): {validation.errors.slice(0, 3).map((e) => e.message).join('; ')}
