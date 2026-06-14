@@ -47,6 +47,19 @@ export async function fetchEntityBody(ref: string, opts: FetchOpts = {}): Promis
   }
 }
 
+export async function latestVersion(etype: string, id: string, opts: FetchOpts = {}): Promise<string | null> {
+  const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
+  const f = opts.fetchImpl ?? fetch
+  try {
+    const res = await f(`${base}/v1/entities/${etype}/${id}`)
+    if (!res.ok) return null
+    const d = (await res.json()) as { version?: string }
+    return typeof d.version === 'string' ? d.version : null
+  } catch {
+    return null
+  }
+}
+
 export interface EntitySearchResult { id: string; version: string; title: string | null; entity_type: string }
 
 export async function searchEntities(etype: string, q: string, opts: FetchOpts = {}): Promise<{ items: EntitySearchResult[]; total: number }> {

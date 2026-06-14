@@ -65,3 +65,19 @@ test('searchEntities queries /v1/entities/{etype} and returns items', async () =
   expect(calls[0]).toContain('/v1/entities/prompt?')
   expect(calls[0]).toContain('q=mood')
 })
+
+import { latestVersion } from './library'
+
+test('latestVersion returns the latest entity version', async () => {
+  const calls: string[] = []
+  const fakeFetch = (async (url: string) => { calls.push(url); return { ok: true, json: async () => ({ id: 'pr_x', version: 'v26.0610', entity_type: 'prompt', status: 'published' }) } as Response }) as unknown as typeof fetch
+  expect(await latestVersion('prompt', 'pr_x', { baseUrl: 'http://lib', fetchImpl: fakeFetch })).toBe('v26.0610')
+  expect(calls[0]).toBe('http://lib/v1/entities/prompt/pr_x')
+})
+
+test('latestVersion returns null on 404 / error', async () => {
+  const miss = (async () => ({ ok: false, status: 404 } as Response)) as unknown as typeof fetch
+  expect(await latestVersion('prompt', 'pr_x', { baseUrl: 'http://lib', fetchImpl: miss })).toBeNull()
+  const boom = (async () => { throw new Error('offline') }) as unknown as typeof fetch
+  expect(await latestVersion('prompt', 'pr_x', { baseUrl: 'http://lib', fetchImpl: boom })).toBeNull()
+})
