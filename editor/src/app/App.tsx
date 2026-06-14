@@ -7,7 +7,6 @@ import { newQuestionnaire } from '../model/scaffold'
 import { readQuestionnaireFile } from '../persistence/file'
 import { fetchFromLibrary } from '../persistence/library'
 import { saveDraft, loadDraft } from '../persistence/indexeddb'
-import type { EntityBody } from '../model/types'
 
 export function App() {
   const { model, loadModel, validation } = useEditorStore()
@@ -17,7 +16,7 @@ export function App() {
 
   // restore autosaved draft on boot
   useEffect(() => {
-    loadDraft().then((d) => { if (d) loadModel(d.model, d.source, d.entities as Record<string, EntityBody>) }).finally(() => setBooting(false))
+    loadDraft().then((d) => { if (d) loadModel(d.model, d.source, d.entities) }).finally(() => setBooting(false))
   }, [loadModel])
 
   // autosave on model/pool change (debounced)

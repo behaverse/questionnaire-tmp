@@ -23,13 +23,16 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
   const [scope, setScope] = useState<'page' | 'all'>('page')
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({})
   const cacheRef = useRef(new Map<string, EntityBody | null>())
+  const prevPoolKeysRef = useRef<string[]>([])
 
   useEffect(() => {
     if (!model) return
     let ignore = false
     setResolving(true)
     const t = setTimeout(() => {
-      for (const ref of Object.keys(pool)) cacheRef.current.delete(ref) // pool entities re-resolve fresh
+      const poolKeys = Object.keys(pool)
+      for (const ref of new Set([...prevPoolKeysRef.current, ...poolKeys])) cacheRef.current.delete(ref) // pool entities re-resolve fresh; departed refs invalidated too
+      prevPoolKeysRef.current = poolKeys
       resolveEntities(model, fetchEntity, cacheRef.current).then((m) => {
         if (ignore) return
         setEntityMap(new Map(m))
