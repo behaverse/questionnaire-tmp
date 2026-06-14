@@ -52,3 +52,15 @@ test('Add item mints a pool prompt and appends an inline item, then selects it',
   const added = st.model!.pages[0].elements[before] as { question: { prompt: { ref: string } } }
   expect(st.pool[added.question.prompt.ref]).toBeTruthy()
 })
+
+test('Add message mints a pool message and appends a MessageRef element', async () => {
+  useEditorStore.getState().select(['pages', 0])
+  render(<Canvas />)
+  const before = useEditorStore.getState().model!.pages[0].elements.length
+  await userEvent.click(screen.getByRole('button', { name: /add message/i }))
+  const st = useEditorStore.getState()
+  expect(st.model!.pages[0].elements.length).toBe(before + 1)
+  const added = st.model!.pages[0].elements[before] as { ref?: string }
+  expect(added.ref).toMatch(/^msg_new_\d+@/)
+  expect(st.pool[added.ref!]).toBeTruthy()
+})
