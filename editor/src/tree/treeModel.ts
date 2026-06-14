@@ -53,7 +53,7 @@ export function buildTreeRows(q: Questionnaire): TreeRow[] {
 
   q.pages.forEach((p, pi) => {
     if (grouped.has(p.id)) return
-    emitPage(pi, blocks.length > 0 ? 0 : 0)
+    emitPage(pi, 0)
   })
 
   return rows
