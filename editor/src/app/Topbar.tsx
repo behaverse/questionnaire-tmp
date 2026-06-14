@@ -2,7 +2,7 @@ import { useEditorStore } from '../state/store'
 import { exportToFile } from '../persistence/file'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
-  const { model, dirty, validation } = useEditorStore()
+  const { model, dirty, validation, previewOpen, togglePreview } = useEditorStore()
   if (!model) return null
   const invalid = validation && !validation.valid
   const doExport = () => {
@@ -15,7 +15,10 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
       {dirty && <span className="text-xs text-amber-600">● unsaved</span>}
       <div className="ml-auto flex items-center gap-2">
         <button onClick={onValidate} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">✓ Validate</button>
-        <button disabled className="rounded border border-slate-200 px-3 py-1 text-sm text-slate-400" title="Available in ED-B">▢ Preview</button>
+        <button onClick={togglePreview}
+                className={`rounded border px-3 py-1 text-sm ${previewOpen ? 'border-slate-800 bg-slate-800 text-white' : 'border-slate-300 hover:bg-slate-50'}`}>
+          ▢ Preview
+        </button>
         <button onClick={doExport} className="rounded bg-slate-800 px-3 py-1 text-sm text-white">Export</button>
       </div>
     </header>

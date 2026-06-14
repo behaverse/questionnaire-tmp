@@ -49,3 +49,10 @@ test('revalidate refreshes validation without marking dirty', () => {
   expect(useEditorStore.getState().dirty).toBe(false)
   expect(useEditorStore.getState().validation?.valid).toBe(true)
 })
+
+test('togglePreview flips previewOpen', () => {
+  const st = useEditorStore.getState()
+  expect(useEditorStore.getState().previewOpen).toBe(false)
+  st.togglePreview()
+  expect(useEditorStore.getState().previewOpen).toBe(true)
+})

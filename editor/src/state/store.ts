@@ -13,12 +13,14 @@ interface EditorState {
   expanded: Record<string, boolean>
   dirty: boolean
   validation: { valid: boolean; errors: ValidationError[] } | null
+  previewOpen: boolean
   loadModel: (model: Questionnaire, source: Source) => void
   applyEdit: (fn: (model: Questionnaire) => Questionnaire) => void
   revalidate: () => void
   select: (path: NodePath | null) => void
   toggleExpanded: (key: string) => void
   markSaved: () => void
+  togglePreview: () => void
   reset: () => void
 }
 
@@ -29,6 +31,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   expanded: {},
   dirty: false,
   validation: null,
+  previewOpen: false,
   loadModel: (model, source) =>
     set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model) }),
   applyEdit: (fn) => {
@@ -51,5 +54,6 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   select: (path) => set({ selection: path }),
   toggleExpanded: (key) => set((s) => ({ expanded: { ...s.expanded, [key]: !s.expanded[key] } })),
   markSaved: () => set({ dirty: false }),
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null }),
+  togglePreview: () => set((s) => ({ previewOpen: !s.previewOpen })),
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false }),
 }))
