@@ -38,3 +38,16 @@ test('language picker switches the rendered locale', async () => {
   await userEvent.selectOptions(screen.getByLabelText(/language/i), 'pt')
   await waitFor(() => expect(screen.getByText('Como está?', { selector: 'h2.qv-prompt' })).toBeInTheDocument())
 })
+
+test('resolves a prompt from the store pool (default fetcher) and updates on pool edit', async () => {
+  const m = {
+    metadata: { id: 'qst_t', title: 'T', language: 'en', available_languages: ['en'] },
+    pages: [{ id: 'p1', title: 'P', elements: [{ question: { prompt: { ref: 'pr_a@v26.0609.dev1' } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'Q' } } } }] }],
+  } as unknown as Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(m, { kind: 'file', name: 't.json' })
+  useEditorStore.getState().upsertPoolEntity('pr_a@v26.0609.dev1', { id: 'pr_a', content: { en: { status: 'draft', text: 'Hello?' } } })
+  render(<PreviewPane />)   // no injected fetchEntity → uses the default pool fetcher
+  expect(await screen.findByText('Hello?', { selector: 'h2.qv-prompt' })).toBeInTheDocument()
+})
