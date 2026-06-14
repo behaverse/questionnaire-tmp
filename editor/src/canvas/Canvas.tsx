@@ -32,8 +32,8 @@ export function Canvas() {
     && 'shared_option' in selNode && typeof selNode.shared_option === 'object'
   if (isInlineItem || isSharedOptionSection) return <ItemEditor path={sel} />
 
-  const isPoolMessage = !!selNode && kind === 'message' && typeof (selNode as { ref?: unknown }).ref === 'string' && !!pool[(selNode as { ref: string }).ref]
-  if (isPoolMessage) return <MessagePane path={sel} />
+  const isMessageElement = !!selNode && kind === 'message' && typeof (selNode as { ref?: unknown }).ref === 'string'
+  if (isMessageElement) return <MessagePane path={sel} />
 
   if (kind !== 'page' && kind !== 'section' && kind !== 'questionnaire') {
     return <div className="overflow-auto p-6 text-slate-400">This node has no children. Editing item content arrives in ED-C.</div>
