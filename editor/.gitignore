@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-lib
+*.local
+.vite
+tests/e2e/screenshots
+
+# tsc -b composite-project emit (config files emitted next to source)
+*.tsbuildinfo
+vite.config.d.ts
+vite.config.js
+tailwind.config.d.ts
+tailwind.config.js
