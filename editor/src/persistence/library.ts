@@ -1,4 +1,5 @@
 import type { Questionnaire } from '../model/types'
+import type { EntityBody } from '../preview/resolve'
 
 const DEFAULT_BASE = import.meta.env.VITE_LIBRARY_BASE_URL ?? 'https://questionnaire-library.vercel.app'
 
@@ -13,4 +14,35 @@ export async function fetchFromLibrary(id: string, version: string, opts: FetchO
   const obj = (await res.json()) as Questionnaire
   if (!obj?.metadata) throw new Error('Library returned a non-questionnaire payload')
   return obj
+}
+
+const PREFIX_TYPE: Record<string, string> = {
+  pr: 'prompt', opt: 'option', it: 'item', q: 'question', msg: 'message',
+  ctx: 'context', ins: 'instruction', ph: 'placeholder', help: 'help', rx: 'regex', sol: 'solution',
+}
+
+export function parseRef(ref: string): { type: string; id: string; version: string } | null {
+  const at = ref.indexOf('@')
+  if (at < 0) return null
+  const id = ref.slice(0, at)
+  const version = ref.slice(at + 1)
+  const prefix = id.split('_')[0]
+  const type = PREFIX_TYPE[prefix]
+  if (!type || !id || !version) return null
+  return { type, id, version }
+}
+
+export async function fetchEntityBody(ref: string, opts: FetchOpts = {}): Promise<EntityBody | null> {
+  const parsed = parseRef(ref)
+  if (!parsed) return null
+  const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
+  const f = opts.fetchImpl ?? fetch
+  const url = `${base}/v1/entities/${parsed.type}/${parsed.id}?version=${encodeURIComponent(parsed.version)}`
+  try {
+    const res = await f(url)
+    if (!res.ok) return null
+    return (await res.json()) as EntityBody
+  } catch {
+    return null
+  }
 }

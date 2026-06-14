@@ -28,3 +28,28 @@ test('fetchFromLibrary throws on 404', async () => {
   const fakeFetch = (async () => ({ ok: false, status: 404 } as Response)) as unknown as typeof fetch
   await expect(fetchFromLibrary('qst_missing', 'v1', { baseUrl: 'http://lib', fetchImpl: fakeFetch })).rejects.toThrow()
 })
+
+import { parseRef, fetchEntityBody } from './library'
+
+test('parseRef maps prefix → entity type', () => {
+  expect(parseRef('pr_aiss_q_2@v26.0602')).toEqual({ type: 'prompt', id: 'pr_aiss_q_2', version: 'v26.0602' })
+  expect(parseRef('opt_agreement_7@v1')).toEqual({ type: 'option', id: 'opt_agreement_7', version: 'v1' })
+  expect(parseRef('msg_welcome@v1')?.type).toBe('message')
+  expect(parseRef('no_at_sign')).toBeNull()
+})
+
+test('fetchEntityBody requests the typed entity endpoint and returns the body', async () => {
+  const calls: string[] = []
+  const fakeFetch = (async (url: string) => { calls.push(url); return { ok: true, json: async () => ({ id: 'pr_x' }) } as Response }) as unknown as typeof fetch
+  const body = await fetchEntityBody('pr_x@v26.0602', { baseUrl: 'http://lib', fetchImpl: fakeFetch })
+  expect(body).toEqual({ id: 'pr_x' })
+  expect(calls[0]).toContain('/v1/entities/prompt/pr_x')
+  expect(calls[0]).toContain('version=v26.0602')
+})
+
+test('fetchEntityBody returns null on a non-OK response or network error', async () => {
+  const miss = (async () => ({ ok: false, status: 404 } as Response)) as unknown as typeof fetch
+  expect(await fetchEntityBody('pr_x@v1', { baseUrl: 'http://lib', fetchImpl: miss })).toBeNull()
+  const boom = (async () => { throw new Error('offline') }) as unknown as typeof fetch
+  expect(await fetchEntityBody('pr_x@v1', { baseUrl: 'http://lib', fetchImpl: boom })).toBeNull()
+})
