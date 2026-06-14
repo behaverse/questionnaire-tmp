@@ -1,7 +1,63 @@
+import { useEffect, useState } from 'react'
+import { useEditorStore } from '../state/store'
+import { StartScreen } from './StartScreen'
+import { Topbar } from './Topbar'
+import { EditorWorkspace } from './EditorWorkspace'
+import { newQuestionnaire } from '../model/scaffold'
+import { readQuestionnaireFile } from '../persistence/file'
+import { fetchFromLibrary } from '../persistence/library'
+import { saveDraft, loadDraft } from '../persistence/indexeddb'
+
 export function App() {
+  const { model, loadModel, validation } = useEditorStore()
+  const [error, setError] = useState<string | null>(null)
+  const [booting, setBooting] = useState(true)
+
+  // restore autosaved draft on boot
+  useEffect(() => {
+    loadDraft().then((d) => { if (d) loadModel(d.model, d.source) }).finally(() => setBooting(false))
+  }, [loadModel])
+
+  // autosave on model change (debounced)
+  useEffect(() => {
+    if (!model) return
+    const t = setTimeout(() => {
+      const { source } = useEditorStore.getState()
+      if (source) saveDraft(model, source)
+    }, 500)
+    return () => clearTimeout(t)
+  }, [model])
+
+  if (booting) return <main className="flex h-full items-center justify-center text-slate-400">Loading…</main>
+
+  if (!model) {
+    return (
+      <>
+        {error && <div role="alert" className="bg-red-50 p-2 text-sm text-red-700">{error}</div>}
+        <StartScreen
+          onNew={() => loadModel(newQuestionnaire(), { kind: 'new' })}
+          onOpenFile={async (f) => {
+            try { setError(null); loadModel(await readQuestionnaireFile(f), { kind: 'file', name: f.name }) }
+            catch (e) { setError(String(e)) }
+          }}
+          onOpenLibrary={async (id, version) => {
+            try { setError(null); loadModel(await fetchFromLibrary(id, version), { kind: 'library', id, version }) }
+            catch (e) { setError(String(e)) }
+          }}
+        />
+      </>
+    )
+  }
+
   return (
-    <main className="flex h-full items-center justify-center text-slate-700">
-      <h1 className="text-2xl font-semibold">Questionnaire Editor</h1>
-    </main>
+    <div className="flex h-full flex-col">
+      <Topbar onValidate={() => useEditorStore.getState().applyEdit((m) => m)} />
+      {validation && !validation.valid && (
+        <div role="alert" className="border-b border-red-200 bg-red-50 px-4 py-1 text-xs text-red-700">
+          {validation.errors.length} validation issue(s): {validation.errors.slice(0, 3).map((e) => e.message).join('; ')}
+        </div>
+      )}
+      <EditorWorkspace />
+    </div>
   )
 }
