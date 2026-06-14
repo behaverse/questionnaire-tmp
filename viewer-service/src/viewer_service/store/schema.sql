@@ -87,6 +87,7 @@ ALTER TABLE deployment ADD COLUMN IF NOT EXISTS created_by                  text
 ALTER TABLE deployment ADD COLUMN IF NOT EXISTS consent_text_ref            text;
 
 ALTER TABLE session ADD COLUMN IF NOT EXISTS ephemeral boolean NOT NULL DEFAULT false;
+ALTER TABLE session ADD COLUMN IF NOT EXISTS scorer_outputs jsonb;
 
 CREATE TABLE IF NOT EXISTS theme (
   theme_id    text PRIMARY KEY,
