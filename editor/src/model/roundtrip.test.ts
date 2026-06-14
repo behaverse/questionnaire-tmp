@@ -1,3 +1,4 @@
+import minimal from '../__fixtures__/minimal.json'
 import phq9 from '../__fixtures__/phq9.json'
 import kitchensink from '../__fixtures__/kitchensink.json'
 import type { Questionnaire } from './types'
@@ -6,7 +7,7 @@ import { validateQuestionnaire } from './validation'
 import { reorder, deleteNode } from './tree'
 
 test('no-op round-trip is identical and valid', () => {
-  for (const fx of [phq9, kitchensink]) {
+  for (const fx of [minimal, phq9, kitchensink]) {
     const model = parseQuestionnaire(JSON.stringify(fx))
     expect(validateQuestionnaire(model).valid).toBe(true)
     const out = JSON.parse(serializeQuestionnaire(model))
