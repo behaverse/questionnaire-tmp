@@ -94,3 +94,14 @@ test('reorder moves an item forward with arrayMove semantics', () => {
   // [0,1,2,3] -> [1,2,0,3]
   expect(next.pages.map((p) => p.id)).toEqual([ids[1], ids[2], ids[0], ids[3]])
 })
+
+import { unsetNodeProp } from './tree'
+test('unsetNodeProp deletes a key from the node at path (immutably)', () => {
+  const q = base()
+  // give page 0 a marker key, then remove it
+  let next = updateNodeProps(q, ['pages', 0], { x_marker: true })
+  expect((next.pages[0] as Record<string, unknown>).x_marker).toBe(true)
+  next = unsetNodeProp(next, ['pages', 0], 'x_marker')
+  expect('x_marker' in (next.pages[0] as object)).toBe(false)
+  expect((q.pages[0] as Record<string, unknown>).x_marker).toBeUndefined() // original untouched
+})

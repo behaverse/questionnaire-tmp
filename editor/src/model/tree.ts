@@ -95,3 +95,10 @@ export function setBlockPages(model: Questionnaire, blockId: string, pageIds: st
     if (block) block.page_ids = pageIds
   })
 }
+
+export function unsetNodeProp(model: Questionnaire, path: NodePath, key: string): Questionnaire {
+  return produce(model, (draft) => {
+    const node = getAtPath(draft, path) as Record<string, unknown> | undefined
+    if (node) delete node[key]
+  })
+}

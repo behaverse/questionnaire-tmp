@@ -3,8 +3,10 @@ import { getAtPath, nodeKind, pathKey, type NodePath } from '../model/path'
 import { insertNode, deleteNode } from '../model/tree'
 import type { Page, Questionnaire, Section } from '../model/types'
 import { ItemEditor } from './ItemEditor'
+import { MessagePane } from './MessagePane'
 import { collectIds, draftVersion } from '../pool/mint'
 import { buildNewItem } from '../pool/newItem'
+import { buildMessage } from '../pool/newEntities'
 
 function nextSectionId(model: Questionnaire): string {
   const used = new Set<string>()
@@ -30,6 +32,9 @@ export function Canvas() {
     && 'shared_option' in selNode && typeof selNode.shared_option === 'object'
   if (isInlineItem || isSharedOptionSection) return <ItemEditor path={sel} />
 
+  const isMessageElement = !!selNode && kind === 'message' && typeof (selNode as { ref?: unknown }).ref === 'string'
+  if (isMessageElement) return <MessagePane path={sel} />
+
   if (kind !== 'page' && kind !== 'section' && kind !== 'questionnaire') {
     return <div className="overflow-auto p-6 text-slate-400">This node has no children. Editing item content arrives in ED-C.</div>
   }
@@ -54,12 +59,22 @@ export function Canvas() {
     select([...elementsPath, elements.length])
   }
 
+  const addMessage = () => {
+    const { ref, body } = buildMessage(collectIds(model, pool), draftVersion(model.metadata.version as string | undefined), String(model.metadata.language ?? 'en'))
+    upsertPoolEntity(ref, body)
+    applyEdit((m) => insertNode(m, elementsPath, elements.length, { ref }))
+    select([...elementsPath, elements.length])
+  }
+
   return (
     <div className="overflow-auto p-6">
       <div className="mb-4 flex items-center gap-2">
         <h2 className="text-lg font-medium text-slate-800">{node.title ?? (node as Page).id}</h2>
         {(kind === 'page' || kind === 'section') && (
           <button onClick={addItem} className="ml-auto rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add item</button>
+        )}
+        {(kind === 'page' || kind === 'section') && (
+          <button onClick={addMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add message</button>
         )}
         <button onClick={addSection} className={`${kind === 'page' || kind === 'section' ? '' : 'ml-auto '}rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50`}>+ Add section</button>
       </div>

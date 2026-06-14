@@ -119,3 +119,27 @@ test('add a new item, type a prompt, see it in the preview', async ({ page }) =>
 
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-c2a-new-item.png', fullPage: true })
 })
+
+test('add a message + a context to a new item, type both, preview them', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: /new questionnaire/i }).click()
+  await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
+
+  // add a message, fill its text
+  await page.getByRole('button', { name: /add message/i }).click()
+  await page.getByLabel(/message text/i).fill('Welcome to the study')
+
+  // add an item, add a context to it, fill prompt + context
+  await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
+  await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByLabel(/prompt text/i).fill('How do you feel?')
+  await page.getByRole('button', { name: /add context/i }).click()
+  await page.getByLabel(/context text/i).fill('Think about the past week.')
+
+  // preview shows the prompt + context
+  await page.getByRole('button', { name: /preview/i }).click()
+  const preview = page.getByRole('region', { name: /preview/i })
+  await expect(preview.locator('h2.qv-prompt', { hasText: 'How do you feel?' })).toBeVisible()
+
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-c2b-context-message.png', fullPage: true })
+})
