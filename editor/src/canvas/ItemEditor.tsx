@@ -10,7 +10,7 @@ import { buildContext, buildInstruction } from '../pool/newEntities'
 import { collectIds, draftVersion } from '../pool/mint'
 
 export function ItemEditor({ path }: { path: NodePath }) {
-  const { model, applyEdit, pool, upsertPoolEntity, removePoolEntity } = useEditorStore()
+  const { model, applyEdit, pool, upsertPoolEntity, removePoolEntity, openPicker } = useEditorStore()
   if (!model) return null
   const node = getAtPath(model, path) as Record<string, unknown>
   const locale = String(model.metadata.language ?? 'en')
@@ -33,6 +33,21 @@ export function ItemEditor({ path }: { path: NodePath }) {
   const poolCtx = ctxRef ? (pool[ctxRef] as ContextBody | undefined) : undefined
   const poolIns = insRef ? (pool[insRef] as InstructionBody | undefined) : undefined
 
+  const pickInto = (slotKey: 'prompt' | 'context' | 'instruction', etype: string) => {
+    const prev = (question?.[slotKey] as { ref?: string } | undefined)?.ref
+    openPicker(etype, (ref) => {
+      applyEdit((m) => updateNodeProps(m, questionPath, { [slotKey]: { ref } }))
+      if (prev && pool[prev]) removePoolEntity(prev) // drop the orphaned pool draft we replaced
+    })
+  }
+  const pickOption = () => {
+    const prev = typeof option === 'object' && option && 'ref' in option ? (option as { ref: string }).ref : undefined
+    openPicker('option', (ref) => {
+      applyEdit((m) => updateNodeProps(m, path, { [optionKey]: { ref } }))
+      if (prev && pool[prev]) removePoolEntity(prev)
+    })
+  }
+
   const addContext = () => { const { ref, body } = buildContext(ids(), dv(), locale); upsertPoolEntity(ref, body); applyEdit((m) => updateNodeProps(m, questionPath, { context: { ref } })) }
   const removeContext = () => { applyEdit((m) => unsetNodeProp(m, questionPath, 'context')); if (ctxRef) removePoolEntity(ctxRef) }
   const addInstruction = () => { const { ref, body } = buildInstruction(ids(), dv(), locale); upsertPoolEntity(ref, body); applyEdit((m) => updateNodeProps(m, questionPath, { instruction: { ref } })) }
@@ -42,7 +57,10 @@ export function ItemEditor({ path }: { path: NodePath }) {
     <div className="overflow-auto p-6">
       {promptRef && (
         <div className="mb-4">
-          <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Question</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Question</span>
+            <button onClick={() => pickInto('prompt', 'prompt')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick prompt</button>
+          </div>
           {poolPrompt ? (
             <div className="mt-2">
               <PromptEditor prompt={poolPrompt} locale={locale} onChange={(p) => upsertPoolEntity(promptRef, p)} />
@@ -61,6 +79,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Context</span>
               {!ctxRef && <button onClick={addContext} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add context</button>}
+              {!ctxRef && <button onClick={() => pickInto('context', 'context')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick context</button>}
               {ctxRef && poolCtx && <button onClick={removeContext} className="text-xs text-slate-400 hover:text-red-600">Remove context</button>}
             </div>
             {ctxRef && (poolCtx
@@ -71,6 +90,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Instruction</span>
               {!insRef && <button onClick={addInstruction} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add instruction</button>}
+              {!insRef && <button onClick={() => pickInto('instruction', 'instruction')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick instruction</button>}
               {insRef && poolIns && <button onClick={removeInstruction} className="text-xs text-slate-400 hover:text-red-600">Remove instruction</button>}
             </div>
             {insRef && (poolIns
@@ -79,7 +99,10 @@ export function ItemEditor({ path }: { path: NodePath }) {
           </div>
         </div>
       )}
-      <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Response (Option)</span>
+      <div className="flex items-center gap-2">
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Response (Option)</span>
+        {question && <button onClick={pickOption} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick option</button>}
+      </div>
       {isInlineOption ? (
         <div className="mt-2">
           <OptionEditor option={option as EditableOption} locale={locale}

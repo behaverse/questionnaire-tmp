@@ -81,3 +81,23 @@ test('Remove context unsets the ref and drops the pool entity', async () => {
   expect(q.context).toBeUndefined()
   expect(useEditorStore.getState().pool[ctxRef]).toBeUndefined()
 })
+
+test('Pick prompt opens the picker; the onPick sets a Library ref', async () => {
+  const ref = 'pr_p@v26.0609.dev1'
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'page_1', title: 'P', elements: [{ question: { prompt: { ref } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as import('../model/types').Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
+  useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Q' } } })
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  await userEvent.click(screen.getByRole('button', { name: /pick prompt/i }))
+  // the picker opened with etype 'prompt'; simulate the pick
+  expect(useEditorStore.getState().picker?.etype).toBe('prompt')
+  useEditorStore.getState().picker!.onPick('pr_lib@v26.0609')
+  const q = (useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }).question
+  expect(q.prompt.ref).toBe('pr_lib@v26.0609')
+  expect(useEditorStore.getState().pool['pr_p@v26.0609.dev1']).toBeUndefined()
+})

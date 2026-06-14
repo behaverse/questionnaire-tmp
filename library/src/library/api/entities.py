@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import JSONResponse
 from .deps import get_conn
 from .. import query
 from ..models import Paginated, EntitySummary
@@ -41,6 +42,22 @@ def get_entity_version(etype: str, eid: str, version: str, conn=Depends(get_conn
     if row is None:
         raise HTTPException(status_code=404, detail="entity version not found")
     return EntitySummary(**row)
+
+@router.get("/entities/{etype}/{eid}/versions/{version}/definition")
+def entity_definition(etype: str, eid: str, version: str, conn=Depends(get_conn)):
+    if etype not in ENTITY_TYPES:
+        raise HTTPException(status_code=404, detail="unknown entity type")
+    row = conn.execute(
+        "SELECT status, content_json, withdrawn_at FROM entity WHERE id=%s AND version=%s",
+        (eid, version)).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="not found")
+    status, content_json, withdrawn_at = row
+    if status == "withdrawn" or content_json is None:
+        return JSONResponse(status_code=410, content={
+            "error": {"code": "gone", "message": "withdrawn",
+                      "withdrawn_at": withdrawn_at.isoformat() if withdrawn_at else None}})
+    return content_json
 
 @router.get("/entities/{etype}/{eid}/versions/{version}/dependents", response_model=Paginated)
 def dependents(etype: str, eid: str, version: str, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):

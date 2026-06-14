@@ -176,3 +176,37 @@ Help are inline-editable inside the Option editor); add if a need arises.
 
 ED-C1 FOLLOWUP (q) — the shared-option-section child list — is **still open**; not addressed
 in C2b.
+
+# ED-C3a Follow-ups
+
+Known limitations and open items carried out of ED-C3a (pick from Library).
+
+## (aa) ED-B (g) RESOLVED — Library entity-body endpoint now exists
+
+ED-B FOLLOWUP (g) is **resolved**: the Library per-entity body endpoint now exists
+(`GET /v1/entities/{etype}/{eid}/versions/{version}/definition`) and `fetchEntityBody` uses
+it (the old `?version=` query path returned metadata). Library-pinned (`{ref}`) entities now
+preview correctly.
+
+## (bb) Deploy needed — live Library must be redeployed
+
+The live Vercel Library must be **redeployed** to expose the new entity-body endpoint before
+pick-from-Library works against the live API. The editor unit tests and the Playwright smoke
+**stub** the endpoint, so they pass regardless.
+
+## (cc) Picks pin the latest version — version selection is ED-C3b
+
+C3a pins the **latest** version surfaced at pick time. Explicit version selection +
+newer-version detection / upgrade is **ED-C3b** (OD-06).
+
+## (dd) Picked refs are read-only; the picker is focused, not the catalogue
+
+Picked refs are **read-only** in the editor (forking / editing a referenced entity is
+**ED-C4**); the picker has no facets / instrument-grouping (it is a focused picker, not the
+library-web catalogue browse).
+
+## (ee) ItemEditor RefSlot refactor (forward-looking)
+
+The prompt / context / instruction / option slots in `ItemEditor` are near-identical
+Add / Pick / Remove + pool-editor-vs-fork-box blocks; a `<RefSlot>` sub-component would dedupe
+them. Do this when **ED-C4**'s fork affordance grows these blocks.

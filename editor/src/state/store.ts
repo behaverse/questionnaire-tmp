@@ -15,6 +15,7 @@ interface EditorState {
   validation: { valid: boolean; errors: ValidationError[] } | null
   previewOpen: boolean
   pool: Record<string, EntityBody>
+  picker: { etype: string; onPick: (ref: string) => void } | null
   loadModel: (model: Questionnaire, source: Source, pool?: Record<string, EntityBody>) => void
   upsertPoolEntity: (ref: string, body: EntityBody) => void
   removePoolEntity: (ref: string) => void
@@ -24,6 +25,8 @@ interface EditorState {
   toggleExpanded: (key: string) => void
   markSaved: () => void
   togglePreview: () => void
+  openPicker: (etype: string, onPick: (ref: string) => void) => void
+  closePicker: () => void
   reset: () => void
 }
 
@@ -36,6 +39,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   validation: null,
   previewOpen: false,
   pool: {},
+  picker: null,
   loadModel: (model, source, pool) =>
     set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {} }),
   upsertPoolEntity: (ref, body) => set((s) => ({ pool: { ...s.pool, [ref]: body } })),
@@ -61,5 +65,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   toggleExpanded: (key) => set((s) => ({ expanded: { ...s.expanded, [key]: !s.expanded[key] } })),
   markSaved: () => set({ dirty: false }),
   togglePreview: () => set((s) => ({ previewOpen: !s.previewOpen })),
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {} }),
+  openPicker: (etype, onPick) => set({ picker: { etype, onPick } }),
+  closePicker: () => set({ picker: null }),
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null }),
 }))

@@ -7,10 +7,13 @@ import { newQuestionnaire } from '../model/scaffold'
 import { readQuestionnaireFile } from '../persistence/file'
 import { fetchFromLibrary } from '../persistence/library'
 import { saveDraft, loadDraft } from '../persistence/indexeddb'
+import { LibraryPicker } from '../library/LibraryPicker'
 
 export function App() {
   const { model, loadModel, validation } = useEditorStore()
   const pool = useEditorStore((s) => s.pool)
+  const picker = useEditorStore((s) => s.picker)
+  const closePicker = useEditorStore((s) => s.closePicker)
   const [error, setError] = useState<string | null>(null)
   const [booting, setBooting] = useState(true)
 
@@ -59,6 +62,10 @@ export function App() {
         </div>
       )}
       <EditorWorkspace />
+      {picker && model && (
+        <LibraryPicker etype={picker.etype} locale={String(model.metadata.language ?? 'en')}
+                       onPick={(ref) => { picker.onPick(ref); closePicker() }} onClose={closePicker} />
+      )}
     </div>
   )
 }

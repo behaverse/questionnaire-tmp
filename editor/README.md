@@ -1,6 +1,6 @@
-# Questionnaire Editor — ED-A + ED-B + ED-C1 + ED-C2a + ED-C2b
+# Questionnaire Editor — ED-A + ED-B + ED-C1 + ED-C2a + ED-C2b + ED-C3a
 
-The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), and **ED-C2b** (Context / Instruction + Message authoring) are shipped; see the decomposition table below.
+The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), **ED-C2b** (Context / Instruction + Message authoring), and **ED-C3a** (pick from Library) are shipped; see the decomposition table below.
 
 ED-A is the structural foundation of the custom React + TypeScript questionnaire **Editor** — the authoring tool researchers use to create, adapt, version, and translate questionnaires, producing canonical Schema 2 JSON. ED-A ships a static SPA (Vite · React 19 · TypeScript · Tailwind; Zustand + Immer state; dnd-kit; Ajv in-browser validation) with **no backend**: it opens/creates/loads/saves a Schema-2 questionnaire, renders the five-concept structure tree (Block ▸ Page ▸ Section ▸ Item/Message) in a 3-pane shell, lets you restructure + edit metadata, validates, and exports canonical JSON that round-trips Schema-2-valid. Persistence is browser-local (IndexedDB autosave) plus file open/save and open-from-Library.
 
@@ -22,7 +22,7 @@ The Playwright smoke (`tests/e2e/smoke.spec.ts`) boots the built+previewed app, 
 
 The topbar `▢ Preview` button opens a split-pane WYSIWYG preview that renders the loaded questionnaire using the **Web Viewer renderer library** (`@behaverse/questionnaire-renderer`, OD-03) — the same component the live Web Viewer ships. The renderer is built from `web-viewer/dist-lib` and made available via the `ensure-renderer` prepare step (the `predev` / `prebuild` / `pretest` / `pretypecheck` hooks run `scripts/ensure-renderer.mjs`) plus a Vite alias.
 
-The preview re-renders live on edit, and exposes **language**, **device-frame**, and **scope** (selected page / whole questionnaire) pickers. Leaf `{ref}` entity bodies (prompts, options, etc.) are resolved on demand against the Library via `fetchEntityBody` — `GET {base}/v1/entities/{type}/{id}?version=` — debounced and cached per `ref@version` in-memory for the session.
+The preview re-renders live on edit, and exposes **language**, **device-frame**, and **scope** (selected page / whole questionnaire) pickers. Leaf `{ref}` entity bodies (prompts, options, etc.) are resolved on demand against the Library via `fetchEntityBody` — `GET {base}/v1/entities/{type}/{id}/versions/{version}/definition` (the per-entity body endpoint added in ED-C3a) — debounced and cached per `ref@version` in-memory for the session.
 
 The preview is **static structural** only: it renders every element unconditionally. Logic (`show_if` / skip / branching / piping), validation, and scoring are **not** evaluated in the preview — those arrive in **ED-D** when the expression evaluator + logic engine are wired into the preview.
 
@@ -57,6 +57,16 @@ ED-C2b extends new-content authoring beyond Prompts to the remaining content-bea
 - **Add a standalone Message to a page** — selecting a page or section shows **`+ Add message`** beside `+ Add item`. It mints a draft `Message` (`msg_new_<n>`, default `type: ['information']`) and appends a `MessageRef` element, selecting it to open the **MessagePane**: a comma-separated `type`-tag input + per-locale **Message text** field.
 - **Live preview + bundle export** — Context / Instruction / Message all resolve through the same pool-first preview path and export inside the `{ questionnaire, entities }` bundle. Library-pinned (`{ref}`) Context / Instruction / Message bodies show a read-only "fork to edit (ED-C4)" note.
 
+## ED-C3a — pick from Library
+
+ED-C3a lets an author insert an **existing Library entity** into a slot instead of authoring a new pool draft. A modal **Library picker** (`src/library/LibraryPicker.tsx`) opens, searches the Library by entity type, shows a content snippet of the selected entity, and inserts a **hard-pinned `@vYY.MMDD` ref** on confirm:
+
+- **Where it opens** — per-slot **Pick from Library** buttons in the ItemEditor (`Pick prompt` / `Pick option` / `Pick context` / `Pick instruction`), and the page/section **`+ Pick item`** / **`+ Pick message`** actions in the Canvas.
+- **Search → snippet → insert** — type in the **Search** field (debounced) to list matching entities (`searchEntities` → `GET /v1/entities/{etype}?q=…`); selecting one fetches its body and shows a per-locale **content snippet** (prompt/option text or label); **Insert** pins `id@version` into the slot. Picking a slot that held a pool draft drops the orphaned draft.
+- **Hard-pinned latest** — C3a pins the **latest** version surfaced at pick time. Explicit version selection + newer-version detection/upgrade (OD-06) is **ED-C3b**.
+- **Read-only + live preview** — picked refs are **read-only** in the editor (forking / editing a referenced entity is **ED-C4**); they preview live via the same resolver, now fixed (ED-B FOLLOWUP (g)).
+- **Library endpoint dependency** — the picker's snippet and the preview both rely on the new per-entity **body endpoint** `GET /v1/entities/{etype}/{eid}/versions/{version}/definition` (added in `library/`). `fetchEntityBody` now targets this versioned `/definition` path (the old `?version=` query path returned metadata, which broke the ED-B Library-ref preview). The live Vercel Library must be redeployed to expose it (tests + the Playwright smoke stub it).
+
 ## Environment variables
 
 | Var | Default | Purpose |
@@ -89,9 +99,10 @@ Build order: **ED-A → ED-B → ED-C → ED-D → ED-E → ED-F**.
 - **Edit an existing inline Option** (ED-C1): select an inline item or a matrix section's shared option → the type-aware Option editor (type triple, choice rows, numeric bounds, text validation, inline placeholder/help, derived-widget hint) opens in the canvas; edits round-trip valid + the preview updates live.
 - **Author new items + Prompts** (ED-C2a): `+ Add item` mints a draft Prompt into the local entity pool (`.devN` versions), edit its text + metadata (`PromptEditor`) in the canvas, see it live in the pool-resolved preview; the pool persists in the draft and exports as a `{questionnaire, entities}` bundle (`Export bundle`).
 - **Author new Context / Instruction / Message** (ED-C2b): add a Context and/or an Instruction (with a `dimension`) to a question, and standalone Messages (with `type` tags + text) to a page (`+ Add message`); all are draft pool entities that live-preview and ride along in the bundle export; remove drops the per-add pool entity.
+- **Pick from Library** (ED-C3a): a modal picker (search by entity type + content snippet) opens from per-slot **Pick from Library** buttons (prompt / option / context / instruction) and the page **`+ Pick item`** / **`+ Pick message`** actions; inserts a hard-pinned latest `@vYY.MMDD` ref that previews live and is read-only. Relies on the new Library per-entity body endpoint (which also fixed the ED-B Library-ref preview).
 
 **Doesn't yet (deferred):**
-- Pick-from-Library (embedded read-only browser) → **ED-C3**.
+- Explicit version selection + newer-version detection/upgrade for picked refs (picks pin the **latest**) → **ED-C3b** (OD-06).
 - Forking / editing a **referenced** (Library-pinned) Option / Prompt / Context / Instruction / Message or saved-Item ref → **ED-C4** (read-only note for now).
 - Standalone **Placeholder / Help / RegEx / Solution** editors (Placeholder / Help are inline-editable inside the Option editor) → later.
 - Live logic / branching / scoring / validation **in the preview** (the preview is static structural — every element renders unconditionally) → **ED-D**.

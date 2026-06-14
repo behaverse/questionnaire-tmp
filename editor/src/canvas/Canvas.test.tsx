@@ -64,3 +64,15 @@ test('Add message mints a pool message and appends a MessageRef element', async 
   expect(added.ref).toMatch(/^msg_new_\d+@/)
   expect(st.pool[added.ref!]).toBeTruthy()
 })
+
+test('Pick item opens the item picker; onPick inserts a saved-item ref', async () => {
+  useEditorStore.getState().select(['pages', 0])
+  render(<Canvas />)
+  const before = useEditorStore.getState().model!.pages[0].elements.length
+  await userEvent.click(screen.getByRole('button', { name: /pick item/i }))
+  expect(useEditorStore.getState().picker?.etype).toBe('item')
+  useEditorStore.getState().picker!.onPick('it_lib@v26.0609')
+  const els = useEditorStore.getState().model!.pages[0].elements
+  expect(els.length).toBe(before + 1)
+  expect((els[before] as { ref: string }).ref).toBe('it_lib@v26.0609')
+})
