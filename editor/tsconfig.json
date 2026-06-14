@@ -13,7 +13,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "types": []
+    "types": [],
+    "baseUrl": ".",
+    "paths": { "@behaverse/questionnaire-renderer": ["../web-viewer/dist-lib/lib.d.ts"] }
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/vitest.setup.ts"],
