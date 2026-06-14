@@ -56,3 +56,15 @@ test('togglePreview flips previewOpen', () => {
   st.togglePreview()
   expect(useEditorStore.getState().previewOpen).toBe(true)
 })
+
+test('upsert/remove pool entity; loadModel seeds the pool; reset clears it', () => {
+  const st = useEditorStore.getState()
+  st.loadModel(phq9 as Questionnaire, { kind: 'file', name: 'phq9.json' }, { 'pr_x@v26.0609.dev1': { id: 'pr_x' } })
+  expect(useEditorStore.getState().pool['pr_x@v26.0609.dev1']).toEqual({ id: 'pr_x' })
+  st.upsertPoolEntity('pr_y@v26.0609.dev1', { id: 'pr_y' })
+  expect(useEditorStore.getState().pool['pr_y@v26.0609.dev1']).toEqual({ id: 'pr_y' })
+  st.removePoolEntity('pr_x@v26.0609.dev1')
+  expect(useEditorStore.getState().pool['pr_x@v26.0609.dev1']).toBeUndefined()
+  st.reset()
+  expect(useEditorStore.getState().pool).toEqual({})
+})

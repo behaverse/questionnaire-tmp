@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Questionnaire } from '../model/types'
+import type { Questionnaire, EntityBody } from '../model/types'
 import { getAtPath, type NodePath } from '../model/path'
 import { validateQuestionnaire, type ValidationError } from '../model/validation'
 import type { Source } from './types'
@@ -14,7 +14,10 @@ interface EditorState {
   dirty: boolean
   validation: { valid: boolean; errors: ValidationError[] } | null
   previewOpen: boolean
-  loadModel: (model: Questionnaire, source: Source) => void
+  pool: Record<string, EntityBody>
+  loadModel: (model: Questionnaire, source: Source, pool?: Record<string, EntityBody>) => void
+  upsertPoolEntity: (ref: string, body: EntityBody) => void
+  removePoolEntity: (ref: string) => void
   applyEdit: (fn: (model: Questionnaire) => Questionnaire) => void
   revalidate: () => void
   select: (path: NodePath | null) => void
@@ -32,8 +35,11 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   dirty: false,
   validation: null,
   previewOpen: false,
-  loadModel: (model, source) =>
-    set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model) }),
+  pool: {},
+  loadModel: (model, source, pool) =>
+    set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {} }),
+  upsertPoolEntity: (ref, body) => set((s) => ({ pool: { ...s.pool, [ref]: body } })),
+  removePoolEntity: (ref) => set((s) => { const p = { ...s.pool }; delete p[ref]; return { pool: p } }),
   applyEdit: (fn) => {
     const { model: cur, selection } = get()
     if (!cur) return
@@ -55,5 +61,5 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   toggleExpanded: (key) => set((s) => ({ expanded: { ...s.expanded, [key]: !s.expanded[key] } })),
   markSaved: () => set({ dirty: false }),
   togglePreview: () => set((s) => ({ previewOpen: !s.previewOpen })),
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false }),
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {} }),
 }))

@@ -15,3 +15,11 @@ test('clearDraft removes it', async () => {
   await clearDraft()
   expect(await loadDraft()).toBeNull()
 })
+
+test('saveDraft persists the pool; loadDraft returns it (empty for legacy)', async () => {
+  await saveDraft(phq9 as Questionnaire, { kind: 'new' }, { 'pr_x@v26.0609.dev1': { id: 'pr_x' } })
+  const d = await loadDraft()
+  expect(d?.entities).toEqual({ 'pr_x@v26.0609.dev1': { id: 'pr_x' } })
+  await saveDraft(phq9 as Questionnaire, { kind: 'new' }) // no pool arg
+  expect((await loadDraft())?.entities).toEqual({})
+})

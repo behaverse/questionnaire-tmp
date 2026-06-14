@@ -3,6 +3,8 @@ import { getAtPath, nodeKind, pathKey, type NodePath } from '../model/path'
 import { insertNode, deleteNode } from '../model/tree'
 import type { Page, Questionnaire, Section } from '../model/types'
 import { ItemEditor } from './ItemEditor'
+import { collectIds, draftVersion } from '../pool/mint'
+import { buildNewItem } from '../pool/newItem'
 
 function nextSectionId(model: Questionnaire): string {
   const used = new Set<string>()
@@ -13,7 +15,7 @@ function nextSectionId(model: Questionnaire): string {
 }
 
 export function Canvas() {
-  const { model, selection, applyEdit, select } = useEditorStore()
+  const { model, selection, applyEdit, select, pool, upsertPoolEntity } = useEditorStore()
   if (!model) return null
   const sel = selection && getAtPath(model, selection) !== undefined ? selection : null
   if (!sel) return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree.</div>
@@ -42,11 +44,24 @@ export function Canvas() {
     applyEdit((m) => insertNode(m, elementsPath, elements.length, section))
   }
 
+  const addItem = () => {
+    const ids = collectIds(model, pool)
+    const draftVer = draftVersion(model.metadata.version as string | undefined)
+    const locale = String(model.metadata.language ?? 'en')
+    const { promptRef, promptBody, item } = buildNewItem(ids, draftVer, locale)
+    upsertPoolEntity(promptRef, promptBody)
+    applyEdit((m) => insertNode(m, elementsPath, elements.length, item))
+    select([...elementsPath, elements.length])
+  }
+
   return (
     <div className="overflow-auto p-6">
       <div className="mb-4 flex items-center gap-2">
         <h2 className="text-lg font-medium text-slate-800">{node.title ?? (node as Page).id}</h2>
-        <button onClick={addSection} className="ml-auto rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add section</button>
+        {(kind === 'page' || kind === 'section') && (
+          <button onClick={addItem} className="ml-auto rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add item</button>
+        )}
+        <button onClick={addSection} className={`${kind === 'page' || kind === 'section' ? '' : 'ml-auto '}rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50`}>+ Add section</button>
       </div>
       <ul className="space-y-2">
         {elements.map((el, i) => {

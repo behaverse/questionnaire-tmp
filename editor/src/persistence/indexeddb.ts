@@ -1,4 +1,4 @@
-import type { Questionnaire } from '../model/types'
+import type { Questionnaire, EntityBody } from '../model/types'
 import type { Source, Draft } from '../state/types'
 
 const DB_NAME = 'behaverse-editor'
@@ -29,14 +29,14 @@ async function tx<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBReq
   })
 }
 
-export async function saveDraft(model: Questionnaire, source: Source): Promise<void> {
-  const draft: Draft = { model, source, savedAt: Date.now() }
+export async function saveDraft(model: Questionnaire, source: Source, pool: Record<string, EntityBody> = {}): Promise<void> {
+  const draft: Draft = { model, source, savedAt: Date.now(), entities: pool }
   await tx('readwrite', (s) => s.put(draft, KEY))
 }
 
 export async function loadDraft(): Promise<Draft | null> {
   const res = await tx<Draft | undefined>('readonly', (s) => s.get(KEY))
-  return res ?? null
+  return res ? { ...res, entities: res.entities ?? {} } : null
 }
 
 export async function clearDraft(): Promise<void> {

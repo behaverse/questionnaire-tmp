@@ -27,7 +27,9 @@ test('open a file → select → export → screenshot', async ({ page }) => {
 
   const [download] = await Promise.all([
     page.waitForEvent('download'),
-    page.getByRole('button', { name: /export/i }).click(),
+    // exact name: an "Export bundle" button now also exists (ED-C2a), so a loose
+    // /export/i regex matches two buttons (strict-mode violation).
+    page.getByRole('button', { name: 'Export', exact: true }).click(),
   ])
   const path = await download.path()
   const json = JSON.parse(readFileSync(path!, 'utf8'))
@@ -90,4 +92,30 @@ test('select an inline item → Option editor → add a choice → screenshot', 
   await expect(page.getByLabel('Label for choice 3')).toBeVisible()
 
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-c1-option-editor.png', fullPage: true })
+})
+
+test('add a new item, type a prompt, see it in the preview', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: /new questionnaire/i }).click()
+  await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
+
+  // select page 1 in the tree, then add an item
+  await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
+  await page.getByRole('button', { name: /add item/i }).click()
+
+  // PromptEditor appears; type a prompt. Playwright exposes getByLabel (not
+  // getByLabelText, which is Testing Library only).
+  const promptText = page.getByLabel(/prompt text/i)
+  await expect(promptText).toBeVisible()
+  await promptText.fill('How are you today?')
+
+  // open preview → the new prompt renders (pool-resolved). The renderer emits a
+  // visible <h2 class="qv-prompt"> with the prompt text; scope to it to avoid a
+  // strict-mode match against the sr-only <legend>.
+  await page.getByRole('button', { name: /preview/i }).click()
+  await expect(
+    page.getByRole('region', { name: /preview/i }).locator('h2.qv-prompt', { hasText: 'How are you today?' }),
+  ).toBeVisible()
+
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-c2a-new-item.png', fullPage: true })
 })
