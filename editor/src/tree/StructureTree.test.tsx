@@ -17,3 +17,9 @@ test('renders a row per page and selecting one updates the store', async () => {
   await userEvent.click(row)
   expect(useEditorStore.getState().selection).toEqual(['pages', 0])
 })
+
+test('New block adds a block to the model', async () => {
+  render(<StructureTree />)
+  await userEvent.click(screen.getByRole('button', { name: /\+ block/i }))
+  expect(useEditorStore.getState().model!.blocks?.length).toBe(1)
+})

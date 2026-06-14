@@ -19,20 +19,42 @@ function elementLabel(el: Record<string, unknown>): string {
 
 export function buildTreeRows(q: Questionnaire): TreeRow[] {
   const rows: TreeRow[] = []
-  q.pages.forEach((page, pi) => {
-    rows.push({ key: pathKey(['pages', pi]), path: ['pages', pi], kind: 'page', depth: 0, label: page.title ?? page.id })
+  const pageIndexById = new Map(q.pages.map((p, i) => [p.id, i] as const))
+  const grouped = new Set<string>()
+
+  const emitPage = (pi: number, depth: number) => {
+    const page = q.pages[pi]
+    rows.push({ key: pathKey(['pages', pi]), path: ['pages', pi], kind: 'page', depth, label: page.title ?? page.id })
     page.elements.forEach((el, ei) => {
       const path: NodePath = ['pages', pi, 'elements', ei]
       const kind = nodeKind(q, path)
-      rows.push({ key: pathKey(path), path, kind, depth: 1, label: elementLabel(el as Record<string, unknown>) })
+      rows.push({ key: pathKey(path), path, kind, depth: depth + 1, label: elementLabel(el as Record<string, unknown>) })
       if (kind === 'section') {
         const sec = el as { elements?: Record<string, unknown>[] }
         sec.elements?.forEach((sub, si) => {
           const subPath: NodePath = ['pages', pi, 'elements', ei, 'elements', si]
-          rows.push({ key: pathKey(subPath), path: subPath, kind: nodeKind(q, subPath), depth: 2, label: elementLabel(sub) })
+          rows.push({ key: pathKey(subPath), path: subPath, kind: nodeKind(q, subPath), depth: depth + 2, label: elementLabel(sub) })
         })
       }
     })
+  }
+
+  const blocks = q.blocks ?? []
+  blocks.forEach((block, bi) => {
+    rows.push({ key: pathKey(['blocks', bi]), path: ['blocks', bi], kind: 'block', depth: 0, label: block.title ?? block.id })
+    block.page_ids.forEach((pid) => {
+      if (grouped.has(pid)) return
+      const pi = pageIndexById.get(pid)
+      if (pi === undefined) return
+      grouped.add(pid)
+      emitPage(pi, 1)
+    })
   })
+
+  q.pages.forEach((p, pi) => {
+    if (grouped.has(p.id)) return
+    emitPage(pi, blocks.length > 0 ? 0 : 0)
+  })
+
   return rows
 }

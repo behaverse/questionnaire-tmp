@@ -1,12 +1,12 @@
 import type { JSX } from 'react'
 import { useEditorStore } from '../state/store'
 import { getAtPath, nodeKind } from '../model/path'
-import { updateMetadata, updateNodeProps } from '../model/tree'
+import { updateMetadata, updateNodeProps, setBlockPages, deleteBlock } from '../model/tree'
 import { TextField } from './fields'
 import type { Block, Page, Section } from '../model/types'
 
 export function Inspector() {
-  const { model, selection, applyEdit } = useEditorStore()
+  const { model, selection, applyEdit, select } = useEditorStore()
   if (!model) return null
   const sel = selection && getAtPath(model, selection) !== undefined ? selection : null
   const kind = sel ? nodeKind(model, sel) : 'questionnaire'
@@ -40,7 +40,31 @@ export function Inspector() {
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-slate-700">Block</h3>
         <TextField label="Block title" value={node.title ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { title: v }))} />
-        <p className="text-xs text-slate-400">Pages in this block: {node.page_ids.join(', ') || '(none)'}</p>
+        <TextField label="Id" value={node.id} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { id: v }))} />
+        <div>
+          <span className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">Pages in this block</span>
+          <ul className="space-y-1">
+            {model.pages.map((p) => {
+              const inBlock = node.page_ids.includes(p.id)
+              return (
+                <li key={p.id} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={inBlock}
+                    aria-label={`Include ${p.title ?? p.id}`}
+                    onChange={() => applyEdit((mm) => setBlockPages(mm, node.id,
+                      inBlock ? node.page_ids.filter((x) => x !== p.id) : [...node.page_ids, p.id]))}
+                  />
+                  <span className="truncate">{p.title ?? p.id}</span>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+        <button
+          onClick={() => { const id = node.id; select(null); applyEdit((mm) => deleteBlock(mm, id)) }}
+          className="rounded border border-red-300 px-2 py-1 text-sm text-red-700 hover:bg-red-50"
+        >Delete block</button>
       </div>
     )
   } else {

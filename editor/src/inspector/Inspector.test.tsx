@@ -35,3 +35,16 @@ test('item selected → refs shown read-only with an ED-C note', () => {
   render(<Inspector />)
   expect(screen.getByText(/ED-C/i)).toBeInTheDocument()
 })
+
+test('block selected → toggling a page updates membership', async () => {
+  const st = useEditorStore.getState()
+  // create a block then select it
+  const { createBlock } = await import('../model/tree')
+  st.applyEdit((m) => createBlock(m, { id: 'blk_t', title: 'T', page_ids: [] }))
+  const bi = (st.model!.blocks?.length ?? 1) - 1
+  st.select(['blocks', bi])
+  render(<Inspector />)
+  const firstPage = useEditorStore.getState().model!.pages[0]
+  await userEvent.click(screen.getByLabelText(new RegExp(`include ${firstPage.title ?? firstPage.id}`, 'i')))
+  expect(useEditorStore.getState().model!.blocks![bi].page_ids).toContain(firstPage.id)
+})
