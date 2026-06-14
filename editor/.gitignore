@@ -4,6 +4,9 @@ dist-lib
 *.local
 .vite
 tests/e2e/screenshots
+test-results
+playwright-report
+playwright/.cache
 
 # tsc -b composite-project emit (config files emitted next to source)
 *.tsbuildinfo
