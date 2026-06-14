@@ -7,26 +7,28 @@ import { newQuestionnaire } from '../model/scaffold'
 import { readQuestionnaireFile } from '../persistence/file'
 import { fetchFromLibrary } from '../persistence/library'
 import { saveDraft, loadDraft } from '../persistence/indexeddb'
+import type { EntityBody } from '../model/types'
 
 export function App() {
   const { model, loadModel, validation } = useEditorStore()
+  const pool = useEditorStore((s) => s.pool)
   const [error, setError] = useState<string | null>(null)
   const [booting, setBooting] = useState(true)
 
   // restore autosaved draft on boot
   useEffect(() => {
-    loadDraft().then((d) => { if (d) loadModel(d.model, d.source) }).finally(() => setBooting(false))
+    loadDraft().then((d) => { if (d) loadModel(d.model, d.source, d.entities as Record<string, EntityBody>) }).finally(() => setBooting(false))
   }, [loadModel])
 
-  // autosave on model change (debounced)
+  // autosave on model/pool change (debounced)
   useEffect(() => {
     if (!model) return
     const t = setTimeout(() => {
-      const { source } = useEditorStore.getState()
-      if (source) saveDraft(model, source)
+      const { source, pool } = useEditorStore.getState()
+      if (source) saveDraft(model, source, pool)
     }, 500)
     return () => clearTimeout(t)
-  }, [model])
+  }, [model, pool])
 
   if (booting) return <main className="flex h-full items-center justify-center text-slate-400">Loading…</main>
 
