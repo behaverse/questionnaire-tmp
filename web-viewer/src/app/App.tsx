@@ -13,7 +13,7 @@ import { pipedText } from '../logic/piping'
 import { validateStep } from '../logic/validation'
 import { visibleEntries } from '../logic/visibility'
 import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
-import { completeSession, getRuntime, getSession, mintSession, parseParams, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { completeSession, getRuntime, getSession, mintSession, parseParams, submitScorerOutputs, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
 import { isFramed, observeHeight, postToHost } from './embed'
 import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
@@ -21,8 +21,10 @@ import { ErrorScreen } from './chrome/ErrorScreen'
 import { LocaleSwitcher } from './chrome/LocaleSwitcher'
 import { NavButtons } from './chrome/NavButtons'
 import { ProgressBar } from './chrome/ProgressBar'
+import { ScoreSummary } from './chrome/ScoreSummary'
 import { StepTransition } from './chrome/StepTransition'
 import { t } from './chrome/strings'
+import { displayScores } from '../scoring/display'
 import { agentActor, engineActor, ev, EventBatcher } from './events'
 import { buildItemRow, buildMessageRow, buildRuntimeIndex, stimulusFor } from './responses'
 import type { ElementIndex, SessionIdentity } from './responses'
@@ -279,6 +281,11 @@ export function App() {
       const outcome = await Promise.race([pl.queue.idle().then(() => 'idle' as const), timeout])
       if (cancelled) return
       if (outcome === 'timeout') { dispatch({ type: 'submit_failed' }); return }
+      pl.cache.refresh(stateRef.current.answers, pl.evaluator)
+      const scorerOutputs = pl.cache.scorerOutputs()
+      if (!ephemeralRef.current && pl.identity.sessionId !== 'fixture' && Object.keys(scorerOutputs).length > 0) {
+        await submitScorerOutputs(params.vsBaseUrl, pl.identity.sessionId, token, scorerOutputs)
+      }
       const ok = pl.identity.sessionId === 'fixture' || (await completeSession(params.vsBaseUrl, pl.identity.sessionId, token))
       if (cancelled) return
       if (!ok) { dispatch({ type: 'submit_failed' }); return }
@@ -448,11 +455,19 @@ export function App() {
     return <ErrorScreen locale={locale} kind={state.error.kind} code={state.error.code} onRetry={() => { bootStarted.current = false; dispatch({ type: 'retry' }) }} />
   }
   if (state.phase === 'finished') {
+    const showScore = state.runtime?.x_show_score === true
+    const dscores = showScore && state.runtime ? displayScores(state.runtime) : []
+    const scoreFn = (id: string) => pipeline.current?.cache.resolver.score(id) ?? null
     return (
       <main className="min-h-screen grid place-items-center px-6 font-theme text-center">
         <div className="qv-step-enter max-w-md space-y-3">
           <h1 className="text-3xl font-semibold">{t(locale, 'finished_title')}</h1>
           <p className="text-lg text-slate-600">{t(locale, 'finished_body')}</p>
+          {dscores.length > 0 && (
+            <div className="grid place-items-center">
+              <ScoreSummary title={t(locale, 'results_title')} scores={dscores} score={scoreFn} />
+            </div>
+          )}
         </div>
       </main>
     )
@@ -504,6 +519,14 @@ export function App() {
         </div>
       )}
       <ProgressBar locale={locale} current={state.stepIndex + 1} total={state.steps.length} indeterminate={hasBranching} />
+      {state.runtime?.x_show_score === true && state.runtime?.x_show_score_live === true && p && (() => {
+        const dscores = displayScores(state.runtime!)
+        return dscores.length > 0 ? (
+          <div className="fixed bottom-4 right-4 z-10 w-64">
+            <ScoreSummary title={t(locale, 'results_title')} scores={dscores} score={(id) => p.cache.resolver.score(id) ?? null} />
+          </div>
+        ) : null
+      })()}
       <div ref={stepContainer} className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-6 pb-32 pt-16">
         <StepTransition stepKey={state.stepIndex}>
           <div className="qv-card">

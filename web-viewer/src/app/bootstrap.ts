@@ -57,6 +57,19 @@ export async function completeSession(vsBaseUrl: string, sessionId: string, toke
   }
 }
 
+export async function submitScorerOutputs(vsBaseUrl: string, sessionId: string, token: string, outputs: Record<string, unknown>): Promise<boolean> {
+  try {
+    const r = await fetch(`${vsBaseUrl}/v1/sessions/${sessionId}/scorer_outputs`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body: JSON.stringify(outputs),
+    })
+    return r.ok
+  } catch {
+    return false
+  }
+}
+
 export type SessionState =
   | { kind: 'ok'; status: string; lastActiveLocale: string; agentId: string; sessionIndex: number }
   | { kind: 'ephemeral' } | { kind: 'invalid' } | { kind: 'network' }

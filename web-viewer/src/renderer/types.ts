@@ -53,6 +53,8 @@ export type Runtime = {
   scores?: PinnedScore[]
   logic?: unknown[]
   validation?: unknown[]
+  x_show_score?: boolean
+  x_show_score_live?: boolean
 }
 
 export type PinnedScorerImpl =
