@@ -79,3 +79,19 @@ test('openPicker/closePicker manage picker state', () => {
   st.closePicker()
   expect(useEditorStore.getState().picker).toBeNull()
 })
+
+test('refreshStaleness flags stale Library refs; upgradeRefAction repoints + clears', async () => {
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [{ question: { prompt: { ref: 'pr_x@v26.0609' } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as Questionnaire
+  const st = useEditorStore.getState()
+  st.loadModel(model, { kind: 'file', name: 't.json' })
+  await st.refreshStaleness(async () => 'v26.0610') // injected latestVersion → newer
+  expect(useEditorStore.getState().staleness['pr_x@v26.0609']).toBe('v26.0610')
+  st.upgradeRefAction('pr_x@v26.0609', 'pr_x@v26.0610')
+  const q = useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }
+  expect(q.question.prompt.ref).toBe('pr_x@v26.0610')
+  expect(useEditorStore.getState().staleness['pr_x@v26.0609']).toBeUndefined()
+})

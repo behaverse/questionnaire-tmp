@@ -11,6 +11,7 @@ import { LibraryPicker } from '../library/LibraryPicker'
 
 export function App() {
   const { model, loadModel, validation } = useEditorStore()
+  const refreshStaleness = useEditorStore((s) => s.refreshStaleness)
   const pool = useEditorStore((s) => s.pool)
   const picker = useEditorStore((s) => s.picker)
   const closePicker = useEditorStore((s) => s.closePicker)
@@ -19,8 +20,8 @@ export function App() {
 
   // restore autosaved draft on boot
   useEffect(() => {
-    loadDraft().then((d) => { if (d) loadModel(d.model, d.source, d.entities) }).finally(() => setBooting(false))
-  }, [loadModel])
+    loadDraft().then((d) => { if (d) { loadModel(d.model, d.source, d.entities); void refreshStaleness() } }).finally(() => setBooting(false))
+  }, [loadModel, refreshStaleness])
 
   // autosave on model/pool change (debounced)
   useEffect(() => {
@@ -39,13 +40,13 @@ export function App() {
       <>
         {error && <div role="alert" className="bg-red-50 p-2 text-sm text-red-700">{error}</div>}
         <StartScreen
-          onNew={() => loadModel(newQuestionnaire(), { kind: 'new' })}
+          onNew={() => { loadModel(newQuestionnaire(), { kind: 'new' }); void refreshStaleness() }}
           onOpenFile={async (f) => {
-            try { setError(null); loadModel(await readQuestionnaireFile(f), { kind: 'file', name: f.name }) }
+            try { setError(null); loadModel(await readQuestionnaireFile(f), { kind: 'file', name: f.name }); void refreshStaleness() }
             catch (e) { setError(String(e)) }
           }}
           onOpenLibrary={async (id, version) => {
-            try { setError(null); loadModel(await fetchFromLibrary(id, version), { kind: 'library', id, version }) }
+            try { setError(null); loadModel(await fetchFromLibrary(id, version), { kind: 'library', id, version }); void refreshStaleness() }
             catch (e) { setError(String(e)) }
           }}
         />

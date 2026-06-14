@@ -2,9 +2,14 @@ import { create } from 'zustand'
 import type { Questionnaire, EntityBody } from '../model/types'
 import { getAtPath, type NodePath } from '../model/path'
 import { validateQuestionnaire, type ValidationError } from '../model/validation'
+import { collectLibraryRefs, staleSet } from '../library/staleness'
+import { upgradeRef } from '../model/tree'
+import { latestVersion as realLatestVersion, parseRef } from '../persistence/library'
 import type { Source } from './types'
 
 export type { Source } from './types'
+
+type LatestFn = (etype: string, id: string) => Promise<string | null>
 
 interface EditorState {
   model: Questionnaire | null
@@ -16,6 +21,7 @@ interface EditorState {
   previewOpen: boolean
   pool: Record<string, EntityBody>
   picker: { etype: string; onPick: (ref: string) => void } | null
+  staleness: Record<string, string>
   loadModel: (model: Questionnaire, source: Source, pool?: Record<string, EntityBody>) => void
   upsertPoolEntity: (ref: string, body: EntityBody) => void
   removePoolEntity: (ref: string) => void
@@ -27,6 +33,8 @@ interface EditorState {
   togglePreview: () => void
   openPicker: (etype: string, onPick: (ref: string) => void) => void
   closePicker: () => void
+  refreshStaleness: (latestFn?: LatestFn) => Promise<void>
+  upgradeRefAction: (oldRef: string, newRef: string) => void
   reset: () => void
 }
 
@@ -40,6 +48,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   previewOpen: false,
   pool: {},
   picker: null,
+  staleness: {},
   loadModel: (model, source, pool) =>
     set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {} }),
   upsertPoolEntity: (ref, body) => set((s) => ({ pool: { ...s.pool, [ref]: body } })),
@@ -67,5 +76,22 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   togglePreview: () => set((s) => ({ previewOpen: !s.previewOpen })),
   openPicker: (etype, onPick) => set({ picker: { etype, onPick } }),
   closePicker: () => set({ picker: null }),
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null }),
+  refreshStaleness: async (latestFn) => {
+    const { model, pool } = get()
+    if (!model) return
+    const fetchLatest = latestFn ?? ((t: string, i: string) => realLatestVersion(t, i))
+    const refs = collectLibraryRefs(model, pool)
+    const byEntity = new Map<string, { type: string; id: string }>()
+    for (const ref of refs) { const p = parseRef(ref); if (p) byEntity.set(`${p.type}/${p.id}`, { type: p.type, id: p.id }) }
+    const entries = await Promise.all([...byEntity.entries()].map(async ([key, e]) => [key, await fetchLatest(e.type, e.id)] as const))
+    const latestByEntity = Object.fromEntries(entries)
+    const latestByKey: Record<string, string | null> = {}
+    for (const ref of refs) { const p = parseRef(ref); latestByKey[ref] = p ? (latestByEntity[`${p.type}/${p.id}`] ?? null) : null }
+    set({ staleness: staleSet(refs, latestByKey) })
+  },
+  upgradeRefAction: (oldRef, newRef) => {
+    get().applyEdit((m) => upgradeRef(m, oldRef, newRef))
+    set((s) => { const st = { ...s.staleness }; delete st[oldRef]; return { staleness: st } })
+  },
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null, staleness: {} }),
 }))
