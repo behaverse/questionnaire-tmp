@@ -5,7 +5,7 @@ const DEFAULT_BASE = import.meta.env.VITE_LIBRARY_BASE_URL ?? 'https://questionn
 export interface FetchOpts { baseUrl?: string; fetchImpl?: typeof fetch }
 
 export async function fetchFromLibrary(id: string, version: string, opts: FetchOpts = {}): Promise<Questionnaire> {
-  const base = opts.baseUrl ?? DEFAULT_BASE
+  const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
   const f = opts.fetchImpl ?? fetch
   const url = `${base}/v1/questionnaires/${id}/versions/${version}/definition?resolved=false`
   const res = await f(url)

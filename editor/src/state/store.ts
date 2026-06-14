@@ -2,8 +2,9 @@ import { create } from 'zustand'
 import type { Questionnaire } from '../model/types'
 import type { NodePath } from '../model/path'
 import { validateQuestionnaire, type ValidationError } from '../model/validation'
+import type { Source } from './types'
 
-export type Source = { kind: 'new' } | { kind: 'file'; name: string } | { kind: 'library'; id: string; version: string }
+export type { Source } from './types'
 
 interface EditorState {
   model: Questionnaire | null

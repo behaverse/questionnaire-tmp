@@ -1,11 +1,9 @@
 import type { Questionnaire } from '../model/types'
-import type { Source } from '../state/store'
+import type { Source, Draft } from '../state/types'
 
 const DB_NAME = 'behaverse-editor'
 const STORE = 'drafts'
 const KEY = 'current'
-
-export interface Draft { model: Questionnaire; source: Source; savedAt: number }
 
 function open(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -19,10 +17,15 @@ function open(): Promise<IDBDatabase> {
 async function tx<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBRequest): Promise<T> {
   const db = await open()
   return new Promise<T>((resolve, reject) => {
-    const store = db.transaction(STORE, mode).objectStore(STORE)
+    const transaction = db.transaction(STORE, mode)
+    const store = transaction.objectStore(STORE)
     const req = fn(store)
-    req.onsuccess = () => resolve(req.result as T)
+    let result: T
+    req.onsuccess = () => { result = req.result as T }
     req.onerror = () => reject(req.error)
+    transaction.oncomplete = () => resolve(result)
+    transaction.onerror = () => reject(transaction.error)
+    transaction.onabort = () => reject(transaction.error ?? new Error('IndexedDB transaction aborted'))
   })
 }
 
