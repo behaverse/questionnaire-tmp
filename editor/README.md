@@ -14,7 +14,15 @@ npm run build        # typecheck + vite production build
 npm run e2e          # Playwright chromium smoke (needs: npx playwright install chromium)
 ```
 
-The Playwright smoke (`tests/e2e/smoke.spec.ts`) boots the built+previewed app, opens the kitchensink fixture, reorders/selects, exports, and writes a screenshot to `tests/e2e/screenshots/ed-a-workspace.png` (gitignored).
+The Playwright smoke (`tests/e2e/smoke.spec.ts`) boots the built+previewed app, opens the kitchensink fixture, reorders/selects, exports, and writes a screenshot to `tests/e2e/screenshots/ed-a-workspace.png` (gitignored). A second smoke loads a self-contained preview bundle (`src/__fixtures__/preview_bundle.json`), stubs the Library `/v1/entities/**` endpoint, toggles the preview, asserts the resolved prompt + option render via the renderer, and writes `tests/e2e/screenshots/ed-b-preview.png` (gitignored).
+
+## ED-B — Inline preview
+
+The topbar `▢ Preview` button opens a split-pane WYSIWYG preview that renders the loaded questionnaire using the **Web Viewer renderer library** (`@behaverse/questionnaire-renderer`, OD-03) — the same component the live Web Viewer ships. The renderer is built from `web-viewer/dist-lib` and made available via the `ensure-renderer` prepare step (the `predev` / `prebuild` / `pretest` / `pretypecheck` hooks run `scripts/ensure-renderer.mjs`) plus a Vite alias.
+
+The preview re-renders live on edit, and exposes **language**, **device-frame**, and **scope** (selected page / whole questionnaire) pickers. Leaf `{ref}` entity bodies (prompts, options, etc.) are resolved on demand against the Library via `fetchEntityBody` — `GET {base}/v1/entities/{type}/{id}?version=` — debounced and cached per `ref@version` in-memory for the session.
+
+The preview is **static structural** only: it renders every element unconditionally. Logic (`show_if` / skip / branching / piping), validation, and scoring are **not** evaluated in the preview — those arrive in **ED-D** when the expression evaluator + logic engine are wired into the preview.
 
 ## Environment variables
 
@@ -44,11 +52,12 @@ Build order: **ED-A → ED-B → ED-C → ED-D → ED-E → ED-F**.
 - Edit `metadata` + node title; `style` / `flow` panel scaffolding.
 - Validate (Ajv over bundled Schema 2 + Schema 1) on demand and on load; export allowed when invalid (with a warning).
 - IndexedDB autosave + restore-on-reload.
+- **Live WYSIWYG inline preview** (ED-B): the `▢ Preview` button opens a split-pane rendered by the Web Viewer renderer, with language / device / scope pickers and on-demand Library ref resolution.
 
 **Doesn't yet (deferred):**
 - Item / Question / Option / content authoring → **ED-C**.
-- Inline WYSIWYG preview (the `▢ Preview` button is a disabled placeholder) → **ED-B**.
-- Logic / validation builders / scoring / `show_if` expressions → **ED-D**.
+- Live logic / branching / scoring / validation **in the preview** (the preview is static structural — every element renders unconditionally) → **ED-D**.
+- Logic / validation builders / scoring / `show_if` expressions (authoring) → **ED-D**.
 - Translation interface (locale indicator is inert) → **ED-E**.
 - Preview deployment, PDF / printable-summary export → **ED-F**.
 
