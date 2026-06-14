@@ -143,3 +143,45 @@ test('add a message + a context to a new item, type both, preview them', async (
 
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-c2b-context-message.png', fullPage: true })
 })
+
+test('pick a prompt from the Library into a new item', async ({ page }) => {
+  // stub Library search (list) + entity body. Both the picker's body fetch and the
+  // preview resolver hit the same `…/definition` route, so one stub serves both.
+  await page.route('**/v1/entities/prompt?*', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        items: [{ id: 'pr_lib_mood', version: 'v26.0609', title: null, entity_type: 'prompt' }],
+        total: 1,
+      }),
+    })
+  })
+  await page.route('**/v1/entities/prompt/pr_lib_mood/versions/v26.0609/definition', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        id: 'pr_lib_mood',
+        content: { en: { status: 'validated', text: 'Library: how is your mood?' } },
+      }),
+    })
+  })
+
+  await page.goto('/')
+  await page.getByRole('button', { name: /new questionnaire/i }).click()
+  await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
+  await page.getByRole('button', { name: /add item/i }).click() // a new item is selected
+  await page.getByRole('button', { name: /pick prompt/i }).click() // open the picker
+  await page.getByLabel(/search/i).fill('mood')
+  await page.getByText('pr_lib_mood').click()
+  await expect(page.getByText('Library: how is your mood?')).toBeVisible() // snippet
+  await page.getByRole('button', { name: /insert/i }).click()
+
+  // preview shows the picked Library prompt (same stubbed `…/definition` route resolves it)
+  await page.getByRole('button', { name: /preview/i }).click()
+  await expect(
+    page.getByRole('region', { name: /preview/i }).locator('h2.qv-prompt', { hasText: 'Library: how is your mood?' }),
+  ).toBeVisible()
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-c3a-pick-library.png', fullPage: true })
+})
