@@ -11,7 +11,7 @@ export function ChoiceRows({ option, locale, onChange }: { option: EditableOptio
       {structural.map((row) => (
         <div key={row.index} className="grid grid-cols-[3rem_5rem_1fr_auto] items-center gap-2">
           <span className="text-sm text-slate-500">{row.index}</span>
-          <input aria-label={`Value for choice ${row.index}`} type="number" defaultValue={row.value === null ? '' : String(row.value)}
+          <input aria-label={`Value for choice ${row.index}`} type="number" value={row.value === null ? '' : String(row.value)}
                  onChange={(e) => onChange(setChoiceValue(option, row.index, e.target.value === '' ? null : Number(e.target.value)))}
                  className="rounded border border-slate-300 px-1 py-0.5 text-sm" />
           <input aria-label={`Label for choice ${row.index}`} value={textByIndex.get(row.index) ?? ''}

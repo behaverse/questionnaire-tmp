@@ -41,3 +41,23 @@ test('Remove drops the row', async () => {
   await userEvent.click(screen.getAllByRole('button', { name: /remove choice/i })[0])
   expect(onChange.mock.calls.at(-1)![0].options).toHaveLength(1)
 })
+
+test('value input reflects the model after a reorder (controlled, not stale)', () => {
+  const before: EditableOption = {
+    input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
+    options: [{ index: 1, value: 0 }, { index: 2, value: 1 }],
+    content: { en: { status: 'draft', options: [{ index: 1, text: 'No' }, { index: 2, text: 'Yes' }] } },
+  }
+  const { rerender } = render(<ChoiceRows option={before} locale="en" onChange={() => {}} />)
+  // value at index 1 is 0
+  expect((screen.getByLabelText('Value for choice 1') as HTMLInputElement).value).toBe('0')
+  // simulate a reorder result: positions swapped, renumbered → index1 now value 1
+  const after: EditableOption = {
+    input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
+    options: [{ index: 1, value: 1 }, { index: 2, value: 0 }],
+    content: { en: { status: 'draft', options: [{ index: 1, text: 'Yes' }, { index: 2, text: 'No' }] } },
+  }
+  rerender(<ChoiceRows option={after} locale="en" onChange={() => {}} />)
+  expect((screen.getByLabelText('Value for choice 1') as HTMLInputElement).value).toBe('1')
+  expect((screen.getByLabelText('Value for choice 2') as HTMLInputElement).value).toBe('0')
+})
