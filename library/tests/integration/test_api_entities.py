@@ -71,3 +71,16 @@ def test_alias_options(client):
     r_direct = client.get("/v1/entities/option")
     assert r_alias.status_code == 200
     assert r_alias.json()["total"] == r_direct.json()["total"]
+
+def test_entity_definition_returns_body(client):
+    """GET /v1/entities/{etype}/{eid}/versions/{version}/definition returns content_json."""
+    opt = client.get("/v1/entities/option").json()["items"][0]
+    r = client.get(f"/v1/entities/option/{opt['id']}/versions/{opt['version']}/definition")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["id"] == opt["id"]
+    assert body["input_data_type"]  # an Option body carries its structural fields
+
+def test_entity_definition_404_unknown(client):
+    assert client.get("/v1/entities/option/opt_nope/versions/v26.0601/definition").status_code == 404
+    assert client.get("/v1/entities/notatype/x/versions/v26.0601/definition").status_code == 404
