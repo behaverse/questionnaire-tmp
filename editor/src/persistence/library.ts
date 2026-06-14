@@ -37,7 +37,7 @@ export async function fetchEntityBody(ref: string, opts: FetchOpts = {}): Promis
   if (!parsed) return null
   const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
   const f = opts.fetchImpl ?? fetch
-  const url = `${base}/v1/entities/${parsed.type}/${parsed.id}?version=${encodeURIComponent(parsed.version)}`
+  const url = `${base}/v1/entities/${parsed.type}/${parsed.id}/versions/${encodeURIComponent(parsed.version)}/definition`
   try {
     const res = await f(url)
     if (!res.ok) return null
@@ -45,4 +45,16 @@ export async function fetchEntityBody(ref: string, opts: FetchOpts = {}): Promis
   } catch {
     return null
   }
+}
+
+export interface EntitySearchResult { id: string; version: string; title: string | null; entity_type: string }
+
+export async function searchEntities(etype: string, q: string, opts: FetchOpts = {}): Promise<{ items: EntitySearchResult[]; total: number }> {
+  const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
+  const f = opts.fetchImpl ?? fetch
+  const url = `${base}/v1/entities/${etype}?q=${encodeURIComponent(q)}&limit=20`
+  const res = await f(url)
+  if (!res.ok) throw new Error(`Library search failed (${res.status}) for ${etype}`)
+  const data = (await res.json()) as { items?: EntitySearchResult[]; total?: number }
+  return { items: data.items ?? [], total: data.total ?? 0 }
 }

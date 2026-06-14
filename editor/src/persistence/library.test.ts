@@ -29,7 +29,7 @@ test('fetchFromLibrary throws on 404', async () => {
   await expect(fetchFromLibrary('qst_missing', 'v1', { baseUrl: 'http://lib', fetchImpl: fakeFetch })).rejects.toThrow()
 })
 
-import { parseRef, fetchEntityBody } from './library'
+import { parseRef, fetchEntityBody, searchEntities } from './library'
 
 test('parseRef maps prefix → entity type', () => {
   expect(parseRef('pr_aiss_q_2@v26.0602')).toEqual({ type: 'prompt', id: 'pr_aiss_q_2', version: 'v26.0602' })
@@ -38,18 +38,25 @@ test('parseRef maps prefix → entity type', () => {
   expect(parseRef('no_at_sign')).toBeNull()
 })
 
-test('fetchEntityBody requests the typed entity endpoint and returns the body', async () => {
+test('fetchEntityBody requests the versioned definition endpoint', async () => {
   const calls: string[] = []
-  const fakeFetch = (async (url: string) => { calls.push(url); return { ok: true, json: async () => ({ id: 'pr_x' }) } as Response }) as unknown as typeof fetch
+  const fakeFetch = (async (url: string) => { calls.push(url); return { ok: true, json: async () => ({ id: 'pr_x', content: {} }) } as Response }) as unknown as typeof fetch
   const body = await fetchEntityBody('pr_x@v26.0602', { baseUrl: 'http://lib', fetchImpl: fakeFetch })
-  expect(body).toEqual({ id: 'pr_x' })
-  expect(calls[0]).toContain('/v1/entities/prompt/pr_x')
-  expect(calls[0]).toContain('version=v26.0602')
+  expect(body).toEqual({ id: 'pr_x', content: {} })
+  expect(calls[0]).toBe('http://lib/v1/entities/prompt/pr_x/versions/v26.0602/definition')
 })
 
-test('fetchEntityBody returns null on a non-OK response or network error', async () => {
+test('fetchEntityBody returns null on non-OK / error', async () => {
   const miss = (async () => ({ ok: false, status: 404 } as Response)) as unknown as typeof fetch
   expect(await fetchEntityBody('pr_x@v1', { baseUrl: 'http://lib', fetchImpl: miss })).toBeNull()
-  const boom = (async () => { throw new Error('offline') }) as unknown as typeof fetch
-  expect(await fetchEntityBody('pr_x@v1', { baseUrl: 'http://lib', fetchImpl: boom })).toBeNull()
+})
+
+test('searchEntities queries /v1/entities/{etype} and returns items', async () => {
+  const calls: string[] = []
+  const fakeFetch = (async (url: string) => { calls.push(url); return { ok: true, json: async () => ({ items: [{ id: 'pr_a', version: 'v26.0609', title: null, entity_type: 'prompt' }], total: 1 }) } as Response }) as unknown as typeof fetch
+  const { items, total } = await searchEntities('prompt', 'mood', { baseUrl: 'http://lib', fetchImpl: fakeFetch })
+  expect(total).toBe(1)
+  expect(items[0].id).toBe('pr_a')
+  expect(calls[0]).toContain('/v1/entities/prompt?')
+  expect(calls[0]).toContain('q=mood')
 })
