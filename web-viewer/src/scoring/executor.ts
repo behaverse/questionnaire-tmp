@@ -96,6 +96,7 @@ function jsonPointer(obj: unknown, pointer: string): unknown {
 export interface ScoreCache {
   refresh(answers: Record<string, AnswerValue>, ev: LogicEvaluator): void
   resolver: ScoreResolver
+  scorerOutputs(): Record<string, unknown>
 }
 
 export function makeScoreCache(set: ScorerSet, runtime: Runtime): ScoreCache {
@@ -121,6 +122,9 @@ export function makeScoreCache(set: ScorerSet, runtime: Runtime): ScoreCache {
         if (typeof v === 'number' || typeof v === 'string' || typeof v === 'boolean') return v
         return null
       },
+    },
+    scorerOutputs() {
+      return Object.fromEntries(outputs)
     },
   }
 }

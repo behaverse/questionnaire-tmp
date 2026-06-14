@@ -50,6 +50,19 @@ test('compiles, runs once per scorer, and resolves scores by JSON Pointer', asyn
   expect(cache.resolver.score('unknown_id')).toBeNull()
 })
 
+test('scorerOutputs() returns the cached structured outputs keyed by scorer ref', async () => {
+  const rt = phq9Runtime()
+  const ev = makeFakeEvaluator()
+  const set = await compileScorers(rt, fetchWasm as never)
+  const cache = makeScoreCache(set, rt)
+  const answers: Record<string, number> = {}
+  rt.pages[0].elements.forEach((el: any, i: number) => { answers[elementKey(el, pageElementFallback('p1', i))] = 1 })
+  cache.refresh(answers, ev)
+  const outputs = cache.scorerOutputs()
+  expect(Object.keys(outputs)).toEqual(['scr_phq9@v26.0602'])
+  expect((outputs['scr_phq9@v26.0602'] as any).total).toBe(9)
+})
+
 test('a failed/absent scorer resolves scores to null (no throw)', async () => {
   // Use a distinct sha so the module-level fetch cache (keyed by sha256) does not return the
   // real wasm compiled in the first test. The sha mismatch causes ScorerIntegrityError inside
