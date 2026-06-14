@@ -127,3 +127,27 @@ Choice `selection: multiple` with a non-`nominal` measurement type shows
 "Renders as: Unsupported" (the widget table only defines `choice.nominal.multiple`);
 the option is still Schema-2-valid. No inline guidance steers the author to `nominal`
 for multi-select — UX polish for a later stage.
+
+# ED-C2a Follow-ups
+
+Known limitations and open items carried out of ED-C2a (entity pool + new items).
+
+## (s) Pool-entity id rename isn't supported
+
+Renaming a pool-entity id (it would re-key the pool + repoint the item's `ref`) is **not
+supported** in C2a — minted `pr_new_<n>` ids stick. A rename affordance is a later nicety.
+
+## (t) Draft version is a single `.dev1`
+
+The draft version is derived from `metadata.version` (`+ .dev1`); **all** new entities in a
+draft share one `.dev1` version. Multiple draft iterations (`.dev2`…) aren't surfaced.
+
+## (u) Bundle export is the only carry-out; promotion needs OD-08
+
+Bundle export (`{questionnaire, entities}`) is the **only** way to carry pool entities out of
+the editor. Promoting pool drafts to real Library versions needs Identity / write — **OD-08**.
+
+## (v) New items are invalid until the prompt text is typed
+
+New items are intentionally **invalid** until the prompt text is typed (the minted prompt
+starts with empty `content.<locale>.text`); this surfaces in the validation banner.
