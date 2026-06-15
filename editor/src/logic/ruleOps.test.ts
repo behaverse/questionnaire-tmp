@@ -46,9 +46,9 @@ describe('validateRule', () => {
   it('a fully-valid rule has no errors', () => {
     expect(validateRule({ type: 'visibility', condition: 'q==1', action: { target_id: 'it_a', show: false } }, targets).errors).toEqual([])
   })
-  it('flags a piping rule as deferred to D2b', () => {
+  it('a 2-arg piping call with unknown field_path gets a warning (not deferred)', () => {
     expect(validateRule({ type: 'piping', condition: 'q==1', action: { source: 'it_a', field_path: 'x' } }, targets).errors
-      .some((x) => x.level === 'warning')).toBe(true)
+      .some((x) => x.field === 'field_path' && x.level === 'warning')).toBe(true)
   })
 })
 
