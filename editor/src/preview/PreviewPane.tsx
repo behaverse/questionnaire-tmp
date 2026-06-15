@@ -8,6 +8,8 @@ import { projectForPreview } from './project'
 import { flattenPage } from './flatten'
 import { FRAMES, FRAME_LABELS, type FrameKey } from './frames'
 import type { EntityBody } from './resolve'
+import { useEvaluator } from '../logic/useEvaluator'
+import { makeBindings, filterPageVisible } from '../logic/visibility'
 
 const STRINGS: RendererStrings = { required: 'Required', unsupported: 'Unsupported element' }
 
@@ -22,6 +24,7 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
   const [device, setDevice] = useState<FrameKey>('desktop')
   const [scope, setScope] = useState<'page' | 'all'>('page')
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({})
+  const evaluator = useEvaluator()
   const cacheRef = useRef(new Map<string, EntityBody | null>())
   const prevPoolKeysRef = useRef<string[]>([])
 
@@ -57,6 +60,8 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
     return runtime.pages[0]?.id
   })()
   const pages = scope === 'all' ? runtime.pages : runtime.pages.filter((p) => p.id === selectedPageId)
+  const bindings = makeBindings(answers as Record<string, unknown>, { score: () => null })
+  const visiblePages = evaluator ? pages.map((p) => filterPageVisible(p, evaluator, bindings)) : pages
   const width = FRAMES[device]
   const onAnswer = (key: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [key]: value }))
 
@@ -92,7 +97,7 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
       <div className="flex-1 overflow-auto bg-slate-100 p-6">
         <div className="qv-theme mx-auto bg-white shadow-sm" style={{ width: width ?? '100%', maxWidth: '100%' }}>
           <div className="p-6">
-            {pages.map((page) => (
+            {visiblePages.map((page) => (
               <div key={page.id} className="mb-8">
                 {scope === 'all' && page.title && <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-400">{page.title}</h2>}
                 <StepRenderer elements={flattenPage(page)} locale={locale} answers={answers} onAnswer={onAnswer}
