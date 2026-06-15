@@ -7,6 +7,7 @@ import type { Block, Page, Section } from '../model/types'
 import { ShowIfEditor } from '../canvas/ShowIfEditor'
 import { LogicPanel } from '../logic/LogicPanel'
 import { ValidationPanel } from '../logic/ValidationPanel'
+import { ScoringPanel } from '../logic/ScoringPanel'
 
 export function Inspector() {
   const { model, selection, applyEdit, select } = useEditorStore()
@@ -27,6 +28,7 @@ export function Inspector() {
         <TextField label="Language" value={m.language ?? ''} onChange={(v) => applyEdit((mm) => updateMetadata(mm, { language: v }))} />
         <LogicPanel />
         <ValidationPanel />
+        <ScoringPanel />
         <CheckboxField label="Randomize page order" checked={(model.flow as { randomize_pages?: boolean })?.randomize_pages === true}
           onChange={(v) => applyEdit((mm) => updateFlow(mm, { randomize_pages: v ? true : undefined }))} />
       </div>

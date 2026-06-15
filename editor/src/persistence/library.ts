@@ -19,6 +19,7 @@ export async function fetchFromLibrary(id: string, version: string, opts: FetchO
 const PREFIX_TYPE: Record<string, string> = {
   pr: 'prompt', opt: 'option', it: 'item', q: 'question', msg: 'message',
   ctx: 'context', ins: 'instruction', ph: 'placeholder', help: 'help', rx: 'regex', sol: 'solution',
+  scr: 'scorer',
 }
 
 export function parseRef(ref: string): { type: string; id: string; version: string } | null {

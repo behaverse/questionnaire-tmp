@@ -459,3 +459,40 @@ In `scope: 'page'` the preview renders only the selected page, but `collectCross
 runs over the full `model.validation[]`. Errors keyed to off-page elements compute but don't
 display (the key isn't in the rendered DOM) — harmless, and broadly consistent with the viewer
 validating per-step. Noted for completeness.
+
+# ED-D4 Follow-ups
+
+Known limitations and open items carried out of ED-D4 (scoring builder, author-only).
+
+## (ppp) Live score preview is deferred (D4b)
+
+ED-D4 authors `scores[]` but does NOT run scorers in the preview — `score()` stays null, so
+score-referencing logic/validation conditions remain inert in the preview. A live score preview
+needs a bundled reference-scorer wasm + a ported executor (input-assembly + sha256-verify +
+compile + JSON-Pointer + cache) + impl-pinning, and would only ever work for REFERENCE scorers
+(custom author scorers have no wasm source in the editor). Deferred to a D4b follow-on.
+
+## (qqq) Scorer picker is empty until the Library seeds scorers
+
+The "Pick from Library" button opens the picker with `etype='scorer'` (parseRef now knows the
+`scr_` prefix), but the live Library has ZERO Scorer entities seeded. Manual `scr_*@vYY.MMDD`
+ref entry is the working path today; the picker lights up automatically once scorers exist.
+
+## (rrr) No path autocomplete / unknown-scorer-or-path checks
+
+`path` is a manually-entered JSON Pointer (pattern-validated). Autocomplete of paths from the
+scorer's `output_schema`, and unknown-scorer / unknown-path warnings, need the resolved scorer
+body — they pair with the D4b scorer-runtime work.
+
+## (sss) A freshly-added score is transiently Schema-invalid
+
+"+ Add score" mints `{id: score_N, scorer: '', path: ''}`; `scorer`/`path` are required by Schema 2,
+so the questionnaire is Ajv-invalid (and blocks export) until they're filled — flagged both
+globally (banner) and per-score ("N need attention" + inline errors). Same authoring behaviour as
+the empty-condition logic rule (ED-D2 FOLLOWUP zz).
+
+## (ttt) ED-D authoring surface COMPLETE; consolidate global panels into tabs
+
+Logic + Validation + Scoring now all live as sections in the questionnaire-root Inspector. With
+three global panels, consolidating them into Inspector tabs is now worthwhile (deferred). The
+ED-D *authoring* surface is complete; remaining ED-D work is the D4b live score preview.
