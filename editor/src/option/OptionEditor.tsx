@@ -2,7 +2,7 @@ import { ChoiceRows } from './ChoiceRows'
 import { widgetLabel } from './widget'
 import {
   setInputDataType, setMeasurementType, setSelection, setMinMaxSelected, setBounds, setLabel, setUnits,
-  setInputValidation, setPlaceholderText, setHelpText,
+  setInputValidation, setPlaceholderText, setHelpText, setValidation,
   type EditableOption, type InputDataType, type MeasurementType,
 } from './ops'
 
@@ -85,12 +85,74 @@ export function OptionEditor({ option, locale, onChange }: { option: EditableOpt
       )}
 
       {option.input_data_type === 'text' && (
-        <label className="block text-sm">Validation regex
+        <label className="block text-sm">Input mask (RegEx)
           <input value={typeof option.input_validation === 'string' ? option.input_validation : ''}
                  onChange={(e) => onChange(setInputValidation(option, e.target.value || undefined))}
-                 className="mt-1 w-full rounded border border-slate-300 px-2 py-1 font-mono text-xs" aria-label="Validation regex" />
+                 className="mt-1 w-full rounded border border-slate-300 px-2 py-1 font-mono text-xs" aria-label="Input mask (RegEx)" />
+          <span className="mt-0.5 block text-[11px] text-slate-400">Input-level pattern. For a validation error message, use Format below.</span>
         </label>
       )}
+
+      {option.input_data_type !== 'choice' && (() => {
+        const v = option.validation ?? {}
+        const numStr = (n: number | null | undefined) => (n === null || n === undefined ? '' : String(n))
+        const parse = (raw: string): number | null => (raw === '' ? null : Number(raw))
+        return (
+          <div className="space-y-2 rounded border border-slate-200 p-2">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Validation</div>
+            {option.input_data_type === 'number' && (
+              <div className="flex flex-wrap items-end gap-3">
+                <label className="text-sm">Min value
+                  <input type="number" aria-label="Min value" value={numStr(v.range?.[0])}
+                         onChange={(e) => onChange(setValidation(option, { range: [parse(e.target.value), v.range?.[1] ?? null] }))}
+                         className="ml-1 w-24 rounded border border-slate-300 px-1 py-0.5" />
+                </label>
+                <label className="text-sm">Max value
+                  <input type="number" aria-label="Max value" value={numStr(v.range?.[1])}
+                         onChange={(e) => onChange(setValidation(option, { range: [v.range?.[0] ?? null, parse(e.target.value)] }))}
+                         className="ml-1 w-24 rounded border border-slate-300 px-1 py-0.5" />
+                </label>
+                <label className="block w-full text-sm">Range message
+                  <input value={v.range_message ?? ''} aria-label="Range message"
+                         onChange={(e) => onChange(setValidation(option, { range_message: e.target.value }))}
+                         className="mt-1 w-full rounded border border-slate-300 px-2 py-1" />
+                </label>
+              </div>
+            )}
+            {option.input_data_type === 'text' && (
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-end gap-3">
+                  <label className="text-sm">Min length
+                    <input type="number" aria-label="Min length" min={0} value={numStr(v.length?.[0])}
+                           onChange={(e) => onChange(setValidation(option, { length: [parse(e.target.value), v.length?.[1] ?? null] }))}
+                           className="ml-1 w-24 rounded border border-slate-300 px-1 py-0.5" />
+                  </label>
+                  <label className="text-sm">Max length
+                    <input type="number" aria-label="Max length" min={0} value={numStr(v.length?.[1])}
+                           onChange={(e) => onChange(setValidation(option, { length: [v.length?.[0] ?? null, parse(e.target.value)] }))}
+                           className="ml-1 w-24 rounded border border-slate-300 px-1 py-0.5" />
+                  </label>
+                  <label className="block w-full text-sm">Length message
+                    <input value={v.length_message ?? ''} aria-label="Length message"
+                           onChange={(e) => onChange(setValidation(option, { length_message: e.target.value }))}
+                           className="mt-1 w-full rounded border border-slate-300 px-2 py-1" />
+                  </label>
+                </div>
+                <label className="block text-sm">Format (regex)
+                  <input value={v.format ?? ''} aria-label="Format (regex)"
+                         onChange={(e) => onChange(setValidation(option, { format: e.target.value }))}
+                         className="mt-1 w-full rounded border border-slate-300 px-2 py-1 font-mono text-xs" />
+                </label>
+                <label className="block text-sm">Format message
+                  <input value={v.format_message ?? ''} aria-label="Format message"
+                         onChange={(e) => onChange(setValidation(option, { format_message: e.target.value }))}
+                         className="mt-1 w-full rounded border border-slate-300 px-2 py-1" />
+                </label>
+              </div>
+            )}
+          </div>
+        )
+      })()}
 
       {option.input_data_type !== 'choice' && (
         <label className="block text-sm">Placeholder ({locale})
