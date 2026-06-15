@@ -1,5 +1,7 @@
 import { elementKey, pageElementFallback, sectionChildFallback } from '@behaverse/questionnaire-renderer'
 import type { RuntimeElement, RuntimePage, AnswerValue } from '@behaverse/questionnaire-renderer'
+import type { Bindings, LogicEvaluator } from './types'
+import type { CrossQuestionValidationRule } from '../model/types'
 
 export type ValidationError = { key: string; message: string }
 
@@ -34,6 +36,20 @@ function validationOf(el: unknown): Record<string, unknown> | undefined {
   if (optVal && typeof optVal === 'object') return optVal as Record<string, unknown>
   const elVal = (el as { validation?: unknown }).validation
   return elVal && typeof elVal === 'object' ? (elVal as Record<string, unknown>) : undefined
+}
+
+/** Cross-question validation errors: for each rule whose condition is valid + true, push the
+ *  message onto each target. Mirrors the viewer's cross-question loop; the `ev.check` guard is
+ *  the editor's malformed-safe addition. */
+export function collectCrossQuestionErrors(rules: CrossQuestionValidationRule[], ev: LogicEvaluator, bindings: Bindings): ValidationError[] {
+  const errors: ValidationError[] = []
+  for (const rule of rules) {
+    const c = rule.condition
+    if (typeof c !== 'string' || c.length === 0 || ev.check(c) !== null) continue
+    if (!ev.condition(c, bindings)) continue
+    for (const t of rule.targets ?? []) errors.push({ key: t, message: rule.message })
+  }
+  return errors
 }
 
 /** Per-question validation errors over the given pages, keyed exactly as the renderer keys

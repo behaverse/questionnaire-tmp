@@ -57,6 +57,13 @@ export interface LogicRule {
   action: Record<string, unknown>
 }
 
+export interface CrossQuestionValidationRule {
+  id: string
+  condition: string
+  message: string
+  targets?: string[]
+}
+
 export interface Questionnaire {
   '@context'?: string
   metadata: Metadata
@@ -65,5 +72,6 @@ export interface Questionnaire {
   style?: unknown
   flow?: unknown
   logic?: LogicRule[]
+  validation?: CrossQuestionValidationRule[]
   [k: string]: unknown
 }

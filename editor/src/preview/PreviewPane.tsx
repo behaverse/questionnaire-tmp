@@ -11,7 +11,7 @@ import type { EntityBody } from './resolve'
 import { useEvaluator } from '../logic/useEvaluator'
 import { makeBindings, filterPageVisible } from '../logic/visibility'
 import { applyPiping } from '../logic/piping'
-import { collectPerQuestionErrors } from '../logic/validation'
+import { collectPerQuestionErrors, collectCrossQuestionErrors } from '../logic/validation'
 
 const STRINGS: RendererStrings = { required: 'Required', unsupported: 'Unsupported element' }
 
@@ -66,8 +66,10 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
   const pipedPages = evaluator ? pages.map((p) => applyPiping(p, model.logic ?? [], evaluator, bindings, locale)) : pages
   const visiblePages = evaluator ? pipedPages.map((p) => filterPageVisible(p, evaluator, bindings, model.logic ?? [])) : pipedPages
   const verrors = collectPerQuestionErrors(visiblePages, answers)
-  const errorMessages = Object.fromEntries(verrors.map((e) => [e.key, e.message]))
-  const requiredErrorKeys = verrors.map((e) => e.key)
+  const cqErrors = evaluator ? collectCrossQuestionErrors(model.validation ?? [], evaluator, bindings) : []
+  const allErrors = [...verrors, ...cqErrors]
+  const errorMessages = Object.fromEntries(allErrors.map((e) => [e.key, e.message]))
+  const requiredErrorKeys = allErrors.map((e) => e.key)
   const width = FRAMES[device]
   const onAnswer = (key: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [key]: value }))
 

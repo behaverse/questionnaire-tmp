@@ -180,3 +180,23 @@ describe('updateLogic', () => {
     expect('logic' in out).toBe(false)
   })
 })
+
+import { updateValidation } from './tree'
+import type { CrossQuestionValidationRule } from './types'
+
+describe('updateValidation', () => {
+  const base = { metadata: { id: 'qst_x', language: 'en' }, pages: [] } as unknown as import('./types').Questionnaire
+  const rule: CrossQuestionValidationRule = { id: 'val_1', condition: 'a > b', message: 'oops', targets: ['it_a'] }
+  it('sets validation[] without mutating input', () => {
+    const out = updateValidation(base, [rule])
+    expect(out.validation).toEqual([rule])
+    expect(base.validation).toBeUndefined()
+  })
+  it('replaces the whole array', () => {
+    const out = updateValidation(updateValidation(base, [rule]), [{ ...rule, message: 'changed' }])
+    expect(out.validation).toEqual([{ ...rule, message: 'changed' }])
+  })
+  it('deletes validation when given an empty array', () => {
+    expect('validation' in updateValidation(updateValidation(base, [rule]), [])).toBe(false)
+  })
+})

@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { Questionnaire, Block, Metadata, LogicRule } from './types'
+import type { Questionnaire, Block, Metadata, LogicRule, CrossQuestionValidationRule } from './types'
 import { getAtPath, getContainer, type NodePath, pathKey } from './path'
 
 /** Two element-array paths are compatible; both `pages` arrays are compatible. */
@@ -88,6 +88,13 @@ export function updateLogic(model: Questionnaire, rules: LogicRule[]): Questionn
   return produce(model, (draft) => {
     if (rules.length === 0) delete draft.logic
     else draft.logic = rules
+  })
+}
+
+export function updateValidation(model: Questionnaire, rules: CrossQuestionValidationRule[]): Questionnaire {
+  return produce(model, (draft) => {
+    if (rules.length === 0) delete draft.validation
+    else draft.validation = rules
   })
 }
 
