@@ -50,6 +50,13 @@ export interface Block {
   [k: string]: unknown
 }
 
+export interface LogicRule {
+  id?: string
+  type: 'skip' | 'visibility' | 'piping' | 'branch'
+  condition: string
+  action: Record<string, unknown>
+}
+
 export interface Questionnaire {
   '@context'?: string
   metadata: Metadata
@@ -57,5 +64,6 @@ export interface Questionnaire {
   blocks?: Block[]
   style?: unknown
   flow?: unknown
+  logic?: LogicRule[]
   [k: string]: unknown
 }
