@@ -343,3 +343,11 @@ multi-clause AND/OR builder is deferred (same stance as ED-D1).
 
 Logic lives as a section in the questionnaire-root Inspector. When ED-D3 (validation) and
 ED-D4 (scoring) add their own global panels, consolidate them into tabs.
+
+## (zz) A freshly-added rule is transiently Schema-invalid
+
+"+ Add rule" mints a rule with `condition: ''`, but Schema 2's `Expression` is `minLength: 1`,
+so an unfinished rule makes the whole questionnaire Ajv-invalid (and blocks export) until a
+condition is typed. This is surfaced both globally (validation banner) and per-rule
+("N need attention" + the inline "Condition required" error) — never silently saved as valid.
+Intended authoring behaviour; noted so it's not mistaken for a bug.
