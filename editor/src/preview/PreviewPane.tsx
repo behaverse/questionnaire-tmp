@@ -61,7 +61,7 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
   })()
   const pages = scope === 'all' ? runtime.pages : runtime.pages.filter((p) => p.id === selectedPageId)
   const bindings = makeBindings(answers as Record<string, unknown>, { score: () => null })
-  const visiblePages = evaluator ? pages.map((p) => filterPageVisible(p, evaluator, bindings)) : pages
+  const visiblePages = evaluator ? pages.map((p) => filterPageVisible(p, evaluator, bindings, model.logic ?? [])) : pages
   const width = FRAMES[device]
   const onAnswer = (key: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [key]: value }))
 
