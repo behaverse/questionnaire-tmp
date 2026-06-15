@@ -1,6 +1,6 @@
 import type { JSX } from 'react'
 import { useEditorStore } from '../state/store'
-import { getAtPath, nodeKind } from '../model/path'
+import { getAtPath, nodeKind, pathKey } from '../model/path'
 import { updateMetadata, updateNodeProps, setBlockPages, deleteBlock } from '../model/tree'
 import { TextField } from './fields'
 import type { Block, Page, Section } from '../model/types'
@@ -33,7 +33,7 @@ export function Inspector() {
         <TextField label={`${kind} title`} value={node.title ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { title: v }))} />
         <TextField label="Id" value={(node as Page).id ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { id: v }))} />
         <p className="text-xs text-slate-400">style / flow panels arrive with full coverage in later stages.</p>
-        <ShowIfEditor path={sel!} />
+        <ShowIfEditor key={pathKey(sel!)} path={sel!} />
       </div>
     )
   } else if (kind === 'block') {
@@ -67,7 +67,7 @@ export function Inspector() {
           onClick={() => { const id = node.id; select(null); applyEdit((mm) => deleteBlock(mm, id)) }}
           className="rounded border border-red-300 px-2 py-1 text-sm text-red-700 hover:bg-red-50"
         >Delete block</button>
-        <ShowIfEditor path={sel!} />
+        <ShowIfEditor key={pathKey(sel!)} path={sel!} />
       </div>
     )
   } else {
@@ -76,7 +76,7 @@ export function Inspector() {
       <div className="space-y-3">
         <h3 className="text-sm font-semibold capitalize text-slate-700">{kind}</h3>
         <pre className="overflow-auto rounded bg-slate-50 p-2 text-xs text-slate-600">{JSON.stringify(node, null, 2)}</pre>
-        {kind === 'item' && <ShowIfEditor path={sel!} />}
+        {kind === 'item' && <ShowIfEditor key={pathKey(sel!)} path={sel!} />}
       </div>
     )
   }
