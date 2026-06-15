@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/ensure-renderer.mjs",
+    "predev": "node scripts/ensure-renderer.mjs && node scripts/build-evaluator.mjs",
     "dev": "vite",
-    "prebuild": "node scripts/ensure-renderer.mjs",
+    "prebuild": "node scripts/ensure-renderer.mjs && node scripts/build-evaluator.mjs",
     "build": "tsc -b && tsc -p tsconfig.test.json && vite build",
     "pretypecheck": "node scripts/ensure-renderer.mjs",
     "typecheck": "tsc -b && tsc -p tsconfig.test.json",
