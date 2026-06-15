@@ -13,9 +13,10 @@ import { ForkButton } from '../library/ForkButton'
 
 export function ItemEditor({ path }: { path: NodePath }) {
   const { model, applyEdit, pool, upsertPoolEntity, removePoolEntity, openPicker } = useEditorStore()
+  const editingLocale = useEditorStore((s) => s.editingLocale)
   if (!model) return null
   const node = getAtPath(model, path) as Record<string, unknown>
-  const locale = String(model.metadata.language ?? 'en')
+  const locale = editingLocale ?? String(model.metadata.language ?? 'en')
 
   // shared_option (section) or option (inline item)
   const optionKey = 'shared_option' in node ? 'shared_option' : 'option'

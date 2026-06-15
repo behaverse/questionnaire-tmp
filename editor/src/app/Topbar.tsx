@@ -1,5 +1,6 @@
 import { useEditorStore } from '../state/store'
 import { exportToFile, exportBundle } from '../persistence/file'
+import { EditingLocaleSwitcher } from './EditingLocaleSwitcher'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
   const { model, dirty, validation, previewOpen, togglePreview } = useEditorStore()
@@ -17,6 +18,7 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
       <span className="font-medium text-slate-800">{model.metadata.title ?? model.metadata.id}</span>
       {dirty && <span className="text-xs text-amber-600">● unsaved</span>}
       <div className="ml-auto flex items-center gap-2">
+        <EditingLocaleSwitcher />
         {Object.keys(staleness).length > 0 && (
           <span className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-800">⬆ {Object.keys(staleness).length} update{Object.keys(staleness).length > 1 ? 's' : ''}</span>
         )}
