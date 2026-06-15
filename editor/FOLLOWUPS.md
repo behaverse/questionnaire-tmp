@@ -241,3 +241,40 @@ The `latestVersion` lookup (`GET /v1/entities/{etype}/{eid}`) runs against the s
 the rest of pick-from-Library. That API is live (see **(bb)** — auto-deployed), so real staleness
 detection works against it. Tests + the Playwright smoke **stub** the endpoint, so they don't
 depend on it.
+
+# ED-C4 Follow-ups
+
+Known limitations and open items carried out of ED-C4 (OD-05 override + fork).
+
+## (jj) Derive-locally repoints all occurrences
+
+Derive-locally repoints **all occurrences** of the ref (a study-scoped fork of the entity).
+Per-occurrence forking (forking one occurrence while leaving others pinned to the Library) is a
+possible later refinement.
+
+## (kk) "Propose a new shared version" is disabled (OD-08)
+
+The fork dialog's **"Propose a new shared version"** action is **disabled** — there is no Library
+write / contribution API (**OD-08**, needs Identity). Only **Derive locally** is functional.
+
+## (ll) `show_if` override is ED-D
+
+`show_if` (the third OD-05 free override, alongside `required` + position) is **ED-D** (the logic
+builder); only `required` (+ position via reorder) are surfaced in ED-C4.
+
+## (mm) Forking a saved Item copies only the Item binding
+
+Forking a saved **Item** copies the Item binding to the pool; its nested question / option stay
+Library refs (each forkable separately). There is **no dedicated saved-Item editor** yet.
+
+## (nn) ED-C is COMPLETE
+
+ED-C is **COMPLETE** (C1 Option · C2a pool + Prompt + new-item · C2b Context / Instruction /
+Message · C3a pick + body-endpoint · C3b OD-06 upgrade · C4 OD-05 fork). The **next editor stage
+is ED-D** (logic / validation / scoring builders).
+
+## (oo) Modal a11y (forward-looking)
+
+`ForkDialog` + `LibraryPicker` modals lack `Escape`-to-close, `role="dialog"`, and a focus-trap.
+This is **consistent across both** (not a regression introduced by ED-C4); it is worth a shared
+a11y pass over the editor's modals.
