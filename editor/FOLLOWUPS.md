@@ -544,3 +544,13 @@ Older Playwright specs rotted as later stages added more questionnaire-global pa
 strict-mode selector ambiguities that broke logic-rule/piping/3 smoke specs on master (each stage
 only ran its OWN new spec). Fixed in ED-E by scoping selectors to their panel/modal. Lesson: when
 adding a global panel/modal, re-run the FULL `npm run e2e` suite, not just the new spec.
+
+## (e2e-2) Minor ED-E review notes
+
+- The Option **label** gets a per-locale status control but NO source-text hint (the "primary: <source>"
+  hint is on Prompt/Context/Instruction/Message editors only). A translator editing an Option label
+  doesn't see the source string — add the hint to OptionEditor's label if it proves useful.
+- `setAvailableLanguages` EXCLUDES the primary from `metadata.available_languages` (primary is implicit
+  via `metadata.language`), whereas some seed fixtures INCLUDE it (e.g. `["en","pt"]`). Both are
+  Schema-2-valid (the preview/switcher prepend the primary regardless); noted so the convention
+  difference isn't a surprise.
