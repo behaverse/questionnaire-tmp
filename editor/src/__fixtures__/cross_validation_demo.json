@@ -1,0 +1,22 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "questionnaire": {
+    "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+    "metadata": { "id": "qst_cross_validation_demo", "title": "Cross-Validation Demo", "description": "ED-D3b smoke", "version": "v26.0615", "language": "en" },
+    "validation": [
+      { "id": "val_1", "condition": "it_pick == 'no'", "message": "Please reconsider your choice", "targets": ["it_pick"] }
+    ],
+    "pages": [
+      { "id": "page_1", "title": "Page 1", "elements": [
+        { "id": "it_pick",
+          "question": { "prompt": { "ref": "pr_pick@v26.0615" } },
+          "option": { "input_data_type": "choice", "measurement_type": "nominal", "selection": "single",
+            "options": [{ "index": 1, "value": "yes" }, { "index": 2, "value": "no" }],
+            "content": { "en": { "status": "validated", "label": "Pick", "options": [{ "index": 1, "text": "Yes" }, { "index": 2, "text": "No" }] } } } }
+      ] }
+    ]
+  },
+  "entities": {
+    "prompt/pr_pick": { "id": "pr_pick", "content": { "en": { "status": "validated", "text": "Do you want to continue?" } } }
+  }
+}
