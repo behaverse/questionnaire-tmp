@@ -234,3 +234,35 @@ test('stale Library ref shows Upgrade → upgrading repoints it', async ({ page 
   // after upgrade the badge for the old ref is gone
   await expect(page.getByText(/newer: v26\.0610/i)).toHaveCount(0)
 })
+
+test('fork a picked Library prompt → derive locally → editable', async ({ page }) => {
+  await page.route('**/v1/entities/prompt?*', async (route) => {
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ items: [{ id: 'pr_shared', version: 'v26.0609', title: null, entity_type: 'prompt' }], total: 1 }) })
+  })
+  // latest-version (for any staleness check) — same version, not stale. Register the
+  // bare-latest `…/pr_shared` glob (no trailing **) FIRST and the more-specific
+  // `…/versions/*/definition` body route LAST so each path hits its intended stub.
+  await page.route('**/v1/entities/prompt/pr_shared', async (route) => {
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 'pr_shared', version: 'v26.0609', entity_type: 'prompt', status: 'published' }) })
+  })
+  await page.route('**/v1/entities/prompt/pr_shared/versions/*/definition', async (route) => {
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 'pr_shared', content: { en: { status: 'validated', text: 'Shared prompt text' } } }) })
+  })
+
+  await page.goto('/')
+  await page.getByRole('button', { name: /new questionnaire/i }).click()
+  await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
+  await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /pick prompt/i }).click()
+  await page.getByLabel(/search/i).fill('shared')
+  await page.getByText('pr_shared').click()
+  await page.getByRole('button', { name: /insert/i }).click()
+
+  // the prompt is now a read-only Library chip with "Fork to edit"
+  await page.getByRole('button', { name: /fork to edit/i }).first().click()
+  await page.getByRole('button', { name: /derive locally/i }).click()
+
+  // after forking, the editable Prompt text field appears with the forked content
+  await expect(page.getByLabel(/prompt text/i)).toHaveValue('Shared prompt text')
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-c4-fork.png', fullPage: true })
+})
