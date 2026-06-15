@@ -76,3 +76,25 @@ test('Pick item opens the item picker; onPick inserts a saved-item ref', async (
   expect(els.length).toBe(before + 1)
   expect((els[before] as { ref: string }).ref).toBe('it_lib@v26.0609')
 })
+
+test('toggling Required on an item row sets the element required flag', async () => {
+  // phq9 page 0 is a matrix section (no item rows), so load a small model with an
+  // inline item element to genuinely exercise the Required checkbox.
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [{ question: { prompt: { ref: 'pr_x@v26.0609.dev1' } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
+  useEditorStore.getState().select(['pages', 0])
+  render(<Canvas />)
+  const checks = screen.queryAllByRole('checkbox', { name: /required/i })
+  expect(checks.length).toBeGreaterThan(0) // an inline item row exists
+  await userEvent.click(checks[0])
+  // the first item element on the page now has required true (or toggled)
+  const els = useEditorStore.getState().model!.pages[0].elements as Array<Record<string, unknown>>
+  const firstItem = els.find((e) => 'question' in e || (typeof e.ref === 'string' && (e.ref as string).startsWith('it_')))
+  expect(firstItem && 'required' in firstItem).toBe(true)
+  expect(firstItem && firstItem.required).toBe(true)
+})

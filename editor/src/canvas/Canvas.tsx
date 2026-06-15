@@ -1,6 +1,6 @@
 import { useEditorStore } from '../state/store'
 import { getAtPath, nodeKind, pathKey, type NodePath } from '../model/path'
-import { insertNode, deleteNode } from '../model/tree'
+import { insertNode, deleteNode, updateNodeProps } from '../model/tree'
 import type { Page, Questionnaire, Section } from '../model/types'
 import { ItemEditor } from './ItemEditor'
 import { MessagePane } from './MessagePane'
@@ -105,6 +105,13 @@ export function Canvas() {
               <button className="truncate text-left hover:underline" onClick={() => select(path)}>{label}</button>
               {typeof el.ref === 'string' && <UpgradeBadge refStr={el.ref} />}
               {typeof el.ref === 'string' && <ForkButton refStr={el.ref} />}
+              {(('question' in el) || (typeof el.ref === 'string' && el.ref.startsWith('it_'))) && (
+                <label className="ml-2 inline-flex items-center gap-1 text-xs text-slate-500">
+                  <input type="checkbox" aria-label="Required" checked={!!el.required}
+                         onChange={(e) => applyEdit((m) => updateNodeProps(m, [...elementsPath, i], { required: e.target.checked }))} />
+                  Required
+                </label>
+              )}
               <span className="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-500">{k}</span>
               <button aria-label={`Delete ${label}`} onClick={() => applyEdit((m) => deleteNode(m, path))}
                       className="text-slate-400 hover:text-red-600">✕</button>
