@@ -19,7 +19,7 @@ describe('ExpressionInput', () => {
   it('warns about unknown references', () => {
     render(<ExpressionInput value="q_typo == 1" onChange={() => {}} catalogue={cat} evaluator={okEv} />)
     expect(screen.getByText(/unknown/i)).toBeInTheDocument()
-    expect(screen.getByText(/q_typo/)).toBeInTheDocument()
+    expect(screen.getByText(/q_typo/, { selector: 'p' })).toBeInTheDocument()
   })
   it('insert-condition appends a well-formed snippet', () => {
     const onChange = vi.fn()

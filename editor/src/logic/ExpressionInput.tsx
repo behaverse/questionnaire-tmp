@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import type { IdCatalogue } from './ids'
 import { unknownRefs } from './refcheck'
 import type { LogicEvaluator } from './types'
@@ -17,13 +17,6 @@ export function ExpressionInput({
   const [qid, setQid] = useState(catalogue.questionIds[0] ?? '')
   const [op, setOp] = useState<(typeof OPS)[number]>('==')
   const [val, setVal] = useState('')
-  const taRef = useRef<HTMLTextAreaElement>(null)
-
-  // Sync value via DOM property (not inner text) so the textarea has no text child nodes.
-  // This ensures getByText queries don't inadvertently match the expression being typed.
-  useEffect(() => {
-    if (taRef.current && taRef.current.value !== value) taRef.current.value = value
-  }, [value])
 
   const error = evaluator && value.trim() ? evaluator.check(value) : null
   const unknown = value.trim() ? unknownRefs(value, catalogue) : []
@@ -37,8 +30,8 @@ export function ExpressionInput({
   return (
     <div className="space-y-1">
       <textarea
-        ref={taRef}
         aria-label="Expression"
+        value={value}
         onChange={(e) => onChange(e.target.value)}
         rows={2}
         className="w-full rounded border border-slate-300 px-2 py-1 font-mono text-sm"
