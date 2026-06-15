@@ -75,6 +75,15 @@ export function updateMetadata(model: Questionnaire, patch: Partial<Metadata>): 
   })
 }
 
+export function updateFlow(model: Questionnaire, patch: Record<string, unknown>): Questionnaire {
+  return produce(model, (draft) => {
+    const flow = { ...((draft.flow as Record<string, unknown>) ?? {}), ...patch }
+    for (const k of Object.keys(flow)) if (flow[k] === undefined) delete flow[k]
+    if (Object.keys(flow).length === 0) delete draft.flow
+    else draft.flow = flow
+  })
+}
+
 export function updateLogic(model: Questionnaire, rules: LogicRule[]): Questionnaire {
   return produce(model, (draft) => {
     if (rules.length === 0) delete draft.logic

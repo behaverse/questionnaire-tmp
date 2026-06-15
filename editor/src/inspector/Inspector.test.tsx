@@ -55,6 +55,34 @@ test('block selected → toggling a page updates membership', async () => {
   expect(useEditorStore.getState().model!.blocks![bi].page_ids).toContain(firstPage.id)
 })
 
+import { fireEvent } from '@testing-library/react'
+
+describe('Inspector randomization (D2b)', () => {
+  const base = {
+    metadata: { id: 'qst_x', title: 'X', language: 'en', version: 'v26.0601', description: 'd' },
+    pages: [{ id: 'p1', title: 'P1', elements: [] }],
+    blocks: [{ id: 'b1', title: 'B1', page_ids: ['p1'] }],
+  } as unknown as Questionnaire
+
+  beforeEach(() => useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never))
+
+  it('page: toggling Randomize element order sets then unsets the flag', () => {
+    useEditorStore.getState().select(['pages', 0])
+    render(<Inspector />)
+    fireEvent.click(screen.getByLabelText(/randomize element order/i))
+    expect((useEditorStore.getState().model!.pages[0] as { randomize?: boolean }).randomize).toBe(true)
+    fireEvent.click(screen.getByLabelText(/randomize element order/i))
+    expect('randomize' in (useEditorStore.getState().model!.pages[0] as object)).toBe(false)
+  })
+
+  it('questionnaire root: Randomize page order writes flow.randomize_pages', () => {
+    useEditorStore.getState().select(null)
+    render(<Inspector />)
+    fireEvent.click(screen.getByLabelText(/randomize page order/i))
+    expect((useEditorStore.getState().model!.flow as { randomize_pages?: boolean }).randomize_pages).toBe(true)
+  })
+})
+
 test('switching item selection updates ShowIfEditor draft (key fix regression)', async () => {
   const twoItemModel = {
     metadata: { id: 'qst_reg', title: 'Reg', description: 'd', language: 'en', version: 'v26.0601' },

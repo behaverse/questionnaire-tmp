@@ -2,6 +2,7 @@ import type { LogicRule } from '../model/types'
 import type { LogicTargets } from './targets'
 import type { IdCatalogue } from './ids'
 import type { LogicEvaluator } from './types'
+import type { PipingTarget } from './pipingTargets'
 import { newRule, validateRule } from './ruleOps'
 import { ExpressionInput } from './ExpressionInput'
 
@@ -20,16 +21,30 @@ function TargetSelect({ label, value, options, onChange }: {
   )
 }
 
-export function RuleEditor({ rule, targets, catalogue, evaluator, onChange, onDelete }: {
+function LabeledSelect({ label, value, options, onChange }: {
+  label: string; value: string; options: { value: string; label: string }[]; onChange: (v: string) => void
+}) {
+  const opts = value && !options.some((o) => o.value === value) ? [{ value, label: value }, ...options] : options
+  return (
+    <select aria-label={label} value={value} onChange={(e) => onChange(e.target.value)}
+      className="mt-0.5 block w-full rounded border border-slate-300 px-1 py-0.5 text-sm">
+      <option value="">— choose —</option>
+      {opts.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+    </select>
+  )
+}
+
+export function RuleEditor({ rule, targets, catalogue, evaluator, pipingTargets, onChange, onDelete }: {
   rule: LogicRule
   targets: LogicTargets
   catalogue: IdCatalogue
   evaluator: LogicEvaluator | null
+  pipingTargets: PipingTarget[]
   onChange: (rule: LogicRule) => void
   onDelete: () => void
 }) {
   const a = (rule.action ?? {}) as Record<string, unknown>
-  const issues = validateRule(rule, targets).errors
+  const issues = validateRule(rule, targets, pipingTargets.map((t) => t.fieldPath)).errors
   const setAction = (patch: Record<string, unknown>) => onChange({ ...rule, action: { ...rule.action, ...patch } })
   const changeType = (type: LogicRule['type']) =>
     onChange({ ...newRule(type), condition: rule.condition, ...(rule.id ? { id: rule.id } : {}) })
@@ -71,7 +86,17 @@ export function RuleEditor({ rule, targets, catalogue, evaluator, onChange, onDe
         </div>
       )}
 
-      {rule.type === 'piping' && <p className="text-xs text-amber-600">Piping editing arrives in ED-D2b.</p>}
+      {rule.type === 'piping' && (
+        <div className="space-y-1">
+          <div className="text-xs font-medium text-slate-500">Source question (answer to insert)</div>
+          <TargetSelect label="Source question" value={String(a.source ?? '')} options={catalogue.questionIds}
+            onChange={(v) => setAction({ source: v })} />
+          <div className="text-xs font-medium text-slate-500">Target prompt</div>
+          <LabeledSelect label="Target prompt" value={String(a.field_path ?? '')}
+            options={pipingTargets.map((t) => ({ value: t.fieldPath, label: t.label }))}
+            onChange={(v) => setAction({ field_path: v })} />
+        </div>
+      )}
 
       {issues.length > 0 && (
         <ul className="space-y-0.5 text-xs">

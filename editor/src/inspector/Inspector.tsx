@@ -1,8 +1,8 @@
 import type { JSX } from 'react'
 import { useEditorStore } from '../state/store'
 import { getAtPath, nodeKind, pathKey } from '../model/path'
-import { updateMetadata, updateNodeProps, setBlockPages, deleteBlock } from '../model/tree'
-import { TextField } from './fields'
+import { updateMetadata, updateNodeProps, setBlockPages, deleteBlock, updateFlow, unsetNodeProp } from '../model/tree'
+import { TextField, CheckboxField } from './fields'
 import type { Block, Page, Section } from '../model/types'
 import { ShowIfEditor } from '../canvas/ShowIfEditor'
 import { LogicPanel } from '../logic/LogicPanel'
@@ -25,6 +25,8 @@ export function Inspector() {
         <TextField label="Description" value={m.description ?? ''} onChange={(v) => applyEdit((mm) => updateMetadata(mm, { description: v }))} />
         <TextField label="Language" value={m.language ?? ''} onChange={(v) => applyEdit((mm) => updateMetadata(mm, { language: v }))} />
         <LogicPanel />
+        <CheckboxField label="Randomize page order" checked={(model.flow as { randomize_pages?: boolean })?.randomize_pages === true}
+          onChange={(v) => applyEdit((mm) => updateFlow(mm, { randomize_pages: v ? true : undefined }))} />
       </div>
     )
   } else if (kind === 'page' || kind === 'section') {
@@ -34,7 +36,9 @@ export function Inspector() {
         <h3 className="text-sm font-semibold capitalize text-slate-700">{kind}</h3>
         <TextField label={`${kind} title`} value={node.title ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { title: v }))} />
         <TextField label="Id" value={(node as Page).id ?? ''} onChange={(v) => applyEdit((mm) => updateNodeProps(mm, sel!, { id: v }))} />
-        <p className="text-xs text-slate-400">style / flow panels arrive with full coverage in later stages.</p>
+        <CheckboxField label="Randomize element order"
+          checked={(node as { randomize?: boolean }).randomize === true}
+          onChange={(v) => applyEdit((mm) => v ? updateNodeProps(mm, sel!, { randomize: true }) : unsetNodeProp(mm, sel!, 'randomize'))} />
         <ShowIfEditor key={pathKey(sel!)} path={sel!} />
       </div>
     )
@@ -69,6 +73,9 @@ export function Inspector() {
           onClick={() => { const id = node.id; select(null); applyEdit((mm) => deleteBlock(mm, id)) }}
           className="rounded border border-red-300 px-2 py-1 text-sm text-red-700 hover:bg-red-50"
         >Delete block</button>
+        <CheckboxField label="Randomize page order in block"
+          checked={(node as { randomize?: boolean }).randomize === true}
+          onChange={(v) => applyEdit((mm) => v ? updateNodeProps(mm, sel!, { randomize: true }) : unsetNodeProp(mm, sel!, 'randomize'))} />
         <ShowIfEditor key={pathKey(sel!)} path={sel!} />
       </div>
     )

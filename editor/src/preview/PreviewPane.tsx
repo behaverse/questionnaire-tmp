@@ -10,6 +10,7 @@ import { FRAMES, FRAME_LABELS, type FrameKey } from './frames'
 import type { EntityBody } from './resolve'
 import { useEvaluator } from '../logic/useEvaluator'
 import { makeBindings, filterPageVisible } from '../logic/visibility'
+import { applyPiping } from '../logic/piping'
 
 const STRINGS: RendererStrings = { required: 'Required', unsupported: 'Unsupported element' }
 
@@ -61,7 +62,8 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
   })()
   const pages = scope === 'all' ? runtime.pages : runtime.pages.filter((p) => p.id === selectedPageId)
   const bindings = makeBindings(answers as Record<string, unknown>, { score: () => null })
-  const visiblePages = evaluator ? pages.map((p) => filterPageVisible(p, evaluator, bindings, model.logic ?? [])) : pages
+  const pipedPages = evaluator ? pages.map((p) => applyPiping(p, model.logic ?? [], evaluator, bindings, locale)) : pages
+  const visiblePages = evaluator ? pipedPages.map((p) => filterPageVisible(p, evaluator, bindings, model.logic ?? [])) : pipedPages
   const width = FRAMES[device]
   const onAnswer = (key: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [key]: value }))
 

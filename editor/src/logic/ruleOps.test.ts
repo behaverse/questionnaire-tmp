@@ -46,8 +46,30 @@ describe('validateRule', () => {
   it('a fully-valid rule has no errors', () => {
     expect(validateRule({ type: 'visibility', condition: 'q==1', action: { target_id: 'it_a', show: false } }, targets).errors).toEqual([])
   })
-  it('flags a piping rule as deferred to D2b', () => {
+  it('a 2-arg piping call with unknown field_path gets a warning (not deferred)', () => {
     expect(validateRule({ type: 'piping', condition: 'q==1', action: { source: 'it_a', field_path: 'x' } }, targets).errors
-      .some((x) => x.level === 'warning')).toBe(true)
+      .some((x) => x.field === 'field_path' && x.level === 'warning')).toBe(true)
+  })
+})
+
+describe('validateRule — piping (D2b)', () => {
+  const targets = { pageIds: ['p1'], elementKeys: ['it_a'] }
+  const paths = ['pages.p1.elements.0.prompt']
+
+  it('flags empty source and empty field_path as errors', () => {
+    const e = validateRule({ type: 'piping', condition: 'true', action: { source: '', field_path: '' } }, targets, paths).errors
+    expect(e.some((x) => x.field === 'source' && x.level === 'error')).toBe(true)
+    expect(e.some((x) => x.field === 'field_path' && x.level === 'error')).toBe(true)
+  })
+  it('warns on an unknown field_path target', () => {
+    const e = validateRule({ type: 'piping', condition: 'true', action: { source: 'q_x', field_path: 'pages.p9.elements.0.prompt' } }, targets, paths).errors
+    expect(e.some((x) => x.field === 'field_path' && x.level === 'warning')).toBe(true)
+  })
+  it('a fully-valid piping rule has no errors, and no source-unknown warning', () => {
+    const e = validateRule({ type: 'piping', condition: 'true', action: { source: 'q_x', field_path: 'pages.p1.elements.0.prompt' } }, targets, paths).errors
+    expect(e).toEqual([])
+  })
+  it('back-compat: 2-arg calls still work for non-piping rules', () => {
+    expect(validateRule({ type: 'skip', condition: 'q==1', action: { skip_to: 'p1' } }, targets).errors).toEqual([])
   })
 })
