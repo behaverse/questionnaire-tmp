@@ -1,9 +1,15 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 import phq9 from '../__fixtures__/phq9.json'
 import type { Questionnaire } from '../model/types'
 import { useEditorStore } from '../state/store'
 import { Inspector } from './Inspector'
+
+vi.mock('../logic/useEvaluator', async (_orig) => {
+  const real = await import('../logic/evaluator')
+  return { useEvaluator: () => real.makeFakeEvaluator({}) }
+})
 
 beforeEach(() => {
   useEditorStore.getState().reset()
@@ -47,4 +53,36 @@ test('block selected → toggling a page updates membership', async () => {
   const firstPage = useEditorStore.getState().model!.pages[0]
   await userEvent.click(screen.getByLabelText(new RegExp(`include ${firstPage.title ?? firstPage.id}`, 'i')))
   expect(useEditorStore.getState().model!.blocks![bi].page_ids).toContain(firstPage.id)
+})
+
+test('switching item selection updates ShowIfEditor draft (key fix regression)', async () => {
+  const twoItemModel = {
+    metadata: { id: 'qst_reg', title: 'Reg', description: 'd', language: 'en', version: 'v26.0601' },
+    pages: [
+      {
+        id: 'p1',
+        elements: [
+          { id: 'q_a', show_if: 'a == 1' },
+          { id: 'q_b', show_if: 'b == 2' },
+        ],
+      },
+    ],
+  } as unknown as Questionnaire
+
+  const st = useEditorStore.getState()
+  st.reset()
+  st.loadModel(twoItemModel, { kind: 'new' })
+
+  // Select first item then render
+  act(() => { st.select(['pages', 0, 'elements', 0]) })
+  render(<Inspector />)
+
+  // First item's show_if should appear in the Expression textarea
+  expect((screen.getByLabelText('Expression') as HTMLTextAreaElement).value).toBe('a == 1')
+
+  // Switch to the second item
+  act(() => { st.select(['pages', 0, 'elements', 1]) })
+
+  // The textarea must now show the SECOND item's show_if, not the stale first
+  expect((screen.getByLabelText('Expression') as HTMLTextAreaElement).value).toBe('b == 2')
 })

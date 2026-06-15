@@ -278,3 +278,34 @@ is ED-D** (logic / validation / scoring builders).
 `ForkDialog` + `LibraryPicker` modals lack `Escape`-to-close, `role="dialog"`, and a focus-trap.
 This is **consistent across both** (not a regression introduced by ED-C4); it is worth a shared
 a11y pass over the editor's modals.
+
+# ED-D1 Follow-ups
+
+Known limitations and open items carried out of ED-D1 (expression foundation + visibility).
+
+## (pp) Visibility rules + key-based program map are ED-D2
+
+D1 reads `show_if` directly off elements. LogicRule-based `visibility` (target_id / show)
+and skip/branch/piping/randomization + the questionnaire `logic[]` panel are **ED-D2**.
+
+## (qq) Id catalogue is a generous superset
+
+`collectIdCatalogue` gathers every `id` in the model/pool + `scores[].id`. The precise
+variable-id semantics (runtime element key vs question id vs item id) are refined when D2/D4
+wire real bindings. Reference-checking is therefore a soft **warning**, never blocking.
+
+## (rr) Preview score bindings are null
+
+The preview's `makeBindings` uses `score: () => null` (no scores until ED-D4). A `show_if`
+that references a score evaluates that score to null (→ condition false unless null-tolerant).
+
+## (ss) ExpressionInput insert-helper is single-row
+
+The "insert condition" helper appends one `id op value` snippet joined with `&&`. Nested
+AND/OR groups, value pickers driven by option sets, and removing/editing inserted rows are a
+later refinement; the escape hatch (free expression text) covers everything meanwhile.
+
+## (tt) No debounce on check
+
+`ExpressionInput` runs `evaluator.check` synchronously on every keystroke (cheap WASM call).
+If profiling shows jank on large expressions, add debouncing.
