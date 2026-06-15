@@ -4,6 +4,7 @@ import { updateLogic } from '../model/tree'
 import type { LogicRule } from '../model/types'
 import { collectLogicTargets } from './targets'
 import { collectIdCatalogue } from './ids'
+import { collectPipingTargets } from './pipingTargets'
 import { useEvaluator } from './useEvaluator'
 import { newRule, summarizeRule, validateRule } from './ruleOps'
 import { RuleEditor } from './RuleEditor'
@@ -16,7 +17,9 @@ export function LogicPanel() {
   const rules = (model.logic ?? []) as LogicRule[]
   const targets = collectLogicTargets(model)
   const catalogue = collectIdCatalogue(model, pool)
-  const attention = rules.filter((r) => validateRule(r, targets).errors.some((e) => e.level === 'error')).length
+  const pipingTargets = collectPipingTargets(model)
+  const pipingPaths = pipingTargets.map((t) => t.fieldPath)
+  const attention = rules.filter((r) => validateRule(r, targets, pipingPaths).errors.some((e) => e.level === 'error')).length
 
   const write = (next: LogicRule[]) => applyEdit((m) => updateLogic(m, next))
   const add = () => { const next = [...rules, newRule('skip')]; write(next); setOpenIdx(next.length - 1) }
@@ -42,7 +45,7 @@ export function LogicPanel() {
             {openIdx === i && (
               <div className="mt-1">
                 <RuleEditor rule={r} targets={targets} catalogue={catalogue} evaluator={evaluator}
-                  onChange={(rule) => edit(i, rule)} onDelete={() => del(i)} />
+                  pipingTargets={pipingTargets} onChange={(rule) => edit(i, rule)} onDelete={() => del(i)} />
               </div>
             )}
           </li>
