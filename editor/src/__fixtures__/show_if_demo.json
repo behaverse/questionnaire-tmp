@@ -1,54 +1,67 @@
 {
-  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
-  "metadata": {
-    "id": "qst_show_if_demo",
-    "title": "Show-If Demo",
-    "description": "ED-D1 smoke: two items, second conditionally shown",
-    "version": "v26.0615",
-    "language": "en"
-  },
-  "pages": [
-    {
-      "id": "page_1",
-      "title": "Page 1",
-      "elements": [
-        {
-          "id": "it_control",
-          "question": {
-            "prompt": { "ref": "pr_show_if_control@v26.0615.dev1" }
-          },
-          "option": {
-            "input_data_type": "choice",
-            "measurement_type": "nominal",
-            "selection": "single",
-            "options": [
-              { "index": 1, "value": "yes" },
-              { "index": 2, "value": "no" }
-            ],
-            "content": {
-              "en": {
-                "status": "validated",
-                "label": "Answer",
-                "options": [
-                  { "index": 1, "text": "Yes" },
-                  { "index": 2, "text": "No" }
-                ]
+  "questionnaire": {
+    "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+    "metadata": {
+      "id": "qst_show_if_demo",
+      "title": "Show-If Demo",
+      "description": "ED-D1 smoke: two items, second conditionally shown",
+      "version": "v26.0615",
+      "language": "en",
+      "available_languages": ["en"]
+    },
+    "pages": [
+      {
+        "id": "page_1",
+        "title": "Page 1",
+        "elements": [
+          {
+            "id": "it_control",
+            "question": {
+              "prompt": { "ref": "pr_show_if_control@v26.0615" }
+            },
+            "option": {
+              "input_data_type": "choice",
+              "measurement_type": "nominal",
+              "selection": "single",
+              "options": [
+                { "index": 1, "value": "yes" },
+                { "index": 2, "value": "no" }
+              ],
+              "content": {
+                "en": {
+                  "status": "validated",
+                  "label": "Answer",
+                  "options": [
+                    { "index": 1, "text": "Yes" },
+                    { "index": 2, "text": "No" }
+                  ]
+                }
               }
             }
-          }
-        },
-        {
-          "id": "it_dependent",
-          "question": {
-            "prompt": { "ref": "pr_show_if_dependent@v26.0615.dev1" }
           },
-          "option": {
-            "input_data_type": "text",
-            "measurement_type": "nominal",
-            "content": { "en": { "status": "draft", "label": "Answer" } }
+          {
+            "id": "it_dependent",
+            "question": {
+              "prompt": { "ref": "pr_show_if_dependent@v26.0615" }
+            },
+            "option": {
+              "input_data_type": "text",
+              "measurement_type": "nominal",
+              "content": { "en": { "status": "draft", "label": "Answer" } }
+            }
           }
-        }
-      ]
+        ]
+      }
+    ]
+  },
+  "entities": {
+    "prompt/pr_show_if_control": {
+      "id": "pr_show_if_control",
+      "content": { "en": { "status": "validated", "text": "Do you want to see more?" } }
+    },
+    "prompt/pr_show_if_dependent": {
+      "id": "pr_show_if_dependent",
+      "content": { "en": { "status": "validated", "text": "Bonus question revealed!" } }
     }
-  ]
+  }
 }
