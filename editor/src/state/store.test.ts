@@ -129,3 +129,15 @@ test('forkRefAction returns false (no change) when the body cannot be fetched', 
   const q = useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }
   expect(q.question.prompt.ref).toBe('pr_x@v26.0609') // unchanged
 })
+
+test('forkRefAction clears the forked ref from staleness', async () => {
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [{ question: { prompt: { ref: 'pr_lib@v26.0609' } }, option: {} }] }],
+  } as unknown as Questionnaire
+  const st = useEditorStore.getState()
+  st.loadModel(model, { kind: 'file', name: 't.json' })
+  useEditorStore.setState({ staleness: { 'pr_lib@v26.0609': 'v26.0610' } })
+  await st.forkRefAction('pr_lib@v26.0609', async () => ({ id: 'pr_lib', content: { en: { status: 'validated', text: 'x' } } }))
+  expect(useEditorStore.getState().staleness['pr_lib@v26.0609']).toBeUndefined()
+})

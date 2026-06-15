@@ -104,7 +104,7 @@ export function Canvas() {
               <span className="text-slate-400">{k === 'section' ? '▦' : k === 'message' ? '✉' : '◉'}</span>
               <button className="truncate text-left hover:underline" onClick={() => select(path)}>{label}</button>
               {typeof el.ref === 'string' && <UpgradeBadge refStr={el.ref} />}
-              {typeof el.ref === 'string' && <ForkButton refStr={el.ref} />}
+              {typeof el.ref === 'string' && !(el.ref in pool) && <ForkButton refStr={el.ref} />}
               {(('question' in el) || (typeof el.ref === 'string' && el.ref.startsWith('it_'))) && (
                 <label className="ml-2 inline-flex items-center gap-1 text-xs text-slate-500">
                   <input type="checkbox" aria-label="Required" checked={!!el.required}

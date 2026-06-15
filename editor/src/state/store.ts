@@ -111,6 +111,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     const newRef = `${parsed.id}@${draftVersion(parsed.version)}`
     get().upsertPoolEntity(newRef, body)
     get().applyEdit((m) => repointRef(m, ref, newRef))
+    set((s) => { const st = { ...s.staleness }; delete st[ref]; return { staleness: st } })
     return true
   },
   reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null, staleness: {}, fork: null }),
