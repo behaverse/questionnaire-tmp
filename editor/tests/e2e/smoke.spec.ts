@@ -103,9 +103,9 @@ test('add a new item, type a prompt, see it in the preview', async ({ page }) =>
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
   await page.getByRole('button', { name: /add item/i }).click()
 
-  // PromptEditor appears; type a prompt. Playwright exposes getByLabel (not
-  // getByLabelText, which is Testing Library only).
-  const promptText = page.getByLabel(/prompt text/i)
+  // PromptEditor appears; type a prompt. Use exact label to avoid matching the
+  // "Prompt text status" select added in ED-E.
+  const promptText = page.getByLabel('Prompt text', { exact: true })
   await expect(promptText).toBeVisible()
   await promptText.fill('How are you today?')
 
@@ -127,14 +127,14 @@ test('add a message + a context to a new item, type both, preview them', async (
 
   // add a message, fill its text
   await page.getByRole('button', { name: /add message/i }).click()
-  await page.getByLabel(/message text/i).fill('Welcome to the study')
+  await page.getByLabel('Message text', { exact: true }).fill('Welcome to the study')
 
   // add an item, add a context to it, fill prompt + context
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
   await page.getByRole('button', { name: /add item/i }).click()
-  await page.getByLabel(/prompt text/i).fill('How do you feel?')
+  await page.getByLabel('Prompt text', { exact: true }).fill('How do you feel?')
   await page.getByRole('button', { name: /add context/i }).click()
-  await page.getByLabel(/context text/i).fill('Think about the past week.')
+  await page.getByLabel('Context text', { exact: true }).fill('Think about the past week.')
 
   // preview shows the prompt + context
   await page.getByRole('button', { name: /preview/i }).click()
@@ -263,6 +263,6 @@ test('fork a picked Library prompt → derive locally → editable', async ({ pa
   await page.getByRole('button', { name: /derive locally/i }).click()
 
   // after forking, the editable Prompt text field appears with the forked content
-  await expect(page.getByLabel(/prompt text/i)).toHaveValue('Shared prompt text')
+  await expect(page.getByLabel('Prompt text', { exact: true })).toHaveValue('Shared prompt text')
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-c4-fork.png', fullPage: true })
 })
