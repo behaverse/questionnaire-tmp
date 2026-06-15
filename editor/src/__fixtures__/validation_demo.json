@@ -1,0 +1,44 @@
+{
+  "questionnaire": {
+    "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+    "metadata": {
+      "id": "qst_validation_demo",
+      "title": "Validation Demo",
+      "description": "ED-D3a smoke",
+      "version": "v26.0615",
+      "language": "en",
+      "available_languages": ["en"]
+    },
+    "pages": [
+      {
+        "id": "page_1",
+        "title": "Page 1",
+        "elements": [
+          {
+            "id": "it_age",
+            "question": {
+              "prompt": { "ref": "pr_age@v26.0615" }
+            },
+            "option": {
+              "input_data_type": "number",
+              "measurement_type": "ratio",
+              "content": {
+                "en": { "status": "validated", "label": "Age" }
+              },
+              "validation": {
+                "range": [0, 120],
+                "range_message": "Enter an age between 0 and 120"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "entities": {
+    "prompt/pr_age": {
+      "id": "pr_age",
+      "content": { "en": { "status": "validated", "text": "How old are you?" } }
+    }
+  }
+}
