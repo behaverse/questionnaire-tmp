@@ -452,3 +452,10 @@ single displayed message is acceptable.
 ED-D3 (validation) is COMPLETE: D3a (per-question) + D3b (cross-question), both displayed live.
 Logic + Validation now both live as sections in the questionnaire-root Inspector; when ED-D4
 (scoring) adds its panel, consolidate Logic / Validation / Scoring into tabs. NEXT = ED-D4.
+
+## (ooo) Cross-question errors compute over all rules regardless of preview scope
+
+In `scope: 'page'` the preview renders only the selected page, but `collectCrossQuestionErrors`
+runs over the full `model.validation[]`. Errors keyed to off-page elements compute but don't
+display (the key isn't in the rendered DOM) — harmless, and broadly consistent with the viewer
+validating per-step. Noted for completeness.
