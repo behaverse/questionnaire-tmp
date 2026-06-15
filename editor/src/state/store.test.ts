@@ -141,3 +141,17 @@ test('forkRefAction clears the forked ref from staleness', async () => {
   await st.forkRefAction('pr_lib@v26.0609', async () => ({ id: 'pr_lib', content: { en: { status: 'validated', text: 'x' } } }))
   expect(useEditorStore.getState().staleness['pr_lib@v26.0609']).toBeUndefined()
 })
+
+describe('editingLocale', () => {
+  it('defaults to null and is set by setEditingLocale', () => {
+    useEditorStore.setState({ editingLocale: null })
+    expect(useEditorStore.getState().editingLocale).toBeNull()
+    useEditorStore.getState().setEditingLocale('fr')
+    expect(useEditorStore.getState().editingLocale).toBe('fr')
+  })
+  it('is cleared to null on loadModel', () => {
+    useEditorStore.getState().setEditingLocale('fr')
+    useEditorStore.getState().loadModel({ metadata: { id: 'qst_x', language: 'en' }, pages: [] } as never, { kind: 'new' } as never)
+    expect(useEditorStore.getState().editingLocale).toBeNull()
+  })
+})

@@ -496,3 +496,61 @@ the empty-condition logic rule (ED-D2 FOLLOWUP zz).
 Logic + Validation + Scoring now all live as sections in the questionnaire-root Inspector. With
 three global panels, consolidating them into Inspector tabs is now worthwhile (deferred). The
 ED-D *authoring* surface is complete; remaining ED-D work is the D4b live score preview.
+
+# ED-E Follow-ups
+
+Known limitations and open items carried out of ED-E (translation interface).
+
+## (uuu) Side-by-side translation matrix is deferred (E2)
+
+ED-E translates via an editing-language switcher (reusing the per-locale editors). The richer
+design §7 side-by-side source/target matrix (all translatable strings × locales + bulk status)
+is a follow-on (E2).
+
+## (vvv) Page/Section/Block + metadata title translations not covered
+
+Page/Section/Block titles use a separate `translations: { <locale>: {status, title?} }` map (not
+`content`), and `metadata.title`/`description` are plain strings — ED-E translates only the
+`content`-based surface (prompts/options/contexts/instructions/messages/placeholders/help). Title
+translation is deferred.
+
+## (www) Validation-message + metadata-title localization is a schema gap
+
+Per-question/cross-question validation `message`s and `metadata.title`/`description` are PLAIN
+STRINGS in Schema 2 (not language-keyed), despite design §5 calling messages "translatable".
+Making them per-locale is an upstream schema change (owner decision), out of editor scope.
+
+## (xxx) Removing a language is non-destructive
+
+Removing a locale from `available_languages` does NOT prune authored `content[locale]` entries
+(avoids silent data loss). An orphaned translation stays in the data until manually cleared; the
+deployed viewer ignores locales not in `available_languages`.
+
+## (yyy) Translating a Library entity requires forking
+
+Library-ref entities are read-only; the editing-language switcher only affects POOL entities +
+inline options. To translate a Library entity, fork it first (ED-C4) — then its content is
+editable per-locale.
+
+## (zzz) Editing locale vs preview locale are independent
+
+The topbar "Editing language" (which locale you edit) and the preview's "Preview language"
+(which you view) are separate controls — you can edit `fr` while viewing `en`. By design.
+
+## (e2e) e2e specs must re-run after panel/picker additions
+
+Older Playwright specs rotted as later stages added more questionnaire-global panels: a second
+"+ Add rule" button (Validation panel, ED-D3b) and the LibraryPicker's "Insert" button created
+strict-mode selector ambiguities that broke logic-rule/piping/3 smoke specs on master (each stage
+only ran its OWN new spec). Fixed in ED-E by scoping selectors to their panel/modal. Lesson: when
+adding a global panel/modal, re-run the FULL `npm run e2e` suite, not just the new spec.
+
+## (e2e-2) Minor ED-E review notes
+
+- The Option **label** gets a per-locale status control but NO source-text hint (the "primary: <source>"
+  hint is on Prompt/Context/Instruction/Message editors only). A translator editing an Option label
+  doesn't see the source string — add the hint to OptionEditor's label if it proves useful.
+- `setAvailableLanguages` EXCLUDES the primary from `metadata.available_languages` (primary is implicit
+  via `metadata.language`), whereas some seed fixtures INCLUDE it (e.g. `["en","pt"]`). Both are
+  Schema-2-valid (the preview/switcher prepend the primary regardless); noted so the convention
+  difference isn't a surprise.

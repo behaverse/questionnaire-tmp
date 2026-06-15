@@ -6,10 +6,11 @@ import { ForkButton } from '../library/ForkButton'
 
 export function MessagePane({ path }: { path: NodePath }) {
   const { model, pool, upsertPoolEntity } = useEditorStore()
+  const editingLocale = useEditorStore((s) => s.editingLocale)
   if (!model) return null
   const ref = (getAtPath(model, path) as { ref?: string } | undefined)?.ref
   const message = ref ? (pool[ref] as MessageBody | undefined) : undefined
-  const locale = String(model.metadata.language ?? 'en')
+  const locale = editingLocale ?? String(model.metadata.language ?? 'en')
   return (
     <div className="overflow-auto p-6">
       <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Message</span>

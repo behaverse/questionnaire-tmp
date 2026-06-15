@@ -1,7 +1,7 @@
 import {
   setInputDataType, setMeasurementType, setSelection, addChoice, removeChoice,
   reorderChoice, setChoiceValue, setChoiceText, setLabel, setUnits, setBounds,
-  setInputValidation, setPlaceholderText, setHelpText, setValidation, type EditableOption,
+  setInputValidation, setPlaceholderText, setHelpText, setValidation, setStatus, type EditableOption,
 } from './ops'
 import { validateQuestionnaire } from '../model/validation'
 
@@ -143,5 +143,14 @@ describe('setValidation', () => {
     const withVal = setValidation(numOpt, { range: [0, 10] })
     expect('validation' in setInputDataType(withVal, 'choice')).toBe(false)
     expect('validation' in setInputDataType(withVal, 'text')).toBe(false)
+  })
+})
+
+describe('setStatus', () => {
+  const opt = { input_data_type: 'choice', measurement_type: 'nominal', content: { en: { status: 'draft' } } } as unknown as import('./ops').EditableOption
+  it('sets content[locale].status without mutating input', () => {
+    const out = setStatus(opt, 'fr', 'complete')
+    expect(out.content.fr.status).toBe('complete')
+    expect(opt.content.fr).toBeUndefined()
   })
 })

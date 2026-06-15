@@ -25,6 +25,8 @@ interface EditorState {
   picker: { etype: string; onPick: (ref: string) => void } | null
   staleness: Record<string, string>
   fork: { ref: string } | null
+  editingLocale: string | null
+  setEditingLocale: (locale: string | null) => void
   loadModel: (model: Questionnaire, source: Source, pool?: Record<string, EntityBody>) => void
   upsertPoolEntity: (ref: string, body: EntityBody) => void
   removePoolEntity: (ref: string) => void
@@ -55,8 +57,10 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   pool: {},
   picker: null,
   staleness: {},
+  editingLocale: null,
+  setEditingLocale: (locale) => set({ editingLocale: locale }),
   loadModel: (model, source, pool) =>
-    set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {} }),
+    set({ model, source, selection: null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {}, editingLocale: null }),
   upsertPoolEntity: (ref, body) => set((s) => ({ pool: { ...s.pool, [ref]: body } })),
   removePoolEntity: (ref) => set((s) => { const p = { ...s.pool }; delete p[ref]; return { pool: p } }),
   applyEdit: (fn) => {
@@ -114,5 +118,5 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     set((s) => { const st = { ...s.staleness }; delete st[ref]; return { staleness: st } })
     return true
   },
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null, staleness: {}, fork: null }),
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null, staleness: {}, fork: null, editingLocale: null }),
 }))

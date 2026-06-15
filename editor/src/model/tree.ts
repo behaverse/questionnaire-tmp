@@ -75,6 +75,15 @@ export function updateMetadata(model: Questionnaire, patch: Partial<Metadata>): 
   })
 }
 
+export function setAvailableLanguages(model: Questionnaire, langs: string[]): Questionnaire {
+  return produce(model, (draft) => {
+    const primary = draft.metadata.language
+    const set = [...new Set(langs.filter((l) => l && l !== primary))]
+    if (set.length === 0) delete draft.metadata.available_languages
+    else draft.metadata.available_languages = set
+  })
+}
+
 export function updateFlow(model: Questionnaire, patch: Record<string, unknown>): Questionnaire {
   return produce(model, (draft) => {
     const flow = { ...((draft.flow as Record<string, unknown>) ?? {}), ...patch }

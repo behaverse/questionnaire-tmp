@@ -216,3 +216,18 @@ describe('updateScores', () => {
     expect('scores' in updateScores(updateScores(base, [score]), [])).toBe(false)
   })
 })
+
+import { setAvailableLanguages } from './tree'
+
+describe('setAvailableLanguages', () => {
+  const base = { metadata: { id: 'qst_x', language: 'en' }, pages: [] } as unknown as import('./types').Questionnaire
+  it('sets available_languages (deduped, primary dropped) without mutating input', () => {
+    const out = setAvailableLanguages(base, ['fr', 'fr', 'en', 'de'])
+    expect(out.metadata.available_languages).toEqual(['fr', 'de'])
+    expect(base.metadata.available_languages).toBeUndefined()
+  })
+  it('deletes the key when the set is empty (or just the primary)', () => {
+    const out = setAvailableLanguages(setAvailableLanguages(base, ['fr']), ['en'])
+    expect('available_languages' in out.metadata).toBe(false)
+  })
+})

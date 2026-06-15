@@ -17,7 +17,7 @@ beforeEach(() => {
 
 test('edits a pool message body via the store', () => {
   render(<MessagePane path={['pages', 0, 'elements', 0]} />)
-  fireEvent.change(screen.getByLabelText(/message text/i), { target: { value: 'Hello there' } })
+  fireEvent.change(screen.getByLabelText('Message text'), { target: { value: 'Hello there' } })
   expect((useEditorStore.getState().pool[ref] as { content: { en: { text: string } } }).content.en.text).toBe('Hello there')
 })
 

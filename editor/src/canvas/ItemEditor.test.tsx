@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useEditorStore } from '../state/store'
 import { ItemEditor } from './ItemEditor'
@@ -41,7 +41,7 @@ test('edits a pool prompt via the PromptEditor', async () => {
   useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
   useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Q' } } })
   render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
-  const ta = screen.getByLabelText(/prompt text/i)
+  const ta = screen.getByLabelText('Prompt text')
   await userEvent.type(ta, '?')
   expect((useEditorStore.getState().pool[ref] as { content: { en: { text: string } } }).content.en.text).toMatch(/Q/)
 })
@@ -100,6 +100,27 @@ test('Pick prompt opens the picker; the onPick sets a Library ref', async () => 
   const q = (useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }).question
   expect(q.prompt.ref).toBe('pr_lib@v26.0609')
   expect(useEditorStore.getState().pool['pr_p@v26.0609.dev1']).toBeUndefined()
+})
+
+test('edits the editing-locale content, not the primary', async () => {
+  const ref = 'pr_p@v26.0609.dev1'
+  const modelFr = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'page_1', title: 'P', elements: [{ question: { prompt: { ref } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as import('../model/types').Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(modelFr, { kind: 'file', name: 't.json' })
+  useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Hello' } } })
+  useEditorStore.getState().setEditingLocale('fr')
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  // The PromptEditor label reflects the active locale:
+  expect(screen.getByText(/Prompt text \(fr\)/)).toBeInTheDocument()
+  fireEvent.change(screen.getByLabelText('Prompt text'), { target: { value: 'Bonjour' } })
+  // The pool prompt now has content.fr.text = 'Bonjour'; content.en (primary) is untouched.
+  const pool = useEditorStore.getState().pool
+  const promptBody = Object.values(pool).find((b) => (b as { content?: Record<string, { text?: string }> }).content?.fr) as { content: Record<string, { text?: string }> }
+  expect(promptBody.content.fr.text).toBe('Bonjour')
 })
 
 test('a stale Library prompt ref shows the upgrade badge in the chip', () => {
