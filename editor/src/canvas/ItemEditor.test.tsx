@@ -101,3 +101,17 @@ test('Pick prompt opens the picker; the onPick sets a Library ref', async () => 
   expect(q.prompt.ref).toBe('pr_lib@v26.0609')
   expect(useEditorStore.getState().pool['pr_p@v26.0609.dev1']).toBeUndefined()
 })
+
+test('a stale Library prompt ref shows the upgrade badge in the chip', () => {
+  const ref = 'pr_lib@v26.0609'
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'page_1', title: 'P', elements: [{ question: { prompt: { ref } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as import('../model/types').Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
+  useEditorStore.setState({ staleness: { [ref]: 'v26.0610' } })
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  expect(screen.getByText(/newer: v26\.0610/i)).toBeInTheDocument()
+})

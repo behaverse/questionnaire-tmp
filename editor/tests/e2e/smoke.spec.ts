@@ -185,3 +185,52 @@ test('pick a prompt from the Library into a new item', async ({ page }) => {
   ).toBeVisible()
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-c3a-pick-library.png', fullPage: true })
 })
+
+test('stale Library ref shows Upgrade → upgrading repoints it', async ({ page }) => {
+  // Library search (list) → a v26.0609 prompt
+  await page.route('**/v1/entities/prompt?*', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ items: [{ id: 'pr_stale', version: 'v26.0609', title: null, entity_type: 'prompt' }], total: 1 }),
+    })
+  })
+  // latest-version endpoint (no version segment) → NEWER than the pinned v26.0609.
+  // Playwright matches routes in registration order with last-registered winning on
+  // overlap; the bare `…/pr_stale` glob (no trailing **) does NOT match the
+  // `…/pr_stale/versions/*/definition` path, but to be unambiguous we register this
+  // bare-latest route FIRST and the more-specific `/versions/*/definition` body route
+  // LAST so the body path always wins its match and each path hits its intended stub.
+  await page.route('**/v1/entities/prompt/pr_stale', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ id: 'pr_stale', version: 'v26.0610', entity_type: 'prompt', status: 'published' }),
+    })
+  })
+  // entity body (picker snippet + preview resolver) — registered last (most specific)
+  await page.route('**/v1/entities/prompt/pr_stale/versions/*/definition', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ id: 'pr_stale', content: { en: { status: 'validated', text: 'Stale prompt' } } }),
+    })
+  })
+
+  await page.goto('/')
+  await page.getByRole('button', { name: /new questionnaire/i }).click()
+  await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
+  await page.getByRole('button', { name: /add item/i }).click()
+  // pick the (v26.0609) prompt → it will be flagged stale (latest v26.0610)
+  await page.getByRole('button', { name: /pick prompt/i }).click()
+  await page.getByLabel(/search/i).fill('stale')
+  await page.getByText('pr_stale').click()
+  await page.getByRole('button', { name: /insert/i }).click()
+  // trigger the staleness check
+  await page.getByRole('button', { name: /check for updates/i }).click()
+  await expect(page.getByText(/newer: v26\.0610/i)).toBeVisible()
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-c3b-upgrade.png', fullPage: true })
+  await page.getByRole('button', { name: /upgrade/i }).click()
+  // after upgrade the badge for the old ref is gone
+  await expect(page.getByText(/newer: v26\.0610/i)).toHaveCount(0)
+})

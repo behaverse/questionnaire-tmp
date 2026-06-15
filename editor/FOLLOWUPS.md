@@ -210,3 +210,31 @@ library-web catalogue browse).
 The prompt / context / instruction / option slots in `ItemEditor` are near-identical
 Add / Pick / Remove + pool-editor-vs-fork-box blocks; a `<RefSlot>` sub-component would dedupe
 them. Do this when **ED-C4**'s fork affordance grows these blocks.
+
+# ED-C3b Follow-ups
+
+Known limitations and open items carried out of ED-C3b (newer-version notification + upgrade).
+
+## (ff) Staleness is checked on load + manual refresh, not per-edit
+
+Staleness checks run on each model **load** and on the manual **`Check for updates`** button —
+**not** on every edit, to avoid hammering the Library. If the Library is offline / unavailable,
+nothing is flagged (no false positives), so a real update can be missed until the next check.
+
+## (gg) No content diff — only the version + one-click upgrade
+
+ED-C3b surfaces only the **newer version** and a one-click **Upgrade**; there is **no diff**
+between the pinned and latest entity content. OD-06's pinned-vs-latest "diff" view is **deferred**.
+
+## (hh) No transitive staleness
+
+Refs nested **inside** a Library entity's body (e.g. a saved Item's nested prompt) are **not**
+checked — only the top-level refs in the questionnaire. The Library owns its entities' internal
+pinning; the editor does not walk into resolved entity bodies for staleness.
+
+## (ii) `latestVersion` lookup gated on the live Library redeploy
+
+The `latestVersion` lookup (`GET /v1/entities/{etype}/{eid}`) runs against the same live API as
+the rest of pick-from-Library, so FOLLOWUP **(bb)** (the live Library must be redeployed) also
+gates real staleness detection. Tests + the Playwright smoke **stub** the endpoint, so they pass
+regardless.

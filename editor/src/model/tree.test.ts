@@ -105,3 +105,21 @@ test('unsetNodeProp deletes a key from the node at path (immutably)', () => {
   expect('x_marker' in (next.pages[0] as object)).toBe(false)
   expect((q.pages[0] as Record<string, unknown>).x_marker).toBeUndefined() // original untouched
 })
+
+import { upgradeRef } from './tree'
+test('upgradeRef repoints every occurrence of a ref, immutably', () => {
+  const q = {
+    metadata: { id: 'qst_t', version: 'v26.0609' },
+    pages: [{ id: 'p1', elements: [
+      { question: { prompt: { ref: 'pr_x@v26.0609' } }, option: { ref: 'opt_a@v1' } },
+      { ref: 'it_x@v26.0609' },
+      { question: { prompt: { ref: 'pr_x@v26.0609' } }, option: {} }, // same ref twice
+    ] }],
+  } as unknown as import('./types').Questionnaire
+  const next = upgradeRef(q, 'pr_x@v26.0609', 'pr_x@v26.0610')
+  const els = next.pages[0].elements as Array<Record<string, any>>
+  expect(els[0].question.prompt.ref).toBe('pr_x@v26.0610')
+  expect(els[2].question.prompt.ref).toBe('pr_x@v26.0610')
+  expect(els[0].option.ref).toBe('opt_a@v1') // untouched
+  expect((q.pages[0].elements[0] as any).question.prompt.ref).toBe('pr_x@v26.0609') // original immutable
+})

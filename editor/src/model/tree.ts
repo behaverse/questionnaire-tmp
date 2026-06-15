@@ -102,3 +102,17 @@ export function unsetNodeProp(model: Questionnaire, path: NodePath, key: string)
     if (node) delete node[key]
   })
 }
+
+export function upgradeRef(model: Questionnaire, oldRef: string, newRef: string): Questionnaire {
+  return produce(model, (draft) => {
+    const walk = (node: unknown): void => {
+      if (Array.isArray(node)) { node.forEach(walk); return }
+      if (node && typeof node === 'object') {
+        const obj = node as Record<string, unknown>
+        if (obj.ref === oldRef) obj.ref = newRef
+        for (const v of Object.values(obj)) walk(v)
+      }
+    }
+    walk(draft)
+  })
+}

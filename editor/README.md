@@ -1,6 +1,6 @@
-# Questionnaire Editor — ED-A + ED-B + ED-C1 + ED-C2a + ED-C2b + ED-C3a
+# Questionnaire Editor — ED-A + ED-B + ED-C1 + ED-C2a + ED-C2b + ED-C3a + ED-C3b
 
-The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), **ED-C2b** (Context / Instruction + Message authoring), and **ED-C3a** (pick from Library) are shipped; see the decomposition table below.
+The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), **ED-C2b** (Context / Instruction + Message authoring), **ED-C3a** (pick from Library), and **ED-C3b** (newer-version notification + upgrade) are shipped; see the decomposition table below.
 
 ED-A is the structural foundation of the custom React + TypeScript questionnaire **Editor** — the authoring tool researchers use to create, adapt, version, and translate questionnaires, producing canonical Schema 2 JSON. ED-A ships a static SPA (Vite · React 19 · TypeScript · Tailwind; Zustand + Immer state; dnd-kit; Ajv in-browser validation) with **no backend**: it opens/creates/loads/saves a Schema-2 questionnaire, renders the five-concept structure tree (Block ▸ Page ▸ Section ▸ Item/Message) in a 3-pane shell, lets you restructure + edit metadata, validates, and exports canonical JSON that round-trips Schema-2-valid. Persistence is browser-local (IndexedDB autosave) plus file open/save and open-from-Library.
 
@@ -67,6 +67,16 @@ ED-C3a lets an author insert an **existing Library entity** into a slot instead 
 - **Read-only + live preview** — picked refs are **read-only** in the editor (forking / editing a referenced entity is **ED-C4**); they preview live via the same resolver, now fixed (ED-B FOLLOWUP (g)).
 - **Library endpoint dependency** — the picker's snippet and the preview both rely on the new per-entity **body endpoint** `GET /v1/entities/{etype}/{eid}/versions/{version}/definition` (added in `library/`). `fetchEntityBody` now targets this versioned `/definition` path (the old `?version=` query path returned metadata, which broke the ED-B Library-ref preview). The live Vercel Library must be redeployed to expose it (tests + the Playwright smoke stub it).
 
+## ED-C3b — newer-version upgrade (OD-06)
+
+ED-C3b flags Library-pinned refs whose entity has a **newer published version** and lets the author upgrade each one **explicitly — never silently**:
+
+- **Staleness check** — on each model load (boot restore + New / Open file / Open from Library), and on demand via a topbar **`Check for updates`** button, the editor reads each Library-pinned ref's **latest published version** (`GET /v1/entities/{etype}/{eid}` → `EntitySummary.version`, the `max(published)`) and compares it to the pinned CalVer (`isNewer`, in `src/library/staleness.ts`). Pool drafts (`.devN`) and refs the Library doesn't resolve are **not** flagged.
+- **Per-chip flag** — a stale Library ref shows a **`newer: vX [Upgrade]`** badge (`UpgradeBadge`) inline on its read-only chip across the **ItemEditor** (prompt / context / instruction / option-ref slots), the **MessagePane** (message ref), and the **Canvas** element list (saved-item / message refs). The badge self-hides when the ref isn't stale.
+- **Topbar count** — when anything is stale, the topbar shows a **`⬆ N updates`** badge beside the buttons.
+- **Explicit upgrade** — clicking **Upgrade** re-points the ref to the newer version across **all occurrences** in the questionnaire (`upgradeRef`, an immutable replace-all tree op) and clears that entry's badge; the preview re-resolves at the new version. There is **no auto-upgrade** — the version only ever changes when the author clicks Upgrade.
+- **No content diff** — ED-C3b surfaces the version + one-click upgrade only; a pinned-vs-latest content diff view is deferred (see FOLLOWUPS). Staleness is **not transitive** — refs nested *inside* a Library entity's body are owned by the Library, not re-checked here.
+
 ## Environment variables
 
 | Var | Default | Purpose |
@@ -100,9 +110,10 @@ Build order: **ED-A → ED-B → ED-C → ED-D → ED-E → ED-F**.
 - **Author new items + Prompts** (ED-C2a): `+ Add item` mints a draft Prompt into the local entity pool (`.devN` versions), edit its text + metadata (`PromptEditor`) in the canvas, see it live in the pool-resolved preview; the pool persists in the draft and exports as a `{questionnaire, entities}` bundle (`Export bundle`).
 - **Author new Context / Instruction / Message** (ED-C2b): add a Context and/or an Instruction (with a `dimension`) to a question, and standalone Messages (with `type` tags + text) to a page (`+ Add message`); all are draft pool entities that live-preview and ride along in the bundle export; remove drops the per-add pool entity.
 - **Pick from Library** (ED-C3a): a modal picker (search by entity type + content snippet) opens from per-slot **Pick from Library** buttons (prompt / option / context / instruction) and the page **`+ Pick item`** / **`+ Pick message`** actions; inserts a hard-pinned latest `@vYY.MMDD` ref that previews live and is read-only. Relies on the new Library per-entity body endpoint (which also fixed the ED-B Library-ref preview).
+- **Newer-version upgrade** (ED-C3b): on load + via the topbar **`Check for updates`** button, stale Library-pinned refs are flagged per-chip with **`newer: vX [Upgrade]`** plus a topbar **`⬆ N updates`** badge; **Upgrade** re-points all occurrences of the ref explicitly (never silent) and re-resolves the preview.
 
 **Doesn't yet (deferred):**
-- Explicit version selection + newer-version detection/upgrade for picked refs (picks pin the **latest**) → **ED-C3b** (OD-06).
+- A pinned-vs-latest **content diff** view (ED-C3b surfaces the version + one-click upgrade only); **transitive** staleness of refs nested inside a Library entity's body → out of scope (the Library owns its entities' internal pinning).
 - Forking / editing a **referenced** (Library-pinned) Option / Prompt / Context / Instruction / Message or saved-Item ref → **ED-C4** (read-only note for now).
 - Standalone **Placeholder / Help / RegEx / Solution** editors (Placeholder / Help are inline-editable inside the Option editor) → later.
 - Live logic / branching / scoring / validation **in the preview** (the preview is static structural — every element renders unconditionally) → **ED-D**.
