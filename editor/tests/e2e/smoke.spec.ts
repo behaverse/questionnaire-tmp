@@ -176,7 +176,9 @@ test('pick a prompt from the Library into a new item', async ({ page }) => {
   await page.getByLabel(/search/i).fill('mood')
   await page.getByText('pr_lib_mood').click()
   await expect(page.getByText('Library: how is your mood?')).toBeVisible() // snippet
-  await page.getByRole('button', { name: /insert/i }).click()
+  // Scope to the picker modal (fixed overlay, z-50) to avoid strict-mode collision with
+  // the "+ insert condition" button that may be visible in the logic/validation panels.
+  await page.locator('.fixed.z-50').getByRole('button', { name: /insert/i }).click()
 
   // preview shows the picked Library prompt (same stubbed `…/definition` route resolves it)
   await page.getByRole('button', { name: /preview/i }).click()
@@ -225,7 +227,9 @@ test('stale Library ref shows Upgrade → upgrading repoints it', async ({ page 
   await page.getByRole('button', { name: /pick prompt/i }).click()
   await page.getByLabel(/search/i).fill('stale')
   await page.getByText('pr_stale').click()
-  await page.getByRole('button', { name: /insert/i }).click()
+  // Scope to the picker modal (fixed overlay, z-50) to avoid strict-mode collision with
+  // the "+ insert condition" button that may be visible in the logic/validation panels.
+  await page.locator('.fixed.z-50').getByRole('button', { name: /insert/i }).click()
   // trigger the staleness check
   await page.getByRole('button', { name: /check for updates/i }).click()
   await expect(page.getByText(/newer: v26\.0610/i)).toBeVisible()
@@ -256,7 +260,9 @@ test('fork a picked Library prompt → derive locally → editable', async ({ pa
   await page.getByRole('button', { name: /pick prompt/i }).click()
   await page.getByLabel(/search/i).fill('shared')
   await page.getByText('pr_shared').click()
-  await page.getByRole('button', { name: /insert/i }).click()
+  // Scope to the picker modal (fixed overlay, z-50) to avoid strict-mode collision with
+  // the "+ insert condition" button that may be visible in the logic/validation panels.
+  await page.locator('.fixed.z-50').getByRole('button', { name: /insert/i }).click()
 
   // the prompt is now a read-only Library chip with "Fork to edit"
   await page.getByRole('button', { name: /fork to edit/i }).first().click()

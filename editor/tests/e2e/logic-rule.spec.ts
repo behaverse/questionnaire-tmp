@@ -29,13 +29,20 @@ test('a visibility rule hides an element in the preview when its condition holds
   // Logic panel is in the questionnaire-root Inspector (nothing selected on load).
   await expect(page.getByText(/logic rules/i)).toBeVisible()
 
+  // Scope to the Logic rules panel header row to avoid strict-mode collision with
+  // the Validation rules panel which also has a "+ Add rule" button. The heading
+  // and its sibling button share the same parent flex row (<div class="flex…">).
+  const logicRulesHeading = page.getByRole('heading', { name: 'Logic rules' })
+  const logicAddRuleBtn = logicRulesHeading.locator('xpath=../button')
+
   // Add a new rule — LogicPanel sets openIdx to the new rule, so the editor auto-opens.
-  await page.getByRole('button', { name: /add rule/i }).click()
+  await logicAddRuleBtn.click()
 
   // If the rule editor did not auto-open, click the summary row to open it.
   const ruleTypeSelect = page.getByLabel('Rule type')
   const ruleEditorVisible = await ruleTypeSelect.isVisible().catch(() => false)
   if (!ruleEditorVisible) {
+    // "Edit rule 1" is only in the Logic rules panel (Validation uses "Edit validation rule N").
     await page.getByRole('button', { name: /edit rule 1/i }).click()
   }
 
