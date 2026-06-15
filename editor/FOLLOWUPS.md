@@ -418,3 +418,37 @@ panel + preview are ED-D3b, which extends `collectPerQuestionErrors` with cross-
 faithful projection keeps it), with an `el.validation` fallback for parity with the viewer's
 denormalised runtime (which hoists it). If the editor's projection ever hoists validation, the
 fallback already covers it.
+
+# ED-D3b Follow-ups
+
+Known limitations and open items carried out of ED-D3b (cross-question validation). ED-D3 COMPLETE.
+
+## (jjj) Duplicate-id is a warning, not a hard error
+
+A duplicate cross-question rule `id` is flagged as a warning (the editor's permissive stance;
+Schema 2 doesn't enforce uniqueness). Auto-`val_N` ids avoid collisions for added rules; manual
+edits can still collide (warned, not blocked).
+
+## (kkk) Validation is display-only + live (no submit gate)
+
+Cross-question errors compute live over the throwaway answers and display via the renderer's
+`requiredErrors`/`errorMessages` (merged with per-question). There is no blocking submit gate
+(the deployed viewer validates on Next; the editor preview is an authoring aid).
+
+## (lll) Scores are inert in cross-question conditions in preview
+
+A cross-question condition that references a `score()` evaluates that score to null in the
+preview (`score: () => null`, same as the Logic panel) until ED-D4 wires the Scorer. The
+authored rule is correct; only the preview can't compute the score yet.
+
+## (mmm) Duplicate-key error merge: cross-question wins display
+
+If a per-question and a cross-question error target the same element key, the merged
+`errorMessages` keeps the cross-question message (last-written). Both indicate a problem; the
+single displayed message is acceptable.
+
+## (nnn) ED-D3 is COMPLETE; questionnaire-global panels not yet tabbed
+
+ED-D3 (validation) is COMPLETE: D3a (per-question) + D3b (cross-question), both displayed live.
+Logic + Validation now both live as sections in the questionnaire-root Inspector; when ED-D4
+(scoring) adds its panel, consolidate Logic / Validation / Scoring into tabs. NEXT = ED-D4.
