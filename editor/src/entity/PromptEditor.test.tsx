@@ -8,7 +8,7 @@ const prompt = (): PromptBody => ({ id: 'pr_1', content: { en: { status: 'draft'
 test('edits prompt text for the locale', async () => {
   const onChange = vi.fn()
   render(<PromptEditor prompt={prompt()} locale="en" onChange={onChange} />)
-  const ta = screen.getByLabelText(/prompt text/i)
+  const ta = screen.getByLabelText('Prompt text')
   await userEvent.type(ta, '!')
   expect(onChange.mock.calls.at(-1)![0].content.en.text).toBe('Hi!')
 })

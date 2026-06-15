@@ -141,6 +141,10 @@ export function setLabel(opt: EditableOption, locale: string, label: string): Ed
   return next
 }
 
+export function setStatus(opt: EditableOption, locale: string, status: string): EditableOption {
+  const next = clone(opt); const e = ensureEntry(next, locale); e.status = status; return next
+}
+
 export function setUnits(opt: EditableOption, locale: string, units: string): EditableOption {
   const next = clone(opt); const e = ensureEntry(next, locale)
   if (units) e.units = units; else delete e.units

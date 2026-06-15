@@ -18,7 +18,7 @@ test('ContextEditor wraps content back into the context body', async () => {
   const onChange = vi.fn()
   const ctx: ContextBody = { id: 'ctx_1', content: { en: { status: 'draft', text: 'x' } } }
   render(<ContextEditor context={ctx} locale="en" onChange={onChange} />)
-  await userEvent.type(screen.getByLabelText(/context text/i), 'y')
+  await userEvent.type(screen.getByLabelText('Context text'), 'y')
   expect(onChange.mock.calls.at(-1)![0].content.en.text).toBe('xy')
   expect(onChange.mock.calls.at(-1)![0].id).toBe('ctx_1')
 })

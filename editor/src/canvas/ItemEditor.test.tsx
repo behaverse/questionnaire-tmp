@@ -41,7 +41,7 @@ test('edits a pool prompt via the PromptEditor', async () => {
   useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
   useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Q' } } })
   render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
-  const ta = screen.getByLabelText(/prompt text/i)
+  const ta = screen.getByLabelText('Prompt text')
   await userEvent.type(ta, '?')
   expect((useEditorStore.getState().pool[ref] as { content: { en: { text: string } } }).content.en.text).toMatch(/Q/)
 })

@@ -2,7 +2,7 @@ import { ChoiceRows } from './ChoiceRows'
 import { widgetLabel } from './widget'
 import {
   setInputDataType, setMeasurementType, setSelection, setMinMaxSelected, setBounds, setLabel, setUnits,
-  setInputValidation, setPlaceholderText, setHelpText, setValidation,
+  setInputValidation, setPlaceholderText, setHelpText, setValidation, setStatus,
   type EditableOption, type InputDataType, type MeasurementType,
 } from './ops'
 
@@ -64,6 +64,13 @@ export function OptionEditor({ option, locale, onChange }: { option: EditableOpt
       <label className="block text-sm">Label ({locale})
         <input value={c?.label ?? ''} onChange={(e) => onChange(setLabel(option, locale, e.target.value))}
                className="mt-1 w-full rounded border border-slate-300 px-2 py-1" aria-label={`Label ${locale}`} />
+      </label>
+
+      <label className="text-xs text-slate-500">Status
+        <select aria-label="Option status" value={c?.status ?? 'draft'} onChange={(e) => onChange(setStatus(option, locale, e.target.value))}
+                className="ml-1 rounded border border-slate-300 px-1 py-0.5">
+          {['draft', 'complete', 'validated'].map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
       </label>
 
       {option.input_data_type === 'choice' && <ChoiceRows option={option} locale={locale} onChange={onChange} />}

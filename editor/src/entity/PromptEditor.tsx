@@ -9,10 +9,12 @@ export interface PromptBody {
   [k: string]: unknown
 }
 
-export function PromptEditor({ prompt, locale, onChange }: { prompt: PromptBody; locale: string; onChange: (p: PromptBody) => void }) {
+export function PromptEditor({ prompt, locale, primaryLocale, onChange }: { prompt: PromptBody; locale: string; primaryLocale?: string; onChange: (p: PromptBody) => void }) {
   const entry = prompt.content?.[locale] ?? { status: 'draft' }
   const setText = (text: string) =>
     onChange({ ...prompt, content: { ...prompt.content, [locale]: { ...entry, status: entry.status ?? 'draft', text } } })
+  const setStatus = (status: string) =>
+    onChange({ ...prompt, content: { ...prompt.content, [locale]: { ...entry, status } } })
   const setField = (k: 'name' | 'construct' | 'dimension', v: string) => {
     const next = { ...prompt }
     if (v) next[k] = v; else delete next[k]
@@ -24,11 +26,19 @@ export function PromptEditor({ prompt, locale, onChange }: { prompt: PromptBody;
     if (topics.length) next.topics = topics; else delete next.topics
     onChange(next)
   }
+  const source = primaryLocale && primaryLocale !== locale ? prompt.content?.[primaryLocale]?.text : undefined
   return (
     <div className="space-y-3">
       <label className="block text-sm">Prompt text ({locale})
         <textarea aria-label="Prompt text" value={entry.text ?? ''} onChange={(e) => setText(e.target.value)} rows={2}
                   className="mt-1 w-full rounded border border-slate-300 px-2 py-1" />
+      </label>
+      {source !== undefined && <p className="text-[11px] text-slate-400">primary: {source || '(empty)'}</p>}
+      <label className="text-xs text-slate-500">Status
+        <select aria-label="Prompt text status" value={entry.status ?? 'draft'} onChange={(e) => setStatus(e.target.value)}
+                className="ml-1 rounded border border-slate-300 px-1 py-0.5">
+          {['draft', 'complete', 'validated'].map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
       </label>
       <div className="flex flex-wrap gap-3">
         <label className="text-sm">Name

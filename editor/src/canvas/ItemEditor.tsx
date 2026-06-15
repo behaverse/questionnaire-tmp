@@ -17,6 +17,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
   if (!model) return null
   const node = getAtPath(model, path) as Record<string, unknown>
   const locale = editingLocale ?? String(model.metadata.language ?? 'en')
+  const primaryLocale = String(model.metadata.language ?? 'en')
 
   // shared_option (section) or option (inline item)
   const optionKey = 'shared_option' in node ? 'shared_option' : 'option'
@@ -66,7 +67,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
           </div>
           {poolPrompt ? (
             <div className="mt-2">
-              <PromptEditor prompt={poolPrompt} locale={locale} onChange={(p) => upsertPoolEntity(promptRef, p)} />
+              <PromptEditor prompt={poolPrompt} locale={locale} primaryLocale={primaryLocale} onChange={(p) => upsertPoolEntity(promptRef, p)} />
             </div>
           ) : (
             <div className="mt-1 flex items-center gap-2 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
@@ -87,7 +88,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
               {ctxRef && poolCtx && <button onClick={removeContext} className="text-xs text-slate-400 hover:text-red-600">Remove context</button>}
             </div>
             {ctxRef && (poolCtx
-              ? <div className="mt-1"><ContextEditor context={poolCtx} locale={locale} onChange={(c) => upsertPoolEntity(ctxRef, c)} /></div>
+              ? <div className="mt-1"><ContextEditor context={poolCtx} locale={locale} primaryLocale={primaryLocale} onChange={(c) => upsertPoolEntity(ctxRef, c)} /></div>
               : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{ctxRef}</span> <UpgradeBadge refStr={ctxRef} /> <ForkButton refStr={ctxRef} /></div>)}
           </div>
           <div>
@@ -98,7 +99,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
               {insRef && poolIns && <button onClick={removeInstruction} className="text-xs text-slate-400 hover:text-red-600">Remove instruction</button>}
             </div>
             {insRef && (poolIns
-              ? <div className="mt-1"><InstructionEditor instruction={poolIns} locale={locale} onChange={(i) => upsertPoolEntity(insRef, i)} /></div>
+              ? <div className="mt-1"><InstructionEditor instruction={poolIns} locale={locale} primaryLocale={primaryLocale} onChange={(i) => upsertPoolEntity(insRef, i)} /></div>
               : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{insRef}</span> <UpgradeBadge refStr={insRef} /> <ForkButton refStr={insRef} /></div>)}
           </div>
         </div>
