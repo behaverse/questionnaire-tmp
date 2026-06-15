@@ -139,6 +139,26 @@ test('repointRef replaces all occurrences; upgradeRef is an alias of it', () => 
   expect(upgradeAlias).toBe(repointRef) // same function reference
 })
 
+import { updateFlow } from './tree'
+
+describe('updateFlow', () => {
+  const base = { metadata: { id: 'qst_x', language: 'en' }, pages: [] } as unknown as import('./types').Questionnaire
+  it('sets flow.randomize_pages and does not mutate input', () => {
+    const out = updateFlow(base, { randomize_pages: true })
+    expect((out.flow as { randomize_pages: boolean }).randomize_pages).toBe(true)
+    expect(base.flow).toBeUndefined()
+  })
+  it('clears a key set to undefined and drops an emptied flow', () => {
+    const set = updateFlow(base, { randomize_pages: true })
+    const cleared = updateFlow(set, { randomize_pages: undefined })
+    expect('flow' in cleared).toBe(false)
+  })
+  it('preserves other flow keys', () => {
+    const out = updateFlow({ ...base, flow: { other: 1 } } as unknown as import('./types').Questionnaire, { randomize_pages: true })
+    expect(out.flow).toEqual({ other: 1, randomize_pages: true })
+  })
+})
+
 import { updateLogic } from './tree'
 import type { LogicRule } from './types'
 

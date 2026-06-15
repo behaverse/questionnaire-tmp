@@ -7,3 +7,12 @@ export function TextField({ label, value, onChange }: { label: string; value: st
     </label>
   )
 }
+
+export function CheckboxField({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
+  return (
+    <label className="flex items-center gap-2 text-sm text-slate-600">
+      <input type="checkbox" aria-label={label} checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      {label}
+    </label>
+  )
+}
