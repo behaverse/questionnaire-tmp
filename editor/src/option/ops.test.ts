@@ -1,7 +1,7 @@
 import {
   setInputDataType, setMeasurementType, setSelection, addChoice, removeChoice,
   reorderChoice, setChoiceValue, setChoiceText, setLabel, setUnits, setBounds,
-  setInputValidation, setPlaceholderText, setHelpText, type EditableOption,
+  setInputValidation, setPlaceholderText, setHelpText, setValidation, type EditableOption,
 } from './ops'
 import { validateQuestionnaire } from '../model/validation'
 
@@ -114,4 +114,34 @@ test('purity: inputs are never mutated', () => {
   const snapshot = JSON.stringify(base)
   addChoice(base, 'en'); removeChoice(base, 1); setLabel(base, 'en', 'x')
   expect(JSON.stringify(base)).toBe(snapshot)
+})
+
+const numOpt = { input_data_type: 'number', measurement_type: 'ratio', content: { en: { status: 'draft' } } } as unknown as EditableOption
+
+describe('setValidation', () => {
+  it('sets a range and does not mutate input', () => {
+    const out = setValidation(numOpt, { range: [0, 10] })
+    expect(out.validation).toEqual({ range: [0, 10] })
+    expect(numOpt.validation).toBeUndefined()
+  })
+  it('merges patches', () => {
+    const out = setValidation(setValidation(numOpt, { range: [0, 10] }), { range_message: 'too big' })
+    expect(out.validation).toEqual({ range: [0, 10], range_message: 'too big' })
+  })
+  it('keeps open bounds ([n,null] / [null,n])', () => {
+    expect(setValidation(numOpt, { range: [3, null] }).validation).toEqual({ range: [3, null] })
+  })
+  it('drops a [null,null] tuple', () => {
+    const out = setValidation(setValidation(numOpt, { range: [0, 10] }), { range: [null, null] })
+    expect('validation' in out).toBe(false)
+  })
+  it('drops empty-string messages and removes validation when empty', () => {
+    const out = setValidation(setValidation(numOpt, { range_message: 'x' }), { range_message: '' })
+    expect('validation' in out).toBe(false)
+  })
+  it('clears validation when switching input type', () => {
+    const withVal = setValidation(numOpt, { range: [0, 10] })
+    expect('validation' in setInputDataType(withVal, 'choice')).toBe(false)
+    expect('validation' in setInputDataType(withVal, 'text')).toBe(false)
+  })
 })
