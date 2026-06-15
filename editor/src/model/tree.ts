@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { Questionnaire, Block, Metadata, LogicRule, CrossQuestionValidationRule } from './types'
+import type { Questionnaire, Block, Metadata, LogicRule, CrossQuestionValidationRule, Score } from './types'
 import { getAtPath, getContainer, type NodePath, pathKey } from './path'
 
 /** Two element-array paths are compatible; both `pages` arrays are compatible. */
@@ -95,6 +95,13 @@ export function updateValidation(model: Questionnaire, rules: CrossQuestionValid
   return produce(model, (draft) => {
     if (rules.length === 0) delete draft.validation
     else draft.validation = rules
+  })
+}
+
+export function updateScores(model: Questionnaire, scores: Score[]): Questionnaire {
+  return produce(model, (draft) => {
+    if (scores.length === 0) delete draft.scores
+    else draft.scores = scores
   })
 }
 

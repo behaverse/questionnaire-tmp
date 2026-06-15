@@ -81,3 +81,12 @@ test('latestVersion returns null on 404 / error', async () => {
   const boom = (async () => { throw new Error('offline') }) as unknown as typeof fetch
   expect(await latestVersion('prompt', 'pr_x', { baseUrl: 'http://lib', fetchImpl: boom })).toBeNull()
 })
+
+describe('parseRef scorer prefix', () => {
+  it('resolves a scr_ ref to the scorer type', () => {
+    expect(parseRef('scr_phq9@v26.0602')).toEqual({ type: 'scorer', id: 'scr_phq9', version: 'v26.0602' })
+  })
+  it('still resolves a prompt ref', () => {
+    expect(parseRef('pr_x@v26.0601')).toEqual({ type: 'prompt', id: 'pr_x', version: 'v26.0601' })
+  })
+})

@@ -200,3 +200,19 @@ describe('updateValidation', () => {
     expect('validation' in updateValidation(updateValidation(base, [rule]), [])).toBe(false)
   })
 })
+
+import { updateScores } from './tree'
+import type { Score } from './types'
+
+describe('updateScores', () => {
+  const base = { metadata: { id: 'qst_x', language: 'en' }, pages: [] } as unknown as import('./types').Questionnaire
+  const score: Score = { id: 'score_1', scorer: 'scr_phq9@v26.0602', path: '/total' }
+  it('sets scores[] without mutating input', () => {
+    const out = updateScores(base, [score])
+    expect(out.scores).toEqual([score])
+    expect(base.scores).toBeUndefined()
+  })
+  it('deletes scores when given an empty array', () => {
+    expect('scores' in updateScores(updateScores(base, [score]), [])).toBe(false)
+  })
+})

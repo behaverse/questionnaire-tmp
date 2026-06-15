@@ -64,6 +64,14 @@ export interface CrossQuestionValidationRule {
   targets?: string[]
 }
 
+export interface Score {
+  id: string
+  scorer: string
+  path: string
+  name?: string
+  description?: string
+}
+
 export interface Questionnaire {
   '@context'?: string
   metadata: Metadata
@@ -73,5 +81,6 @@ export interface Questionnaire {
   flow?: unknown
   logic?: LogicRule[]
   validation?: CrossQuestionValidationRule[]
+  scores?: Score[]
   [k: string]: unknown
 }
