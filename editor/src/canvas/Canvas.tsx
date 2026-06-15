@@ -8,6 +8,7 @@ import { collectIds, draftVersion } from '../pool/mint'
 import { buildNewItem } from '../pool/newItem'
 import { buildMessage } from '../pool/newEntities'
 import { UpgradeBadge } from '../library/UpgradeBadge'
+import { ForkButton } from '../library/ForkButton'
 
 function nextSectionId(model: Questionnaire): string {
   const used = new Set<string>()
@@ -103,6 +104,7 @@ export function Canvas() {
               <span className="text-slate-400">{k === 'section' ? '▦' : k === 'message' ? '✉' : '◉'}</span>
               <button className="truncate text-left hover:underline" onClick={() => select(path)}>{label}</button>
               {typeof el.ref === 'string' && <UpgradeBadge refStr={el.ref} />}
+              {typeof el.ref === 'string' && <ForkButton refStr={el.ref} />}
               <span className="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-500">{k}</span>
               <button aria-label={`Delete ${label}`} onClick={() => applyEdit((m) => deleteNode(m, path))}
                       className="text-slate-400 hover:text-red-600">✕</button>

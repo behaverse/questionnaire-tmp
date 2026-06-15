@@ -9,6 +9,7 @@ import { InstructionEditor, type InstructionBody } from '../entity/InstructionEd
 import { buildContext, buildInstruction } from '../pool/newEntities'
 import { collectIds, draftVersion } from '../pool/mint'
 import { UpgradeBadge } from '../library/UpgradeBadge'
+import { ForkButton } from '../library/ForkButton'
 
 export function ItemEditor({ path }: { path: NodePath }) {
   const { model, applyEdit, pool, upsertPoolEntity, removePoolEntity, openPicker } = useEditorStore()
@@ -70,7 +71,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
             <div className="mt-1 flex items-center gap-2 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
               <span className="text-slate-400">◉</span><span className="font-mono">{promptRef}</span>
               <UpgradeBadge refStr={promptRef} />
-              <span className="ml-auto text-xs text-slate-400">fork to edit (ED-C4)</span>
+              <span className="ml-auto"><ForkButton refStr={promptRef} /></span>
             </div>
           )}
         </div>
@@ -86,7 +87,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
             </div>
             {ctxRef && (poolCtx
               ? <div className="mt-1"><ContextEditor context={poolCtx} locale={locale} onChange={(c) => upsertPoolEntity(ctxRef, c)} /></div>
-              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{ctxRef}</span> <UpgradeBadge refStr={ctxRef} /> <span className="text-xs text-slate-400">— fork to edit (ED-C4)</span></div>)}
+              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{ctxRef}</span> <UpgradeBadge refStr={ctxRef} /> <ForkButton refStr={ctxRef} /></div>)}
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -97,7 +98,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
             </div>
             {insRef && (poolIns
               ? <div className="mt-1"><InstructionEditor instruction={poolIns} locale={locale} onChange={(i) => upsertPoolEntity(insRef, i)} /></div>
-              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{insRef}</span> <UpgradeBadge refStr={insRef} /> <span className="text-xs text-slate-400">— fork to edit (ED-C4)</span></div>)}
+              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{insRef}</span> <UpgradeBadge refStr={insRef} /> <ForkButton refStr={insRef} /></div>)}
           </div>
         </div>
       )}
@@ -113,7 +114,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
       ) : (
         <div className="mt-2 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500">
           {option && 'ref' in (option as object) ? (
-            <>Referenced option <span className="font-mono">{(option as { ref: string }).ref}</span><UpgradeBadge refStr={(option as { ref: string }).ref} /> — pick/fork in ED-C3/C4.</>
+            <>Referenced option <span className="font-mono">{(option as { ref: string }).ref}</span><UpgradeBadge refStr={(option as { ref: string }).ref} /> <ForkButton refStr={(option as { ref: string }).ref} /></>
           ) : 'No editable option.'}
         </div>
       )}
