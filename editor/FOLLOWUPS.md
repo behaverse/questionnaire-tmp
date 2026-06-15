@@ -383,3 +383,38 @@ ED-D2 (logic rules) is COMPLETE: D2a (skip/branch/visibility + live visibility p
 D2b (piping + live piping preview + randomization). The next editor stages are ED-D3
 (validation builders) and ED-D4 (scoring builders), then ED-E (translation), ED-F
 (preview-deploy + export).
+
+# ED-D3a Follow-ups
+
+Known limitations and open items carried out of ED-D3a (per-question validation).
+
+## (eee) Two regex fields: `input_validation` vs `validation.format`
+
+`OptionBase` has BOTH `input_validation` (a standalone RegEx/RegExRef, edited as "Input mask")
+AND `validation.format` (the per-question format check the viewer validates + messages on).
+ED-D3a edits `validation`; `input_validation` stays as the ED-C1 field. Whether the schema
+should keep both regexes is a schema/domain question for the owner, not the editor's to resolve.
+
+## (fff) Validation is display-only + live in the preview (no submit gate)
+
+The editor preview computes per-question errors live and shows them via the renderer's
+`requiredErrors`/`errorMessages`. There is no blocking "Validate"/submit gate (the deployed
+viewer validates on Next; the editor preview is an authoring aid). Empty values never error
+(that's the separate `required` flag from ED-C4).
+
+## (ggg) No inline validator-linting
+
+The editor does not lint the validators themselves (e.g. min>max, or a broken `format` regex —
+which silently passes at runtime per the viewer). Author-facing linting is a later refinement.
+
+## (hhh) Cross-question validation is ED-D3b
+
+Cross-question rules (`Questionnaire.validation[]`: id + condition + message + targets) and their
+panel + preview are ED-D3b, which extends `collectPerQuestionErrors` with cross-question rules.
+
+## (iii) Per-question validation reads `el.option.validation` in the editor runtime
+
+`collectPerQuestionErrors` reads validation from `el.option.validation` (where the editor's
+faithful projection keeps it), with an `el.validation` fallback for parity with the viewer's
+denormalised runtime (which hoists it). If the editor's projection ever hoists validation, the
+fallback already covers it.
