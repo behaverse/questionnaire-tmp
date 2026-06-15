@@ -5,6 +5,7 @@ import { updateMetadata, updateNodeProps, setBlockPages, deleteBlock } from '../
 import { TextField } from './fields'
 import type { Block, Page, Section } from '../model/types'
 import { ShowIfEditor } from '../canvas/ShowIfEditor'
+import { LogicPanel } from '../logic/LogicPanel'
 
 export function Inspector() {
   const { model, selection, applyEdit, select } = useEditorStore()
@@ -23,6 +24,7 @@ export function Inspector() {
         <TextField label="Id" value={m.id} onChange={(v) => applyEdit((mm) => updateMetadata(mm, { id: v }))} />
         <TextField label="Description" value={m.description ?? ''} onChange={(v) => applyEdit((mm) => updateMetadata(mm, { description: v }))} />
         <TextField label="Language" value={m.language ?? ''} onChange={(v) => applyEdit((mm) => updateMetadata(mm, { language: v }))} />
+        <LogicPanel />
       </div>
     )
   } else if (kind === 'page' || kind === 'section') {

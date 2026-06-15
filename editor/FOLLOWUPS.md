@@ -309,3 +309,45 @@ later refinement; the escape hatch (free expression text) covers everything mean
 
 `ExpressionInput` runs `evaluator.check` synchronously on every keystroke (cheap WASM call).
 If profiling shows jank on large expressions, add debouncing.
+
+# ED-D2a Follow-ups
+
+Known limitations and open items carried out of ED-D2a (navigation & visibility logic rules).
+
+## (uu) Skip/branch are author + validate only (no preview navigation)
+
+The editor preview renders a page / all pages with throwaway answers; it has no page-to-page
+navigation runtime, so `skip` and `branch` rules cannot be demonstrated in preview. They are
+authored + semantically validated and labelled "runs in the deployed viewer". A mini
+navigation preview is a possible later refinement.
+
+## (vv) Piping + randomization are ED-D2b
+
+Piping rule authoring (source + field_path picker + same-page piping preview) and the
+randomization checkboxes (`Page/Section/Block.randomize`, `flow.randomize_pages`) are ED-D2b.
+ED-D2a renders a piping rule's summary + a "editing arrives in D2b" note but does not author it.
+Option-order randomization is not in Schema 2 v26.0602 (out of scope entirely).
+
+## (ww) Branch has no explicit else-target
+
+Schema `branch` uses `action.skip_to` for the true path; the false path falls through to the
+next step (the viewer's `nextStepIndex` model). There is no second target field. The editor
+authors `skip_to` only; the implicit else-to-next is documented, not configured.
+
+## (xx) Logic-rule conditions are expression-first (no per-clause builder)
+
+Rule conditions use the shared `ExpressionInput` (+ insert-condition helper). A structured
+multi-clause AND/OR builder is deferred (same stance as ED-D1).
+
+## (yy) Questionnaire-global panels not yet tabbed
+
+Logic lives as a section in the questionnaire-root Inspector. When ED-D3 (validation) and
+ED-D4 (scoring) add their own global panels, consolidate them into tabs.
+
+## (zz) A freshly-added rule is transiently Schema-invalid
+
+"+ Add rule" mints a rule with `condition: ''`, but Schema 2's `Expression` is `minLength: 1`,
+so an unfinished rule makes the whole questionnaire Ajv-invalid (and blocks export) until a
+condition is typed. This is surfaced both globally (validation banner) and per-rule
+("N need attention" + the inline "Condition required" error) — never silently saved as valid.
+Intended authoring behaviour; noted so it's not mistaken for a bug.

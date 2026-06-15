@@ -138,3 +138,25 @@ test('repointRef replaces all occurrences; upgradeRef is an alias of it', () => 
   expect((a.pages[0].elements[1] as any).question.prompt.ref).toBe('pr_x@v26.0609.dev1')
   expect(upgradeAlias).toBe(repointRef) // same function reference
 })
+
+import { updateLogic } from './tree'
+import type { LogicRule } from './types'
+
+describe('updateLogic', () => {
+  const base = { metadata: { id: 'qst_x', title: 'X', language: 'en' }, pages: [] } as unknown as import('./types').Questionnaire
+  const rule: LogicRule = { type: 'skip', condition: "q == 'y'", action: { skip_to: 'p2' } }
+
+  it('sets logic[] and does not mutate the input', () => {
+    const out = updateLogic(base, [rule])
+    expect(out.logic).toEqual([rule])
+    expect(base.logic).toBeUndefined()
+  })
+  it('replaces the whole array', () => {
+    const out = updateLogic(updateLogic(base, [rule]), [{ ...rule, action: { skip_to: 'p3' } }])
+    expect(out.logic).toEqual([{ ...rule, action: { skip_to: 'p3' } }])
+  })
+  it('deletes logic when given an empty array', () => {
+    const out = updateLogic(updateLogic(base, [rule]), [])
+    expect('logic' in out).toBe(false)
+  })
+})

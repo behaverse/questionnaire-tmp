@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { Questionnaire, Block, Metadata } from './types'
+import type { Questionnaire, Block, Metadata, LogicRule } from './types'
 import { getAtPath, getContainer, type NodePath, pathKey } from './path'
 
 /** Two element-array paths are compatible; both `pages` arrays are compatible. */
@@ -72,6 +72,13 @@ export function updateNodeProps(model: Questionnaire, path: NodePath, patch: Rec
 export function updateMetadata(model: Questionnaire, patch: Partial<Metadata>): Questionnaire {
   return produce(model, (draft) => {
     Object.assign(draft.metadata, patch)
+  })
+}
+
+export function updateLogic(model: Questionnaire, rules: LogicRule[]): Questionnaire {
+  return produce(model, (draft) => {
+    if (rules.length === 0) delete draft.logic
+    else draft.logic = rules
   })
 }
 
