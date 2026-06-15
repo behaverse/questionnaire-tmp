@@ -188,11 +188,14 @@ ED-B FOLLOWUP (g) is **resolved**: the Library per-entity body endpoint now exis
 it (the old `?version=` query path returned metadata). Library-pinned (`{ref}`) entities now
 preview correctly.
 
-## (bb) Deploy needed — live Library must be redeployed
+## (bb) Live Library deploy — RESOLVED (auto-deployed)
 
-The live Vercel Library must be **redeployed** to expose the new entity-body endpoint before
-pick-from-Library works against the live API. The editor unit tests and the Playwright smoke
-**stub** the endpoint, so they pass regardless.
+The new entity-body endpoint (`/v1/entities/{etype}/{eid}/versions/{version}/definition`) is
+**live** on questionnaire-library.vercel.app — verified 2026-06-15 returning real entity bodies.
+The Vercel project **auto-deploys from pushes to `behaverse/questionnaire-tmp`'s `master`**, so the
+ED-C3a merge shipped it automatically (no manual redeploy was needed). Future Library API changes
+deploy on push. (The editor unit tests + Playwright smoke still stub the endpoint, so they don't
+depend on the live API.)
 
 ## (cc) Picks pin the latest version — version selection is ED-C3b
 
@@ -232,9 +235,9 @@ Refs nested **inside** a Library entity's body (e.g. a saved Item's nested promp
 checked — only the top-level refs in the questionnaire. The Library owns its entities' internal
 pinning; the editor does not walk into resolved entity bodies for staleness.
 
-## (ii) `latestVersion` lookup gated on the live Library redeploy
+## (ii) `latestVersion` lookup runs against the live API
 
 The `latestVersion` lookup (`GET /v1/entities/{etype}/{eid}`) runs against the same live API as
-the rest of pick-from-Library, so FOLLOWUP **(bb)** (the live Library must be redeployed) also
-gates real staleness detection. Tests + the Playwright smoke **stub** the endpoint, so they pass
-regardless.
+the rest of pick-from-Library. That API is live (see **(bb)** — auto-deployed), so real staleness
+detection works against it. Tests + the Playwright smoke **stub** the endpoint, so they don't
+depend on it.
