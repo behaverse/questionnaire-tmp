@@ -351,3 +351,35 @@ so an unfinished rule makes the whole questionnaire Ajv-invalid (and blocks expo
 condition is typed. This is surfaced both globally (validation banner) and per-rule
 ("N need attention" + the inline "Condition required" error) — never silently saved as valid.
 Intended authoring behaviour; noted so it's not mistaken for a bug.
+
+# ED-D2b Follow-ups
+
+Known limitations and open items carried out of ED-D2b (piping + randomization). ED-D2 COMPLETE.
+
+## (aaa) Piping targets are question prompts only
+
+The field_path picker offers only top-level item question prompts
+(`pages.{pageId}.elements.{idx}.prompt`) — the only target the Web Viewer currently applies
+(its App layer builds exactly that path). Option labels, message text, section titles, and
+section-child prompts are NOT wired in the viewer, so authoring them would silently not fire;
+they are deferred until the viewer applies them.
+
+## (bbb) Randomization is author-only (no preview shuffle)
+
+`Page/Section/Block.randomize` + `flow.randomize_pages` are authored as checkboxes but the
+preview does not shuffle (it has no seeded navigation runtime; the seed strategy is a
+deployment concern). The preview ignores the flags (does not crash). Option-order
+randomization is not in Schema 2 v26.0602 (out of scope entirely).
+
+## (ccc) Piping preview is single-locale + same-render
+
+`applyPiping` rewrites the active preview locale's prompt text (mirroring the viewer's App).
+Cross-page piping previews only in "Whole questionnaire" scope (the source must be answerable);
+in "Selected page" scope only same-page sources resolve. Both match the runtime.
+
+## (ddd) ED-D2 is COMPLETE
+
+ED-D2 (logic rules) is COMPLETE: D2a (skip/branch/visibility + live visibility preview) +
+D2b (piping + live piping preview + randomization). The next editor stages are ED-D3
+(validation builders) and ED-D4 (scoring builders), then ED-E (translation), ED-F
+(preview-deploy + export).
