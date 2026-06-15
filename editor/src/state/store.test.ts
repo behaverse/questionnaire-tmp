@@ -95,3 +95,37 @@ test('refreshStaleness flags stale Library refs; upgradeRefAction repoints + cle
   expect(q.question.prompt.ref).toBe('pr_x@v26.0610')
   expect(useEditorStore.getState().staleness['pr_x@v26.0609']).toBeUndefined()
 })
+
+test('forkRefAction copies the body to the pool as <id>@<pinnedVer>.dev1 + repoints; openFork/closeFork', async () => {
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [{ question: { prompt: { ref: 'pr_lib@v26.0609' } }, option: {
+      input_data_type: 'text', measurement_type: 'nominal', content: { en: { status: 'draft', label: 'L' } } } }] }],
+  } as unknown as Questionnaire
+  const st = useEditorStore.getState()
+  st.loadModel(model, { kind: 'file', name: 't.json' })
+  st.openFork('pr_lib@v26.0609')
+  expect(useEditorStore.getState().fork?.ref).toBe('pr_lib@v26.0609')
+  const ok = await st.forkRefAction('pr_lib@v26.0609', async () => ({ id: 'pr_lib', content: { en: { status: 'validated', text: 'Forked' } } }))
+  expect(ok).toBe(true)
+  const forkRef = 'pr_lib@v26.0609.dev1'
+  expect(useEditorStore.getState().pool[forkRef]).toEqual({ id: 'pr_lib', content: { en: { status: 'validated', text: 'Forked' } } })
+  const q = useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }
+  expect(q.question.prompt.ref).toBe(forkRef)
+  st.closeFork()
+  expect(useEditorStore.getState().fork).toBeNull()
+})
+
+test('forkRefAction returns false (no change) when the body cannot be fetched', async () => {
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', description: 'd', version: 'v26.0609', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [{ question: { prompt: { ref: 'pr_x@v26.0609' } }, option: {} }] }],
+  } as unknown as Questionnaire
+  const st = useEditorStore.getState()
+  st.loadModel(model, { kind: 'file', name: 't.json' })
+  const ok = await st.forkRefAction('pr_x@v26.0609', async () => null)
+  expect(ok).toBe(false)
+  expect(Object.keys(useEditorStore.getState().pool)).toHaveLength(0)
+  const q = useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }
+  expect(q.question.prompt.ref).toBe('pr_x@v26.0609') // unchanged
+})
