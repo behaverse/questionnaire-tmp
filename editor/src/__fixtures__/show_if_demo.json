@@ -4,7 +4,7 @@
     "id": "qst_show_if_demo",
     "title": "Show-If Demo",
     "description": "ED-D1 smoke: two items, second conditionally shown",
-    "version": "v26.0609",
+    "version": "v26.0615",
     "language": "en"
   },
   "pages": [
@@ -13,11 +13,9 @@
       "title": "Page 1",
       "elements": [
         {
-          "id": "q_control",
+          "id": "it_control",
           "question": {
-            "prompt": {
-              "content": { "en": { "status": "validated", "text": "Do you want to see more?" } }
-            }
+            "prompt": { "ref": "pr_show_if_control@v26.0615.dev1" }
           },
           "option": {
             "input_data_type": "choice",
@@ -40,11 +38,9 @@
           }
         },
         {
-          "id": "q_dependent",
+          "id": "it_dependent",
           "question": {
-            "prompt": {
-              "content": { "en": { "status": "validated", "text": "Bonus question revealed!" } }
-            }
+            "prompt": { "ref": "pr_show_if_dependent@v26.0615.dev1" }
           },
           "option": {
             "input_data_type": "text",
