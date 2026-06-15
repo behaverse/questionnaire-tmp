@@ -11,6 +11,7 @@ import type { EntityBody } from './resolve'
 import { useEvaluator } from '../logic/useEvaluator'
 import { makeBindings, filterPageVisible } from '../logic/visibility'
 import { applyPiping } from '../logic/piping'
+import { collectPerQuestionErrors } from '../logic/validation'
 
 const STRINGS: RendererStrings = { required: 'Required', unsupported: 'Unsupported element' }
 
@@ -64,6 +65,9 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
   const bindings = makeBindings(answers as Record<string, unknown>, { score: () => null })
   const pipedPages = evaluator ? pages.map((p) => applyPiping(p, model.logic ?? [], evaluator, bindings, locale)) : pages
   const visiblePages = evaluator ? pipedPages.map((p) => filterPageVisible(p, evaluator, bindings, model.logic ?? [])) : pipedPages
+  const verrors = collectPerQuestionErrors(visiblePages, answers)
+  const errorMessages = Object.fromEntries(verrors.map((e) => [e.key, e.message]))
+  const requiredErrorKeys = verrors.map((e) => e.key)
   const width = FRAMES[device]
   const onAnswer = (key: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [key]: value }))
 
@@ -103,7 +107,7 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
               <div key={page.id} className="mb-8">
                 {scope === 'all' && page.title && <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-400">{page.title}</h2>}
                 <StepRenderer elements={flattenPage(page)} locale={locale} answers={answers} onAnswer={onAnswer}
-                              requiredErrors={[]} strings={STRINGS} />
+                              requiredErrors={requiredErrorKeys} errorMessages={errorMessages} strings={STRINGS} />
               </div>
             ))}
           </div>

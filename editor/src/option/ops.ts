@@ -2,6 +2,15 @@ export type InputDataType = 'choice' | 'number' | 'text'
 export type MeasurementType = 'nominal' | 'ordinal' | 'interval' | 'ratio'
 export type Selection = 'single' | 'multiple'
 
+export interface PerQuestionValidation {
+  format?: string
+  range?: [number | null, number | null]
+  length?: [number | null, number | null]
+  format_message?: string
+  range_message?: string
+  length_message?: string
+}
+
 export interface ChoiceStructural { index: number; value: number | string | boolean | null }
 export interface ChoiceContent { index: number; text: string }
 export interface OptionContentEntry { status: string; label?: string; units?: string; options?: ChoiceContent[] }
@@ -18,6 +27,7 @@ export interface EditableOption {
   step?: number
   options?: ChoiceStructural[]
   input_validation?: string | { ref: string }
+  validation?: PerQuestionValidation
   placeholder?: InlineText | { ref: string }
   help?: InlineText | { ref: string }
   content: Record<string, OptionContentEntry>
@@ -47,6 +57,7 @@ function renumberChoices(opt: EditableOption): void {
 export function setInputDataType(opt: EditableOption, t: InputDataType): EditableOption {
   const next = clone(opt)
   next.input_data_type = t
+  delete next.validation
   if (t === 'choice') {
     next.selection = next.selection ?? 'single'
     if (!next.options || next.options.length < 2) next.options = [{ index: 1, value: null }, { index: 2, value: null }]
@@ -147,6 +158,20 @@ export function setBounds(opt: EditableOption, b: { min?: number; max?: number; 
 export function setInputValidation(opt: EditableOption, regex: string | undefined): EditableOption {
   const next = clone(opt)
   if (regex) next.input_validation = regex; else delete next.input_validation
+  return next
+}
+
+export function setValidation(opt: EditableOption, patch: Partial<PerQuestionValidation>): EditableOption {
+  const next = clone(opt)
+  const v: PerQuestionValidation = { ...(next.validation ?? {}), ...patch }
+  for (const k of Object.keys(v) as (keyof PerQuestionValidation)[]) {
+    const val = v[k]
+    if (val === undefined) { delete v[k]; continue }
+    if ((k === 'range' || k === 'length') && Array.isArray(val) && val[0] === null && val[1] === null) { delete v[k]; continue }
+    if (typeof val === 'string' && val === '') { delete v[k]; continue }
+  }
+  if (Object.keys(v).length === 0) delete next.validation
+  else next.validation = v
   return next
 }
 
