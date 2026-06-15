@@ -21,7 +21,7 @@ export function summarizeRule(rule: LogicRule): string {
   }
 }
 
-export function validateRule(rule: LogicRule, targets: LogicTargets): { errors: RuleIssue[] } {
+export function validateRule(rule: LogicRule, targets: LogicTargets, pipingPaths: string[] = []): { errors: RuleIssue[] } {
   const errors: RuleIssue[] = []
   const a = (rule.action ?? {}) as Record<string, unknown>
   if (!rule.condition || !rule.condition.trim()) errors.push({ field: 'condition', message: 'Condition required', level: 'error' })
@@ -35,7 +35,11 @@ export function validateRule(rule: LogicRule, targets: LogicTargets): { errors: 
     else if (!targets.elementKeys.includes(t)) errors.push({ field: 'target_id', message: `Unknown element: ${t}`, level: 'warning' })
     if (typeof a.show !== 'boolean') errors.push({ field: 'show', message: 'Show must be true or false', level: 'error' })
   } else if (rule.type === 'piping') {
-    errors.push({ field: 'type', message: 'Piping editing arrives in ED-D2b', level: 'warning' })
+    const src = a.source
+    if (typeof src !== 'string' || !src) errors.push({ field: 'source', message: 'Choose a source question', level: 'error' })
+    const fp = a.field_path
+    if (typeof fp !== 'string' || !fp) errors.push({ field: 'field_path', message: 'Choose a target prompt', level: 'error' })
+    else if (!pipingPaths.includes(fp)) errors.push({ field: 'field_path', message: `Unknown target: ${fp}`, level: 'warning' })
   }
   return { errors }
 }
