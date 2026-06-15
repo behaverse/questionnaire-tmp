@@ -97,6 +97,7 @@ export function OptionEditor({ option, locale, onChange }: { option: EditableOpt
         const v = option.validation ?? {}
         const numStr = (n: number | null | undefined) => (n === null || n === undefined ? '' : String(n))
         const parse = (raw: string): number | null => (raw === '' ? null : Number(raw))
+        const parseLen = (raw: string): number | null => (raw === '' ? null : Math.trunc(Number(raw)))
         return (
           <div className="space-y-2 rounded border border-slate-200 p-2">
             <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Validation</div>
@@ -123,13 +124,13 @@ export function OptionEditor({ option, locale, onChange }: { option: EditableOpt
               <div className="space-y-2">
                 <div className="flex flex-wrap items-end gap-3">
                   <label className="text-sm">Min length
-                    <input type="number" aria-label="Min length" min={0} value={numStr(v.length?.[0])}
-                           onChange={(e) => onChange(setValidation(option, { length: [parse(e.target.value), v.length?.[1] ?? null] }))}
+                    <input type="number" step={1} aria-label="Min length" min={0} value={numStr(v.length?.[0])}
+                           onChange={(e) => onChange(setValidation(option, { length: [parseLen(e.target.value), v.length?.[1] ?? null] }))}
                            className="ml-1 w-24 rounded border border-slate-300 px-1 py-0.5" />
                   </label>
                   <label className="text-sm">Max length
-                    <input type="number" aria-label="Max length" min={0} value={numStr(v.length?.[1])}
-                           onChange={(e) => onChange(setValidation(option, { length: [v.length?.[0] ?? null, parse(e.target.value)] }))}
+                    <input type="number" step={1} aria-label="Max length" min={0} value={numStr(v.length?.[1])}
+                           onChange={(e) => onChange(setValidation(option, { length: [v.length?.[0] ?? null, parseLen(e.target.value)] }))}
                            className="ml-1 w-24 rounded border border-slate-300 px-1 py-0.5" />
                   </label>
                   <label className="block w-full text-sm">Length message

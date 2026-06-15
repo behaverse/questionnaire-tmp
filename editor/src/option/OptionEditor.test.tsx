@@ -86,4 +86,10 @@ describe('OptionEditor validation section', () => {
     render(<OptionEditor option={textOpt} locale="en" onChange={() => {}} />)
     expect(screen.getByLabelText('Input mask (RegEx)')).toBeInTheDocument()
   })
+  it('coerces Max length to an integer', () => {
+    const onChange = vi.fn()
+    render(<OptionEditor option={textOpt} locale="en" onChange={onChange} />)
+    fireEvent.change(screen.getByLabelText('Max length'), { target: { value: '2.5' } })
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ validation: { length: [null, 2] } }))
+  })
 })
