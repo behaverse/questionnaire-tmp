@@ -8,6 +8,7 @@ import { readQuestionnaireFile } from '../persistence/file'
 import { fetchFromLibrary } from '../persistence/library'
 import { saveDraft, loadDraft } from '../persistence/indexeddb'
 import { LibraryPicker } from '../library/LibraryPicker'
+import { ForkDialog } from '../library/ForkDialog'
 
 export function App() {
   const { model, loadModel, validation } = useEditorStore()
@@ -15,6 +16,8 @@ export function App() {
   const pool = useEditorStore((s) => s.pool)
   const picker = useEditorStore((s) => s.picker)
   const closePicker = useEditorStore((s) => s.closePicker)
+  const fork = useEditorStore((s) => s.fork)
+  const closeFork = useEditorStore((s) => s.closeFork)
   const [error, setError] = useState<string | null>(null)
   const [booting, setBooting] = useState(true)
 
@@ -67,6 +70,7 @@ export function App() {
         <LibraryPicker etype={picker.etype} locale={String(model.metadata.language ?? 'en')}
                        onPick={(ref) => { picker.onPick(ref); closePicker() }} onClose={closePicker} />
       )}
+      {fork && <ForkDialog refStr={fork.ref} onClose={closeFork} />}
     </div>
   )
 }

@@ -3,13 +3,15 @@ import type { Questionnaire, EntityBody } from '../model/types'
 import { getAtPath, type NodePath } from '../model/path'
 import { validateQuestionnaire, type ValidationError } from '../model/validation'
 import { collectLibraryRefs, staleSet } from '../library/staleness'
-import { upgradeRef } from '../model/tree'
-import { latestVersion as realLatestVersion, parseRef } from '../persistence/library'
+import { upgradeRef, repointRef } from '../model/tree'
+import { draftVersion } from '../pool/mint'
+import { latestVersion as realLatestVersion, parseRef, fetchEntityBody as realFetchEntityBody } from '../persistence/library'
 import type { Source } from './types'
 
 export type { Source } from './types'
 
 type LatestFn = (etype: string, id: string) => Promise<string | null>
+type FetchBody = (ref: string) => Promise<EntityBody | null>
 
 interface EditorState {
   model: Questionnaire | null
@@ -22,6 +24,7 @@ interface EditorState {
   pool: Record<string, EntityBody>
   picker: { etype: string; onPick: (ref: string) => void } | null
   staleness: Record<string, string>
+  fork: { ref: string } | null
   loadModel: (model: Questionnaire, source: Source, pool?: Record<string, EntityBody>) => void
   upsertPoolEntity: (ref: string, body: EntityBody) => void
   removePoolEntity: (ref: string) => void
@@ -35,6 +38,9 @@ interface EditorState {
   closePicker: () => void
   refreshStaleness: (latestFn?: LatestFn) => Promise<void>
   upgradeRefAction: (oldRef: string, newRef: string) => void
+  openFork: (ref: string) => void
+  closeFork: () => void
+  forkRefAction: (ref: string, fetchBody?: FetchBody) => Promise<boolean>
   reset: () => void
 }
 
@@ -93,5 +99,20 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     get().applyEdit((m) => upgradeRef(m, oldRef, newRef))
     set((s) => { const st = { ...s.staleness }; delete st[oldRef]; return { staleness: st } })
   },
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null, staleness: {} }),
+  fork: null,
+  openFork: (ref) => set({ fork: { ref } }),
+  closeFork: () => set({ fork: null }),
+  forkRefAction: async (ref, fetchBody) => {
+    const fetchB = fetchBody ?? ((r: string) => realFetchEntityBody(r))
+    const parsed = parseRef(ref)
+    if (!parsed) return false
+    const body = await fetchB(ref)
+    if (!body) return false
+    const newRef = `${parsed.id}@${draftVersion(parsed.version)}`
+    get().upsertPoolEntity(newRef, body)
+    get().applyEdit((m) => repointRef(m, ref, newRef))
+    set((s) => { const st = { ...s.staleness }; delete st[ref]; return { staleness: st } })
+    return true
+  },
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null, staleness: {}, fork: null }),
 }))

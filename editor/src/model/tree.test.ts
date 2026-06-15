@@ -123,3 +123,18 @@ test('upgradeRef repoints every occurrence of a ref, immutably', () => {
   expect(els[0].option.ref).toBe('opt_a@v1') // untouched
   expect((q.pages[0].elements[0] as any).question.prompt.ref).toBe('pr_x@v26.0609') // original immutable
 })
+
+import { repointRef, upgradeRef as upgradeAlias } from './tree'
+test('repointRef replaces all occurrences; upgradeRef is an alias of it', () => {
+  const q = {
+    metadata: { id: 'qst_t', version: 'v26.0609' },
+    pages: [{ id: 'p1', elements: [
+      { question: { prompt: { ref: 'pr_x@v26.0609' } }, option: {} },
+      { question: { prompt: { ref: 'pr_x@v26.0609' } }, option: {} },
+    ] }],
+  } as unknown as import('./types').Questionnaire
+  const a = repointRef(q, 'pr_x@v26.0609', 'pr_x@v26.0609.dev1')
+  expect((a.pages[0].elements[0] as any).question.prompt.ref).toBe('pr_x@v26.0609.dev1')
+  expect((a.pages[0].elements[1] as any).question.prompt.ref).toBe('pr_x@v26.0609.dev1')
+  expect(upgradeAlias).toBe(repointRef) // same function reference
+})

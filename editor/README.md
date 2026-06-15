@@ -1,6 +1,6 @@
-# Questionnaire Editor — ED-A + ED-B + ED-C1 + ED-C2a + ED-C2b + ED-C3a + ED-C3b
+# Questionnaire Editor — ED-A + ED-B + ED-C (C1 + C2a + C2b + C3a + C3b + C4)
 
-The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), **ED-C2b** (Context / Instruction + Message authoring), **ED-C3a** (pick from Library), and **ED-C3b** (newer-version notification + upgrade) are shipped; see the decomposition table below.
+The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), and the full **ED-C** item/Question/Option authoring + reusable-entity workflow — **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), **ED-C2b** (Context / Instruction + Message authoring), **ED-C3a** (pick from Library), **ED-C3b** (newer-version notification + upgrade), and **ED-C4** (OD-05 override + fork) — are shipped. **ED-C is now COMPLETE**; see the decomposition table below.
 
 ED-A is the structural foundation of the custom React + TypeScript questionnaire **Editor** — the authoring tool researchers use to create, adapt, version, and translate questionnaires, producing canonical Schema 2 JSON. ED-A ships a static SPA (Vite · React 19 · TypeScript · Tailwind; Zustand + Immer state; dnd-kit; Ajv in-browser validation) with **no backend**: it opens/creates/loads/saves a Schema-2 questionnaire, renders the five-concept structure tree (Block ▸ Page ▸ Section ▸ Item/Message) in a 3-pane shell, lets you restructure + edit metadata, validates, and exports canonical JSON that round-trips Schema-2-valid. Persistence is browser-local (IndexedDB autosave) plus file open/save and open-from-Library.
 
@@ -77,6 +77,16 @@ ED-C3b flags Library-pinned refs whose entity has a **newer published version** 
 - **Explicit upgrade** — clicking **Upgrade** re-points the ref to the newer version across **all occurrences** in the questionnaire (`upgradeRef`, an immutable replace-all tree op) and clears that entry's badge; the preview re-resolves at the new version. There is **no auto-upgrade** — the version only ever changes when the author clicks Upgrade.
 - **No content diff** — ED-C3b surfaces the version + one-click upgrade only; a pinned-vs-latest content diff view is deferred (see FOLLOWUPS). Staleness is **not transitive** — refs nested *inside* a Library entity's body are owned by the Library, not re-checked here.
 
+## ED-C4 — override + fork (OD-05)
+
+ED-C4 turns read-only Library-pinned refs into **forkable, study-scoped local copies** and adds the OD-05 `required` override — **completing ED-C**:
+
+- **Fork to edit** — every read-only Library-pinned ref chip (prompt / context / instruction / option / message / saved-item, across the **ItemEditor**, the **MessagePane**, and the **Canvas** element list) now shows a **`Fork to edit`** button in place of the old static "fork to edit (ED-C4)" note.
+- **Fork dialog** — clicking it opens a `ForkDialog` modal offering three actions: **Derive locally** (enabled), **Propose a new shared version** (disabled — needs Identity / Library write, **OD-08**), and **Cancel**.
+- **Derive locally** — fetches the pinned entity's body and copies it into the editor-local **entity pool** as `<id>@<pinnedVer>.dev1` (reusing the C2a `draftVersion` minting), then **repoints all occurrences** of the original ref to the new pool draft (`repointRef`, the generalized C3b replace-all tree op). The forked entity becomes **editable** in the pool editors (PromptEditor / ContentTextEditor / Option editor), previews live (pool-resolved), and rides along in the `{questionnaire, entities}` bundle export. A failed body fetch leaves the model unchanged and surfaces an error in the dialog.
+- **`required` override** — item rows in the Canvas element list carry a **`Required`** checkbox bound to the element's `required` flag (the first of OD-05's free overrides). Position is overridable via reorder; `show_if` (the third OD-05 override) arrives with the **ED-D** logic builder.
+- **Never writes the Library** — forking is purely local; the Library is read-only from the editor (promotion → OD-08).
+
 ## Environment variables
 
 | Var | Default | Purpose |
@@ -111,10 +121,10 @@ Build order: **ED-A → ED-B → ED-C → ED-D → ED-E → ED-F**.
 - **Author new Context / Instruction / Message** (ED-C2b): add a Context and/or an Instruction (with a `dimension`) to a question, and standalone Messages (with `type` tags + text) to a page (`+ Add message`); all are draft pool entities that live-preview and ride along in the bundle export; remove drops the per-add pool entity.
 - **Pick from Library** (ED-C3a): a modal picker (search by entity type + content snippet) opens from per-slot **Pick from Library** buttons (prompt / option / context / instruction) and the page **`+ Pick item`** / **`+ Pick message`** actions; inserts a hard-pinned latest `@vYY.MMDD` ref that previews live and is read-only. Relies on the new Library per-entity body endpoint (which also fixed the ED-B Library-ref preview).
 - **Newer-version upgrade** (ED-C3b): on load + via the topbar **`Check for updates`** button, stale Library-pinned refs are flagged per-chip with **`newer: vX [Upgrade]`** plus a topbar **`⬆ N updates`** badge; **Upgrade** re-points all occurrences of the ref explicitly (never silent) and re-resolves the preview.
+- **Override + fork** (ED-C4): a Library-pinned ref shows **`Fork to edit`** → a fork dialog (**Derive locally** enabled; **Propose a new shared version** disabled per OD-08; Cancel); deriving copies the entity into the local pool as `<id>@<pinnedVer>.dev1`, repoints all occurrences, and makes it editable; the OD-05 `required` override is a **`Required`** checkbox on item rows. Forking never writes the Library.
 
 **Doesn't yet (deferred):**
 - A pinned-vs-latest **content diff** view (ED-C3b surfaces the version + one-click upgrade only); **transitive** staleness of refs nested inside a Library entity's body → out of scope (the Library owns its entities' internal pinning).
-- Forking / editing a **referenced** (Library-pinned) Option / Prompt / Context / Instruction / Message or saved-Item ref → **ED-C4** (read-only note for now).
 - Standalone **Placeholder / Help / RegEx / Solution** editors (Placeholder / Help are inline-editable inside the Option editor) → later.
 - Live logic / branching / scoring / validation **in the preview** (the preview is static structural — every element renders unconditionally) → **ED-D**.
 - Logic / validation builders / scoring / `show_if` expressions (authoring) → **ED-D**.

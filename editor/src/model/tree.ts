@@ -103,7 +103,7 @@ export function unsetNodeProp(model: Questionnaire, path: NodePath, key: string)
   })
 }
 
-export function upgradeRef(model: Questionnaire, oldRef: string, newRef: string): Questionnaire {
+export function repointRef(model: Questionnaire, oldRef: string, newRef: string): Questionnaire {
   return produce(model, (draft) => {
     const walk = (node: unknown): void => {
       if (Array.isArray(node)) { node.forEach(walk); return }
@@ -116,3 +116,6 @@ export function upgradeRef(model: Questionnaire, oldRef: string, newRef: string)
     walk(draft)
   })
 }
+
+/** @deprecated use repointRef — kept for ED-C3b's upgradeRefAction. */
+export const upgradeRef = repointRef
