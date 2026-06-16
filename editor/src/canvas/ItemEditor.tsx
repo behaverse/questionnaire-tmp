@@ -105,7 +105,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
         </div>
       )}
       <div className="flex items-center gap-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Response (Option)</span>
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Option (Response)</span>
         {question && <button onClick={pickOption} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick option</button>}
       </div>
       {isInlineOption ? (

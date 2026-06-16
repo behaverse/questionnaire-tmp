@@ -5,10 +5,12 @@ import { Topbar } from './Topbar'
 import { EditorWorkspace } from './EditorWorkspace'
 import { newQuestionnaire } from '../model/scaffold'
 import { readQuestionnaireFile } from '../persistence/file'
-import { fetchFromLibrary } from '../persistence/library'
+import { fetchFromLibrary, latestVersion } from '../persistence/library'
 import { saveDraft, loadDraft } from '../persistence/indexeddb'
 import { LibraryPicker } from '../library/LibraryPicker'
+import { LibraryQuestionnairePicker } from '../library/LibraryQuestionnairePicker'
 import { ForkDialog } from '../library/ForkDialog'
+import { bisbasSample } from '../samples/sample'
 
 export function App() {
   const { model, loadModel, validation } = useEditorStore()
@@ -20,6 +22,7 @@ export function App() {
   const closeFork = useEditorStore((s) => s.closeFork)
   const [error, setError] = useState<string | null>(null)
   const [booting, setBooting] = useState(true)
+  const [browsing, setBrowsing] = useState(false)
 
   // restore autosaved draft on boot
   useEffect(() => {
@@ -52,7 +55,23 @@ export function App() {
             try { setError(null); loadModel(await fetchFromLibrary(id, version), { kind: 'library', id, version }); void refreshStaleness() }
             catch (e) { setError(String(e)) }
           }}
+          onLoadSample={() => { loadModel(bisbasSample.questionnaire, { kind: 'sample', id: 'qst_x_bisbas' }, bisbasSample.entities); void refreshStaleness() }}
+          onBrowseLibrary={() => setBrowsing(true)}
         />
+        {browsing && (
+          <LibraryQuestionnairePicker
+            onClose={() => setBrowsing(false)}
+            onPick={async (id, version) => {
+              setBrowsing(false)
+              try {
+                setError(null)
+                const v = version || (await latestVersion('questionnaire', id)) || version
+                loadModel(await fetchFromLibrary(id, v), { kind: 'library', id, version: v })
+                void refreshStaleness()
+              } catch (e) { setError(String(e)) }
+            }}
+          />
+        )}
       </>
     )
   }

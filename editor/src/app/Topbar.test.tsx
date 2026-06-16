@@ -20,3 +20,16 @@ describe('Topbar Open preview', () => {
     openSpy.mockRestore()
   })
 })
+
+describe('Topbar Home button', () => {
+  beforeEach(() => { useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never) })
+
+  it('Home button returns to the start screen (clears the model) after confirm', () => {
+    useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never)
+    const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true)
+    render(<Topbar onValidate={() => {}} />)
+    fireEvent.click(screen.getByRole('button', { name: /home/i }))
+    expect(useEditorStore.getState().model).toBeNull()
+    confirmSpy.mockRestore()
+  })
+})

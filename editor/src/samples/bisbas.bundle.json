@@ -1,0 +1,876 @@
+{
+  "questionnaire": {
+    "pages": [
+      {
+        "id": "page_main",
+        "elements": [
+          {
+            "ref": "msg_bisbas_m_1@v26.0606"
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_1@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_2@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_3@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_4@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_5@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_6@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_7@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_8@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_9@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_10@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_11@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_12@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_13@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_14@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_15@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_16@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_17@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_18@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_19@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_20@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_21@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_22@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_23@v26.0606"
+              }
+            }
+          },
+          {
+            "option": {
+              "ref": "opt_agreement_7@v26.0606"
+            },
+            "question": {
+              "prompt": {
+                "ref": "pr_bisbas_q_24@v26.0606"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+    "metadata": {
+      "id": "qst_x_bisbas",
+      "title": "Behavioral Approach/Inhibition Systems (BIS/BAS)",
+      "license": "unknown",
+      "variant": "base",
+      "version": "v26.0606",
+      "language": "en",
+      "provenance": {
+        "source": "survey_db_sqlite",
+        "imported_at": "2026-06-06T00:00:00Z",
+        "importer_version": "survey-db-importer-0.1.0"
+      },
+      "description": "The Behavioral avoidance/inhibition (BIS/BAS) scales",
+      "instrument_id": "inst_bisbas",
+      "psychometrics": {
+        "item_count": 24
+      },
+      "classification": {
+        "tags": [
+          "inhibition",
+          "behavioral approach system",
+          "behavioral avoidance system",
+          "drive",
+          "fun seeking",
+          "reward responsiveness"
+        ],
+        "domain": [
+          "inhibition",
+          "behavioral approach system",
+          "behavioral avoidance system",
+          "drive",
+          "fun seeking",
+          "reward responsiveness"
+        ]
+      },
+      "x_source_reference": "http://www.midss.org/sites/default/files/bis.pdf",
+      "available_languages": [
+        "en",
+        "fr"
+      ]
+    }
+  },
+  "entities": {
+    "pr_bisbas_q_7@v26.0606": {
+      "id": "pr_bisbas_q_7",
+      "name": "excited_receiving",
+      "topics": [
+        "BAS reward responsiveness"
+      ],
+      "content": {
+        "en": {
+          "text": "When I get something I want, I feel excited and energized.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Quand j'obtiens quelque chose que je veux, je me sens plein d'énergie et stimulé(e).",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_23@v26.0606": {
+      "id": "pr_bisbas_q_23",
+      "name": "win_contest",
+      "topics": [
+        "BAS reward responsiveness"
+      ],
+      "content": {
+        "en": {
+          "text": "It would excite me to win a contest.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Cela me stimulerait de gagner un concours ou une compétition.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_9@v26.0606": {
+      "id": "pr_bisbas_q_9",
+      "name": "all_out",
+      "topics": [
+        "BAS drive"
+      ],
+      "content": {
+        "en": {
+          "text": "When I want something, I usually go all-out to get it.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Quand je veux quelque chose je vais jusqu'au bout pour l'avoir.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_19@v26.0606": {
+      "id": "pr_bisbas_q_19",
+      "name": "worry_performance",
+      "topics": [
+        "BIS"
+      ],
+      "content": {
+        "en": {
+          "text": "I feel worried when I think I have done poorly at something important.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Je me sens inquiet(e) lorsque j'ai fait quelque chose de médiocre.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_11@v26.0606": {
+      "id": "pr_bisbas_q_11",
+      "name": "haircut",
+      "topics": [
+        "filler"
+      ],
+      "content": {
+        "en": {
+          "text": "It is hard for me to find the time to do things such as get a haircut.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "J'ai du mal à trouver le temps de faire des choses comme aller chez le coiffeur.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_8@v26.0606": {
+      "id": "pr_bisbas_q_8",
+      "name": "criticism",
+      "topics": [
+        "BIS"
+      ],
+      "content": {
+        "en": {
+          "text": "Criticism or scolding hurts me quite a bit.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Les critiques et les remarques négatives me blessent assez fortement.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_2@v26.0606": {
+      "id": "pr_bisbas_q_2",
+      "name": "nervousness",
+      "topics": [
+        "BIS"
+      ],
+      "content": {
+        "en": {
+          "text": "Even if something bad is about to happen to me, I rarely experience fear or nervousness.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Même si quelque chose de mauvais m'arrive, je suis rarement nerveux(se) ou apeuré(e).",
+          "status": "complete"
+        }
+      },
+      "reversed": true,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_22@v26.0606": {
+      "id": "pr_bisbas_q_22",
+      "name": "fearless",
+      "topics": [
+        "BIS"
+      ],
+      "content": {
+        "en": {
+          "text": "I have very few fears compared to my friends.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Je ressens moins de peurs que la plupart de mes amis.",
+          "status": "complete"
+        }
+      },
+      "reversed": true,
+      "dimension": "truthfullness"
+    },
+    "opt_agreement_7@v26.0606": {
+      "id": "opt_agreement_7",
+      "content": {
+        "en": {
+          "status": "complete",
+          "options": [
+            {
+              "text": "strongly disagree",
+              "index": 1
+            },
+            {
+              "text": "disagree",
+              "index": 2
+            },
+            {
+              "text": "somewhat disagree",
+              "index": 3
+            },
+            {
+              "text": "neither agree nor disagree",
+              "index": 4
+            },
+            {
+              "text": "somewhat agree",
+              "index": 5
+            },
+            {
+              "text": "agree",
+              "index": 6
+            },
+            {
+              "text": "strongly agree",
+              "index": 7
+            }
+          ]
+        },
+        "fr": {
+          "status": "complete",
+          "options": [
+            {
+              "text": "fortement en désaccord",
+              "index": 1
+            },
+            {
+              "text": "en désaccord",
+              "index": 2
+            },
+            {
+              "text": "un peu en désaccord",
+              "index": 3
+            },
+            {
+              "text": "ni d'accord, ni pas d'accord",
+              "index": 4
+            },
+            {
+              "text": "un peu d'accord",
+              "index": 5
+            },
+            {
+              "text": "d'accord",
+              "index": 6
+            },
+            {
+              "text": "fortement en accord",
+              "index": 7
+            }
+          ]
+        }
+      },
+      "options": [
+        {
+          "index": 1,
+          "value": "-1.0"
+        },
+        {
+          "index": 2,
+          "value": "-0.66"
+        },
+        {
+          "index": 3,
+          "value": "-0.33"
+        },
+        {
+          "index": 4,
+          "value": "0.0"
+        },
+        {
+          "index": 5,
+          "value": "0.33"
+        },
+        {
+          "index": 6,
+          "value": "0.66"
+        },
+        {
+          "index": 7,
+          "value": "1.0"
+        }
+      ],
+      "dimension": "agreement",
+      "selection": "single",
+      "input_data_type": "choice",
+      "measurement_type": "ordinal"
+    },
+    "pr_bisbas_q_24@v26.0606": {
+      "id": "pr_bisbas_q_24",
+      "name": "worry_mistakes",
+      "topics": [
+        "BIS"
+      ],
+      "content": {
+        "en": {
+          "text": "I worry about making mistakes.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "J'ai peur de faire des erreurs.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_15@v26.0606": {
+      "id": "pr_bisbas_q_15",
+      "name": "impulsive",
+      "topics": [
+        "BAS fun seeking"
+      ],
+      "content": {
+        "en": {
+          "text": "I often act on the spur of the moment.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Je fais souvent des choses de manière impulsive.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "msg_bisbas_m_1@v26.0606": {
+      "id": "msg_bisbas_m_1",
+      "type": [
+        "job",
+        "purpose"
+      ],
+      "content": {
+        "en": {
+          "text": "Each item of this questionnaire is a statement that a person may either agree with or disagree with. For each item, indicate how much you agree or disagree with what the item says.<br />Please respond to all the items; do not leave any blank.<br />Please be as accurate and honest as you can be.<br />Respond to each item as if it were the only item. That is, don't worry about being *consistent* in your responses.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Pour chaque phrase, veuillez indiquer dans quelle mesure elle vous décrit en choisissant le chiffre approprié sur l'échelle présentée ci-dessous. Veuillez lire chaque phrase très attentivement avant de répondre. Répondez de la manière la plus honnête possible. Ne donnez qu'une réponse pour chaque proposition. Merci.",
+          "status": "complete"
+        }
+      }
+    },
+    "pr_bisbas_q_13@v26.0606": {
+      "id": "pr_bisbas_q_13",
+      "name": "angry",
+      "topics": [
+        "BIS"
+      ],
+      "content": {
+        "en": {
+          "text": "I feel pretty worried or upset when I think or know somebody is angry at me.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Je me sens assez inquiet(e) ou bouleversé(e) quand je pense ou sais que quelqu'un est fâché contre moi.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_4@v26.0606": {
+      "id": "pr_bisbas_q_4",
+      "name": "keep_going",
+      "topics": [
+        "BAS reward responsiveness"
+      ],
+      "content": {
+        "en": {
+          "text": "When I am doing well at something, I love to keep at it.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Quand je suis entrain de faire quelque chose de bien, j'aime persévérer.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_21@v26.0606": {
+      "id": "pr_bisbas_q_21",
+      "name": "no_holds_barred",
+      "topics": [
+        "BAS drive"
+      ],
+      "content": {
+        "en": {
+          "text": "When I go after something, I use a \"no holds barred\" approach.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Quand je veux quelque chose, je considère que « tout moyen est bon ».",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_18@v26.0606": {
+      "id": "pr_bisbas_q_18",
+      "name": "affected_good",
+      "topics": [
+        "BAS reward responsiveness"
+      ],
+      "content": {
+        "en": {
+          "text": "When good things happen to me, it affects me strongly.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Quand quelque chose de bien m'arrive, cela produit un fort effet sur moi.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_3@v26.0606": {
+      "id": "pr_bisbas_q_3",
+      "name": "determination",
+      "topics": [
+        "BAS drive"
+      ],
+      "content": {
+        "en": {
+          "text": "I go out of my way to get things I want.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Quand je veux quelque chose, je fais tout mon possible pour l'obtenir.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_17@v26.0606": {
+      "id": "pr_bisbas_q_17",
+      "name": "wonder",
+      "topics": [
+        "filler"
+      ],
+      "content": {
+        "en": {
+          "text": "I often wonder why people act the way they do.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Je me demande souvent pourquoi les gens agissent ainsi.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_12@v26.0606": {
+      "id": "pr_bisbas_q_12",
+      "name": "opportunity",
+      "topics": [
+        "BAS drive"
+      ],
+      "content": {
+        "en": {
+          "text": "If I see a chance to get something I want, I move on it right away.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Si je vois que j'ai une chance d'obtenir quelque chose que je veux, je saisis l'occasion.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_10@v26.0606": {
+      "id": "pr_bisbas_q_10",
+      "name": "for_fun",
+      "topics": [
+        "BAS fun seeking"
+      ],
+      "content": {
+        "en": {
+          "text": "I will often do things for no other reason than that they might be fun.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Je fais des choses sans autre raison que celle de me faire plaisir.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_14@v26.0606": {
+      "id": "pr_bisbas_q_14",
+      "name": "excited_opportunity",
+      "topics": [
+        "BAS reward responsiveness"
+      ],
+      "content": {
+        "en": {
+          "text": "When I see an opportunity for something I like, I get excited right away.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Quand je vois une opportunité d'obtenir quelque chose que j'aime, je suis tout de suite enthousiaste, stimulé(e).",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_5@v26.0606": {
+      "id": "pr_bisbas_q_5",
+      "name": "try_new",
+      "topics": [
+        "BAS fun seeking"
+      ],
+      "content": {
+        "en": {
+          "text": "I am always willing to try something new if I think it will be fun.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Je suis toujours disposé(e) à essayer de nouvelles choses si je pense que cela sera amusant.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_20@v26.0606": {
+      "id": "pr_bisbas_q_20",
+      "name": "crave_novelty",
+      "topics": [
+        "BAS fun seeking"
+      ],
+      "content": {
+        "en": {
+          "text": "I crave excitement and new sensations.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "J'aime ressentir des émotions et de nouvelles sensations.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_1@v26.0606": {
+      "id": "pr_bisbas_q_1",
+      "name": "family",
+      "topics": [
+        "filler"
+      ],
+      "content": {
+        "en": {
+          "text": "A person's family is the most important thing in life.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "La famille est la chose la plus importante dans la vie.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_6@v26.0606": {
+      "id": "pr_bisbas_q_6",
+      "name": "dressing",
+      "topics": [
+        "filler"
+      ],
+      "content": {
+        "en": {
+          "text": "How I dress is important to me.",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "La facon dont je m'habille a de l'importance pour moi.",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    },
+    "pr_bisbas_q_16@v26.0606": {
+      "id": "pr_bisbas_q_16",
+      "name": "worry",
+      "topics": [
+        "BIS"
+      ],
+      "content": {
+        "en": {
+          "text": "If I think something unpleasant is going to happen, I usually get pretty \"worked up\".",
+          "status": "complete"
+        },
+        "fr": {
+          "text": "Habituellement quand je pense que quelque chose de déplaisant va m'arriver je suis assez préoccupé(e).",
+          "status": "complete"
+        }
+      },
+      "reversed": false,
+      "dimension": "truthfullness"
+    }
+  }
+}
