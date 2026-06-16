@@ -1,5 +1,6 @@
 import type { Questionnaire } from '../model/types'
 import type { EntityBody } from '../model/types'
+import { withRetry } from './concurrency'
 
 const DEFAULT_BASE = import.meta.env.VITE_LIBRARY_BASE_URL ?? 'https://questionnaire-library.vercel.app'
 
@@ -40,9 +41,11 @@ export async function fetchEntityBody(ref: string, opts: FetchOpts = {}): Promis
   const f = opts.fetchImpl ?? fetch
   const url = `${base}/v1/entities/${parsed.type}/${parsed.id}/versions/${encodeURIComponent(parsed.version)}/definition`
   try {
-    const res = await f(url)
-    if (!res.ok) return null
-    return (await res.json()) as EntityBody
+    return await withRetry(async () => {
+      const res = await f(url)
+      if (!res.ok) throw new Error(`Entity fetch failed (${res.status}) for ${ref}`)
+      return (await res.json()) as EntityBody
+    }, { retries: 1, backoffMs: 200 })
   } catch {
     return null
   }
@@ -52,9 +55,11 @@ export async function latestVersion(etype: string, id: string, opts: FetchOpts =
   const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
   const f = opts.fetchImpl ?? fetch
   try {
-    const res = await f(`${base}/v1/entities/${etype}/${id}`)
-    if (!res.ok) return null
-    const d = (await res.json()) as { version?: string }
+    const d = await withRetry(async () => {
+      const res = await f(`${base}/v1/entities/${etype}/${id}`)
+      if (!res.ok) throw new Error(`latestVersion fetch failed (${res.status}) for ${etype}/${id}`)
+      return (await res.json()) as { version?: string }
+    }, { retries: 1, backoffMs: 200 })
     return typeof d.version === 'string' ? d.version : null
   } catch {
     return null

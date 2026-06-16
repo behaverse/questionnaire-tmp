@@ -33,3 +33,25 @@ test('a throwing fetchEntity is treated as unresolvable (never rejects)', async 
   const map = await resolveEntities(model, throwing)
   expect(map.get('pr_a@v1')).toBeNull()
 })
+
+import { describe, it, expect } from 'vitest'
+
+describe('resolveEntities concurrency', () => {
+  it('never runs more than 5 fetches at once', async () => {
+    const model2 = {
+      metadata: { id: 'qst_t', title: 'T', language: 'en' },
+      pages: [{ id: 'p1', elements: Array.from({ length: 20 }, (_, i) => ({
+        id: `it_${i}`, question: { prompt: { ref: `pr_${i}@v1` } },
+        option: { ref: `opt_${i}@v1` },
+      })) }],
+    } as unknown as Questionnaire
+    let active = 0, peak = 0
+    const fetchEntity = async () => {
+      active++; peak = Math.max(peak, active)
+      await new Promise((r) => setTimeout(r, 3))
+      active--; return null
+    }
+    await resolveEntities(model2, fetchEntity)
+    expect(peak).toBeLessThanOrEqual(5)
+  })
+})

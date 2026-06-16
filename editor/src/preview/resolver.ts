@@ -1,7 +1,10 @@
 import type { Questionnaire } from '../model/types'
 import { collectRefs, type EntityBody } from './resolve'
+import { mapLimit } from '../persistence/concurrency'
 
 export type FetchEntity = (ref: string) => Promise<EntityBody | null>
+
+const MAX_CONCURRENT = 5
 
 /** Resolve every ref in the model (transitively, following refs inside fetched
  *  bodies), memoised in `cache` keyed by `ref@version`. Never throws; an
@@ -13,9 +16,8 @@ export async function resolveEntities(
 ): Promise<Map<string, EntityBody | null>> {
   let frontier = [...collectRefs(model)].filter((r) => !cache.has(r))
   while (frontier.length) {
-    await Promise.all(frontier.map(async (ref) => {
-      cache.set(ref, await fetchEntity(ref).catch(() => null))
-    }))
+    const bodies = await mapLimit(frontier, MAX_CONCURRENT, (ref) => fetchEntity(ref).catch(() => null))
+    frontier.forEach((ref, i) => cache.set(ref, bodies[i]))
     const next = new Set<string>()
     for (const ref of frontier) {
       const body = cache.get(ref)
