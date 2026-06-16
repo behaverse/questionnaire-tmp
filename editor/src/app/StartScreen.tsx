@@ -4,9 +4,11 @@ interface Props {
   onNew: () => void
   onOpenFile: (file: File) => void
   onOpenLibrary: (id: string, version: string) => void
+  onLoadSample: () => void
+  onBrowseLibrary: () => void
 }
 
-export function StartScreen({ onNew, onOpenFile, onOpenLibrary }: Props) {
+export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary: _onBrowseLibrary }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [id, setId] = useState('')
   const [version, setVersion] = useState('')
@@ -14,6 +16,14 @@ export function StartScreen({ onNew, onOpenFile, onOpenLibrary }: Props) {
     <main className="mx-auto flex h-full max-w-2xl flex-col justify-center gap-6 p-8">
       <h1 className="text-3xl font-semibold text-slate-800">Questionnaire Editor</h1>
       <div className="grid gap-4">
+        <button
+          onClick={onLoadSample}
+          className="rounded-lg border border-slate-300 p-4 text-left hover:bg-slate-50"
+        >
+          <div className="font-medium">Load a sample</div>
+          <div className="text-sm text-slate-500">Explore a ready-made questionnaire (BIS/BAS) — works offline</div>
+        </button>
+
         <button
           onClick={onNew}
           className="rounded-lg border border-slate-300 p-4 text-left hover:bg-slate-50"

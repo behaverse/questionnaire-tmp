@@ -9,6 +9,7 @@ import { fetchFromLibrary } from '../persistence/library'
 import { saveDraft, loadDraft } from '../persistence/indexeddb'
 import { LibraryPicker } from '../library/LibraryPicker'
 import { ForkDialog } from '../library/ForkDialog'
+import { bisbasSample } from '../samples/sample'
 
 export function App() {
   const { model, loadModel, validation } = useEditorStore()
@@ -52,6 +53,8 @@ export function App() {
             try { setError(null); loadModel(await fetchFromLibrary(id, version), { kind: 'library', id, version }); void refreshStaleness() }
             catch (e) { setError(String(e)) }
           }}
+          onLoadSample={() => { loadModel(bisbasSample.questionnaire, { kind: 'sample', id: 'qst_x_bisbas' }, bisbasSample.entities); void refreshStaleness() }}
+          onBrowseLibrary={() => {}}
         />
       </>
     )
