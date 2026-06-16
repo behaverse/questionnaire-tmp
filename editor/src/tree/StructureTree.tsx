@@ -15,7 +15,7 @@ function nextBlockId(model: Questionnaire): string {
   return `blk_${n}`
 }
 
-function Row({ row, untranslatedIn }: { row: TreeRow; untranslatedIn?: string | null }) {
+function Row({ row, translation }: { row: TreeRow; translation?: { locale: string; done: boolean } | null }) {
   const { selection, select } = useEditorStore()
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.key })
   const selected = selection && pathKey(selection) === row.key
@@ -31,8 +31,11 @@ function Row({ row, untranslatedIn }: { row: TreeRow; untranslatedIn?: string | 
       <span className="text-slate-400">{row.kind === 'block' ? '▣' : row.kind === 'page' ? '▤' : row.kind === 'section' ? '▦' : row.kind === 'message' ? '✉' : '◉'}</span>
       {row.num != null && <span className="tabular-nums text-xs text-slate-400">{row.num}.</span>}
       <span className="truncate">{row.label}</span>
-      {untranslatedIn && <span title={`Not translated in ${untranslatedIn}`} aria-label={`Not translated in ${untranslatedIn}`}
-                               className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />}
+      {translation && (
+        <span title={translation.done ? `Translated in ${translation.locale}` : `Not translated in ${translation.locale}`}
+              aria-label={translation.done ? `Translated in ${translation.locale}` : `Not translated in ${translation.locale}`}
+              className={`ml-auto h-1.5 w-1.5 shrink-0 rounded-full ${translation.done ? 'bg-green-500' : 'bg-amber-400'}`} />
+      )}
     </div>
   )
 }
@@ -51,7 +54,8 @@ export function StructureTree() {
   const primary = String(model.metadata.language ?? 'en')
   // when editing a non-primary language, flag rows whose (pool) content lacks that locale
   const translating = editingLocale && editingLocale !== primary ? editingLocale : null
-  const untranslatedIn = (row: TreeRow): string | null => {
+  // translation status for content-bearing rows (item prompt / message) in the editing locale
+  const translationOf = (row: TreeRow): { locale: string; done: boolean } | null => {
     if (!translating) return null
     const el = getAtPath(model, row.path) as Record<string, unknown> | undefined
     const q = el?.question as Record<string, unknown> | undefined
@@ -61,9 +65,9 @@ export function StructureTree() {
     if (!ref) return null
     // pool (drafted/forked) first, else the resolved Library body shared from the preview
     const body = (pool[ref] ?? resolved[ref]) as { content?: Record<string, { text?: string }> } | null | undefined
-    if (!body) return null // not resolved yet (e.g. preview closed) → can't tell, don't flag
+    if (!body) return null // not resolved yet (e.g. preview closed) → can't tell, no dot
     const txt = body.content?.[translating]?.text
-    return !txt || !String(txt).trim() ? translating : null
+    return { locale: translating, done: !!txt && !!String(txt).trim() }
   }
 
   function onDragEnd(e: DragEndEvent) {
@@ -99,7 +103,7 @@ export function StructureTree() {
       </button>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={rows.map((r) => r.key)} strategy={verticalListSortingStrategy}>
-          {rows.map((row) => <Row key={row.key} row={row} untranslatedIn={untranslatedIn(row)} />)}
+          {rows.map((row) => <Row key={row.key} row={row} translation={translationOf(row)} />)}
         </SortableContext>
       </DndContext>
     </nav>
