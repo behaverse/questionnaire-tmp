@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
-import { searchEntities as realSearch, fetchEntityBody as realFetchBody, type EntitySearchResult } from '../persistence/library'
+import { useEffect, useMemo, useState } from 'react'
+import { listAllEntities as realList, fetchEntityBody as realFetchBody, type EntitySearchResult } from '../persistence/library'
 import { buildRef, bodySnippet } from './picker'
 import type { EntityBody } from '../model/types'
 
 export interface PickerClient {
-  searchEntities: (etype: string, q: string) => Promise<{ items: EntitySearchResult[]; total: number }>
+  listEntities: (etype: string) => Promise<EntitySearchResult[]>
   fetchEntityBody: (ref: string) => Promise<EntityBody | null>
 }
 const defaultClient: PickerClient = {
-  searchEntities: (etype, q) => realSearch(etype, q),
+  listEntities: (etype) => realList(etype),
   fetchEntityBody: (ref) => realFetchBody(ref),
 }
 
@@ -16,21 +16,28 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
   etype: string; locale: string; onPick: (ref: string) => void; onClose: () => void; client?: PickerClient
 }) {
   const [q, setQ] = useState('')
-  const [items, setItems] = useState<EntitySearchResult[]>([])
+  const [all, setAll] = useState<EntitySearchResult[]>([])
+  const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState<EntitySearchResult | null>(null)
   const [snippet, setSnippet] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const tRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
+  // Load the full list once; the search field filters it client-side (the server's
+  // full-text search only indexes title/description, which most entities lack).
   useEffect(() => {
-    if (!q) { setItems([]); return }
-    clearTimeout(tRef.current)
-    tRef.current = setTimeout(() => {
-      client.searchEntities(etype, q).then((r) => { setItems(r.items); setError(null) })
-        .catch(() => setError('Library unavailable'))
-    }, 300)
-    return () => clearTimeout(tRef.current)
-  }, [q, etype, client])
+    let ignore = false
+    setLoading(true)
+    client.listEntities(etype)
+      .then((r) => { if (!ignore) { setAll(r); setError(null); setLoading(false) } })
+      .catch(() => { if (!ignore) { setError('Library unavailable'); setLoading(false) } })
+    return () => { ignore = true }
+  }, [etype, client])
+
+  const items = useMemo(() => {
+    const ql = q.trim().toLowerCase()
+    if (!ql) return all
+    return all.filter((it) => it.id.toLowerCase().includes(ql) || (it.title ?? '').toLowerCase().includes(ql))
+  }, [q, all])
 
   const select = (it: EntitySearchResult) => {
     setSelected(it); setSnippet('')
@@ -45,22 +52,27 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
           <button onClick={onClose} className="ml-auto text-slate-400 hover:text-slate-700">✕</button>
         </div>
         <div className="p-3">
-          <input aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Search ${etype}s…`}
+          <input aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Filter ${etype}s…`}
                  className="w-full rounded border border-slate-300 px-2 py-1 text-sm" />
-          <div className="mt-1 text-xs text-slate-400">Searches title &amp; description.</div>
+          <div className="mt-1 flex items-center justify-between text-xs text-slate-400">
+            <span>Filter by id or title.</span>
+            <span>{loading ? 'loading…' : `${items.length}${q ? ` of ${all.length}` : ''} ${etype}${items.length === 1 ? '' : 's'}`}</span>
+          </div>
           {error && <div className="mt-2 text-sm text-red-600">{error}</div>}
-          <ul className="mt-2 max-h-60 overflow-auto">
+          <ul className="mt-2 max-h-72 overflow-auto">
             {items.map((it) => (
               <li key={`${it.id}@${it.version}`}>
                 <button onClick={() => select(it)}
                         className={`flex w-full items-center gap-2 rounded px-2 py-1 text-left text-sm ${selected?.id === it.id ? 'bg-slate-100' : 'hover:bg-slate-50'}`}>
                   <span className="font-mono">{it.id}</span>
-                  {it.title && <span className="truncate text-slate-500">{it.title}</span>}
+                  {it.title && it.title !== it.id && <span className="truncate text-slate-500">{it.title}</span>}
                   <span className="ml-auto text-xs text-slate-400">{it.version}</span>
                 </button>
               </li>
             ))}
-            {q && items.length === 0 && !error && <li className="px-2 py-1 text-sm text-slate-400">No results.</li>}
+            {!loading && items.length === 0 && !error && (
+              <li className="px-2 py-1 text-sm text-slate-400">{all.length === 0 ? `No ${etype}s in the Library.` : 'No matches.'}</li>
+            )}
           </ul>
           {selected && (
             <div className="mt-3 rounded border border-slate-200 bg-slate-50 p-2 text-sm">
