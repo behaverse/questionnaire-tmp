@@ -49,7 +49,7 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
       {resolving && <div className="bg-white px-3 py-1 text-xs text-slate-400">resolving…</div>}
       <PreviewView runtime={runtime} problems={problems}
         logic={(model.logic ?? []) as LogicRule[]} validation={(model.validation ?? []) as CrossQuestionValidationRule[]}
-        initialLocale={String(model.metadata.language ?? 'en')} initialScope="page" selectedPageId={selectedPageId} />
+        initialLocale={String(model.metadata.language ?? 'en')} initialScope="page" selectedPageId={selectedPageId} compact />
     </div>
   )
 }

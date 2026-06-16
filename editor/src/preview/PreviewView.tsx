@@ -13,7 +13,7 @@ import type { LogicRule, CrossQuestionValidationRule } from '../model/types'
 
 const STRINGS: RendererStrings = { required: 'Required', unsupported: 'Unsupported element' }
 
-export function PreviewView({ runtime, problems, logic, validation, initialLocale, initialScope = 'all', selectedPageId }: {
+export function PreviewView({ runtime, problems, logic, validation, initialLocale, initialScope = 'all', selectedPageId, compact = false }: {
   runtime: Runtime
   problems: RefProblem[]
   logic: LogicRule[]
@@ -21,6 +21,9 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
   initialLocale?: string
   initialScope?: 'page' | 'all'
   selectedPageId?: string
+  /** In-editor inline pane: scale the focus-mode content down + separate stacked items.
+   *  The standalone full-page preview leaves this off for WYSIWYG fidelity. */
+  compact?: boolean
 }) {
   const [locale, setLocale] = useState<string>(initialLocale ?? String(runtime.metadata.language ?? 'en'))
   const [device, setDevice] = useState<FrameKey>('desktop')
@@ -71,7 +74,8 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
         </div>
       )}
       <div className="flex-1 overflow-auto bg-slate-100 p-6">
-        <div className="qv-theme mx-auto bg-white shadow-sm" style={{ width: width ?? '100%', maxWidth: '100%' }}>
+        <div className={`qv-theme mx-auto bg-white shadow-sm ${compact ? 'qv-compact' : ''}`}
+             style={{ width: width ?? '100%', maxWidth: '100%', ...(compact ? { zoom: 0.82 } : {}) }}>
           <div className="p-6">
             {visiblePages.map((page) => (
               <div key={page.id} className="mb-8">

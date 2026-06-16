@@ -5,3 +5,12 @@
 :root { color-scheme: light; }
 html, body, #root { height: 100%; margin: 0; overflow: hidden; }
 body { font-family: ui-sans-serif, system-ui, sans-serif; }
+
+/* In-editor compact preview: separate stacked items with a subtle divider so the
+   focus-mode renderer (one big prompt per item) reads as distinct items in the pane.
+   Scoped to .qv-compact (set by PreviewView only for the in-editor pane). */
+.qv-compact .space-y-10 > * + * {
+  border-top: 1px solid #e2e8f0;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+}

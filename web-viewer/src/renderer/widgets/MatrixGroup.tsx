@@ -3,6 +3,7 @@ import { isItem } from '../guards'
 import { elementKey, sectionChildFallback } from '../keys'
 import type { AnswerValue, SectionElement } from '../types'
 import { UnsupportedElement } from './UnsupportedElement'
+import { RichText } from '../RichText'
 
 type Props = {
   sectionKey: string
@@ -33,7 +34,7 @@ export function MatrixGroup({ sectionKey, section, locale, answers, onAnswer, re
             <tr>
               <td className="min-w-48"></td>
               {choices.map((c) => (
-                <th key={c.index} scope="col" className="px-3 pb-2 text-center text-sm font-medium text-slate-500">{c.text}</th>
+                <th key={c.index} scope="col" className="px-3 pb-2 text-center text-sm font-medium text-slate-500"><RichText>{c.text}</RichText></th>
               ))}
             </tr>
           </thead>
@@ -44,7 +45,7 @@ export function MatrixGroup({ sectionKey, section, locale, answers, onAnswer, re
               const rowFails = requiredErrors.includes(key)
               return (
                 <tr key={key} className={rowFails ? 'bg-error/5' : undefined}>
-                  <th scope="row" className="py-2 pr-4 text-left text-base font-normal">{prompt}</th>
+                  <th scope="row" className="py-2 pr-4 text-left text-base font-normal"><RichText>{prompt}</RichText></th>
                   {choices.map((c) => (
                     <td key={c.index} className="px-3 text-center">
                       <input

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import type { AnswerValue, MergedChoice } from '../types'
+import { RichText } from '../RichText'
 
 type Props = {
   name: string
@@ -44,7 +45,7 @@ export function RadioGroup({ name, label, choices, value, onChange, keyHints = f
             {keyHints && (
               <span aria-hidden className="qv-option-badge">{LETTERS[i]}</span>
             )}
-            <span>{c.text}</span>
+            <span><RichText>{c.text}</RichText></span>
           </label>
         )
       })}
