@@ -589,3 +589,32 @@ conditions don't fire in the standalone preview — same as the in-app preview.
 
 "Open preview" hands the bundle to preview.html via sessionStorage (same browser/origin). The
 file-open path covers cross-machine sharing of an exported bundle.
+
+# ED-G Follow-ups
+
+Known limitations and open items carried out of ED-G (usability/onboarding pass).
+
+## (ed-g-1) Server-side search indexes title + description only
+
+The Library full-text index (`library/src/library/store/index.py`) covers each entity's
+title + description, NOT its id or item/prompt body text. The pickers now say so. Extending
+the index to body text (so authors can find a prompt by its wording) is a Library schema +
+reseed change, deferred.
+
+## (ed-g-2) The sample is a frozen snapshot
+
+`src/samples/bisbas.bundle.json` is generated once from the live Library
+(`scripts/build-sample.mjs`). If BIS/BAS is republished at a newer version, re-run the script
+to refresh the asset. It is intentionally self-contained (no runtime network) so the sample
+works offline.
+
+## (ed-g-3) Back-to-home keeps the autosaved draft
+
+"← Home" returns to the StartScreen but does not clear IndexedDB, so a browser reload still
+resumes the last draft. A dedicated "discard draft" / draft manager is deferred.
+
+## (ed-g-4) Browse picker is a flat latest-only list
+
+The questionnaire browser lists the latest published version of each form (from the grouped
+catalogue). Choosing an older version still uses the manual id+version fallback. A per-form
+version dropdown is deferred.
