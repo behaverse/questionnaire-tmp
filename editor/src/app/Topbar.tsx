@@ -3,10 +3,11 @@ import { exportToFile, exportBundle, bundleData } from '../persistence/file'
 import { EditingLocaleSwitcher } from './EditingLocaleSwitcher'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
-  const { model, dirty, validation, previewOpen, togglePreview } = useEditorStore()
+  const { model, dirty, validation, previewOpen, togglePreview, translateView } = useEditorStore()
   const pool = useEditorStore((s) => s.pool)
   const staleness = useEditorStore((s) => s.staleness)
   const refreshStaleness = useEditorStore((s) => s.refreshStaleness)
+  const setTranslateView = useEditorStore((s) => s.setTranslateView)
   const reset = useEditorStore((s) => s.reset)
   if (!model) return null
   const invalid = validation && !validation.valid
@@ -36,6 +37,10 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
         <button title="Show/hide the live inline preview pane" onClick={togglePreview}
                 className={`rounded border px-3 py-1 text-sm ${previewOpen ? 'border-slate-800 bg-slate-800 text-white' : 'border-slate-300 hover:bg-slate-50'}`}>
           ▢ Preview
+        </button>
+        <button title="Open the side-by-side translation view" onClick={() => setTranslateView(!translateView)}
+                className={`rounded border px-3 py-1 text-sm ${translateView ? 'border-slate-800 bg-slate-800 text-white' : 'border-slate-300 hover:bg-slate-50'}`}>
+          Translate
         </button>
         <button title="Download the questionnaire JSON only (references not included)" onClick={doExport} className="rounded bg-slate-800 px-3 py-1 text-sm text-white">Export</button>
         <button title="Download a self-contained bundle: the questionnaire plus all referenced/drafted entities (opens offline in the standalone preview)" onClick={() => { if (model) exportBundle(model, pool) }}

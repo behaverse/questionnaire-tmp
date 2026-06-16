@@ -10,10 +10,11 @@ import { saveDraft, loadDraft } from '../persistence/indexeddb'
 import { LibraryPicker } from '../library/LibraryPicker'
 import { LibraryQuestionnairePicker } from '../library/LibraryQuestionnairePicker'
 import { ForkDialog } from '../library/ForkDialog'
+import { TranslationPanel } from '../translate/TranslationPanel'
 import { bisbasSample } from '../samples/sample'
 
 export function App() {
-  const { model, loadModel, validation } = useEditorStore()
+  const { model, loadModel, validation, translateView } = useEditorStore()
   const refreshStaleness = useEditorStore((s) => s.refreshStaleness)
   const pool = useEditorStore((s) => s.pool)
   const picker = useEditorStore((s) => s.picker)
@@ -84,7 +85,7 @@ export function App() {
           {validation.errors.length} validation issue(s): {validation.errors.slice(0, 3).map((e) => e.message).join('; ')}
         </div>
       )}
-      <EditorWorkspace />
+      {translateView ? <TranslationPanel /> : <EditorWorkspace />}
       {picker && model && (
         <LibraryPicker etype={picker.etype} locale={String(model.metadata.language ?? 'en')}
                        onPick={(ref) => { picker.onPick(ref); closePicker() }} onClose={closePicker} />
