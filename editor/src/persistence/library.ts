@@ -68,6 +68,27 @@ export async function latestVersion(etype: string, id: string, opts: FetchOpts =
 
 export interface EntitySearchResult { id: string; version: string; title: string | null; entity_type: string }
 
+/** List all entities of a type (paged through, capped) for browse-and-filter pickers.
+ *  The Library's full-text search only indexes title/description, and most entities have
+ *  no title (it falls back to the id) — so client-side substring filtering over the full
+ *  list is both more useful (matches descriptive ids like `opt_agreement_7`) and simpler. */
+export async function listAllEntities(etype: string, opts: FetchOpts & { cap?: number } = {}): Promise<EntitySearchResult[]> {
+  const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
+  const f = opts.fetchImpl ?? fetch
+  const cap = opts.cap ?? 500
+  const pageSize = 100
+  const out: EntitySearchResult[] = []
+  for (let offset = 0; offset < cap; offset += pageSize) {
+    const res = await f(`${base}/v1/entities/${etype}?limit=${pageSize}&offset=${offset}`)
+    if (!res.ok) throw new Error(`Library list failed (${res.status}) for ${etype}`)
+    const data = (await res.json()) as { items?: EntitySearchResult[]; total?: number }
+    const items = data.items ?? []
+    out.push(...items)
+    if (items.length < pageSize || out.length >= (data.total ?? out.length)) break
+  }
+  return out
+}
+
 export async function searchEntities(etype: string, q: string, opts: FetchOpts = {}): Promise<{ items: EntitySearchResult[]; total: number }> {
   const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
   const f = opts.fetchImpl ?? fetch
