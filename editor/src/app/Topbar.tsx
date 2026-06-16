@@ -7,6 +7,7 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
   const pool = useEditorStore((s) => s.pool)
   const staleness = useEditorStore((s) => s.staleness)
   const refreshStaleness = useEditorStore((s) => s.refreshStaleness)
+  const reset = useEditorStore((s) => s.reset)
   if (!model) return null
   const invalid = validation && !validation.valid
   const doExport = () => {
@@ -15,6 +16,9 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
   }
   return (
     <header className="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-2">
+      <button
+        onClick={() => { if (!dirty || confirm('Leave this questionnaire? Your draft is autosaved and will be here when you return.')) reset() }}
+        className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">← Home</button>
       <span className="font-medium text-slate-800">{model.metadata.title ?? model.metadata.id}</span>
       {dirty && <span className="text-xs text-amber-600">● unsaved</span>}
       <div className="ml-auto flex items-center gap-2">
