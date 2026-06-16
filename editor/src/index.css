@@ -14,3 +14,5 @@ body { font-family: ui-sans-serif, system-ui, sans-serif; }
   margin-top: 2.5rem;
   padding-top: 2.5rem;
 }
+/* leave a gap above an item when the structure-tree selection scrolls it to the top */
+.qv-compact .space-y-10 > * { scroll-margin-top: 1.5rem; }

@@ -8,8 +8,8 @@ test('translate a prompt into a second language', async ({ page }) => {
 
   // The questionnaire root is selected by default → Inspector shows LanguagesField.
   // Add 'fr' as an available language before navigating to a page.
-  await page.getByLabel('Add language').fill('fr')
-  await page.getByRole('button', { name: /^add$/i }).click()
+  await page.getByLabel('New language code').fill('fr')
+  await page.getByRole('button', { name: 'Add language' }).click()
 
   // Add an item + author the primary (en) prompt.
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()

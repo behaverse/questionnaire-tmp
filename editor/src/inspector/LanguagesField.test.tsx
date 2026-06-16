@@ -17,14 +17,14 @@ describe('LanguagesField', () => {
   })
   it('adds a valid locale to available_languages', () => {
     render(<LanguagesField />)
-    fireEvent.change(screen.getByLabelText('Add language'), { target: { value: 'fr' } })
-    fireEvent.click(screen.getByRole('button', { name: /^add$/i }))
+    fireEvent.change(screen.getByLabelText('New language code'), { target: { value: 'fr' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Add language' }))
     expect(useEditorStore.getState().model!.metadata.available_languages).toEqual(['fr'])
   })
   it('rejects a malformed locale code', () => {
     render(<LanguagesField />)
-    fireEvent.change(screen.getByLabelText('Add language'), { target: { value: 'Bad Code!' } })
-    fireEvent.click(screen.getByRole('button', { name: /^add$/i }))
+    fireEvent.change(screen.getByLabelText('New language code'), { target: { value: 'Bad Code!' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Add language' }))
     expect(useEditorStore.getState().model!.metadata.available_languages).toBeUndefined()
   })
   it('removes a language', () => {

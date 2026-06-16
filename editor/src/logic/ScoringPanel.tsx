@@ -22,8 +22,8 @@ export function ScoringPanel() {
       <div className="flex items-center gap-2">
         <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Scores</h4>
         {attention > 0 && <span className="text-[11px] text-red-600">{attention} need{attention === 1 ? 's' : ''} attention</span>}
-        <button type="button" onClick={add}
-          className="ml-auto rounded border border-slate-300 px-2 py-0.5 text-xs text-slate-600 hover:bg-slate-50">+ Add score</button>
+        <button type="button" aria-label="Add score" onClick={add}
+          className="ml-auto rounded border border-slate-300 px-2 py-0.5 text-xs text-slate-600 hover:bg-slate-50">+ Add</button>
       </div>
       {scores.length === 0 && <p className="text-[11px] text-slate-400">No scores yet.</p>}
       <ul className="space-y-1">

@@ -32,9 +32,9 @@ export function LanguagesField() {
         ))}
       </div>
       <div className="flex gap-1">
-        <input aria-label="Add language" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="fr"
+        <input aria-label="New language code" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="fr"
                className="w-20 rounded border border-slate-300 px-1 py-0.5 text-sm" />
-        <button type="button" onClick={add} className="rounded border border-slate-300 px-2 py-0.5 text-xs hover:bg-slate-50">Add</button>
+        <button type="button" aria-label="Add language" onClick={add} className="rounded border border-slate-300 px-2 py-0.5 text-xs hover:bg-slate-50">+ Add</button>
       </div>
       {invalid && <p className="text-[11px] text-red-600">Invalid locale code</p>}
     </div>
