@@ -52,7 +52,7 @@ test('toggle preview → renders resolved content via the renderer', async ({ pa
   await page.setInputFiles('input[type=file]', { name: 'preview_demo.json', mimeType: 'application/json', buffer: Buffer.from(qJson) })
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
 
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
   // The renderer emits both an sr-only <legend> and a visible <h2 class="qv-prompt">
   // with the prompt text; scope to the visible heading to avoid a strict-mode match.
@@ -112,7 +112,7 @@ test('add a new item, type a prompt, see it in the preview', async ({ page }) =>
   // open preview → the new prompt renders (pool-resolved). The renderer emits a
   // visible <h2 class="qv-prompt"> with the prompt text; scope to it to avoid a
   // strict-mode match against the sr-only <legend>.
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   await expect(
     page.getByRole('region', { name: /preview/i }).locator('h2.qv-prompt', { hasText: 'How are you today?' }),
   ).toBeVisible()
@@ -137,7 +137,7 @@ test('add a message + a context to a new item, type both, preview them', async (
   await page.getByLabel('Context text', { exact: true }).fill('Think about the past week.')
 
   // preview shows the prompt + context
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
   await expect(preview.locator('h2.qv-prompt', { hasText: 'How do you feel?' })).toBeVisible()
 
@@ -181,7 +181,7 @@ test('pick a prompt from the Library into a new item', async ({ page }) => {
   await page.locator('.fixed.z-50').getByRole('button', { name: /insert/i }).click()
 
   // preview shows the picked Library prompt (same stubbed `…/definition` route resolves it)
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   await expect(
     page.getByRole('region', { name: /preview/i }).locator('h2.qv-prompt', { hasText: 'Library: how is your mood?' }),
   ).toBeVisible()

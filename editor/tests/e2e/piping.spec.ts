@@ -60,7 +60,7 @@ test('a piping rule inserts the source answer into a target prompt in the previe
   await page.getByLabel('Expression').fill('true')
 
   // Open the preview pane.
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
 
   // Set scope to whole questionnaire so both items appear on the same view.

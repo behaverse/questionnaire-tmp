@@ -24,7 +24,7 @@ test('translate a prompt into a second language', async ({ page }) => {
   await page.getByLabel('Prompt text', { exact: true }).fill('Comment ça va ?')
 
   // Open preview + switch preview locale to fr → translated text renders.
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
   await preview.getByLabel('Preview language').selectOption('fr')
   await expect(preview.locator('h2.qv-prompt', { hasText: 'Comment ça va ?' })).toBeVisible()
