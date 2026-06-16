@@ -28,6 +28,7 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
       resolveEntities(model, fetchEntity, cacheRef.current).then((m) => {
         if (ignore) return
         setEntityMap(new Map(m))
+        useEditorStore.getState().setResolved(Object.fromEntries(m)) // share with the tree (untranslated indicator)
         setResolving(false)
       })
     }, 300)
