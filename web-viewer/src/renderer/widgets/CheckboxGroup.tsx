@@ -1,4 +1,5 @@
 import type { AnswerValue, MergedChoice } from '../types'
+import { RichText } from '../RichText'
 
 type Props = { label: string; choices: MergedChoice[]; value: AnswerValue; onChange: (value: (number | string)[]) => void }
 
@@ -13,7 +14,7 @@ export function CheckboxGroup({ label, choices, value, onChange }: Props) {
         return (
           <label key={c.index} data-selected={isOn} className="qv-option">
             <input type="checkbox" checked={isOn} onChange={() => toggle(c.value)} className="h-5 w-5 accent-[var(--qv-primary)]" />
-            <span>{c.text}</span>
+            <span><RichText>{c.text}</RichText></span>
           </label>
         )
       })}

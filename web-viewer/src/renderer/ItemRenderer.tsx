@@ -5,6 +5,7 @@ import { RenderError, type AnswerValue, type ItemElement } from './types'
 import { CheckboxGroup } from './widgets/CheckboxGroup'
 import { NumberInput } from './widgets/NumberInput'
 import { RadioGroup } from './widgets/RadioGroup'
+import { RichText } from './RichText'
 import { TextInput } from './widgets/TextInput'
 import { UnsupportedElement } from './widgets/UnsupportedElement'
 
@@ -56,9 +57,9 @@ export function ItemRenderer({ answerKey, element, locale, value, onAnswer, keyH
     <fieldset aria-describedby={shownError ? errorId : undefined} className="space-y-5">
       <legend className="sr-only">{prompt}</legend>
       <div className="space-y-2">
-        <h2 tabIndex={-1} className="qv-prompt">{prompt}</h2>
-        {context && <p className="qv-secondary text-base">{context}</p>}
-        {instruction && <p className="qv-secondary text-sm italic">{instruction}</p>}
+        <h2 tabIndex={-1} className="qv-prompt"><RichText>{prompt}</RichText></h2>
+        {context && <p className="qv-secondary text-base"><RichText>{context}</RichText></p>}
+        {instruction && <p className="qv-secondary text-sm italic"><RichText>{instruction}</RichText></p>}
       </div>
       {widget}
       {shownError && (
