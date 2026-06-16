@@ -48,14 +48,20 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
   const width = FRAMES[device]
   const onAnswer = (key: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [key]: value }))
 
-  // Scroll the selected structure-tree element into view in the preview (page scope only).
+  // Scroll the selected structure-tree element into view — WITHIN the preview's own scroll
+  // container only. (el.scrollIntoView() would also scroll ancestor/window scroll ranges,
+  // which under the root's overflow:hidden quirk pushes the whole app — incl. the topbar —
+  // off-screen. Scrolling the container directly never touches the window.)
   const scrollRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (scope !== 'page' || selectedElementIndex == null) return
-    const items = scrollRef.current?.querySelectorAll<HTMLElement>('.space-y-10 > *')
-    const el = items?.[selectedElementIndex]
+    const el = scrollRef.current?.querySelectorAll<HTMLElement>('.space-y-10 > *')[selectedElementIndex]
     if (!el) return
-    el.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    // Native scrollIntoView is zoom-aware (handles the qv-theme zoom correctly), but it also
+    // scrolls ancestor scroll ranges — incl. the document root, which under overflow:hidden has
+    // a phantom range and would push the topbar off-screen. So undo any window scroll afterwards.
+    el.scrollIntoView({ block: 'start' })
+    if (window.scrollY !== 0 || document.documentElement.scrollTop !== 0) window.scrollTo(0, 0)
     el.animate([{ backgroundColor: 'rgba(99,102,241,0.12)' }, { backgroundColor: 'transparent' }], { duration: 900 })
   }, [selectedElementIndex, scope, pageId])
 
