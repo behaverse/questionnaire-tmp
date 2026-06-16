@@ -12,6 +12,20 @@ test('load sample renders offline + back-to-home returns to start', async ({ pag
   await page.getByRole('button', { name: '▢ Preview' }).click()
   await expect(page.getByText(/referenced entities not loaded/i)).toHaveCount(0)
   await expect(page.locator('h2.qv-prompt').first()).toBeVisible()
+  // layout: a long preview must scroll INSIDE its pane, not turn the whole window
+  // into a scrollable page (the document root is overflow:hidden; panes scroll).
+  const layout = await page.evaluate(() => {
+    const de = document.documentElement
+    const prevScroll = document.querySelector('section[aria-label="Preview"] .overflow-auto') as HTMLElement
+    return {
+      noWindowScrollbar: de.clientWidth >= window.innerWidth - 1,
+      rootOverflowHidden: getComputedStyle(de).overflowY === 'hidden',
+      previewScrollsInternally: prevScroll.scrollHeight > prevScroll.clientHeight + 2,
+    }
+  })
+  expect(layout.noWindowScrollbar).toBe(true)
+  expect(layout.rootOverflowHidden).toBe(true)
+  expect(layout.previewScrollsInternally).toBe(true)
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-g-sample.png', fullPage: true })
   // back to home (dirty-guard confirm auto-accepted by the handler above)
   await page.getByRole('button', { name: /home/i }).click()

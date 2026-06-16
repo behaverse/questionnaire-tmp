@@ -26,19 +26,19 @@ export function Canvas() {
 
   const kind = nodeKind(model, sel)
 
-  // Route inline items (question+inline option) and matrix sections (shared_option) to the Option editor.
+  // Route items (any node with a question — inline OR ref-based option) and matrix
+  // sections (shared_option) to the item/Option editor; messages to the message pane.
   const selNode = getAtPath(model, sel) as Record<string, unknown> | undefined
-  const isInlineItem = !!selNode && 'question' in selNode && 'option' in selNode
-    && typeof selNode.option === 'object' && selNode.option !== null && 'input_data_type' in (selNode.option as object)
+  const isItem = !!selNode && 'question' in selNode
   const isSharedOptionSection = !!selNode && kind === 'section'
     && 'shared_option' in selNode && typeof selNode.shared_option === 'object'
-  if (isInlineItem || isSharedOptionSection) return <ItemEditor path={sel} />
+  if (isItem || isSharedOptionSection) return <ItemEditor path={sel} />
 
   const isMessageElement = !!selNode && kind === 'message' && typeof (selNode as { ref?: unknown }).ref === 'string'
   if (isMessageElement) return <MessagePane path={sel} />
 
   if (kind !== 'page' && kind !== 'section' && kind !== 'questionnaire') {
-    return <div className="overflow-auto p-6 text-slate-400">This node has no children. Editing item content arrives in ED-C.</div>
+    return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree to edit its contents.</div>
   }
 
   const node = getAtPath(model, sel) as Page | Section

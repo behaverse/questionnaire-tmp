@@ -8,7 +8,7 @@ export function EditorWorkspace() {
   const previewOpen = useEditorStore((s) => s.previewOpen)
   const center = previewOpen ? 'grid-cols-[260px_1fr_1fr_320px]' : 'grid-cols-[260px_1fr_320px]'
   return (
-    <div className={`grid flex-1 overflow-hidden ${center}`}>
+    <div className={`grid min-h-0 flex-1 overflow-hidden [&>*]:min-h-0 ${center}`}>
       <StructureTree />
       <Canvas />
       {previewOpen && <PreviewPane />}

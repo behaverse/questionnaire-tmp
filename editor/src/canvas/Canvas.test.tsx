@@ -19,6 +19,24 @@ test('with a page selected, shows its elements and an Add control', () => {
   if (typeof firstEl.ref === 'string') expect(screen.getByText(firstEl.ref)).toBeInTheDocument()
 })
 
+test('selecting an item with a ref-based option opens the item editor (not a stub)', () => {
+  // BIS/BAS-style item: prompt AND option are Library refs (not inline). This must
+  // route to the ItemEditor, not the old "Editing item content arrives in ED-C" stub.
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', version: 'v26.0606', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [
+      { option: { ref: 'opt_agreement_7@v26.0606' }, question: { prompt: { ref: 'pr_x@v26.0606' } } },
+    ] }],
+  } as unknown as Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'file', name: 't.json' })
+  useEditorStore.getState().select(['pages', 0, 'elements', 0])
+  render(<Canvas />)
+  expect(screen.getByText('Option (Response)')).toBeInTheDocument()
+  expect(screen.getByText(/Referenced option/i)).toBeInTheDocument()
+  expect(screen.queryByText(/arrives in ED-C/i)).toBeNull()
+})
+
 test('Add section inserts a section into the selected page', async () => {
   useEditorStore.getState().select(['pages', 0])
   render(<Canvas />)
