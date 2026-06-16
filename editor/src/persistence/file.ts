@@ -42,6 +42,14 @@ export function bundleFilename(model: Questionnaire): string {
   return `${id}.bundle.json`
 }
 
+export function parseBundle(text: string): { questionnaire: Questionnaire; entities: Record<string, EntityBody> } {
+  const obj = JSON.parse(text) as { questionnaire?: unknown; entities?: unknown }
+  const q = obj?.questionnaire as Questionnaire | undefined
+  const entities = obj?.entities as Record<string, EntityBody> | undefined
+  if (!q?.metadata || !entities || typeof entities !== 'object') throw new Error('Not a valid questionnaire bundle')
+  return { questionnaire: q, entities }
+}
+
 /** Browser-only: download the {questionnaire, entities} bundle. */
 export function exportBundle(model: Questionnaire, pool: Record<string, EntityBody>): void {
   const blob = new Blob([JSON.stringify(bundleData(model, pool), null, 2)], { type: 'application/json' })
