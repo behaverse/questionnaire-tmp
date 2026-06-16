@@ -22,6 +22,10 @@ interface EditorState {
   validation: { valid: boolean; errors: ValidationError[] } | null
   previewOpen: boolean
   pool: Record<string, EntityBody>
+  /** Last resolved entity bodies (pool + Library), shared from the preview so the tree can
+   *  read content (e.g. for the untranslated indicator) for refs that aren't in the local pool. */
+  resolved: Record<string, EntityBody | null>
+  setResolved: (m: Record<string, EntityBody | null>) => void
   picker: { etype: string; onPick: (ref: string) => void } | null
   staleness: Record<string, string>
   fork: { ref: string } | null
@@ -55,6 +59,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   validation: null,
   previewOpen: false,
   pool: {},
+  resolved: {},
+  setResolved: (m) => set({ resolved: m }),
   picker: null,
   staleness: {},
   editingLocale: null,
@@ -62,7 +68,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   loadModel: (model, source, pool) =>
     // open with the first page selected (so the canvas shows it, not a blank pane) and
     // the preview on by default; the tree's "Questionnaire" root returns to the q-level inspector.
-    set({ model, source, selection: model.pages?.length ? ['pages', 0] : null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {}, editingLocale: null, previewOpen: true }),
+    set({ model, source, selection: model.pages?.length ? ['pages', 0] : null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {}, resolved: {}, editingLocale: null, previewOpen: true }),
   upsertPoolEntity: (ref, body) => set((s) => ({ pool: { ...s.pool, [ref]: body } })),
   removePoolEntity: (ref) => set((s) => { const p = { ...s.pool }; delete p[ref]; return { pool: p } }),
   applyEdit: (fn) => {
@@ -120,5 +126,5 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     set((s) => { const st = { ...s.staleness }; delete st[ref]; return { staleness: st } })
     return true
   },
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, picker: null, staleness: {}, fork: null, editingLocale: null }),
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, pool: {}, resolved: {}, picker: null, staleness: {}, fork: null, editingLocale: null }),
 }))

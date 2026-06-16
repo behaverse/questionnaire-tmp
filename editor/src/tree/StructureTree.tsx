@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { useEditorStore } from '../state/store'
 import { buildTreeRows, type TreeRow } from './treeModel'
 import { reorder, createBlock } from '../model/tree'
-import { pathKey } from '../model/path'
+import { pathKey, getAtPath } from '../model/path'
 import type { Questionnaire } from '../model/types'
 
 function nextBlockId(model: Questionnaire): string {
@@ -15,7 +15,7 @@ function nextBlockId(model: Questionnaire): string {
   return `blk_${n}`
 }
 
-function Row({ row }: { row: TreeRow }) {
+function Row({ row, untranslatedIn }: { row: TreeRow; untranslatedIn?: string | null }) {
   const { selection, select } = useEditorStore()
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.key })
   const selected = selection && pathKey(selection) === row.key
@@ -31,18 +31,40 @@ function Row({ row }: { row: TreeRow }) {
       <span className="text-slate-400">{row.kind === 'block' ? '▣' : row.kind === 'page' ? '▤' : row.kind === 'section' ? '▦' : row.kind === 'message' ? '✉' : '◉'}</span>
       {row.num != null && <span className="tabular-nums text-xs text-slate-400">{row.num}.</span>}
       <span className="truncate">{row.label}</span>
+      {untranslatedIn && <span title={`Not translated in ${untranslatedIn}`} aria-label={`Not translated in ${untranslatedIn}`}
+                               className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />}
     </div>
   )
 }
 
 export function StructureTree() {
   const { model, applyEdit, selection, select } = useEditorStore()
+  const pool = useEditorStore((s) => s.pool)
+  const resolved = useEditorStore((s) => s.resolved)
+  const editingLocale = useEditorStore((s) => s.editingLocale)
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   )
   if (!model) return null
   const rows = buildTreeRows(model)
+  const primary = String(model.metadata.language ?? 'en')
+  // when editing a non-primary language, flag rows whose (pool) content lacks that locale
+  const translating = editingLocale && editingLocale !== primary ? editingLocale : null
+  const untranslatedIn = (row: TreeRow): string | null => {
+    if (!translating) return null
+    const el = getAtPath(model, row.path) as Record<string, unknown> | undefined
+    const q = el?.question as Record<string, unknown> | undefined
+    const ref = row.kind === 'message'
+      ? (el?.ref as string | undefined)
+      : ((q?.prompt as { ref?: string } | undefined)?.ref)
+    if (!ref) return null
+    // pool (drafted/forked) first, else the resolved Library body shared from the preview
+    const body = (pool[ref] ?? resolved[ref]) as { content?: Record<string, { text?: string }> } | null | undefined
+    if (!body) return null // not resolved yet (e.g. preview closed) → can't tell, don't flag
+    const txt = body.content?.[translating]?.text
+    return !txt || !String(txt).trim() ? translating : null
+  }
 
   function onDragEnd(e: DragEndEvent) {
     const { active, over } = e
@@ -77,7 +99,7 @@ export function StructureTree() {
       </button>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={rows.map((r) => r.key)} strategy={verticalListSortingStrategy}>
-          {rows.map((row) => <Row key={row.key} row={row} />)}
+          {rows.map((row) => <Row key={row.key} row={row} untranslatedIn={untranslatedIn(row)} />)}
         </SortableContext>
       </DndContext>
     </nav>
