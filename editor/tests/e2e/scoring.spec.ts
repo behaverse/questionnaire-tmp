@@ -19,6 +19,7 @@ test('a score can be authored in the Scores panel', async ({ page }) => {
     buffer: Buffer.from(JSON.stringify(bundle.questionnaire)),
   })
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
+  await page.getByRole('button', { name: /questionnaire settings/i }).click() // select the questionnaire root → q-level Inspector (first page is auto-selected on load)
 
   // The Scores panel is in the questionnaire-root Inspector (nothing selected on load).
   await expect(page.getByRole('heading', { name: /^scores$/i })).toBeVisible()

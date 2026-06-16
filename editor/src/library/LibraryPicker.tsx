@@ -52,7 +52,7 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
           <button onClick={onClose} className="ml-auto text-slate-400 hover:text-slate-700">✕</button>
         </div>
         <div className="p-3">
-          <input aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Filter ${etype}s…`}
+          <input autoFocus aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Filter ${etype}s…`}
                  className="w-full rounded border border-slate-300 px-2 py-1 text-sm" />
           <div className="mt-1 flex items-center justify-between text-xs text-slate-400">
             <span>Filter by id or title.</span>

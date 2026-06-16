@@ -26,7 +26,6 @@ test('a per-question range shows an inline validation error in the preview', asy
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
 
   // Open the preview pane.
-  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
   await expect(preview.locator('h2.qv-prompt', { hasText: 'How old are you?' })).toBeVisible()
 

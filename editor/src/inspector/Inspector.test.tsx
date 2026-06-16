@@ -17,6 +17,7 @@ beforeEach(() => {
 })
 
 test('no selection → shows the metadata panel and edits title', async () => {
+  useEditorStore.getState().select(null) // questionnaire-root inspector (loadModel now selects the first page)
   render(<Inspector />)
   const input = screen.getByLabelText(/^title$/i)
   await userEvent.clear(input)

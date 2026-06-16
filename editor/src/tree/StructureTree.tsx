@@ -35,7 +35,7 @@ function Row({ row }: { row: TreeRow }) {
 }
 
 export function StructureTree() {
-  const { model, applyEdit } = useEditorStore()
+  const { model, applyEdit, selection, select } = useEditorStore()
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -66,6 +66,14 @@ export function StructureTree() {
           className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-100"
         >+ Block</button>
       </div>
+      <button
+        onClick={() => select(null)}
+        aria-label="Questionnaire settings"
+        className={`flex w-full cursor-pointer items-center gap-1 px-2 py-1 text-left text-sm ${selection === null ? 'bg-slate-200 font-medium' : 'hover:bg-slate-100'}`}
+      >
+        <span className="text-slate-400">≡</span>
+        <span className="truncate">{model.metadata.title ?? model.metadata.id}</span>
+      </button>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={rows.map((r) => r.key)} strategy={verticalListSortingStrategy}>
           {rows.map((row) => <Row key={row.key} row={row} />)}

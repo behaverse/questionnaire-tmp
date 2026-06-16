@@ -42,7 +42,6 @@ test('show_if hides then reveals an element in the preview', async ({ page }) =>
   await page.getByRole('button', { name: 'Set', exact: true }).click()
 
   // Switch to Preview; set Scope to whole questionnaire so both items appear.
-  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
   await preview.getByLabel('Scope').selectOption('all')
 
