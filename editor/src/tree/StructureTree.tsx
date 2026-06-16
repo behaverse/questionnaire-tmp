@@ -29,6 +29,7 @@ function Row({ row }: { row: TreeRow }) {
       {...listeners}
     >
       <span className="text-slate-400">{row.kind === 'block' ? '▣' : row.kind === 'page' ? '▤' : row.kind === 'section' ? '▦' : row.kind === 'message' ? '✉' : '◉'}</span>
+      {row.num != null && <span className="tabular-nums text-xs text-slate-400">{row.num}.</span>}
       <span className="truncate">{row.label}</span>
     </div>
   )

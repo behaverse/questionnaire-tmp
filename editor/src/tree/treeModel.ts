@@ -7,6 +7,8 @@ export interface TreeRow {
   kind: NodeKind | 'block'
   depth: number
   label: string
+  /** 1-based position among its siblings (page/section children); undefined for pages/blocks. */
+  num?: number
 }
 
 function elementLabel(el: Record<string, unknown>): string {
@@ -14,7 +16,7 @@ function elementLabel(el: Record<string, unknown>): string {
   if ('elements' in el) return (el.title as string) ?? 'Section'
   const q = el.question as Record<string, unknown> | undefined
   const promptRef = (q?.prompt as Record<string, unknown> | undefined)?.ref
-  return typeof promptRef === 'string' ? `inline · ${promptRef}` : 'inline item'
+  return typeof promptRef === 'string' ? promptRef : 'item'
 }
 
 export function buildTreeRows(q: Questionnaire): TreeRow[] {
@@ -28,12 +30,12 @@ export function buildTreeRows(q: Questionnaire): TreeRow[] {
     page.elements.forEach((el, ei) => {
       const path: NodePath = ['pages', pi, 'elements', ei]
       const kind = nodeKind(q, path)
-      rows.push({ key: pathKey(path), path, kind, depth: depth + 1, label: elementLabel(el as Record<string, unknown>) })
+      rows.push({ key: pathKey(path), path, kind, depth: depth + 1, label: elementLabel(el as Record<string, unknown>), num: ei + 1 })
       if (kind === 'section') {
         const sec = el as { elements?: Record<string, unknown>[] }
         sec.elements?.forEach((sub, si) => {
           const subPath: NodePath = ['pages', pi, 'elements', ei, 'elements', si]
-          rows.push({ key: pathKey(subPath), path: subPath, kind: nodeKind(q, subPath), depth: depth + 2, label: elementLabel(sub) })
+          rows.push({ key: pathKey(subPath), path: subPath, kind: nodeKind(q, subPath), depth: depth + 2, label: elementLabel(sub), num: si + 1 })
         })
       }
     })
