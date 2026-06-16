@@ -77,3 +77,21 @@ export async function searchEntities(etype: string, q: string, opts: FetchOpts =
   const data = (await res.json()) as { items?: EntitySearchResult[]; total?: number }
   return { items: data.items ?? [], total: data.total ?? 0 }
 }
+
+export interface QuestionnaireResult { id: string; version: string; title: string | null; instrument_id: string | null }
+
+export async function searchQuestionnaires(q: string, opts: FetchOpts = {}): Promise<QuestionnaireResult[]> {
+  const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
+  const f = opts.fetchImpl ?? fetch
+  const url = `${base}/v1/questionnaires?q=${encodeURIComponent(q)}&limit=20`
+  const res = await f(url)
+  if (!res.ok) throw new Error(`Library questionnaire search failed (${res.status})`)
+  const data = (await res.json()) as { items?: Array<{ instrument_id?: string; forms?: Array<{ id: string; version: string; title?: string | null }> }> }
+  const out: QuestionnaireResult[] = []
+  for (const group of data.items ?? []) {
+    for (const form of group.forms ?? []) {
+      out.push({ id: form.id, version: form.version, title: form.title ?? null, instrument_id: group.instrument_id ?? null })
+    }
+  }
+  return out
+}

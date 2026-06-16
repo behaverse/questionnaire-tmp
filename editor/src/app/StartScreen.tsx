@@ -8,7 +8,7 @@ interface Props {
   onBrowseLibrary: () => void
 }
 
-export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary: _onBrowseLibrary }: Props) {
+export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [id, setId] = useState('')
   const [version, setVersion] = useState('')
@@ -46,13 +46,16 @@ export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, on
 
         <div className="rounded-lg border border-slate-300 p-4">
           <div className="font-medium">Open from Library</div>
-          <div className="mt-2 flex gap-2">
+          <button onClick={onBrowseLibrary}
+                  className="mt-2 rounded bg-slate-800 px-3 py-1 text-sm text-white">Browse Library…</button>
+          <div className="mt-3 text-xs text-slate-400">Or open by exact id + version:</div>
+          <div className="mt-1 flex gap-2">
             <input value={id} onChange={(e) => setId(e.target.value)} placeholder="qst_phq9"
                    className="flex-1 rounded border border-slate-300 px-2 py-1 text-sm" aria-label="Questionnaire id" />
             <input value={version} onChange={(e) => setVersion(e.target.value)} placeholder="v26.0609"
                    className="w-32 rounded border border-slate-300 px-2 py-1 text-sm" aria-label="Version" />
             <button onClick={() => onOpenLibrary(id, version)} disabled={!id || !version}
-                    className="rounded bg-slate-800 px-3 py-1 text-sm text-white disabled:opacity-40">Open</button>
+                    className="rounded border border-slate-300 px-3 py-1 text-sm disabled:opacity-40">Open</button>
           </div>
         </div>
       </div>

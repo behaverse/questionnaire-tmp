@@ -47,6 +47,7 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
         <div className="p-3">
           <input aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Search ${etype}s…`}
                  className="w-full rounded border border-slate-300 px-2 py-1 text-sm" />
+          <div className="mt-1 text-xs text-slate-400">Searches title &amp; description.</div>
           {error && <div className="mt-2 text-sm text-red-600">{error}</div>}
           <ul className="mt-2 max-h-60 overflow-auto">
             {items.map((it) => (
