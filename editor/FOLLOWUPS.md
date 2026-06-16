@@ -637,3 +637,23 @@ one questionnaire is not auto-shared to others until Library write exists.
 ## (ed-e2-4) Refs need the preview to have resolved them
 The panel reads Library bodies from the shared `resolved` map (populated by the preview). If a
 ref hasn't been resolved yet, its source/labels won't show until the preview has run once.
+
+# ⏸ EDITOR PARKED (owner decision 2026-06-16)
+
+The editor is feature-complete + polished and **further work is deferred** by the owner. The
+items below (and the per-stage deferrals above) are the backlog if/when it resumes. See
+HANDOFF.md "⏸ EDITOR — PARKED" for the full state summary.
+
+## (ed-defer-1) Auto-translate button
+A button to **machine-translate** content into the editing locale — e.g. translate one target
+field, a whole entity, or the entire questionnaire in one click (calling a translation API /
+LLM), filling the Translation panel's target column. Explicitly deferred 2026-06-16. Design
+notes when it resumes: needs a translation provider + key (config/secret), a per-row/whole-doc
+trigger, "machine-translated → set status=draft for review", and it must reuse the panel's
+auto-fork-on-write path (translating a Library ref forks it locally first).
+
+## (ed-defer-2) Other deferred editor work (consolidated)
+ED-D4b live score preview; translate placeholder/help text + page/section/block + metadata
+titles; validation-message/metadata-title localization (schema gap, upstream); Logic/Validation/
+Scoring → Inspector tabs; single-file offline preview; broader visual restyle; and the OD-08-gated
+"Open in viewer" real deployment + writing forked/translated entities back to the shared Library.
