@@ -41,9 +41,9 @@ export function ExpressionInput({
         {error ? <span className="text-red-600">✗ {error}</span>
           : value.trim() ? <span className="text-green-700">✓ valid</span>
           : <span className="text-slate-400">empty</span>}
-        <button type="button" onClick={() => setOpen((o) => !o)}
+        <button type="button" aria-label="Insert condition" onClick={() => setOpen((o) => !o)}
           className="ml-auto rounded border border-slate-300 px-1.5 py-0.5 text-slate-600 hover:bg-slate-50">
-          + insert condition
+          Insert condition
         </button>
       </div>
       {unknown.length > 0 && (

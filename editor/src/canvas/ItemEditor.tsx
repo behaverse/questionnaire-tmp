@@ -63,7 +63,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
         <div className="mb-4">
           <div className="flex items-center gap-2">
             <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Question</span>
-            <button onClick={() => pickInto('prompt', 'prompt')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick prompt</button>
+            <button aria-label="Pick prompt" onClick={() => pickInto('prompt', 'prompt')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>
           </div>
           {poolPrompt ? (
             <div className="mt-2">
@@ -83,9 +83,9 @@ export function ItemEditor({ path }: { path: NodePath }) {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Context</span>
-              {!ctxRef && <button onClick={addContext} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add context</button>}
-              {!ctxRef && <button onClick={() => pickInto('context', 'context')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick context</button>}
-              {ctxRef && poolCtx && <button onClick={removeContext} className="text-xs text-slate-400 hover:text-red-600">Remove context</button>}
+              {!ctxRef && <button aria-label="Add context" onClick={addContext} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add</button>}
+              {!ctxRef && <button aria-label="Pick context" onClick={() => pickInto('context', 'context')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>}
+              {ctxRef && poolCtx && <button aria-label="Remove context" onClick={removeContext} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Remove</button>}
             </div>
             {ctxRef && (poolCtx
               ? <div className="mt-1"><ContextEditor context={poolCtx} locale={locale} primaryLocale={primaryLocale} onChange={(c) => upsertPoolEntity(ctxRef, c)} /></div>
@@ -94,9 +94,9 @@ export function ItemEditor({ path }: { path: NodePath }) {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Instruction</span>
-              {!insRef && <button onClick={addInstruction} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add instruction</button>}
-              {!insRef && <button onClick={() => pickInto('instruction', 'instruction')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick instruction</button>}
-              {insRef && poolIns && <button onClick={removeInstruction} className="text-xs text-slate-400 hover:text-red-600">Remove instruction</button>}
+              {!insRef && <button aria-label="Add instruction" onClick={addInstruction} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add</button>}
+              {!insRef && <button aria-label="Pick instruction" onClick={() => pickInto('instruction', 'instruction')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>}
+              {insRef && poolIns && <button aria-label="Remove instruction" onClick={removeInstruction} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Remove</button>}
             </div>
             {insRef && (poolIns
               ? <div className="mt-1"><InstructionEditor instruction={poolIns} locale={locale} primaryLocale={primaryLocale} onChange={(i) => upsertPoolEntity(insRef, i)} /></div>
@@ -106,7 +106,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
       )}
       <div className="flex items-center gap-2">
         <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Option (Response)</span>
-        {question && <button onClick={pickOption} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick option</button>}
+        {question && <button aria-label="Pick option" onClick={pickOption} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>}
       </div>
       {isInlineOption ? (
         <div className="mt-2">
