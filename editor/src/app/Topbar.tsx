@@ -1,5 +1,5 @@
 import { useEditorStore } from '../state/store'
-import { exportToFile, exportBundle } from '../persistence/file'
+import { exportToFile, exportBundle, bundleData } from '../persistence/file'
 import { EditingLocaleSwitcher } from './EditingLocaleSwitcher'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
@@ -23,6 +23,10 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
           <span className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-800">⬆ {Object.keys(staleness).length} update{Object.keys(staleness).length > 1 ? 's' : ''}</span>
         )}
         <button onClick={() => void refreshStaleness()} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">Check for updates</button>
+        <button onClick={() => {
+          try { sessionStorage.setItem('qv-preview-bundle', JSON.stringify(bundleData(model, pool))) } catch { /* quota: fall through */ }
+          window.open('/preview.html', '_blank')
+        }} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">Open preview</button>
         <button onClick={onValidate} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">✓ Validate</button>
         <button onClick={togglePreview}
                 className={`rounded border px-3 py-1 text-sm ${previewOpen ? 'border-slate-800 bg-slate-800 text-white' : 'border-slate-300 hover:bg-slate-50'}`}>
