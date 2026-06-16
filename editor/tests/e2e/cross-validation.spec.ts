@@ -22,7 +22,7 @@ test('a cross-question validation rule shows its message in the preview when tri
   // The Validation panel shows the authored rule at the questionnaire root.
   await expect(page.getByText(/validation rules/i)).toBeVisible()
 
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
   await expect(preview.locator('h2.qv-prompt', { hasText: 'Do you want to continue?' })).toBeVisible()
   await preview.getByText('No').click()

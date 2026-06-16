@@ -1,7 +1,7 @@
 import type { Questionnaire, EntityBody } from '../model/types'
 import { parseQuestionnaire, serializeQuestionnaire } from '../model/serialize'
 
-function readFileText(file: File): Promise<string> {
+export function readFileText(file: File): Promise<string> {
   // Prefer Blob.text() (real browsers); fall back to FileReader (jsdom's File lacks .text()).
   if (typeof file.text === 'function') return file.text()
   return new Promise<string>((resolve, reject) => {
@@ -40,6 +40,16 @@ export function bundleData(model: Questionnaire, pool: Record<string, EntityBody
 export function bundleFilename(model: Questionnaire): string {
   const id = model.metadata?.id ?? 'questionnaire'
   return `${id}.bundle.json`
+}
+
+export function parseBundle(text: string): { questionnaire: Questionnaire; entities: Record<string, EntityBody> } {
+  let obj: { questionnaire?: unknown; entities?: unknown }
+  try { obj = JSON.parse(text) as { questionnaire?: unknown; entities?: unknown } }
+  catch { throw new Error('Not a valid questionnaire bundle') }
+  const q = obj?.questionnaire as Questionnaire | undefined
+  const entities = obj?.entities as Record<string, EntityBody> | undefined
+  if (!q?.metadata || !entities || typeof entities !== 'object') throw new Error('Not a valid questionnaire bundle')
+  return { questionnaire: q, entities }
 }
 
 /** Browser-only: download the {questionnaire, entities} bundle. */

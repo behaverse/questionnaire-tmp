@@ -61,7 +61,7 @@ test('a visibility rule hides an element in the preview when its condition holds
   await page.getByLabel('Expression').fill("it_control == 'yes'")
 
   // Open the preview pane.
-  await page.getByRole('button', { name: /preview/i }).click()
+  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
 
   // Set scope to whole questionnaire so both items appear.
