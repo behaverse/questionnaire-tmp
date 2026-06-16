@@ -26,6 +26,11 @@ test('load sample renders offline + back-to-home returns to start', async ({ pag
   expect(layout.noWindowScrollbar).toBe(true)
   expect(layout.rootOverflowHidden).toBe(true)
   expect(layout.previewScrollsInternally).toBe(true)
+  // selecting a deep structure-tree item scrolls the preview to it
+  await page.getByRole('button', { name: /pr_bisbas_q_20@/ }).click()
+  await expect.poll(() => page.evaluate(() =>
+    Math.round((document.querySelector('section[aria-label="Preview"] .overflow-auto') as HTMLElement).scrollTop)
+  )).toBeGreaterThan(100)
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-g-sample.png', fullPage: true })
   // back to home (dirty-guard confirm auto-accepted by the handler above)
   await page.getByRole('button', { name: /home/i }).click()

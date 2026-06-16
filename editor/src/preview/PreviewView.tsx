@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { StepRenderer, type RendererStrings, type AnswerValue } from '@behaverse/questionnaire-renderer'
 import '@behaverse/questionnaire-renderer/style.css'
 import type { Runtime } from '@behaverse/questionnaire-renderer'
@@ -13,7 +13,7 @@ import type { LogicRule, CrossQuestionValidationRule } from '../model/types'
 
 const STRINGS: RendererStrings = { required: 'Required', unsupported: 'Unsupported element' }
 
-export function PreviewView({ runtime, problems, logic, validation, initialLocale, initialScope = 'all', selectedPageId, compact = false }: {
+export function PreviewView({ runtime, problems, logic, validation, initialLocale, initialScope = 'all', selectedPageId, selectedElementIndex, compact = false }: {
   runtime: Runtime
   problems: RefProblem[]
   logic: LogicRule[]
@@ -21,6 +21,9 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
   initialLocale?: string
   initialScope?: 'page' | 'all'
   selectedPageId?: string
+  /** Top-level element index (within the shown page) to scroll into view — driven by
+   *  the editor's structure-tree selection. Only honored in 'page' scope. */
+  selectedElementIndex?: number
   /** In-editor inline pane: scale the focus-mode content down + separate stacked items.
    *  The standalone full-page preview leaves this off for WYSIWYG fidelity. */
   compact?: boolean
@@ -44,6 +47,17 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
   const requiredErrorKeys = allErrors.map((e) => e.key)
   const width = FRAMES[device]
   const onAnswer = (key: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [key]: value }))
+
+  // Scroll the selected structure-tree element into view in the preview (page scope only).
+  const scrollRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (scope !== 'page' || selectedElementIndex == null) return
+    const items = scrollRef.current?.querySelectorAll<HTMLElement>('.space-y-10 > *')
+    const el = items?.[selectedElementIndex]
+    if (!el) return
+    el.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    el.animate([{ backgroundColor: 'rgba(99,102,241,0.12)' }, { backgroundColor: 'transparent' }], { duration: 900 })
+  }, [selectedElementIndex, scope, pageId])
 
   return (
     <section aria-label="Preview" className="flex h-full flex-col overflow-hidden">
@@ -73,9 +87,9 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
           {problems.length} referenced {problems.length === 1 ? 'entity' : 'entities'} not loaded (showing placeholders).
         </div>
       )}
-      <div className="flex-1 overflow-auto bg-slate-100 p-6">
+      <div ref={scrollRef} className="flex-1 overflow-auto bg-slate-100 p-6">
         <div className={`qv-theme mx-auto bg-white shadow-sm ${compact ? 'qv-compact' : ''}`}
-             style={{ width: width ?? '100%', maxWidth: '100%', ...(compact ? { zoom: 0.82 } : {}) }}>
+             style={{ width: width ?? '100%', maxWidth: '100%', ...(compact ? { zoom: 0.6 } : {}) }}>
           <div className="p-6">
             {visiblePages.map((page) => (
               <div key={page.id} className="mb-8">
