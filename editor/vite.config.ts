@@ -12,6 +12,14 @@ export default defineConfig({
       '@behaverse/questionnaire-renderer': resolve(distLib, 'renderer.js'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        preview: resolve(__dirname, 'preview.html'),
+      },
+    },
+  },
   server: { fs: { allow: [resolve(__dirname, '..')] } },
   test: {
     globals: true,
