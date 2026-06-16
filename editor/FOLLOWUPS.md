@@ -554,3 +554,38 @@ adding a global panel/modal, re-run the FULL `npm run e2e` suite, not just the n
   via `metadata.language`), whereas some seed fixtures INCLUDE it (e.g. `["en","pt"]`). Both are
   Schema-2-valid (the preview/switcher prepend the primary regardless); noted so the convention
   difference isn't a surprise.
+
+# ED-F Follow-ups
+
+Known limitations and open items carried out of ED-F (standalone shareable preview).
+
+## (ed-f-1) Real Viewer-Service deployment is deferred (OD-08)
+
+The design's "Open in viewer" preset `preview` is NOT buildable: the VS rejects `preview`
+(modes.py supports only anonymous_link/demo; `preview` → 422), OD-08 Identity (`editor_session`
+auth) doesn't exist, and the VS mints runtimes from the LIBRARY (drafts with pool `.devN` entities
+aren't there; the Library has no write API). ED-F ships a no-backend standalone preview instead;
+real deployment waits for OD-08.
+
+## (ed-f-2) Standalone preview is served from the editor build, not a single offline file
+
+`preview.html` is a second entry in the editor's Vite build (renderer + wasm shared with the app).
+"Shareable" = the recipient opens an exported `.bundle.json` in this page (served from the editor
+app, or run locally). A truly hosting-free single-file HTML (renderer JS + wasm base64-inlined) is
+a heavier follow-on.
+
+## (ed-f-3) Library refs not in the bundle render as placeholders
+
+The standalone has NO network (pool = the bundle's entities, Library fetcher returns null), so
+hard-pinned Library refs not included in the bundle render as placeholders (the "N referenced
+entities not loaded" banner). Fork Library entities into the pool to include them in the export.
+
+## (ed-f-4) Scores are inert in the standalone preview
+
+`score()` is null (no scorer runtime; ED-D4b deferred), so score-referencing logic/validation
+conditions don't fire in the standalone preview — same as the in-app preview.
+
+## (ed-f-5) sessionStorage handoff is same-browser
+
+"Open preview" hands the bundle to preview.html via sessionStorage (same browser/origin). The
+file-open path covers cross-machine sharing of an exported bundle.
