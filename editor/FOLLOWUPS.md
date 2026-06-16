@@ -618,3 +618,22 @@ resumes the last draft. A dedicated "discard draft" / draft manager is deferred.
 The questionnaire browser lists the latest published version of each form (from the grouped
 catalogue). Choosing an older version still uses the manual id+version fallback. A per-form
 version dropdown is deferred.
+
+# ED-E2 Follow-ups (translation panel)
+
+## (ed-e2-1) Placeholder/Help text not in the panel
+Option placeholder/help strings are translatable (same content map) but omitted from the
+panel for now; add `setPlaceholderText`/`setHelpText` rows when needed.
+
+## (ed-e2-2) Page/Section/Block titles
+Title translations use a separate `translations[locale]` map (not the entity `content`); the
+panel covers entity content only. Deferred (same as ED-E).
+
+## (ed-e2-3) Translations are local
+Translating a Library entity forks it into the local pool; the translation rides the bundle
+export but is not written back to the shared Library (OD-08). A reused entity translated in
+one questionnaire is not auto-shared to others until Library write exists.
+
+## (ed-e2-4) Refs need the preview to have resolved them
+The panel reads Library bodies from the shared `resolved` map (populated by the preview). If a
+ref hasn't been resolved yet, its source/labels won't show until the preview has run once.
