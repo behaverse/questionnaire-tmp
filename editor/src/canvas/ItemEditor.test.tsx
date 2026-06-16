@@ -136,3 +136,10 @@ test('a stale Library prompt ref shows the upgrade badge in the chip', () => {
   render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
   expect(screen.getByText(/newer: v26\.0610/i)).toBeInTheDocument()
 })
+
+test('labels the option section "Option (Response)"', () => {
+  // uses the top-level beforeEach model: inline item with question + option
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  expect(screen.getByText('Option (Response)')).toBeInTheDocument()
+  expect(screen.queryByText('Response (Option)')).toBeNull()
+})
