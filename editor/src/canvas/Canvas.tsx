@@ -86,8 +86,8 @@ export function Canvas() {
             <>
               <button onClick={addItem} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add item</button>
               <button onClick={addMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add message</button>
-              <button onClick={pickItem} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Pick item</button>
-              <button onClick={pickMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Pick message</button>
+              <button onClick={pickItem} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">Pick item</button>
+              <button onClick={pickMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">Pick message</button>
             </>
           )}
           <button onClick={addSection} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add section</button>

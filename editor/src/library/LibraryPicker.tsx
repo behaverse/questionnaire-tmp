@@ -78,10 +78,14 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
             <div className="mt-3 rounded border border-slate-200 bg-slate-50 p-2 text-sm">
               <div className="text-xs uppercase tracking-wide text-slate-400">Preview ({locale})</div>
               <div className="mt-1">{snippet || <span className="text-slate-400">…</span>}</div>
-              <button onClick={() => onPick(buildRef(selected.id, selected.version))}
-                      className="mt-2 rounded bg-slate-800 px-3 py-1 text-sm text-white">Insert {selected.id}@{selected.version}</button>
             </div>
           )}
+        </div>
+        <div className="flex items-center justify-end gap-2 border-t border-slate-200 p-3">
+          <button onClick={onClose} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">Cancel</button>
+          <button disabled={!selected} aria-label={selected ? `Insert ${selected.id}@${selected.version}` : 'Insert'}
+                  onClick={() => selected && onPick(buildRef(selected.id, selected.version))}
+                  className="rounded bg-slate-800 px-3 py-1 text-sm text-white disabled:opacity-40">Insert</button>
         </div>
       </div>
     </div>

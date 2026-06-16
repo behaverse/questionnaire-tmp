@@ -101,18 +101,44 @@ export async function searchEntities(etype: string, q: string, opts: FetchOpts =
 
 export interface QuestionnaireResult { id: string; version: string; title: string | null; instrument_id: string | null }
 
+type QGroup = { instrument_id?: string; forms?: Array<{ id: string; version: string; title?: string | null }> }
+function flattenGroups(groups: QGroup[]): QuestionnaireResult[] {
+  const out: QuestionnaireResult[] = []
+  for (const group of groups) {
+    for (const form of group.forms ?? []) {
+      out.push({ id: form.id, version: form.version, title: form.title ?? null, instrument_id: group.instrument_id ?? null })
+    }
+  }
+  return out
+}
+
+/** List every questionnaire form (paged through, capped). Like listAllEntities, this
+ *  powers a browse-and-filter picker — client-side substring filtering on title/id is
+ *  faster (one load) and more forgiving than the server's full-text search (e.g. "BAS"
+ *  finds "…(BIS/BAS)" and "qst_x_bisbas"). */
+export async function listAllQuestionnaires(opts: FetchOpts & { cap?: number } = {}): Promise<QuestionnaireResult[]> {
+  const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
+  const f = opts.fetchImpl ?? fetch
+  const cap = opts.cap ?? 500
+  const pageSize = 100
+  const out: QuestionnaireResult[] = []
+  for (let offset = 0; offset < cap; offset += pageSize) {
+    const res = await f(`${base}/v1/questionnaires?limit=${pageSize}&offset=${offset}`)
+    if (!res.ok) throw new Error(`Library questionnaire list failed (${res.status})`)
+    const data = (await res.json()) as { items?: QGroup[]; total?: number }
+    const groups = data.items ?? []
+    out.push(...flattenGroups(groups))
+    if (groups.length < pageSize || groups.length === 0) break
+  }
+  return out
+}
+
 export async function searchQuestionnaires(q: string, opts: FetchOpts = {}): Promise<QuestionnaireResult[]> {
   const base = (opts.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, '')
   const f = opts.fetchImpl ?? fetch
   const url = `${base}/v1/questionnaires?q=${encodeURIComponent(q)}&limit=20`
   const res = await f(url)
   if (!res.ok) throw new Error(`Library questionnaire search failed (${res.status})`)
-  const data = (await res.json()) as { items?: Array<{ instrument_id?: string; forms?: Array<{ id: string; version: string; title?: string | null }> }> }
-  const out: QuestionnaireResult[] = []
-  for (const group of data.items ?? []) {
-    for (const form of group.forms ?? []) {
-      out.push({ id: form.id, version: form.version, title: form.title ?? null, instrument_id: group.instrument_id ?? null })
-    }
-  }
-  return out
+  const data = (await res.json()) as { items?: QGroup[] }
+  return flattenGroups(data.items ?? [])
 }
