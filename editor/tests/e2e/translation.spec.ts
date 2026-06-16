@@ -4,6 +4,7 @@ test('translate a prompt into a second language', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: /new questionnaire/i }).click()
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
+  await page.getByRole('button', { name: /questionnaire settings/i }).click() // select the questionnaire root → q-level Inspector (first page is auto-selected on load)
 
   // The questionnaire root is selected by default → Inspector shows LanguagesField.
   // Add 'fr' as an available language before navigating to a page.
@@ -24,7 +25,6 @@ test('translate a prompt into a second language', async ({ page }) => {
   await page.getByLabel('Prompt text', { exact: true }).fill('Comment ça va ?')
 
   // Open preview + switch preview locale to fr → translated text renders.
-  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
   await preview.getByLabel('Preview language').selectOption('fr')
   await expect(preview.locator('h2.qv-prompt', { hasText: 'Comment ça va ?' })).toBeVisible()

@@ -25,6 +25,7 @@ test('a visibility rule hides an element in the preview when its condition holds
     buffer: Buffer.from(JSON.stringify(bundle.questionnaire)),
   })
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
+  await page.getByRole('button', { name: /questionnaire settings/i }).click() // select the questionnaire root → q-level Inspector (first page is auto-selected on load)
 
   // Logic panel is in the questionnaire-root Inspector (nothing selected on load).
   await expect(page.getByText(/logic rules/i)).toBeVisible()
@@ -61,7 +62,6 @@ test('a visibility rule hides an element in the preview when its condition holds
   await page.getByLabel('Expression').fill("it_control == 'yes'")
 
   // Open the preview pane.
-  await page.getByRole('button', { name: '▢ Preview' }).click()
   const preview = page.getByRole('region', { name: /preview/i })
 
   // Set scope to whole questionnaire so both items appear.

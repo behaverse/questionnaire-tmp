@@ -38,7 +38,7 @@ export function LibraryQuestionnairePicker({ onPick, onClose, list = realList }:
           <button onClick={onClose} className="ml-auto text-slate-400 hover:text-slate-700">✕</button>
         </div>
         <div className="p-3">
-          <input aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Filter questionnaires…"
+          <input autoFocus aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Filter questionnaires…"
                  className="w-full rounded border border-slate-300 px-2 py-1 text-sm" />
           <div className="mt-1 flex items-center justify-between text-xs text-slate-400">
             <span>Filter by title or id.</span>

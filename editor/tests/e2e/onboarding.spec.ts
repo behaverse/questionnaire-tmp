@@ -9,7 +9,6 @@ test('load sample renders offline + back-to-home returns to start', async ({ pag
   await page.getByRole('button', { name: /load a sample/i }).click()
   await expect(page.getByText(/BIS\/BAS|Behavioral Approach/i).first()).toBeVisible()
   // open the in-app preview; assert NO placeholder banner (self-contained bundle resolves offline)
-  await page.getByRole('button', { name: '▢ Preview' }).click()
   await expect(page.getByText(/referenced entities not loaded/i)).toHaveCount(0)
   await expect(page.locator('h2.qv-prompt').first()).toBeVisible()
   // layout: a long preview must scroll INSIDE its pane, not turn the whole window
