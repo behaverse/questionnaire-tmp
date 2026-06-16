@@ -33,3 +33,12 @@ describe('Topbar Home button', () => {
     confirmSpy.mockRestore()
   })
 })
+
+describe('Topbar Translate toggle', () => {
+  it('Translate button toggles translateView', () => {
+    useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never)
+    render(<Topbar onValidate={() => {}} />)
+    fireEvent.click(screen.getByRole('button', { name: /^translate$/i }))
+    expect(useEditorStore.getState().translateView).toBe(true)
+  })
+})

@@ -155,3 +155,10 @@ describe('editingLocale', () => {
     expect(useEditorStore.getState().editingLocale).toBeNull()
   })
 })
+
+test('translateView toggles and resets on load', () => {
+  useEditorStore.getState().setTranslateView(true)
+  expect(useEditorStore.getState().translateView).toBe(true)
+  useEditorStore.getState().loadModel({ metadata: { id: 'q', title: 'q', language: 'en' }, pages: [] } as unknown as Questionnaire, { kind: 'new' })
+  expect(useEditorStore.getState().translateView).toBe(false)
+})
