@@ -54,18 +54,18 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
           onClick={onValidate}
         >✓ Validate</Button>
         <Button
-          variant="secondary"
+          variant={previewOpen ? 'primary' : 'secondary'}
           icon={Eye}
+          aria-pressed={previewOpen}
           title="Show/hide the live inline preview pane"
           onClick={togglePreview}
-          className={previewOpen ? 'border-ed-accent bg-ed-accent text-white hover:brightness-110' : ''}
         >▢ Preview</Button>
         <Button
-          variant="secondary"
+          variant={translateView ? 'primary' : 'secondary'}
           icon={Languages}
+          aria-pressed={translateView}
           title="Open the side-by-side translation view"
           onClick={() => setTranslateView(!translateView)}
-          className={translateView ? 'border-ed-accent bg-ed-accent text-white hover:brightness-110' : ''}
         >Translate</Button>
         <Button
           variant="primary"
