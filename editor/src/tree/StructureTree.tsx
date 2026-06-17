@@ -1,11 +1,14 @@
 import { DndContext, closestCenter, type DragEndEvent, PointerSensor, KeyboardSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { Layers, FileText, Rows3, Mail, CircleDot } from 'lucide-react'
 import { useEditorStore } from '../state/store'
 import { buildTreeRows, type TreeRow } from './treeModel'
 import { reorder, createBlock } from '../model/tree'
 import { pathKey, getAtPath } from '../model/path'
 import type { Questionnaire } from '../model/types'
+
+const KIND_ICON = { block: Layers, page: FileText, section: Rows3, message: Mail, item: CircleDot } as const
 
 function nextBlockId(model: Questionnaire): string {
   const used = new Set<string>()
@@ -19,17 +22,20 @@ function Row({ row, translation }: { row: TreeRow; translation?: { locale: strin
   const { selection, select } = useEditorStore()
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.key })
   const selected = selection && pathKey(selection) === row.key
+  const Icon = KIND_ICON[row.kind as keyof typeof KIND_ICON] ?? CircleDot
   return (
     <div
       ref={setNodeRef}
+      aria-current={selected ? 'true' : undefined}
       style={{ transform: CSS.Transform.toString(transform), transition, paddingLeft: 8 + row.depth * 16 }}
-      className={`flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-sm ${selected ? 'bg-slate-200' : 'hover:bg-slate-100'}`}
+      className={`flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-sm transition-colors ${
+        selected ? 'bg-ed-accent-soft text-ed-text shadow-[inset_2px_0_0_0_var(--qv-ed-accent)]' : 'hover:bg-ed-subtle'}`}
       onClick={() => select(row.path)}
       {...attributes}
       {...listeners}
     >
-      <span className="text-slate-400">{row.kind === 'block' ? '▣' : row.kind === 'page' ? '▤' : row.kind === 'section' ? '▦' : row.kind === 'message' ? '✉' : '◉'}</span>
-      {row.num != null && <span className="tabular-nums text-xs text-slate-400">{row.num}.</span>}
+      <Icon size={15} aria-hidden="true" className="shrink-0 text-ed-muted" />
+      {row.num != null && <span className="tabular-nums text-xs text-ed-muted">{row.num}.</span>}
       <span className="truncate">{row.label}</span>
       {translation && (
         <span title={translation.done ? `Translated in ${translation.locale}` : `Not translated in ${translation.locale}`}
@@ -85,20 +91,21 @@ export function StructureTree() {
   }
 
   return (
-    <nav aria-label="Structure" className="h-full overflow-auto border-r border-slate-200 bg-slate-50 py-2">
+    <nav aria-label="Structure" className="h-full overflow-auto border-r border-ed-border bg-ed-subtle py-2">
       <div className="flex items-center justify-between px-2 pb-1">
-        <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Structure</span>
+        <span className="text-xs font-semibold uppercase tracking-wide text-ed-muted">Structure</span>
         <button
           onClick={() => { const id = nextBlockId(model!); applyEdit((m) => createBlock(m, { id, title: 'New block', page_ids: [] })) }}
-          className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-100"
+          className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle"
         >+ Block</button>
       </div>
       <button
         onClick={() => select(null)}
         aria-label="Questionnaire settings"
-        className={`flex w-full cursor-pointer items-center gap-1 px-2 py-1 text-left text-sm ${selection === null ? 'bg-slate-200 font-medium' : 'hover:bg-slate-100'}`}
+        aria-current={selection === null ? 'true' : undefined}
+        className={`flex w-full cursor-pointer items-center gap-1 px-2 py-1 text-left text-sm ${selection === null ? 'bg-ed-accent-soft font-medium text-ed-text shadow-[inset_2px_0_0_0_var(--qv-ed-accent)]' : 'hover:bg-ed-subtle'}`}
       >
-        <span className="text-slate-400">≡</span>
+        <CircleDot size={15} aria-hidden="true" className="shrink-0 text-ed-muted" />
         <span className="truncate">{model.metadata.title ?? model.metadata.id}</span>
       </button>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>

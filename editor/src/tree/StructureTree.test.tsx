@@ -23,3 +23,11 @@ test('New block adds a block to the model', async () => {
   await userEvent.click(screen.getByRole('button', { name: /\+ block/i }))
   expect(useEditorStore.getState().model!.blocks?.length).toBe(1)
 })
+
+it('marks the selected row with aria-current', async () => {
+  render(<StructureTree />)
+  const firstPage = (phq9 as Questionnaire).pages[0]
+  const row = screen.getByText(firstPage.title ?? firstPage.id)
+  await userEvent.click(row)
+  expect(screen.getByText(firstPage.title ?? firstPage.id).closest('[aria-current="true"]')).toBeTruthy()
+})
