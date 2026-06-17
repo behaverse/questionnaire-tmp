@@ -20,6 +20,38 @@ Initial source resources:
 The work proceeds **one questionnaire at a time**, with open questions surfaced for the owner to
 answer inline in markdown files.
 
+## Prior work already in place (2026-06-17)
+
+A separate agent (the Editor agent) briefly started this work and handed over the genuinely useful,
+**already-validated** pieces (see `questionnaire-harvester/HANDOFF_from_editor_agent.md`). This design
+**reuses** them rather than rebuilding:
+
+- **The de-dup engine is built** — `dedup/build_catalogue.py` + `dedup/scales-index.json` +
+  `dedup/scales-catalogue.md`. It is exactly the content-fingerprint mechanism in § "De-dup" below,
+  validated against the regenerated survey_db corpus (~113 baseline Options; it already surfaced 5
+  genuine duplicate scales). This **replaces** the multi-module `registry/` originally sketched here.
+- **`conventions.md` is the canonical conventions reference** — id prefixes, entity shapes, and
+  **validator gotchas** (below) distilled from the survey_db importer + the live schema validator.
+- **A PHQ-9 pilot exists** (`output/`, public-domain) — full loop capture→mint→dedup→validate→render,
+  12/12 Schema-2 valid, rendered (`output/phq9-preview.png`). Kept as the worked example. **GAD-7 is
+  the next instrument**, chosen specifically to exercise dedup (it should reuse `opt_phq_frequency_4`
+  + `ins_phq_2weeks`).
+
+The handoff's draft `plan.md` / `registry.md` / single-file `open-questions.md` were **not** carried
+over (they used a conservative open-license-only policy and a single-question-file model). This
+design's full-content+disclosure policy and per-`qst_id` question model supersede them.
+
+### Validator gotchas (from `conventions.md`, confirmed against the live validator)
+
+- `metadata.license` is a **fixed enum** (underscored): `public_domain | cc0 | cc_by | cc_by_nc |
+  cc_by_sa | proprietary_open_redistribution | proprietary_restricted | unknown |
+  mixed_see_components`. The harvester's richer license taxonomy (§ Licensing) maps onto this.
+- `provenance` is **closed** to exactly `{source, imported_at, importer_version}`. All harvest-specific
+  metadata (incl. the rich license block, source URL, harvest date) goes in **`x_*` keys at the
+  `metadata` level** (the corpus already does this, e.g. `x_source_reference`).
+- **Validate before review** using the library's own validator over the drafted batch; refs must
+  resolve within the batch.
+
 ## Non-goals (YAGNI)
 
 - No review web UI — markdown files are the review surface.
@@ -43,33 +75,40 @@ own pipeline; it does not re-implement the writer/mappers.
 
 ## Architecture
 
+Legend: **[built]** already on disk (prior work) · **[build]** to be built by the plan.
+
 ```
 questionnaire-harvester/
-├── pyproject.toml
-├── about_licenses.md            # licensing primer + project policy (see companion doc)
-├── src/harvester/
-│   ├── cli.py                   # harvest / draft / dedup / status / promote commands
-│   ├── sources/                 # one adapter per site
-│   │   ├── base.py              # SourceAdapter interface → raw extraction
-│   │   ├── psytoolkit.py        # FIRST adapter
-│   │   ├── psychology_tools.py  # later
-│   │   └── arab_psychology.py   # later
-│   ├── raw.py                   # raw-extraction intermediate model
-│   ├── draft.py                 # raw → canonical Schema-2 entities (uses library writer/IDs)
-│   ├── registry/                # de-dup engine (see below)
-│   │   ├── index.py             # normalized-content-hash → entity id + ref
-│   │   ├── normalize.py         # per-entity normalization rules
-│   │   ├── match.py             # exact / near-match / mint decision
-│   │   └── seed.py              # seed index from existing library content
-│   ├── licensing.py             # structured license block model + heuristics
-│   └── tracking.py              # reads/writes register.md + questions/*.md
-├── raw/<qst_id>.json            # loose pre-canonical extraction (gitignored)
-├── staging/<qst_id>/            # canonical entities + loss_report.md (gitignored)
-├── registry/index.json          # the curated shared-entity catalogue (committed)
-├── register.md                  # master progress table (committed)
-├── questions/<qst_id>.md         # per-questionnaire open questions (committed)
-└── review/dedup.md               # pending near-match decisions (committed)
+├── about_licenses.md            # [built] licensing primer + project policy (companion doc)
+├── conventions.md               # [built] id prefixes + entity shapes + validator gotchas
+├── pyproject.toml               # [build] packaging + library/ as read dependency
+├── dedup/                       # [built] the de-dup engine (see below) — was "registry/"
+│   ├── build_catalogue.py       #   fingerprints Options across corpora, finds duplicates
+│   ├── scales-index.json        #   {fingerprint: [option_ids]} — the committed index
+│   └── scales-catalogue.md      #   human-readable scale index
+├── src/harvester/               # [build]
+│   ├── cli.py                   #   harvest / draft / dedup / status / promote commands
+│   ├── sources/                 #   one adapter per site
+│   │   ├── base.py              #   SourceAdapter interface → raw extraction
+│   │   ├── psytoolkit.py        #   FIRST adapter
+│   │   ├── psychology_tools.py  #   later
+│   │   └── arab_psychology.py   #   later
+│   ├── raw.py                   #   raw-extraction intermediate model
+│   ├── draft.py                 #   raw → canonical Schema-2 entities (uses library writer/IDs)
+│   ├── licensing.py             #   rich license block model + heuristics + enum mapping
+│   └── tracking.py              #   reads/writes register.md + questions/*.md
+├── _corpus/<plural-type>/       # [built, gitignored] regenerated survey_db baseline for dedup
+├── raw/<qst_id>.json            # [build, gitignored] loose pre-canonical extraction
+├── output/<plural-type>/        # [built] canonical entities — PHQ-9 pilot (tracked staging area)
+│   └── phq9.bundle.json         #   self-contained {questionnaire, entities} for the viewer
+├── register.md                  # [build] master progress table (committed)
+├── questions/<qst_id>.md         # [build] per-questionnaire open questions (committed)
+└── review/dedup.md               # [build] pending near-match decisions (committed)
 ```
+
+The pilot used `output/` as the canonical staging area; the spec's `staging/<qst_id>/` and this
+`output/` are the same role — the plan standardises on `output/` since it already exists and is
+tracked.
 
 ## Pipeline (per questionnaire)
 
@@ -93,27 +132,33 @@ pick candidate → harvest (fetch+parse) → draft (canonical) → dedup pass �
 
 ## De-dup: curated registry + content match
 
-The heart of the system.
+The heart of the system. **Built** as `dedup/build_catalogue.py` (+ `scales-index.json`,
+`scales-catalogue.md`); this section describes it and the remaining enhancement.
 
-- **Seeded from existing library content.** On first run, `registry/seed.py` ingests the survey_db
-  import output and `schemas/questionnaire/examples/library_examples` so the index already knows
-  every entity currently in the library — we reuse what exists, not just newly-harvested entities.
-- **Index** (`registry/index.json`, committed): per entity type, a map of
-  `normalized-content-hash → {canonical_id, ref}`. Most valuable for **Options** (Likert scales) and
-  **Instructions**, which recur across questionnaires.
-- **Normalization** (`normalize.py`): lowercase, trim, collapse internal whitespace, sort option rows
-  by `index`, and fold punctuation/quote variants — so `"Strongly agree"` and `"strongly agree"`
-  hash identically.
-- **Three outcomes per entity:**
-  - **Exact hash match** → reuse the existing `@version` ref.
-  - **Near-match** (similarity above a configured threshold) → appended to `review/dedup.md` with both
-    candidates for the owner to decide *reuse vs. mint*.
-  - **No match** → mint a new entity with a consistent naming convention:
-    - Options: `opt_<dimension>_<n>` (e.g. `opt_agreement_5`, `opt_frequency_7`).
-    - Instructions: `ins_<purpose>` (e.g. `ins_agreement_likert_7`).
+- **Seeded from existing library content.** The engine scans the regenerated survey_db baseline
+  (`_corpus/`, gitignored) **and** the tracked harvest `output/`, so the index knows every entity
+  already in the library plus everything harvested so far — we reuse what exists, not just
+  newly-harvested entities. (Baseline ≈ 113 Options; PHQ-9 pilot adds one → 114.)
+- **Index** (`dedup/scales-index.json`, committed): `{fingerprint: [option_ids]}`. A fingerprint with
+  >1 id is a duplicate scale to collapse. Most valuable for **Options** (Likert scales).
+- **Fingerprint / normalization** (`fingerprint()` in `build_catalogue.py`): sha256 of
+  `(input_data_type, measurement_type, selection, values, normalized en anchor texts)`. `norm()`
+  lowercases, trims, and collapses whitespace, so `"Strongly agree"` and `"strongly agree"` hash
+  identically. Anchored choice scales dedup on values+anchors; choice-less inputs (free text / number)
+  fall back to `dimension + units` so distinct fields (minutes ≠ weight ≠ years) don't collapse.
+- **Outcomes per entity:**
+  - **Exact fingerprint match** → reuse the existing `@version` ref. *(built)*
+  - **No match** → mint a new entity with a consistent naming convention. *(workflow)*
+    - Options: instrument- or dimension-prefixed, e.g. `opt_phq_frequency_4`, `opt_agreement_5`.
+    - Instructions: `ins_<purpose>` (e.g. `ins_phq_2weeks`, `ins_agreement_likert_7`).
     - Other shared entities follow the same `<prefix>_<semantic-slug>` pattern.
-- **Write-back:** confirmed new shared entities are added to the index, so the catalogue compounds
-  across questionnaires.
+  - **Near-match** (similarity below identical but above a threshold) → appended to `review/dedup.md`
+    for the owner to decide *reuse vs. mint*. ***[build]*** — a fuzzy tier layered on top of the
+    existing exact-match engine; not yet implemented.
+- **Write-back:** rerunning `build_catalogue.py` after minting re-scans `output/`, so newly-minted
+  shared entities become dedup-visible to later instruments and the catalogue compounds.
+- **Extend beyond Options:** the engine currently fingerprints Options only; the plan generalises it
+  to Instructions (and other recurring content entities) using the same normalize-and-hash approach.
 
 ## Licensing model
 
@@ -133,8 +178,13 @@ The heart of the system.
 - **`about_licenses.md`** (companion deliverable): the legal landscape, sources, project policy, and
   the license taxonomy above.
 - **Schema unchanged for now** (owner decision): the canonical questionnaire JSON keeps its existing
-  single `license` field; the rich block lives in the harvester tracking layer. Extending the schema
-  to carry the structured block is a noted future follow-up.
+  single `metadata.license` field, which is a **fixed enum** (`public_domain | cc0 | cc_by | cc_by_nc |
+  cc_by_sa | proprietary_open_redistribution | proprietary_restricted | unknown |
+  mixed_see_components`). `licensing.py` maps the rich `license_class` onto this enum (e.g.
+  `free_research → proprietary_open_redistribution`; generic `proprietary → proprietary_restricted`).
+  The full rich block (commercial_use / redistribution / translation / source_url /
+  author_contact_needed / notes) lives in **`x_*` keys at `metadata`** (since `provenance` is closed).
+  Extending the schema to carry the structured block natively is a noted future follow-up.
 
 ## Progress & open-questions surface (markdown-driven)
 

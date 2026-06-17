@@ -116,9 +116,28 @@ license:
   "free to use" notice, a CC tag, or a public-domain origin). Otherwise `inferred` or `unknown`.
 - `free_research` = author permits non-commercial research/clinical use, typically with attribution.
 
-> **Note:** for now this block is stored in the harvester tracking layer only. The canonical
-> questionnaire schema keeps its existing single `license` field. Extending the schema to carry this
-> structured block is a tracked follow-up.
+> **Note:** for now this block is stored in the harvester tracking layer only (as `x_*` keys at the
+> `metadata` level, since `provenance` is closed). The canonical questionnaire schema keeps its
+> existing single `metadata.license` field. Extending the schema to carry this structured block is a
+> tracked follow-up.
+
+### Mapping to the canonical `metadata.license` enum
+
+The canonical schema's `license` field is a **fixed enum**, confirmed against the validator
+(see `conventions.md`). Our richer `license_class` maps onto it; the nuance the enum can't express is
+preserved in the `x_*` rich block + `notes`.
+
+| Rich `license_class` | Canonical `metadata.license` enum |
+|----------------------|-----------------------------------|
+| `public_domain`      | `public_domain`                   |
+| `cc_by`              | `cc_by`                           |
+| `cc_by_nc`           | `cc_by_nc`                        |
+| `cc_by_sa`           | `cc_by_sa`                        |
+| (CC0)                | `cc0`                             |
+| `free_research`      | `proprietary_open_redistribution` (research/redistribution allowed; commercial nuance → `notes`) |
+| `proprietary`        | `proprietary_restricted`          |
+| `unknown`            | `unknown`                         |
+| (mixed constituents) | `mixed_see_components`            |
 
 ## 6. Draft site-wide disclaimer banner
 
