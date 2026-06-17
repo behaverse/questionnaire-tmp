@@ -65,9 +65,9 @@ corpus already does this, e.g. `x_source_reference`):
 ```
 
 ## Output location
-- **`harvest/output/{type}/<id>.json`** — TRACKED, hand-curated harvested entities (not
-  regenerable). This is the curated library contribution.
-- **`harvest/_corpus/`** — gitignored, regenerable survey_db dedup baseline.
+- **`questionnaire-harvester/output/{type}/<id>.json`** — TRACKED, hand-curated harvested
+  entities (not regenerable). This is the curated library contribution.
+- **`questionnaire-harvester/_corpus/`** — gitignored, regenerable survey_db dedup baseline.
 - Validate with the library before review: `PYTHONPATH=library/src python3` → `build_registry`
   + `validate_artifact` over `load_tree(<dir>, release)`; refs must resolve within the batch.
 

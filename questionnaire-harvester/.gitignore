@@ -1,0 +1,4 @@
+# Regenerable survey_db dedup baseline (derivable from survey_database/data/survey_db.sqlite).
+_corpus/
+# Raw fetched source material may contain copyrighted instrument text — do not commit.
+sources/
