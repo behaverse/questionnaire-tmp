@@ -9,6 +9,10 @@ import { buildNewItem } from '../pool/newItem'
 import { buildMessage } from '../pool/newEntities'
 import { UpgradeBadge } from '../library/UpgradeBadge'
 import { ForkButton } from '../library/ForkButton'
+import { IconButton } from '../ui/Button'
+import { Trash2, Rows3, Mail, CircleDot } from 'lucide-react'
+
+const ROW_ICON = { section: Rows3, message: Mail } as const
 
 function nextSectionId(model: Questionnaire): string {
   const used = new Set<string>()
@@ -22,7 +26,7 @@ export function Canvas() {
   const { model, selection, applyEdit, select, pool, upsertPoolEntity, openPicker } = useEditorStore()
   if (!model) return null
   const sel = selection && getAtPath(model, selection) !== undefined ? selection : null
-  if (!sel) return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree.</div>
+  if (!sel) return <div className="overflow-auto p-6 text-ed-muted">Select a page or section in the structure tree.</div>
 
   const kind = nodeKind(model, sel)
 
@@ -38,7 +42,7 @@ export function Canvas() {
   if (isMessageElement) return <MessagePane path={sel} />
 
   if (kind !== 'page' && kind !== 'section' && kind !== 'questionnaire') {
-    return <div className="overflow-auto p-6 text-slate-400">Select a page or section in the structure tree to edit its contents.</div>
+    return <div className="overflow-auto p-6 text-ed-muted">Select a page or section in the structure tree to edit its contents.</div>
   }
 
   const node = getAtPath(model, sel) as Page | Section
@@ -80,17 +84,17 @@ export function Canvas() {
   return (
     <div className="overflow-auto p-6">
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <h2 className="text-lg font-medium text-slate-800">{node.title ?? (node as Page).id}</h2>
+        <h2 className="text-lg font-medium text-ed-text">{node.title ?? (node as Page).id}</h2>
         <div className="ml-auto flex flex-wrap items-center gap-2">
           {(kind === 'page' || kind === 'section') && (
             <>
-              <button onClick={addItem} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add item</button>
-              <button onClick={addMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add message</button>
-              <button onClick={pickItem} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">Pick item</button>
-              <button onClick={pickMessage} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">Pick message</button>
+              <button onClick={addItem} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add item</button>
+              <button onClick={addMessage} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add message</button>
+              <button onClick={pickItem} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">Pick item</button>
+              <button onClick={pickMessage} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">Pick message</button>
             </>
           )}
-          <button onClick={addSection} className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">+ Add section</button>
+          <button onClick={addSection} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add section</button>
         </div>
       </div>
       <ul className="space-y-2">
@@ -98,27 +102,27 @@ export function Canvas() {
           const path: NodePath = [...elementsPath, i]
           const k = nodeKind(model, path)
           const label = typeof el.ref === 'string' ? el.ref : k === 'section' ? ((el.title as string) ?? 'Section') : 'inline item'
+          const RI = ROW_ICON[k as keyof typeof ROW_ICON] ?? CircleDot
           return (
             <li key={pathKey(path)}
-                className="flex items-center gap-2 rounded border border-slate-200 bg-white px-3 py-2 text-sm">
-              <span className="text-slate-400">{k === 'section' ? '▦' : k === 'message' ? '✉' : '◉'}</span>
+                className="flex items-center gap-2 rounded-lg border border-ed-border bg-ed-panel px-3 py-2 text-sm shadow-sm">
+              <RI size={15} aria-hidden="true" className="shrink-0 text-ed-muted" />
               <button className="truncate text-left hover:underline" onClick={() => select(path)}>{label}</button>
               {typeof el.ref === 'string' && <UpgradeBadge refStr={el.ref} />}
               {typeof el.ref === 'string' && !(el.ref in pool) && <ForkButton refStr={el.ref} />}
               {(('question' in el) || (typeof el.ref === 'string' && el.ref.startsWith('it_'))) && (
-                <label className="ml-2 inline-flex items-center gap-1 text-xs text-slate-500">
+                <label className="ml-2 inline-flex items-center gap-1 text-xs text-ed-muted">
                   <input type="checkbox" aria-label="Required" checked={!!el.required}
                          onChange={(e) => applyEdit((m) => updateNodeProps(m, [...elementsPath, i], { required: e.target.checked }))} />
                   Required
                 </label>
               )}
-              <span className="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-500">{k}</span>
-              <button aria-label={`Delete ${label}`} onClick={() => applyEdit((m) => deleteNode(m, path))}
-                      className="text-slate-400 hover:text-red-600">✕</button>
+              <span className="ml-auto rounded bg-ed-subtle px-1.5 py-0.5 text-xs text-ed-muted">{k}</span>
+              <IconButton icon={Trash2} label={`Delete ${label}`} onClick={() => applyEdit((m) => deleteNode(m, path))} className="ml-0 hover:text-ed-danger" />
             </li>
           )
         })}
-        {elements.length === 0 && <li className="text-sm text-slate-400">No elements yet.</li>}
+        {elements.length === 0 && <li className="text-sm text-ed-muted">No elements yet.</li>}
       </ul>
     </div>
   )

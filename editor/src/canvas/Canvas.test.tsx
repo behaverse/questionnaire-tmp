@@ -95,6 +95,12 @@ test('Pick item opens the item picker; onPick inserts a saved-item ref', async (
   expect((els[before] as { ref: string }).ref).toBe('it_lib@v26.0609')
 })
 
+test('keeps an accessible Delete name on item rows', () => {
+  useEditorStore.getState().select(['pages', 0])
+  render(<Canvas />)
+  expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument()
+})
+
 test('toggling Required on an item row sets the element required flag', async () => {
   // phq9 page 0 is a matrix section (no item rows), so load a small model with an
   // inline item element to genuinely exercise the Required checkbox.
