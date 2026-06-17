@@ -33,6 +33,7 @@ def test_reuses_existing_phq_frequency_option():
     assert refs == {"opt_phq_frequency_4@v26.0617"}      # reused, not minted
     assert "opt_phq_frequency_4" in res.reused
     assert not any(o["id"] != "opt_phq_frequency_4" for o in res.entities.get("option", []))
+    assert res.entities.get("option", []) == []
 
 def test_mints_prompts_and_sets_license_enum_and_x_metadata():
     res = draft(_gad7(), version="v26.0617", scales_index={}, instr_index={})
@@ -40,7 +41,6 @@ def test_mints_prompts_and_sets_license_enum_and_x_metadata():
     assert qst["metadata"]["license"] == "unknown"
     assert qst["metadata"]["x_author_contact_needed"] is True
     assert qst["metadata"]["provenance"] == {"source": "web_harvest",
-        "imported_at": "2026-06-17T00:00:00Z", "importer_version": "web-harvest-0.1.0"} or \
-        set(qst["metadata"]["provenance"]) == {"source", "imported_at", "importer_version"}
+        "imported_at": "2026-06-17T00:00:00Z", "importer_version": "web-harvest-0.1.0"}
     assert len(res.entities["prompt"]) == 2
     assert qst["pages"][0]["elements"][0]["question"]["prompt"]["ref"] == "pr_gad7_1@v26.0617"

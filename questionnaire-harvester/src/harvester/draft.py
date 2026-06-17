@@ -23,7 +23,7 @@ def _slug(qst_id: str) -> str:
 def _build_option(rq: RawQuestionnaire, slug: str) -> dict:
     s = rq.scale
     return {
-        "id": f"opt_{slug}_{s.dimension}_{len(s.anchors)}",
+        "id": f"opt_{sanitize(slug)}_{sanitize(s.dimension)}_{len(s.anchors)}",
         "dimension": s.dimension, "input_data_type": s.input_data_type,
         "measurement_type": s.measurement_type, "selection": s.selection,
         "options": [{"index": i + 1, "value": float(v)} for i, v in enumerate(s.values)],
@@ -49,7 +49,7 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         res.minted.append(opt_id)
 
     # --- Instruction: reuse or mint ---
-    ins = {"id": f"ins_{slug}_instruction",
+    ins = {"id": f"ins_{sanitize(slug)}_instruction",
            "content": {"en": {"status": "validated", "text": rq.instruction_text}}}
     existing_ins = lookup_instruction(ins, instr_index)
     if existing_ins:
@@ -63,7 +63,7 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
     # --- Prompts ---
     elements = []
     for i, item in enumerate(rq.items, start=1):
-        pr_id = f"pr_{slug}_{i}"
+        pr_id = f"pr_{sanitize(slug)}_{i}"
         prompt = {"id": pr_id, "content": {"en": {"status": "validated", "text": item.text}}}
         if item.construct:
             prompt["construct"] = item.construct
