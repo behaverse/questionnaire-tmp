@@ -21,15 +21,22 @@ test('with a page selected, shows its elements and an Add control', () => {
   if (ref) expect(screen.getByText(ref.split('@')[0])).toBeInTheDocument()
 })
 
-it('shows resolved prompt text in an item row when content is available', () => {
-  const st = useEditorStore.getState(); st.select(['pages', 0])
-  const el = (st.model!.pages[0].elements as Record<string, unknown>[]).find((e) => 'question' in e) as Record<string, unknown> | undefined
-  const ref = ((el?.question as Record<string, unknown>)?.prompt as { ref?: string })?.ref
-  if (ref) {
-    useEditorStore.setState({ pool: { ...st.pool, [ref]: { id: ref.split('@')[0], content: { en: { text: 'Canvas readable text' } } } } as never })
-    render(<Canvas />)
-    expect(screen.getByText('Canvas readable text')).toBeInTheDocument()
-  }
+it('shows resolved prompt text (and the bare id as secondary) in an item row', () => {
+  // purpose-built model with a TOP-LEVEL item so the row renders directly under the page
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', version: 'v26.0606', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [
+      { option: { ref: 'opt_a@v26.0606' }, question: { prompt: { ref: 'pr_q1@v26.0606' } } },
+    ] }],
+  } as unknown as Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'new' }, {
+    'pr_q1@v26.0606': { id: 'pr_q1', content: { en: { text: 'Canvas readable text' } } } as never,
+  })
+  useEditorStore.getState().select(['pages', 0])
+  render(<Canvas />)
+  expect(screen.getByText('Canvas readable text')).toBeInTheDocument() // primary = resolved text
+  expect(screen.getByText('pr_q1')).toBeInTheDocument()               // secondary = bare id (no @version)
 })
 
 test('selecting an item with a ref-based option opens the item editor (not a stub)', () => {
