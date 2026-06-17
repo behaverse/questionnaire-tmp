@@ -2,9 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
+:root {
+  color-scheme: light;
+  --qv-ed-surface: #f8fafc;
+  --qv-ed-panel: #ffffff;
+  --qv-ed-subtle: #f1f5f9;
+  --qv-ed-border: #e2e8f0;
+  --qv-ed-border-strong: #cbd5e1;
+  --qv-ed-text: #1e293b;
+  --qv-ed-muted: #64748b;
+  --qv-ed-accent: #4f46e5;
+  --qv-ed-accent-soft: #eef2ff;
+  --qv-ed-danger: #dc2626;
+}
 html, body, #root { height: 100%; margin: 0; overflow: hidden; }
-body { font-family: ui-sans-serif, system-ui, sans-serif; }
+body { font-family: ui-sans-serif, system-ui, sans-serif; color: var(--qv-ed-text); }
 
 /* In-editor compact preview: separate stacked items with a subtle divider so the
    focus-mode renderer (one big prompt per item) reads as distinct items in the pane.
