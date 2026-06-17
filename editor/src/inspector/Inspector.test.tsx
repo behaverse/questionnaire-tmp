@@ -84,6 +84,16 @@ describe('Inspector randomization (D2b)', () => {
   })
 })
 
+it('groups Logic/Validation/Scoring into tabs at the questionnaire root', () => {
+  useEditorStore.getState().select(null)
+  render(<Inspector />)
+  expect(screen.getByRole('tab', { name: /logic/i })).toBeInTheDocument()
+  expect(screen.getByRole('tab', { name: /validation/i })).toBeInTheDocument()
+  expect(screen.getByRole('tab', { name: /scoring|scores/i })).toBeInTheDocument()
+  fireEvent.click(screen.getByRole('tab', { name: /validation/i }))
+  expect(screen.getByRole('tab', { name: /validation/i })).toHaveAttribute('aria-selected', 'true')
+})
+
 test('switching item selection updates ShowIfEditor draft (key fix regression)', async () => {
   const twoItemModel = {
     metadata: { id: 'qst_reg', title: 'Reg', description: 'd', language: 'en', version: 'v26.0601' },

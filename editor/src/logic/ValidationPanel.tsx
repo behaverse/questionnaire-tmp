@@ -24,14 +24,14 @@ export function ValidationPanel() {
   const del = (i: number) => { write(rules.filter((_, j) => j !== i)); setOpenIdx(null) }
 
   return (
-    <div className="space-y-2 border-t border-slate-200 pt-3">
+    <div className="space-y-2 border-t border-ed-border pt-3">
       <div className="flex items-center gap-2">
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Validation rules</h4>
+        <h4 className="text-xs font-semibold text-ed-muted">Validation rules</h4>
         {attention > 0 && <span className="text-[11px] text-red-600">{attention} need{attention === 1 ? 's' : ''} attention</span>}
         <button type="button" aria-label="Add rule" onClick={add}
-          className="ml-auto rounded border border-slate-300 px-2 py-0.5 text-xs text-slate-600 hover:bg-slate-50">+ Add</button>
+          className="ml-auto rounded border border-ed-border px-2 py-0.5 text-xs text-ed-muted hover:bg-ed-subtle">+ Add</button>
       </div>
-      {rules.length === 0 && <p className="text-[11px] text-slate-400">No rules yet.</p>}
+      {rules.length === 0 && <p className="text-[11px] text-ed-muted">No rules yet.</p>}
       <ul className="space-y-1">
         {rules.map((r, i) => (
           <li key={i}>

@@ -18,14 +18,14 @@ export function ScoringPanel() {
   const del = (i: number) => { write(scores.filter((_, j) => j !== i)); setOpenIdx(null) }
 
   return (
-    <div className="space-y-2 border-t border-slate-200 pt-3">
+    <div className="space-y-2 border-t border-ed-border pt-3">
       <div className="flex items-center gap-2">
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Scores</h4>
+        <h4 className="text-xs font-semibold text-ed-muted">Scores</h4>
         {attention > 0 && <span className="text-[11px] text-red-600">{attention} need{attention === 1 ? 's' : ''} attention</span>}
         <button type="button" aria-label="Add score" onClick={add}
-          className="ml-auto rounded border border-slate-300 px-2 py-0.5 text-xs text-slate-600 hover:bg-slate-50">+ Add</button>
+          className="ml-auto rounded border border-ed-border px-2 py-0.5 text-xs text-ed-muted hover:bg-ed-subtle">+ Add</button>
       </div>
-      {scores.length === 0 && <p className="text-[11px] text-slate-400">No scores yet.</p>}
+      {scores.length === 0 && <p className="text-[11px] text-ed-muted">No scores yet.</p>}
       <ul className="space-y-1">
         {scores.map((s, i) => (
           <li key={i}>
@@ -41,7 +41,7 @@ export function ScoringPanel() {
           </li>
         ))}
       </ul>
-      <p className="text-[11px] text-slate-400">Scores are computed by the deployed viewer — not shown live in this preview.</p>
+      <p className="text-[11px] text-ed-muted">Scores are computed by the deployed viewer — not shown live in this preview.</p>
     </div>
   )
 }

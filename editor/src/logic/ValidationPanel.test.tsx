@@ -40,9 +40,10 @@ describe('ValidationPanel', () => {
 
 describe('Inspector mounts ValidationPanel at the questionnaire root', () => {
   beforeEach(() => useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never))
-  it('shows Validation rules at root', () => {
+  it('shows Validation rules at root (via Validation tab)', () => {
     useEditorStore.getState().select(null)
     render(<Inspector />)
+    fireEvent.click(screen.getByRole('tab', { name: /validation/i }))
     expect(screen.getByText(/validation rules/i)).toBeInTheDocument()
   })
   it('does not show Validation rules for a page selection', () => {

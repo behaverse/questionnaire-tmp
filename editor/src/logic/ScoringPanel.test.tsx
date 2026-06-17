@@ -34,9 +34,10 @@ describe('ScoringPanel', () => {
 
 describe('Inspector mounts ScoringPanel at the questionnaire root', () => {
   beforeEach(() => useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never))
-  it('shows Scores at root', () => {
+  it('shows Scores at root (via Scoring tab)', () => {
     useEditorStore.getState().select(null)
     render(<Inspector />)
+    fireEvent.click(screen.getByRole('tab', { name: /scoring/i }))
     expect(screen.getByText(/^scores$/i)).toBeInTheDocument()
   })
   it('does not show Scores for a page selection', () => {
