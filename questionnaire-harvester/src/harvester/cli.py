@@ -23,7 +23,8 @@ def main(argv=None) -> int:
     if a.cmd != "harvest":
         return 2
 
-    rq = PsyToolkitAdapter().parse(PsyToolkitAdapter().fetch(a.url), a.url)
+    adapter = PsyToolkitAdapter()
+    rq = adapter.parse(adapter.fetch(a.url), a.url)
     scales_index = load_scales_index(Path(a.scales_index))
     instr_index = build_instruction_index(Path(a.out))
     result = draft(rq, a.version, scales_index, instr_index)
