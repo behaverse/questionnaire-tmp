@@ -17,8 +17,10 @@ Regenerate the survey_db dedup baseline first (it is gitignored — derivable fr
 
 Fingerprint collisions across DIFFERENT ids reveal duplicate scales — reuse one ref.
 """
-import json, hashlib, glob, sys, os
+import json, glob, sys, os
 from collections import Counter
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+from harvester.dedup import norm, option_fingerprint as fingerprint
 
 # Scan the regenerable survey_db baseline AND the tracked hand-curated harvest output,
 # so harvested scales are dedup-visible to later instruments. Override dirs via argv.
@@ -26,23 +28,6 @@ from collections import Counter
 CORPORA = sys.argv[1:] if len(sys.argv) > 1 else [
     "questionnaire-harvester/_corpus", "questionnaire-harvester/output"]
 HERE = os.path.dirname(__file__)
-
-def norm(s): return " ".join(str(s).strip().lower().split())
-
-def fingerprint(o: dict) -> str:
-    en = (o.get("content", {}).get("en") or {})
-    anchors = [norm(a.get("text", "")) for a in (en.get("options") or [])]
-    values = [a.get("value") for a in (o.get("options") or [])]
-    base = [o.get("input_data_type"), o.get("measurement_type"), o.get("selection")]
-    # Anchored choice scales (the Likert case) dedup on values + anchor wording, so
-    # wording-identical scales merge regardless of dimension label. Choice-less inputs
-    # (free text / number) have no anchors to compare → fall back to dimension + units
-    # so distinct fields (minutes vs weight vs years) don't collapse together.
-    if anchors:
-        payload = base + [values, anchors]
-    else:
-        payload = base + [o.get("dimension"), norm(en.get("units", ""))]
-    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:16]
 
 def main():
     rows, index = [], {}
