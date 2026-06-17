@@ -1,10 +1,10 @@
 # Shared Scales Catalogue (dedup aid)
 
-Auto-generated from `harvest/_corpus` by `harvest/build_catalogue.py`. Check here (or the
+Auto-generated from `harvest/_corpus, harvest/output` by `harvest/build_catalogue.py`. Check here (or the
 fingerprint in `scales-index.json`) before minting a new Option. Exact normalized
 match → reuse the ref; difference → new scale (flag borderline for owner review).
 
-**113 Options indexed · 5 fingerprint collisions (existing duplicates).**
+**114 Options indexed · 5 fingerprint collisions (existing duplicates).**
 Fingerprint = sha256 of (input_data_type, measurement_type, selection, values, normalized en anchors).
 
 ## Existing duplicates (same scale, multiple ids — reuse one)
@@ -47,6 +47,7 @@ Fingerprint = sha256 of (input_data_type, measurement_type, selection, values, n
 | `opt_mmi_frequency_4` | 4 | choice/ordinal | single | frequency | Never · A little of the time · Some of the time · Most of the time | `8c7658f4ea2d697b` |
 | `opt_psqi_frequency_4` | 4 | choice/ordinal | single | frequency | not during the past month · less than once a week · once or twice a week · three or more times a week | `26f54a87a88d1c83` |
 | `opt_sqs_frequency_4` | 4 | choice/ordinal | single | frequency | Rarely · Sometimes · Often · Almost always | `6dc4a8095c8010d6` |
+| `opt_phq_frequency_4` | 4 | choice/ordinal | single | frequency | Not at all · Several days · More than half the days · Nearly every day | `f2a0f6cecafa7e61` |
 | `opt_arces_frequency_5` | 5 | choice/ordinal | single | frequency | never · rarely · sometimes · often · very often | `875b931128f534d4` |
 | `opt_cfq_scale` | 5 | choice/ordinal | single | frequency | Never · Very rarely · Occasionally · Quite often · Very often | `7c05a9b4908ca62f` |
 | `opt_i_panas_sf_frequency_5b` | 5 | choice/interval | single | frequency | Never (1) · 2 · 3 · 4 · Always (5) | `c6dde3866a3d722c` |
