@@ -1,0 +1,175 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [
+        "depression"
+      ],
+      "population": [
+        "adults"
+      ]
+    },
+    "description": "A 9-item self-report measure screening for the presence and severity of depression over the past two weeks.",
+    "id": "qst_phq9",
+    "language": "en",
+    "license": "public_domain",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 9
+    },
+    "publication": {
+      "citation": "Kroenke K, Spitzer RL, Williams JBW (2001). The PHQ-9. J Gen Intern Med, 16(9), 606-613.",
+      "year": 2001
+    },
+    "short_title": "PHQ-9",
+    "title": "Patient Health Questionnaire-9 (PHQ-9)",
+    "version": "v26.0617",
+    "x_harvest_date": "2026-06-17",
+    "x_license": "public_domain",
+    "x_source_site": "phqscreeners.com",
+    "x_source_url": "https://www.phqscreeners.com/"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_phq_2weeks@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_phq9_9@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

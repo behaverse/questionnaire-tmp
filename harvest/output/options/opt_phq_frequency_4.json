@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "PHQ 4-point frequency (past 2 weeks)",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not at all"
+        },
+        {
+          "index": 2,
+          "text": "Several days"
+        },
+        {
+          "index": 3,
+          "text": "More than half the days"
+        },
+        {
+          "index": 4,
+          "text": "Nearly every day"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "frequency",
+  "id": "opt_phq_frequency_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

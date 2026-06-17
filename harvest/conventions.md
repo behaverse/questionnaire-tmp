@@ -49,12 +49,27 @@ Harvested entities MUST follow these so the Library Core ingests them identicall
   available_languages, classification, publication, license, provenance }, pages:[
   { id, elements:[ {ref} | { question:{ref}, option:{ref}, required } ] } ] }`
 
-## Provenance (extend for web harvest)
+## Provenance + custom fields (validator-confirmed placement)
+`provenance` is **closed** to exactly `{source, imported_at, importer_version}` — extra keys
+fail validation. Put harvest-specific data as **`x_*` keys at the `metadata` level** (the
+corpus already does this, e.g. `x_source_reference`):
 ```json
-"provenance": { "source": "web_harvest", "imported_at": "...",
-  "importer_version": "web-harvest-0.1.0",
-  "x_source_url": "...", "x_source_site": "...", "x_harvest_date": "...", "x_license": "..." }
+"metadata": {
+  ...,
+  "license": "public_domain",          // ENUM (underscore!): public_domain | cc0 | cc_by |
+                                        //   cc_by_nc | cc_by_sa | proprietary_open_redistribution |
+                                        //   proprietary_restricted | unknown | mixed_see_components
+  "x_source_url": "...", "x_source_site": "...", "x_harvest_date": "...", "x_license": "public_domain",
+  "provenance": { "source": "web_harvest", "imported_at": "...", "importer_version": "web-harvest-0.1.0" }
+}
 ```
+
+## Output location
+- **`harvest/output/{type}/<id>.json`** — TRACKED, hand-curated harvested entities (not
+  regenerable). This is the curated library contribution.
+- **`harvest/_corpus/`** — gitignored, regenerable survey_db dedup baseline.
+- Validate with the library before review: `PYTHONPATH=library/src python3` → `build_registry`
+  + `validate_artifact` over `load_tree(<dir>, release)`; refs must resolve within the batch.
 
 ## Loss report
 Append per import: `entries:[{category: dropped|approximated|warning, source, detail}]`

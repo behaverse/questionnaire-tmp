@@ -20,7 +20,9 @@ Fingerprint collisions across DIFFERENT ids reveal duplicate scales — reuse on
 import json, hashlib, glob, sys, os
 from collections import Counter
 
-CORPUS = sys.argv[1] if len(sys.argv) > 1 else "harvest/_corpus"
+# Scan the regenerable survey_db baseline AND the tracked hand-curated harvest output,
+# so harvested scales are dedup-visible to later instruments. Override dirs via argv.
+CORPORA = sys.argv[1:] if len(sys.argv) > 1 else ["harvest/_corpus", "harvest/output"]
 HERE = os.path.dirname(__file__)
 
 def norm(s): return " ".join(str(s).strip().lower().split())
@@ -42,7 +44,10 @@ def fingerprint(o: dict) -> str:
 
 def main():
     rows, index = [], {}
-    for fp in sorted(glob.glob(os.path.join(CORPUS, "options", "*.json"))):
+    files = []
+    for c in CORPORA:
+        files += sorted(glob.glob(os.path.join(c, "options", "*.json")))
+    for fp in files:
         o = json.load(open(fp))
         en = (o.get("content", {}).get("en") or {})
         anchors = [a.get("text", "") for a in (en.get("options") or [])]
@@ -61,7 +66,7 @@ def main():
     dups = {k: v for k, v in index.items() if len(v) > 1}
     rows.sort(key=lambda r: (r[4] or "~", r[1]))
     out = ["# Shared Scales Catalogue (dedup aid)", "",
-           f"Auto-generated from `{CORPUS}` by `harvest/build_catalogue.py`. Check here (or the",
+           f"Auto-generated from `{', '.join(CORPORA)}` by `harvest/build_catalogue.py`. Check here (or the",
            "fingerprint in `scales-index.json`) before minting a new Option. Exact normalized",
            "match → reuse the ref; difference → new scale (flag borderline for owner review).", "",
            f"**{len(rows)} Options indexed · {len(dups)} fingerprint collisions (existing duplicates).**",

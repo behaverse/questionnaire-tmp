@@ -15,7 +15,8 @@ Library) · `skipped:<reason>` (e.g. `skipped:license`, `skipped:duplicate`).
 
 | # | Instrument | Acronym | Source | Domain | Items | Scale(s) | Importance | License | Status | Dedup / notes |
 |---|------------|---------|--------|--------|-------|----------|------------|---------|--------|---------------|
-| — | _(example)_ | AISS | PTK | personality | 20 | opt_agreement_7 (reused) | High | open | imported | scale matched existing |
+| 1 | Patient Health Questionnaire-9 | PHQ-9 | phqscreeners.com | depression | 9 | `opt_phq_frequency_4` (minted) | High | public_domain | **needs-review** | pilot; scale had NO match in 113-Option baseline → minted new; 12/12 schema-valid, refs resolve, renders in preview |
+| 2 | Generalized Anxiety Disorder-7 | GAD-7 | phqscreeners.com | anxiety | 7 | `opt_phq_frequency_4` (reuse) | High | public_domain | candidate | next; will REUSE PHQ-9 scale + `ins_phq_2weeks` (dedup demo) |
 
 > Candidate list is populated in the first backlog-building pass (after Q1/Q6 are answered).
 > Each `imported` row must satisfy the Definition of Done (see open-questions Q10).

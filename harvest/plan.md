@@ -25,14 +25,17 @@ harvest/                         # this workspace — curation process only, iso
 ├── registry.md                  # the progress dashboard (one row per instrument)
 ├── conventions.md               # reused id/naming/entity-shape cheatsheet
 ├── scales-catalogue.md          # human-readable index of known shared scales (dedup aid)
-├── sources/<acronym>/           # per-instrument raw capture (fetched HTML/text, notes)
-│   ├── source.md                #   source URL(s), captured text, license note
-│   └── extraction.json          #   intermediate structured extraction (pre-canonical)
-└── (no library code here)
-
-content/                         # EXISTING gitignored output tree the Library ingests
-├── options/  prompts/  questions/  items/  questionnaires/  ...   # harvested JSON lands here
+├── sources/<acronym>/           # per-instrument raw capture (fetched HTML/text) — GITIGNORED
+│   └── source.md                #   source URL(s), captured text, license note
+├── output/                      # TRACKED canonical output — hand-curated, NOT regenerable
+│   ├── options/  instructions/  prompts/  questionnaires/  ...   # one JSON per entity
+└── _corpus/                     # GITIGNORED regenerable survey_db dedup baseline
 ```
+
+Harvested entities are **tracked** under `harvest/output/` (unlike the regenerable survey_db
+corpus). The Library ingests from `harvest/output/` + the corpus; this becomes the
+`questionnaire-library-content` contribution. Validated with the library's own
+`validate_artifact` + ref resolution before owner review.
 
 - `harvest/` is **process + working files**; it never imports `library/` internals.
 - Canonical entity JSON is written into the **existing `content/` tree** (one file per
