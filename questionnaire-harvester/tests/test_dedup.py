@@ -23,3 +23,13 @@ def test_lookup_returns_none_for_unknown_scale():
     other = {**PHQ_FREQ, "options": [{"index": 1, "value": 0.0}, {"index": 2, "value": 1.0}],
              "content": {"en": {"options": [{"index": 1, "text": "No"}, {"index": 2, "text": "Yes"}]}}}
     assert lookup_option(other, {option_fingerprint(PHQ_FREQ): ["opt_phq_frequency_4"]}) is None
+
+from harvester.dedup import instruction_fingerprint, lookup_instruction
+
+INS = {"content": {"en": {"text": "Over the last 2 weeks, how often have you been bothered?"}}}
+
+def test_instruction_dedup_is_case_and_space_insensitive():
+    a = instruction_fingerprint(INS)
+    b = instruction_fingerprint({"content": {"en": {"text": "  Over the LAST 2 weeks, how often   have you been bothered? "}}})
+    assert a == b
+    assert lookup_instruction(INS, {a: ["ins_phq_2weeks"]}) == "ins_phq_2weeks"
