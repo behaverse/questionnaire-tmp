@@ -657,3 +657,12 @@ ED-D4b live score preview; translate placeholder/help text + page/section/block 
 titles; validation-message/metadata-title localization (schema gap, upstream); Logic/Validation/
 Scoring → Inspector tabs; single-file offline preview; broader visual restyle; and the OD-08-gated
 "Open in viewer" real deployment + writing forked/translated entities back to the shared Library.
+
+## ED-H1 (visual system foundation) — deferred (final-review triage, 2026-06-17)
+- ed-h1-1: token test (`src/ui/tokens.test.ts`) asserts the `ed-*` color NAMES appear in `tailwind.config.ts` source + that some `var(--qv-ed-` exists, not the full per-key `'name': var(--qv-ed-name)` mapping. Reads source-as-text to dodge `.js`/`.ts` resolution fragility; strengthen if desired.
+- ed-h1-2: `Button` `danger` variant uses raw `hover:bg-red-50` (not a token) and is currently UNUSED — add a `--qv-ed-danger-soft` token when `danger` is first used. Optional `children?: never` guard on `IconButton`.
+- ed-h1-3: `CheckboxField` is only covered indirectly (Inspector/Canvas tests) — add a direct unit test.
+- ed-h1-4: the questionnaire-settings tree node uses `CircleDot` (same glyph as the `item` fallback) — give it a distinct icon (e.g. `Settings`/`SlidersHorizontal`). Do in H2/H3 when the tree is revisited.
+- ed-h1-5: the canvas delete-guard test asserts only `/delete/i`, not the full row label (intentional — keeps it stable across the H2 label change).
+- ed-h1-6: StartScreen "Open" button left as a raw `<button>` (tokenized) rather than the shared `Button` — cosmetic consistency.
+- ed-h1-7: `Inspector.tsx` (aside wrapper, `<h3>` headers, the "Pages in this block" uppercase micro-label) and the Logic/Validation/Scoring panel headers still use raw `slate-*` + uppercase. This is H3 territory (inspector tabs); the token seam between slices is expected. Re-token in H3.
