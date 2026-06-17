@@ -31,3 +31,25 @@ it('marks the selected row with aria-current', async () => {
   await userEvent.click(row)
   expect(screen.getByText(firstPage.title ?? firstPage.id).closest('[aria-current="true"]')).toBeTruthy()
 })
+
+it('shows resolved prompt text for an item row when content is in the pool', () => {
+  // seed one item prompt body into the store pool, then render
+  const st = useEditorStore.getState()
+  const m = st.model!
+  // PHQ-9 items live in sections; search recursively for first element with question.prompt.ref
+  function findRef(elements: Record<string, unknown>[]): string | undefined {
+    for (const el of elements) {
+      const q = el.question as Record<string, unknown> | undefined
+      const ref = (q?.prompt as { ref?: string } | undefined)?.ref
+      if (ref) return ref
+      const sub = el.elements as Record<string, unknown>[] | undefined
+      if (sub) { const r = findRef(sub); if (r) return r }
+    }
+  }
+  const allEls = m.pages.flatMap((p) => p.elements as Record<string, unknown>[])
+  const ref = findRef(allEls)
+  expect(ref).toBeTruthy() // fixture must have at least one item
+  useEditorStore.setState({ pool: { ...st.pool, [ref!]: { id: ref!.split('@')[0], content: { en: { text: 'Readable prompt text' } } } } as never })
+  render(<StructureTree />)
+  expect(screen.getByText('Readable prompt text')).toBeInTheDocument()
+})

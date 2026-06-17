@@ -7,6 +7,7 @@ import { buildTreeRows, type TreeRow } from './treeModel'
 import { reorder, createBlock } from '../model/tree'
 import { pathKey, getAtPath } from '../model/path'
 import type { Questionnaire } from '../model/types'
+import { resolveNodeLabel } from './nodeLabel'
 
 const KIND_ICON = { block: Layers, page: FileText, section: Rows3, message: Mail, item: CircleDot } as const
 
@@ -18,11 +19,21 @@ function nextBlockId(model: Questionnaire): string {
   return `blk_${n}`
 }
 
-function Row({ row, translation }: { row: TreeRow; translation?: { locale: string; done: boolean } | null }) {
+function Row({
+  row,
+  label,
+  translation,
+}: {
+  row: TreeRow
+  label: { text: string | null; id: string | null; ref: string | null }
+  translation?: { locale: string; done: boolean } | null
+}) {
   const { selection, select } = useEditorStore()
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.key })
   const selected = selection && pathKey(selection) === row.key
   const Icon = KIND_ICON[row.kind as keyof typeof KIND_ICON] ?? CircleDot
+  const primary = label.text ?? label.id ?? 'Untitled'
+  const secondary = label.text && label.id ? label.id : null
   return (
     <div
       ref={setNodeRef}
@@ -36,7 +47,10 @@ function Row({ row, translation }: { row: TreeRow; translation?: { locale: strin
     >
       <Icon size={15} aria-hidden="true" className="shrink-0 text-ed-muted" />
       {row.num != null && <span className="tabular-nums text-xs text-ed-muted">{row.num}.</span>}
-      <span className="truncate">{row.label}</span>
+      <span className="flex min-w-0 flex-col" title={label.ref ?? label.id ?? undefined}>
+        <span className="truncate">{primary}</span>
+        {secondary && <span className="truncate text-[11px] leading-tight text-ed-muted">{secondary}</span>}
+      </span>
       {translation && (
         <span title={translation.done ? `Translated in ${translation.locale}` : `Not translated in ${translation.locale}`}
               aria-label={translation.done ? `Translated in ${translation.locale}` : `Not translated in ${translation.locale}`}
@@ -57,6 +71,7 @@ export function StructureTree() {
   )
   if (!model) return null
   const rows = buildTreeRows(model)
+  const labelLocale = String(editingLocale ?? model.metadata.language ?? 'en')
   const primary = String(model.metadata.language ?? 'en')
   // when editing a non-primary language, flag rows whose (pool) content lacks that locale
   const translating = editingLocale && editingLocale !== primary ? editingLocale : null
@@ -110,7 +125,11 @@ export function StructureTree() {
       </button>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={rows.map((r) => r.key)} strategy={verticalListSortingStrategy}>
-          {rows.map((row) => <Row key={row.key} row={row} translation={translationOf(row)} />)}
+          {rows.map((row) => (
+            <Row key={row.key} row={row}
+                 label={resolveNodeLabel(model, row.path, pool, resolved, labelLocale)}
+                 translation={translationOf(row)} />
+          ))}
         </SortableContext>
       </DndContext>
     </nav>
