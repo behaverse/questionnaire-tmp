@@ -35,7 +35,7 @@ function Resizer({ onDrag, label }: { onDrag: (dx: number) => void; label: strin
   }
   return (
     <div role="separator" aria-label={label} aria-orientation="vertical" onPointerDown={onPointerDown}
-         className="cursor-col-resize bg-slate-200 transition-colors hover:bg-slate-400" />
+         className="cursor-col-resize bg-ed-border transition-colors hover:bg-ed-accent" />
   )
 }
 

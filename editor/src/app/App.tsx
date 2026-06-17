@@ -40,7 +40,7 @@ export function App() {
     return () => clearTimeout(t)
   }, [model, pool])
 
-  if (booting) return <main className="flex h-full items-center justify-center text-slate-400">Loading…</main>
+  if (booting) return <main className="flex h-full items-center justify-center bg-ed-surface text-ed-muted">Loading…</main>
 
   if (!model) {
     return (
@@ -78,7 +78,7 @@ export function App() {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col bg-ed-surface">
       <Topbar onValidate={() => useEditorStore.getState().revalidate()} />
       {validation && !validation.valid && (
         <div role="alert" className="border-b border-red-200 bg-red-50 px-4 py-1 text-xs text-red-700">

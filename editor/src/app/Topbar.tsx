@@ -1,6 +1,8 @@
+import { ArrowLeft, RefreshCw, ExternalLink, Check, Eye, Languages, Download, Package } from 'lucide-react'
 import { useEditorStore } from '../state/store'
 import { exportToFile, exportBundle, bundleData } from '../persistence/file'
 import { EditingLocaleSwitcher } from './EditingLocaleSwitcher'
+import { Button } from '../ui/Button'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
   const { model, dirty, validation, previewOpen, togglePreview, translateView } = useEditorStore()
@@ -16,35 +18,67 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
     exportToFile(model)
   }
   return (
-    <header className="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-2">
-      <button
+    <header className="flex items-center gap-3 border-b border-ed-border bg-ed-panel px-4 py-2">
+      <Button
+        variant="ghost"
+        icon={ArrowLeft}
         title="Return to the start screen (your draft is autosaved)"
         onClick={() => { if (!dirty || confirm('Leave this questionnaire? Your draft is autosaved and will be here when you return.')) reset() }}
-        className="rounded border border-slate-300 px-2 py-1 text-sm hover:bg-slate-50">← Home</button>
-      <span className="font-medium text-slate-800">{model.metadata.title ?? model.metadata.id}</span>
+      >Home</Button>
+      <span className="font-medium text-ed-text">{model.metadata.title ?? model.metadata.id}</span>
       {dirty && <span className="text-xs text-amber-600">● unsaved</span>}
       <div className="ml-auto flex items-center gap-2">
         <EditingLocaleSwitcher />
         {Object.keys(staleness).length > 0 && (
           <span className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-800">⬆ {Object.keys(staleness).length} update{Object.keys(staleness).length > 1 ? 's' : ''}</span>
         )}
-        <button title="Check the Library for newer versions of any pinned references" onClick={() => void refreshStaleness()} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">Check for updates</button>
-        <button title="Open this draft full-screen in a separate tab (read-only preview)" onClick={() => {
-          try { sessionStorage.setItem('qv-preview-bundle', JSON.stringify(bundleData(model, pool))) } catch { /* quota: fall through */ }
-          window.open('/preview.html', '_blank')
-        }} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">Open preview</button>
-        <button title="Re-check this questionnaire against the Schema 2 rules" onClick={onValidate} className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">✓ Validate</button>
-        <button title="Show/hide the live inline preview pane" onClick={togglePreview}
-                className={`rounded border px-3 py-1 text-sm ${previewOpen ? 'border-slate-800 bg-slate-800 text-white' : 'border-slate-300 hover:bg-slate-50'}`}>
-          ▢ Preview
-        </button>
-        <button title="Open the side-by-side translation view" onClick={() => setTranslateView(!translateView)}
-                className={`rounded border px-3 py-1 text-sm ${translateView ? 'border-slate-800 bg-slate-800 text-white' : 'border-slate-300 hover:bg-slate-50'}`}>
-          Translate
-        </button>
-        <button title="Download the questionnaire JSON only (references not included)" onClick={doExport} className="rounded bg-slate-800 px-3 py-1 text-sm text-white">Export</button>
-        <button title="Download a self-contained bundle: the questionnaire plus all referenced/drafted entities (opens offline in the standalone preview)" onClick={() => { if (model) exportBundle(model, pool) }}
-                className="rounded border border-slate-300 px-3 py-1 text-sm hover:bg-slate-50">Export bundle</button>
+        <Button
+          variant="secondary"
+          icon={RefreshCw}
+          title="Check the Library for newer versions of any pinned references"
+          onClick={() => void refreshStaleness()}
+        >Check for updates</Button>
+        <Button
+          variant="secondary"
+          icon={ExternalLink}
+          title="Open this draft full-screen in a separate tab (read-only preview)"
+          onClick={() => {
+            try { sessionStorage.setItem('qv-preview-bundle', JSON.stringify(bundleData(model, pool))) } catch { /* quota: fall through */ }
+            window.open('/preview.html', '_blank')
+          }}
+        >Open preview</Button>
+        <Button
+          variant="secondary"
+          icon={Check}
+          title="Re-check this questionnaire against the Schema 2 rules"
+          onClick={onValidate}
+        >✓ Validate</Button>
+        <Button
+          variant="secondary"
+          icon={Eye}
+          title="Show/hide the live inline preview pane"
+          onClick={togglePreview}
+          className={previewOpen ? 'border-ed-accent bg-ed-accent text-white hover:brightness-110' : ''}
+        >▢ Preview</Button>
+        <Button
+          variant="secondary"
+          icon={Languages}
+          title="Open the side-by-side translation view"
+          onClick={() => setTranslateView(!translateView)}
+          className={translateView ? 'border-ed-accent bg-ed-accent text-white hover:brightness-110' : ''}
+        >Translate</Button>
+        <Button
+          variant="primary"
+          icon={Download}
+          title="Download the questionnaire JSON only (references not included)"
+          onClick={doExport}
+        >Export</Button>
+        <Button
+          variant="secondary"
+          icon={Package}
+          title="Download a self-contained bundle: the questionnaire plus all referenced/drafted entities (opens offline in the standalone preview)"
+          onClick={() => { if (model) exportBundle(model, pool) }}
+        >Export bundle</Button>
       </div>
     </header>
   )
