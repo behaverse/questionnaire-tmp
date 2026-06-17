@@ -63,7 +63,7 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
             {items.map((it) => (
               <li key={`${it.id}@${it.version}`}>
                 <button onClick={() => select(it)}
-                        className={`flex w-full items-center gap-2 rounded px-2 py-1 text-left text-sm ${selected?.id === it.id ? 'bg-ed-subtle' : 'hover:bg-ed-subtle'}`}>
+                        className={`flex w-full items-center gap-2 rounded px-2 py-1 text-left text-sm ${selected?.id === it.id ? 'bg-ed-accent-soft text-ed-text' : 'hover:bg-ed-subtle'}`}>
                   <span className="font-mono">{it.id}</span>
                   {it.title && it.title !== it.id && <span className="truncate text-ed-muted">{it.title}</span>}
                   <span className="ml-auto text-xs text-ed-muted">{it.version}</span>
