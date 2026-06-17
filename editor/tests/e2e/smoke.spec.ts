@@ -74,10 +74,11 @@ test('select an inline item → Option editor → add a choice → screenshot', 
   })
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
 
-  // select the inline item row in the tree (label is `inline · pr_demo@v26.0609`)
+  // select the inline item row in the tree. (ED-H2: with no resolved content the row
+  // shows the bare id `pr_demo` as the label — no @version.)
   await page
     .getByRole('navigation', { name: /structure/i })
-    .getByText(/pr_demo@v26\.0609/)
+    .getByText(/pr_demo\b/)
     .click()
 
   // the Option editor is shown in the canvas

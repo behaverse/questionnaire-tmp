@@ -25,8 +25,11 @@ test('load sample renders offline + back-to-home returns to start', async ({ pag
   expect(layout.noWindowScrollbar).toBe(true)
   expect(layout.rootOverflowHidden).toBe(true)
   expect(layout.previewScrollsInternally).toBe(true)
-  // selecting a deep structure-tree item scrolls the preview to it
-  await page.getByRole('button', { name: /pr_bisbas_q_20@/ }).click()
+  // selecting a deep structure-tree item scrolls the preview to it.
+  // (ED-H2: rows now show resolved prompt text + the bare id `pr_bisbas_q_20` — no @version;
+  // scope to the structure nav since the canvas row button matches the same id too.)
+  await page.getByRole('navigation', { name: /structure/i })
+    .getByRole('button', { name: /pr_bisbas_q_20\b/ }).click()
   await expect.poll(() => page.evaluate(() =>
     Math.round((document.querySelector('section[aria-label="Preview"] .overflow-auto') as HTMLElement).scrollTop)
   )).toBeGreaterThan(100)
