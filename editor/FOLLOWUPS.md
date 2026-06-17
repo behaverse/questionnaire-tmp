@@ -666,3 +666,11 @@ Scoring → Inspector tabs; single-file offline preview; broader visual restyle;
 - ed-h1-5: the canvas delete-guard test asserts only `/delete/i`, not the full row label (intentional — keeps it stable across the H2 label change).
 - ed-h1-6: StartScreen "Open" button left as a raw `<button>` (tokenized) rather than the shared `Button` — cosmetic consistency.
 - ed-h1-7: `Inspector.tsx` (aside wrapper, `<h3>` headers, the "Pages in this block" uppercase micro-label) and the Logic/Validation/Scoring panel headers still use raw `slate-*` + uppercase. This is H3 territory (inspector tabs); the token seam between slices is expected. Re-token in H3.
+
+## ED-H2 (readable content labels) — deferred (final-review triage, 2026-06-17)
+- ed-h2-1: `StructureTree.tsx` outer local `primary` (the primary-language string) shares a name with `Row`'s `primary` (the label) — rename the outer to `primaryLocale`.
+- ed-h2-2: `Canvas.tsx` computes `labelLocale` inside the `elements.map` (loop-invariant) — hoist it above the loop.
+- ed-h2-3: `nodeLabel.ts` local `Body` subtype — add a one-line comment that it's a structural view of `EntityBody`/resolved content (or share with the identical inline type in `StructureTree.tsx`).
+- ed-h2-4: locale parity — tree labels use `editingLocale ?? language`; canvas item rows use `language` only, so canvas rows don't re-localize when the editing locale changes. Read `editingLocale` in Canvas for parity.
+- ed-h2-5: stale comment in `tests/e2e/show-if.spec.ts` (~line 33) still says labels are `inline · pr_…@vXX` — the `inline ·` prefix and `@version` are gone post-H2.
+- ed-h2-6: `treeModel.elementLabel` / `TreeRow.label` is still computed but no longer rendered (superseded by `resolveNodeLabel`) — candidate for removal in a later cleanup (touches treeModel tests).
