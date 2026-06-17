@@ -16,7 +16,20 @@ test('with a page selected, shows its elements and an Add control', () => {
   render(<Canvas />)
   expect(screen.getByRole('button', { name: /add section/i })).toBeInTheDocument()
   const firstEl = (phq9 as Questionnaire).pages[0].elements[0] as Record<string, unknown>
-  if (typeof firstEl.ref === 'string') expect(screen.getByText(firstEl.ref)).toBeInTheDocument()
+  const ref = typeof firstEl.ref === 'string' ? firstEl.ref
+    : ((firstEl.question as Record<string, unknown>)?.prompt as { ref?: string })?.ref
+  if (ref) expect(screen.getByText(ref.split('@')[0])).toBeInTheDocument()
+})
+
+it('shows resolved prompt text in an item row when content is available', () => {
+  const st = useEditorStore.getState(); st.select(['pages', 0])
+  const el = (st.model!.pages[0].elements as Record<string, unknown>[]).find((e) => 'question' in e) as Record<string, unknown> | undefined
+  const ref = ((el?.question as Record<string, unknown>)?.prompt as { ref?: string })?.ref
+  if (ref) {
+    useEditorStore.setState({ pool: { ...st.pool, [ref]: { id: ref.split('@')[0], content: { en: { text: 'Canvas readable text' } } } } as never })
+    render(<Canvas />)
+    expect(screen.getByText('Canvas readable text')).toBeInTheDocument()
+  }
 })
 
 test('selecting an item with a ref-based option opens the item editor (not a stub)', () => {

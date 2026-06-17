@@ -11,6 +11,7 @@ import { UpgradeBadge } from '../library/UpgradeBadge'
 import { ForkButton } from '../library/ForkButton'
 import { IconButton } from '../ui/Button'
 import { Trash2, Rows3, Mail, CircleDot } from 'lucide-react'
+import { resolveNodeLabel } from '../tree/nodeLabel'
 
 const ROW_ICON = { section: Rows3, message: Mail } as const
 
@@ -23,7 +24,7 @@ function nextSectionId(model: Questionnaire): string {
 }
 
 export function Canvas() {
-  const { model, selection, applyEdit, select, pool, upsertPoolEntity, openPicker } = useEditorStore()
+  const { model, selection, applyEdit, select, pool, resolved, upsertPoolEntity, openPicker } = useEditorStore()
   if (!model) return null
   const sel = selection && getAtPath(model, selection) !== undefined ? selection : null
   if (!sel) return <div className="overflow-auto p-6 text-ed-muted">Select a page or section in the structure tree.</div>
@@ -101,13 +102,19 @@ export function Canvas() {
         {elements.map((el, i) => {
           const path: NodePath = [...elementsPath, i]
           const k = nodeKind(model, path)
-          const label = typeof el.ref === 'string' ? el.ref : k === 'section' ? ((el.title as string) ?? 'Section') : 'inline item'
+          const labelLocale = String(model.metadata.language ?? 'en')
+          const nl = resolveNodeLabel(model, path, pool, resolved, labelLocale)
+          const primary = nl.text ?? nl.id ?? (k === 'section' ? ((el.title as string) ?? 'Section') : 'Untitled item')
+          const secondary = nl.text && nl.id ? nl.id : null
           const RI = ROW_ICON[k as keyof typeof ROW_ICON] ?? CircleDot
           return (
             <li key={pathKey(path)}
                 className="flex items-center gap-2 rounded-lg border border-ed-border bg-ed-panel px-3 py-2 text-sm shadow-sm">
               <RI size={15} aria-hidden="true" className="shrink-0 text-ed-muted" />
-              <button className="truncate text-left hover:underline" onClick={() => select(path)}>{label}</button>
+              <button className="min-w-0 flex-1 text-left hover:underline" onClick={() => select(path)} title={nl.ref ?? nl.id ?? undefined}>
+                <span className="block truncate">{primary}</span>
+                {secondary && <span className="block truncate text-[11px] leading-tight text-ed-muted">{secondary}</span>}
+              </button>
               {typeof el.ref === 'string' && <UpgradeBadge refStr={el.ref} />}
               {typeof el.ref === 'string' && !(el.ref in pool) && <ForkButton refStr={el.ref} />}
               {(('question' in el) || (typeof el.ref === 'string' && el.ref.startsWith('it_'))) && (
@@ -118,7 +125,7 @@ export function Canvas() {
                 </label>
               )}
               <span className="ml-auto rounded bg-ed-subtle px-1.5 py-0.5 text-xs text-ed-muted">{k}</span>
-              <IconButton icon={Trash2} label={`Delete ${label}`} onClick={() => applyEdit((m) => deleteNode(m, path))} className="ml-0 hover:text-ed-danger" />
+              <IconButton icon={Trash2} label={`Delete ${primary}`} onClick={() => applyEdit((m) => deleteNode(m, path))} className="ml-0 hover:text-ed-danger" />
             </li>
           )
         })}
