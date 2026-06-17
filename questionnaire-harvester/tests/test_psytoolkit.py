@@ -21,6 +21,7 @@ def test_parses_gad7_items_and_scale():
     assert rq.scale.dimension == "frequency"
     assert rq.instruction_text.lower().startswith("over the last 2 weeks")
     assert "the following problems" in rq.instruction_text.lower()
+    assert "any of" not in rq.instruction_text.lower()
     assert rq.license.license_class == "unknown"
     assert rq.year == 2006
     assert "Spitzer" in rq.citation
