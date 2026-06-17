@@ -1,7 +1,7 @@
 from pathlib import Path
 from harvester.validate import validate_tree
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[2]
 SCHEMAS = REPO / "schemas"
 PILOT = REPO / "questionnaire-harvester" / "output"
 
