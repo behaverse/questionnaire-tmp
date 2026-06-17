@@ -21,29 +21,29 @@ export function ValidationRuleEditor({ rule, targets, catalogue, evaluator, allR
     onChange({ ...rule, targets: current.includes(key) ? current.filter((t) => t !== key) : [...current, key] })
 
   return (
-    <div className="space-y-2 rounded border border-slate-200 p-2">
+    <div className="space-y-2 rounded border border-ed-border p-2">
       <div className="flex items-center gap-2">
-        <label className="text-xs text-slate-500">Id
+        <label className="text-xs text-ed-muted">Id
           <input aria-label="Rule id" value={rule.id} onChange={(e) => onChange({ ...rule, id: e.target.value })}
-            className="ml-1 rounded border border-slate-300 px-1 py-0.5 font-mono text-xs" />
+            className="ml-1 rounded border border-ed-border px-1 py-0.5 font-mono text-xs" />
         </label>
         <button type="button" aria-label="Delete rule" onClick={onDelete}
           className="ml-auto rounded border border-red-300 px-2 py-0.5 text-xs text-red-700 hover:bg-red-50">Delete</button>
       </div>
 
-      <div className="text-xs font-medium text-slate-500">Condition</div>
+      <div className="text-xs font-medium text-ed-muted">Condition</div>
       <ExpressionInput value={rule.condition} onChange={(v) => onChange({ ...rule, condition: v })} catalogue={catalogue} evaluator={evaluator} />
 
-      <label className="block text-xs font-medium text-slate-500">Error message
+      <label className="block text-xs font-medium text-ed-muted">Error message
         <input aria-label="Error message" value={rule.message} onChange={(e) => onChange({ ...rule, message: e.target.value })}
-          className="mt-0.5 w-full rounded border border-slate-300 px-2 py-1 text-sm" />
+          className="mt-0.5 w-full rounded border border-ed-border px-2 py-1 text-sm" />
       </label>
 
-      <div className="text-xs font-medium text-slate-500">Targets</div>
+      <div className="text-xs font-medium text-ed-muted">Targets</div>
       <div className="flex flex-wrap gap-2">
-        {targetOptions.length === 0 && <span className="text-[11px] text-slate-400">No elements to target yet.</span>}
+        {targetOptions.length === 0 && <span className="text-[11px] text-ed-muted">No elements to target yet.</span>}
         {targetOptions.map((k) => (
-          <label key={k} className="flex items-center gap-1 text-xs text-slate-600">
+          <label key={k} className="flex items-center gap-1 text-xs text-ed-muted">
             <input type="checkbox" aria-label={`Target ${k}`} checked={current.includes(k)} onChange={() => toggle(k)} />
             {k}
           </label>

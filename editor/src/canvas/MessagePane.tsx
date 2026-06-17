@@ -13,11 +13,11 @@ export function MessagePane({ path }: { path: NodePath }) {
   const locale = editingLocale ?? String(model.metadata.language ?? 'en')
   return (
     <div className="overflow-auto p-6">
-      <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Message</span>
+      <span className="text-xs font-medium text-ed-muted">Message</span>
       {ref && message ? (
         <div className="mt-2"><MessageEditor message={message} locale={locale} onChange={(m) => upsertPoolEntity(ref, m)} /></div>
       ) : (
-        <div className="mt-2 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+        <div className="mt-2 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm">
           <span className="font-mono">{ref}</span> {ref && <UpgradeBadge refStr={ref} />} {ref && <ForkButton refStr={ref} />}
         </div>
       )}

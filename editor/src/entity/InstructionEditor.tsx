@@ -10,7 +10,7 @@ export function InstructionEditor({ instruction, locale, primaryLocale, onChange
                          onChange={(c) => onChange({ ...instruction, content: c })} />
       <label className="block text-sm">Dimension
         <input aria-label="Dimension" value={instruction.dimension ?? ''} onChange={(e) => setDim(e.target.value)}
-               className="ml-1 rounded border border-slate-300 px-1 py-0.5" />
+               className="ml-1 rounded border border-ed-border px-1 py-0.5" />
       </label>
     </div>
   )

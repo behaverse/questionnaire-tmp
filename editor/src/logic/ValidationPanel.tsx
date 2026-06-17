@@ -36,7 +36,7 @@ export function ValidationPanel() {
         {rules.map((r, i) => (
           <li key={i}>
             <button type="button" aria-label={`Edit validation rule ${i + 1}`} onClick={() => setOpenIdx(openIdx === i ? null : i)}
-              className="block w-full truncate rounded px-1 py-0.5 text-left font-mono text-xs hover:bg-slate-50">
+              className="block w-full truncate rounded px-1 py-0.5 text-left font-mono text-xs hover:bg-ed-subtle">
               {summarizeValidationRule(r)}
             </button>
             {openIdx === i && (

@@ -30,7 +30,7 @@ export function ScoringPanel() {
         {scores.map((s, i) => (
           <li key={i}>
             <button type="button" aria-label={`Edit score ${i + 1}`} onClick={() => setOpenIdx(openIdx === i ? null : i)}
-              className="block w-full truncate rounded px-1 py-0.5 text-left font-mono text-xs hover:bg-slate-50">
+              className="block w-full truncate rounded px-1 py-0.5 text-left font-mono text-xs hover:bg-ed-subtle">
               {summarizeScore(s)}
             </button>
             {openIdx === i && (

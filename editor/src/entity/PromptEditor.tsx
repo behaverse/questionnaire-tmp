@@ -9,8 +9,8 @@ export interface PromptBody {
   [k: string]: unknown
 }
 
-const LABEL = 'mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500'
-const INPUT = 'w-full rounded border border-slate-300 px-2 py-1 text-sm'
+const LABEL = 'mb-1 block text-xs font-medium text-ed-muted'
+const INPUT = 'w-full rounded border border-ed-border px-2 py-1 text-sm'
 
 export function PromptEditor({ prompt, locale, primaryLocale, onChange }: { prompt: PromptBody; locale: string; primaryLocale?: string; onChange: (p: PromptBody) => void }) {
   const entry = prompt.content?.[locale] ?? { status: 'draft' }
@@ -37,7 +37,7 @@ export function PromptEditor({ prompt, locale, primaryLocale, onChange }: { prom
         <textarea aria-label="Prompt text" value={entry.text ?? ''} onChange={(e) => setText(e.target.value)} rows={2}
                   className={INPUT} />
       </label>
-      {source !== undefined && <p className="-mt-2 text-[11px] text-slate-400">primary: {source || '(empty)'}</p>}
+      {source !== undefined && <p className="-mt-2 text-[11px] text-ed-muted">primary: {source || '(empty)'}</p>}
       <label className="block">
         <span className={LABEL}>Status</span>
         <select aria-label="Prompt text status" value={entry.status ?? 'draft'} onChange={(e) => setStatus(e.target.value)}

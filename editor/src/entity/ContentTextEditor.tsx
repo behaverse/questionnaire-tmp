@@ -1,8 +1,8 @@
 export interface ContentMap { [lang: string]: { status: string; text?: string } }
 
 const STATUSES = ['draft', 'complete', 'validated']
-const LABEL = 'mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500'
-const INPUT = 'w-full rounded border border-slate-300 px-2 py-1 text-sm'
+const LABEL = 'mb-1 block text-xs font-medium text-ed-muted'
+const INPUT = 'w-full rounded border border-ed-border px-2 py-1 text-sm'
 
 export function ContentTextEditor({ content, locale, label, primaryLocale, onChange }: {
   content: ContentMap; locale: string; label: string; primaryLocale?: string; onChange: (c: ContentMap) => void
@@ -18,7 +18,7 @@ export function ContentTextEditor({ content, locale, label, primaryLocale, onCha
         <textarea aria-label={label} value={entry.text ?? ''} onChange={(e) => setText(e.target.value)} rows={2}
                   className={INPUT} />
       </label>
-      {source !== undefined && <p className="-mt-2 text-[11px] text-slate-400">primary: {source || '(empty)'}</p>}
+      {source !== undefined && <p className="-mt-2 text-[11px] text-ed-muted">primary: {source || '(empty)'}</p>}
       <label className="block">
         <span className={LABEL}>Status</span>
         <select aria-label={`${label} status`} value={entry.status ?? 'draft'} onChange={(e) => setStatus(e.target.value)}

@@ -15,23 +15,23 @@ export function ShowIfEditor({ path }: { path: NodePath }) {
   const catalogue = collectIdCatalogue(model, pool)
 
   return (
-    <div className="space-y-2 border-t border-slate-200 pt-3">
-      <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Visible when…</h4>
+    <div className="space-y-2 border-t border-ed-border pt-3">
+      <h4 className="text-xs font-semibold text-ed-muted">Visible when…</h4>
       <ExpressionInput value={draft} onChange={setDraft} catalogue={catalogue} evaluator={evaluator} />
       <div className="flex gap-2">
         <button type="button"
           onClick={() => applyEdit((m) => updateNodeProps(m, path, { show_if: draft }))}
           disabled={!draft.trim()}
-          className="rounded bg-slate-700 px-2 py-1 text-xs text-white hover:bg-slate-800 disabled:opacity-40">
+          className="rounded bg-ed-accent px-2 py-1 text-xs text-white hover:brightness-110 disabled:opacity-40">
           Set
         </button>
         <button type="button"
           onClick={() => { setDraft(''); applyEdit((m) => unsetNodeProp(m, path, 'show_if')) }}
-          className="rounded border border-slate-300 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50">
+          className="rounded border border-ed-border px-2 py-1 text-xs text-ed-muted hover:bg-ed-subtle">
           Clear
         </button>
       </div>
-      <p className="text-[11px] text-slate-400">Always shown when empty. A malformed condition is treated as shown.</p>
+      <p className="text-[11px] text-ed-muted">Always shown when empty. A malformed condition is treated as shown.</p>
     </div>
   )
 }

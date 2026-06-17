@@ -62,16 +62,16 @@ export function ItemEditor({ path }: { path: NodePath }) {
       {promptRef && (
         <div className="mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Question</span>
-            <button aria-label="Pick prompt" onClick={() => pickInto('prompt', 'prompt')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>
+            <span className="text-xs font-medium text-ed-muted">Question</span>
+            <button aria-label="Pick prompt" onClick={() => pickInto('prompt', 'prompt')} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Pick</button>
           </div>
           {poolPrompt ? (
             <div className="mt-2">
               <PromptEditor prompt={poolPrompt} locale={locale} primaryLocale={primaryLocale} onChange={(p) => upsertPoolEntity(promptRef, p)} />
             </div>
           ) : (
-            <div className="mt-1 flex items-center gap-2 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
-              <span className="text-slate-400">◉</span><span className="font-mono">{promptRef}</span>
+            <div className="mt-1 flex items-center gap-2 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm">
+              <span className="text-ed-muted">◉</span><span className="font-mono">{promptRef}</span>
               <UpgradeBadge refStr={promptRef} />
               <span className="ml-auto"><ForkButton refStr={promptRef} /></span>
             </div>
@@ -82,31 +82,31 @@ export function ItemEditor({ path }: { path: NodePath }) {
         <div className="mb-4 space-y-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Context</span>
-              {!ctxRef && <button aria-label="Add context" onClick={addContext} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add</button>}
-              {!ctxRef && <button aria-label="Pick context" onClick={() => pickInto('context', 'context')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>}
-              {ctxRef && poolCtx && <button aria-label="Remove context" onClick={removeContext} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Remove</button>}
+              <span className="text-xs font-medium text-ed-muted">Context</span>
+              {!ctxRef && <button aria-label="Add context" onClick={addContext} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">+ Add</button>}
+              {!ctxRef && <button aria-label="Pick context" onClick={() => pickInto('context', 'context')} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Pick</button>}
+              {ctxRef && poolCtx && <button aria-label="Remove context" onClick={removeContext} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Remove</button>}
             </div>
             {ctxRef && (poolCtx
               ? <div className="mt-1"><ContextEditor context={poolCtx} locale={locale} primaryLocale={primaryLocale} onChange={(c) => upsertPoolEntity(ctxRef, c)} /></div>
-              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{ctxRef}</span> <UpgradeBadge refStr={ctxRef} /> <ForkButton refStr={ctxRef} /></div>)}
+              : <div className="mt-1 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm"><span className="font-mono">{ctxRef}</span> <UpgradeBadge refStr={ctxRef} /> <ForkButton refStr={ctxRef} /></div>)}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Instruction</span>
-              {!insRef && <button aria-label="Add instruction" onClick={addInstruction} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">+ Add</button>}
-              {!insRef && <button aria-label="Pick instruction" onClick={() => pickInto('instruction', 'instruction')} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>}
-              {insRef && poolIns && <button aria-label="Remove instruction" onClick={removeInstruction} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Remove</button>}
+              <span className="text-xs font-medium text-ed-muted">Instruction</span>
+              {!insRef && <button aria-label="Add instruction" onClick={addInstruction} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">+ Add</button>}
+              {!insRef && <button aria-label="Pick instruction" onClick={() => pickInto('instruction', 'instruction')} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Pick</button>}
+              {insRef && poolIns && <button aria-label="Remove instruction" onClick={removeInstruction} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Remove</button>}
             </div>
             {insRef && (poolIns
               ? <div className="mt-1"><InstructionEditor instruction={poolIns} locale={locale} primaryLocale={primaryLocale} onChange={(i) => upsertPoolEntity(insRef, i)} /></div>
-              : <div className="mt-1 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm"><span className="font-mono">{insRef}</span> <UpgradeBadge refStr={insRef} /> <ForkButton refStr={insRef} /></div>)}
+              : <div className="mt-1 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm"><span className="font-mono">{insRef}</span> <UpgradeBadge refStr={insRef} /> <ForkButton refStr={insRef} /></div>)}
           </div>
         </div>
       )}
       <div className="flex items-center gap-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Option (Response)</span>
-        {question && <button aria-label="Pick option" onClick={pickOption} className="rounded border border-slate-300 px-1.5 py-0.5 text-xs hover:bg-slate-50">Pick</button>}
+        <span className="text-xs font-medium text-ed-muted">Option (Response)</span>
+        {question && <button aria-label="Pick option" onClick={pickOption} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Pick</button>}
       </div>
       {isInlineOption ? (
         <div className="mt-2">
@@ -114,7 +114,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
                         onChange={(o) => applyEdit((m) => updateNodeProps(m, path, { [optionKey]: o }))} />
         </div>
       ) : (
-        <div className="mt-2 rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500">
+        <div className="mt-2 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm text-ed-muted">
           {option && 'ref' in (option as object) ? (
             <>Referenced option <span className="font-mono">{(option as { ref: string }).ref}</span><UpgradeBadge refStr={(option as { ref: string }).ref} /> <ForkButton refStr={(option as { ref: string }).ref} /></>
           ) : 'No editable option.'}
