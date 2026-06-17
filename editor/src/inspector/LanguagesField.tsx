@@ -21,20 +21,20 @@ export function LanguagesField() {
 
   return (
     <div className="space-y-1">
-      <span className="block text-xs font-medium uppercase tracking-wide text-slate-500">Languages</span>
+      <span className="block text-xs font-medium text-ed-muted">Languages</span>
       <div className="flex flex-wrap items-center gap-1">
-        <span className="rounded bg-slate-200 px-2 py-0.5 text-xs">{primary} <span className="text-slate-400">primary</span></span>
+        <span className="rounded bg-ed-subtle px-2 py-0.5 text-xs">{primary} <span className="text-ed-muted">primary</span></span>
         {langs.map((l) => (
-          <span key={l} className="flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 text-xs">
+          <span key={l} className="flex items-center gap-1 rounded bg-ed-subtle px-2 py-0.5 text-xs">
             {l}
-            <button type="button" aria-label={`Remove ${l}`} onClick={() => remove(l)} className="text-slate-400 hover:text-red-600">×</button>
+            <button type="button" aria-label={`Remove ${l}`} onClick={() => remove(l)} className="text-ed-muted hover:text-red-600">×</button>
           </span>
         ))}
       </div>
       <div className="flex gap-1">
         <input aria-label="New language code" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="fr"
-               className="w-20 rounded border border-slate-300 px-1 py-0.5 text-sm" />
-        <button type="button" aria-label="Add language" onClick={add} className="rounded border border-slate-300 px-2 py-0.5 text-xs hover:bg-slate-50">+ Add</button>
+               className="w-20 rounded border border-ed-border-strong px-1 py-0.5 text-sm" />
+        <button type="button" aria-label="Add language" onClick={add} className="rounded border border-ed-border-strong px-2 py-0.5 text-xs hover:bg-ed-subtle">+ Add</button>
       </div>
       {invalid && <p className="text-[11px] text-red-600">Invalid locale code</p>}
     </div>

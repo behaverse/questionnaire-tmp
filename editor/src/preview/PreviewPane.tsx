@@ -40,7 +40,7 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
     return projectForPreview(model, (ref) => entityMap.get(ref) ?? null)
   }, [model, entityMap])
 
-  if (!model || !runtime) return <div className="p-6 text-slate-400">Nothing to preview.</div>
+  if (!model || !runtime) return <div className="p-6 text-ed-muted">Nothing to preview.</div>
   const selectedPageId = (() => {
     if (selection && selection[0] === 'pages' && typeof selection[1] === 'number') return runtime.pages[selection[1] as number]?.id
     return runtime.pages[0]?.id
@@ -50,8 +50,8 @@ export function PreviewPane({ fetchEntity = defaultPoolFetcher }: { fetchEntity?
   const selectedElementIndex = selection && selection[0] === 'pages' && selection[2] === 'elements' && typeof selection[3] === 'number'
     ? (selection[3] as number) : undefined
   return (
-    <div className="flex h-full flex-col border-l border-slate-200">
-      {resolving && <div className="bg-white px-3 py-1 text-xs text-slate-400">resolving…</div>}
+    <div className="flex h-full flex-col border-l border-ed-border">
+      {resolving && <div className="bg-ed-panel px-3 py-1 text-xs text-ed-muted">resolving…</div>}
       <PreviewView runtime={runtime} problems={problems}
         logic={(model.logic ?? []) as LogicRule[]} validation={(model.validation ?? []) as CrossQuestionValidationRule[]}
         initialLocale={String(model.metadata.language ?? 'en')} initialScope="page" selectedPageId={selectedPageId}

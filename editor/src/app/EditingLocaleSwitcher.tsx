@@ -13,10 +13,10 @@ export function EditingLocaleSwitcher() {
            title={`Choose which language to edit. Editing a non-primary language edits that language's translation (primary is "${primary}").`}>
       Editing language
       <select aria-label="Editing language" value={value} onChange={(e) => setEditingLocale(e.target.value)}
-              className="rounded border border-slate-300 px-1 py-0.5">
+              className="rounded border border-ed-border-strong px-1 py-0.5">
         {locales.map((l) => <option key={l} value={l}>{l}</option>)}
       </select>
-      {value !== primary && <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-500">{value} translation</span>}
+      {value !== primary && <span className="rounded bg-ed-subtle px-1.5 py-0.5 text-[11px] text-ed-muted">{value} translation</span>}
     </label>
   )
 }

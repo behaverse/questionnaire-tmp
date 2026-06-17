@@ -41,9 +41,9 @@ export function StandalonePreview() {
 
   if (!bundle) {
     return (
-      <div className="mx-auto max-w-md space-y-3 p-8 text-sm text-slate-600">
-        <h1 className="text-base font-semibold text-slate-800">Questionnaire preview</h1>
-        <p className="text-slate-500">Open a <code>.bundle.json</code> exported from the editor.</p>
+      <div className="mx-auto max-w-md space-y-3 p-8 text-sm text-ed-muted">
+        <h1 className="text-base font-semibold text-ed-text">Questionnaire preview</h1>
+        <p className="text-ed-muted">Open a <code>.bundle.json</code> exported from the editor.</p>
         <label className="block">Load a bundle
           <input type="file" accept="application/json,.json" aria-label="Load a bundle"
                  onChange={(e) => { const f = e.target.files?.[0]; if (f) void onFile(f) }}
@@ -56,12 +56,12 @@ export function StandalonePreview() {
 
   return (
     <div className="flex h-screen flex-col">
-      <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-4 py-2 text-sm">
-        <span className="font-medium text-slate-800">{String(bundle.questionnaire.metadata.title ?? bundle.questionnaire.metadata.id)}</span>
-        <span className="text-xs text-slate-400">read-only preview — not a deployment</span>
+      <header className="flex items-center gap-2 border-b border-ed-border bg-ed-panel px-4 py-2 text-sm">
+        <span className="font-medium text-ed-text">{String(bundle.questionnaire.metadata.title ?? bundle.questionnaire.metadata.id)}</span>
+        <span className="text-xs text-ed-muted">read-only preview — not a deployment</span>
       </header>
       {!projected ? (
-        <div className="p-6 text-slate-400">Resolving…</div>
+        <div className="p-6 text-ed-muted">Resolving…</div>
       ) : (
         <PreviewView runtime={projected.runtime} problems={projected.problems}
           logic={(bundle.questionnaire.logic ?? []) as LogicRule[]}

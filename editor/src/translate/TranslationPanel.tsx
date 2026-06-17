@@ -27,7 +27,7 @@ export function TranslationPanel() {
 
   if (!target) {
     return (
-      <div className="p-8 text-sm text-slate-500">
+      <div className="p-8 text-sm text-ed-muted">
         Pick a non-primary editing language in the top bar to translate.
       </div>
     )
@@ -77,10 +77,10 @@ export function TranslationPanel() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-2 text-sm">
+      <div className="flex items-center gap-3 border-b border-ed-border bg-ed-panel px-4 py-2 text-sm">
         <span className="font-semibold">Translate → {target}</span>
-        <span className="text-slate-400">{doneCount} / {allRows.length} translated</span>
-        <label className="ml-auto flex items-center gap-1 text-xs text-slate-500">
+        <span className="text-ed-muted">{doneCount} / {allRows.length} translated</span>
+        <label className="ml-auto flex items-center gap-1 text-xs text-ed-muted">
           <input type="checkbox" checked={untranslatedOnly} onChange={(e) => setUntranslatedOnly(e.target.checked)} /> show untranslated only
         </label>
       </div>
@@ -92,19 +92,19 @@ export function TranslationPanel() {
           const rows = untranslatedOnly ? g.rows.filter((r) => !r.done) : g.rows
           if (!rows.length) return null
           return (
-            <div key={g.groupId} className="mb-4 rounded border border-slate-200">
-              <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50 px-3 py-1 text-xs text-slate-500">
-                <span className="uppercase tracking-wide">{g.kind}</span><span className="font-mono">{g.title}</span>
+            <div key={g.groupId} className="mb-4 rounded border border-ed-border">
+              <div className="flex items-center gap-2 border-b border-ed-border bg-ed-subtle px-3 py-1 text-xs text-ed-muted">
+                <span>{g.kind}</span><span className="font-mono">{g.title}</span>
               </div>
               {rows.map((row: TransRow) => (
                 <div key={row.id} className="grid grid-cols-[7rem_1fr_1fr_auto] items-start gap-2 px-3 py-2">
-                  <span className="pt-1 text-xs text-slate-400">{row.fieldLabel}</span>
-                  <div className="whitespace-pre-wrap pt-1 text-sm text-slate-600">{row.source || <span className="text-slate-300">(empty)</span>}</div>
+                  <span className="pt-1 text-xs text-ed-muted">{row.fieldLabel}</span>
+                  <div className="whitespace-pre-wrap pt-1 text-sm text-ed-muted">{row.source || <span className="text-ed-muted/50">(empty)</span>}</div>
                   <textarea aria-label={`translate ${row.id}`} rows={1} defaultValue={row.target}
                             onChange={(e) => onEditText(g, row, e.target.value)}
-                            className="w-full rounded border border-slate-300 px-2 py-1 text-sm" />
+                            className="w-full rounded border border-ed-border-strong px-2 py-1 text-sm" />
                   <select aria-label={`status ${row.id}`} value={row.status} onChange={(e) => onEditStatus(g, e.target.value)}
-                          className="rounded border border-slate-300 px-1 py-0.5 text-xs">
+                          className="rounded border border-ed-border-strong px-1 py-0.5 text-xs">
                     {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
@@ -112,7 +112,7 @@ export function TranslationPanel() {
             </div>
           )
         })}
-        {!groups.length && <div className="text-sm text-slate-400">No translatable content found.</div>}
+        {!groups.length && <div className="text-sm text-ed-muted">No translatable content found.</div>}
       </div>
     </div>
   )

@@ -93,7 +93,7 @@ export function Inspector() {
     body = (
       <div className="space-y-3">
         <h3 className="text-sm font-semibold capitalize text-ed-text">{kind}</h3>
-        <pre className="overflow-auto rounded bg-slate-50 p-2 text-xs text-slate-600">{JSON.stringify(node, null, 2)}</pre>
+        <pre className="overflow-auto rounded bg-ed-subtle p-2 text-xs text-ed-muted">{JSON.stringify(node, null, 2)}</pre>
         {kind === 'item' && <ShowIfEditor key={pathKey(sel!)} path={sel!} />}
       </div>
     )

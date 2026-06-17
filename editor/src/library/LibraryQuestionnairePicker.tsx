@@ -32,15 +32,15 @@ export function LibraryQuestionnairePicker({ onPick, onClose, list = realList }:
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30" onClick={onClose}>
-      <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-white shadow-xl" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center gap-2 border-b border-slate-200 p-3">
+      <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-ed-panel shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-2 border-b border-ed-border p-3">
           <strong className="text-sm">Open a questionnaire from the Library</strong>
-          <button onClick={onClose} className="ml-auto text-slate-400 hover:text-slate-700">✕</button>
+          <button onClick={onClose} className="ml-auto text-ed-muted hover:text-ed-text">✕</button>
         </div>
         <div className="p-3">
           <input autoFocus aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Filter questionnaires…"
-                 className="w-full rounded border border-slate-300 px-2 py-1 text-sm" />
-          <div className="mt-1 flex items-center justify-between text-xs text-slate-400">
+                 className="w-full rounded border border-ed-border-strong px-2 py-1 text-sm" />
+          <div className="mt-1 flex items-center justify-between text-xs text-ed-muted">
             <span>Filter by title or id.</span>
             <span>{loading ? 'loading…' : `${items.length}${q ? ` of ${all.length}` : ''} questionnaire${items.length === 1 ? '' : 's'}`}</span>
           </div>
@@ -49,15 +49,15 @@ export function LibraryQuestionnairePicker({ onPick, onClose, list = realList }:
             {items.map((it) => (
               <li key={`${it.id}@${it.version}`}>
                 <button onClick={() => onPick(it.id, it.version)}
-                        className="flex w-full items-center gap-2 rounded px-2 py-1 text-left text-sm hover:bg-slate-50">
+                        className="flex w-full items-center gap-2 rounded px-2 py-1 text-left text-sm hover:bg-ed-subtle">
                   {it.title && <span className="truncate">{it.title}</span>}
-                  <span className="font-mono text-xs text-slate-400">{it.id}</span>
-                  <span className="ml-auto text-xs text-slate-400">{it.version}</span>
+                  <span className="font-mono text-xs text-ed-muted">{it.id}</span>
+                  <span className="ml-auto text-xs text-ed-muted">{it.version}</span>
                 </button>
               </li>
             ))}
             {!loading && items.length === 0 && !error && (
-              <li className="px-2 py-1 text-sm text-slate-400">{all.length === 0 ? 'No questionnaires in the Library.' : 'No matches.'}</li>
+              <li className="px-2 py-1 text-sm text-ed-muted">{all.length === 0 ? 'No questionnaires in the Library.' : 'No matches.'}</li>
             )}
           </ul>
         </div>
