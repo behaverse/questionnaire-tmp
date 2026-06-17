@@ -21,6 +21,8 @@ test('a score can be authored in the Scores panel', async ({ page }) => {
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
   await page.getByRole('button', { name: /questionnaire settings/i }).click() // select the questionnaire root → q-level Inspector (first page is auto-selected on load)
 
+  // ED-H3: Logic/Validation/Scoring are now inspector tabs — open the Scoring tab.
+  await page.getByRole('tab', { name: /scoring/i }).click()
   // The Scores panel is in the questionnaire-root Inspector (nothing selected on load).
   await expect(page.getByRole('heading', { name: /^scores$/i })).toBeVisible()
   await page.getByRole('button', { name: /add score/i }).click()

@@ -25,11 +25,11 @@ test('open a file → select → export → screenshot', async ({ page }) => {
 
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-a-workspace.png', fullPage: true })
 
+  // ED-H3: Export is now a dropdown menu folding {Export JSON, Export bundle, Open preview}.
+  await page.getByRole('button', { name: /export/i }).click() // open the Export ▾ menu
   const [download] = await Promise.all([
     page.waitForEvent('download'),
-    // exact name: an "Export bundle" button now also exists (ED-C2a), so a loose
-    // /export/i regex matches two buttons (strict-mode violation).
-    page.getByRole('button', { name: 'Export', exact: true }).click(),
+    page.getByRole('menuitem', { name: /export json/i }).click(),
   ])
   const path = await download.path()
   const json = JSON.parse(readFileSync(path!, 'utf8'))

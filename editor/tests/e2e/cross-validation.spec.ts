@@ -20,6 +20,8 @@ test('a cross-question validation rule shows its message in the preview when tri
   })
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
   await page.getByRole('button', { name: /questionnaire settings/i }).click() // select the questionnaire root → q-level Inspector (first page is auto-selected on load)
+  // ED-H3: Logic/Validation/Scoring are now inspector tabs — open the Validation tab.
+  await page.getByRole('tab', { name: /validation/i }).click()
   // The Validation panel shows the authored rule at the questionnaire root.
   await expect(page.getByText(/validation rules/i)).toBeVisible()
 
