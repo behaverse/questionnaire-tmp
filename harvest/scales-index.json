@@ -1,0 +1,309 @@
+{
+  "0705e4e1dd4538c8": [
+    "opt_frequency_7"
+  ],
+  "09bf559b179ec6ce": [
+    "opt_apps_average_scale",
+    "opt_email_average_scale",
+    "opt_games_average_scale",
+    "opt_im_average_scale",
+    "opt_music_average_scale",
+    "opt_nonmusic_audios_average_scale",
+    "opt_number",
+    "opt_phone_average_scale",
+    "opt_print_average_scale",
+    "opt_tv_average_scale",
+    "opt_videos_average_scale",
+    "opt_web_average_scale"
+  ],
+  "0ad6c357e180c120": [
+    "opt_icar16_relation_14_8"
+  ],
+  "0ad89d8dfde8d364": [
+    "opt_mw_truth_7b"
+  ],
+  "151f4e5342c93e3b": [
+    "opt_grit12_similarity_5"
+  ],
+  "163520c9e46bfa7f": [
+    "opt_icar16_letters_8_8"
+  ],
+  "16e0391addef2392": [
+    "opt_similarity_7"
+  ],
+  "16e0a5227f918cbf": [
+    "opt_psqi_problem_4"
+  ],
+  "1718a1058983d2ea": [
+    "opt_aiss_scale"
+  ],
+  "199e037e6860878d": [
+    "opt_sex_4"
+  ],
+  "1ed310379ce7e138": [
+    "opt_whoqol_satisfaction_scale"
+  ],
+  "1f73182f51e3506d": [
+    "opt_ncs_18_similarity_5"
+  ],
+  "20eab00540fa6071": [
+    "opt_frequency_4"
+  ],
+  "2259eecd3f049ca4": [
+    "opt_icar16_numbers_10_8"
+  ],
+  "230da10d4d1f4a7c": [
+    "opt_xcit_occupation_11"
+  ],
+  "24784a1bc0daded6": [
+    "opt_bfi_2_agreement_5"
+  ],
+  "24a020ce84fe352e": [
+    "opt_sci_quality_5"
+  ],
+  "26f54a87a88d1c83": [
+    "opt_psqi_frequency_4"
+  ],
+  "2a65d7a19036f486": [
+    "opt_maas_frequency_7"
+  ],
+  "2a9d20173f8c0ded": [
+    "opt_hours_minutes_time"
+  ],
+  "2b585c1863a316e1": [
+    "opt_sci_minutes_5_o"
+  ],
+  "2fc2a3b50c6a934b": [
+    "opt_hhmm_per_day_text"
+  ],
+  "311b0e98c6c45feb": [
+    "opt_agreement_4"
+  ],
+  "35f7812a50001035": [
+    "opt_psqi_quality_4"
+  ],
+  "370ecaf62002cf65": [
+    "opt_relative_to_average_7"
+  ],
+  "3791e5cf3c8dcc1e": [
+    "opt_quality_adv_7b"
+  ],
+  "3a2f8d758d8c05ac": [
+    "opt_agreement_7n"
+  ],
+  "3f83926f7ac44b49": [
+    "opt_whoqol_frequency_scale"
+  ],
+  "412aad451a6e5fe2": [
+    "opt_arousal_7b"
+  ],
+  "4156ebe0105b3a2b": [
+    "opt_mw_frequency_7b_2"
+  ],
+  "423e9066a59611ee": [
+    "opt_whoqol_amount_v3_scale"
+  ],
+  "43d970262abe3f8f": [
+    "opt_mwq_frequency_6"
+  ],
+  "4ca31bf87885e35b": [
+    "opt_xcit_edu_field_12"
+  ],
+  "4d297ae2b0028721": [
+    "opt_sci_nights_5"
+  ],
+  "4d4f8a2ff7aaab71": [
+    "opt_xcit_financial_7"
+  ],
+  "5120b8c62e304acf": [
+    "opt_bis11_frequency_4"
+  ],
+  "59065c31ebdd82ca": [
+    "opt_upps_sf_agreement_4"
+  ],
+  "59e4f676b468832e": [
+    "opt_amount_7b"
+  ],
+  "5f5f8e273ba3ac42": [
+    "opt_who5_frequency_6"
+  ],
+  "63b497ff1f99ab2f": [
+    "opt_loudness_7b"
+  ],
+  "6b385ed3c3836393": [
+    "opt_icar16_letters_1_8"
+  ],
+  "6b508bb77cd86609": [
+    "opt_icar16_letters_4_8"
+  ],
+  "6dc4a8095c8010d6": [
+    "opt_sqs_frequency_4"
+  ],
+  "7213c71c585d3b78": [
+    "opt_sci_minutes_5"
+  ],
+  "72458a62b6052b3c": [
+    "opt_clarity_7b"
+  ],
+  "72bc6c2735ee0bbf": [
+    "opt_hand_preference_7"
+  ],
+  "760f9e686918afdd": [
+    "opt_cfs_scale"
+  ],
+  "767072a54956c968": [
+    "opt_height_us"
+  ],
+  "78c404819ee91b28": [
+    "opt_years"
+  ],
+  "7beef1d43f4d52af": [
+    "opt_relative_quality_7b"
+  ],
+  "7c05a9b4908ca62f": [
+    "opt_cfq_scale"
+  ],
+  "7cb002f9d2e4b560": [
+    "opt_corrected_to_normal_3"
+  ],
+  "7d210aaf14f710ad": [
+    "opt_adc_ease_4"
+  ],
+  "802694974e471f53": [
+    "opt_nasa_tlx_height_7b"
+  ],
+  "80b159829f3d3806": [
+    "opt_ess_frequency_4"
+  ],
+  "8133363940d8aa25": [
+    "opt_days_per_week"
+  ],
+  "81ea354f21bfd834": [
+    "opt_minutes_per_day"
+  ],
+  "825bdf3834bad50b": [
+    "opt_hours_minutes_duration",
+    "opt_minutes_duration"
+  ],
+  "875b931128f534d4": [
+    "opt_arces_frequency_5",
+    "opt_mfs_frequency_5"
+  ],
+  "88205c29ac82d95c": [
+    "opt_xcit_edu_level_9"
+  ],
+  "8c7658f4ea2d697b": [
+    "opt_mmi_frequency_4"
+  ],
+  "8ff287a92ed9fafe": [
+    "opt_mmi_sf_frequency_5b"
+  ],
+  "93f17febfe911453": [
+    "opt_sci_month_5"
+  ],
+  "9491e2911364ee1a": [
+    "opt_avg_hour_scale"
+  ],
+  "97c0746ca0fc611c": [
+    "opt_icar16_weekdays_16_8"
+  ],
+  "99ff569a803d4cb3": [
+    "opt_raven18_scale"
+  ],
+  "9ad14776b629a10c": [
+    "opt_input_device"
+  ],
+  "9b1a37d886808b8d": [
+    "opt_bisbas_scale"
+  ],
+  "9b2b73b24f00b6b0": [
+    "opt_adc_frequency_4"
+  ],
+  "9d48168716292f04": [
+    "opt_xcit_job_type_10"
+  ],
+  "9e1d1b3d18046456": [
+    "opt_valence_7b"
+  ],
+  "9e1efae1e7b308ee": [
+    "opt_ehi_sf_1_scale"
+  ],
+  "a27523318fe50873": [
+    "opt_mw_frequency_7b"
+  ],
+  "a4cd075992e4ca8b": [
+    "opt_sci_5_scale"
+  ],
+  "aee7f1f7db153943": [
+    "opt_whoqol_quality_scale"
+  ],
+  "b2197c2469b9a081": [
+    "opt_webexec_problems_4"
+  ],
+  "b590d0fb0f3e1f78": [
+    "opt_sci_amount_5"
+  ],
+  "ba96783f5e705379": [
+    "opt_icar16_numbers_6_8"
+  ],
+  "c6dde3866a3d722c": [
+    "opt_i_panas_sf_frequency_5b"
+  ],
+  "cd2ef515a4446c9b": [
+    "opt_whoqol_amount_scale"
+  ],
+  "d6fd948b9ad6243a": [
+    "opt_whoqol_quality_v2_scale"
+  ],
+  "d740dbd3f42c657b": [
+    "opt_mmi_sf_frequency_5b_2"
+  ],
+  "d82ceabe8a9094e0": [
+    "opt_sss_sleepiness_7"
+  ],
+  "d8749ead768e975e": [
+    "opt_number_10"
+  ],
+  "d93375ce6cff1376": [
+    "opt_kss_sleepiness_10"
+  ],
+  "dd9a65744af1d59f": [
+    "opt_agreement_7"
+  ],
+  "dfa7954fd35d4bd8": [
+    "opt_ncs_6_similarity_5b"
+  ],
+  "dfc2b8a51e64ede7": [
+    "opt_difficulty_7"
+  ],
+  "e13223f435fe2dc6": [
+    "opt_icar16_abc_8"
+  ],
+  "e453da1753e318c3": [
+    "opt_whoqol_amount_v2_scale"
+  ],
+  "e7bfdd9c93d49c24": [
+    "opt_rei_similarity_5"
+  ],
+  "e90e3d7a7d56d02a": [
+    "opt_text",
+    "opt_text_multiline"
+  ],
+  "eb7b2567ceb4ae3b": [
+    "opt_xcit_demographics_12_scale",
+    "opt_xcit_demographics_2_scale",
+    "opt_xcit_demographics_3_scale"
+  ],
+  "eeedef13fd00bcc9": [
+    "opt_icar16_letters_2_8"
+  ],
+  "f0cc4167a123e6cc": [
+    "opt_xcit_debrief_number_7"
+  ],
+  "f9ad14bd06baa560": [
+    "opt_month_year"
+  ],
+  "fdc464bd85fc8100": [
+    "opt_weight_us"
+  ]
+}

@@ -1,0 +1,5 @@
+# Raw fetched source material may contain copyrighted instrument text — do not commit.
+sources/
+
+# Regenerated dedup corpus (derivable from survey_db.sqlite — large, not committed).
+_corpus/
