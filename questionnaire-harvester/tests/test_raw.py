@@ -1,4 +1,4 @@
-from harvester.raw import RawQuestionnaire
+from harvester.raw import RawQuestionnaire, RawScale, RawItem
 from harvester.licensing import LicenseFlag
 
 def _sample():
@@ -18,3 +18,13 @@ def test_raw_roundtrips_through_dict():
     rq = _sample()
     assert RawQuestionnaire.from_dict(rq.to_dict()).qst_id == "qst_gad7"
     assert RawQuestionnaire.from_dict(rq.to_dict()).items[0].text.startswith("Feeling nervous")
+
+    # Verify that __post_init__ re-coerces nested dicts back to their dataclass types
+    result = RawQuestionnaire.from_dict(rq.to_dict())
+    assert isinstance(result.scale, RawScale)
+    assert isinstance(result.items[0], RawItem)
+    assert isinstance(result.license, LicenseFlag)
+
+    # Idempotency: re-constructing from an already-typed object must not crash and stays typed
+    result2 = RawQuestionnaire.from_dict(result.to_dict())
+    assert isinstance(result2.scale, RawScale)
