@@ -681,3 +681,9 @@ Scoring → Inspector tabs; single-file offline preview; broader visual restyle;
 - ed-h3-3: `Topbar.tsx` Validate chip — `(validation as { errors?: unknown[] }).errors?.length ?? '!'` cast is dead-but-harmless (store guarantees `errors` when invalid); simplify to `validation.errors.length`.
 - ed-h3-4: `LanguagesField` `LANGUAGES` micro-label still uppercase (out of H3 scope) — re-token to sentence-case `text-ed-muted`.
 - ed-h3-5 (ED-H follow-up, bigger): ~174 `slate-*` remain repo-wide in CRUD-EDITOR INTERNALS (RuleEditor, ScoreEditor, OptionEditor, ItemEditor, entity editors, library dialogs) — never in ED-H's chrome-only scope. A future "re-token editor internals" pass would finish the visual system end-to-end.
+
+## ED-H4 (re-token editor internals) — done; deferred Minors (final-review triage, 2026-06-17)
+ED-H4 re-tokened the ~174 `slate-*` in CRUD editors/dialogs/pickers/preview/misc to `ed-*` — the editor chrome is now 100% tokenized (zero `slate-*` in non-test src). Closes ed-h3-2/-4/-5. Deferred:
+- ed-h4-1: `LanguagesField` "primary" language pill uses `bg-ed-subtle` (the mapping table said `bg-ed-accent-soft` for selected/active fills) — it's a static neutral badge, not a selection, so ed-subtle is intentional; revisit if an accent-tinted active-language chip is wanted.
+- ed-h4-2: `TranslationPanel` `(empty)` placeholder uses `text-ed-muted/50` (opacity variant) rather than flat `text-ed-muted` — intentional for a lighter placeholder; documented divergence.
+(ed-h3-5 LibraryPicker selected==hover regression was FOUND + FIXED in H4 → `bg-ed-accent-soft`.)
