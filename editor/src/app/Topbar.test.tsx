@@ -12,7 +12,8 @@ describe('Topbar Open preview', () => {
   it('writes the bundle to sessionStorage and opens preview.html', () => {
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
     render(<Topbar onValidate={() => {}} />)
-    fireEvent.click(screen.getByRole('button', { name: /open preview/i }))
+    fireEvent.click(screen.getByRole('button', { name: /export/i }))      // open the Export ▾ menu
+    fireEvent.click(screen.getByRole('menuitem', { name: /open preview/i }))
     const raw = sessionStorage.getItem('qv-preview-bundle')
     expect(raw).toBeTruthy()
     expect(JSON.parse(raw!).questionnaire.metadata.id).toBe('qst_x')

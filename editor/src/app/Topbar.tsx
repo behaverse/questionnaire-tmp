@@ -1,8 +1,9 @@
-import { ArrowLeft, RefreshCw, ExternalLink, Check, Eye, Languages, Download, Package } from 'lucide-react'
+import { ArrowLeft, RefreshCw, Check, AlertTriangle, Eye, Languages, Download, Package, ExternalLink } from 'lucide-react'
 import { useEditorStore } from '../state/store'
 import { exportToFile, exportBundle, bundleData } from '../persistence/file'
 import { EditingLocaleSwitcher } from './EditingLocaleSwitcher'
-import { Button } from '../ui/Button'
+import { Button, IconButton } from '../ui/Button'
+import { Menu } from '../ui/Menu'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
   const { model, dirty, validation, previewOpen, togglePreview, translateView } = useEditorStore()
@@ -28,57 +29,48 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
       <span className="font-medium text-ed-text">{model.metadata.title ?? model.metadata.id}</span>
       {dirty && <span className="text-xs text-amber-600">● unsaved</span>}
       <div className="ml-auto flex items-center gap-2">
+        {/* Utilities */}
         <EditingLocaleSwitcher />
         {Object.keys(staleness).length > 0 && (
           <span className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-800">⬆ {Object.keys(staleness).length} update{Object.keys(staleness).length > 1 ? 's' : ''}</span>
         )}
+        <IconButton icon={RefreshCw} label="Check for updates" onClick={() => void refreshStaleness()} />
         <Button
           variant="secondary"
-          icon={RefreshCw}
-          title="Check the Library for newer versions of any pinned references"
-          onClick={() => void refreshStaleness()}
-        >Check for updates</Button>
-        <Button
-          variant="secondary"
-          icon={ExternalLink}
-          title="Open this draft full-screen in a separate tab (read-only preview)"
-          onClick={() => {
-            try { sessionStorage.setItem('qv-preview-bundle', JSON.stringify(bundleData(model, pool))) } catch { /* quota: fall through */ }
-            window.open('/preview.html', '_blank')
-          }}
-        >Open preview</Button>
-        <Button
-          variant="secondary"
-          icon={Check}
+          icon={invalid ? AlertTriangle : Check}
           title="Re-check this questionnaire against the Schema 2 rules"
           onClick={onValidate}
-        >✓ Validate</Button>
-        <Button
-          variant={previewOpen ? 'primary' : 'secondary'}
-          icon={Eye}
-          aria-pressed={previewOpen}
-          title="Show/hide the live inline preview pane"
-          onClick={togglePreview}
-        >▢ Preview</Button>
-        <Button
-          variant={translateView ? 'primary' : 'secondary'}
-          icon={Languages}
-          aria-pressed={translateView}
-          title="Open the side-by-side translation view"
-          onClick={() => setTranslateView(!translateView)}
-        >Translate</Button>
-        <Button
-          variant="primary"
-          icon={Download}
-          title="Download the questionnaire JSON only (references not included)"
-          onClick={doExport}
-        >Export</Button>
-        <Button
-          variant="secondary"
-          icon={Package}
-          title="Download a self-contained bundle: the questionnaire plus all referenced/drafted entities (opens offline in the standalone preview)"
-          onClick={() => { if (model) exportBundle(model, pool) }}
-        >Export bundle</Button>
+        >
+          {invalid ? `Validate (${(validation as { errors?: unknown[] }).errors?.length ?? '!'})` : 'Validate'}
+        </Button>
+
+        {/* Mode toggles — segmented group */}
+        <div className="inline-flex overflow-hidden rounded-md border border-ed-border-strong [&>button]:rounded-none [&>button]:border-0">
+          <Button
+            variant={previewOpen ? 'primary' : 'ghost'}
+            icon={Eye}
+            aria-pressed={previewOpen}
+            title="Show/hide the live inline preview pane"
+            onClick={togglePreview}
+          >Preview</Button>
+          <Button
+            variant={translateView ? 'primary' : 'ghost'}
+            icon={Languages}
+            aria-pressed={translateView}
+            title="Open the side-by-side translation view"
+            onClick={() => setTranslateView(!translateView)}
+          >Translate</Button>
+        </div>
+
+        {/* Export menu */}
+        <Menu label="Export" icon={Download} variant="primary" items={[
+          { label: 'Export JSON', icon: Download, title: 'Download the questionnaire JSON only (references not included)', onClick: doExport },
+          { label: 'Export bundle', icon: Package, title: 'Download a self-contained bundle (opens offline in the standalone preview)', onClick: () => { if (model) exportBundle(model, pool) } },
+          { label: 'Open preview', icon: ExternalLink, title: 'Open this draft full-screen in a separate tab (read-only preview)', onClick: () => {
+            try { sessionStorage.setItem('qv-preview-bundle', JSON.stringify(bundleData(model, pool))) } catch { /* quota */ }
+            window.open('/preview.html', '_blank')
+          } },
+        ]} />
       </div>
     </header>
   )
