@@ -674,3 +674,10 @@ Scoring → Inspector tabs; single-file offline preview; broader visual restyle;
 - ed-h2-4: locale parity — tree labels use `editingLocale ?? language`; canvas item rows use `language` only, so canvas rows don't re-localize when the editing locale changes. Read `editingLocale` in Canvas for parity.
 - ed-h2-5: stale comment in `tests/e2e/show-if.spec.ts` (~line 33) still says labels are `inline · pr_…@vXX` — the `inline ·` prefix and `@version` are gone post-H2.
 - ed-h2-6: `treeModel.elementLabel` / `TreeRow.label` is still computed but no longer rendered (superseded by `resolveNodeLabel`) — candidate for removal in a later cleanup (touches treeModel tests).
+
+## ED-H3 (topbar hierarchy + inspector tabs) — deferred (final-review triage, 2026-06-17)
+- ed-h3-1: `Tabs.tsx` — wire `aria-controls`/`id` between `role="tab"` and `role="tabpanel"` + `aria-labelledby` on the panel (AA-nice-to-have; roles already functional).
+- ed-h3-2: residual CRUD-internal/debug `slate-*` in H3-touched files: `hover:bg-slate-50` on the panel summary-row buttons (`LogicPanel.tsx`, `ValidationPanel.tsx`, `ScoringPanel.tsx`) and the `<pre>` debug block (`Inspector.tsx`). Out of H3's header-only re-token scope.
+- ed-h3-3: `Topbar.tsx` Validate chip — `(validation as { errors?: unknown[] }).errors?.length ?? '!'` cast is dead-but-harmless (store guarantees `errors` when invalid); simplify to `validation.errors.length`.
+- ed-h3-4: `LanguagesField` `LANGUAGES` micro-label still uppercase (out of H3 scope) — re-token to sentence-case `text-ed-muted`.
+- ed-h3-5 (ED-H follow-up, bigger): ~174 `slate-*` remain repo-wide in CRUD-EDITOR INTERNALS (RuleEditor, ScoreEditor, OptionEditor, ItemEditor, entity editors, library dialogs) — never in ED-H's chrome-only scope. A future "re-token editor internals" pass would finish the visual system end-to-end.
