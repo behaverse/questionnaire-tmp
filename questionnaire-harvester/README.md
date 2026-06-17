@@ -27,11 +27,14 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
 Output:
 
 ```
-harvested qst_gad7: reused=['opt_phq_frequency_4', 'ins_phq_2weeks'] minted=7 open_qs=2
+harvested qst_gad7: reused=['opt_phq_frequency_4'] minted=8 open_qs=2
 ```
 
-The GAD-7 reused PHQ-9's `opt_phq_frequency_4` response scale (same 4-point frequency
-anchors, same values) rather than minting a duplicate. Only the 7 item prompts were new.
+The GAD-7 reused PHQ-9's `opt_phq_frequency_4` response scale (identical 4-point frequency
+anchors and values). The instruction was **minted as new** (`ins_gad7_instruction`) because
+its text differs slightly from PHQ-9's — the dedup engine correctly detected this and did not
+merge them. The 8 minted entities are the 7 item prompts (`pr_gad7_1..7`) and the
+instruction.
 
 ---
 
@@ -160,6 +163,11 @@ Expected: 15 tests, all passing.
 
 These are tracked but deliberately deferred:
 
+- **PsyToolkit adapter domain/population hardcoding** — currently hardcodes
+  `domain=["anxiety"]` and `population=["adults"]` (correct only for GAD-7); real per-instrument
+  classification extraction from page metadata is a follow-up.
+- **Embedded newlines in harvested descriptions** — source `<p>` tags may produce
+  multi-line `description` fields in canonical entities; normalization is a follow-up.
 - **Fuzzy near-match tier** — a `review/dedup.md` list for fingerprint near-misses (e.g.
   anchor text differs by one word); currently only exact fingerprint matches reuse.
 - **`psychology_tools` adapter** — source adapter for psychologytools.com.
