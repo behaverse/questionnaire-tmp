@@ -47,8 +47,11 @@ def test_mints_prompts_and_sets_license_enum_and_x_metadata():
 
 
 def _gad7_with_context():
+    # Mirror what the adapter produces: temporal frame split into context_text, and the
+    # instruction trimmed + capitalized.
     rq = _gad7()
-    rq.context_text = "Over the last 2 weeks,"   # what the adapter now peels off
+    rq.context_text = "Over the last 2 weeks,"
+    rq.instruction_text = "How often have you been bothered by any of the following problems?"
     return rq
 
 def test_reuses_known_library_context_and_mints_no_context():
