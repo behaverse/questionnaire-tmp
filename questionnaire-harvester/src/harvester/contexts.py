@@ -1,15 +1,15 @@
-"""Split a leading temporal frame out of an instruction into a Context, and reuse a
-known Library Context when the phrase matches one we already have.
+"""Split a leading temporal frame out of an instruction into a Context.
 
-Rationale: "Over the last 2 weeks, how often have you been bothered ...?" mixes a
-temporal *context* with the *instruction* proper. The OD-15 entity model keeps these as
-separate entities (Question = Prompt + optional Context + Instruction). The temporal
-frame recurs across instruments (PHQ-9, GAD-7, ...) so it should be a single shared
-Context, not minted per questionnaire.
+"Over the last 2 weeks, how often have you been bothered ...?" mixes a temporal *context*
+with the *instruction* proper. The OD-15 entity model keeps these as separate entities
+(Question = Prompt + optional Context + Instruction).
 
-Context dedup is not yet in the fingerprint engine (that generalisation is a follow-up);
-for now a small curated KNOWN_CONTEXTS map points recognised temporal phrases at the
-Context already published in the Library.
+Faithfulness policy (owner, 2026-06-18): a base import keeps the source text exactly as
+written. The Context is therefore minted verbatim from the source phrase — we do NOT
+normalise "2" to "two" or "last" to "past" to reuse a near-but-not-identical Library
+Context. Near-duplicates are acceptable; variant-consistency rules are defined later.
+(Case/whitespace are treated as cosmetic by the dedup engine, so genuinely identical
+phrases still share one minted entity.)
 """
 import re
 
@@ -20,23 +20,6 @@ _TEMPORAL_RE = re.compile(
     r"(?:day|week|month|year)s?)\s*,\s*",
     re.IGNORECASE,
 )
-
-_NUM_WORDS = {"1": "one", "2": "two", "3": "three", "4": "four", "5": "five",
-              "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten"}
-
-# Normalised temporal phrase -> (context_id, version) for Contexts already in the Library.
-# The normaliser folds last/past/previous -> "past" and digits -> words, so both
-# "Over the last 2 weeks," (source) and "Over the last two weeks," (Library) map here.
-KNOWN_CONTEXTS = {
-    "over the past two weeks": ("ctx_past_2_weeks", "v26.0606"),
-}
-
-
-def _norm_temporal(phrase: str) -> str:
-    s = " ".join(phrase.strip().lower().rstrip(",").split())
-    toks = [_NUM_WORDS.get(t, t) for t in s.split()]
-    toks = ["past" if t in ("last", "previous", "past") else t for t in toks]
-    return " ".join(toks)
 
 
 def split_temporal_context(instruction_text: str):
@@ -54,9 +37,3 @@ def split_temporal_context(instruction_text: str):
     if remainder:
         remainder = remainder[0].upper() + remainder[1:]
     return context_text, remainder
-
-
-def resolve_known_context(context_text: str):
-    """Return ``(context_id, version)`` if this temporal phrase matches a known Library
-    Context, else ``None``."""
-    return KNOWN_CONTEXTS.get(_norm_temporal(context_text))

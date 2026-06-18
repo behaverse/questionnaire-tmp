@@ -27,18 +27,23 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
 Output:
 
 ```
-harvested qst_gad7: reused=['opt_phq_frequency_4', 'ctx_past_2_weeks'] minted=['ins_gad7_instruction', 'pr_gad7_1'..'pr_gad7_7'] open_qs=3
+harvested qst_gad7: reused=['opt_phq_frequency_4', 'ins_gad7_instruction'] minted=['ctx_over_the_last_2_weeks', 'pr_gad7_1'..'pr_gad7_7'] open_qs=3
 ```
 
-The GAD-7 **reused** two shared entities: PHQ-9's `opt_phq_frequency_4` response scale
-(identical 4-point frequency anchors and values) and the Library's `ctx_past_2_weeks@v26.0606`
-temporal context. The adapter splits a leading temporal frame ("Over the last 2 weeks,") off the
-instruction into that Context (see `contexts.py`); the remaining instruction
-("How often have you been bothered by the following problems?") is **minted as new**
-(`ins_gad7_instruction`) because its text differs from PHQ-9's "…any of the following problems?"
-— the dedup engine correctly declined to merge them. The 8 minted entities are that instruction
-plus the 7 item prompts (`pr_gad7_1..7`). Both reuses become open questions for owner
-confirmation.
+The GAD-7 **reused** PHQ-9's `opt_phq_frequency_4` response scale (identical 4-point frequency
+anchors, case treated as cosmetic). The adapter splits the leading temporal frame
+("Over the last 2 weeks,") off the instruction into a Context (see `contexts.py`); that Context is
+**minted verbatim** (`ctx_over_the_last_2_weeks`) — per the faithfulness policy we keep the source
+text exactly ("2 weeks", not "two weeks"), so we do NOT reuse the Library's near-but-different
+`ctx_past_2_weeks` ("…two weeks,"). The trimmed instruction
+("How often have you been bothered by the following problems?") is shared with prior harvests when
+identical. Because the Context id is content-based, PHQ-9 and GAD-7 (whose temporal phrase is
+byte-identical) share the one minted Context losslessly.
+
+**Faithfulness policy (base imports):** the imported text is kept exactly as the source wrote it.
+Reuse fires only when content is identical (capitalisation and whitespace are cosmetic); a real
+word/number difference ("2" vs "two") produces a faithful near-duplicate rather than a lossy reuse.
+Variant-consistency rules across questionnaires are defined later, downstream of import.
 
 ---
 
@@ -79,7 +84,7 @@ All paths are relative to the repo root. Override with CLI flags:
 | `sources/` | Source adapters — `SourceAdapter` base + `PsyToolkitAdapter` (built); extend here for new sites |
 | `raw.py` | Neutral intermediate dataclasses: `RawQuestionnaire`, `RawScale`, `RawItem`; source-agnostic |
 | `dedup.py` | Fingerprinting + index lookups: `option_fingerprint`, `lookup_option`, `build_instruction_index`, `lookup_instruction` |
-| `contexts.py` | `split_temporal_context()` peels a leading temporal frame ("Over the last 2 weeks,") into a Context; `resolve_known_context()` reuses a known Library Context (`KNOWN_CONTEXTS` map) instead of minting a duplicate |
+| `contexts.py` | `split_temporal_context()` peels a leading temporal frame ("Over the last 2 weeks,") off the instruction into a Context, minted verbatim (faithfulness policy — no number/word folding) |
 | `licensing.py` | `LicenseFlag` dataclass — rich license block, `canonical_enum()` mapping to Schema-2 `license` enum, `x_metadata()` for `x_*` fields |
 | `draft.py` | Reuse-or-mint logic: checks dedup indexes, builds canonical entities, writes via Library writer |
 | `tracking.py` | Progress surface: `upsert_register_row()` (register.md) + `write_questions()` (questions/<id>.md) |
@@ -175,10 +180,11 @@ These are tracked but deliberately deferred:
   multi-line `description` fields in canonical entities; normalization is a follow-up.
 - **Fuzzy near-match tier** — a `review/dedup.md` list for fingerprint near-misses (e.g.
   anchor text differs by one word); currently only exact fingerprint matches reuse.
-- **Generalise context dedup** — Context reuse currently relies on the curated
-  `contexts.KNOWN_CONTEXTS` map (recognised temporal phrases → Library Context ids). Folding
-  Contexts into the fingerprint engine (like Options/Instructions) and seeding the index from
-  the Library would make reuse automatic for any Context, not just temporal frames.
+- **Generalise context dedup** — split-off Contexts are currently minted (with content-based ids
+  so identical phrases share losslessly). Folding Contexts into the fingerprint engine (like
+  Options/Instructions) and seeding the index from the Library would let a harvested Context reuse
+  an *identical* existing Library Context automatically — while still respecting the faithfulness
+  policy (only byte-identical-modulo-case content reuses; "2 weeks" never folds to "two weeks").
 - **`psychology_tools` adapter** — source adapter for psychologytools.com.
 - **`arab_psychology` adapter** — source adapter for arabpsychology.net.
 - **Promote to Library** — run `library ingest` against `output/` after owner sign-off;

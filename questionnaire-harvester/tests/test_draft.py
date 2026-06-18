@@ -54,24 +54,23 @@ def _gad7_with_context():
     rq.instruction_text = "How often have you been bothered by any of the following problems?"
     return rq
 
-def test_reuses_known_library_context_and_mints_no_context():
+def test_mints_faithful_context_with_content_based_id():
     res = draft(_gad7_with_context(), version="v26.0617", scales_index={}, instr_index={})
     qst = res.entities["questionnaire"][0]
-    ctx_refs = {e["question"]["context"]["ref"] for e in qst["pages"][0]["elements"]}
-    assert ctx_refs == {"ctx_past_2_weeks@v26.0606"}      # reused Library context, own version
-    assert "ctx_past_2_weeks" in res.reused
-    assert res.entities["context"] == []                  # nothing minted
-
-def test_mints_local_context_for_unknown_temporal_frame():
-    rq = _gad7_with_context()
-    rq.context_text = "Over the last 3 months,"           # not in KNOWN_CONTEXTS
-    res = draft(rq, version="v26.0617", scales_index={}, instr_index={})
-    qst = res.entities["questionnaire"][0]
+    # minted verbatim (no "2"->"two" folding), content-based id, batch version
     assert len(res.entities["context"]) == 1
     ctx = res.entities["context"][0]
-    assert ctx["content"]["en"]["text"] == "Over the last 3 months,"
+    assert ctx["id"] == "ctx_over_the_last_2_weeks"
+    assert ctx["content"]["en"]["text"] == "Over the last 2 weeks,"
     ctx_refs = {e["question"]["context"]["ref"] for e in qst["pages"][0]["elements"]}
-    assert ctx_refs == {f'{ctx["id"]}@v26.0617'}
+    assert ctx_refs == {"ctx_over_the_last_2_weeks@v26.0617"}
+    assert "ctx_over_the_last_2_weeks" in res.minted
+
+def test_context_id_is_content_based():
+    rq = _gad7_with_context()
+    rq.context_text = "Over the last 3 months,"
+    res = draft(rq, version="v26.0617", scales_index={}, instr_index={})
+    assert res.entities["context"][0]["id"] == "ctx_over_the_last_3_months"
 
 def test_no_context_when_context_text_absent():
     res = draft(_gad7(), version="v26.0617", scales_index={}, instr_index={})

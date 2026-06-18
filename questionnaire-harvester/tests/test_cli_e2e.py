@@ -20,8 +20,9 @@ def test_gad7_harvest_reuses_phq_scale_and_validates(tmp_path, monkeypatch):
     refs = {e["option"]["ref"] for e in qst["pages"][0]["elements"]}
     assert refs == {"opt_phq_frequency_4@v26.0617"}          # reused PHQ-9 scale
     assert not (out / "options").exists() or not list((out / "options").glob("*.json"))  # nothing minted
-    # temporal frame split off and reused from the Library — no local context minted
+    # temporal frame split off into a faithfully-minted Context (verbatim "2 weeks", not "two")
     ctx_refs = {e["question"]["context"]["ref"] for e in qst["pages"][0]["elements"]}
-    assert ctx_refs == {"ctx_past_2_weeks@v26.0606"}
-    assert not (out / "contexts").exists() or not list((out / "contexts").glob("*.json"))
+    assert ctx_refs == {"ctx_over_the_last_2_weeks@v26.0617"}
+    minted_ctx = json.loads((out / "contexts" / "ctx_over_the_last_2_weeks.json").read_text())
+    assert minted_ctx["content"]["en"]["text"] == "Over the last 2 weeks,"
     assert (tmp_path / "questions" / "qst_gad7.md").exists()
