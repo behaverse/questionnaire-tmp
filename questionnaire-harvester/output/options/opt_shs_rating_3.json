@@ -1,0 +1,17 @@
+{
+  "content": {
+    "en": {
+      "label": "SHS 1–7",
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_shs_rating_3",
+  "input_data_type": "number",
+  "max": 7.0,
+  "max_label": "a great deal",
+  "measurement_type": "interval",
+  "min": 1.0,
+  "min_label": "not at all",
+  "step": 1.0
+}

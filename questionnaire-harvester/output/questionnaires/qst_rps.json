@@ -1,0 +1,149 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Some people are more likely to take risks than others. Some people\nmight even enjoy taking risks.",
+    "id": "qst_rps",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 7
+    },
+    "publication": {
+      "citation": "Meertens, R. M. & Lion, R. (2008). Measuring an Individual’s\nTendency to Take Risks: The Risk Propensity Scale. Journal of Applied\nSocial Psychology, 38 (6) , 1506-1520.",
+      "year": 2008
+    },
+    "short_title": "RPS",
+    "title": "Risk Propensity Scale (RPS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/risk-rps.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_rps_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rps_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_rps_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rps_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rps_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_rps_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rps_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rps_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_rps_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rps_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rps_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_rps_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rps_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rps_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_rps_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rps_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rps_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_rps_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rps_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rps_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_rps_7@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

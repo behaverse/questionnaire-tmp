@@ -1,0 +1,107 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Happiness and the term more\ncommonly used in psychology, subjective\nwellbeing , are frequently studied in the field of psychology\n(including in positive psychology )\nand related applied areas, such as social care .",
+    "id": "qst_shs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 4
+    },
+    "publication": {
+      "citation": "Lyubomirsky, S. & Lepper, H. S. (1999). A measure of subjective happines: Preliminary reliability and construct validation. Social indicators research, 46 , 137-155.",
+      "year": 1999
+    },
+    "short_title": "SHS",
+    "title": "Subjective Happiness Scale (SHS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/happiness-shs.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_shs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shs_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shs_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shs_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shs_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shs_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shs_4@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

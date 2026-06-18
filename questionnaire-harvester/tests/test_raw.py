@@ -28,3 +28,22 @@ def test_raw_roundtrips_through_dict():
     # Idempotency: re-constructing from an already-typed object must not crash and stays typed
     result2 = RawQuestionnaire.from_dict(result.to_dict())
     assert isinstance(result2.scale, RawScale)
+
+
+def test_raw_questionnaire_supports_per_item_number_option():
+    from harvester.raw import RawQuestionnaire, RawOption
+    from harvester.licensing import LicenseFlag
+    rq = RawQuestionnaire(
+        qst_id="qst_shs", title="SHS", short_title="SHS", description="",
+        citation="", year=None, source_site="psytoolkit.org", source_url="https://x/shs.html",
+        instruction_text="Indicate the point on the scale.", scale=None,
+        items=[{"text": "In general, I consider myself:",
+                "option": {"input_data_type": "number", "measurement_type": "interval",
+                           "dimension": "rating", "min": 1.0, "max": 7.0, "step": 1.0,
+                           "min_label": "not a very happy person", "max_label": "a very happy person",
+                           "initial_value": 5.0}}],
+        license=LicenseFlag.unknown("https://x/shs.html"))
+    assert rq.scale is None
+    assert isinstance(rq.items[0].option, RawOption)
+    assert rq.items[0].option.max == 7.0
+    assert rq.items[0].option.min_label == "not a very happy person"

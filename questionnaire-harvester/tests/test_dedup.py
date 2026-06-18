@@ -33,3 +33,18 @@ def test_instruction_dedup_is_case_and_space_insensitive():
     b = instruction_fingerprint({"content": {"en": {"text": "  Over the LAST 2 weeks, how often   have you been bothered? "}}})
     assert a == b
     assert lookup_instruction(INS, {a: ["ins_phq_2weeks"]}) == "ins_phq_2weeks"
+
+def test_number_option_fingerprint_distinguishes_labels_and_range():
+    from harvester.dedup import option_fingerprint
+    def num(mn, mx, left, right):
+        return {"input_data_type": "number", "measurement_type": "interval",
+                "dimension": "rating", "min": mn, "max": mx,
+                "min_label": left, "max_label": right,
+                "content": {"en": {"status": "validated", "label": "x"}}}
+    a = num(1, 7, "not happy", "very happy")
+    b = num(1, 7, "less happy", "more happy")    # same range, different labels
+    c = num(0, 100, "not happy", "very happy")   # same labels, different range
+    a2 = num(1, 7, "Not Happy", "Very Happy")    # case-only difference -> same
+    assert option_fingerprint(a) != option_fingerprint(b)
+    assert option_fingerprint(a) != option_fingerprint(c)
+    assert option_fingerprint(a) == option_fingerprint(a2)

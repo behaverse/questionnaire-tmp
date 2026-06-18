@@ -20,7 +20,7 @@ def main(argv=None) -> int:
     h.add_argument("--register", default="questionnaire-harvester/register.md")
     h.add_argument("--questions", default="questionnaire-harvester/questions")
     h.add_argument("--schemas", default="schemas")
-    h.add_argument("--version", default="v26.0617")
+    h.add_argument("--version", default="v26.0618")
     a = ap.parse_args(argv)
     if a.cmd != "harvest":
         return 2

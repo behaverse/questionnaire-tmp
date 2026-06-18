@@ -12,7 +12,10 @@ def option_fingerprint(o: dict) -> str:
     if anchors:
         payload = base + [values, anchors]
     else:
-        payload = base + [o.get("dimension"), norm(en.get("units", ""))]
+        payload = base + [o.get("dimension"), norm(en.get("units", "")),
+                          o.get("min"), o.get("max"), o.get("step"),
+                          norm(o.get("min_label", "")), norm(o.get("max_label", "")),
+                          norm(o.get("center_label", "")), o.get("initial_value")]
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:16]
 
 def load_scales_index(path: Path) -> dict[str, list[str]]:

@@ -110,3 +110,47 @@ def test_no_collision_for_same_source_url_is_idempotent(tmp_path):
 def test_no_collision_when_id_unseen(tmp_path):
     from harvester.draft import find_questionnaire_collision
     assert find_questionnaire_collision(tmp_path, "qst_new", "https://x/new.html") is None
+
+
+def _shs_range():
+    from harvester.raw import RawQuestionnaire, RawOption
+    from harvester.licensing import LicenseFlag
+    def item(stem, left, right, rev=False):
+        return {"text": stem, "reversed": rev,
+                "option": {"input_data_type": "number", "measurement_type": "interval",
+                           "dimension": "rating", "min": 1.0, "max": 7.0, "step": 1.0,
+                           "min_label": left, "max_label": right, "initial_value": None}}
+    return RawQuestionnaire(
+        qst_id="qst_shs", title="SHS", short_title="SHS", description="",
+        citation="", year=None, source_site="psytoolkit.org", source_url="https://x/shs.html",
+        instruction_text="Indicate the point on the scale.", scale=None,
+        items=[item("In general, I consider myself:", "not a very happy person", "a very happy person"),
+               item("To what extent does this describe you?", "not at all", "a great deal"),
+               item("And to what extent not?", "not at all", "a great deal", rev=True)],
+        license=LicenseFlag.unknown("https://x/shs.html"))
+
+
+def test_draft_builds_number_options_and_dedups_identical_sliders():
+    res = draft(_shs_range(), version="v26.0618", scales_index={}, instr_index={})
+    qst = res.entities["questionnaire"][0]
+    opts = res.entities["option"]
+    # items 2 and 3 share an identical slider (same range+labels) -> 2 distinct options total
+    assert len(opts) == 2
+    first = next(o for o in opts if o["min_label"] == "not a very happy person")
+    assert first["input_data_type"] == "number" and first["measurement_type"] == "interval"
+    assert first["min"] == 1.0 and first["max"] == 7.0 and first["step"] == 1.0
+    assert "options" not in first and "selection" not in first
+    assert first["content"]["en"]["label"] == "SHS 1–7"
+    # reversed flag rides on the prompt, not the option
+    assert res.entities["prompt"][2]["reversed"] is True
+
+
+def test_draft_number_option_reuses_global_index():
+    res0 = draft(_shs_range(), version="v26.0618", scales_index={}, instr_index={})
+    shared = next(o for o in res0.entities["option"] if o["min_label"] == "not at all")
+    from harvester.dedup import option_fingerprint
+    idx = {option_fingerprint(shared): ["opt_shared_rating"]}
+    res = draft(_shs_range(), version="v26.0618", scales_index=idx, instr_index={})
+    refs = {e["option"]["ref"] for e in res.entities["questionnaire"][0]["pages"][0]["elements"]}
+    assert "opt_shared_rating@v26.0618" in refs
+    assert "opt_shared_rating" in res.reused

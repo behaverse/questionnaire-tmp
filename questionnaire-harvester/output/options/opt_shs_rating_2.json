@@ -1,0 +1,17 @@
+{
+  "content": {
+    "en": {
+      "label": "SHS 1–7",
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_shs_rating_2",
+  "input_data_type": "number",
+  "max": 7.0,
+  "max_label": "more happy",
+  "measurement_type": "interval",
+  "min": 1.0,
+  "min_label": "less happy",
+  "step": 1.0
+}
