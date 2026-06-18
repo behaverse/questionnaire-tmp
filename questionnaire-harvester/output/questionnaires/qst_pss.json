@@ -1,0 +1,247 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Stress is a\nbig topic in psychological research. Humans regularly experience\nstress. It is a feeling of pressure. There is both positive (e.g.,\nwedding) and negative stress (e.g., fleeing from an attack), although\nit is probably more frequently discussed as a negative feeling.",
+    "id": "qst_pss",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 14
+    },
+    "publication": {
+      "citation": "Cohen, S., Kamarck, T., Mermelstein, R. (1983). A global measure of perceived stress. Journal of Health and Social Behavior, 24 , 385-396.",
+      "year": 1983
+    },
+    "short_title": "PSS",
+    "title": "Perceived Stress Scale (PSS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/stress-pss.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pss_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pss_14@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

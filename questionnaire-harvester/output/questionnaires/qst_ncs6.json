@@ -1,0 +1,135 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Need for cognition is people’s desire to engage in difficult\ncognitive activity\n( read more via\nWikipedia ).",
+    "id": "qst_ncs6",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 6
+    },
+    "publication": {
+      "citation": "Coelho, G.L.D.H., Hanel, P.H.P, & Wolf, L.J. (2018). The\nVery Efficient Assessment of Need for Cognition: Developing a Six-Item\nVersion. Assessment, online first , 1-16. Download here .",
+      "year": 2018
+    },
+    "short_title": "NCS-6",
+    "title": "Need for Cognition (NCS-6)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/need-for-cognition-ncs6.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_ncs6_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ncs6_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ncs6_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ncs6_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ncs6_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ncs6_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ncs6_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ncs6_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ncs6_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ncs6_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ncs6_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ncs6_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ncs6_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ncs6_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ncs6_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ncs6_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ncs6_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ncs6_6@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

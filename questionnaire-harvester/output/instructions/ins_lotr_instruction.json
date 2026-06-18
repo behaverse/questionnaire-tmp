@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Below is a list of statements.<br> For each statement, indicate how much you agree with it.<br> There are no right or wrong answers.<br> Please be as accurate and honest as you can throughout.<br> Try not to let your answer to one statement influence your answers to other statements.<br>"
+    }
+  },
+  "id": "ins_lotr_instruction"
+}

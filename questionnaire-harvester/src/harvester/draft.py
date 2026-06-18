@@ -22,12 +22,16 @@ def _slug(qst_id: str) -> str:
 
 def _build_option(rq: RawQuestionnaire, slug: str) -> dict:
     s = rq.scale
+    # dimension is an identifier (schema: ^[a-z][a-z0-9_]+$), not displayed text, so the
+    # source scale name is sanitized (e.g. "tilsScale" -> "tilsscale"). Anchor text stays verbatim.
+    dim = sanitize(s.dimension)
     return {
-        "id": f"opt_{sanitize(slug)}_{sanitize(s.dimension)}_{len(s.anchors)}",
-        "dimension": s.dimension, "input_data_type": s.input_data_type,
+        "id": f"opt_{sanitize(slug)}_{dim}_{len(s.anchors)}",
+        "dimension": dim, "input_data_type": s.input_data_type,
         "measurement_type": s.measurement_type, "selection": s.selection,
         "options": [{"index": i + 1, "value": float(v)} for i, v in enumerate(s.values)],
         "content": {"en": {"status": "validated",
+            # label is human-readable -> keep the source scale name's original casing
             "label": f"{rq.short_title} {len(s.anchors)}-point {s.dimension}",
             "options": [{"index": i + 1, "text": t} for i, t in enumerate(s.anchors)]}},
     }

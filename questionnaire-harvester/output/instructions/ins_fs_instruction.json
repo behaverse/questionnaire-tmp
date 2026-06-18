@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Below are 8 statements with which you may agree or disagree. Using scale below, indicate your agreement with each item by indicating that response for each statement."
+    }
+  },
+  "id": "ins_fs_instruction"
+}

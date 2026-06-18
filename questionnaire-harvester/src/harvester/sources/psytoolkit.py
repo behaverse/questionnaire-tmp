@@ -30,13 +30,14 @@ def _blocks(dsl: str):
 def _parse_scale(dsl: str):
     """Parse the first `scale: <name>` definition. Returns (name, anchors, values).
 
-    Requires explicit `{score=N}` on every anchor — scales without explicit scores are
-    not handled (we will not invent values for a faithful import)."""
+    An anchor's value is its explicit `{score=N}` when present; otherwise PsyToolkit's
+    documented default applies — the 1-based position in the list. This faithfully
+    reproduces the source's (possibly implicit) scoring."""
     m = re.search(r"^scale:\s*(\S+)\s*$", dsl, re.MULTILINE)
     if not m:
         raise PsyToolkitParseError("no `scale:` definition found")
     name = m.group(1)
-    anchors, values = [], []
+    anchors, values, pos = [], [], 0
     for ln in dsl[m.end():].splitlines():
         s = ln.strip()
         if not s:
@@ -45,12 +46,15 @@ def _parse_scale(dsl: str):
             continue
         if not s.startswith("-"):
             break              # next directive ends the anchor list
+        pos += 1
         am = re.match(r"-\s*\{score=(-?\d+)\}\s*(.+)", s)
-        if not am:
-            raise PsyToolkitParseError(
-                f"scale '{name}' has an anchor without an explicit {{score=N}}: {s!r}")
-        values.append(float(am.group(1)))
-        anchors.append(am.group(2).strip())
+        if am:
+            values.append(float(am.group(1)))
+            anchors.append(am.group(2).strip())
+        else:                  # no explicit score -> default is the 1-based position
+            text = re.sub(r"^(\{[^}]*\}\s*)+", "", re.sub(r"^-\s*", "", s)).strip()
+            values.append(float(pos))
+            anchors.append(text)
     if not anchors:
         raise PsyToolkitParseError(f"scale '{name}' has no anchors")
     return name, anchors, values

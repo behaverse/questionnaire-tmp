@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Indicate for each statement below how true it is for you."
+    }
+  },
+  "id": "ins_gse_instruction"
+}

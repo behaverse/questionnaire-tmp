@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "The following question refers to your overall sleep quality for the <b>majority</b> of nights in the <b>past 7 days ONLY</b>. <BR> Please think about the quality of your sleep <b>overall</b>, such as how many hours of sleep you got, how easily you feel asleep, how often you woke up during the night (except to go to the bathroom), how often you woke up earlier than you had to in the morning, and how refreshing your sleep was."
+    }
+  },
+  "id": "ins_sqs_instruction"
+}
