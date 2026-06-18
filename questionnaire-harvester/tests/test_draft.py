@@ -154,3 +154,46 @@ def test_draft_number_option_reuses_global_index():
     refs = {e["option"]["ref"] for e in res.entities["questionnaire"][0]["pages"][0]["elements"]}
     assert "opt_shared_rating@v26.0618" in refs
     assert "opt_shared_rating" in res.reused
+
+
+def _npi_matrix():
+    from harvester.raw import RawQuestionnaire
+    from harvester.licensing import LicenseFlag
+    def item(a, b):
+        return {"text": None,
+                "option": {"input_data_type": "choice", "measurement_type": "ordinal",
+                           "selection": "single", "dimension": "rating",
+                           "anchors": [a, b], "values": [0.0, 1.0], "randomize": True}}
+    return RawQuestionnaire(
+        qst_id="qst_npi", title="NPI", short_title="NPI", description="",
+        citation="", year=None, source_site="psytoolkit.org", source_url="https://x/npi.html",
+        instruction_text=None, scale=None,
+        shared_prompt_text="For each pair, choose the one you identify with most.",
+        items=[item("I am modest", "I am superior"), item("I blend in", "I stand out")],
+        license=LicenseFlag.unknown("https://x/npi.html"))
+
+
+def test_draft_matrix_shared_prompt_and_per_item_options():
+    res = draft(_npi_matrix(), version="v26.0618", scales_index={}, instr_index={})
+    qst = res.entities["questionnaire"][0]
+    els = qst["pages"][0]["elements"]
+    # one shared prompt, referenced by every element, no instruction minted
+    assert len(res.entities["prompt"]) == 1
+    assert res.entities["prompt"][0]["id"] == "pr_npi_shared"
+    assert res.entities["prompt"][0]["content"]["en"]["text"].startswith("For each pair")
+    assert {e["question"]["prompt"]["ref"] for e in els} == {"pr_npi_shared@v26.0618"}
+    assert all("instruction" not in e["question"] for e in els)
+    assert res.entities["instruction"] == []
+    # two distinct per-item choice options with counter ids + randomize
+    opts = res.entities["option"]
+    assert len(opts) == 2
+    assert {o["id"] for o in opts} == {"opt_npi_rating_1", "opt_npi_rating_2"}
+    assert all(o["input_data_type"] == "choice" and o["randomize"] is True for o in opts)
+
+
+def test_draft_likert_still_uses_legacy_choice_id():
+    # regression: shared scale (no per-item option) keeps the len-based id
+    res = draft(_gad7(), version="v26.0617", scales_index={}, instr_index={})
+    opt = res.entities["option"][0]
+    assert opt["id"] == "opt_gad7_frequency_4"
+    assert "randomize" not in opt
