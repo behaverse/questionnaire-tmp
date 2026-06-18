@@ -43,3 +43,24 @@ def test_id_override_resolves_collision(tmp_path, monkeypatch):
     assert (out / "questionnaires" / "qst_custom.json").exists()
     assert not (out / "questionnaires" / "qst_gad7.json").exists()
     assert (tmp_path / "questions" / "qst_custom.md").exists()
+
+
+def test_range_slider_harvest_validates(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psytoolkit_range.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/happiness-shs.html",
+                   "--out", str(out),
+                   "--scales-index", str(tmp_path / "missing-index.json"),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    qst = json.loads((out / "questionnaires" / "qst_shs.json").read_text())
+    assert len(qst["pages"][0]["elements"]) == 4
+    # slider options are numbers with endpoint labels; identical ones dedup
+    opt_files = list((out / "options").glob("*.json"))
+    assert opt_files, "expected minted slider options"
+    one = json.loads(opt_files[0].read_text())
+    assert one["input_data_type"] == "number"
+    assert "min_label" in one and "max_label" in one
