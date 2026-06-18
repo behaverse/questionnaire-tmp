@@ -1,0 +1,65 @@
+{
+  "content": {
+    "en": {
+      "label": "The WHO-5 Well-Being Index 6-point whofreq",
+      "options": [
+        {
+          "index": 1,
+          "text": "All of the time"
+        },
+        {
+          "index": 2,
+          "text": "Most of the time"
+        },
+        {
+          "index": 3,
+          "text": "More than half the time"
+        },
+        {
+          "index": 4,
+          "text": "Less than half the time"
+        },
+        {
+          "index": 5,
+          "text": "Some of the time"
+        },
+        {
+          "index": 6,
+          "text": "At no time"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "whofreq",
+  "id": "opt_who5_whofreq_6",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 5.0
+    },
+    {
+      "index": 2,
+      "value": 4.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 2.0
+    },
+    {
+      "index": 5,
+      "value": 1.0
+    },
+    {
+      "index": 6,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

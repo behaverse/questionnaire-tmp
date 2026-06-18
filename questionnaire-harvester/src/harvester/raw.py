@@ -14,6 +14,7 @@ class RawScale:
 class RawItem:
     text: str
     construct: str | None = None
+    reversed: bool = False
 
 @dataclass
 class RawQuestionnaire:

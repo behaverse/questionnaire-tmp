@@ -79,6 +79,8 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         prompt = {"id": pr_id, "content": {"en": {"status": "validated", "text": item.text}}}
         if item.construct:
             prompt["construct"] = item.construct
+        if getattr(item, "reversed", False):
+            prompt["reversed"] = True
         res.entities["prompt"].append(prompt)
         res.minted.append(pr_id)
         question = {"prompt": {"ref": f"{pr_id}@{version}"},

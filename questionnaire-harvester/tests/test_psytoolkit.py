@@ -1,8 +1,14 @@
 from pathlib import Path
+import pytest
 from harvester.sources.psytoolkit import PsyToolkitAdapter
 
-FIX = Path(__file__).parent / "fixtures" / "psytoolkit_gad7.html"
+FIXDIR = Path(__file__).parent / "fixtures"
+FIX = FIXDIR / "psytoolkit_gad7.html"
 URL = "https://us.psytoolkit.org/survey-library/anxiety-gad7.html"
+
+
+def _parse(fixture, url):
+    return PsyToolkitAdapter().parse((FIXDIR / fixture).read_text(), url)
 
 
 def test_parses_gad7_items_and_scale():
@@ -27,3 +33,47 @@ def test_parses_gad7_items_and_scale():
     assert rq.license.license_class == "unknown"
     assert rq.year == 2006
     assert "Spitzer" in rq.citation
+
+
+def test_rosenberg_flexible_order_reverse_markers_and_multiline_instruction():
+    # Rosenberg block order is l: / o: / q: (multi-line) / t: scale — q comes BEFORE t.
+    rq = _parse("psytoolkit_rosenberg.html",
+                "https://us.psytoolkit.org/survey-library/self-esteem-rosenberg.html")
+    assert rq.qst_id == "qst_rses"                 # slug from "(RSES)" acronym
+    assert len(rq.items) == 10
+    assert rq.scale.values == [0.0, 1.0, 2.0, 3.0]
+    assert rq.scale.anchors[0] == "strongly agree"
+    # 5 items are {reverse}-marked; the marker is stripped from the text
+    assert sum(1 for it in rq.items if it.reversed) == 5
+    assert rq.items[0].reversed is True
+    assert rq.items[0].text == "On the whole, I am satisfied with myself."
+    assert "{" not in rq.items[0].text
+    # multi-line q: joined into one instruction
+    assert rq.instruction_text.startswith("Below is a list of statements")
+    assert "Select how much" in rq.instruction_text
+
+
+def test_swls_seven_point_scale_kept_verbatim_and_acronym_slug():
+    rq = _parse("psytoolkit_swls.html",
+                "https://us.psytoolkit.org/survey-library/satisfaction-with-life.html")
+    assert rq.qst_id == "qst_swls"                 # not "qst_life" (URL last segment)
+    assert len(rq.items) == 5
+    assert rq.scale.values == [7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0]
+    assert rq.scale.anchors[0] == "Strongly agree"   # title-case preserved verbatim
+    assert rq.year == 1985
+
+
+def test_who5_url_slug_fallback_and_six_point_scale():
+    rq = _parse("psytoolkit_who5.html",
+                "https://us.psytoolkit.org/survey-library/who5.html")
+    assert rq.qst_id == "qst_who5"                 # title has no parens -> URL slug
+    assert len(rq.items) == 5
+    assert len(rq.scale.anchors) == 6
+    assert rq.scale.values == [5.0, 4.0, 3.0, 2.0, 1.0, 0.0]
+
+
+def test_unsupported_scale_without_scores_raises():
+    from harvester.sources.psytoolkit import PsyToolkitParseError, _parse_scale
+    dsl = "scale: agree\n- strongly disagree\n- disagree\n- agree\n\nl: x\nt: scale agree\nq: rate\n- item one\n"
+    with pytest.raises(PsyToolkitParseError):
+        _parse_scale(dsl)
