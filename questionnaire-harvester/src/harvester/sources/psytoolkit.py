@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from harvester.sources.base import SourceAdapter
 from harvester.raw import RawQuestionnaire, RawScale, RawItem
 from harvester.licensing import LicenseFlag
+from harvester.contexts import split_temporal_context
 
 
 class PsyToolkitAdapter(SourceAdapter):
@@ -51,6 +52,8 @@ class PsyToolkitAdapter(SourceAdapter):
             re.MULTILINE,
         )
         instruction_text = block_m.group(1).strip()
+        # Peel a leading temporal frame ("Over the last 2 weeks,") off into a Context.
+        context_text, instruction_text = split_temporal_context(instruction_text)
         item_lines = re.findall(r"^-\s+(.+)", block_m.group(2), re.MULTILINE)
         items = [RawItem(text=line.strip()) for line in item_lines]
 
@@ -91,4 +94,5 @@ class PsyToolkitAdapter(SourceAdapter):
             license=LicenseFlag.unknown(url),
             domain=["anxiety"],
             population=["adults"],
+            context_text=context_text,
         )

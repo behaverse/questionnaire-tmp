@@ -47,8 +47,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_1@v26.0617"
@@ -61,8 +64,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_2@v26.0617"
@@ -75,8 +81,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_3@v26.0617"
@@ -89,8 +98,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_4@v26.0617"
@@ -103,8 +115,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_5@v26.0617"
@@ -117,8 +132,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_6@v26.0617"
@@ -131,8 +149,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_7@v26.0617"
@@ -145,8 +166,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_8@v26.0617"
@@ -159,8 +183,11 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
-              "ref": "ins_phq_2weeks@v26.0617"
+              "ref": "ins_phq_instruction@v26.0617"
             },
             "prompt": {
               "ref": "pr_phq9_9@v26.0617"

@@ -53,6 +53,9 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
               "ref": "ins_gad7_instruction@v26.0617"
             },
@@ -67,6 +70,9 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
               "ref": "ins_gad7_instruction@v26.0617"
             },
@@ -81,6 +87,9 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
               "ref": "ins_gad7_instruction@v26.0617"
             },
@@ -95,6 +104,9 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
               "ref": "ins_gad7_instruction@v26.0617"
             },
@@ -109,6 +121,9 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
               "ref": "ins_gad7_instruction@v26.0617"
             },
@@ -123,6 +138,9 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
               "ref": "ins_gad7_instruction@v26.0617"
             },
@@ -137,6 +155,9 @@
             "ref": "opt_phq_frequency_4@v26.0617"
           },
           "question": {
+            "context": {
+              "ref": "ctx_past_2_weeks@v26.0606"
+            },
             "instruction": {
               "ref": "ins_gad7_instruction@v26.0617"
             },

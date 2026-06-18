@@ -10,3 +10,6 @@ Answer inline under each item (replace the `> answer:` line).
 ### 2. Confirm reuse of shared entity `opt_phq_frequency_4` for **Generalized Anxiety Disorder (GAD-7)** (vs. minting a new one)?
 > answer: 
 
+### 3. Confirm reuse of shared entity `ctx_past_2_weeks` for **Generalized Anxiety Disorder (GAD-7)** (vs. minting a new one)?
+> answer: 
+

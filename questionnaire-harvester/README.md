@@ -27,14 +27,18 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
 Output:
 
 ```
-harvested qst_gad7: reused=['opt_phq_frequency_4'] minted=8 open_qs=2
+harvested qst_gad7: reused=['opt_phq_frequency_4', 'ctx_past_2_weeks'] minted=['ins_gad7_instruction', 'pr_gad7_1'..'pr_gad7_7'] open_qs=3
 ```
 
-The GAD-7 reused PHQ-9's `opt_phq_frequency_4` response scale (identical 4-point frequency
-anchors and values). The instruction was **minted as new** (`ins_gad7_instruction`) because
-its text differs slightly from PHQ-9's — the dedup engine correctly detected this and did not
-merge them. The 8 minted entities are the 7 item prompts (`pr_gad7_1..7`) and the
-instruction.
+The GAD-7 **reused** two shared entities: PHQ-9's `opt_phq_frequency_4` response scale
+(identical 4-point frequency anchors and values) and the Library's `ctx_past_2_weeks@v26.0606`
+temporal context. The adapter splits a leading temporal frame ("Over the last 2 weeks,") off the
+instruction into that Context (see `contexts.py`); the remaining instruction
+("How often have you been bothered by the following problems?") is **minted as new**
+(`ins_gad7_instruction`) because its text differs from PHQ-9's "…any of the following problems?"
+— the dedup engine correctly declined to merge them. The 8 minted entities are that instruction
+plus the 7 item prompts (`pr_gad7_1..7`). Both reuses become open questions for owner
+confirmation.
 
 ---
 
@@ -75,6 +79,7 @@ All paths are relative to the repo root. Override with CLI flags:
 | `sources/` | Source adapters — `SourceAdapter` base + `PsyToolkitAdapter` (built); extend here for new sites |
 | `raw.py` | Neutral intermediate dataclasses: `RawQuestionnaire`, `RawScale`, `RawItem`; source-agnostic |
 | `dedup.py` | Fingerprinting + index lookups: `option_fingerprint`, `lookup_option`, `build_instruction_index`, `lookup_instruction` |
+| `contexts.py` | `split_temporal_context()` peels a leading temporal frame ("Over the last 2 weeks,") into a Context; `resolve_known_context()` reuses a known Library Context (`KNOWN_CONTEXTS` map) instead of minting a duplicate |
 | `licensing.py` | `LicenseFlag` dataclass — rich license block, `canonical_enum()` mapping to Schema-2 `license` enum, `x_metadata()` for `x_*` fields |
 | `draft.py` | Reuse-or-mint logic: checks dedup indexes, builds canonical entities, writes via Library writer |
 | `tracking.py` | Progress surface: `upsert_register_row()` (register.md) + `write_questions()` (questions/<id>.md) |
@@ -146,7 +151,7 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
   python -m pytest questionnaire-harvester/tests -v
 ```
 
-Expected: 15 tests, all passing.
+Expected: 22 tests, all passing.
 
 ---
 
@@ -170,6 +175,10 @@ These are tracked but deliberately deferred:
   multi-line `description` fields in canonical entities; normalization is a follow-up.
 - **Fuzzy near-match tier** — a `review/dedup.md` list for fingerprint near-misses (e.g.
   anchor text differs by one word); currently only exact fingerprint matches reuse.
+- **Generalise context dedup** — Context reuse currently relies on the curated
+  `contexts.KNOWN_CONTEXTS` map (recognised temporal phrases → Library Context ids). Folding
+  Contexts into the fingerprint engine (like Options/Instructions) and seeding the index from
+  the Library would make reuse automatic for any Context, not just temporal frames.
 - **`psychology_tools` adapter** — source adapter for psychologytools.com.
 - **`arab_psychology` adapter** — source adapter for arabpsychology.net.
 - **Promote to Library** — run `library ingest` against `output/` after owner sign-off;
