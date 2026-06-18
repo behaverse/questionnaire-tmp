@@ -1,0 +1,191 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Supernatural beliefs are\nbeliefs in things that do not and cannot exist to the best of\nscientific knowledge, but which appear real to believers. Examples are\nthe belief in god, angels, daemons, reincarnation , ghosts, and mind-body\ndualism .",
+    "id": "qst_sbs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 10
+    },
+    "publication": {
+      "citation": "Jong, J., Bluemke, M., & Halberstadt, J. (2013). Fear of death and supernatural beliefs: Developing a new supernatural belief scale to test the relationship. European Journal of Personality, 27 , 495-506.",
+      "year": 2013
+    },
+    "short_title": "Supernatural Belief Scale",
+    "title": "Supernatural Belief Scale",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/supernatural-sbs.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sbs_agree_9@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sbs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sbs_10@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

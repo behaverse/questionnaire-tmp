@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "This scale consists of a number of words that describe different feelings and emotions. Read each item and then select how much you feel like this from the scale. Indicate to what extent you feel this way right now, that is, at the *present moment*."
+    }
+  },
+  "id": "ins_panas_instruction"
+}

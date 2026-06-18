@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BIS 4-point howoften",
+      "options": [
+        {
+          "index": 1,
+          "text": "Rarely/Never"
+        },
+        {
+          "index": 2,
+          "text": "Occasionally"
+        },
+        {
+          "index": 3,
+          "text": "Often"
+        },
+        {
+          "index": 4,
+          "text": "Almost Always/Always"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "howoften",
+  "id": "opt_bis_howoften_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

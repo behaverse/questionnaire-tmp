@@ -1,0 +1,219 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Mental flexibility is the ability to switch between different thoughts\nand actions. Mental flexibility is considered part of executive funcions ,\nwhich are the general mental functions that help us to cordinate\nthought and action.",
+    "id": "qst_cfs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 12
+    },
+    "publication": {
+      "citation": "Martin, M. M. & Rubin, R.B. (1995). A new measure of cognitive flexibility. Psychological Reports, 76 , 623-626. (Download here) .",
+      "year": 1995
+    },
+    "short_title": "CFS",
+    "title": "Cognitive Flexibility Scale (CFS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/flexibility-cfs.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cfs_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cfs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cfs_12@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

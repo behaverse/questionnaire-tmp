@@ -1,0 +1,107 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Resilience is\nthe ability to cope with\ndifficulties. The term resilience is often used in the medical world\nto describe patients' coping ability.",
+    "id": "qst_brcs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 4
+    },
+    "publication": {
+      "citation": "Sinclair, V. G., & Wallston, K.A. (2004). The development and psychometric evaluation of the\nBrief Resilient Coping Scale. Assessment, 11 (1) , 94-101.",
+      "year": 2004
+    },
+    "short_title": "BRCS",
+    "title": "Resilience (BRCS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/resilience-brcs.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_brcs_true_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_brcs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_brcs_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_brcs_true_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_brcs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_brcs_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_brcs_true_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_brcs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_brcs_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_brcs_true_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_brcs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_brcs_4@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

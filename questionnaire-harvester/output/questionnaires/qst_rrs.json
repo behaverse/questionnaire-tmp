@@ -1,0 +1,359 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Rumination is the process of \"compulsively focused attention on the symptoms of\none’s distress, and on its possible causes and consequences, as\nopposed to its solutions\" (Nolen-Hoeksema, 1998). This process has\nbeen studied by the late Susan\nNolen-Hoeksma , who was a professor in psychology at Yale\nUniversity .",
+    "id": "qst_rrs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 22
+    },
+    "publication": {
+      "citation": "Nolen-Hoeksema, S. (2000). The role of rumination in depressive\ndisorders and mixed anxiety/depressive Symptoms. Journal of Abnormal\nPsychology, 109 , 504–511.",
+      "year": 2000
+    },
+    "short_title": "RRS",
+    "title": "Rumination Response Scale (RRS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/rumination.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_rrs_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_rrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_rrs_22@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

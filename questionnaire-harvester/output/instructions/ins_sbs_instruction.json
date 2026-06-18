@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please indicate your agreement with the following statements<br> Note: The scale runs from strongly disagree to strongly agree, you need to choose the level agreement that matches your personal beliefs.<br>"
+    }
+  },
+  "id": "ins_sbs_instruction"
+}

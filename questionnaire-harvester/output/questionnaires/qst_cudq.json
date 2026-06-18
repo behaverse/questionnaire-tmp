@@ -1,0 +1,191 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Caffeine is a psychoactive substance present in drinks and foods:",
+    "id": "qst_cudq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 10
+    },
+    "publication": {
+      "citation": "Addicott M. A. (2014). Caffeine Use Disorder: A Review of the\nEvidence and Future Implications. Current addiction reports, 1(3) ,\n186-192. https://doi.org/10.1007/s40429-014-0024-9",
+      "year": 2014
+    },
+    "short_title": "CUDQ",
+    "title": "Caffeine Use Disorder Questionnaire (CUDQ)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/caffeine-cudq.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cudq_use_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cudq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cudq_10@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please indicate how frequently you embellish, exaggerate, or otherwise stretch the truth just a little when interacting with other people."
+    }
+  },
+  "id": "ins_bfs_instruction"
+}

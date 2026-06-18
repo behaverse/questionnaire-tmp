@@ -1,0 +1,327 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Self esteem is one’s own\nfeeling of worthyness, and there are various scales measuring this\n( see also the PsyToolkit implementation\nof Rosenberg’s scale ).",
+    "id": "qst_sses",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "short_title": "SSES",
+    "title": "The State Self Esteem Scale (SSES)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/self-esteem-sses.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sses_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sses_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sses_20@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "This is a questionnaire designed to measure what you are thinking<br><b>at this moment</b>.<br> There is, of course, no right answer for any statement.<br> The best answer is what you feel is true of yourself at this moment.<br> Be sure to answer all of the items, even if you are not<br> certain of the best answer.<br><b>Again, answer these questions as they are true for you RIGHT NOW</b><br>"
+    }
+  },
+  "id": "ins_sses_instruction"
+}

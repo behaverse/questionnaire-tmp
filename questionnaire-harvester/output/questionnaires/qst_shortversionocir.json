@@ -1,0 +1,303 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "OCD,\nObsessive-compulive disorder is a fairly common mental disorder\naffecting between and 1 and 2% of the population (see for US or UK ).",
+    "id": "qst_shortversionocir",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 18
+    },
+    "publication": {
+      "citation": "Foa, E.B., Huppert, J.D., Leiberg, S. Langner, R., Kichic, R., Hajcak,\nG., and Salkovskis, P.M. (2002). The obsessive–compulsive inventory:\nDevelopment and validation of a short version. Psychological\nAssessment, 14 , 485-496.",
+      "year": 2002
+    },
+    "short_title": "short version, OCI-R",
+    "title": "The Obsessive–Compulsive Inventory (short version, OCI-R)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/obsessiveness-oci-r.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shortversionocir_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shortversionocir_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shortversionocir_18@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -7,10 +7,13 @@ creating duplicate shared entities** (response scales, instructions).
 review). It never touches the Library database. Promotion to the Library is a **separate
 manual step** (`library ingest`) performed after owner review.
 
-**Harvested so far (PsyToolkit, 15):** PHQ-9, GAD-7, RSES, SWLS, WHO-5, PSS, LOT-R, GSE,
-GRIT-S, BRS, NCS-6, GQ-6, FS (flourishing), TILS (loneliness), SQS (sleep). GAD-7 reuses
-PHQ-9's frequency scale and all share `ctx_over_the_last_2_weeks` where applicable; the
-distinct agree/frequency scales are kept as faithful separate entities (no false merge).
+**Harvested so far (PsyToolkit, 40):** single-Likert scales including PHQ-9, GAD-7, RSES,
+SWLS, WHO-5, PSS, LOT-R, GSE, GRIT-S, BRS, NCS-6, GQ-6, FS, TILS, SQS, PANAS, TIPI (Big-5),
+SPANE, HSQ, MHC-SF, AAI, AMAS, TAI-5, OCI-R, BITe, CUDQ, NPI-16, PIOS, BFS, CFS, SBS, AISS,
+RRS, BIS, BRCS, SAPS, CNS, SSES, ERQ, trust. GAD-7 reuses PHQ-9's frequency scale; otherwise
+distinct scales are kept as faithful separate entities (no false merge). The harvest list is
+in `register.md`. Pages the adapter can't faithfully represent are skipped cleanly (logged),
+not partially imported — see "adapter coverage" below.
 
 ---
 
@@ -161,7 +164,7 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
   python -m pytest questionnaire-harvester/tests -v
 ```
 
-Expected: 26 tests, all passing.
+Expected: 28 tests, all passing.
 
 ---
 
@@ -190,12 +193,15 @@ These are tracked but deliberately deferred:
   Options/Instructions) and seeding the index from the Library would let a harvested Context reuse
   an *identical* existing Library Context automatically — while still respecting the faithfulness
   policy (only byte-identical-modulo-case content reuses; "2 weeks" never folds to "two weeks").
-- **PsyToolkit adapter coverage** — the adapter handles single-scale Likert questionnaires,
-  including scales without explicit `{score=N}` (scored by 1-based position per PsyToolkit's
-  default). NOT yet handled (raise `PsyToolkitParseError`, logged for manual handling):
-  multi-scale pages (only the first `scale` block is taken) and non-`scale` blocks
-  (`t: radio`/`t: textline`/matrix). Per-instrument `classification` (domain/population) is
-  left empty for adapter imports — classify downstream.
+- **PsyToolkit adapter coverage** — handles single-scale Likert questionnaires, including
+  scales without explicit `{score=N}` (scored by 1-based position per PsyToolkit's default),
+  and merges items across multiple pages that share one scale. It **refuses cleanly** (raises
+  `PsyToolkitParseError`; the CLI prints `SKIP ...` and writes nothing) for pages it can't
+  faithfully represent: genuinely multi-scale pages (>1 distinct scale), non-`scale` blocks
+  (`t: radio`/`t: textline`/matrix → "no `t: scale` block"), and label-less numeric scales
+  (e.g. CFQ: `- {score=4}` with no anchor text). `publication` is emitted only when both a
+  citation and a year are extracted (else the reference usually remains in the description).
+  Per-instrument `classification` (domain/population) is left empty — classify downstream.
 - **`psychology_tools` adapter** — source adapter for psychologytools.com.
 - **`arab_psychology` adapter** — source adapter for arabpsychology.net.
 - **Promote to Library** — run `library ingest` against `output/` after owner sign-off;

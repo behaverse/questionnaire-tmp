@@ -104,10 +104,13 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
           "classification": {"domain": rq.domain, "population": rq.population,
                              "administration_mode": ["self_report"]},
           "psychometrics": {"item_count": len(rq.items)},
-          "publication": {"citation": rq.citation, **({"year": rq.year} if rq.year else {})},
           "provenance": dict(PROVENANCE),
           "x_source_site": rq.source_site, "x_harvest_date": "2026-06-17",
           **rq.license.x_metadata()}
+    # publication is optional; emit it only when both citation and year are present
+    # (the schema requires both). Otherwise the reference often remains in the description.
+    if rq.citation and rq.year:
+        md["publication"] = {"citation": rq.citation, "year": rq.year}
     qst = {"@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
            "metadata": md, "pages": [{"id": "page_main", "elements": elements}]}
     res.entities["questionnaire"].append(qst)
