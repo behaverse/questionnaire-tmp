@@ -1,0 +1,121 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "A part of subjective well-being and happyness is how satisfied people\nare with their life. The Satisfaction with life scale (SWLS) measures\nthis. It is a short 5-item scale.",
+    "id": "qst_swls",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 5
+    },
+    "publication": {
+      "citation": "Diener, E., Emmons, R. A., Larsen, R. J., & Griffin, S. (1985). The\nSatisfaction with Life Scale. Journal of Personality Assessment, 49 ,\n71-75.",
+      "year": 1985
+    },
+    "short_title": "SWLS",
+    "title": "Satisfaction with life scale (SWLS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/satisfaction-with-life.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_swls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swls_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swls_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swls_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swls_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swls_5@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

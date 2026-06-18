@@ -3,7 +3,6 @@ from pathlib import Path
 from library.importers.survey_db.ids import sanitize
 from library.importers.survey_db.writer import write_entity
 from harvester.dedup import option_fingerprint, lookup_option, lookup_instruction
-from harvester.contexts import resolve_known_context
 from harvester.raw import RawQuestionnaire
 
 PROVENANCE = {"source": "web_harvest", "imported_at": "2026-06-17T00:00:00Z",
@@ -61,20 +60,17 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         res.entities["instruction"].append(ins)
         res.minted.append(ins_id)
 
-    # --- Context (temporal frame): reuse a known Library Context, else mint ---
+    # --- Context (temporal frame): mint verbatim from the source phrase ---
+    # Faithfulness policy: keep the base text exactly as written (no "2"->"two" or
+    # "last"->"past" folding). The content-based id means questionnaires whose temporal
+    # phrase is byte-identical (case/whitespace aside) share one minted Context.
     ctx_ref = None
     if rq.context_text:
-        known = resolve_known_context(rq.context_text)
-        if known:
-            ctx_id, ctx_ver = known
-            ctx_ref = f"{ctx_id}@{ctx_ver}"
-            res.reused.append(ctx_id)
-        else:
-            ctx_id = f"ctx_{sanitize(slug)}_context"
-            res.entities["context"].append(
-                {"id": ctx_id, "content": {"en": {"status": "validated", "text": rq.context_text}}})
-            res.minted.append(ctx_id)
-            ctx_ref = f"{ctx_id}@{version}"
+        ctx_id = f"ctx_{sanitize(rq.context_text)}"
+        res.entities["context"].append(
+            {"id": ctx_id, "content": {"en": {"status": "validated", "text": rq.context_text}}})
+        res.minted.append(ctx_id)
+        ctx_ref = f"{ctx_id}@{version}"
 
     # --- Prompts ---
     elements = []
@@ -83,6 +79,8 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         prompt = {"id": pr_id, "content": {"en": {"status": "validated", "text": item.text}}}
         if item.construct:
             prompt["construct"] = item.construct
+        if getattr(item, "reversed", False):
+            prompt["reversed"] = True
         res.entities["prompt"].append(prompt)
         res.minted.append(pr_id)
         question = {"prompt": {"ref": f"{pr_id}@{version}"},

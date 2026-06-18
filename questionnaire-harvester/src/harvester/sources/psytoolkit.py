@@ -7,92 +7,156 @@ from harvester.licensing import LicenseFlag
 from harvester.contexts import split_temporal_context
 
 
+class PsyToolkitParseError(ValueError):
+    """The page's PsyToolkit DSL isn't a shape this adapter handles (e.g. no scored
+    scale block, multiple scales). Surfaced so the harvest stops rather than guessing."""
+
+
+def _blocks(dsl: str):
+    """Split the DSL into blocks delimited by `l:` label lines."""
+    blocks, cur = [], []
+    for ln in dsl.splitlines():
+        if re.match(r"^l:", ln):
+            if cur:
+                blocks.append(cur)
+            cur = [ln]
+        else:
+            cur.append(ln)
+    if cur:
+        blocks.append(cur)
+    return blocks
+
+
+def _parse_scale(dsl: str):
+    """Parse the first `scale: <name>` definition. Returns (name, anchors, values).
+
+    Requires explicit `{score=N}` on every anchor — scales without explicit scores are
+    not handled (we will not invent values for a faithful import)."""
+    m = re.search(r"^scale:\s*(\S+)\s*$", dsl, re.MULTILINE)
+    if not m:
+        raise PsyToolkitParseError("no `scale:` definition found")
+    name = m.group(1)
+    anchors, values = [], []
+    for ln in dsl[m.end():].splitlines():
+        s = ln.strip()
+        if not s:
+            if anchors:
+                break          # blank line ends the anchor list
+            continue
+        if not s.startswith("-"):
+            break              # next directive ends the anchor list
+        am = re.match(r"-\s*\{score=(-?\d+)\}\s*(.+)", s)
+        if not am:
+            raise PsyToolkitParseError(
+                f"scale '{name}' has an anchor without an explicit {{score=N}}: {s!r}")
+        values.append(float(am.group(1)))
+        anchors.append(am.group(2).strip())
+    if not anchors:
+        raise PsyToolkitParseError(f"scale '{name}' has no anchors")
+    return name, anchors, values
+
+
+def _parse_block(block_lines):
+    """From a `t: scale ...` block, return (instruction_text, [RawItem, ...]).
+
+    Handles directives (`q:`, `o:`, `t:`, ...) in any order, a multi-line `q:` value,
+    and `{...}` item markers (notably `{reverse}` -> RawItem.reversed)."""
+    q_parts, items, in_q = [], [], False
+    for ln in block_lines[1:]:               # skip the `l:` line
+        s = ln.rstrip()
+        if re.match(r"^-\s", s) or s.strip() == "-":
+            in_q = False
+            text = re.sub(r"^-\s*", "", s)
+            reverse = False
+            mk = re.match(r"^(\{[^}]*\}\s*)+", text)
+            if mk:
+                reverse = "reverse" in mk.group(0)
+                text = text[mk.end():]
+            text = text.strip()
+            if text:
+                items.append(RawItem(text=text, reversed=reverse))
+        elif re.match(r"^[a-z]:", s):        # a PsyToolkit directive line
+            if s.startswith("q:"):
+                q_parts, in_q = [s[2:].strip()], True
+            else:
+                in_q = False
+        elif in_q and s.strip():
+            q_parts.append(s.strip())
+    instruction = " ".join(p for p in q_parts if p)
+    return instruction, items
+
+
 class PsyToolkitAdapter(SourceAdapter):
     site = "psytoolkit.org"
 
     def parse(self, html: str, url: str) -> RawQuestionnaire:
         soup = BeautifulSoup(html, "html.parser")
 
-        # --- slug / qst_id from URL filename (e.g. anxiety-gad7.html -> gad7) ---
-        filename = url.rsplit("/", 1)[-1].replace(".html", "")
-        # take the last dash-segment and strip non-alnum
-        slug = re.sub(r"[^a-z0-9]", "", filename.rsplit("-", 1)[-1].lower())
-        qst_id = f"qst_{slug}"
-
-        # --- DSL text from the <pre> inside the listingblock ---
-        pre = soup.find("pre")
-        dsl = unescape(pre.get_text())
-
-        # --- parse scale definition ---
-        # matches: scale: <name>\n followed by "- {score=N} <text>" lines
-        scale_m = re.search(
-            r"^scale:\s*(\S+)\s*\n((?:- \{score=\d+\}[^\n]*\n?)+)",
-            dsl,
-            re.MULTILINE,
-        )
-        scale_name = scale_m.group(1)
-        anchor_lines = re.findall(r"- \{score=(\d+)\}\s*(.+)", scale_m.group(2))
-        values = [float(v) for v, _ in anchor_lines]
-        anchors = [text.strip() for _, text in anchor_lines]
-        scale = RawScale(
-            input_data_type="choice",
-            measurement_type="ordinal",
-            selection="single",
-            dimension=scale_name,
-            anchors=anchors,
-            values=values,
-        )
-
-        # --- find the first "t: scale <name>" block ---
-        # pattern: l: <label>\nt: scale <scale_name>\nq: <instruction>\n- items...
-        block_m = re.search(
-            r"^l:[^\n]*\nt:\s*scale\s+" + re.escape(scale_name) + r"\s*\n"
-            r"q:\s*([^\n]+)\n((?:-\s+[^\n]+\n?)+)",
-            dsl,
-            re.MULTILINE,
-        )
-        instruction_text = block_m.group(1).strip()
-        # Peel a leading temporal frame ("Over the last 2 weeks,") off into a Context.
-        context_text, instruction_text = split_temporal_context(instruction_text)
-        item_lines = re.findall(r"^-\s+(.+)", block_m.group(2), re.MULTILINE)
-        items = [RawItem(text=line.strip()) for line in item_lines]
-
-        # --- metadata from HTML ---
-        title = soup.find("h1").get_text(strip=True)
-        # short_title: text inside parentheses in title, e.g. "GAD-7"
+        # --- title / short_title from the <h1> ---
+        h1 = soup.find("h1")
+        title = h1.get_text(strip=True) if h1 else (
+            soup.title.get_text(strip=True) if soup.title else "")
         short_m = re.search(r"\(([^)]+)\)", title)
         short_title = short_m.group(1) if short_m else title
 
-        # description: first <p> in #content
+        # --- slug / qst_id: prefer the title's acronym (e.g. "(SWLS)" -> swls),
+        #     else the last URL segment (anxiety-gad7.html -> gad7) ---
+        url_slug = re.sub(r"[^a-z0-9]", "", url.rsplit("/", 1)[-1].replace(".html", "").rsplit("-", 1)[-1].lower())
+        # a parenthetical acronym ("(SWLS)") makes the best id; otherwise the URL segment
+        acronym_slug = re.sub(r"[^a-z0-9]", "", short_m.group(1).lower()) if short_m else ""
+        slug = acronym_slug or url_slug
+        qst_id = f"qst_{slug}"
+
+        # --- DSL text from the <pre> survey-script block ---
+        pre = soup.find("pre")
+        if pre is None:
+            raise PsyToolkitParseError("no <pre> survey-script block on the page")
+        dsl = unescape(pre.get_text())
+
+        # --- scale definition + the first question block that uses it ---
+        scale_name, anchors, values = _parse_scale(dsl)
+        target = next(
+            (b for b in _blocks(dsl)
+             if any(re.match(rf"^t:\s*scale\s+{re.escape(scale_name)}\b", ln) for ln in b)),
+            None)
+        if target is None:
+            raise PsyToolkitParseError(f"no `t: scale {scale_name}` question block found")
+        instruction_text, items = _parse_block(target)
+        if not items:
+            raise PsyToolkitParseError("question block has no items")
+
+        # peel a leading temporal frame ("Over the last 2 weeks,") into a Context
+        context_text, instruction_text = split_temporal_context(instruction_text)
+
+        scale = RawScale(
+            input_data_type="choice", measurement_type="ordinal", selection="single",
+            dimension=scale_name, anchors=anchors, values=values)
+
+        # --- remaining metadata from HTML ---
+        if not title:
+            title = slug
         desc_tag = soup.select_one("#content p")
         description = desc_tag.get_text(" ", strip=True) if desc_tag else ""
 
-        # citation: first <li> in the refs section
+        # citation: the first reference <li> that carries a 4-digit year (the leading
+        # <li> is sometimes a bare URL); fall back to the first <li>.
+        citation, year = "", None
         refs_section = soup.find("h2", {"id": "refs"})
-        citation = ""
-        year = None
         if refs_section:
-            li = refs_section.find_next("li")
-            if li:
-                citation = li.get_text(" ", strip=True)
-                year_m = re.search(r"\b(19|20)\d{2}\b", citation)
-                if year_m:
-                    year = int(year_m.group())
+            lis = refs_section.find_all_next("li")
+            for li in lis:
+                text = li.get_text(" ", strip=True)
+                ym = re.search(r"\b(19|20)\d{2}\b", text)
+                if ym:
+                    citation, year = text, int(ym.group())
+                    break
+            if not citation and lis:
+                citation = lis[0].get_text(" ", strip=True)
 
         return RawQuestionnaire(
-            qst_id=qst_id,
-            title=title,
-            short_title=short_title,
-            description=description,
-            citation=citation,
-            year=year,
-            source_site=self.site,
-            source_url=url,
-            instruction_text=instruction_text,
-            scale=scale,
-            items=items,
+            qst_id=qst_id, title=title, short_title=short_title, description=description,
+            citation=citation, year=year, source_site=self.site, source_url=url,
+            instruction_text=instruction_text, scale=scale, items=items,
             license=LicenseFlag.unknown(url),
-            domain=["anxiety"],
-            population=["adults"],
-            context_text=context_text,
-        )
+            domain=[], population=[],          # not derivable from the DSL — classify later
+            context_text=context_text)
