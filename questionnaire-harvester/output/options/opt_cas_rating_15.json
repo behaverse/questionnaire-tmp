@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. My feelings of anger do not interfere with my work."
+        },
+        {
+          "index": 2,
+          "text": "B. From time to time my feelings of anger interfere with my work."
+        },
+        {
+          "index": 3,
+          "text": "C. I feel so angry that it interferes with my capacity to work."
+        },
+        {
+          "index": 4,
+          "text": "D. My feelings of anger prevent me from doing any work at all."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_15",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,34 @@
+{
+  "content": {
+    "en": {
+      "label": "16-item version 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "When people compliment me I sometimes get embarrassed"
+        },
+        {
+          "index": 2,
+          "text": "I know that I am good because everybody keeps telling me so"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_npi16_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "randomize": true,
+  "selection": "single"
+}

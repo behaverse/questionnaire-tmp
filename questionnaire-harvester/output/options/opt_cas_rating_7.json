@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I don't feel angry when I think about myself."
+        },
+        {
+          "index": 2,
+          "text": "B. I feel more angry about myself these days than I used to."
+        },
+        {
+          "index": 3,
+          "text": "C. I feel angry about myself a good deal of the time."
+        },
+        {
+          "index": 4,
+          "text": "D. When I think about myself, I feel intense anger."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I don't feel angry enough to hurt someone."
+        },
+        {
+          "index": 2,
+          "text": "B. Sometimes I am so angry that I feel like hurting others, but I would not really do it."
+        },
+        {
+          "index": 3,
+          "text": "C. My anger is so intense that I sometimes feel like hurting others."
+        },
+        {
+          "index": 4,
+          "text": "D. I'm so angry that I would like to hurt someone."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_9",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

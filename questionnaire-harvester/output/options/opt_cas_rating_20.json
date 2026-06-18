@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. My ability to think clearly is unaffected by my feelings of anger."
+        },
+        {
+          "index": 2,
+          "text": "B. Sometimes my feelings of anger prevent me from thinking in a clear-headed way."
+        },
+        {
+          "index": 3,
+          "text": "C. My anger makes it hard for me to think of anything else."
+        },
+        {
+          "index": 4,
+          "text": "D. I'm so intensely angry and hostile that it completely interferes with my thinking."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_20",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

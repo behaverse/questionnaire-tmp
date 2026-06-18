@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I don't have angry feelings about others having screwed up my life."
+        },
+        {
+          "index": 2,
+          "text": "B. It's beginning to make me angry that others are screwing up my life."
+        },
+        {
+          "index": 3,
+          "text": "C. I feel angry that others prevent me from having a good life."
+        },
+        {
+          "index": 4,
+          "text": "D. I am constantly angry because others have made my life totally miserable."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_8",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}
