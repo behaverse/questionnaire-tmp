@@ -14,5 +14,5 @@
 | qst_ncs6 | psytoolkit.org | high | needs-review | 1 | unknown |
 | qst_gq6 | psytoolkit.org | high | needs-review | 1 | unknown |
 | qst_fs | psytoolkit.org | high | needs-review | 1 | unknown |
-| qst_tils | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_tils | psytoolkit.org | high | needs-review | 2 | unknown |
 | qst_sqs | psytoolkit.org | high | needs-review | 1 | unknown |

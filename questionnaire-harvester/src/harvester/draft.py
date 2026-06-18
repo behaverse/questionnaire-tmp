@@ -31,7 +31,8 @@ def _build_option(rq: RawQuestionnaire, slug: str) -> dict:
         "measurement_type": s.measurement_type, "selection": s.selection,
         "options": [{"index": i + 1, "value": float(v)} for i, v in enumerate(s.values)],
         "content": {"en": {"status": "validated",
-            "label": f"{rq.short_title} {len(s.anchors)}-point {dim}",
+            # label is human-readable -> keep the source scale name's original casing
+            "label": f"{rq.short_title} {len(s.anchors)}-point {s.dimension}",
             "options": [{"index": i + 1, "text": t} for i, t in enumerate(s.anchors)]}},
     }
 
