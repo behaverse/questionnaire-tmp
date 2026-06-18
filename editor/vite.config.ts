@@ -20,7 +20,11 @@ export default defineConfig({
       },
     },
   },
-  server: { fs: { allow: [resolve(__dirname, '..')] } },
+  // Pin to 5173 (strictPort): the live Library's CORS allowlist includes
+  // http://localhost:5173. Without strictPort, vite silently falls back to 5174+
+  // when 5173 is busy, and every Library fetch (pickers, browse) is then CORS-blocked.
+  // Failing loudly on a busy port is the correct signal (reuse the existing 5173 server).
+  server: { port: 5173, strictPort: true, fs: { allow: [resolve(__dirname, '..')] } },
   test: {
     globals: true,
     environment: 'jsdom',
