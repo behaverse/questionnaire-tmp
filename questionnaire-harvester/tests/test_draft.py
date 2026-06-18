@@ -44,3 +44,37 @@ def test_mints_prompts_and_sets_license_enum_and_x_metadata():
         "imported_at": "2026-06-17T00:00:00Z", "importer_version": "web-harvest-0.1.0"}
     assert len(res.entities["prompt"]) == 2
     assert qst["pages"][0]["elements"][0]["question"]["prompt"]["ref"] == "pr_gad7_1@v26.0617"
+
+
+def _gad7_with_context():
+    # Mirror what the adapter produces: temporal frame split into context_text, and the
+    # instruction trimmed + capitalized.
+    rq = _gad7()
+    rq.context_text = "Over the last 2 weeks,"
+    rq.instruction_text = "How often have you been bothered by any of the following problems?"
+    return rq
+
+def test_reuses_known_library_context_and_mints_no_context():
+    res = draft(_gad7_with_context(), version="v26.0617", scales_index={}, instr_index={})
+    qst = res.entities["questionnaire"][0]
+    ctx_refs = {e["question"]["context"]["ref"] for e in qst["pages"][0]["elements"]}
+    assert ctx_refs == {"ctx_past_2_weeks@v26.0606"}      # reused Library context, own version
+    assert "ctx_past_2_weeks" in res.reused
+    assert res.entities["context"] == []                  # nothing minted
+
+def test_mints_local_context_for_unknown_temporal_frame():
+    rq = _gad7_with_context()
+    rq.context_text = "Over the last 3 months,"           # not in KNOWN_CONTEXTS
+    res = draft(rq, version="v26.0617", scales_index={}, instr_index={})
+    qst = res.entities["questionnaire"][0]
+    assert len(res.entities["context"]) == 1
+    ctx = res.entities["context"][0]
+    assert ctx["content"]["en"]["text"] == "Over the last 3 months,"
+    ctx_refs = {e["question"]["context"]["ref"] for e in qst["pages"][0]["elements"]}
+    assert ctx_refs == {f'{ctx["id"]}@v26.0617'}
+
+def test_no_context_when_context_text_absent():
+    res = draft(_gad7(), version="v26.0617", scales_index={}, instr_index={})
+    qst = res.entities["questionnaire"][0]
+    assert all("context" not in e["question"] for e in qst["pages"][0]["elements"])
+    assert res.entities["context"] == []

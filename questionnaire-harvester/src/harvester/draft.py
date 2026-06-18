@@ -3,6 +3,7 @@ from pathlib import Path
 from library.importers.survey_db.ids import sanitize
 from library.importers.survey_db.writer import write_entity
 from harvester.dedup import option_fingerprint, lookup_option, lookup_instruction
+from harvester.contexts import resolve_known_context
 from harvester.raw import RawQuestionnaire
 
 PROVENANCE = {"source": "web_harvest", "imported_at": "2026-06-17T00:00:00Z",
@@ -35,7 +36,7 @@ def _build_option(rq: RawQuestionnaire, slug: str) -> dict:
 
 def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: dict) -> "DraftResult":
     slug = _slug(rq.qst_id)
-    res = DraftResult(entities={"option": [], "instruction": [], "prompt": [], "questionnaire": []})
+    res = DraftResult(entities={"option": [], "instruction": [], "context": [], "prompt": [], "questionnaire": []})
 
     # --- Option: reuse or mint ---
     opt = _build_option(rq, slug)
@@ -60,6 +61,21 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         res.entities["instruction"].append(ins)
         res.minted.append(ins_id)
 
+    # --- Context (temporal frame): reuse a known Library Context, else mint ---
+    ctx_ref = None
+    if rq.context_text:
+        known = resolve_known_context(rq.context_text)
+        if known:
+            ctx_id, ctx_ver = known
+            ctx_ref = f"{ctx_id}@{ctx_ver}"
+            res.reused.append(ctx_id)
+        else:
+            ctx_id = f"ctx_{sanitize(slug)}_context"
+            res.entities["context"].append(
+                {"id": ctx_id, "content": {"en": {"status": "validated", "text": rq.context_text}}})
+            res.minted.append(ctx_id)
+            ctx_ref = f"{ctx_id}@{version}"
+
     # --- Prompts ---
     elements = []
     for i, item in enumerate(rq.items, start=1):
@@ -69,10 +85,13 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
             prompt["construct"] = item.construct
         res.entities["prompt"].append(prompt)
         res.minted.append(pr_id)
+        question = {"prompt": {"ref": f"{pr_id}@{version}"},
+                    "instruction": {"ref": f"{ins_id}@{version}"}}
+        if ctx_ref:
+            question["context"] = {"ref": ctx_ref}
         elements.append({
             "option": {"ref": f"{opt_id}@{version}"},
-            "question": {"prompt": {"ref": f"{pr_id}@{version}"},
-                         "instruction": {"ref": f"{ins_id}@{version}"}},
+            "question": question,
             "required": True,
         })
 

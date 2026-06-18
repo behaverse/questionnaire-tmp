@@ -31,6 +31,7 @@ class RawQuestionnaire:
     license: LicenseFlag
     domain: list = field(default_factory=list)
     population: list = field(default_factory=list)
+    context_text: str | None = None
 
     def __post_init__(self):
         if isinstance(self.scale, dict):
