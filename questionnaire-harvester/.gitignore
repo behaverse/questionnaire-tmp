@@ -5,3 +5,5 @@ _corpus/
 raw/
 *.egg-info/
 .venv/
+# Local working handoff for the next agent — intentionally untracked.
+/HANDOFF.md

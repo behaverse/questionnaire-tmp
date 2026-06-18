@@ -89,7 +89,7 @@ All paths are relative to the repo root. Override with CLI flags:
 
 | Module | Responsibility |
 |---|---|
-| `sources/` | Source adapters — `SourceAdapter` base + `PsyToolkitAdapter` (built); extend here for new sites. The PsyToolkit adapter parses the survey-script DSL in the page `<pre>`: a `scale:` definition (anchors with explicit `{score=N}`) + the first `t: scale` question block. It handles flexible directive ordering (`l:`/`o:`/`q:`/`t:`), a multi-line `q:`, `{reverse}` item markers (→ `Prompt.reversed`), and derives the id from the title acronym (`(SWLS)` → `qst_swls`) else the URL. |
+| `sources/` | Source adapters — `SourceAdapter` base + `PsyToolkitAdapter` (built); extend here for new sites. The PsyToolkit adapter parses the survey-script DSL in the page `<pre>`: a `scale:` definition (explicit `{score=N}` or 1-based positional default) + the `t: scale` question block(s) for the single scale in use. It handles flexible directive ordering (`l:`/`o:`/`q:`/`t:`), a multi-line `q:`, `{reverse}` item markers (→ `Prompt.reversed`), merges items across multi-page same-scale blocks, derives the id from the title acronym (`(SWLS)` → `qst_swls`) else the URL, and raises `PsyToolkitParseError` (→ CLI `SKIP`) on shapes it can't faithfully represent (multi-scale, label-less numeric, non-`scale` blocks). |
 | `raw.py` | Neutral intermediate dataclasses: `RawQuestionnaire`, `RawScale`, `RawItem`; source-agnostic |
 | `dedup.py` | Fingerprinting + index lookups: `option_fingerprint`, `lookup_option`, `build_instruction_index`, `lookup_instruction` |
 | `contexts.py` | `split_temporal_context()` peels a leading temporal frame ("Over the last 2 weeks,") off the instruction into a Context, minted verbatim (faithfulness policy — no number/word folding) |
