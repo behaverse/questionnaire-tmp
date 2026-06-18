@@ -8,6 +8,7 @@ This schema uses Calendar Versioning (`vYY.MMDD`) per the [Behaverse schemas pol
 
 - **Option slider display fields** — `min_label`, `max_label`, `center_label` (strings) and `initial_value` (number) on every Option. They describe a `number` option's endpoints / initial handle; a viewer renders a `number` option carrying `min_label`/`max_label` as a slider (no `slider` input_data_type). Existing instances stay valid.
 - **Unlabeled ordinal choices** — `OptionChoiceContent.text` is now optional, so an ordinal scale may label only some choices (e.g. endpoints). Convention: nominal scales should still label every choice.
+- **Option-order randomization** — `Option.randomize` (boolean) requests that a viewer shuffle this option's choice order at presentation; source order and scores are stored verbatim. Maps PsyToolkit `o: random`. Existing instances stay valid.
 
 **Severity:** `additive`.
 

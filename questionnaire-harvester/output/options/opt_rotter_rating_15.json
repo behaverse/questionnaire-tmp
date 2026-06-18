@@ -1,0 +1,34 @@
+{
+  "content": {
+    "en": {
+      "label": "Rotter, 1966 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "In the long run the people are responsible for bad government on a national as well as on a local level."
+        },
+        {
+          "index": 2,
+          "text": "Most of the time I can't understand why politicians behave the way they do."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_rotter_rating_15",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "randomize": true,
+  "selection": "single"
+}

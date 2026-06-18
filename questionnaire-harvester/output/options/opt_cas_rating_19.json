@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. My feelings of anger don't interfere with my health."
+        },
+        {
+          "index": 2,
+          "text": "B. My feelings of anger are beginning to interfere with my health."
+        },
+        {
+          "index": 3,
+          "text": "C. My anger prevents me from devoting much time and attention to my health."
+        },
+        {
+          "index": 4,
+          "text": "D. I'm so angry at everything these days that I pay no attention to my health and well-being."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_19",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

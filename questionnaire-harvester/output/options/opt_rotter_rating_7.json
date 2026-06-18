@@ -1,0 +1,34 @@
+{
+  "content": {
+    "en": {
+      "label": "Rotter, 1966 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "When I make plans, I am almost certain that I can make them work."
+        },
+        {
+          "index": 2,
+          "text": "It is not always wise to plan too far ahead because many things turn out to- be a matter of good or bad fortune anyhow."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_rotter_rating_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "randomize": true,
+  "selection": "single"
+}

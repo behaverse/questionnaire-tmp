@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. It makes me angry that I feel like such a failure."
+        },
+        {
+          "index": 2,
+          "text": "B. It makes me angry that I have failed more than the average person."
+        },
+        {
+          "index": 3,
+          "text": "C. As I look back on my life, I feel angry about my failures."
+        },
+        {
+          "index": 4,
+          "text": "D. It makes me angry to feel like a complete failure as a person."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_3",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

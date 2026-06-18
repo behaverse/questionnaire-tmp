@@ -25,10 +25,12 @@ def _fmt_num(x):
     return int(f) if f.is_integer() else f
 
 
-def _build_choice_option(spec, slug: str, short_title: str) -> dict:
+def _build_choice_option(spec, slug: str, short_title: str, n=None) -> dict:
     dim = sanitize(spec.dimension)
-    return {
-        "id": f"opt_{sanitize(slug)}_{dim}_{len(spec.anchors)}",
+    oid = (f"opt_{sanitize(slug)}_{dim}_{n}" if n is not None
+           else f"opt_{sanitize(slug)}_{dim}_{len(spec.anchors)}")
+    opt = {
+        "id": oid,
         "dimension": dim, "input_data_type": spec.input_data_type,
         "measurement_type": spec.measurement_type, "selection": spec.selection,
         "options": [{"index": i + 1, "value": float(v)} for i, v in enumerate(spec.values)],
@@ -36,6 +38,9 @@ def _build_choice_option(spec, slug: str, short_title: str) -> dict:
             "label": f"{short_title} {len(spec.anchors)}-point {spec.dimension}",
             "options": [{"index": i + 1, "text": t} for i, t in enumerate(spec.anchors)]}},
     }
+    if getattr(spec, "randomize", False):
+        opt["randomize"] = True
+    return opt
 
 
 def _build_number_option(spec, slug: str, short_title: str, n: int) -> dict:
@@ -60,11 +65,14 @@ def _build_number_option(spec, slug: str, short_title: str, n: int) -> dict:
     return opt
 
 
-def _resolve_option(spec, slug, short_title, res, scales_index, mint_cache) -> str:
+def _resolve_option(spec, slug, short_title, res, scales_index, mint_cache, per_item=False) -> str:
     """Build `spec`'s canonical Option, then reuse (global index, then this run) or mint it.
-    Returns the opt_id to reference. `mint_cache` maps fingerprint -> minted id for this run."""
+    Returns the opt_id to reference. `mint_cache` maps fingerprint -> minted id for this run.
+    `per_item` options (slider/matrix) use the counter id scheme to avoid collisions."""
     if spec.input_data_type == "number":
         opt = _build_number_option(spec, slug, short_title, n=len(mint_cache) + 1)
+    elif per_item:
+        opt = _build_choice_option(spec, slug, short_title, n=len(mint_cache) + 1)
     else:
         opt = _build_choice_option(spec, slug, short_title)
     existing = lookup_option(opt, scales_index)
@@ -86,17 +94,19 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
     slug = _slug(rq.qst_id)
     res = DraftResult(entities={"option": [], "instruction": [], "context": [], "prompt": [], "questionnaire": []})
 
-    # --- Instruction: reuse or mint ---
-    ins = {"id": f"ins_{sanitize(slug)}_instruction",
-           "content": {"en": {"status": "validated", "text": rq.instruction_text}}}
-    existing_ins = lookup_instruction(ins, instr_index)
-    if existing_ins:
-        ins_id = existing_ins
-        res.reused.append(ins_id)
-    else:
-        ins_id = ins["id"]
-        res.entities["instruction"].append(ins)
-        res.minted.append(ins_id)
+    # --- Instruction: reuse or mint (skipped when absent, e.g. matrix) ---
+    ins_id = None
+    if rq.instruction_text:
+        ins = {"id": f"ins_{sanitize(slug)}_instruction",
+               "content": {"en": {"status": "validated", "text": rq.instruction_text}}}
+        existing_ins = lookup_instruction(ins, instr_index)
+        if existing_ins:
+            ins_id = existing_ins
+            res.reused.append(ins_id)
+        else:
+            ins_id = ins["id"]
+            res.entities["instruction"].append(ins)
+            res.minted.append(ins_id)
 
     # --- Context (temporal frame): mint verbatim from the source phrase ---
     # Faithfulness policy: keep the base text exactly as written (no "2"->"two" or
@@ -110,22 +120,37 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         res.minted.append(ctx_id)
         ctx_ref = f"{ctx_id}@{version}"
 
-    # --- Prompts + per-item options ---
+    # --- Shared prompt (matrix): one prompt referenced by every item ---
+    shared_prompt_id = None
+    if rq.shared_prompt_text:
+        shared_prompt_id = f"pr_{sanitize(slug)}_shared"
+        res.entities["prompt"].append(
+            {"id": shared_prompt_id,
+             "content": {"en": {"status": "validated", "text": rq.shared_prompt_text}}})
+        res.minted.append(shared_prompt_id)
+
+    # --- Per-item options + prompts ---
     mint_cache: dict = {}
     elements = []
     for i, item in enumerate(rq.items, start=1):
         spec = item.option or rq.scale
-        opt_id = _resolve_option(spec, slug, rq.short_title, res, scales_index, mint_cache)
-        pr_id = f"pr_{sanitize(slug)}_{i}"
-        prompt = {"id": pr_id, "content": {"en": {"status": "validated", "text": item.text}}}
-        if item.construct:
-            prompt["construct"] = item.construct
-        if getattr(item, "reversed", False):
-            prompt["reversed"] = True
-        res.entities["prompt"].append(prompt)
-        res.minted.append(pr_id)
-        question = {"prompt": {"ref": f"{pr_id}@{version}"},
-                    "instruction": {"ref": f"{ins_id}@{version}"}}
+        opt_id = _resolve_option(spec, slug, rq.short_title, res, scales_index,
+                                 mint_cache, per_item=item.option is not None)
+        if shared_prompt_id:
+            pr_ref = shared_prompt_id
+        else:
+            pr_id = f"pr_{sanitize(slug)}_{i}"
+            prompt = {"id": pr_id, "content": {"en": {"status": "validated", "text": item.text}}}
+            if item.construct:
+                prompt["construct"] = item.construct
+            if getattr(item, "reversed", False):
+                prompt["reversed"] = True
+            res.entities["prompt"].append(prompt)
+            res.minted.append(pr_id)
+            pr_ref = pr_id
+        question = {"prompt": {"ref": f"{pr_ref}@{version}"}}
+        if ins_id:
+            question["instruction"] = {"ref": f"{ins_id}@{version}"}
         if ctx_ref:
             question["context"] = {"ref": ctx_ref}
         elements.append({

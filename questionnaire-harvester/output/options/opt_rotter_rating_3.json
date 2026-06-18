@@ -1,0 +1,34 @@
+{
+  "content": {
+    "en": {
+      "label": "Rotter, 1966 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "The idea that teachers are unfair to students is nonsense."
+        },
+        {
+          "index": 2,
+          "text": "Most students don't realize the extent to which their grades are influenced by accidental happenings."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_rotter_rating_3",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "randomize": true,
+  "selection": "single"
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I don't feel so angry that it interferes with my interest in sex."
+        },
+        {
+          "index": 2,
+          "text": "B. My feelings of anger leave me less interested in sex than I used to be."
+        },
+        {
+          "index": 3,
+          "text": "C. My current feelings of anger undermine my interest in sex."
+        },
+        {
+          "index": 4,
+          "text": "D. I'm so angry about my life that I've completely lost interest in sex."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_21",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

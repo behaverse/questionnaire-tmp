@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I am not particularly angry about my future."
+        },
+        {
+          "index": 2,
+          "text": "B. When I think about my future, I feel angry."
+        },
+        {
+          "index": 3,
+          "text": "C. I feel angry about what I have to look forward to."
+        },
+        {
+          "index": 4,
+          "text": "D. I feel intensely angry about my future, since it cannot be improved."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

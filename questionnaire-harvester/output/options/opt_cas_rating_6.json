@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I don't feel that others are trying to annoy me."
+        },
+        {
+          "index": 2,
+          "text": "B. At times I think people are trying to annoy me."
+        },
+        {
+          "index": 3,
+          "text": "C. More people than usual are beginning to make me feel angry."
+        },
+        {
+          "index": 4,
+          "text": "D. I feel that others are constantly and intentionally making me angry."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_6",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

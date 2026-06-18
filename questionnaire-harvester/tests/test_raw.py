@@ -47,3 +47,21 @@ def test_raw_questionnaire_supports_per_item_number_option():
     assert isinstance(rq.items[0].option, RawOption)
     assert rq.items[0].option.max == 7.0
     assert rq.items[0].option.min_label == "not a very happy person"
+
+def test_raw_supports_shared_prompt_and_option_randomize():
+    from harvester.raw import RawQuestionnaire, RawOption, RawItem
+    from harvester.licensing import LicenseFlag
+    rq = RawQuestionnaire(
+        qst_id="qst_npi", title="NPI", short_title="NPI", description="",
+        citation="", year=None, source_site="psytoolkit.org", source_url="https://x/npi.html",
+        instruction_text=None, scale=None,
+        shared_prompt_text="For each pair, choose the one you identify with most.",
+        items=[{"text": None,
+                "option": {"input_data_type": "choice", "measurement_type": "ordinal",
+                           "selection": "single", "dimension": "rating",
+                           "anchors": ["A", "B"], "values": [0.0, 1.0], "randomize": True}}],
+        license=LicenseFlag.unknown("https://x/npi.html"))
+    assert rq.shared_prompt_text.startswith("For each pair")
+    assert rq.items[0].text is None
+    assert isinstance(rq.items[0].option, RawOption)
+    assert rq.items[0].option.randomize is True

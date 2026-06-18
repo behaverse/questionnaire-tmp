@@ -25,10 +25,11 @@ class RawOption:
     max_label: str | None = None
     center_label: str | None = None
     initial_value: float | None = None
+    randomize: bool = False
 
 @dataclass
 class RawItem:
-    text: str
+    text: str | None
     construct: str | None = None
     reversed: bool = False
     option: "RawOption | None" = None
@@ -54,6 +55,7 @@ class RawQuestionnaire:
     domain: list = field(default_factory=list)
     population: list = field(default_factory=list)
     context_text: str | None = None
+    shared_prompt_text: str | None = None
 
     def __post_init__(self):
         if isinstance(self.scale, dict):

@@ -64,3 +64,25 @@ def test_range_slider_harvest_validates(tmp_path, monkeypatch):
     one = json.loads(opt_files[0].read_text())
     assert one["input_data_type"] == "number"
     assert "min_label" in one and "max_label" in one
+
+
+def test_multiradio_harvest_validates(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psytoolkit_multiradio.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/narcism-npi16.html",
+                   "--out", str(out),
+                   "--scales-index", str(tmp_path / "missing-index.json"),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    # h1 "Narcissism (NPI-16)" -> acronym "(NPI-16)" sanitizes to qst_npi16
+    qst = json.loads((out / "questionnaires" / "qst_npi16.json").read_text())
+    els = qst["pages"][0]["elements"]
+    assert len(els) == 2
+    # all elements share one prompt; no instruction
+    assert len({e["question"]["prompt"]["ref"] for e in els}) == 1
+    assert all("instruction" not in e["question"] for e in els)
+    opt = json.loads(next((out / "options").glob("*.json")).read_text())
+    assert opt["input_data_type"] == "choice" and opt["randomize"] is True

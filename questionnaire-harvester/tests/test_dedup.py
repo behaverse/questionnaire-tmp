@@ -48,3 +48,20 @@ def test_number_option_fingerprint_distinguishes_labels_and_range():
     assert option_fingerprint(a) != option_fingerprint(b)
     assert option_fingerprint(a) != option_fingerprint(c)
     assert option_fingerprint(a) == option_fingerprint(a2)
+
+def test_choice_fingerprint_distinguishes_randomize_but_keeps_legacy():
+    from harvester.dedup import option_fingerprint
+    def choice(randomize):
+        o = {"input_data_type": "choice", "measurement_type": "ordinal", "selection": "single",
+             "options": [{"index": 1, "value": 0}, {"index": 2, "value": 1}],
+             "content": {"en": {"status": "validated", "options": [
+                 {"index": 1, "text": "a"}, {"index": 2, "text": "b"}]}}}
+        if randomize:
+            o["randomize"] = True
+        return o
+    plain = choice(False)
+    rand = choice(True)
+    assert option_fingerprint(plain) != option_fingerprint(rand)
+    # legacy (no randomize key) fingerprint must be unchanged: equals an explicit randomize=False
+    plain_false = choice(False); plain_false["randomize"] = False
+    assert option_fingerprint(plain) == option_fingerprint(plain_false)

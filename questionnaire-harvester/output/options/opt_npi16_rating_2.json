@@ -1,0 +1,34 @@
+{
+  "content": {
+    "en": {
+      "label": "16-item version 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I am no better or worse than most people"
+        },
+        {
+          "index": 2,
+          "text": "I think I am a special person"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_npi16_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "randomize": true,
+  "selection": "single"
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I don't have any persistent angry feelings that influence my ability to make decisions."
+        },
+        {
+          "index": 2,
+          "text": "B. My feelings of anger occasionally undermine my ability to make decisions."
+        },
+        {
+          "index": 3,
+          "text": "C. I am angry to the extent that it interferes with my making good decisions."
+        },
+        {
+          "index": 4,
+          "text": "D. I'm so angry that I can't make good decisions anymore."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_13",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

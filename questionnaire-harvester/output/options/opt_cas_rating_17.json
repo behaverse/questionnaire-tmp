@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. My anger does not make me feel anymore tired than usual."
+        },
+        {
+          "index": 2,
+          "text": "B. My feelings of anger are beginning to tire me out."
+        },
+        {
+          "index": 3,
+          "text": "C. My anger is intense enough that it makes me feel very tired."
+        },
+        {
+          "index": 4,
+          "text": "D. My feelings of anger leave me too tired to do anything."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_17",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

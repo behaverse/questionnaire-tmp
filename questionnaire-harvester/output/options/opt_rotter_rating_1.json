@@ -1,0 +1,34 @@
+{
+  "content": {
+    "en": {
+      "label": "Rotter, 1966 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Children get into trouble because their patents punish them too much."
+        },
+        {
+          "index": 2,
+          "text": "The trouble with most children nowadays is that their parents are too easy with them."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_rotter_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "randomize": true,
+  "selection": "single"
+}

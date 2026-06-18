@@ -1,0 +1,34 @@
+{
+  "content": {
+    "en": {
+      "label": "Rotter, 1966 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "One of the major reasons why we have wars is because people don't take enough interest in politics."
+        },
+        {
+          "index": 2,
+          "text": "There will always be wars, no matter how hard people try to prevent them."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_rotter_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "randomize": true,
+  "selection": "single"
+}

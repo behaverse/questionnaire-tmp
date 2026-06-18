@@ -226,3 +226,72 @@ def test_parse_full_range_page_via_public_surface():
     assert rq.scale is None
     assert len(rq.items) == 1
     assert rq.items[0].option.max == 7.0
+
+
+def test_parse_multiradio_block_groups_items_and_scores():
+    from harvester.sources.psytoolkit import _parse_multiradio_block
+    block = [
+        "l: cas",
+        "t: multiradio 2",
+        "o: random",
+        "o: scores 0 1",
+        "q: For each pair, choose the one you identify with most.",
+        "- A1",
+        "- A2",
+        "- B1",
+        "- B2",
+    ]
+    prompt, items = _parse_multiradio_block(block)
+    assert prompt == "For each pair, choose the one you identify with most."
+    assert len(items) == 2
+    assert items[0].text is None
+    assert items[0].option.input_data_type == "choice"
+    assert items[0].option.measurement_type == "ordinal"
+    assert items[0].option.anchors == ["A1", "A2"]
+    assert items[0].option.values == [0.0, 1.0]
+    assert items[0].option.randomize is True
+    assert items[1].option.anchors == ["B1", "B2"]
+
+
+def test_parse_multiradio_positional_values_when_free():
+    from harvester.sources.psytoolkit import _parse_multiradio_block
+    block = ["l: pmi", "t: multiradio 3", "o: free", "q: Rate yourself.",
+             "- low", "- mid", "- high", "- bad", "- ok", "- good"]
+    prompt, items = _parse_multiradio_block(block)
+    assert len(items) == 2
+    assert items[0].option.values == [1.0, 2.0, 3.0]
+    assert items[0].option.randomize is False
+
+
+def test_parse_multiradio_refuses_non_divisible():
+    from harvester.sources.psytoolkit import _parse_multiradio_block, PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        _parse_multiradio_block(["l: x", "t: multiradio 2", "q: q", "- a", "- b", "- c"])
+
+
+def test_parse_multiradio_refuses_scores_length_mismatch():
+    from harvester.sources.psytoolkit import _parse_multiradio_block, PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        _parse_multiradio_block(["l: x", "t: multiradio 2", "o: scores 0 1 2", "q: q", "- a", "- b"])
+
+
+def test_parse_full_multiradio_page_via_public_surface():
+    dsl = ("l: npi\nt: multiradio 2\no: random\no: scores 0 1\n"
+           "q: For each pair, choose the one you identify with most.\n"
+           "- I am modest\n- I am superior\n- I blend in\n- I stand out\n")
+    html = f"<html><h1>Narcissism (NPI-16)</h1><pre>{dsl}</pre></html>"
+    rq = PsyToolkitAdapter().parse(html, "https://x/narcism-npi16.html")
+    assert rq.scale is None
+    assert rq.instruction_text is None
+    assert rq.shared_prompt_text.startswith("For each pair")
+    assert len(rq.items) == 2
+    assert rq.items[0].option.randomize is True
+
+
+def test_parse_refuses_multiple_multiradio_blocks():
+    dsl = ("l: a\nt: multiradio 2\no: scores 0 1\nq: q1\n- a\n- b\n\n"
+           "l: b\nt: multiradio 2\no: scores 0 1\nq: q2\n- c\n- d\n")
+    html = f"<html><h1>Demo (D)</h1><pre>{dsl}</pre></html>"
+    from harvester.sources.psytoolkit import PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        PsyToolkitAdapter().parse(html, "https://x/demo.html")

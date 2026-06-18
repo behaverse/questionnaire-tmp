@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. My anger does not interfere with my sleep."
+        },
+        {
+          "index": 2,
+          "text": "B. Sometimes I don't sleep very well because I'm feeling angry."
+        },
+        {
+          "index": 3,
+          "text": "C. My anger is so great that I stay awake 1-2 hours later than usual."
+        },
+        {
+          "index": 4,
+          "text": "D. I am so intensely angry that I can't get much sleep during the night."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_16",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

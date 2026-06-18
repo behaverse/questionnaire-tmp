@@ -173,6 +173,63 @@ def _parse_range_block(block_lines):
     return " ".join(p for p in q_parts if p), items
 
 
+def _parse_multiradio_block(block_lines):
+    """From a `t: multiradio N` block, return (shared_prompt_text, [RawItem]).
+
+    Matrix items have no per-item stem: the `-` lines are response options, grouped
+    into consecutive N-chunks (one chunk = one item's choice option set). Values come
+    from `o: scores ...` (length N) else positional 1..N. `o: random` -> RawOption.randomize.
+    The shared `q:` is the prompt for every item. Refuses (PsyToolkitParseError) on a
+    non-divisible `-` count, an o:scores length != N, an empty anchor, or a missing N.
+    """
+    n = None
+    scores = None
+    randomize = False
+    anchors_all = []
+    q_parts, in_q = [], False
+    for ln in block_lines[1:]:
+        s = ln.rstrip()
+        if re.match(r"^-\s", s) or s.strip() == "-":
+            in_q = False
+            anchors_all.append(re.sub(r"^-\s*", "", s).strip())
+        elif re.match(r"^t:\s*multiradio", s):
+            in_q = False
+            m = re.match(r"^t:\s*multiradio\s+(\d+)", s)
+            if m:
+                n = int(m.group(1))
+        elif re.match(r"^o:", s):
+            in_q = False
+            od = s[2:].strip()
+            if od == "random":
+                randomize = True
+            elif od.startswith("scores"):
+                scores = [float(x) for x in od.split()[1:]]
+        elif re.match(r"^[a-z]:", s):
+            if s.startswith("q:"):
+                q_parts, in_q = [s[2:].strip()], True
+            else:
+                in_q = False
+        elif in_q and s.strip():
+            q_parts.append(s.strip())
+    if not n:
+        raise PsyToolkitParseError("multiradio block missing column count N")
+    if not anchors_all or len(anchors_all) % n != 0:
+        raise PsyToolkitParseError(f"multiradio: {len(anchors_all)} options not divisible by {n}")
+    if any(not a for a in anchors_all):
+        raise PsyToolkitParseError("multiradio has an empty option label")
+    if scores is not None and len(scores) != n:
+        raise PsyToolkitParseError(f"multiradio scores length {len(scores)} != {n}")
+    values = scores if scores is not None else [float(i + 1) for i in range(n)]
+    items = []
+    for k in range(0, len(anchors_all), n):
+        opt = RawOption(
+            input_data_type="choice", measurement_type="ordinal", selection="single",
+            dimension="rating", anchors=anchors_all[k:k + n], values=list(values),
+            randomize=randomize)
+        items.append(RawItem(text=None, option=opt))
+    return " ".join(p for p in q_parts if p), items
+
+
 class PsyToolkitAdapter(SourceAdapter):
     site = "psytoolkit.org"
 
@@ -203,11 +260,17 @@ class PsyToolkitAdapter(SourceAdapter):
                 if bm and bm.group(1) not in used:
                     used.append(bm.group(1))
 
+        range_blocks = [b for b in blocks if any(re.match(r"^t:\s*range\b", ln) for ln in b)]
+        mr_blocks = [b for b in blocks if any(re.match(r"^t:\s*multiradio\b", ln) for ln in b)]
+        scale = None
+        shared_prompt_text = None
+        instruction_text = None
+
         if used:
             if len(used) > 1:
                 raise PsyToolkitParseError(f"multiple distinct scales {used} — needs manual handling")
             scale_name, anchors, values = _parse_scale(dsl, used[0])
-            instruction_text, items = None, []
+            items = []
             for b in blocks:
                 if any(re.match(rf"^t:\s*scale\s+{re.escape(scale_name)}\b", ln) for ln in b):
                     instr, its = _parse_block(b)
@@ -219,11 +282,8 @@ class PsyToolkitAdapter(SourceAdapter):
             scale = RawScale(
                 input_data_type="choice", measurement_type="ordinal", selection="single",
                 dimension=scale_name, anchors=anchors, values=values)
-        else:
-            range_blocks = [b for b in blocks if any(re.match(r"^t:\s*range\b", ln) for ln in b)]
-            if not range_blocks:
-                raise PsyToolkitParseError("no `t: scale` or `t: range` question block found")
-            instruction_text, items = None, []
+        elif range_blocks:
+            items = []
             for b in range_blocks:
                 instr, its = _parse_range_block(b)
                 if instruction_text is None:
@@ -231,10 +291,19 @@ class PsyToolkitAdapter(SourceAdapter):
                 items.extend(its)
             if not items:
                 raise PsyToolkitParseError("range block has no items")
-            scale = None
+        elif mr_blocks:
+            if len(mr_blocks) > 1:
+                raise PsyToolkitParseError("multiple multiradio blocks — needs manual handling")
+            shared_prompt_text, items = _parse_multiradio_block(mr_blocks[0])
+            if not items:
+                raise PsyToolkitParseError("multiradio block has no items")
+        else:
+            raise PsyToolkitParseError("no `t: scale`, `t: range`, or `t: multiradio` question block found")
 
         # peel a leading temporal frame ("Over the last 2 weeks,") into a Context
-        context_text, instruction_text = split_temporal_context(instruction_text)
+        context_text = None
+        if instruction_text:
+            context_text, instruction_text = split_temporal_context(instruction_text)
 
         # --- remaining metadata from HTML ---
         if not title:
@@ -263,4 +332,4 @@ class PsyToolkitAdapter(SourceAdapter):
             instruction_text=instruction_text, scale=scale, items=items,
             license=LicenseFlag.unknown(url),
             domain=[], population=[],          # not derivable from the DSL — classify later
-            context_text=context_text)
+            context_text=context_text, shared_prompt_text=shared_prompt_text)

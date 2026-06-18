@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please say how much you are feeling the following at this moment in time.<BR> Please select one of the options (e.g. \"happy\" or \"unhappy\" for the words in each box, indicating how you are feeling at this moment."
+    }
+  },
+  "id": "pr_pmi_shared"
+}

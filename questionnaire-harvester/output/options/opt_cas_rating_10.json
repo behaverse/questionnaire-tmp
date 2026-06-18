@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I don't shout at people any more than usual."
+        },
+        {
+          "index": 2,
+          "text": "B. I shout at others more now than I used to."
+        },
+        {
+          "index": 3,
+          "text": "C. I shout at people all the time now."
+        },
+        {
+          "index": 4,
+          "text": "D. I shout at others so often that sometimes I just can't stop."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_10",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

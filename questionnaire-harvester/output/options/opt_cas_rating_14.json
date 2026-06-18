@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A. I'm not so angry and hostile that others dislike me."
+        },
+        {
+          "index": 2,
+          "text": "B. People sometimes dislike being around me since I become angry."
+        },
+        {
+          "index": 3,
+          "text": "C. More often than not, people stay away from me because I'm so hostile and angry."
+        },
+        {
+          "index": 4,
+          "text": "D. People don't like me anymore because I'm constantly angry all the time."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_cas_rating_14",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

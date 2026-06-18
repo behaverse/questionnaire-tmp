@@ -11,6 +11,8 @@ def option_fingerprint(o: dict) -> str:
     base = [o.get("input_data_type"), o.get("measurement_type"), o.get("selection")]
     if anchors:
         payload = base + [values, anchors]
+        if o.get("randomize"):
+            payload = payload + ["randomize"]
     else:
         payload = base + [o.get("dimension"), norm(en.get("units", "")),
                           o.get("min"), o.get("max"), o.get("step"),
