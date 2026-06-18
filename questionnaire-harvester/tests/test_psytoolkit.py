@@ -180,3 +180,49 @@ def test_derive_qst_id_distinguishes_short_form_collision_via_url():
     b = derive_qst_id("Love Attitudes Scale (Short Form)",
                       "https://x/love-styles-hendrick-sf.html")
     assert a == "qst_ehi" and b == "qst_sf" and a != b
+
+
+def test_parse_range_brace_params_and_flags():
+    from harvester.sources.psytoolkit import _parse_range_brace
+    p = _parse_range_brace("min=1,max=7,left=not happy,right=very happy,start=5,reverse")
+    assert p["min"] == "1" and p["max"] == "7"
+    assert p["left"] == "not happy" and p["right"] == "very happy"
+    assert p["start"] == "5" and p["reverse"] is True
+
+
+def test_parse_range_block_builds_number_options():
+    from harvester.sources.psytoolkit import _parse_range_block
+    block = [
+        "l: shs",
+        "t: range",
+        "q: Indicate the point on the scale.",
+        "- {min=1,max=7,left=not a very happy person,right=a very happy person} In general, I consider myself:",
+        "- {min=1,max=7,left=not at all,right=a great deal,reverse} To what extent does this describe you?",
+    ]
+    instr, items = _parse_range_block(block)
+    assert instr == "Indicate the point on the scale."
+    assert len(items) == 2
+    assert items[0].text == "In general, I consider myself:"
+    assert items[0].option.input_data_type == "number"
+    assert items[0].option.measurement_type == "interval"
+    assert items[0].option.min == 1.0 and items[0].option.max == 7.0 and items[0].option.step == 1.0
+    assert items[0].option.min_label == "not a very happy person"
+    assert items[0].option.max_label == "a very happy person"
+    assert items[1].reversed is True
+
+
+def test_parse_range_item_missing_minmax_refused():
+    from harvester.sources.psytoolkit import _parse_range_block, PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        _parse_range_block(["l: x", "t: range", "- {left=lo,right=hi} no range here"])
+
+
+def test_parse_full_range_page_via_public_surface():
+    dsl = ("l: shs\nt: range\nq: Indicate the point on the scale.\n"
+           "- {min=1,max=7,left=not a very happy person,right=a very happy person} In general, I consider myself:\n")
+    html = f"<html><h1>Subjective Happiness Scale (SHS)</h1><pre>{dsl}</pre></html>"
+    rq = PsyToolkitAdapter().parse(html, "https://x/happiness-shs.html")
+    assert rq.qst_id == "qst_shs"
+    assert rq.scale is None
+    assert len(rq.items) == 1
+    assert rq.items[0].option.max == 7.0

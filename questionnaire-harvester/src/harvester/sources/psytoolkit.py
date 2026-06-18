@@ -2,7 +2,7 @@ import re
 from html import unescape
 from bs4 import BeautifulSoup
 from harvester.sources.base import SourceAdapter
-from harvester.raw import RawQuestionnaire, RawScale, RawItem
+from harvester.raw import RawQuestionnaire, RawScale, RawItem, RawOption
 from harvester.licensing import LicenseFlag
 from harvester.contexts import split_temporal_context
 
@@ -121,6 +121,58 @@ def _parse_block(block_lines):
     return instruction, items
 
 
+def _parse_range_brace(brace: str) -> dict:
+    """Parse a `{min=1,max=7,left=...,right=...,start=5,reverse}` item brace.
+    `key=value` pairs become strings; bare flags (e.g. `reverse`) become True.
+    PsyToolkit separates params by comma, so labels never contain commas."""
+    params: dict = {}
+    for part in brace.split(","):
+        part = part.strip()
+        if "=" in part:
+            k, v = part.split("=", 1)
+            params[k.strip()] = v.strip()
+        elif part:
+            params[part] = True
+    return params
+
+
+def _parse_range_block(block_lines):
+    """From a `t: range` block, return (instruction_text, [RawItem with .option]).
+
+    Each `-` item carries its own number option (min/max/step + left/right labels).
+    Refuses (PsyToolkitParseError) a range item whose brace lacks min/max."""
+    q_parts, items, in_q = [], [], False
+    for ln in block_lines[1:]:
+        s = ln.rstrip()
+        if re.match(r"^-\s", s) or s.strip() == "-":
+            in_q = False
+            text = re.sub(r"^-\s*", "", s)
+            m = re.match(r"^\{([^}]*)\}\s*(.*)", text)
+            if not m:
+                continue
+            params = _parse_range_brace(m.group(1))
+            stem = m.group(2).strip()
+            if "min" not in params or "max" not in params:
+                raise PsyToolkitParseError("range item missing min/max")
+            if not stem:
+                continue
+            opt = RawOption(
+                input_data_type="number", measurement_type="interval", dimension="rating",
+                min=float(params["min"]), max=float(params["max"]),
+                step=float(params["step"]) if "step" in params else 1.0,
+                min_label=params.get("left") or None, max_label=params.get("right") or None,
+                initial_value=float(params["start"]) if "start" in params else None)
+            items.append(RawItem(text=stem, reversed=bool(params.get("reverse")), option=opt))
+        elif re.match(r"^[a-z]:", s):
+            if s.startswith("q:"):
+                q_parts, in_q = [s[2:].strip()], True
+            else:
+                in_q = False
+        elif in_q and s.strip():
+            q_parts.append(s.strip())
+    return " ".join(p for p in q_parts if p), items
+
+
 class PsyToolkitAdapter(SourceAdapter):
     site = "psytoolkit.org"
 
@@ -143,7 +195,6 @@ class PsyToolkitAdapter(SourceAdapter):
             raise PsyToolkitParseError("no <pre> survey-script block on the page")
         dsl = unescape(pre.get_text())
 
-        # --- find the scale(s) actually used by `t: scale` question blocks ---
         blocks = _blocks(dsl)
         used = []
         for b in blocks:
@@ -151,31 +202,39 @@ class PsyToolkitAdapter(SourceAdapter):
                 bm = re.match(r"^t:\s*scale\s+(\S+)", ln)
                 if bm and bm.group(1) not in used:
                     used.append(bm.group(1))
-        if not used:
-            raise PsyToolkitParseError("no `t: scale` question block found")
-        if len(used) > 1:
-            # genuinely multi-scale: can't be represented as one single-scale questionnaire
-            raise PsyToolkitParseError(f"multiple distinct scales {used} — needs manual handling")
-        scale_name, anchors, values = _parse_scale(dsl, used[0])
 
-        # merge items from ALL blocks that use this scale (multi-page single-scale);
-        # take the instruction from the first such block
-        instruction_text, items = None, []
-        for b in blocks:
-            if any(re.match(rf"^t:\s*scale\s+{re.escape(scale_name)}\b", ln) for ln in b):
-                instr, its = _parse_block(b)
+        if used:
+            if len(used) > 1:
+                raise PsyToolkitParseError(f"multiple distinct scales {used} — needs manual handling")
+            scale_name, anchors, values = _parse_scale(dsl, used[0])
+            instruction_text, items = None, []
+            for b in blocks:
+                if any(re.match(rf"^t:\s*scale\s+{re.escape(scale_name)}\b", ln) for ln in b):
+                    instr, its = _parse_block(b)
+                    if instruction_text is None:
+                        instruction_text = instr
+                    items.extend(its)
+            if not items:
+                raise PsyToolkitParseError("question block has no items")
+            scale = RawScale(
+                input_data_type="choice", measurement_type="ordinal", selection="single",
+                dimension=scale_name, anchors=anchors, values=values)
+        else:
+            range_blocks = [b for b in blocks if any(re.match(r"^t:\s*range\b", ln) for ln in b)]
+            if not range_blocks:
+                raise PsyToolkitParseError("no `t: scale` or `t: range` question block found")
+            instruction_text, items = None, []
+            for b in range_blocks:
+                instr, its = _parse_range_block(b)
                 if instruction_text is None:
                     instruction_text = instr
                 items.extend(its)
-        if not items:
-            raise PsyToolkitParseError("question block has no items")
+            if not items:
+                raise PsyToolkitParseError("range block has no items")
+            scale = None
 
         # peel a leading temporal frame ("Over the last 2 weeks,") into a Context
         context_text, instruction_text = split_temporal_context(instruction_text)
-
-        scale = RawScale(
-            input_data_type="choice", measurement_type="ordinal", selection="single",
-            dimension=scale_name, anchors=anchors, values=values)
 
         # --- remaining metadata from HTML ---
         if not title:
