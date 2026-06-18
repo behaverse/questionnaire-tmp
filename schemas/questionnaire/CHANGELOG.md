@@ -2,6 +2,15 @@
 
 This schema uses Calendar Versioning (`vYY.MMDD`) per the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning).
 
+## [v26.0618] — 2026-06-18
+
+### Added (severity: additive)
+
+- **Option slider display fields** — `min_label`, `max_label`, `center_label` (strings) and `initial_value` (number) on every Option. They describe a `number` option's endpoints / initial handle; a viewer renders a `number` option carrying `min_label`/`max_label` as a slider (no `slider` input_data_type). Existing instances stay valid.
+- **Unlabeled ordinal choices** — `OptionChoiceContent.text` is now optional, so an ordinal scale may label only some choices (e.g. endpoints). Convention: nominal scales should still label every choice.
+
+**Severity:** `additive`.
+
 ## [v26.0609] — 2026-06-09
 
 ### Changed (severity: breaking)

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://behaverse.org/schemas/questionnaire/v26.0618/schema.json",
+  "$id": "https://behaverse.org/schemas/questionnaire/v26.0609/schema.json",
   "title": "Questionnaire Definition",
   "description": "Schema 2 v26.0609 per OD-15 + OD-16. Retargets instrument/v26.0609 (instrument_id + author rename).",
   "type": "object",
@@ -360,10 +360,6 @@
         "min":              { "type": "number" },
         "max":              { "type": "number" },
         "step":             { "type": "number", "exclusiveMinimum": 0 },
-        "min_label":        { "type": "string", "minLength": 1 },
-        "max_label":        { "type": "string", "minLength": 1 },
-        "center_label":     { "type": "string", "minLength": 1 },
-        "initial_value":    { "type": "number" },
         "min_selected":     { "type": "integer", "minimum": 0 },
         "max_selected":     { "type": "integer", "minimum": 1 },
         "placeholder":      { "oneOf": [{ "$ref": "#/$defs/PlaceholderRef" }, { "$ref": "#/$defs/PlaceholderInline" }] },
@@ -406,7 +402,7 @@
     },
     "OptionChoiceContent": {
       "type": "object",
-      "required": ["index"],
+      "required": ["index", "text"],
       "properties": {
         "index": { "type": "integer", "minimum": 1 },
         "text":  { "type": "string", "minLength": 1 }
