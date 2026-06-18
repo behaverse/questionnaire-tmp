@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "For each sentence below, please select how uncharacteristic or characteristic (5-point scale) this is for you personally."
+    }
+  },
+  "id": "ins_ncs6_instruction"
+}

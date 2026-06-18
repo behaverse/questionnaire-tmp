@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please respond to the following 8 items. Be honest. There are no right or wrong answers!"
+    }
+  },
+  "id": "ins_grits_instruction"
+}

@@ -1,0 +1,93 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The Three Item Loneliness Scale (TILS) is a short scale ideally suited\nfor studies in which many other questions are asked. This reduces\nfatigue of participants. It is based on the longer Revised UCLA scale.",
+    "id": "qst_tils",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 3
+    },
+    "publication": {
+      "citation": "Ernst, J.M. & Cacioppo, J.T. (1999). Lonely hearts: Psychological perspectives on loneliness. Applied & Preventative Psychology, 8 (1) , 1-22.",
+      "year": 1999
+    },
+    "short_title": "TILS",
+    "title": "Loneliness (TILS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/loneliness-tils.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_tils_tilsscale_3@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_tils_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_tils_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_tils_tilsscale_3@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_tils_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_tils_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_tils_tilsscale_3@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_tils_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_tils_3@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Optimism is a positive attitude\nabout the future. In the field of psychology, optimism is viewed as a\ngeneral way of thinking that can be beneficial to, for example, health\noutcomes. The Scheier and Carver paper from 1992 ( see\nreferences ) is a really good read about this topic.",
+    "id": "qst_lotr",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 10
+    },
+    "publication": {
+      "citation": "Scheier, M. F., & Carver, C. S. (1992). Effects of optimism on psychological and physical well-being:\nTheoretical overview and empirical update. Cognitive Therapy and Research, 16 , 201-228.",
+      "year": 1992
+    },
+    "short_title": "LOT-R",
+    "title": "Optimism (LOT-R)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/optimism-lotr.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lotr_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lotr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lotr_10@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

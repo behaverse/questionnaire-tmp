@@ -7,9 +7,10 @@ creating duplicate shared entities** (response scales, instructions).
 review). It never touches the Library database. Promotion to the Library is a **separate
 manual step** (`library ingest`) performed after owner review.
 
-**Harvested so far (PsyToolkit):** PHQ-9, GAD-7, RSES (Rosenberg self-esteem), SWLS
-(satisfaction with life), WHO-5. GAD-7 reuses PHQ-9's frequency scale; the four distinct
-agree/frequency scales are kept as faithful separate entities.
+**Harvested so far (PsyToolkit, 15):** PHQ-9, GAD-7, RSES, SWLS, WHO-5, PSS, LOT-R, GSE,
+GRIT-S, BRS, NCS-6, GQ-6, FS (flourishing), TILS (loneliness), SQS (sleep). GAD-7 reuses
+PHQ-9's frequency scale and all share `ctx_over_the_last_2_weeks` where applicable; the
+distinct agree/frequency scales are kept as faithful separate entities (no false merge).
 
 ---
 
@@ -160,7 +161,7 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
   python -m pytest questionnaire-harvester/tests -v
 ```
 
-Expected: 25 tests, all passing.
+Expected: 26 tests, all passing.
 
 ---
 
@@ -189,10 +190,10 @@ These are tracked but deliberately deferred:
   Options/Instructions) and seeding the index from the Library would let a harvested Context reuse
   an *identical* existing Library Context automatically — while still respecting the faithfulness
   policy (only byte-identical-modulo-case content reuses; "2 weeks" never folds to "two weeks").
-- **PsyToolkit adapter coverage** — the adapter handles single-scale Likert questionnaires
-  whose anchors carry explicit `{score=N}`. NOT yet handled (raise `PsyToolkitParseError`,
-  logged for manual handling): scales without explicit scores (e.g. GQ-6 gratitude),
-  multi-scale pages (only the first scale block is taken), and non-`scale` blocks
+- **PsyToolkit adapter coverage** — the adapter handles single-scale Likert questionnaires,
+  including scales without explicit `{score=N}` (scored by 1-based position per PsyToolkit's
+  default). NOT yet handled (raise `PsyToolkitParseError`, logged for manual handling):
+  multi-scale pages (only the first `scale` block is taken) and non-`scale` blocks
   (`t: radio`/`t: textline`/matrix). Per-instrument `classification` (domain/population) is
   left empty for adapter imports — classify downstream.
 - **`psychology_tools` adapter** — source adapter for psychologytools.com.

@@ -1,5 +1,4 @@
 from pathlib import Path
-import pytest
 from harvester.sources.psytoolkit import PsyToolkitAdapter
 
 FIXDIR = Path(__file__).parent / "fixtures"
@@ -72,8 +71,19 @@ def test_who5_url_slug_fallback_and_six_point_scale():
     assert rq.scale.values == [5.0, 4.0, 3.0, 2.0, 1.0, 0.0]
 
 
-def test_unsupported_scale_without_scores_raises():
-    from harvester.sources.psytoolkit import PsyToolkitParseError, _parse_scale
-    dsl = "scale: agree\n- strongly disagree\n- disagree\n- agree\n\nl: x\nt: scale agree\nq: rate\n- item one\n"
-    with pytest.raises(PsyToolkitParseError):
-        _parse_scale(dsl)
+def test_scale_without_scores_uses_1based_position():
+    # PsyToolkit default: anchors without {score=N} are scored by 1-based position.
+    from harvester.sources.psytoolkit import _parse_scale
+    name, anchors, values = _parse_scale(
+        "scale: agree\n- strongly disagree\n- disagree\n- neutral\n- agree\n- strongly agree\n")
+    assert name == "agree"
+    assert anchors == ["strongly disagree", "disagree", "neutral", "agree", "strongly agree"]
+    assert values == [1.0, 2.0, 3.0, 4.0, 5.0]
+
+
+def test_scale_with_explicit_scores_overrides_position():
+    from harvester.sources.psytoolkit import _parse_scale
+    _, anchors, values = _parse_scale(
+        "scale: f\n- {score=0} never\n- {score=1} sometimes\n- {score=2} always\n")
+    assert values == [0.0, 1.0, 2.0]
+    assert anchors == ["never", "sometimes", "always"]

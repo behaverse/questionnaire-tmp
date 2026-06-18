@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "The questions in this scale ask you about your feelings and thoughts during the last month.<br> In each case, you will be asked <i>how often</i> you felt or thought a certain way.<br> Although some of the questions are similar, there are differences between them and you should treat each one as a separate question.<br> The best approach is answer each question fairly quickly.<br> That is, don't try to count up the number of times you felt a particular way,<br> but rather indicate the alternative that seems like a reasonable estimate.<br>"
+    }
+  },
+  "id": "ins_pss_instruction"
+}

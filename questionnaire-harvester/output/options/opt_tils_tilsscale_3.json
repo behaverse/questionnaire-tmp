@@ -1,0 +1,41 @@
+{
+  "content": {
+    "en": {
+      "label": "TILS 3-point tilsscale",
+      "options": [
+        {
+          "index": 1,
+          "text": "Hardly ever"
+        },
+        {
+          "index": 2,
+          "text": "Some of the time"
+        },
+        {
+          "index": 3,
+          "text": "Often"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "tilsscale",
+  "id": "opt_tils_tilsscale_3",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}
