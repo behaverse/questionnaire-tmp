@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "The following items refer to thoughts and feelings you may have had about others <b>over the last month</b>.<br> Think about the last month and indicate the extent of these feelings from 1 (Not at all) to 5 (Totally).<br><br> (N.B. Please do not rate items according to any experiences you may have had under the influence of drugs.)<br><br>"
+    }
+  },
+  "id": "ins_gpts_instruction"
+}

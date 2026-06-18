@@ -1,0 +1,191 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Autism is a mental health condition which is frequently mentioned in\nthe media. No wonder, given that more and more children and adults are\ndiagnosed as being on the autism spectrum. Therefore, it is important\nto have a short checklist which may be a reason to go see a mental\nhealth specialist. The Short Autism Spectrum Quotient is exactly made\nto be that, and it has been developed by the same team that developed\nthe longer and most used Autism Quotient Scale (under the supervision\nof Simon Baron-Cohen at Cambridge University in the UK).",
+    "id": "qst_quotient",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 10
+    },
+    "publication": {
+      "citation": "Allison, C., Auyeung, B., & Baron-Cohen, S. (2012). Toward Brief\n\"Red Flags\" for Autism Screening: The Short Autism Spectrum Quotient\nand the Short Quantitative Checklist in 1,000 Cases and 3,000 Controls. Journal of the American Acad of Child & Adolescent Psychiatry, 51(2) , 202-212.",
+      "year": 2012
+    },
+    "short_title": "Short Autism Spectrum Quotient",
+    "title": "Short Autism Spectrum Quotient",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/short-autism-spectrum-quotient.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_quotient_agreesaq_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_quotient_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_quotient_10@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CSJAS 4-point csjasLikert",
+      "options": [
+        {
+          "index": 1,
+          "text": "Completely disagree"
+        },
+        {
+          "index": 2,
+          "text": "Somewhat disagree"
+        },
+        {
+          "index": 3,
+          "text": "Somewhat agree"
+        },
+        {
+          "index": 4,
+          "text": "Completely agree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "csjaslikert",
+  "id": "opt_csjas_csjaslikert_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

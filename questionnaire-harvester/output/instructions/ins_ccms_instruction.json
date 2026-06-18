@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "For each item, choose how much an item is like you. Values range from “Not at all like me” (1) to “Very much like me” (5)."
+    }
+  },
+  "id": "ins_ccms_instruction"
+}

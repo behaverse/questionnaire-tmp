@@ -1,0 +1,33 @@
+{
+  "content": {
+    "en": {
+      "label": "Groningen Sleep Quality Questionnaire 2-point tf",
+      "options": [
+        {
+          "index": 1,
+          "text": "True"
+        },
+        {
+          "index": 2,
+          "text": "False"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "tf",
+  "id": "opt_gsqs_tf_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

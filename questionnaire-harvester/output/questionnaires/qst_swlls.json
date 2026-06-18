@@ -1,0 +1,121 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Love is one of the most important human emotions, and therefore it is\nof no surprise that psychologists study love. That said, my personal\nimpression is that love gets less attention than it deserves in\npsychology.",
+    "id": "qst_swlls",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 5
+    },
+    "publication": {
+      "citation": "Neto, F. (2005). The Satisfaction With Love Life Scale. Measurement and evaluation in counseling and development, 38 , 2-13.",
+      "year": 2005
+    },
+    "short_title": "SWLLS",
+    "title": "Satisfaction with love life scale (SWLLS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/love-satisfaction-swlls.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_swlls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swlls_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swlls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swlls_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swlls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swlls_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swlls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swlls_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_swlls_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_swls_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_swlls_5@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

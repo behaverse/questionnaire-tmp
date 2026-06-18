@@ -1,0 +1,79 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "People differ in whether they are more of a morning or an evening\nperson. Many people are neither. What you are in this respect is your chronotype .",
+    "id": "qst_cirens",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 2
+    },
+    "publication": {
+      "citation": "Reference to the original MEQ: Horne and Ostberg (1976). A\nself-assessment questionnaire to determine morningness-eveningness in\nhuman circadian rhythms. International Journal of Chronobiology, 4 ,\n97–110.",
+      "year": 1976
+    },
+    "short_title": "CIRENS",
+    "title": "Chronotype: Circadian Energy Scale (CIRENS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/chronotype-cirens.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_cirens_energy_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cirens_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cirens_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cirens_energy_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cirens_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cirens_2@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

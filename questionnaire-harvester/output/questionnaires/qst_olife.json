@@ -1,0 +1,653 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Schizophrenia is a mental disorder with five categories of symptoms (for a review see van Os & Kapur, 2009 ):",
+    "id": "qst_olife",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 43
+    },
+    "publication": {
+      "citation": "Mason, O., Linney, Y., & Claridge, G. (2005). Short scales for\nmeasuring schizotypy. Schizophrenia Research, 78 , 293-296.",
+      "year": 2005
+    },
+    "short_title": "O-LIFE",
+    "title": "Short Oxford-Liverpool Inventory of Feelings and Experiences (O-LIFE).",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/schizotypy-short-olife.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_29@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_30@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_31@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_32@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_33@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_34@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_35@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_36@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_37@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_38@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_39@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_40@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_41@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_42@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_olife_yesno_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_olife_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_olife_43@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

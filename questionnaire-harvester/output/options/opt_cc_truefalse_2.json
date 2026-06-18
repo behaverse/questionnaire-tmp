@@ -1,0 +1,33 @@
+{
+  "content": {
+    "en": {
+      "label": "Shortened, ZKPQ-50-CC 2-point truefalse",
+      "options": [
+        {
+          "index": 1,
+          "text": "True"
+        },
+        {
+          "index": 2,
+          "text": "False"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "truefalse",
+  "id": "opt_cc_truefalse_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

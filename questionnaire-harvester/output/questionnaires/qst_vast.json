@@ -1,0 +1,429 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Most people do not want to hurt other people, yet there are those that\nenjoy being cruel (i.e., sadism). Hence, it is a personality trait\nthat deservers study (for an excellent overview, see Buckels et al., 2013 ).",
+    "id": "qst_vast",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 27
+    },
+    "publication": {
+      "citation": "D. L. Paulhus & D. N. Jones (2015).  Measuring dark personalities via questionnaire.  In G. J. Boyle, D. H. Saklofske & G. Matthews (Eds.), Measures of personality and social psychological constructs (pp.562-594).  San Diego, CA: Academic Press.",
+      "year": 2015
+    },
+    "short_title": "VAST",
+    "title": "Varieties of Sadistic Tendencies (VAST)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/vast.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vast_agree_vast_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vast_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_vast_27@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

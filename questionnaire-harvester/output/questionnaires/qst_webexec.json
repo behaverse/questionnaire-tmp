@@ -1,0 +1,135 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Executive control functions are those mental functions that coordinate\nthoughts and behavior.",
+    "id": "qst_webexec",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 6
+    },
+    "publication": {
+      "citation": "Buchanan, T., Heffernan, T. M., Parrott, A. C., Ling, J., Rodgers, J., & Scholey, A. B. (2010). A short self-report measure of problems with executive function suitable for administration via the Internet. Behavior Research Methods, 42 , 709-714.",
+      "year": 2010
+    },
+    "short_title": "webexec",
+    "title": "Problems with executive control (webexec)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/webexec.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_webexec_problems_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_webexec_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_webexec_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_webexec_problems_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_webexec_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_webexec_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_webexec_problems_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_webexec_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_webexec_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_webexec_problems_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_webexec_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_webexec_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_webexec_problems_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_webexec_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_webexec_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_webexec_problems_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_webexec_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_webexec_6@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

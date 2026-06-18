@@ -1,0 +1,345 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Attachment theory is\nan important and well-known theory in developmental and social\npsychology. It relates to how people feel and behave in long-term\nrelationships, such as those between parent and child or between\nromantic partners (see attachment in\nadults ).",
+    "id": "qst_saam",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 21
+    },
+    "publication": {
+      "citation": "Gillath, O., Hart, J., Noftle, E. E., & Stockdale, G. D. (2009). Development and validation of a state adult attachment measure (SAAM). Journal of Research in Personality, 43 , 362-373. See also this link to Gillath’s web page .",
+      "year": 2009
+    },
+    "short_title": "SAAM",
+    "title": "State Adult Attachment Measure (SAAM)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/attachment-saam.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_saam_agreesaam_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_saam_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_saam_21@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

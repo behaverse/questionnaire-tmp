@@ -1,0 +1,261 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The BIG 5 is one of the leading models to express the most important\ndimensions of personality, namely:",
+    "id": "qst_bfis",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 15
+    },
+    "publication": {
+      "citation": "Lang, F. R., John, D., Ludtke, O., Schupp, J., & Wagner, G. G. (2011). Short assessment of the Big Five: robust accros survey methods except telephone interviewing. Behavior Research Methods, 43 , 548-567.",
+      "year": 2011
+    },
+    "short_title": "BFI-S",
+    "title": "Short 15-item Big Five Inventory (BFI-S)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/big5-bfi-s.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bfis_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bfis_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bfis_15@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

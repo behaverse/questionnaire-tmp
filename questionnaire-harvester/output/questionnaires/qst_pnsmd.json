@@ -1,0 +1,247 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The \"positive and negative semantic dimensions of relationship\nsatisfaction\" scale uses a special way of measuring relationship\nsatisfaction. While many relationship scales treat positive and\nnegative attitudes as polar opposites, this might not be the best way\nto deal with measuring how people feel about their relationship.",
+    "id": "qst_pnsmd",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 14
+    },
+    "publication": {
+      "citation": "Mattson, R. E., Rogge, R. D., Johnson, M. D., Davidson, E. K. B., & Fincham, F. D. (2013). The positive and negative semantic dimensions of relationship satisfaction. Personal Relationships, 20 , 328-355.",
+      "year": 2013
+    },
+    "short_title": "PN-SMD",
+    "title": "Relationship satisfaction (PN-SMD)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/relationship-satisfaction-pnsmd.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pnsmd_howmuch_8@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pnsmd_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pnsmd_14@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

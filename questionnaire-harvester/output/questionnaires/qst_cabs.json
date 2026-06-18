@@ -1,0 +1,611 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Bullying is a major problem in schools around the world.",
+    "id": "qst_cabs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 40
+    },
+    "publication": {
+      "citation": "Strout, T.D., Vessey, J.A., Difazio, R.L., Ludlow, L.H. (2018). The\nChild Adolescent Bullying Scale (CABS): Psychometric evaluation of a\nnew measure. Research in Nursing and Health, 41 , 1-13.",
+      "year": 2018
+    },
+    "short_title": "CABS",
+    "title": "Child Adolescent Bullying Scale (CABS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/cabs.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_29@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_30@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_31@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_32@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_33@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_34@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_35@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_36@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_37@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_38@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_39@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cabs_cabsscores_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cabs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_cabs_40@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

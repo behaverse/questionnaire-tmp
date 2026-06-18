@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "CIA 3.0 4-point howmuch",
+      "options": [
+        {
+          "index": 1,
+          "text": "not at all"
+        },
+        {
+          "index": 2,
+          "text": "a little"
+        },
+        {
+          "index": 3,
+          "text": "quite a bit"
+        },
+        {
+          "index": 4,
+          "text": "a lot"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "howmuch",
+  "id": "opt_cia_howmuch_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

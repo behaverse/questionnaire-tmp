@@ -1,0 +1,891 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Gender differences are always a popular subject among psychology\nstudents and in the general population. The well-known social\npsychologist Sandara Bem (1944-2014) developed a sex role\ninventory to measure different aspects of hypothesized psychological\ngender traits.",
+    "id": "qst_bsri",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 60
+    },
+    "publication": {
+      "citation": "Bem, S. L. (1974) The measurement of psychological\nandrogyny. Journal of Consulting and Clinical Psychology, 42 ,\n155-162.",
+      "year": 1974
+    },
+    "short_title": "BSRI",
+    "title": "Bem sex role inventory (BSRI)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/sex-role-bem.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_29@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_30@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_31@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_32@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_33@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_34@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_35@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_36@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_37@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_38@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_39@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_40@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_41@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_42@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_43@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_44@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_45@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_46@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_47@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_48@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_49@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_50@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_51@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_52@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_53@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_54@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_55@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_56@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_57@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_58@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_59@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsri_howoften_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsri_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsri_60@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

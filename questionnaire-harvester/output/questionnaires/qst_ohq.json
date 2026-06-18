@@ -1,0 +1,457 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Happiness and the term more\ncommonly used in psychology, subjective\nwellbeing , are frequently studied in the field of psychology\n(including in positive psychology )\nand related applied areas, such as social care .",
+    "id": "qst_ohq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 29
+    },
+    "publication": {
+      "citation": "Hills, P. & Argyle, M. (2002). The Oxford Happiness Questionnaire: a compact scale for the measurement of psychological well-being. Personality and Individual Differences, 33 , 1073-1082.",
+      "year": 2002
+    },
+    "short_title": "Oxford Happiness Scale",
+    "title": "Oxford Happiness Scale",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/happiness-ohq.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ohq_agree_6@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ohq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ohq_29@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

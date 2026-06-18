@@ -117,6 +117,22 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
     return res
 
 
+def find_questionnaire_collision(out_dir: Path, qst_id: str, source_url: str) -> str | None:
+    """Return the source URL of an already-harvested questionnaire that shares this
+    `qst_id` but came from a *different* page, else None.
+
+    Guards against id-derivation clashes (e.g. two distinct "BES" instruments)
+    silently overwriting each other. Re-harvesting the same URL is idempotent
+    (returns None), so refreshes still work.
+    """
+    import json
+    path = Path(out_dir) / "questionnaires" / f"{qst_id}.json"
+    if not path.exists():
+        return None
+    existing = json.loads(path.read_text()).get("metadata", {}).get("x_source_url")
+    return existing if existing and existing != source_url else None
+
+
 def write_draft(result: DraftResult, out_dir: Path) -> None:
     for etype, objs in result.entities.items():
         for obj in objs:

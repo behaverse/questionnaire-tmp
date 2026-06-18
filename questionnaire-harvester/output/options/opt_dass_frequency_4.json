@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "DASS 4-point frequency",
+      "options": [
+        {
+          "index": 1,
+          "text": "Never"
+        },
+        {
+          "index": 2,
+          "text": "Sometimes"
+        },
+        {
+          "index": 3,
+          "text": "Often"
+        },
+        {
+          "index": 4,
+          "text": "Almost always"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "frequency",
+  "id": "opt_dass_frequency_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

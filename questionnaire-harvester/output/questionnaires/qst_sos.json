@@ -1,0 +1,219 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Alcoholism is a common form\nof addiction. Although alcohol is widely available, it is generally\nconsidered a harmful substance even when taken in regular small doses.",
+    "id": "qst_sos",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 12
+    },
+    "publication": {
+      "citation": "Pagano, M.E., Krentzman, A.R., Onder, C.C., Baryak, J.L., Murphy, J.L., Zywiak, W.H.,  & Stout, R. L. (2010). Service to Others in Sobriety (SOS). Alcohol Treatment Quarterly, 28 , 111-127. Read this paper online for free .",
+      "year": 2010
+    },
+    "short_title": "SOS",
+    "title": "Service to Others in Sobriety (SOS) questionnaire",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/alcohol-sobriety-sos.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sos_sosfreq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sos_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sos_12@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

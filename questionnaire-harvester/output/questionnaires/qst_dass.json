@@ -1,0 +1,639 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Depression, anxiety, and stress are all negative feelings. The\nUniversity of New South Wales in Australia developed a questionnaire\nto measure all three of them using one questionnaire, known as DASS.",
+    "id": "qst_dass",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 42
+    },
+    "publication": {
+      "citation": "Lovibond, S.H. & Lovibond, P.F. (1995). Manual for the Depression Anxiety & Stress Scales. (2 Ed.)Sydney: Psychology Foundation.",
+      "year": 1995
+    },
+    "short_title": "DASS",
+    "title": "Depression Anxiety Stress Scales (DASS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/depression-anxiety-stress-dass.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_29@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_30@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_31@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_32@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_33@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_34@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_35@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_36@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_37@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_38@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_39@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_40@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_41@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dass_frequency_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dass_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dass_42@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

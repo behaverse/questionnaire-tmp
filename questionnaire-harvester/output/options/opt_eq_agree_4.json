@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "EQ 4-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Strongly agree"
+        },
+        {
+          "index": 2,
+          "text": "Slightly agree"
+        },
+        {
+          "index": 3,
+          "text": "Slightly disagree"
+        },
+        {
+          "index": 4,
+          "text": "Strongly disagree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_eq_agree_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

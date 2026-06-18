@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "UPLAS 4-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Strongly Disagree"
+        },
+        {
+          "index": 2,
+          "text": "Disagree"
+        },
+        {
+          "index": 3,
+          "text": "Agree"
+        },
+        {
+          "index": 4,
+          "text": "Strongly Agree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_uplas_agree_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

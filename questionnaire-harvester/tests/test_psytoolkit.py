@@ -135,3 +135,48 @@ def test_parse_scale_refuses_labelless_numeric_scale():
     from harvester.sources.psytoolkit import PsyToolkitParseError, _parse_scale
     with pytest.raises(PsyToolkitParseError):
         _parse_scale("scale: frequency\n- {score=4}\n- {score=3}\n- {score=0}\n")
+
+
+# --- id derivation: a parenthetical is an acronym only when it is a clean
+#     ALL-CAPS / digit / hyphen token; otherwise fall back to the URL slug ---
+
+def test_derive_qst_id_acronym_parenthetical():
+    from harvester.sources.psytoolkit import derive_qst_id
+    assert derive_qst_id("Satisfaction with Life Scale (SWLS)",
+                         "https://x/satisfaction-with-life.html") == "qst_swls"
+    assert derive_qst_id("Generalized Anxiety Disorder Scale (GAD-7)",
+                         "https://x/anxiety-gad7.html") == "qst_gad7"
+    assert derive_qst_id("Autism Spectrum Quotient 10 Items (AQ-10)",
+                         "https://x/short-autism-spectrum-quotient.html") == "qst_aq10"
+
+
+def test_derive_qst_id_rejects_nonacronym_parenthetical_uses_url_slug():
+    from harvester.sources.psytoolkit import derive_qst_id
+    # "(McCroskey)" is a name, not an acronym -> URL slug "mcss"
+    assert derive_qst_id("Shyness Scale (McCroskey)",
+                         "https://x/shyness-mcss.html") == "qst_mcss"
+    # "(Revised Version)" has a space -> URL slug "scsr"
+    assert derive_qst_id("Self-Consciousness Scale (Revised Version)",
+                         "https://x/self-consciousness-scale-scsr.html") == "qst_scsr"
+    # "(for Adolescents)" -> URL slug
+    assert derive_qst_id("Aggression Scale (for Adolescents)",
+                         "https://x/aggression-adolescents.html") == "qst_adolescents"
+    # "(LAS, Short Form)" comma+space -> URL slug
+    assert derive_qst_id("Love Attitudes Scale (LAS, Short Form)",
+                         "https://x/love-styles-hendrick-sf.html") == "qst_sf"
+
+
+def test_derive_qst_id_no_parenthetical_uses_url_slug():
+    from harvester.sources.psytoolkit import derive_qst_id
+    assert derive_qst_id("World Health Organization Well-Being Index",
+                         "https://x/who5.html") == "qst_who5"
+
+
+def test_derive_qst_id_distinguishes_short_form_collision_via_url():
+    from harvester.sources.psytoolkit import derive_qst_id
+    # two different instruments both titled "(Short Form)" must not collide
+    a = derive_qst_id("Edinburgh Handedness Inventory (Short Form)",
+                      "https://x/handedness-ehi.html")
+    b = derive_qst_id("Love Attitudes Scale (Short Form)",
+                      "https://x/love-styles-hendrick-sf.html")
+    assert a == "qst_ehi" and b == "qst_sf" and a != b

@@ -1,0 +1,303 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Procrastination is the\npostponing of more important activities for less important ones.",
+    "id": "qst_pci",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 18
+    },
+    "publication": {
+      "citation": "Stainton, M., Lay, C. H., & Flett, G. L. (2000). Trait procrastinators and behavior/trait-specific cognitions. Journal of social behavior and personality, 15 , 297-312.",
+      "year": 2000
+    },
+    "short_title": "PCI",
+    "title": "Procrastinatory Cognitions Inventory (PCI)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/procrastination-pci.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pci_freq_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pci_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pci_18@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

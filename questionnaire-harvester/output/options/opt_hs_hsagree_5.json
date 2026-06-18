@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "HS 5-point hsagree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Disagree strongly"
+        },
+        {
+          "index": 2,
+          "text": "Disagree"
+        },
+        {
+          "index": 3,
+          "text": "Neither agree nor disagree"
+        },
+        {
+          "index": 4,
+          "text": "Agree"
+        },
+        {
+          "index": 5,
+          "text": "Agree strongly"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "hsagree",
+  "id": "opt_hs_hsagree_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 5.0
+    }
+  ],
+  "selection": "single"
+}

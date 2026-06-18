@@ -1,0 +1,541 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Self esteem refers to how well people feel about themselves. Body\nesteem is part of this. The study of body self esteem is popular among\npsychology students. There is a lot of attention for the role of the\nmedia on body esteem (in particular for women). For example, it is\noften argued that the media constantly shows beautiful people with\nbody features barely anyone has. This makes people feel less confident\nabout their own bodies. This can also be a causal factor in eating\ndisorders, which are more common in adolescent girls and women than in\nboys/men.",
+    "id": "qst_bes",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 35
+    },
+    "publication": {
+      "citation": "Franzoi, S.L. (1994). Further evidence of the reliability and validity of the body esteem scale. Journal of Clinical Psychology, 50 , 237-239.",
+      "year": 1994
+    },
+    "short_title": "BES",
+    "title": "Body Esteem Scale (BES)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/body-esteem-bes.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_29@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_30@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_31@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_32@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_33@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_34@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bes_feelings_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bes_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bes_35@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

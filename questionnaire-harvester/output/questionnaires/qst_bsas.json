@@ -1,0 +1,373 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "People differ in their sexual attitudes. There are different types of\nsexual attitudes, and in the BSAS four are distinguised\n( Hendrick et al, (2005) :",
+    "id": "qst_bsas",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 23
+    },
+    "publication": {
+      "citation": "Hendrick, C., Hendrick, S. S., & Reich, D. A. (2006). The Journal of Sex Research, 43 , 76-86.",
+      "year": 2006
+    },
+    "short_title": "BSAS",
+    "title": "The brief sexual attitudes scale (BSAS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/sexual-attitudes-scale-bsas.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bsas_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bsas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bsas_23@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

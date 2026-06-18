@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "The following statements concern how you feel <b>right now</b>. Please respond to each statement by indicating how much you agree or disagree with it as it reflects <b>your current feelings</b>. Please indicate how you feel at the moment:"
+    }
+  },
+  "id": "ins_saam_instruction"
+}

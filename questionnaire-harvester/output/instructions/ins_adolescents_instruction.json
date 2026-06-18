@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please answer the following questions thinking of<br> what you actually did <b>during the last 7 days.</b><br><br> For each question, answer how many times you did that behavior <b>during the last 7 days.</b><br>"
+    }
+  },
+  "id": "ins_adolescents_instruction"
+}

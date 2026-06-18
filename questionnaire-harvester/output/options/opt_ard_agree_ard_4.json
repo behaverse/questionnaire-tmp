@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "for relationship research 4-point agree_ard",
+      "options": [
+        {
+          "index": 1,
+          "text": "Strongly agree"
+        },
+        {
+          "index": 2,
+          "text": "Agree"
+        },
+        {
+          "index": 3,
+          "text": "Disagree"
+        },
+        {
+          "index": 4,
+          "text": "Strongly disagree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree_ard",
+  "id": "opt_ard_agree_ard_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 4.0
+    },
+    {
+      "index": 2,
+      "value": 3.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,261 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Questionnaires measuring sleep quality are useful in many\nstudies. This because quality of sleep can affect emotion and\nperformance during the day.",
+    "id": "qst_gsqs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 15
+    },
+    "publication": {
+      "citation": "Meijman, T. F., de Vries-Griever, A. H., de Vries, G. (1988): The\nevaluation of the Groningen Sleep Quality Scale. Groningen: Heymans\nBulletin (HB 88—13—EX).",
+      "year": 1988
+    },
+    "short_title": "Groningen Sleep Quality Questionnaire",
+    "title": "Groningen Sleep Quality Questionnaire",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/gsqs.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gsqs_tf_2@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gsqs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gsqs_15@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

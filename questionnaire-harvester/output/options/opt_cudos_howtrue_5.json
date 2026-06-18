@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "CUDOS 5-point howtrue",
+      "options": [
+        {
+          "index": 1,
+          "text": "not at all true (0 days)"
+        },
+        {
+          "index": 2,
+          "text": "rarely true (1-2 days)"
+        },
+        {
+          "index": 3,
+          "text": "sometimes true (3-4 days)"
+        },
+        {
+          "index": 4,
+          "text": "often true (5-6 days)"
+        },
+        {
+          "index": 5,
+          "text": "almost always true (every day)"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "howtrue",
+  "id": "opt_cudos_howtrue_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

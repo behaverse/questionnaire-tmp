@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "short form 5-point side",
+      "options": [
+        {
+          "index": 1,
+          "text": "Always left"
+        },
+        {
+          "index": 2,
+          "text": "Usually left"
+        },
+        {
+          "index": 3,
+          "text": "Both equally"
+        },
+        {
+          "index": 4,
+          "text": "Usually right"
+        },
+        {
+          "index": 5,
+          "text": "Always right"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "side",
+  "id": "opt_ehi_side_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": -100.0
+    },
+    {
+      "index": 2,
+      "value": -50.0
+    },
+    {
+      "index": 3,
+      "value": 0.0
+    },
+    {
+      "index": 4,
+      "value": 50.0
+    },
+    {
+      "index": 5,
+      "value": 100.0
+    }
+  ],
+  "selection": "single"
+}

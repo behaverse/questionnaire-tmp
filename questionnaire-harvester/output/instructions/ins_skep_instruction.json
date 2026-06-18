@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Select for each of the statements below how much you agree (ranging from strongly agree to strongly disagree)."
+    }
+  },
+  "id": "ins_skep_instruction"
+}

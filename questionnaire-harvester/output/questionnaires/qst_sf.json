@@ -1,0 +1,387 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Researchers have studied the way people express and experience\nromantic love. The sociologist Lee (1973) became very well\nknown for his classification of love styles , also called\nthe colors of love . Clyde and Susan Hendrick (University of Texas)\nused this work to develop their lovel attitudes scale; their work is\nplays a dominant role in this field of research.",
+    "id": "qst_sf",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 24
+    },
+    "publication": {
+      "citation": "Hendrick, C. & Hendrick, S. (1986). A theory and method of\nlove. Journal of Personality and Social Psychology, 50 , 392-402.",
+      "year": 1986
+    },
+    "short_title": "Short Form",
+    "title": "Love Attitudes Scale (Short Form)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/love-styles-hendrick-sf.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sf_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sf_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_sf_24@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

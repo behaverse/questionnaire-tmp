@@ -1,0 +1,331 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "According to some alcohol and drug researchers, alcohol is the most\nharmful drug around. This point was made in an influential study by Nutt and colleagues (2010) .",
+    "id": "qst_dmqr",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "publication": {
+      "citation": "Cooper, M. L. (1994). Motivations for Alcohol Use Among Adolescents: Development and Validation of a Four-Factor Model. Psychological Assessment, 6(2) , 117-128.",
+      "year": 1994
+    },
+    "short_title": "DMQ-R",
+    "title": "Drinking Motives Questionnaire, Revised (DMQ-R)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/alcohol-dmq-r.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dmqr_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_dmqr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_dmqr_20@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

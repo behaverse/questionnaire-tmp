@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please read each statement and indicate how much the statement applied to you <b>over the past week</b>.<br> There are no right or wrong answers.<br> Do not spend too much time on any statement.<br> The rating scale is as follows: <ul> <li>Did not apply to me at all - NEVER <li>Applied to me to some degree, or some of the time - SOMETIMES <li>Applied to me to a considerable degree, or a good part of time - OFTEN <li>Applied to me very much, or most of the time - ALMOST ALWAYS </ul><br>"
+    }
+  },
+  "id": "ins_dass_instruction"
+}
