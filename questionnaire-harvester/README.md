@@ -81,7 +81,7 @@ All paths are relative to the repo root. Override with CLI flags:
 | `--register` | `questionnaire-harvester/register.md` |
 | `--questions` | `questionnaire-harvester/questions` |
 | `--schemas` | `schemas` |
-| `--version` | `v26.0617` |
+| `--version` | `v26.0618` |
 
 ---
 
