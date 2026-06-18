@@ -1,0 +1,289 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Trust is an important concept\nin human relationships, even more so in close interpersonal\nrelationships (e.g., romantic partners, married couples, etc).",
+    "id": "qst_trust",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 17
+    },
+    "publication": {
+      "citation": "Rempel, J.K., Holmes, J.G. & Zanna, M.P. (1985). Trust in close relationships. Journal of\nPersonality and Social Psychology, 49 , 95-112.",
+      "year": 1985
+    },
+    "short_title": "Trust in close relationships",
+    "title": "Trust in close relationships",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/trust.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trust_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trust_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_trust_17@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

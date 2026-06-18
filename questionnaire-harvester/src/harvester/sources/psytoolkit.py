@@ -27,15 +27,17 @@ def _blocks(dsl: str):
     return blocks
 
 
-def _parse_scale(dsl: str):
-    """Parse the first `scale: <name>` definition. Returns (name, anchors, values).
+def _parse_scale(dsl: str, name: str | None = None):
+    """Parse a `scale: <name>` definition. Returns (name, anchors, values).
 
-    An anchor's value is its explicit `{score=N}` when present; otherwise PsyToolkit's
-    documented default applies — the 1-based position in the list. This faithfully
-    reproduces the source's (possibly implicit) scoring."""
-    m = re.search(r"^scale:\s*(\S+)\s*$", dsl, re.MULTILINE)
+    With `name`, parse that specific scale; otherwise the first one. An anchor's value is
+    its explicit `{score=N}` when present; otherwise PsyToolkit's documented default
+    applies — the 1-based position in the list. This faithfully reproduces the source's
+    (possibly implicit) scoring."""
+    pat = rf"^scale:\s*({re.escape(name)})\s*$" if name else r"^scale:\s*(\S+)\s*$"
+    m = re.search(pat, dsl, re.MULTILINE)
     if not m:
-        raise PsyToolkitParseError("no `scale:` definition found")
+        raise PsyToolkitParseError(f"no `scale: {name or ''}` definition found")
     name = m.group(1)
     anchors, values, pos = [], [], 0
     for ln in dsl[m.end():].splitlines():
@@ -57,6 +59,10 @@ def _parse_scale(dsl: str):
             anchors.append(text)
     if not anchors:
         raise PsyToolkitParseError(f"scale '{name}' has no anchors")
+    if any(not a for a in anchors):
+        # label-less numeric scale (e.g. CFQ: `- {score=4}` with no text); we can't
+        # faithfully supply anchor labels, so refuse rather than emit empty strings
+        raise PsyToolkitParseError(f"scale '{name}' has empty anchor labels (numeric-only)")
     return name, anchors, values
 
 
@@ -117,15 +123,30 @@ class PsyToolkitAdapter(SourceAdapter):
             raise PsyToolkitParseError("no <pre> survey-script block on the page")
         dsl = unescape(pre.get_text())
 
-        # --- scale definition + the first question block that uses it ---
-        scale_name, anchors, values = _parse_scale(dsl)
-        target = next(
-            (b for b in _blocks(dsl)
-             if any(re.match(rf"^t:\s*scale\s+{re.escape(scale_name)}\b", ln) for ln in b)),
-            None)
-        if target is None:
-            raise PsyToolkitParseError(f"no `t: scale {scale_name}` question block found")
-        instruction_text, items = _parse_block(target)
+        # --- find the scale(s) actually used by `t: scale` question blocks ---
+        blocks = _blocks(dsl)
+        used = []
+        for b in blocks:
+            for ln in b:
+                bm = re.match(r"^t:\s*scale\s+(\S+)", ln)
+                if bm and bm.group(1) not in used:
+                    used.append(bm.group(1))
+        if not used:
+            raise PsyToolkitParseError("no `t: scale` question block found")
+        if len(used) > 1:
+            # genuinely multi-scale: can't be represented as one single-scale questionnaire
+            raise PsyToolkitParseError(f"multiple distinct scales {used} — needs manual handling")
+        scale_name, anchors, values = _parse_scale(dsl, used[0])
+
+        # merge items from ALL blocks that use this scale (multi-page single-scale);
+        # take the instruction from the first such block
+        instruction_text, items = None, []
+        for b in blocks:
+            if any(re.match(rf"^t:\s*scale\s+{re.escape(scale_name)}\b", ln) for ln in b):
+                instr, its = _parse_block(b)
+                if instruction_text is None:
+                    instruction_text = instr
+                items.extend(its)
         if not items:
             raise PsyToolkitParseError("question block has no items")
 

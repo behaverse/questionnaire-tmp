@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "RRS 4-point frequency",
+      "options": [
+        {
+          "index": 1,
+          "text": "almost never"
+        },
+        {
+          "index": 2,
+          "text": "sometimes"
+        },
+        {
+          "index": 3,
+          "text": "often"
+        },
+        {
+          "index": 4,
+          "text": "almost always"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "frequency",
+  "id": "opt_rrs_frequency_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

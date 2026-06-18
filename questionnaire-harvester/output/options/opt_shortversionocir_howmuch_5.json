@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "short version, OCI-R 5-point howmuch",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not at all"
+        },
+        {
+          "index": 2,
+          "text": "A little"
+        },
+        {
+          "index": 3,
+          "text": "Moderately"
+        },
+        {
+          "index": 4,
+          "text": "A lot"
+        },
+        {
+          "index": 5,
+          "text": "Extremely"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "howmuch",
+  "id": "opt_shortversionocir_howmuch_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

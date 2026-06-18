@@ -1,0 +1,331 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Procrastination is the\npostponing of more important activities for less important ones.",
+    "id": "qst_gp",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "publication": {
+      "citation": "Lay, C.H. (1986). At Last, My Research Article on\nProcrastination. Journal of Research in Personality, 20 , 474-495.",
+      "year": 1986
+    },
+    "short_title": "General Procrastination Scale",
+    "title": "General Procrastination Scale",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/procrastination-gp.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gp_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gp_20@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

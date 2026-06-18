@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "AISS 4-point howwell",
+      "options": [
+        {
+          "index": 1,
+          "text": "describes me very well"
+        },
+        {
+          "index": 2,
+          "text": "describes me somewhat"
+        },
+        {
+          "index": 3,
+          "text": "does not describe me very well"
+        },
+        {
+          "index": 4,
+          "text": "does not describe me at all"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "howwell",
+  "id": "opt_aiss_howwell_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 4.0
+    },
+    {
+      "index": 2,
+      "value": 3.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

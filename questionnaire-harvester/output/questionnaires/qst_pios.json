@@ -1,0 +1,317 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Scrupulosity is a severe\npsychological discomfort due to the belief that one is sinful.\nScruples are defined as uneasy feelings caused by a clash between\nactions/thoughts and conscience.",
+    "id": "qst_pios",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 19
+    },
+    "publication": {
+      "citation": "Abramowitz, J.S., Hupper, J.D., Cohen, A.B., Tolin, D.F. & Cahill,\nS.P. (2002). Religious obsessions and compulsions in a non-clinical\nsample: the Penn Inventory of Scrupulosity (PIOS). Behaviour Research\nand Therapy, 40 , 825-838.",
+      "year": 2002
+    },
+    "short_title": "PIOS",
+    "title": "The Penn Inventory of Scrupulosity (PIOS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/scrupulosity-pios.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pios_pios_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pios_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_pios_19@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

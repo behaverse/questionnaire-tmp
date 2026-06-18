@@ -1,0 +1,499 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Humor is important for human emotion, socialisation, emotion, and\ncoping. Although laughing is universal, and even common in babies\n(although we don’t know exactly what they are laughing about, of\ncourse), there are jokes that require complex thought and reasoning\n(cognitive abilities).",
+    "id": "qst_hsq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 32
+    },
+    "publication": {
+      "citation": "Martin, R.A., Puhlik-Doris, P., Larsen, G., Gray, J., and Weir, K. (2003). Individual differences in uses of humor and their relation to psychological well-being: Development of the Humor Styles Questionnaire. Journal of Research in Personality, 37 , 48-75.",
+      "year": 2003
+    },
+    "short_title": "HSQ",
+    "title": "Humor Styles Questionnaire (HSQ)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/humor-hsq.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_29@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_30@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_31@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_hsq_hsq_agree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_hsq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_hsq_32@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import argparse, sys
 from pathlib import Path
-from harvester.sources.psytoolkit import PsyToolkitAdapter
+from harvester.sources.psytoolkit import PsyToolkitAdapter, PsyToolkitParseError
 from harvester.dedup import load_scales_index, build_instruction_index
 from harvester.draft import draft, write_draft
 from harvester.validate import validate_tree
@@ -24,7 +24,11 @@ def main(argv=None) -> int:
         return 2
 
     adapter = PsyToolkitAdapter()
-    rq = adapter.parse(adapter.fetch(a.url), a.url)
+    try:
+        rq = adapter.parse(adapter.fetch(a.url), a.url)
+    except PsyToolkitParseError as e:
+        print(f"SKIP {a.url}: {e}")     # unsupported page shape — nothing written
+        return 2
     scales_index = load_scales_index(Path(a.scales_index))
     instr_index = build_instruction_index(Path(a.out))
     result = draft(rq, a.version, scales_index, instr_index)

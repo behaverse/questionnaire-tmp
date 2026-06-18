@@ -1,0 +1,327 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Affect refers to whether you feel emotionally in a positive or\nnegative mood. An often used measure of both positive and negative\naffect is the Positive and Negative Affect Schedule PANAS (Watson,\nClark, and Tellegen, 1988) .",
+    "id": "qst_panas",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "short_title": "PANAS",
+    "title": "Positive and Negative Affect Schedule (PANAS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/panas.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_panas_howmuch_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_panas_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_panas_20@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

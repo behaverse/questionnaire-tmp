@@ -1,0 +1,65 @@
+{
+  "content": {
+    "en": {
+      "label": "MHC-SF 6-point mhcagree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Never"
+        },
+        {
+          "index": 2,
+          "text": "Once or Twice"
+        },
+        {
+          "index": 3,
+          "text": "About once a week"
+        },
+        {
+          "index": 4,
+          "text": "About 2 or 3 times a week"
+        },
+        {
+          "index": 5,
+          "text": "Almost every day"
+        },
+        {
+          "index": 6,
+          "text": "Every day"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "mhcagree",
+  "id": "opt_mhcsf_mhcagree_6",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    },
+    {
+      "index": 6,
+      "value": 5.0
+    }
+  ],
+  "selection": "single"
+}

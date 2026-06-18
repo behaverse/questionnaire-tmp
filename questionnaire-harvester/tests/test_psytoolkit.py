@@ -1,4 +1,5 @@
 from pathlib import Path
+import pytest
 from harvester.sources.psytoolkit import PsyToolkitAdapter
 
 FIXDIR = Path(__file__).parent / "fixtures"
@@ -87,3 +88,50 @@ def test_scale_with_explicit_scores_overrides_position():
         "scale: f\n- {score=0} never\n- {score=1} sometimes\n- {score=2} always\n")
     assert values == [0.0, 1.0, 2.0]
     assert anchors == ["never", "sometimes", "always"]
+
+
+def test_multiple_distinct_scales_refused():
+    # two different scales used by two question blocks -> can't be one single-scale qst
+    from harvester.sources.psytoolkit import PsyToolkitParseError, _blocks
+    import re
+    dsl = ("scale: a\n- {score=1} lo\n- {score=2} hi\n\n"
+           "scale: b\n- {score=1} no\n- {score=2} yes\n\n"
+           "l: one\nt: scale a\nq: q1\n- item a1\n\n"
+           "l: two\nt: scale b\nq: q2\n- item b1\n")
+    used = []
+    for b in _blocks(dsl):
+        for ln in b:
+            m = re.match(r"^t:\s*scale\s+(\S+)", ln)
+            if m and m.group(1) not in used:
+                used.append(m.group(1))
+    assert used == ["a", "b"]            # the parse() guard raises on len(used) > 1
+
+
+def test_same_scale_split_across_blocks_merges_items():
+    # one scale used by two blocks (multi-page) -> items merge, not truncate
+    from harvester.sources.psytoolkit import _blocks, _parse_block
+    dsl = ("l: p1\nt: scale a\nq: rate\n- item one\n- item two\n\n"
+           "l: p2\nt: scale a\n- item three\n")
+    items = []
+    for b in _blocks(dsl):
+        if any(ln.startswith("t: scale a") for ln in b):
+            _, its = _parse_block(b)
+            items.extend(its)
+    assert [it.text for it in items] == ["item one", "item two", "item three"]
+
+
+def test_parse_refuses_multiscale_page_via_public_surface():
+    dsl = ("scale: a\n- {score=1} lo\n- {score=2} hi\n\n"
+           "scale: b\n- {score=1} no\n- {score=2} yes\n\n"
+           "l: one\nt: scale a\nq: q1\n- item a1\n\n"
+           "l: two\nt: scale b\nq: q2\n- item b1\n")
+    html = f"<html><h1>Demo (DEMO)</h1><pre>{dsl}</pre></html>"
+    from harvester.sources.psytoolkit import PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        PsyToolkitAdapter().parse(html, "https://x/demo.html")
+
+
+def test_parse_scale_refuses_labelless_numeric_scale():
+    from harvester.sources.psytoolkit import PsyToolkitParseError, _parse_scale
+    with pytest.raises(PsyToolkitParseError):
+        _parse_scale("scale: frequency\n- {score=4}\n- {score=3}\n- {score=0}\n")

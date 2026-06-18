@@ -1,0 +1,73 @@
+{
+  "content": {
+    "en": {
+      "label": "Trust in close relationships 7-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "strongly disagree"
+        },
+        {
+          "index": 2,
+          "text": "moderately disagree"
+        },
+        {
+          "index": 3,
+          "text": "mildly disagree"
+        },
+        {
+          "index": 4,
+          "text": "neutral"
+        },
+        {
+          "index": 5,
+          "text": "mildly agree"
+        },
+        {
+          "index": 6,
+          "text": "moderately agree"
+        },
+        {
+          "index": 7,
+          "text": "strongly agree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_trust_agree_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 5.0
+    },
+    {
+      "index": 6,
+      "value": 6.0
+    },
+    {
+      "index": 7,
+      "value": 7.0
+    }
+  ],
+  "selection": "single"
+}

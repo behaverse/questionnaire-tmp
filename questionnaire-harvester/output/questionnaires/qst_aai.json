@@ -1,0 +1,191 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Body Dysmorphic\nDisorder (BDD) is a psychological disorder in which people suffer\nfrom a distorted self body image.",
+    "id": "qst_aai",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 10
+    },
+    "publication": {
+      "citation": "Veale, D., Eshkevaria, E., Kanakama, N., Ellisona, N., Costa, A., and\nWerner, T. (2014). The Appearance Anxiety Inventory: Validation of a\nProcess Measure in the Treatment of Body Dysmorphic\nDisorder. Behavioural and Cognitive Psychotherapy, 42 , 605-616. Link to publisher",
+      "year": 2014
+    },
+    "short_title": "AAI",
+    "title": "Appearance Anxiety Inventory (AAI)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/appearance-aai.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_aai_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_aai_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_aai_10@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

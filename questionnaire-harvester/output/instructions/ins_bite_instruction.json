@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please indicate how often you have felt or behaved in the following ways, <b>during the past two weeks, including today</b>."
+    }
+  },
+  "id": "ins_bite_instruction"
+}

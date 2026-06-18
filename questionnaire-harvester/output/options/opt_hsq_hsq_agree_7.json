@@ -1,0 +1,73 @@
+{
+  "content": {
+    "en": {
+      "label": "HSQ 7-point hsq_agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "totally disagree"
+        },
+        {
+          "index": 2,
+          "text": "moderately disagree"
+        },
+        {
+          "index": 3,
+          "text": "slightly disagree"
+        },
+        {
+          "index": 4,
+          "text": "neither agree nor disagree"
+        },
+        {
+          "index": 5,
+          "text": "slightly agree"
+        },
+        {
+          "index": 6,
+          "text": "moderately agree"
+        },
+        {
+          "index": 7,
+          "text": "totally agree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "hsq_agree",
+  "id": "opt_hsq_hsq_agree_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 5.0
+    },
+    {
+      "index": 6,
+      "value": 6.0
+    },
+    {
+      "index": 7,
+      "value": 7.0
+    }
+  ],
+  "selection": "single"
+}
