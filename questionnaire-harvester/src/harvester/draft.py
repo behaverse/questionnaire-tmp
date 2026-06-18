@@ -20,37 +20,71 @@ def _slug(qst_id: str) -> str:
     return qst_id[4:] if qst_id.startswith("qst_") else qst_id
 
 
-def _build_option(rq: RawQuestionnaire, slug: str) -> dict:
-    s = rq.scale
-    # dimension is an identifier (schema: ^[a-z][a-z0-9_]+$), not displayed text, so the
-    # source scale name is sanitized (e.g. "tilsScale" -> "tilsscale"). Anchor text stays verbatim.
-    dim = sanitize(s.dimension)
+def _fmt_num(x):
+    f = float(x)
+    return int(f) if f.is_integer() else f
+
+
+def _build_choice_option(spec, slug: str, short_title: str) -> dict:
+    dim = sanitize(spec.dimension)
     return {
-        "id": f"opt_{sanitize(slug)}_{dim}_{len(s.anchors)}",
-        "dimension": dim, "input_data_type": s.input_data_type,
-        "measurement_type": s.measurement_type, "selection": s.selection,
-        "options": [{"index": i + 1, "value": float(v)} for i, v in enumerate(s.values)],
+        "id": f"opt_{sanitize(slug)}_{dim}_{len(spec.anchors)}",
+        "dimension": dim, "input_data_type": spec.input_data_type,
+        "measurement_type": spec.measurement_type, "selection": spec.selection,
+        "options": [{"index": i + 1, "value": float(v)} for i, v in enumerate(spec.values)],
         "content": {"en": {"status": "validated",
-            # label is human-readable -> keep the source scale name's original casing
-            "label": f"{rq.short_title} {len(s.anchors)}-point {s.dimension}",
-            "options": [{"index": i + 1, "text": t} for i, t in enumerate(s.anchors)]}},
+            "label": f"{short_title} {len(spec.anchors)}-point {spec.dimension}",
+            "options": [{"index": i + 1, "text": t} for i, t in enumerate(spec.anchors)]}},
     }
+
+
+def _build_number_option(spec, slug: str, short_title: str, n: int) -> dict:
+    dim = sanitize(spec.dimension)
+    opt = {
+        "id": f"opt_{sanitize(slug)}_{dim}_{n}",
+        "dimension": dim, "input_data_type": "number", "measurement_type": spec.measurement_type,
+        "min": float(spec.min), "max": float(spec.max),
+        "content": {"en": {"status": "validated",
+            "label": f"{short_title} {_fmt_num(spec.min)}–{_fmt_num(spec.max)}"}},
+    }
+    if spec.step is not None:
+        opt["step"] = float(spec.step)
+    if spec.min_label:
+        opt["min_label"] = spec.min_label
+    if spec.max_label:
+        opt["max_label"] = spec.max_label
+    if spec.center_label:
+        opt["center_label"] = spec.center_label
+    if spec.initial_value is not None:
+        opt["initial_value"] = float(spec.initial_value)
+    return opt
+
+
+def _resolve_option(spec, slug, short_title, res, scales_index, mint_cache) -> str:
+    """Build `spec`'s canonical Option, then reuse (global index, then this run) or mint it.
+    Returns the opt_id to reference. `mint_cache` maps fingerprint -> minted id for this run."""
+    if spec.input_data_type == "number":
+        opt = _build_number_option(spec, slug, short_title, n=len(mint_cache) + 1)
+    else:
+        opt = _build_choice_option(spec, slug, short_title)
+    existing = lookup_option(opt, scales_index)
+    if existing:
+        if existing not in res.reused:
+            res.reused.append(existing)
+        return existing
+    fp = option_fingerprint(opt)
+    if fp in mint_cache:
+        return mint_cache[fp]
+    opt_id = opt["id"]
+    res.entities["option"].append(opt)
+    res.minted.append(opt_id)
+    mint_cache[fp] = opt_id
+    return opt_id
 
 
 def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: dict) -> "DraftResult":
     slug = _slug(rq.qst_id)
     res = DraftResult(entities={"option": [], "instruction": [], "context": [], "prompt": [], "questionnaire": []})
-
-    # --- Option: reuse or mint ---
-    opt = _build_option(rq, slug)
-    existing_opt = lookup_option(opt, scales_index)
-    if existing_opt:
-        opt_id = existing_opt
-        res.reused.append(opt_id)
-    else:
-        opt_id = opt["id"]
-        res.entities["option"].append(opt)
-        res.minted.append(opt_id)
 
     # --- Instruction: reuse or mint ---
     ins = {"id": f"ins_{sanitize(slug)}_instruction",
@@ -76,9 +110,12 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         res.minted.append(ctx_id)
         ctx_ref = f"{ctx_id}@{version}"
 
-    # --- Prompts ---
+    # --- Prompts + per-item options ---
+    mint_cache: dict = {}
     elements = []
     for i, item in enumerate(rq.items, start=1):
+        spec = item.option or rq.scale
+        opt_id = _resolve_option(spec, slug, rq.short_title, res, scales_index, mint_cache)
         pr_id = f"pr_{sanitize(slug)}_{i}"
         prompt = {"id": pr_id, "content": {"en": {"status": "validated", "text": item.text}}}
         if item.construct:
