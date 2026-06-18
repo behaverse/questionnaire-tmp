@@ -1,4 +1,5 @@
 from pathlib import Path
+import pytest
 from harvester.sources.psytoolkit import PsyToolkitAdapter
 
 FIXDIR = Path(__file__).parent / "fixtures"
@@ -117,3 +118,20 @@ def test_same_scale_split_across_blocks_merges_items():
             _, its = _parse_block(b)
             items.extend(its)
     assert [it.text for it in items] == ["item one", "item two", "item three"]
+
+
+def test_parse_refuses_multiscale_page_via_public_surface():
+    dsl = ("scale: a\n- {score=1} lo\n- {score=2} hi\n\n"
+           "scale: b\n- {score=1} no\n- {score=2} yes\n\n"
+           "l: one\nt: scale a\nq: q1\n- item a1\n\n"
+           "l: two\nt: scale b\nq: q2\n- item b1\n")
+    html = f"<html><h1>Demo (DEMO)</h1><pre>{dsl}</pre></html>"
+    from harvester.sources.psytoolkit import PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        PsyToolkitAdapter().parse(html, "https://x/demo.html")
+
+
+def test_parse_scale_refuses_labelless_numeric_scale():
+    from harvester.sources.psytoolkit import PsyToolkitParseError, _parse_scale
+    with pytest.raises(PsyToolkitParseError):
+        _parse_scale("scale: frequency\n- {score=4}\n- {score=3}\n- {score=0}\n")

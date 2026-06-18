@@ -164,7 +164,7 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
   python -m pytest questionnaire-harvester/tests -v
 ```
 
-Expected: 28 tests, all passing.
+Expected: 30 tests, all passing.
 
 ---
 
