@@ -1,0 +1,16 @@
+{
+  "content": {
+    "en": {
+      "label": "SECS 0–100",
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_secs_rating_1",
+  "initial_value": 50.0,
+  "input_data_type": "number",
+  "max": 100.0,
+  "measurement_type": "interval",
+  "min": 0.0,
+  "step": 1.0
+}

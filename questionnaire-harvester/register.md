@@ -107,3 +107,7 @@
 | qst_hvq | psytoolkit.org | high | needs-review | 3 | unknown |
 | qst_mcss | psytoolkit.org | high | needs-review | 1 | unknown |
 | qst_besc | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_shs | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_rps | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_fsq | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_secs | psytoolkit.org | high | needs-review | 1 | unknown |

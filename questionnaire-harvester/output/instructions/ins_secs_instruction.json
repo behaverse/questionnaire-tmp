@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please indicate the extent to which you feel positive or negative towards each issue.<br> Scores of 0 indicate greater negativity, and scores of 100 indicate greater positivity.<br> Scores of 50 indicate that you feel neutral about the issue.<br>"
+    }
+  },
+  "id": "ins_secs_instruction"
+}

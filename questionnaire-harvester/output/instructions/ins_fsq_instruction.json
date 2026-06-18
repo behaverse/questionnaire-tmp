@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Choose an answer on the scale from \"not at all\" to \"very much\" for each of the 18 items"
+    }
+  },
+  "id": "ins_fsq_instruction"
+}

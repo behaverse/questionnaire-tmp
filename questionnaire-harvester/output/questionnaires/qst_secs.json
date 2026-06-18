@@ -1,0 +1,219 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "In recent years, psychologists and neuroscientists have discussed the\npsychology underlying political attitudes. Jim Everett developed a\nsimple scale to measure political conservatism. It is only 12 items.",
+    "id": "qst_secs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 12
+    },
+    "publication": {
+      "citation": "Everett, J.E. (2013). The 12 Item Social and Economic Conservatism\nScale\n(SECS). Open\naccess link here",
+      "year": 2013
+    },
+    "short_title": "SECS",
+    "title": "Political conservatism scale (SECS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/political-conservatism.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_secs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_secs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_secs_12@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

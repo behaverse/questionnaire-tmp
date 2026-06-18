@@ -1,0 +1,303 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Many people dislike spiders and some are even seriously afraid of\nthem. A serious fear of spiders is also known as arachnophobia .",
+    "id": "qst_fsq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 18
+    },
+    "publication": {
+      "citation": "Szymanksi, J. and O’Donohue, W. (1995). Fear of spiders\nQuestionnaire. Journal of Therapy and Experimental Psychiatry,\n26(1) , 31-34.",
+      "year": 1995
+    },
+    "short_title": "FSQ",
+    "title": "Fear of Spiders Questionnaire (FSQ)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/spider-fear-fsq.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_fsq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_fsq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_fsq_18@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}
