@@ -1,0 +1,21 @@
+{
+  "id": "opt_randomized_pair",
+  "dimension": "narcissism",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "selection": "single",
+  "randomize": true,
+  "options": [
+    { "index": 1, "value": 0 },
+    { "index": 2, "value": 1 }
+  ],
+  "content": {
+    "en": {
+      "status": "validated",
+      "options": [
+        { "index": 1, "text": "When people compliment me I sometimes get embarrassed" },
+        { "index": 2, "text": "I know that I am good because everybody keeps telling me so" }
+      ]
+    }
+  }
+}

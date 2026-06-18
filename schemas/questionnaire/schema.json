@@ -364,6 +364,7 @@
         "max_label":        { "type": "string", "minLength": 1 },
         "center_label":     { "type": "string", "minLength": 1 },
         "initial_value":    { "type": "number" },
+        "randomize":        { "type": "boolean", "default": false },
         "min_selected":     { "type": "integer", "minimum": 0 },
         "max_selected":     { "type": "integer", "minimum": 1 },
         "placeholder":      { "oneOf": [{ "$ref": "#/$defs/PlaceholderRef" }, { "$ref": "#/$defs/PlaceholderInline" }] },
