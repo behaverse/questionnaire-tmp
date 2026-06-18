@@ -11,10 +11,31 @@ class RawScale:
     values: list
 
 @dataclass
+class RawOption:
+    input_data_type: str
+    measurement_type: str
+    dimension: str
+    selection: str | None = None
+    anchors: list = field(default_factory=list)
+    values: list = field(default_factory=list)
+    min: float | None = None
+    max: float | None = None
+    step: float | None = None
+    min_label: str | None = None
+    max_label: str | None = None
+    center_label: str | None = None
+    initial_value: float | None = None
+
+@dataclass
 class RawItem:
     text: str
     construct: str | None = None
     reversed: bool = False
+    option: "RawOption | None" = None
+
+    def __post_init__(self):
+        if isinstance(self.option, dict):
+            self.option = RawOption(**self.option)
 
 @dataclass
 class RawQuestionnaire:
@@ -27,7 +48,7 @@ class RawQuestionnaire:
     source_site: str
     source_url: str
     instruction_text: str
-    scale: RawScale
+    scale: RawScale | None
     items: list
     license: LicenseFlag
     domain: list = field(default_factory=list)
