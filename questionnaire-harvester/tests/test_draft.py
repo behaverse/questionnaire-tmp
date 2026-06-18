@@ -77,3 +77,36 @@ def test_no_context_when_context_text_absent():
     qst = res.entities["questionnaire"][0]
     assert all("context" not in e["question"] for e in qst["pages"][0]["elements"])
     assert res.entities["context"] == []
+
+
+# --- collision guard: never silently overwrite a questionnaire harvested from a
+#     different source URL (id-derivation clashes, e.g. two "BES" instruments) ---
+
+def _write_questionnaire(out_dir, qst_id, source_url):
+    res = draft(_gad7(), version="v26.0617", scales_index={}, instr_index={})
+    qst = res.entities["questionnaire"][0]
+    qst["metadata"]["id"] = qst_id
+    qst["metadata"]["x_source_url"] = source_url
+    qdir = out_dir / "questionnaires"
+    qdir.mkdir(parents=True, exist_ok=True)
+    import json
+    (qdir / f"{qst_id}.json").write_text(json.dumps(qst))
+
+
+def test_collision_detected_for_different_source_url(tmp_path):
+    from harvester.draft import find_questionnaire_collision
+    _write_questionnaire(tmp_path, "qst_bes", "https://x/body-esteem-bes.html")
+    clash = find_questionnaire_collision(tmp_path, "qst_bes", "https://x/bes.html")
+    assert clash == "https://x/body-esteem-bes.html"
+
+
+def test_no_collision_for_same_source_url_is_idempotent(tmp_path):
+    from harvester.draft import find_questionnaire_collision
+    _write_questionnaire(tmp_path, "qst_bes", "https://x/body-esteem-bes.html")
+    assert find_questionnaire_collision(tmp_path, "qst_bes",
+                                        "https://x/body-esteem-bes.html") is None
+
+
+def test_no_collision_when_id_unseen(tmp_path):
+    from harvester.draft import find_questionnaire_collision
+    assert find_questionnaire_collision(tmp_path, "qst_new", "https://x/new.html") is None

@@ -2,7 +2,7 @@ import argparse, sys
 from pathlib import Path
 from harvester.sources.psytoolkit import PsyToolkitAdapter, PsyToolkitParseError
 from harvester.dedup import load_scales_index, build_instruction_index
-from harvester.draft import draft, write_draft
+from harvester.draft import draft, write_draft, find_questionnaire_collision
 from harvester.validate import validate_tree
 from harvester.tracking import upsert_register_row, write_questions
 
@@ -13,6 +13,8 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     h = sub.add_parser("harvest")
     h.add_argument("url")
+    h.add_argument("--id", dest="qst_id", default=None,
+                   help="override the derived qst_id (use to resolve a flagged collision)")
     h.add_argument("--out", default="questionnaire-harvester/output")
     h.add_argument("--scales-index", default="questionnaire-harvester/dedup/scales-index.json")
     h.add_argument("--register", default="questionnaire-harvester/register.md")
@@ -28,6 +30,13 @@ def main(argv=None) -> int:
         rq = adapter.parse(adapter.fetch(a.url), a.url)
     except PsyToolkitParseError as e:
         print(f"SKIP {a.url}: {e}")     # unsupported page shape — nothing written
+        return 2
+    if a.qst_id:
+        rq.qst_id = a.qst_id            # operator override to resolve a flagged collision
+    clash = find_questionnaire_collision(Path(a.out), rq.qst_id, a.url)
+    if clash:
+        print(f"SKIP {a.url}: id {rq.qst_id} collides with already-harvested {clash} "
+              f"— rename one (id-derivation clash); nothing written")
         return 2
     scales_index = load_scales_index(Path(a.scales_index))
     instr_index = build_instruction_index(Path(a.out))

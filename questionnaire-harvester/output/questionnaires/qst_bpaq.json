@@ -1,0 +1,457 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The Buss-Perry Aggression Questionnaire (BPAQ) is a popular measure of\naggression in adults. Men show a higher level of aggression than women\n(Archer, 2004).",
+    "id": "qst_bpaq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 29
+    },
+    "publication": {
+      "citation": "Buss, A.H. and Perry, M.P. (1992). The Aggression\nQuestionnaire. Journal of Personality and Social Psychology, 63 ,\n452-459.",
+      "year": 1992
+    },
+    "short_title": "BPAQ",
+    "title": "Buss-Perry Aggression Questionnaire (BPAQ)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/aggression-buss-perry.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_bpaq_characteristic_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_bpaq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_bpaq_29@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

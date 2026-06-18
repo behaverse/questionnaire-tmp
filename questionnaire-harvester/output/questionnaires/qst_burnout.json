@@ -1,0 +1,331 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Burnout is a\nmental (and possibly physical) state related to disillusionement with\none’s work. Some jobs are more affected by this than others. Teaching\nis generally considered a stressful job.",
+    "id": "qst_burnout",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "publication": {
+      "citation": "Campbell, L.P. (1983). Teacher burnout: Description and\nprescription. The Clearing House, 57 , pp. 111-113",
+      "year": 1983
+    },
+    "short_title": "Teacher burnout",
+    "title": "Teacher burnout",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/teacher-burnout.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_burnout_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_burnout_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_burnout_20@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -12,6 +12,31 @@ class PsyToolkitParseError(ValueError):
     scale block, multiple scales). Surfaced so the harvest stops rather than guessing."""
 
 
+def _url_slug(url: str) -> str:
+    """The last hyphen segment of the page filename (anxiety-gad7.html -> gad7)."""
+    return re.sub(r"[^a-z0-9]", "",
+                  url.rsplit("/", 1)[-1].replace(".html", "").rsplit("-", 1)[-1].lower())
+
+
+def derive_qst_id(title: str, url: str) -> str:
+    """Pick a stable `qst_<slug>` id for a PsyToolkit page.
+
+    A parenthetical in the title is used only when it *looks like* an acronym — a
+    single ALL-CAPS / digit / hyphen token, e.g. "(SWLS)", "(GAD-7)", "(AQ-10)".
+    Descriptive parentheticals ("(Short Form)", "(McCroskey)", "(for Adolescents)")
+    are NOT acronyms and would collide or read badly, so we fall back to the URL
+    slug (which on PsyToolkit usually carries the real acronym, e.g. shyness-mcss).
+    """
+    short_m = re.search(r"\(([^)]+)\)", title)
+    paren = short_m.group(1).strip() if short_m else ""
+    # acronym = uppercase letters / digits / hyphens, no spaces, must contain a letter
+    if paren and re.fullmatch(r"[A-Z0-9]+(?:-[A-Z0-9]+)*", paren) and re.search(r"[A-Z]", paren):
+        slug = re.sub(r"[^a-z0-9]", "", paren.lower())
+    else:
+        slug = _url_slug(url)
+    return f"qst_{slug}"
+
+
 def _blocks(dsl: str):
     """Split the DSL into blocks delimited by `l:` label lines."""
     blocks, cur = [], []
@@ -109,13 +134,8 @@ class PsyToolkitAdapter(SourceAdapter):
         short_m = re.search(r"\(([^)]+)\)", title)
         short_title = short_m.group(1) if short_m else title
 
-        # --- slug / qst_id: prefer the title's acronym (e.g. "(SWLS)" -> swls),
-        #     else the last URL segment (anxiety-gad7.html -> gad7) ---
-        url_slug = re.sub(r"[^a-z0-9]", "", url.rsplit("/", 1)[-1].replace(".html", "").rsplit("-", 1)[-1].lower())
-        # a parenthetical acronym ("(SWLS)") makes the best id; otherwise the URL segment
-        acronym_slug = re.sub(r"[^a-z0-9]", "", short_m.group(1).lower()) if short_m else ""
-        slug = acronym_slug or url_slug
-        qst_id = f"qst_{slug}"
+        # --- slug / qst_id ---
+        qst_id = derive_qst_id(title, url)
 
         # --- DSL text from the <pre> survey-script block ---
         pre = soup.find("pre")

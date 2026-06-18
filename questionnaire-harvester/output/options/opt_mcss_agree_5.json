@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "McCroskey 5-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Strongly Disagree"
+        },
+        {
+          "index": 2,
+          "text": "Disagree"
+        },
+        {
+          "index": 3,
+          "text": "Neutral"
+        },
+        {
+          "index": 4,
+          "text": "Agree"
+        },
+        {
+          "index": 5,
+          "text": "Strongly Agree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_mcss_agree_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 5.0
+    }
+  ],
+  "selection": "single"
+}

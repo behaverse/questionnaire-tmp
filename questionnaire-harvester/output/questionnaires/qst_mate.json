@@ -1,0 +1,331 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "People may differ in the degree to which they accept certain\nfacts. This can be seen as part of cognitive dissonance or, in other\nwords, a clash between incompatible ideas.",
+    "id": "qst_mate",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "publication": {
+      "citation": "Rutledge, M .L . & Warden, M .A . (1999). The development and validation of the Measure of Acceptance of the Theory of Evolution Instrument. School Science and Mathematics, 99(1) , 13-18.",
+      "year": 1999
+    },
+    "short_title": "MATE",
+    "title": "Measure of Acceptance of the Theory of Evolution (MATE)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/evolution-mate.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mate_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gaene_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mate_20@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

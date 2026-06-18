@@ -1,0 +1,499 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Paranoia is a way of\nirrational thinking in which a person thinks that others are trying to\n\"get him\" or her. Because of this a person suffering from paranoia\nmight make false accusations against other people. Paranoia is a\ncommon symptom of psychosis ,\nwhich is a psychiatric term for a person’s irrational interpretation\nof reality.",
+    "id": "qst_gpts",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 32
+    },
+    "publication": {
+      "citation": "Green, C. E. L., Freeman, D., Kuipers, E., Bebbington, P., Fowler, D., Dunn, G., & Garety, P. A. (2008). Measuring ideas of persecution and social reference: the Green et al. Paranoid Thought Scales (GPTS). Psychological medicine, 38 , 101-111.",
+      "year": 2008
+    },
+    "short_title": "GPTS",
+    "title": "Green et al. Paranoid Thought Scales (GPTS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/paranoia-gpts.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_28@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_29@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_30@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_31@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_gpts_much_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_gpts_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_gpts_32@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

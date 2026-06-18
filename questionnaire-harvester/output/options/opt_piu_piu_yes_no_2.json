@@ -1,0 +1,33 @@
+{
+  "content": {
+    "en": {
+      "label": "PIU 2-point piu_yes_no",
+      "options": [
+        {
+          "index": 1,
+          "text": "yes"
+        },
+        {
+          "index": 2,
+          "text": "no"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "piu_yes_no",
+  "id": "opt_piu_piu_yes_no_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

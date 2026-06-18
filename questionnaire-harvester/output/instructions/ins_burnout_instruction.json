@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "This measure is designed to determine how you currently feel about your job and its related aspects.<br> There are no right or wrong answers.<br> Work quickly and based your answers on your first impression.<br> Please indicate the degree to which each statement applies to you.<br>"
+    }
+  },
+  "id": "ins_burnout_instruction"
+}

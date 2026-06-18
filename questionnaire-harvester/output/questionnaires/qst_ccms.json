@@ -1,0 +1,443 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Conscientiousness means being serious about your work and putting a\nlot of effort into doing it in a careful way (see Cambridge\nDictionary ).",
+    "id": "qst_ccms",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 28
+    },
+    "publication": {
+      "citation": "Franzen, P., Arens, A. K., Greiff, S., van der Westhuizen, L., Fischbach, A., Wollschläger, R., & Niepel, C. (2021). Developing and Validating a Short-Form Questionnaire for the Assessment of Seven Facets of Conscientiousness in Large-Scale Assessments. Journal of Personality Assessment, 1–15. Advance online publication. Link to journal",
+      "year": 2021
+    },
+    "short_title": "CCM-S",
+    "title": "Concise Conscientiousness Measure (CCM-S)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/ccms-conscientiousness.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_26@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_27@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccms_ccmsagree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccms_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccms_28@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

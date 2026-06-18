@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please answer the questions below, rating yourself on each of the criteria shown using the scale on the right side of the page. Select the box that best describes how you have felt and conducted yourself *over the past 6 months*."
+    }
+  },
+  "id": "ins_asrs_instruction"
+}

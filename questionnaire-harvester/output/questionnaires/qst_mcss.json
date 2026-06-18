@@ -1,0 +1,247 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Shyness is a form of inhibition\nand discomfort in the presence of others (for a good overview, see\nHopko et al., 2005). Shyness can be observed in children as young as 2\nyears old (Kagan et al., 1989), and there seems to be a clear\nbiological basis for it (Kagan et al., 1988).",
+    "id": "qst_mcss",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 14
+    },
+    "publication": {
+      "citation": "McCroskey, J. C., & Richmond, V. P. (1982). Communication apprehension\nand shyness: Conceptual and operational distinctions. Central States\nSpeech Journal, 33 , 458-468.",
+      "year": 1982
+    },
+    "short_title": "McCroskey",
+    "title": "Shyness Scale (McCroskey)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/shyness-mcss.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_mcss_agree_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_mcss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_mcss_14@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

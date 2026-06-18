@@ -26,3 +26,20 @@ def test_gad7_harvest_reuses_phq_scale_and_validates(tmp_path, monkeypatch):
     minted_ctx = json.loads((out / "contexts" / "ctx_over_the_last_2_weeks.json").read_text())
     assert minted_ctx["content"]["en"]["text"] == "Over the last 2 weeks,"
     assert (tmp_path / "questions" / "qst_gad7.md").exists()
+
+
+def test_id_override_resolves_collision(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psytoolkit_gad7.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    idx = REPO / "questionnaire-harvester" / "dedup" / "scales-index.json"
+    rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/anxiety-gad7.html",
+                   "--id", "qst_custom",
+                   "--out", str(out), "--scales-index", str(idx),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0617"])
+    assert rc == 0
+    assert (out / "questionnaires" / "qst_custom.json").exists()
+    assert not (out / "questionnaires" / "qst_gad7.json").exists()
+    assert (tmp_path / "questions" / "qst_custom.md").exists()

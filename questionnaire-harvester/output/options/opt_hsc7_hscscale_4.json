@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HSC-7 4-point hscscale",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not at all"
+        },
+        {
+          "index": 2,
+          "text": "A little"
+        },
+        {
+          "index": 3,
+          "text": "Fairly"
+        },
+        {
+          "index": 4,
+          "text": "Very"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "hscscale",
+  "id": "opt_hsc7_hscscale_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

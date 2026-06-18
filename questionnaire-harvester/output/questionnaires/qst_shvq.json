@@ -1,0 +1,271 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Hypermasculinity refers to a set of exaggerated beliefs and values\nabout what it means to be a “real man”. These include the idea that\nmen must always be tough, show no emotion, avoid anything considered\nfeminine, and dominate women, especially in sexual contexts. Men who\nstrongly endorse hypermasculine values are also more likely to enjoy\nviolence, risky behaviour, heavy drinking, and aggressive sports.",
+    "id": "qst_shvq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 16
+    },
+    "short_title": "HVQ",
+    "title": "Short Hypermasculinity Values Questionnaire (HVQ)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/hypermasculinity-shvq.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shvq_hvqagree_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shvq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_shvq_16@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

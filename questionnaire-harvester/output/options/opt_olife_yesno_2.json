@@ -1,0 +1,33 @@
+{
+  "content": {
+    "en": {
+      "label": "O-LIFE 2-point yesno",
+      "options": [
+        {
+          "index": 1,
+          "text": "yes"
+        },
+        {
+          "index": 2,
+          "text": "no"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "yesno",
+  "id": "opt_olife_yesno_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

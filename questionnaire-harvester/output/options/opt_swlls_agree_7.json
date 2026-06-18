@@ -1,0 +1,73 @@
+{
+  "content": {
+    "en": {
+      "label": "SWLLS 7-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Strongly agree"
+        },
+        {
+          "index": 2,
+          "text": "Agree"
+        },
+        {
+          "index": 3,
+          "text": "Slightly agree"
+        },
+        {
+          "index": 4,
+          "text": "Neither agree nor disagree"
+        },
+        {
+          "index": 5,
+          "text": "Slightly disagree"
+        },
+        {
+          "index": 6,
+          "text": "Disagree"
+        },
+        {
+          "index": 7,
+          "text": "Strongly disagree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_swlls_agree_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 7.0
+    },
+    {
+      "index": 2,
+      "value": 6.0
+    },
+    {
+      "index": 3,
+      "value": 5.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 3.0
+    },
+    {
+      "index": 6,
+      "value": 2.0
+    },
+    {
+      "index": 7,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

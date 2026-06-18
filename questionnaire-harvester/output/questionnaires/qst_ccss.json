@@ -1,0 +1,317 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "People vary in the degree to which they view cooperation and\ncompetition as useful strategies to reach their goals. The CCSS,\ndeveloped by Tang (1999) measures a score for both cooperation and competition (on a scale from 1 to 7). There are 8\nquestions for cooperation and 11 questions for competition .",
+    "id": "qst_ccss",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 19
+    },
+    "publication": {
+      "citation": "Tang, S. (1999). Cooperation or competition: A comparison of U.S. and Chinese College students. The Journal of Psychology, 133 , 413-423.",
+      "year": 1999
+    },
+    "short_title": "CCSS",
+    "title": "Cooperative/Competitive Strategy Scale (CCSS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/coop-comp-ccss.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ccss_often_7@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ccss_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ccss_19@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

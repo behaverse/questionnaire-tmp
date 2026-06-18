@@ -1,0 +1,73 @@
+{
+  "content": {
+    "en": {
+      "label": "LiES 7-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Strongly *disagree*<br>1"
+        },
+        {
+          "index": 2,
+          "text": "<br><br>2"
+        },
+        {
+          "index": 3,
+          "text": "<br><br>3"
+        },
+        {
+          "index": 4,
+          "text": "Neither agree nor disagree<br>4"
+        },
+        {
+          "index": 5,
+          "text": "<br><br>5"
+        },
+        {
+          "index": 6,
+          "text": "<br><br>6"
+        },
+        {
+          "index": 7,
+          "text": "Strongly *agree*<br>7"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_lying_agree_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 5.0
+    },
+    {
+      "index": 6,
+      "value": 6.0
+    },
+    {
+      "index": 7,
+      "value": 7.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "revised version 4-point likeme",
+      "options": [
+        {
+          "index": 1,
+          "text": "a lot like me"
+        },
+        {
+          "index": 2,
+          "text": "somewhat like me"
+        },
+        {
+          "index": 3,
+          "text": "a little like me"
+        },
+        {
+          "index": 4,
+          "text": "not like me at all"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "likeme",
+  "id": "opt_scsr_likeme_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 3.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 1.0
+    },
+    {
+      "index": 4,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

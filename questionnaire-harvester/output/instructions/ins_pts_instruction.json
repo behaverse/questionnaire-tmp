@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "The following items are to be answered \"Yes\" or \"No\""
+    }
+  },
+  "id": "ins_pts_instruction"
+}

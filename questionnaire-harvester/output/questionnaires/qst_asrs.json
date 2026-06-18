@@ -1,0 +1,303 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Attention Deficit Hyperactivity Disorder (ADHD) is a common mental\nhealth issue. At least in the UK, most people will have heard of ADHD.",
+    "id": "qst_asrs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 18
+    },
+    "publication": {
+      "citation": "Kessler RC, Adler L, Ames M, Demler O, Faraone S, Hiripi E, Howes\nMJ, Jin R, Secnik K, Spencer T, Ustun TB, Walters EE (2005). The World\nHealth Organization Adult ADHD Self-Report Scale (ASRS): a short\nscreening scale for use in the general population. Psychol Medince ,\n,35(2), 245-56. Link to paper",
+      "year": 2005
+    },
+    "short_title": "ASRS",
+    "title": "Adult ADHD Self-Report Scale (ASRS)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/asrs.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_asrs_asrs_scale_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_asrs_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_asrs_18@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

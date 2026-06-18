@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BHPS 4-point frequency",
+      "options": [
+        {
+          "index": 1,
+          "text": "never true"
+        },
+        {
+          "index": 2,
+          "text": "seldom true"
+        },
+        {
+          "index": 3,
+          "text": "very often true"
+        },
+        {
+          "index": 4,
+          "text": "always true"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "frequency",
+  "id": "opt_bhps_frequency_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

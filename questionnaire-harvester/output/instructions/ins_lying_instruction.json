@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "*Instructions:* Everyone tells lies from time to time about various things. We are interested in the lies that you tell. For each of the following statements, indicate the degree to which you agree or disagree that the statement accurately describes you. Choose a response on the scale which runs from <b>disagree</b> to <b>agree</b>"
+    }
+  },
+  "id": "ins_lying_instruction"
+}

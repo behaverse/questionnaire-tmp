@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Below is a list of 10 statements (out of a total of 40). Please read each statement very<br> carefully and rate how strongly you agree or disagree with it.<br> There are no right or wrong answers, or trick questions.<br>"
+    }
+  },
+  "id": "ins_eq_instruction"
+}

@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "REI 5-point rei_agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "definitely not true of myself"
+        },
+        {
+          "index": 2,
+          "text": "somewhat not true of myself"
+        },
+        {
+          "index": 3,
+          "text": "neither true nor untrue of myself"
+        },
+        {
+          "index": 4,
+          "text": "somewhat true of myself"
+        },
+        {
+          "index": 5,
+          "text": "definitely true of myself"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rei_agree",
+  "id": "opt_rei_rei_agree_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 5.0
+    }
+  ],
+  "selection": "single"
+}

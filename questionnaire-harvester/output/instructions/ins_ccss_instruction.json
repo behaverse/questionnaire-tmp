@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Indicate for each statement how often it is true for you.<br> The scale runs from <b>always</b> to <b>never</b>.<br>"
+    }
+  },
+  "id": "ins_ccss_instruction"
+}

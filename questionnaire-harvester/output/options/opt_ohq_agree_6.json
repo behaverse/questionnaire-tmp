@@ -1,0 +1,65 @@
+{
+  "content": {
+    "en": {
+      "label": "Oxford Happiness Scale 6-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "strongly disagree"
+        },
+        {
+          "index": 2,
+          "text": "moderately disagree"
+        },
+        {
+          "index": 3,
+          "text": "slightly disagree"
+        },
+        {
+          "index": 4,
+          "text": "slightly agree"
+        },
+        {
+          "index": 5,
+          "text": "moderately agree"
+        },
+        {
+          "index": 6,
+          "text": "strongly agree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_ohq_agree_6",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    },
+    {
+      "index": 5,
+      "value": 5.0
+    },
+    {
+      "index": 6,
+      "value": 6.0
+    }
+  ],
+  "selection": "single"
+}

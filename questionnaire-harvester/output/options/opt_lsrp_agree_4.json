@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "LSRP 4-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "disagree strongly"
+        },
+        {
+          "index": 2,
+          "text": "disagree somewhat"
+        },
+        {
+          "index": 3,
+          "text": "agree somewhat"
+        },
+        {
+          "index": 4,
+          "text": "agree strongly"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_lsrp_agree_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,303 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Problematic\ninternet use is a common phenomenon. The Problematic Internet Use\nQuestionnaire (PIUQ) was first published in 2006 and its psychometric\nproperties were checked in a study by Kelly & Gruber\n(2010) . The latter study generally confirmed the three-factor\nstructure.",
+    "id": "qst_piuq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 18
+    },
+    "publication": {
+      "citation": "Demetrovics, Z., Szeredi, B., & Rózsa, S. (2008). The three-factor model of Internet addiction: The development of the Problematic Internet Use Questionnaire. Behavior Research Methods, 40 , 563-574.",
+      "year": 2008
+    },
+    "short_title": "PIUQ",
+    "title": "Problematic Internet Use Questionnaire (PIUQ)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/addiction-internet-piuq.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_piuq_frequency_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_piuq_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_piuq_18@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

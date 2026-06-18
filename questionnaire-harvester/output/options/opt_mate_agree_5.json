@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "MATE 5-point agree",
+      "options": [
+        {
+          "index": 1,
+          "text": "Strongly agree"
+        },
+        {
+          "index": 2,
+          "text": "Agree"
+        },
+        {
+          "index": 3,
+          "text": "Undecided"
+        },
+        {
+          "index": 4,
+          "text": "Disagree"
+        },
+        {
+          "index": 5,
+          "text": "Strongly disagree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "agree",
+  "id": "opt_mate_agree_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 5.0
+    },
+    {
+      "index": 2,
+      "value": 4.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 2.0
+    },
+    {
+      "index": 5,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

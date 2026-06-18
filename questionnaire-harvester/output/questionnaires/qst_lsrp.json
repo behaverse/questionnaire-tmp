@@ -1,0 +1,415 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Psychopathy is a personality\ndisorder which can occur in non-institutionalised\npopulation. Psychopaths are also known as sociopaths. Psychopaths are\noften cruel, manipulative, lying, and impulsive. Psychopathy\nfascinates people, and it is easy to find video and audio clips on the\nweb about this topic; some are listed below.",
+    "id": "qst_lsrp",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 26
+    },
+    "publication": {
+      "citation": "Levenson, M.R., Kiehl, K.A, Fitzpatrick, C.M. (1995). Assessing\npsychopathic attributes in a noninstitutionalized population. Journal\nof Personality and Social Psychology, 68 , 151-158.",
+      "year": 1995
+    },
+    "short_title": "LSRP",
+    "title": "Psychopathy (LSRP)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/psychopathy-lsrps.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_21@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_22@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_23@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_24@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_25@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsrp_agree_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsrp_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_lsrp_26@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

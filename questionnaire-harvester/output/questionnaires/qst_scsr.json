@@ -1,0 +1,345 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Self consciousness is\nin essence self-reflection. Some people reflect more on themselves\nthan others, and the popular self-consciousness scale measures\nthis. The revised version used here changed the original one so that\nthe language used is more accessible for a very broad population\n(rather than just psychology students, who are often recruited for\npsychological test validation).",
+    "id": "qst_scsr",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 21
+    },
+    "publication": {
+      "citation": "Scheier, M. F. & Carver, C. S. (1985). The self-consciousnes scale -\na revised version for use with general populations. Journal of\nApplied Social Psychology, 15, 687-699.",
+      "year": 1985
+    },
+    "short_title": "revised version",
+    "title": "Self-consciousness scale (revised version)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/self-consciousness-scale-scsr.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_4@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_5@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_6@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_7@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_8@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_9@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_10@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_11@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_12@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_13@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_14@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_15@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_16@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_17@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_18@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_19@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_20@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scsr_likeme_4@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scsr_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_scsr_21@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

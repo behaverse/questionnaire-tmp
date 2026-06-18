@@ -1,0 +1,107 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Most people are right handed . The Edinburgh\nHandedness Inventory is a well known short questionnaire for\ndetermining objectively whether one is left or right handed (Oldfield,\n1971), and there is a short form of it (Vealy, 2014). This PsyToolkit\nimplementation uses the short form.",
+    "id": "qst_ehi",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 4
+    },
+    "publication": {
+      "citation": "Oldfield, R.C. (1971). The assessment and analysis of handedness: The Edinburgh inventory. Neuropsychologia, 9 , 97-113.",
+      "year": 1971
+    },
+    "short_title": "short form",
+    "title": "The Edinburgh Handedness Inventory (short form)",
+    "version": "v26.0617",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/handedness-ehi.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_ehi_side_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ehi_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ehi_1@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ehi_side_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ehi_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ehi_2@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ehi_side_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ehi_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ehi_3@v26.0617"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_ehi_side_5@v26.0617"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_ehi_instruction@v26.0617"
+            },
+            "prompt": {
+              "ref": "pr_ehi_4@v26.0617"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}
