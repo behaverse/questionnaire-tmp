@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "HAM-A 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not Present"
+        },
+        {
+          "index": 2,
+          "text": "Mild"
+        },
+        {
+          "index": 3,
+          "text": "Moderate"
+        },
+        {
+          "index": 4,
+          "text": "Severe"
+        },
+        {
+          "index": 5,
+          "text": "Very Severe"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hama_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please answer “yes” or “no” to the following questions in regards to how you have been feeling recently."
+    }
+  },
+  "id": "ins_gds_instruction"
+}

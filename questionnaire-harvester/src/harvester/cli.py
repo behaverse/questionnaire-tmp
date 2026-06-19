@@ -1,10 +1,26 @@
 import argparse, sys
 from pathlib import Path
+from urllib.parse import urlparse
+from harvester.sources.base import SourceAdapter
 from harvester.sources.psytoolkit import PsyToolkitAdapter, PsyToolkitParseError
+from harvester.sources.psychology_tools import PsychologyToolsAdapter, PsychologyToolsParseError
 from harvester.dedup import load_scales_index, build_instruction_index
 from harvester.draft import draft, write_draft, find_questionnaire_collision
 from harvester.validate import validate_tree
 from harvester.tracking import upsert_register_row, write_questions
+
+
+_ADAPTERS = (PsyToolkitAdapter, PsychologyToolsAdapter)
+
+
+def dispatch_adapter(url: str) -> SourceAdapter:
+    """Pick the source adapter for `url` by host (exact or subdomain match on each
+    adapter's `.site`). Raises ValueError when no adapter matches."""
+    host = (urlparse(url).hostname or "").lower()
+    for cls in _ADAPTERS:
+        if host == cls.site or host.endswith("." + cls.site):
+            return cls()
+    raise ValueError(f"no adapter for host {host!r}")
 
 
 def main(argv=None) -> int:
@@ -25,10 +41,14 @@ def main(argv=None) -> int:
     if a.cmd != "harvest":
         return 2
 
-    adapter = PsyToolkitAdapter()
+    try:
+        adapter = dispatch_adapter(a.url)
+    except ValueError as e:
+        print(f"SKIP {a.url}: {e}")     # no adapter for this host — nothing written
+        return 2
     try:
         rq = adapter.parse(adapter.fetch(a.url), a.url)
-    except PsyToolkitParseError as e:
+    except (PsyToolkitParseError, PsychologyToolsParseError) as e:
         print(f"SKIP {a.url}: {e}")     # unsupported page shape — nothing written
         return 2
     if a.qst_id:
