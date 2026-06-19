@@ -54,10 +54,14 @@ def test_refuses_non_numeric_value():
     with pytest.raises(PsychologyToolsParseError):
         PsychologyToolsAdapter().parse(_page(bad), "https://psychology-tools.com/test/x")
 
-def test_refuses_empty_stem():
-    bad = _row("q1", "", OPTS3)
-    with pytest.raises(PsychologyToolsParseError):
-        PsychologyToolsAdapter().parse(_page(bad), "https://psychology-tools.com/test/x")
+def test_empty_stem_with_instruction_uses_shared_prompt():
+    # standard-layout row with an empty stem + an Instructions paragraph -> shared prompt
+    rq = PsychologyToolsAdapter().parse(_page(_row("q1", "", OPTS3)),
+                                        "https://psychology-tools.com/test/x")
+    assert rq.shared_prompt_text == "Rate each statement."
+    assert rq.instruction_text is None
+    assert rq.items[0].text is None
+    assert rq.items[0].option.anchors == ["Never", "Sometimes", "Often"]
 
 
 def _std_row_endpoint_only(name, stem):
@@ -98,8 +102,8 @@ def test_alternate_layout_li_question_container():
     assert rq.items[0].option.anchors == ["Absent", "Mild", "Severe"]
     assert rq.items[0].option.values == [0.0, 1.0, 2.0]
 
-def test_alternate_stemless_refused():
-    # empty span.prompt -> stem-less Beck-style -> refuse (deferred)
+def test_alternate_stemless_no_instruction_refused():
+    # empty span.prompt + no instruction paragraph -> refused (no shared prompt source)
     html = _alt_page(_alt_row("q1", "", [("Statement A", "0"), ("Statement B", "1")]))
     with pytest.raises(PsychologyToolsParseError):
         PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
@@ -197,3 +201,38 @@ def test_no_time_element_year_none_citation_and_refs_populated():
     assert rq.year is None, f"expected None, got {rq.year}"
     assert rq.citation != "", "citation must still be populated"
     assert len(rq.references) > 0, "references must be non-empty"
+
+
+def _alt_page_instr(rows, *, instr="Instructions Below are groups of statements.",
+                    title="Demo Eating Scale (DES)"):
+    p = f"<p>{instr}</p>" if instr else ""
+    return (f'<html><head><meta name="description" content="A demo scale."></head>'
+            f'<body><h1>{title}</h1>{p}<form>{rows}</form></body></html>')
+
+def test_stemless_alt_uses_instruction_as_shared_prompt():
+    rows = (_alt_row("q1", "", [("A1", "0"), ("A2", "1")])
+            + _alt_row("q2", "", [("B1", "0"), ("B2", "1")]))
+    rq = PsychologyToolsAdapter().parse(_alt_page_instr(rows), "https://psychology-tools.com/test/x")
+    assert rq.shared_prompt_text == "Below are groups of statements."
+    assert rq.instruction_text is None
+    assert all(it.text is None for it in rq.items)
+    assert rq.items[0].option.anchors == ["A1", "A2"]      # each item keeps its own distinct option-set
+    assert rq.items[1].option.anchors == ["B1", "B2"]
+    assert rq.items[0].option.values == [0.0, 1.0]
+
+def test_stemless_no_instruction_refused():
+    rows = _alt_row("q1", "", OPTS3)
+    with pytest.raises(PsychologyToolsParseError):
+        PsychologyToolsAdapter().parse(_alt_page_instr(rows, instr=""),
+                                       "https://psychology-tools.com/test/x")
+
+def test_mixed_stem_and_stemless_refused():
+    rows = _alt_row("q1", "Has a stem", OPTS3) + _alt_row("q2", "", OPTS3)
+    with pytest.raises(PsychologyToolsParseError):
+        PsychologyToolsAdapter().parse(_alt_page_instr(rows), "https://psychology-tools.com/test/x")
+
+def test_all_stem_alt_page_unchanged_no_shared_prompt():
+    rows = _alt_row("q1", "Real stem one", OPTS3) + _alt_row("q2", "Real stem two", OPTS3)
+    rq = PsychologyToolsAdapter().parse(_alt_page_instr(rows), "https://psychology-tools.com/test/x")
+    assert rq.shared_prompt_text is None
+    assert rq.items[0].text == "Real stem one" and rq.items[1].text == "Real stem two"

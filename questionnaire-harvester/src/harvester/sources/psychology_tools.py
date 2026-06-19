@@ -52,7 +52,8 @@ def _cell_pair(cell):
 def _extract_items(form):
     """Parse item rows from whichever template is present: standard
     `div.notable-tr.question` else alternate `li.question-container`. Returns [RawItem].
-    Refuses (PsychologyToolsParseError) on no rows, an empty stem, or no response cells."""
+    Refuses (PsychologyToolsParseError) on no rows or no response cells.
+    Empty stems yield RawItem(text=None, …) for the caller to handle."""
     rows = form.select("div.notable-tr.question") or form.select("li.question-container")
     if not rows:
         raise PsychologyToolsParseError("no item rows (neither standard nor alternate layout)")
@@ -63,13 +64,11 @@ def _extract_items(form):
         if num:
             num.extract()
         stem = prompt_el.get_text(" ", strip=True) if prompt_el else ""
-        if not stem:
-            raise PsychologyToolsParseError("item has an empty stem")
         cells = row.select(".notable-td.response") or row.select("ul.responses > li")
         if not cells:
             raise PsychologyToolsParseError("item has no response options")
         pairs = [_cell_pair(c) for c in cells]
-        items.append(RawItem(text=stem, option=RawOption(
+        items.append(RawItem(text=stem or None, option=RawOption(
             input_data_type="choice", measurement_type="ordinal", selection="single",
             dimension="rating", anchors=[a for a, _ in pairs], values=[v for _, v in pairs])))
     return items
@@ -102,6 +101,17 @@ class PsychologyToolsAdapter(SourceAdapter):
                 instruction_text = re.sub(r"^instructions?\s*:?\s*", "", t, flags=re.I).strip() or None
                 break
 
+        shared_prompt_text = None
+        stemless = [it for it in items if it.text is None]
+        if stemless:
+            if len(stemless) != len(items):
+                raise PsychologyToolsParseError("mixed stem / stem-less item rows")
+            if not instruction_text:
+                raise PsychologyToolsParseError(
+                    "stem-less page with no instruction to use as the shared prompt")
+            shared_prompt_text = instruction_text
+            instruction_text = None
+
         meta = soup.find("meta", attrs={"name": "description"})
         description = ((meta.get("content").strip() if meta and meta.get("content") else "")
                        or (instruction_text or "") or title)
@@ -122,5 +132,5 @@ class PsychologyToolsAdapter(SourceAdapter):
             citation=citation, year=year, source_site=self.site, source_url=url,
             instruction_text=instruction_text, scale=None, items=items,
             license=LicenseFlag.unknown(url),
-            domain=[], population=[], context_text=None, shared_prompt_text=None,
+            domain=[], population=[], context_text=None, shared_prompt_text=shared_prompt_text,
             references=references)
