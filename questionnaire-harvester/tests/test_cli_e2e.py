@@ -129,3 +129,24 @@ def test_check_harvest_validates(tmp_path, monkeypatch):
     opt = json.loads(next((out / "options").glob("*.json")).read_text())
     assert opt["input_data_type"] == "choice" and opt["selection"] == "multiple"
     assert opt["measurement_type"] == "nominal"
+
+
+def test_psychology_tools_harvest_validates(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_test.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-worry-questionnaire",
+                   "--out", str(out),
+                   "--scales-index", str(tmp_path / "missing-index.json"),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    qst = json.loads((out / "questionnaires" / "qst_dwq.json").read_text())
+    els = qst["pages"][0]["elements"]
+    assert len(els) == 2
+    # per-item distinct prompts; identical 3-point scale dedups to one option
+    assert len({e["question"]["prompt"]["ref"] for e in els}) == 2
+    assert len({e["option"]["ref"] for e in els}) == 1
+    opt = json.loads(next((out / "options").glob("*.json")).read_text())
+    assert opt["input_data_type"] == "choice" and opt["selection"] == "single"
