@@ -697,3 +697,13 @@ ED-J1 added machine auto-translate: a serverless proxy `editor/api/translate` �
 - ed-j1-5: the proxy length cap is 5000 JS chars (sanity cap, not a token/cost guarantee).
 - ed-j1-6: `translateClient` has no request timeout/AbortController — a hung function leaves the row spinner until a network failure; an abort timeout would harden the degradation story.
 - **Deploy note:** real auto-translate needs `AI_GATEWAY_API_KEY` (or Vercel OIDC) set on the editor's deployment; the editor is currently undeployed (it becomes static SPA + 1 function). Without it, auto fails gracefully inline and manual editing is unaffected.
+
+## ED-J2 (Translation Workbench) — deferred (final-review triage, 2026-06-20)
+ED-J2 added a database-wide Translation Workbench (start-screen card → `editor/src/translate/workbench/`): pick entity type + source/target language → list Library entities missing the target translation (F7 fetchers, capped 300) → per-row + bulk auto-translate (reuses J1 `translateText`, status `draft`) into a local working copy → export a contribution bundle. Read-only Library; export-only. Final review APPROVE-WITH-FOLLOWUPS; the one Important (option "Option N" placeholders leaking into the bundle) was FIXED before landing (commit 07c4981f). Deferred minors:
+- ed-j2-1 (was borderline-Important): **stale-selector dead-end** — changing Type/From/To after a Load does not invalidate `result`/`bodies`, so an un-reloaded type switch renders/exports current `kind`/`target` against stale bodies (e.g. entries typed `option` carrying prompt content). Normal flow (Load after every change) avoids it. Fix: clear `result` on any selector change, or disable Load/Download until a matching Load.
+- ed-j2-2: no locale-format validation on the free-text From/To inputs (J1's TranslationPanel uses `LOCALE_RE`); the workbench accepts anything.
+- ed-j2-3: `isUntranslated` computes `entityFields` twice (negligible at workbench scale).
+- ed-j2-4: bulk `autoAll` reads a `bodies` snapshot at call time (benign — writes are functional + per-field-independent).
+- ed-j2-5: `stripStatus` is a shallow strip (no nested empty cleanup beyond the options-array case now handled).
+- ed-j2-6: no per-entity load-progress indicator while the (throttled, capped-300) body fetch runs.
+- Option-export path now has bundle tests (placeholder drop); a workbench component/e2e test still only exercises the prompt path.
