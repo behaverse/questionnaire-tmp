@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 11
     },
+    "publication": {
+      "citation": "Sarah J Brooks, Stanley P Krulewicz, Stan Kutcher. The Kutcher Adolescent Depression Scale: ssessment of its evaluative properties over the course of an 8-week pediatric pharmacotherapy trial. 13 ( 3 ): J Child Adolesc Psychopharmacol 337-49 ( 2003 ).",
+      "year": 2003
+    },
     "short_title": "KADS-11",
     "title": "Kutcher Adolescent Depression Scale - 11-Item (KADS-11)",
     "version": "v26.0618",

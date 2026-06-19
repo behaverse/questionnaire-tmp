@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 27
     },
+    "publication": {
+      "citation": "S Ehlers, C Gillberg, L Wing. A screening questionnaire for Asperger syndrome and other high-functioning autism spectrum disorders in school age children. J Autism Dev Disord. 1999; 29 ( 2 ): 129 – 141.",
+      "year": 1999
+    },
     "short_title": "ASSQ",
     "title": "Autism Spectrum Screening Questionnaire (ASSQ)",
     "version": "v26.0618",

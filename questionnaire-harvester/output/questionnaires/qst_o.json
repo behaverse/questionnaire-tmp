@@ -11,8 +11,8 @@
       "domain": [],
       "population": []
     },
-    "description": "Gauge your anxiety levels with the Zung Self-Rating Anxiety Scale (SAS), a detailed tool for assessing symptoms of anxiety.",
-    "id": "qst_sas",
+    "description": "The Original Hare Psychopathy Checklist is a 22-item psychological assessment tool designed to assess the presence of psychopathy in individuals.",
+    "id": "qst_o",
     "language": "en",
     "license": "unknown",
     "provenance": {
@@ -21,14 +21,14 @@
       "source": "web_harvest"
     },
     "psychometrics": {
-      "item_count": 20
+      "item_count": 22
     },
     "publication": {
-      "citation": "William W K Zung. A Rating Instrument for Anxiety Disorders. 12 ( 6 ): Psychosomatics 371-379. 1971.",
-      "year": 1971
+      "citation": "Hare R D A research scale for the assessment of psychopathy in criminal populations. 1 Pers Indiv Diff 111-119 ( 1980 ).",
+      "year": 1980
     },
-    "short_title": "SAS",
-    "title": "Zung Self-Rating Anxiety Scale (SAS)",
+    "short_title": "Original",
+    "title": "Hare Psychopathy Checklist (Original) (PCL-22)",
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
@@ -38,10 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "William W K Zung. A Rating Instrument for Anxiety Disorders. 12 ( 6 ): Psychosomatics 371-379. 1971."
+      "Hare R D A research scale for the assessment of psychopathy in criminal populations. 1 Pers Indiv Diff 111-119 ( 1980 )."
     ],
     "x_source_site": "psychology-tools.com",
-    "x_source_url": "https://psychology-tools.com/test/zung-anxiety-scale",
+    "x_source_url": "https://psychology-tools.com/test/pcl-22",
     "x_translation": "unknown"
   },
   "pages": [
@@ -49,280 +49,308 @@
       "elements": [
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_1@v26.0618"
+              "ref": "pr_o_1@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_2@v26.0618"
+              "ref": "pr_o_2@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_3@v26.0618"
+              "ref": "pr_o_3@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_4@v26.0618"
+              "ref": "pr_o_4@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_2@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_5@v26.0618"
+              "ref": "pr_o_5@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_6@v26.0618"
+              "ref": "pr_o_6@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_7@v26.0618"
+              "ref": "pr_o_7@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_8@v26.0618"
+              "ref": "pr_o_8@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_2@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_9@v26.0618"
+              "ref": "pr_o_9@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_10@v26.0618"
+              "ref": "pr_o_10@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_11@v26.0618"
+              "ref": "pr_o_11@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_12@v26.0618"
+              "ref": "pr_o_12@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_2@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_13@v26.0618"
+              "ref": "pr_o_13@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_14@v26.0618"
+              "ref": "pr_o_14@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_15@v26.0618"
+              "ref": "pr_o_15@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_16@v26.0618"
+              "ref": "pr_o_16@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_2@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_17@v26.0618"
+              "ref": "pr_o_17@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_18@v26.0618"
+              "ref": "pr_o_18@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_2@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_19@v26.0618"
+              "ref": "pr_o_19@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_sas_rating_1@v26.0618"
+            "ref": "opt_o_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sas_instruction@v26.0618"
+              "ref": "ins_pcl22_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sas_20@v26.0618"
+              "ref": "pr_o_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_o_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcl22_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_o_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_o_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcl22_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_o_22@v26.0618"
             }
           },
           "required": true

@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 14
     },
+    "publication": {
+      "citation": "J M Eriksson, L M Andersen, & S Bejerot. RAADS-14 Screen: validity of a screening tool for autism spectrum disorder in an adult psychiatric population. Molecular Autism, ( 4 ): 49. Dec 2013",
+      "year": 2013
+    },
     "short_title": "RAADS-14",
     "title": "Ritvo Autism & Asperger Diagnostic Scale (RAADS-14)",
     "version": "v26.0618",

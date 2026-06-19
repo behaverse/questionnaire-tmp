@@ -11,8 +11,8 @@
       "domain": [],
       "population": []
     },
-    "description": "Assess manic or hypomanic symptoms with the ASRM (Altman Self-Rating Mania Scale), a concise tool designed for personal and clinical insights.",
-    "id": "qst_asrm",
+    "description": "The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5) is a 5-item screen designed to identify individuals with probable PTSD.",
+    "id": "qst_dsm5",
     "language": "en",
     "license": "unknown",
     "provenance": {
@@ -21,14 +21,14 @@
       "source": "web_harvest"
     },
     "psychometrics": {
-      "item_count": 5
+      "item_count": 6
     },
     "publication": {
-      "citation": "E G Altman, D Hedeker, J L Peterson, J M Davis. The Altman Self-Rating Mania Scale. 42 ( 10 ): Biol Psychiatry 948-55 ( 1997 ).",
-      "year": 1997
+      "citation": "A Prins, MJ Bovin, R Kimerling, DG Kaloupek, BP Marx, A Pless-Kaiser, PP Schnurr. The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5): Development and Evaluation Within a Veteran Primary Care Sample. J Gen Intern Med 31 ( 10 ): 1206-1211 ( 2016 ).",
+      "year": 2016
     },
-    "short_title": "ASRM",
-    "title": "Altman Self-Rating Mania Scale (ASRM)",
+    "short_title": "DSM-5",
+    "title": "Primary Care PTSD Screen (DSM-5) (PC-PTSD-5)",
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
@@ -38,12 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "E G Altman, D Hedeker, J L Peterson, J M Davis. The Altman Self-Rating Mania Scale. 42 ( 10 ): Biol Psychiatry 948-55 ( 1997 ).",
-      "E G Altman, D Hedeker, J L Peterson, J M Davis. A comparative evaluation of three self-rating scales for acute mania. 50 ( 6 ): Biol Psychiatry 468-71 ( 2001 ).",
-      "STABLE National Coordinating Council Resource Toolkit Workgroup. STABLE Resource Toolkit 50-51. Last accessed: 2013-02-24."
+      "A Prins, MJ Bovin, R Kimerling, DG Kaloupek, BP Marx, A Pless-Kaiser, PP Schnurr. The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5): Development and Evaluation Within a Veteran Primary Care Sample. J Gen Intern Med 31 ( 10 ): 1206-1211 ( 2016 )."
     ],
     "x_source_site": "psychology-tools.com",
-    "x_source_url": "https://psychology-tools.com/test/altman-self-rating-mania-scale",
+    "x_source_url": "https://psychology-tools.com/test/pc-ptsd-5",
     "x_translation": "unknown"
   },
   "pages": [
@@ -51,70 +49,84 @@
       "elements": [
         {
           "option": {
-            "ref": "opt_asrm_rating_1@v26.0618"
+            "ref": "opt_dsm5_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_asrm_instruction@v26.0618"
+              "ref": "ins_pcptsd5_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_asrm_1@v26.0618"
+              "ref": "pr_dsm5_1@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_asrm_rating_2@v26.0618"
+            "ref": "opt_dsm5_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_asrm_instruction@v26.0618"
+              "ref": "ins_pcptsd5_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_asrm_2@v26.0618"
+              "ref": "pr_dsm5_2@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_asrm_rating_3@v26.0618"
+            "ref": "opt_dsm5_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_asrm_instruction@v26.0618"
+              "ref": "ins_pcptsd5_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_asrm_3@v26.0618"
+              "ref": "pr_dsm5_3@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_asrm_rating_4@v26.0618"
+            "ref": "opt_dsm5_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_asrm_instruction@v26.0618"
+              "ref": "ins_pcptsd5_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_asrm_4@v26.0618"
+              "ref": "pr_dsm5_4@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_asrm_rating_5@v26.0618"
+            "ref": "opt_dsm5_rating_1@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_asrm_instruction@v26.0618"
+              "ref": "ins_pcptsd5_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_asrm_5@v26.0618"
+              "ref": "pr_dsm5_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_dsm5_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcptsd5_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_dsm5_6@v26.0618"
             }
           },
           "required": true

@@ -1,0 +1,41 @@
+{
+  "content": {
+    "en": {
+      "label": "Original 3-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Definitely Present"
+        },
+        {
+          "index": 2,
+          "text": "Possibly Present"
+        },
+        {
+          "index": 3,
+          "text": "Definitely Absent"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_o_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 2.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}
