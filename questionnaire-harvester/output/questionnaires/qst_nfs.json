@@ -1,0 +1,150 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "This scale is about the perception of a father’s role in one’s\nlife. Arguably, the expectations about fathers has changed over the\ncourse of the 20th century ( Finley and Schwartz, 2004 ).",
+    "id": "qst_nfs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 9
+    },
+    "publication": {
+      "citation": "Finley, G.E. & Schwartz, S.J. (2004). The father involvement and nurturant fathering scales: retrospective measures for adolescent and adult children. Educational and Psychological Measurement, 64(1) , 143-164. DOI: 10.1177/0013164403258453.",
+      "year": 2004
+    },
+    "short_title": "NFS",
+    "title": "Nurturant Fathering Scale (NFS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/nurturant-fathering.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_nfs_rating_1@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_2@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_3@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_3@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_3@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_4@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_5@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_6@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_nfs_rating_7@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_nfs_9@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

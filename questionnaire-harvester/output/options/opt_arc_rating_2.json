@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "Systemizing Quotient 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "strongly agree"
+        },
+        {
+          "index": 2,
+          "text": "slightly agree"
+        },
+        {
+          "index": 3,
+          "text": "slightly disagree"
+        },
+        {
+          "index": 4,
+          "text": "strongly disagree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_arc_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    },
+    {
+      "index": 3,
+      "value": 1.0
+    },
+    {
+      "index": 4,
+      "value": 2.0
+    }
+  ],
+  "selection": "single"
+}
