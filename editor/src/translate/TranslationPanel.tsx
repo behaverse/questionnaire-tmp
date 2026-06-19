@@ -6,6 +6,8 @@ import { setAvailableLanguages } from '../model/tree'
 import type { TransKind, TransRow } from './types'
 import type { EntityBody } from '../model/types'
 import type { NodePath } from '../model/path'
+import { translateText } from './translateClient'
+import { mapLimit } from '../persistence/concurrency'
 
 const STATUSES = ['draft', 'complete', 'validated']
 const LOCALE_RE = /^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$/
@@ -20,6 +22,9 @@ export function TranslationPanel() {
   const [untranslatedOnly, setUntranslatedOnly] = useState(false)
   const [kindFilter, setKindFilter] = useState('all')
   const [newLang, setNewLang] = useState('')
+  const [busy, setBusy] = useState<Record<string, boolean>>({})
+  const [autoErr, setAutoErr] = useState<Record<string, string>>({})
+  const [bump, setBump] = useState<Record<string, number>>({})
 
   const primary = model ? String(model.metadata.language ?? 'en') : 'en'
   const target = editingLocale && editingLocale !== primary ? editingLocale : null
@@ -121,6 +126,27 @@ export function TranslationPanel() {
     else if (g.inlinePath) writeInline(g.inlinePath, mut)
   }
 
+  const autoRow = async (g: typeof groups[number], row: TransRow) => {
+    if (!row.source.trim()) return
+    setBusy((b) => ({ ...b, [row.id]: true }))
+    setAutoErr((e) => ({ ...e, [row.id]: '' }))
+    try {
+      const out = await translateText(row.source, primary, target!, g.kind)
+      onEditText(g, row, out)
+      onEditStatus(g, 'draft')
+      setBump((m) => ({ ...m, [row.id]: (m[row.id] ?? 0) + 1 }))
+    } catch {
+      setAutoErr((e) => ({ ...e, [row.id]: 'auto-translate failed' }))
+    } finally {
+      setBusy((b) => ({ ...b, [row.id]: false }))
+    }
+  }
+
+  const autoAllUntranslated = async () => {
+    const pending = groups.flatMap((g) => g.rows.filter((r) => !r.done).map((r) => ({ g, r })))
+    await mapLimit(pending, 4, ({ g, r }) => autoRow(g, r))
+  }
+
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
       <div className="flex items-center gap-3 border-b border-ed-border bg-ed-panel px-4 py-2 text-sm">
@@ -139,6 +165,7 @@ export function TranslationPanel() {
         <label className="ml-auto flex items-center gap-1 text-xs text-ed-muted">
           <input type="checkbox" checked={untranslatedOnly} onChange={(e) => setUntranslatedOnly(e.target.checked)} /> show untranslated only
         </label>
+        <button onClick={() => void autoAllUntranslated()} className="rounded border border-ed-border-strong px-2 py-0.5 text-xs hover:bg-ed-subtle">Auto-translate untranslated</button>
       </div>
       <div className="border-b border-amber-100 bg-amber-50 px-4 py-1 text-[11px] text-amber-700">
         Editing a translation makes a local editable copy of Library content (shared options are copied once).
@@ -156,13 +183,20 @@ export function TranslationPanel() {
                 <div key={row.id} className="grid grid-cols-[7rem_1fr_1fr_auto] items-start gap-2 px-3 py-2">
                   <span className="pt-1 text-xs text-ed-muted">{row.fieldLabel}</span>
                   <div className="whitespace-pre-wrap pt-1 text-sm text-ed-muted">{row.source || <span className="text-ed-muted/50">(empty)</span>}</div>
-                  <textarea aria-label={`translate ${row.id}`} rows={1} defaultValue={row.target}
+                  <textarea aria-label={`translate ${row.id}`} key={`${row.id}:${bump[row.id] ?? 0}`} rows={1} defaultValue={row.target}
                             onChange={(e) => onEditText(g, row, e.target.value)}
                             className="w-full rounded border border-ed-border-strong px-2 py-1 text-sm" />
-                  <select aria-label={`status ${row.id}`} value={row.status} onChange={(e) => onEditStatus(g, e.target.value)}
-                          className="rounded border border-ed-border-strong px-1 py-0.5 text-xs">
-                    {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-                  </select>
+                  <div className="flex flex-col items-end gap-1">
+                    <select aria-label={`status ${row.id}`} value={row.status} onChange={(e) => onEditStatus(g, e.target.value)}
+                            className="rounded border border-ed-border-strong px-1 py-0.5 text-xs">
+                      {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                    <button aria-label="Auto" onClick={() => void autoRow(g, row)} disabled={busy[row.id] || !row.source.trim()}
+                            className="rounded border border-ed-border-strong px-2 py-0.5 text-xs hover:bg-ed-subtle disabled:opacity-40">
+                      {busy[row.id] ? '…' : 'Auto'}
+                    </button>
+                    {autoErr[row.id] && <span className="text-[10px] text-red-600">{autoErr[row.id]}</span>}
+                  </div>
                 </div>
               ))}
             </div>

@@ -1,8 +1,10 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { TranslationPanel } from './TranslationPanel'
 import { useEditorStore } from '../state/store'
 import type { Questionnaire } from '../model/types'
+
+vi.mock('./translateClient', () => ({ translateText: vi.fn(async () => 'Comment ça va ?') }))
 
 const model = {
   metadata: { id: 'qst_t', title: 'T', language: 'en', available_languages: ['fr'] },
@@ -17,6 +19,19 @@ beforeEach(() => {
 })
 
 describe('TranslationPanel', () => {
+  it('auto-translates a row: fills the target and marks it draft', async () => {
+    // editingLocale is 'fr' (file beforeEach); the prompt source is "How are you?"
+    render(<TranslationPanel />)
+    // click the row's Auto button
+    const autoBtn = screen.getAllByRole('button', { name: /^auto$/i })[0]
+    fireEvent.click(autoBtn)
+    await waitFor(() => {
+      const body = useEditorStore.getState().pool['pr_a@v26.0606.dev1'] as { content: Record<string, { text?: string; status?: string }> }
+      expect(body.content.fr?.text).toBe('Comment ça va ?')
+      expect(body.content.fr?.status).toBe('draft')
+    })
+  })
+
   it('shows the source and writes the target translation to the pool', async () => {
     render(<TranslationPanel />)
     expect(screen.getByText('How are you?')).toBeInTheDocument()
