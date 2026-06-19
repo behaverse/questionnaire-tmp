@@ -49,7 +49,7 @@ export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
       <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-ed-panel shadow-xl">
         <div className="flex items-center gap-2 border-b border-ed-border p-3">
-          <strong className="text-sm">Add {etype}</strong>
+          <strong className="text-sm">{onCreate ? `Add ${etype}` : `Pick ${etype} from Library`}</strong>
           <button onClick={onClose} className="ml-auto text-ed-muted hover:text-ed-text">✕</button>
         </div>
         <div className="p-3">
