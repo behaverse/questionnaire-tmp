@@ -22,3 +22,10 @@ Surfaced during the OD-21 instrument/variant follow-up (2026-06-10):
 
 - **Variant labels for legacy imports.** All 64 imported questionnaires have `variant: "base"`; the genuine per-form variants (8 instrument families) are distinguished only by id + item count. Curating human-readable variant labels (e.g. ASRS "Full" / "Part A screener" / "Inattentive" / "Part A + Inattentive") needs editing/curation tooling.
 - **Surface the response-scale distinction.** The multi-form families are genuine variants differing by their answer scale (e.g. `grit8` 5-pt similarity vs `x_grit8` 7-pt agreement; ASRS Part-A's 5-pt ARCES frequency vs the full form's 7-pt frequency). This scale / measurement-type distinction is not surfaced on cards; surfacing it is a QA-pass enhancement.
+
+## Search — content indexing (2026-06-18)
+- **Index entity content in `search_tsv`** so `q` search matches a prompt's text / an option's
+  scale anchors, not just title/description (today reusable entities effectively match only by id).
+  Full implementation guide + the exact code + the required live re-ingest:
+  **[HANDOFF_content_search_index.md](HANDOFF_content_search_index.md)**. Unblocks the Editor's
+  reuse/dedup picker to search server-side (replacing its ED-I·F7 client-side, 300-capped stopgap).
