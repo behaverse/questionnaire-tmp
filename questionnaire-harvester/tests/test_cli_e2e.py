@@ -211,3 +211,24 @@ def test_psychology_tools_stemless_harvest_validates(tmp_path, monkeypatch):
     assert len({e["option"]["ref"] for e in els}) == 2
     prompt = json.loads(next((out / "prompts").glob("*_shared.json")).read_text())
     assert "Below are groups of statements" in prompt["content"]["en"]["text"]
+
+
+def test_psychology_tools_dimension_harvest_validates(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_dimension.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-two-dimension-scale",
+                   "--out", str(out),
+                   "--scales-index", str(tmp_path / "missing-index.json"),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    qst = json.loads((out / "questionnaires" / "qst_dtds.json").read_text())
+    els = qst["pages"][0]["elements"]
+    assert len(els) == 4                                        # 2 items x 2 dimensions
+    opt_refs = {e["option"]["ref"].split("@")[0] for e in els}
+    assert len(opt_refs) == 2                                   # fear + avoidance scales dedup to 2
+    dims = sorted(json.loads((out / "options" / f"{r}.json").read_text())["dimension"]
+                  for r in opt_refs)
+    assert dims == ["avoidance", "fear"]
