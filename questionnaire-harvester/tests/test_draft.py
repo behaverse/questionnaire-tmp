@@ -221,3 +221,14 @@ def test_build_choice_option_all_labelled_unchanged():
     opt = _build_choice_option(spec, "x", "X")
     co = opt["content"]["en"]["options"]
     assert [(o["index"], o["text"]) for o in co] == [(1, "No"), (2, "Yes")]
+
+def test_draft_emits_x_references_when_present():
+    rq = _gad7()
+    rq.references = ["First A et al. (2006).", "Second B et al. (2010)."]
+    res = draft(rq, version="v26.0617", scales_index={}, instr_index={})
+    md = res.entities["questionnaire"][0]["metadata"]
+    assert md["x_references"] == ["First A et al. (2006).", "Second B et al. (2010)."]
+
+def test_draft_no_x_references_when_empty():
+    res = draft(_gad7(), version="v26.0617", scales_index={}, instr_index={})
+    assert "x_references" not in res.entities["questionnaire"][0]["metadata"]

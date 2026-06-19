@@ -56,6 +56,7 @@ class RawQuestionnaire:
     population: list = field(default_factory=list)
     context_text: str | None = None
     shared_prompt_text: str | None = None
+    references: list = field(default_factory=list)
 
     def __post_init__(self):
         if isinstance(self.scale, dict):

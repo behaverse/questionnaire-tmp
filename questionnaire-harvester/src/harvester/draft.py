@@ -173,6 +173,8 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
     # (the schema requires both). Otherwise the reference often remains in the description.
     if rq.citation and rq.year:
         md["publication"] = {"citation": rq.citation, "year": rq.year}
+    if rq.references:
+        md["x_references"] = rq.references
     qst = {"@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
            "metadata": md, "pages": [{"id": "page_main", "elements": elements}]}
     res.entities["questionnaire"].append(qst)
