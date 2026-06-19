@@ -163,3 +163,37 @@ def test_no_time_element_yields_no_year_but_keeps_citation():
     assert rq.year is None, f"expected None, got {rq.year}"
     assert rq.citation != "", "citation must still be populated"
     assert len(rq.references) > 0, "references must be non-empty"
+
+
+def test_classless_time_element_read_not_page_range():
+    """A <time> with NO publication-date class must still be read.
+    The page-range text '38(8): 1414-1425 (2008)' must not be used;
+    year must come from the <time datetime='2008-9-01'>."""
+    li = ('<li class="source"><span class="authors">C Allison , S Baron-Cohen</span> . '
+          'The Q-CHAT. J Child Psychol Psychiatry 38(8): 1414-1425 (2008) . '
+          '<time datetime="2008-9-01">2008</time> .</li>')
+    rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
+    assert rq.year == 2008, f"expected 2008, got {rq.year}"
+
+
+def test_page_range_with_classless_time_not_confused():
+    """Page range '1905-7' in text plus <time datetime='1984'> (no class) -> year==1984,
+    not 1905 from the page range."""
+    li = ('<li class="source"><span class="authors">JA Ewing</span> . '
+          'Detecting Alcoholism. The CAGE Questionnaire. 252(14): 1905-7 . '
+          '<time datetime="1984">1984</time> .</li>')
+    rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
+    assert rq.year == 1984, f"expected 1984, got {rq.year}"
+    assert "1905" not in str(rq.year)
+
+
+def test_no_time_element_year_none_citation_and_refs_populated():
+    """When li.source has no <time> element at all: year must be None,
+    citation must be non-empty, and references must be non-empty."""
+    li = ('<li class="source"><span class="authors">RL Connor , DW Davidson</span> . '
+          'Development of a new resilience scale: the SPIN. '
+          'J Soc Clin Psychol 19(3): 119-132 .</li>')
+    rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
+    assert rq.year is None, f"expected None, got {rq.year}"
+    assert rq.citation != "", "citation must still be populated"
+    assert len(rq.references) > 0, "references must be non-empty"

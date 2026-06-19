@@ -111,7 +111,7 @@ class PsychologyToolsAdapter(SourceAdapter):
         year = None
         first = soup.select_one("ol.sources li.source")
         if first:
-            tnode = first.select_one("time.publication-date")
+            tnode = first.select_one("time")
             ytext = (tnode.get("datetime") or tnode.get_text(" ", strip=True)) if tnode else ""
             ym = re.search(r"\b(?:19|20)\d{2}\b", ytext)
             if ym:
