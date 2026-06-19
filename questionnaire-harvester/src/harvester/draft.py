@@ -36,7 +36,7 @@ def _build_choice_option(spec, slug: str, short_title: str, n=None) -> dict:
         "options": [{"index": i + 1, "value": float(v)} for i, v in enumerate(spec.values)],
         "content": {"en": {"status": "validated",
             "label": f"{short_title} {len(spec.anchors)}-point {spec.dimension}",
-            "options": [{"index": i + 1, "text": t} for i, t in enumerate(spec.anchors)]}},
+            "options": [{"index": i + 1, "text": t} for i, t in enumerate(spec.anchors) if t]}},
     }
     if getattr(spec, "randomize", False):
         opt["randomize"] = True

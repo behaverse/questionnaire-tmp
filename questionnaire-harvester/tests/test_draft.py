@@ -197,3 +197,27 @@ def test_draft_likert_still_uses_legacy_choice_id():
     opt = res.entities["option"][0]
     assert opt["id"] == "opt_gad7_frequency_4"
     assert "randomize" not in opt
+
+
+def test_build_choice_option_omits_blank_anchor_content():
+    from harvester.draft import _build_choice_option
+    from harvester.raw import RawOption
+    spec = RawOption(input_data_type="choice", measurement_type="ordinal", selection="single",
+                     dimension="rating", anchors=["Low", "", "", "High"], values=[1.0, 2.0, 3.0, 4.0])
+    opt = _build_choice_option(spec, "demo", "Demo", n=1)
+    # structural options keep ALL four (index + value)
+    assert [o["index"] for o in opt["options"]] == [1, 2, 3, 4]
+    assert [o["value"] for o in opt["options"]] == [1.0, 2.0, 3.0, 4.0]
+    # content options only for the labelled anchors (indices 1 and 4), text-bearing
+    co = opt["content"]["en"]["options"]
+    assert [o["index"] for o in co] == [1, 4]
+    assert [o["text"] for o in co] == ["Low", "High"]
+
+def test_build_choice_option_all_labelled_unchanged():
+    from harvester.draft import _build_choice_option
+    from harvester.raw import RawScale
+    spec = RawScale(input_data_type="choice", measurement_type="ordinal", selection="single",
+                    dimension="agree", anchors=["No", "Yes"], values=[0.0, 1.0])
+    opt = _build_choice_option(spec, "x", "X")
+    co = opt["content"]["en"]["options"]
+    assert [(o["index"], o["text"]) for o in co] == [(1, "No"), (2, "Yes")]
