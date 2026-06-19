@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "Liebowitz Social Anxiety Scale 4-point avoidance",
+      "options": [
+        {
+          "index": 1,
+          "text": "Never (0%)"
+        },
+        {
+          "index": 2,
+          "text": "Occasionally (1-33%)"
+        },
+        {
+          "index": 3,
+          "text": "Often (34-66%)"
+        },
+        {
+          "index": 4,
+          "text": "Usually (67-100%)"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "avoidance",
+  "id": "opt_lsas_avoidance_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

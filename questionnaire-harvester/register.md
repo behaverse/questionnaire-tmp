@@ -158,4 +158,4 @@
 | qst_ymrs | psychology-tools.com | high | needs-review | 2 | unknown |
 | qst_hai18 | psychology-tools.com | high | needs-review | 1 | unknown |
 | qst_binge | psychology-tools.com | high | needs-review | 1 | unknown |
-| qst_liebowitzsocialanxietyscale | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_lsas | psychology-tools.com | high | needs-review | 2 | unknown |

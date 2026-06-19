@@ -1,0 +1,719 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Assess your social anxiety levels with the Liebowitz Social Anxiety Scale (LSAS), focusing on fear and avoidance in social situations.",
+    "id": "qst_lsas",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 48
+    },
+    "short_title": "Liebowitz Social Anxiety Scale",
+    "title": "Liebowitz Social Anxiety Scale",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/liebowitz-social-anxiety-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_27@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_28@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_29@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_30@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_31@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_32@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_33@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_34@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_35@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_36@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_37@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_38@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_39@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_40@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_41@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_42@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_43@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_44@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_45@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_46@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_fear_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_47@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_lsas_avoidance_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_lsas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_lsas_48@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

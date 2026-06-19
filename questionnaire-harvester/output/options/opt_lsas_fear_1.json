@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "Liebowitz Social Anxiety Scale 4-point fear",
+      "options": [
+        {
+          "index": 1,
+          "text": "None"
+        },
+        {
+          "index": 2,
+          "text": "Mild"
+        },
+        {
+          "index": 3,
+          "text": "Mode rate"
+        },
+        {
+          "index": 4,
+          "text": "Severe"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "fear",
+  "id": "opt_lsas_fear_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}
