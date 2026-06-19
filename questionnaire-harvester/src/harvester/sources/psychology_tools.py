@@ -26,6 +26,13 @@ def _derive_id(title: str, url: str) -> str:
     return "qst_" + re.sub(r"[^a-z0-9]", "", seg.lower())
 
 
+def _clean_citation(li):
+    """A `li.source` element's text, whitespace-collapsed and tidied so the hCard spans'
+    stray spaces around punctuation are removed (e.g. 'Allison , S' -> 'Allison, S')."""
+    t = re.sub(r"\s+", " ", li.get_text(" ", strip=True)).strip()
+    return re.sub(r"\s+([,.;:])", r"\1", t)
+
+
 def _cell_pair(cell):
     """From a response cell (standard `.notable-td.response` span or alternate
     `ul.responses > li`), return (anchor_text, value_float). Anchor may be "" (unlabeled).
@@ -99,19 +106,21 @@ class PsychologyToolsAdapter(SourceAdapter):
         description = ((meta.get("content").strip() if meta and meta.get("content") else "")
                        or (instruction_text or "") or title)
 
-        citation, year = "", None
-        for el in soup.find_all(["p", "li", "div", "span"]):
-            t = el.get_text(" ", strip=True)
-            if re.match(r"^(source|reference)s?\b", t, re.I):
-                ym = re.search(r"\b(19|20)\d{2}\b", t)
-                if ym:
-                    citation = re.sub(r"^(source|reference)s?\s*:?\s*", "", t, flags=re.I).strip()
-                    year = int(ym.group())
-                break
+        references = [c for c in (_clean_citation(li) for li in soup.select("ol.sources li.source")) if c]
+        citation = references[0] if references else ""
+        year = None
+        first = soup.select_one("ol.sources li.source")
+        if first:
+            tnode = first.select_one("time.publication-date")
+            ytext = (tnode.get("datetime") or tnode.get_text(" ", strip=True)) if tnode else ""
+            ym = re.search(r"\b(?:19|20)\d{2}\b", ytext) or re.search(r"\b(?:19|20)\d{2}\b", citation)
+            if ym:
+                year = int(ym.group())
 
         return RawQuestionnaire(
             qst_id=qst_id, title=title, short_title=short_title, description=description,
             citation=citation, year=year, source_site=self.site, source_url=url,
             instruction_text=instruction_text, scale=None, items=items,
             license=LicenseFlag.unknown(url),
-            domain=[], population=[], context_text=None, shared_prompt_text=None)
+            domain=[], population=[], context_text=None, shared_prompt_text=None,
+            references=references)

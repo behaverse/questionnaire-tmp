@@ -108,3 +108,35 @@ def test_no_rows_either_layout_refused():
     html = "<html><h1>X (X)</h1><form><p>nothing</p></form></html>"
     with pytest.raises(PsychologyToolsParseError):
         PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+
+
+def _page_with_sources(li_html):
+    return (f'<html><body><h1>Demo Scale (DEMO)</h1>'
+            f'<form>{_row("q1", "An item", OPTS3)}</form>'
+            f'<h6>Sources</h6><ol class="sources">{li_html}</ol></body></html>')
+
+def test_extracts_structured_reference_and_year():
+    li = ('<li class="source"><span class="authors">C Allison , S Baron-Cohen</span> . '
+          'Some Title . <time class="publication-date" datetime="2008">2008</time> .</li>')
+    rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
+    assert rq.year == 2008
+    assert len(rq.references) == 1
+    assert "Allison, S Baron-Cohen" in rq.references[0]   # space-before-comma tidied
+    assert " ." not in rq.references[0]                    # space-before-period tidied
+    assert rq.citation == rq.references[0]
+
+def test_two_sources_primary_publication_all_in_references():
+    li = ('<li class="source"><span>First A</span> . '
+          '<time class="publication-date" datetime="1959">1959</time> .</li>'
+          '<li class="source"><span>Second B</span> . '
+          '<time class="publication-date" datetime="1970">1970</time> .</li>')
+    rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
+    assert len(rq.references) == 2
+    assert rq.year == 1959                 # year from the first source
+    assert rq.citation == rq.references[0]
+
+def test_no_sources_section_yields_no_citation():
+    html = ('<html><body><h1>Demo Scale (DEMO)</h1>'
+            f'<form>{_row("q1", "An item", OPTS3)}</form></body></html>')
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    assert rq.citation == "" and rq.year is None and rq.references == []
