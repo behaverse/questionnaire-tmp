@@ -188,3 +188,26 @@ def test_psychology_tools_references_harvest_validates(tmp_path, monkeypatch):
     assert md["publication"]["year"] == 2011
     assert "A Demo, B Tester" in md["publication"]["citation"]
     assert md["x_references"] == [md["publication"]["citation"]]
+
+
+def test_psychology_tools_stemless_harvest_validates(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_stemless.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-eating-scale",
+                   "--out", str(out),
+                   "--scales-index", str(tmp_path / "missing-index.json"),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    qst = json.loads((out / "questionnaires" / "qst_des.json").read_text())
+    els = qst["pages"][0]["elements"]
+    assert len(els) == 2
+    # one shared prompt referenced by every element; no per-item instruction
+    assert len({e["question"]["prompt"]["ref"] for e in els}) == 1
+    assert all("instruction" not in e["question"] for e in els)
+    # the two items have distinct option-sets (different content)
+    assert len({e["option"]["ref"] for e in els}) == 2
+    prompt = json.loads(next((out / "prompts").glob("*_shared.json")).read_text())
+    assert "Below are groups of statements" in prompt["content"]["en"]["text"]
