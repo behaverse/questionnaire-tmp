@@ -1,0 +1,327 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Gauge your anxiety levels with the Zung Self-Rating Anxiety Scale (SAS), a detailed tool for assessing symptoms of anxiety.",
+    "id": "qst_sas",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "short_title": "SAS",
+    "title": "Zung Self-Rating Anxiety Scale (SAS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/zung-anxiety-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_sas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_sas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_sas_20@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Take the Shut-D online test to assess dissociative responses to trauma. A guided, research-based tool for understanding complex psychological symptoms.",
+    "id": "qst_shutd",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 13
+    },
+    "short_title": "SHUT-D",
+    "title": "Shutdown Dissociation Scale (SHUT-D)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/shutdown-dissociation-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_shutd_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_shutd_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_shutd_13@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

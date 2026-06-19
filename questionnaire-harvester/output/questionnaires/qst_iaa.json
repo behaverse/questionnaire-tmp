@@ -1,0 +1,299 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Explore the Internet Addiction Assessment (IAA) to evaluate your digital habits with a nuanced, evidence-based questionnaire.",
+    "id": "qst_iaa",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 18
+    },
+    "short_title": "IAA",
+    "title": "Internet Addiction Assessment (IAA)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/internet-addiction-assessment",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_iaa_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_iaa_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_iaa_18@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

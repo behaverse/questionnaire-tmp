@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "AQ 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Definitely Agree"
+        },
+        {
+          "index": 2,
+          "text": "Slightly Agree"
+        },
+        {
+          "index": 3,
+          "text": "Slightly Disagree"
+        },
+        {
+          "index": 4,
+          "text": "Definitely Disagree"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_aq_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 0.0
+    },
+    {
+      "index": 4,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

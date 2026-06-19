@@ -1,0 +1,677 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Explore the Spence Children's Anxiety Scale (SCAS) to assess anxiety in children with a scientifically validated questionnaire.",
+    "id": "qst_scas",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 45
+    },
+    "short_title": "SCAS",
+    "title": "Spence Children's Anxiety Scale (SCAS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/spence-childrens-anxiety-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_27@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_28@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_29@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_30@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_31@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_32@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_33@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_34@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_35@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_36@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_37@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_38@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_39@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_40@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_41@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_42@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_43@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_44@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_scas_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_scas_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_scas_45@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

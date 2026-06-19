@@ -1,0 +1,593 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Assess autism spectrum characteristics in children with the CAST, a 39-item test developed for parents by experts at the University of Cambridge.",
+    "id": "qst_cast",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 39
+    },
+    "short_title": "CAST",
+    "title": "Childhood Autism Spectrum Test (CAST)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/cast",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_27@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_28@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_29@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_30@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_31@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_32@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_33@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_34@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_35@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_36@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_37@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_38@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cast_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cast_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cast_39@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

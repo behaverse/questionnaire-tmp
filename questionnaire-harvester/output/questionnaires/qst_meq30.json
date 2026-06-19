@@ -1,0 +1,467 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The MEQ-30 evaluates profound experiences of mystical nature, including sense of unity, sacredness, and ineffability, based on your session reflections.",
+    "id": "qst_meq30",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 30
+    },
+    "short_title": "MEQ-30",
+    "title": "Revised Mystical Experience Questionnaire (MEQ-30)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/meq-30",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_27@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_28@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_29@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_meq30_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_meq30_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_meq30_30@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

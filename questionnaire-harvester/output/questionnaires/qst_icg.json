@@ -1,0 +1,313 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The ICG evaluates the intensity of grief that interferes with daily functioning, providing insights into your emotional well-being after loss.",
+    "id": "qst_icg",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 19
+    },
+    "short_title": "ICG",
+    "title": "Inventory of Complicated Grief (ICG)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/inventory-complicated-grief",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_icg_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_icg_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_icg_19@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

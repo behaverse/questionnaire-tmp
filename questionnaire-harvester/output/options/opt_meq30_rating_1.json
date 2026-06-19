@@ -1,0 +1,65 @@
+{
+  "content": {
+    "en": {
+      "label": "MEQ-30 6-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "none; not at all"
+        },
+        {
+          "index": 2,
+          "text": "so slight cannot decide"
+        },
+        {
+          "index": 3,
+          "text": "slight"
+        },
+        {
+          "index": 4,
+          "text": "moderate"
+        },
+        {
+          "index": 5,
+          "text": "strong"
+        },
+        {
+          "index": 6,
+          "text": "extreme"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_meq30_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    },
+    {
+      "index": 6,
+      "value": 5.0
+    }
+  ],
+  "selection": "single"
+}

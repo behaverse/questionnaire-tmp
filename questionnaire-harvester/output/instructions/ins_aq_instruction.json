@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "For each statement below, choose one response that best describes how strongly that statement applies to you:"
+    }
+  },
+  "id": "ins_aq_instruction"
+}

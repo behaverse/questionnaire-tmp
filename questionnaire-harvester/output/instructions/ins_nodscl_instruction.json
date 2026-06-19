@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "For each question, check YES or NO, taking care to not mark questions you are instructed to skip."
+    }
+  },
+  "id": "ins_nodscl_instruction"
+}

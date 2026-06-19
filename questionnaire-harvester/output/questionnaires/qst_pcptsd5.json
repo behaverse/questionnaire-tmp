@@ -1,0 +1,131 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5) is a 5-item screen designed to identify individuals with probable PTSD.",
+    "id": "qst_pcptsd5",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 6
+    },
+    "short_title": "DSM-5",
+    "title": "Primary Care PTSD Screen (DSM-5) (PC-PTSD-5)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/pc-ptsd-5",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_pcptsd5_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcptsd5_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_pcptsd5_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pcptsd5_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcptsd5_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_pcptsd5_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pcptsd5_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcptsd5_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_pcptsd5_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pcptsd5_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcptsd5_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_pcptsd5_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pcptsd5_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcptsd5_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_pcptsd5_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_pcptsd5_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_pcptsd5_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_pcptsd5_6@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please mark present, unclear, or absent regarding each of the following personality traits or observed behaviors."
+    }
+  },
+  "id": "ins_pcl22_instruction"
+}

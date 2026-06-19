@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "TRSI-24 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not true of me"
+        },
+        {
+          "index": 2,
+          "text": "Somewhat true of me"
+        },
+        {
+          "index": 3,
+          "text": "Mostly true of me"
+        },
+        {
+          "index": 4,
+          "text": "Completely true of me"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_trsi24_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

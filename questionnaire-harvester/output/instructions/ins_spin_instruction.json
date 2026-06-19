@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please read each statement and click in the column that indicates how much the statement applied to you over the past week."
+    }
+  },
+  "id": "ins_spin_instruction"
+}

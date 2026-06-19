@@ -1,0 +1,383 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The Trauma Related Shame Inventory (TRSI) is a self-assessment that clarifies between shame and guilt in individuals with PTSD.",
+    "id": "qst_trsi24",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 24
+    },
+    "short_title": "TRSI-24",
+    "title": "Trauma-Related Shame Inventory (TRSI-24)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/trauma-related-shame-inventory",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_trsi24_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_trsi24_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_trsi24_24@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "For each item below, please check the column which best describes how often you felt or behaved this way during the past several days."
+    }
+  },
+  "id": "ins_sas_instruction"
+}

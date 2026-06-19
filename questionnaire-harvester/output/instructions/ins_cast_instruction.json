@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please read each question carefully and select the most accurate response."
+    }
+  },
+  "id": "ins_cast_instruction"
+}

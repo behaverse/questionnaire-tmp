@@ -1,0 +1,495 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Take the EAT-26, a self-screening tool to identify possible eating disorders, including anorexia and bulimia, through a 26-item questionnaire.",
+    "id": "qst_eat26",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 32
+    },
+    "short_title": "EAT-26",
+    "title": "Eating Attitudes Test - 26 Item (EAT-26)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/eat-26",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_27@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_4@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_28@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_4@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_29@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_4@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_30@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_5@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_31@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_eat26_rating_5@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_eat26_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_eat26_32@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

@@ -1,0 +1,327 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Discover insights into your gaming and internet behaviors with our questionnaire designed to highlight aspects of potential concern.",
+    "id": "qst_egst",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 20
+    },
+    "short_title": "EGST",
+    "title": "Excessive Gaming Screening Tool (EGST)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/excessive-gaming-screening-tool",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_egst_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_egst_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_egst_20@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

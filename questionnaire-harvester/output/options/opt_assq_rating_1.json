@@ -1,0 +1,41 @@
+{
+  "content": {
+    "en": {
+      "label": "ASSQ 3-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "No"
+        },
+        {
+          "index": 2,
+          "text": "Somewhat"
+        },
+        {
+          "index": 3,
+          "text": "Yes"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_assq_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    }
+  ],
+  "selection": "single"
+}

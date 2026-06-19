@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "SAS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A Little Of The Time"
+        },
+        {
+          "index": 2,
+          "text": "Some Of The Time"
+        },
+        {
+          "index": 3,
+          "text": "Good Part Of The Time"
+        },
+        {
+          "index": 4,
+          "text": "Most Of The Time"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_sas_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 1.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}
