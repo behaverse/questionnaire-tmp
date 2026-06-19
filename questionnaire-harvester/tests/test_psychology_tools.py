@@ -140,3 +140,26 @@ def test_no_sources_section_yields_no_citation():
             f'<form>{_row("q1", "An item", OPTS3)}</form></body></html>')
     rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
     assert rq.citation == "" and rq.year is None and rq.references == []
+
+
+def test_page_range_does_not_leak_as_year():
+    """Regression: citation text '252(14): 1905-7' must not produce year=1905.
+    The <time> element carries the real year (1984); only that is trusted."""
+    li = ('<li class="source"><span class="authors">JA Ewing</span> . '
+          'Detecting Alcoholism. The CAGE Questionnaire. 252(14): 1905-7 . '
+          '<time class="publication-date" datetime="1984">1984</time> .</li>')
+    rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
+    assert rq.year == 1984, f"expected 1984, got {rq.year}"
+    assert "1905" not in str(rq.year)
+
+
+def test_no_time_element_yields_no_year_but_keeps_citation():
+    """When li.source has a page-range/copyright year in its text but no <time>,
+    year must be None. citation and references must still be populated."""
+    li = ('<li class="source"><span class="authors">JA Ewing</span> . '
+          'Detecting Alcoholism. The CAGE Questionnaire. 252(14): 1905-7 . '
+          'The Journal of the American Medical Association. 1984 .</li>')
+    rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
+    assert rq.year is None, f"expected None, got {rq.year}"
+    assert rq.citation != "", "citation must still be populated"
+    assert len(rq.references) > 0, "references must be non-empty"
