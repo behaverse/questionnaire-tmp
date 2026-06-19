@@ -1,0 +1,62 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Happiness and the term more\ncommonly used in psychology, subjective\nwellbeing , are frequently studied in the field of psychology\n(including in positive psychology )\nand related applied areas, such as social care .",
+    "id": "qst_happiness",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 1
+    },
+    "publication": {
+      "citation": "Morgan, R. (2014). The children’s happiness scale. Children’s\nRights. Documentation,\nincluding questions and scoring retrieved from this link .",
+      "year": 2014
+    },
+    "short_title": "The Children’s Happiness Scale",
+    "title": "The Children’s Happiness Scale",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psytoolkit.org",
+    "x_source_url": "https://us.psytoolkit.org/survey-library/children-happiness.html",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_happiness_rating_1@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_happiness_1@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}
