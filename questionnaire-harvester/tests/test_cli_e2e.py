@@ -171,3 +171,20 @@ def test_psychology_tools_alt_layout_harvest_validates(tmp_path, monkeypatch):
     assert len({e["option"]["ref"] for e in els}) == 1
     opt = json.loads(next((out / "options").glob("*.json")).read_text())
     assert opt["input_data_type"] == "choice" and opt["selection"] == "single"
+
+
+def test_psychology_tools_references_harvest_validates(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_sources.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-worry-scale",
+                   "--out", str(out),
+                   "--scales-index", str(tmp_path / "missing-index.json"),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    md = json.loads((out / "questionnaires" / "qst_dws.json").read_text())["metadata"]
+    assert md["publication"]["year"] == 2011
+    assert "A Demo, B Tester" in md["publication"]["citation"]
+    assert md["x_references"] == [md["publication"]["citation"]]
