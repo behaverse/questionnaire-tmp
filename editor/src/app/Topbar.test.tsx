@@ -43,3 +43,13 @@ describe('Topbar Translate toggle', () => {
     expect(useEditorStore.getState().translateView).toBe(true)
   })
 })
+
+describe('Topbar Inspector toggle', () => {
+  it('Inspector button toggles inspectorOpen (default on)', () => {
+    useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never)
+    expect(useEditorStore.getState().inspectorOpen).toBe(true)
+    render(<Topbar onValidate={() => {}} />)
+    fireEvent.click(screen.getByRole('button', { name: /^inspector$/i }))
+    expect(useEditorStore.getState().inspectorOpen).toBe(false)
+  })
+})

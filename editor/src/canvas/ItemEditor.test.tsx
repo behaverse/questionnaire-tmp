@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useEditorStore } from '../state/store'
 import { ItemEditor } from './ItemEditor'
@@ -30,6 +30,15 @@ test('shows the prompt ref chip read-only with a fork-to-edit button for Library
   expect(screen.getByRole('button', { name: /^edit$/i })).toBeInTheDocument()
 })
 
+test('shows resolved content (read-only) for a Library ref when available', () => {
+  // prompt ref is NOT in the pool (read-only), but its body is in `resolved` (from the preview).
+  useEditorStore.setState({ resolved: { 'pr_x@v26.0609': { id: 'pr_x', content: { en: { text: 'Resolved prompt text' } } } } as never })
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  expect(screen.getByText('Resolved prompt text')).toBeInTheDocument() // content shown greyed
+  expect(screen.getByText('pr_x@v26.0609')).toBeInTheDocument()        // ref still shown below
+  expect(screen.getByRole('button', { name: /^edit$/i })).toBeInTheDocument()
+})
+
 test('edits a pool prompt via the PromptEditor', async () => {
   const ref = 'pr_p@v26.0609.dev1'
   const model = {
@@ -58,6 +67,10 @@ test('Add context mints a pool context + sets question.context ref', async () =>
   useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Q' } } })
   render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
   await userEvent.click(screen.getByRole('button', { name: /add context/i }))
+  // "+ Add" opens the picker (reuse-first); "Create new context" runs the mint via onCreate.
+  const picker = useEditorStore.getState().picker
+  expect(picker?.etype).toBe('context')
+  act(() => picker!.onCreate!())
   const q = (useEditorStore.getState().model!.pages[0].elements[0] as { question: { context?: { ref: string } } }).question
   expect(q.context?.ref).toMatch(/^ctx_new_\d+@v26\.0609\.dev1$/)
   expect(useEditorStore.getState().pool[q.context!.ref]).toBeTruthy()

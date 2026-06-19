@@ -95,13 +95,17 @@ test('select an inline item → Option editor → add a choice → screenshot', 
 })
 
 test('add a new item, type a prompt, see it in the preview', async ({ page }) => {
+  // ED-I·A: "+ Add item" opens the reuse-first picker; stub the item list empty so
+  // "Create new item" is offered immediately (no live-Library dependency).
+  await page.route('**/v1/entities/item?*', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"total":0}' }))
   await page.goto('/')
   await page.getByRole('button', { name: /new questionnaire/i }).click()
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
 
-  // select page 1 in the tree, then add an item
+  // select page 1 in the tree, then add an item → picker → create new
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
   await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /create new item/i }).click()
 
   // PromptEditor appears; type a prompt. Use exact label to avoid matching the
   // "Prompt text status" select added in ED-E.
@@ -120,19 +124,27 @@ test('add a new item, type a prompt, see it in the preview', async ({ page }) =>
 })
 
 test('add a message + a context to a new item, type both, preview them', async ({ page }) => {
+  // ED-I·A: each "+ Add X" opens the reuse-first picker; stub the lists empty so
+  // "Create new X" is offered immediately.
+  for (const et of ['item', 'message', 'context']) {
+    await page.route(`**/v1/entities/${et}?*`, (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"total":0}' }))
+  }
   await page.goto('/')
   await page.getByRole('button', { name: /new questionnaire/i }).click()
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
 
-  // add a message, fill its text
+  // add a message → create new → fill its text
   await page.getByRole('button', { name: /add message/i }).click()
+  await page.getByRole('button', { name: /create new message/i }).click()
   await page.getByLabel('Message text', { exact: true }).fill('Welcome to the study')
 
-  // add an item, add a context to it, fill prompt + context
+  // add an item → create new, add a context to it → create new, fill prompt + context
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
   await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /create new item/i }).click()
   await page.getByLabel('Prompt text', { exact: true }).fill('How do you feel?')
   await page.getByRole('button', { name: /add context/i }).click()
+  await page.getByRole('button', { name: /create new context/i }).click()
   await page.getByLabel('Context text', { exact: true }).fill('Think about the past week.')
 
   // preview shows the prompt + context
@@ -166,10 +178,14 @@ test('pick a prompt from the Library into a new item', async ({ page }) => {
     })
   })
 
+  // item list empty → "+ Add item" offers "Create new item" immediately
+  await page.route('**/v1/entities/item?*', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"total":0}' }))
+
   await page.goto('/')
   await page.getByRole('button', { name: /new questionnaire/i }).click()
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
-  await page.getByRole('button', { name: /add item/i }).click() // a new item is selected
+  await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /create new item/i }).click() // a new item is selected
   await page.getByRole('button', { name: /pick prompt/i }).click() // open the picker
   await page.getByLabel(/search/i).fill('mood')
   await page.getByText('pr_lib_mood').click()
@@ -216,10 +232,13 @@ test('stale Library ref shows Upgrade → upgrading repoints it', async ({ page 
     })
   })
 
+  await page.route('**/v1/entities/item?*', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"total":0}' }))
+
   await page.goto('/')
   await page.getByRole('button', { name: /new questionnaire/i }).click()
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
   await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /create new item/i }).click()
   // pick the (v26.0609) prompt → it will be flagged stale (latest v26.0610)
   await page.getByRole('button', { name: /pick prompt/i }).click()
   await page.getByLabel(/search/i).fill('stale')
@@ -250,10 +269,13 @@ test('fork a picked Library prompt → derive locally → editable', async ({ pa
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 'pr_shared', content: { en: { status: 'validated', text: 'Shared prompt text' } } }) })
   })
 
+  await page.route('**/v1/entities/item?*', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"total":0}' }))
+
   await page.goto('/')
   await page.getByRole('button', { name: /new questionnaire/i }).click()
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
   await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /create new item/i }).click()
   await page.getByRole('button', { name: /pick prompt/i }).click()
   await page.getByLabel(/search/i).fill('shared')
   await page.getByText('pr_shared').click()

@@ -84,6 +84,10 @@ test('Add item mints a pool prompt and appends an inline item, then selects it',
   render(<Canvas />)
   const before = useEditorStore.getState().model!.pages[0].elements.length
   await userEvent.click(screen.getByRole('button', { name: /add item/i }))
+  // "+ Add item" opens the picker (reuse-first); "Create new" runs the mint via onCreate.
+  const picker = useEditorStore.getState().picker
+  expect(picker?.etype).toBe('item')
+  act(() => picker!.onCreate!())
   const st = useEditorStore.getState()
   expect(st.model!.pages[0].elements.length).toBe(before + 1)
   expect(Object.keys(st.pool).length).toBeGreaterThan(0)
@@ -96,6 +100,9 @@ test('Add message mints a pool message and appends a MessageRef element', async 
   render(<Canvas />)
   const before = useEditorStore.getState().model!.pages[0].elements.length
   await userEvent.click(screen.getByRole('button', { name: /add message/i }))
+  const picker = useEditorStore.getState().picker
+  expect(picker?.etype).toBe('message')
+  act(() => picker!.onCreate!())
   const st = useEditorStore.getState()
   expect(st.model!.pages[0].elements.length).toBe(before + 1)
   const added = st.model!.pages[0].elements[before] as { ref?: string }
@@ -103,11 +110,11 @@ test('Add message mints a pool message and appends a MessageRef element', async 
   expect(st.pool[added.ref!]).toBeTruthy()
 })
 
-test('Pick item opens the item picker; onPick inserts a saved-item ref', async () => {
+test('Add item opens the item picker; onPick inserts a saved-item ref', async () => {
   useEditorStore.getState().select(['pages', 0])
   render(<Canvas />)
   const before = useEditorStore.getState().model!.pages[0].elements.length
-  await userEvent.click(screen.getByRole('button', { name: /pick item/i }))
+  await userEvent.click(screen.getByRole('button', { name: /add item/i }))
   expect(useEditorStore.getState().picker?.etype).toBe('item')
   useEditorStore.getState().picker!.onPick('it_lib@v26.0609')
   const els = useEditorStore.getState().model!.pages[0].elements

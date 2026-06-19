@@ -73,14 +73,16 @@ export function Canvas() {
     select([...elementsPath, elements.length])
   }
 
-  const pickItem = () => openPicker('item', (ref) => {
+  // One "+ Add" per element type: opens the Library picker to reuse an existing entity,
+  // with "Create new" (the mint above) offered when nothing matches.
+  const addItemFlow = () => openPicker('item', (ref) => {
     applyEdit((m) => insertNode(m, elementsPath, elements.length, { ref }))
     select([...elementsPath, elements.length])
-  })
-  const pickMessage = () => openPicker('message', (ref) => {
+  }, addItem)
+  const addMessageFlow = () => openPicker('message', (ref) => {
     applyEdit((m) => insertNode(m, elementsPath, elements.length, { ref }))
     select([...elementsPath, elements.length])
-  })
+  }, addMessage)
 
   return (
     <div className="overflow-auto p-6">
@@ -89,10 +91,8 @@ export function Canvas() {
         <div className="ml-auto flex flex-wrap items-center gap-2">
           {(kind === 'page' || kind === 'section') && (
             <>
-              <button onClick={addItem} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add item</button>
-              <button onClick={addMessage} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add message</button>
-              <button onClick={pickItem} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">Pick item</button>
-              <button onClick={pickMessage} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">Pick message</button>
+              <button onClick={addItemFlow} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add item</button>
+              <button onClick={addMessageFlow} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add message</button>
             </>
           )}
           <button onClick={addSection} className="rounded border border-ed-border px-2 py-1 text-sm hover:bg-ed-subtle">+ Add section</button>

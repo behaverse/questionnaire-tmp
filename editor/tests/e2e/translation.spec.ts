@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test'
 
 test('translate a prompt into a second language', async ({ page }) => {
+  // ED-I·A: "+ Add item" opens the reuse-first picker; stub the item list empty so
+  // "Create new item" is offered immediately.
+  await page.route('**/v1/entities/item?*', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"total":0}' }))
   await page.goto('/')
   await page.getByRole('button', { name: /new questionnaire/i }).click()
   await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
@@ -14,6 +17,7 @@ test('translate a prompt into a second language', async ({ page }) => {
   // Add an item + author the primary (en) prompt.
   await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
   await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /create new item/i }).click()
   // Use exact label to avoid matching the "Prompt text status" select added in ED-E.
   await page.getByLabel('Prompt text', { exact: true }).fill('How are you?')
 
