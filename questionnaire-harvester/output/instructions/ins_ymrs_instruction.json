@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "The YMRS is typically administered by a third-party clinician, but it is provided here, in a slightly reworded form, as a self-assessment. This may not be as accurate when self-administered, as people suffering from mania are often unable to properly assess relevant outward symptoms."
+    }
+  },
+  "id": "ins_ymrs_instruction"
+}

@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "YMRS 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Appropriate dress and grooming"
+        },
+        {
+          "index": 2,
+          "text": "Minimally unkempt"
+        },
+        {
+          "index": 3,
+          "text": "Poorly groomed; moderately disheveled; overdressed"
+        },
+        {
+          "index": 4,
+          "text": "Disheveled; partly clothed; garish make-up"
+        },
+        {
+          "index": 5,
+          "text": "Completely unkempt; decorated; bizarre garb"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_ymrs_rating_10",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "YMRS 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "No increase"
+        },
+        {
+          "index": 2,
+          "text": "Feel talkative"
+        },
+        {
+          "index": 3,
+          "text": "Increased rate or amount at times, verbose at times"
+        },
+        {
+          "index": 4,
+          "text": "Push; consistently increased rate and amount;"
+        },
+        {
+          "index": 5,
+          "text": "Pressured; uninterruptedly, continuous speech"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_ymrs_rating_6",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 4.0
+    },
+    {
+      "index": 4,
+      "value": 6.0
+    },
+    {
+      "index": 5,
+      "value": 8.0
+    }
+  ],
+  "selection": "single"
+}

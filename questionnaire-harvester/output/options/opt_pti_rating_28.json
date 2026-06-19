@@ -1,0 +1,33 @@
+{
+  "content": {
+    "en": {
+      "label": "PTI 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "having purchased"
+        },
+        {
+          "index": 2,
+          "text": "having the option to buy"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_pti_rating_28",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

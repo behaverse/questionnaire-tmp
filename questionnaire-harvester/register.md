@@ -147,3 +147,12 @@
 | qst_sds | psychology-tools.com | high | needs-review | 3 | unknown |
 | qst_pcl22 | psychology-tools.com | high | needs-review | 2 | unknown |
 | qst_pcptsd5 | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_pswq | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_asrm | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_desii | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_itc | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_kads11 | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_madrs | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_pti | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_qchat | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_ymrs | psychology-tools.com | high | needs-review | 2 | unknown |

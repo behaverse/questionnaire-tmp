@@ -1,0 +1,73 @@
+{
+  "content": {
+    "en": {
+      "label": "MADRS 7-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "(0) No pessimistic thoughts."
+        },
+        {
+          "index": 2,
+          "text": "(1)"
+        },
+        {
+          "index": 3,
+          "text": "(2) Fluctuating ideas of failure, self-reproach or self-depreciation."
+        },
+        {
+          "index": 4,
+          "text": "(3)"
+        },
+        {
+          "index": 5,
+          "text": "(4) Persistent self-accusations, or definite but still rational ideas of guilt or sin. Increasingly pessimistic about the future."
+        },
+        {
+          "index": 6,
+          "text": "(5)"
+        },
+        {
+          "index": 7,
+          "text": "(6) Delusions of ruin, remorse and irredeemable sin. Self-accusations which are absurd and unshakable."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_madrs_rating_9",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    },
+    {
+      "index": 6,
+      "value": 5.0
+    },
+    {
+      "index": 7,
+      "value": 6.0
+    }
+  ],
+  "selection": "single"
+}

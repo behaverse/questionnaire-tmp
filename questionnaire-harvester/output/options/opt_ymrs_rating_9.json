@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "YMRS 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Absent"
+        },
+        {
+          "index": 2,
+          "text": "Sarcastic; loud at times, guarded"
+        },
+        {
+          "index": 3,
+          "text": "Demanding; threats"
+        },
+        {
+          "index": 4,
+          "text": "Threats, shouting"
+        },
+        {
+          "index": 5,
+          "text": "Assaultive; destructive"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_ymrs_rating_9",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 4.0
+    },
+    {
+      "index": 4,
+      "value": 6.0
+    },
+    {
+      "index": 5,
+      "value": 8.0
+    }
+  ],
+  "selection": "single"
+}

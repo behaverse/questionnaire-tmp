@@ -1,0 +1,33 @@
+{
+  "content": {
+    "en": {
+      "label": "PTI 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "the orderly"
+        },
+        {
+          "index": 2,
+          "text": "whatever turns up"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_pti_rating_42",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "Q-CHAT 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Very typical"
+        },
+        {
+          "index": 2,
+          "text": "Quite typical"
+        },
+        {
+          "index": 3,
+          "text": "Slightly unusual"
+        },
+        {
+          "index": 4,
+          "text": "Very unusual"
+        },
+        {
+          "index": 5,
+          "text": "My child doesn’t speak"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_qchat_rating_9",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

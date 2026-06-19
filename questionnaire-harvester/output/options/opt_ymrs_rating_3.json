@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "YMRS 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Normal; not increased"
+        },
+        {
+          "index": 2,
+          "text": "Mildly or possibly increased"
+        },
+        {
+          "index": 3,
+          "text": "Definite subjective increase"
+        },
+        {
+          "index": 4,
+          "text": "Spontaneous sexual content; elaborates on sexual matters; hypersexual"
+        },
+        {
+          "index": 5,
+          "text": "Overt sexual acts"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_ymrs_rating_3",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

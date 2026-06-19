@@ -1,0 +1,73 @@
+{
+  "content": {
+    "en": {
+      "label": "MADRS 7-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "(0) Sleeps as usual."
+        },
+        {
+          "index": 2,
+          "text": "(1)"
+        },
+        {
+          "index": 3,
+          "text": "(2) Slight difficulty dropping off to sleep or slightly reduced, light or fitful sleep."
+        },
+        {
+          "index": 4,
+          "text": "(3)"
+        },
+        {
+          "index": 5,
+          "text": "(4) Sleep reduced or broken by at least two hours."
+        },
+        {
+          "index": 6,
+          "text": "(5)"
+        },
+        {
+          "index": 7,
+          "text": "(6) Less than two or three hours sleep."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_madrs_rating_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    },
+    {
+      "index": 6,
+      "value": 5.0
+    },
+    {
+      "index": 7,
+      "value": 6.0
+    }
+  ],
+  "selection": "single"
+}

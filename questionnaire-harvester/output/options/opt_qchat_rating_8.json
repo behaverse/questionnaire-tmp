@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "Q-CHAT 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Many times a day"
+        },
+        {
+          "index": 2,
+          "text": "A few times a day"
+        },
+        {
+          "index": 3,
+          "text": "A few times a week"
+        },
+        {
+          "index": 4,
+          "text": "Less than once a week"
+        },
+        {
+          "index": 5,
+          "text": "Never"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_qchat_rating_8",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 4.0
+    },
+    {
+      "index": 2,
+      "value": 3.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 1.0
+    },
+    {
+      "index": 5,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,439 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The Dissociative Experiences Scale (DES-II) is a screening tool for dissociative disorders, trauma, and PTSD.",
+    "id": "qst_desii",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 28
+    },
+    "short_title": "DES-II",
+    "title": "Dissociative Experiences Scale (DES-II)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/dissociative-experiences-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_27@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_desii_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_desii_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_desii_28@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

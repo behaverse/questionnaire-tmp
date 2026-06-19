@@ -1,0 +1,105 @@
+{
+  "content": {
+    "en": {
+      "label": "DES-II 11-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "0%"
+        },
+        {
+          "index": 2,
+          "text": "10%"
+        },
+        {
+          "index": 3,
+          "text": "20%"
+        },
+        {
+          "index": 4,
+          "text": "30%"
+        },
+        {
+          "index": 5,
+          "text": "40%"
+        },
+        {
+          "index": 6,
+          "text": "50%"
+        },
+        {
+          "index": 7,
+          "text": "60%"
+        },
+        {
+          "index": 8,
+          "text": "70%"
+        },
+        {
+          "index": 9,
+          "text": "80%"
+        },
+        {
+          "index": 10,
+          "text": "90%"
+        },
+        {
+          "index": 11,
+          "text": "100%"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_desii_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    },
+    {
+      "index": 6,
+      "value": 5.0
+    },
+    {
+      "index": 7,
+      "value": 6.0
+    },
+    {
+      "index": 8,
+      "value": 7.0
+    },
+    {
+      "index": 9,
+      "value": 8.0
+    },
+    {
+      "index": 10,
+      "value": 9.0
+    },
+    {
+      "index": 11,
+      "value": 10.0
+    }
+  ],
+  "selection": "single"
+}

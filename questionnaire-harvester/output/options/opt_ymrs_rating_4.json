@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "YMRS 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "No decrease in sleep"
+        },
+        {
+          "index": 2,
+          "text": "Sleeping less than normal amount by up to one hour"
+        },
+        {
+          "index": 3,
+          "text": "Sleeping less than normal by more than one hour"
+        },
+        {
+          "index": 4,
+          "text": "Decreased need for sleep"
+        },
+        {
+          "index": 5,
+          "text": "No need for sleep at all"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_ymrs_rating_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}

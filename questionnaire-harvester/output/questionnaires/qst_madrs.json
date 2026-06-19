@@ -1,0 +1,187 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Take the MADRS test to evaluate depression severity, based on well-researched criteria focusing on mood, thoughts, and physical symptoms.",
+    "id": "qst_madrs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 10
+    },
+    "short_title": "MADRS",
+    "title": "Montgomery-Asberg Depression Rating Scale (MADRS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/montgomery-asberg-depression-rating-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_madrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_3@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_4@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_5@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_6@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_7@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_8@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_9@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_madrs_rating_10@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_madrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_madrs_10@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

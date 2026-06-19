@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "KADS-11 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "hardly ever"
+        },
+        {
+          "index": 2,
+          "text": "much of the time"
+        },
+        {
+          "index": 3,
+          "text": "most of the time"
+        },
+        {
+          "index": 4,
+          "text": "all the time"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_kads11_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

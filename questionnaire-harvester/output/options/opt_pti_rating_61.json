@@ -1,0 +1,33 @@
+{
+  "content": {
+    "en": {
+      "label": "PTI 2-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "hard-headed"
+        },
+        {
+          "index": 2,
+          "text": "soft-hearted"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_pti_rating_61",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

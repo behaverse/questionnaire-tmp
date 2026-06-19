@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Please note : This test is typically administered by a third-party clinician, but it is provided here informational purposes. This test may not be as accurate when self-administered, as it relies on a somewhat objective assessment."
+    }
+  },
+  "id": "ins_madrs_instruction"
+}

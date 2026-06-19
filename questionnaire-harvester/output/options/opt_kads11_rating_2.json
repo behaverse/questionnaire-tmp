@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "KADS-11 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "no thoughts or plans or actions"
+        },
+        {
+          "index": 2,
+          "text": "occasional thoughts, no plans or actions"
+        },
+        {
+          "index": 3,
+          "text": "frequent thoughts, no plans or actions"
+        },
+        {
+          "index": 4,
+          "text": "plans and/or actions that have hurt"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_kads11_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

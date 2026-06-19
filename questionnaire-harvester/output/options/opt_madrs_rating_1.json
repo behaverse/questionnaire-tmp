@@ -1,0 +1,73 @@
+{
+  "content": {
+    "en": {
+      "label": "MADRS 7-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "(0) No sadness."
+        },
+        {
+          "index": 2,
+          "text": "(1)"
+        },
+        {
+          "index": 3,
+          "text": "(2) Looks dispirited but does brighten up without difficulty."
+        },
+        {
+          "index": 4,
+          "text": "(3)"
+        },
+        {
+          "index": 5,
+          "text": "(4) Appears sad and unhappy most of the time."
+        },
+        {
+          "index": 6,
+          "text": "(5)"
+        },
+        {
+          "index": 7,
+          "text": "(6) Looks miserable all the time. Extremely despondent."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_madrs_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    },
+    {
+      "index": 6,
+      "value": 5.0
+    },
+    {
+      "index": 7,
+      "value": 6.0
+    }
+  ],
+  "selection": "single"
+}

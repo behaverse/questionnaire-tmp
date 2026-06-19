@@ -1,0 +1,41 @@
+{
+  "content": {
+    "en": {
+      "label": "ITC 3-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not Yet"
+        },
+        {
+          "index": 2,
+          "text": "Sometimes"
+        },
+        {
+          "index": 3,
+          "text": "Often"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_itc_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    }
+  ],
+  "selection": "single"
+}

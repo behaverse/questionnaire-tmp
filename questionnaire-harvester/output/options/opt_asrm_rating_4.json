@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "ASRM 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I do not talk more than usual."
+        },
+        {
+          "index": 2,
+          "text": "I occasionally talk more than usual."
+        },
+        {
+          "index": 3,
+          "text": "I often talk more than usual."
+        },
+        {
+          "index": 4,
+          "text": "I frequently talk more than usual."
+        },
+        {
+          "index": 5,
+          "text": "I talk constantly and cannot be interrupted."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_asrm_rating_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    },
+    {
+      "index": 5,
+      "value": 4.0
+    }
+  ],
+  "selection": "single"
+}
