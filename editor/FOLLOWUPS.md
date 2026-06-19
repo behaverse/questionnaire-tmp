@@ -687,3 +687,13 @@ ED-H4 re-tokened the ~174 `slate-*` in CRUD editors/dialogs/pickers/preview/misc
 - ed-h4-1: `LanguagesField` "primary" language pill uses `bg-ed-subtle` (the mapping table said `bg-ed-accent-soft` for selected/active fills) — it's a static neutral badge, not a selection, so ed-subtle is intentional; revisit if an accent-tinted active-language chip is wanted.
 - ed-h4-2: `TranslationPanel` `(empty)` placeholder uses `text-ed-muted/50` (opacity variant) rather than flat `text-ed-muted` — intentional for a lighter placeholder; documented divergence.
 (ed-h3-5 LibraryPicker selected==hover regression was FOUND + FIXED in H4 → `bg-ed-accent-soft`.)
+
+## ED-J1 (auto-translate) — deferred (final-review triage, 2026-06-18)
+ED-J1 added machine auto-translate: a serverless proxy `editor/api/translate` → Claude via the Vercel AI Gateway (`anthropic/claude-haiku-4-5`, key server-side), `translateClient.translateText`, and per-row + bulk "Auto" in the Translate panel (machine output written at status `draft`). Deferred minors:
+- ed-j1-1: `ai` is in `dependencies` (fine — `api/` is excluded from the SPA build/typecheck so it isn't bundled); could move to a server-only grouping or comment.
+- ed-j1-2: `target!` non-null assertion in `autoRow` (safe under the `if (!target) return` guard above; a local `const tgt = target` would be cleaner).
+- ed-j1-3: the bulk "Auto-translate untranslated" button has no busy/disable guard — rapid re-clicks can launch overlapping batches.
+- ed-j1-4: machine status is set per group/kind (`onEditStatus(g,'draft')`), not strictly per-row — pre-existing behavior of the manual path.
+- ed-j1-5: the proxy length cap is 5000 JS chars (sanity cap, not a token/cost guarantee).
+- ed-j1-6: `translateClient` has no request timeout/AbortController — a hung function leaves the row spinner until a network failure; an abort timeout would harden the degradation story.
+- **Deploy note:** real auto-translate needs `AI_GATEWAY_API_KEY` (or Vercel OIDC) set on the editor's deployment; the editor is currently undeployed (it becomes static SPA + 1 function). Without it, auto fails gracefully inline and manual editing is unaffected.
