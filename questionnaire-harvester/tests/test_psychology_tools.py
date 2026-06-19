@@ -298,3 +298,39 @@ def test_standard_page_unaffected_by_dimension_branch():
     rq = PsychologyToolsAdapter().parse(_page(_row("q1", "I feel tense", OPTS3)),
                                         "https://psychology-tools.com/test/x")
     assert len(rq.items) == 1 and rq.items[0].text == "I feel tense"
+
+
+def test_dimension_table_anchor_span_split_and_br_small():
+    """Faithfulness regression: the site splits 'Moderate' across two sibling spans
+    for word-break CSS (<span>Mode</span><span>rate</span>), and Avoidance anchors
+    use <br> before a <small>(0%)</small>.  The parser must yield 'Moderate' (not
+    'Mode rate') and 'Never (0%)' (not 'Never(0%)')."""
+    # Fear anchors: "None", "Mild", span-split "Moderate", "Severe"
+    # Avoidance anchors: "Never<br/><small>(0%)</small>", "Occasionally<br/><small>(10%)</small>",
+    #                    "Often<br/><small>(50%)</small>", "Usually<br/><small>(90%)</small>"
+    fear_anchors = [
+        "None",
+        "Mild",
+        "<span>Mode</span><span>rate</span>",
+        "Severe",
+    ]
+    avoid_anchors = [
+        "Never<br/><small>(0%)</small>",
+        "Occasionally<br/><small>(10%)</small>",
+        "Often<br/><small>(50%)</small>",
+        "Usually<br/><small>(90%)</small>",
+    ]
+    dims = [("Fear", 4), ("Avoidance", 4)]
+    anchor_groups = [fear_anchors, avoid_anchors]
+    rows_data = [("Telephoning", [0, 1, 2, 3, 0, 1, 2, 3])]
+    html = _dim_table(dims, anchor_groups, rows_data)
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    fear_item = next(i for i in rq.items if i.option.dimension == "fear")
+    avoid_item = next(i for i in rq.items if i.option.dimension == "avoidance")
+    # "Mode rate" (with spurious space) must NOT appear; "Moderate" must
+    assert fear_item.option.anchors == ["None", "Mild", "Moderate", "Severe"], \
+        f"Fear anchors wrong: {fear_item.option.anchors}"
+    # <br> before <small> must become a space, not be dropped
+    assert avoid_item.option.anchors == [
+        "Never (0%)", "Occasionally (10%)", "Often (50%)", "Usually (90%)"
+    ], f"Avoidance anchors wrong: {avoid_item.option.anchors}"

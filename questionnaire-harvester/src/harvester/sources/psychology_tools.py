@@ -49,6 +49,16 @@ def _cell_pair(cell):
         raise PsychologyToolsParseError(f"non-numeric radio value {v!r}")
 
 
+def _cell_text(node) -> str:
+    """Flatten a table cell/header to faithful text. The site splits some words across
+    sibling spans for word-break CSS (e.g. 'Mode'+'rate' -> 'Moderate'), so element
+    boundaries join with NO separator; a <br> becomes a space (e.g. 'Never (0%)'); then
+    whitespace is collapsed."""
+    for br in node.find_all("br"):
+        br.replace_with(" ")
+    return re.sub(r"\s+", " ", node.get_text("")).strip()
+
+
 def _sanitize_dimension(label: str) -> str:
     """A column super-header label -> a schema-valid Option.dimension key
     (pattern ^[a-z][a-z0-9_]+$). 'Fear'->'fear', 'Avoidance'->'avoidance'. Refuses if the
@@ -102,9 +112,9 @@ def _extract_dimension_table(table):
             raise PsychologyToolsParseError(f"bad colspan {th.get('colspan')!r}")
         if span < 1:
             raise PsychologyToolsParseError("colspan < 1")
-        dims.append((_sanitize_dimension(th.get_text(" ", strip=True)), span))
+        dims.append((_sanitize_dimension(_cell_text(th)), span))
     total = sum(span for _, span in dims)
-    anchors_flat = [th.get_text(" ", strip=True) for th in rows[1].find_all("th")]
+    anchors_flat = [_cell_text(th) for th in rows[1].find_all("th")]
     if len(anchors_flat) != total:
         raise PsychologyToolsParseError(
             f"anchor count {len(anchors_flat)} != colspan total {total}")
@@ -123,7 +133,7 @@ def _extract_dimension_table(table):
                 f"data row has {len(radio_cells)} radio cells != {total}")
         stem_cell = next((c for c in cells if not c.find("input", attrs={"type": "radio"})), None)
         stem = re.sub(r"^\s*\d+[.)]\s*", "",
-                      stem_cell.get_text(" ", strip=True)) if stem_cell else ""
+                      _cell_text(stem_cell)) if stem_cell else ""
         if not stem:
             raise PsychologyToolsParseError("dimension-table row has an empty stem")
         values = [_radio_value(c) for c in radio_cells]
