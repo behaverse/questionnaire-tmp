@@ -43,7 +43,7 @@ The drafter's per-item path (`_resolve_option(per_item=True)`) already mints per
 - all 24 Avoidance ratings → **one** `opt_<slug>_avoidance_*`;
 - Fear vs Avoidance differ in anchors → kept as **2 distinct Options**.
 
-Result for Liebowitz: **48 page elements, ~24 prompts (stems), 2 Options**, `qst_lsas`. Page Instructions → Instruction entity, Sources → `publication`/`x_references` (existing extraction, unchanged).
+Result for Liebowitz: **48 page elements, 48 prompts, 2 Options**, `qst_lsas`. The per-item path mints one prompt per element (`pr_<slug>_<i>`) and does **not** dedup prompt text, so each item's stem appears on the item's two prompts (24 same-text pairs). That redundancy is schema-valid and faithful; collapsing it would need a drafter change (out of scope). Page Instructions → Instruction entity, Sources → `publication`/`x_references` (existing extraction, unchanged).
 
 **Documented limitation:** because `dimension` is not in the choice fingerprint, two dimensions with *identical* anchor sets would dedup into one Option (losing the dimension distinction). Moot for Liebowitz (Fear and Avoidance anchors differ). If a future two-dimension table has identical per-dimension anchors, revisit the fingerprint; out of scope here.
 
