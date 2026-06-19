@@ -143,7 +143,8 @@ export function TranslationPanel() {
   }
 
   const autoAllUntranslated = async () => {
-    const pending = groups.flatMap((g) => g.rows.filter((r) => !r.done).map((r) => ({ g, r })))
+    // only the visible (kind-filtered) untranslated rows, matching the panel's current view
+    const pending = visibleGroups.flatMap((g) => g.rows.filter((r) => !r.done).map((r) => ({ g, r })))
     await mapLimit(pending, 4, ({ g, r }) => autoRow(g, r))
   }
 
