@@ -2,18 +2,24 @@ import { useMemo, useState } from 'react'
 import { useEditorStore } from '../state/store'
 import { collectTranslatable } from './collect'
 import { applyTranslation, applyStatus, forkedRef } from './apply'
+import { setAvailableLanguages } from '../model/tree'
 import type { TransKind, TransRow } from './types'
 import type { EntityBody } from '../model/types'
 import type { NodePath } from '../model/path'
 
 const STATUSES = ['draft', 'complete', 'validated']
+const LOCALE_RE = /^[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?$/
 
 export function TranslationPanel() {
   const model = useEditorStore((s) => s.model)
   const pool = useEditorStore((s) => s.pool)
   const resolved = useEditorStore((s) => s.resolved)
   const editingLocale = useEditorStore((s) => s.editingLocale)
+  const setEditingLocale = useEditorStore((s) => s.setEditingLocale)
+  const applyEdit = useEditorStore((s) => s.applyEdit)
   const [untranslatedOnly, setUntranslatedOnly] = useState(false)
+  const [kindFilter, setKindFilter] = useState('all')
+  const [newLang, setNewLang] = useState('')
 
   const primary = model ? String(model.metadata.language ?? 'en') : 'en'
   const target = editingLocale && editingLocale !== primary ? editingLocale : null
@@ -25,15 +31,54 @@ export function TranslationPanel() {
 
   if (!model) return null
 
+  // No target language chosen yet — guide the user instead of stranding them: let them
+  // pick an existing non-primary language or add a new one (and start translating into it).
   if (!target) {
+    const existing = ((model.metadata.available_languages ?? []) as string[]).filter((l) => l !== primary)
+    const code = newLang.trim()
+    const invalid = code.length > 0 && !LOCALE_RE.test(code)
+    const addAndTranslate = () => {
+      if (!LOCALE_RE.test(code) || code === primary) return
+      if (!existing.includes(code)) applyEdit((m) => setAvailableLanguages(m, [...existing, code]))
+      setEditingLocale(code)
+      setNewLang('')
+    }
     return (
-      <div className="p-8 text-sm text-ed-muted">
-        Pick a non-primary editing language in the top bar to translate.
+      <div className="mx-auto max-w-xl p-8">
+        <h2 className="text-lg font-semibold text-ed-text">Translate this questionnaire</h2>
+        <p className="mt-2 text-sm text-ed-muted">
+          The primary language is <span className="font-mono">{primary}</span>. Pick a target language to
+          translate into — translations are stored alongside the original and reused everywhere the entity appears.
+        </p>
+        {existing.length > 0 && (
+          <div className="mt-4">
+            <div className="text-xs font-medium text-ed-muted">Translate into an existing language</div>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {existing.map((l) => (
+                <button key={l} onClick={() => setEditingLocale(l)}
+                        className="rounded-md border border-ed-border-strong px-3 py-1 text-sm hover:bg-ed-subtle">{l}</button>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="mt-4">
+          <div className="text-xs font-medium text-ed-muted">{existing.length > 0 ? 'Or add a new language' : 'Add a language to translate into'}</div>
+          <div className="mt-1 flex items-center gap-2">
+            <input aria-label="New language code" value={newLang} onChange={(e) => setNewLang(e.target.value)} placeholder="e.g. fr"
+                   onKeyDown={(e) => { if (e.key === 'Enter') addAndTranslate() }}
+                   className="w-28 rounded border border-ed-border-strong px-2 py-1 text-sm" />
+            <button onClick={addAndTranslate} disabled={!code || invalid}
+                    className="rounded-md bg-ed-accent px-3 py-1 text-sm text-white disabled:opacity-40">Add &amp; translate</button>
+          </div>
+          {invalid && <p className="mt-1 text-[11px] text-red-600">Invalid locale code (e.g. fr, pt-BR).</p>}
+        </div>
       </div>
     )
   }
 
-  const allRows = groups.flatMap((g) => g.rows)
+  const kinds = [...new Set(groups.map((g) => g.kind))]
+  const visibleGroups = kindFilter === 'all' ? groups : groups.filter((g) => g.kind === kindFilter)
+  const allRows = visibleGroups.flatMap((g) => g.rows)
   const doneCount = allRows.filter((r) => r.done).length
 
   // ensure a pool copy of `ref` exists (fork if needed) → returns the pool key, else null
@@ -80,6 +125,16 @@ export function TranslationPanel() {
       <div className="flex items-center gap-3 border-b border-ed-border bg-ed-panel px-4 py-2 text-sm">
         <span className="font-semibold">Translate → {target}</span>
         <span className="text-ed-muted">{doneCount} / {allRows.length} translated</span>
+        {kinds.length > 1 && (
+          <label className="flex items-center gap-1 text-xs text-ed-muted">
+            Type
+            <select aria-label="Filter by element type" value={kindFilter} onChange={(e) => setKindFilter(e.target.value)}
+                    className="rounded border border-ed-border-strong px-1 py-0.5 text-xs">
+              <option value="all">all</option>
+              {kinds.map((k) => <option key={k} value={k}>{k}</option>)}
+            </select>
+          </label>
+        )}
         <label className="ml-auto flex items-center gap-1 text-xs text-ed-muted">
           <input type="checkbox" checked={untranslatedOnly} onChange={(e) => setUntranslatedOnly(e.target.checked)} /> show untranslated only
         </label>
@@ -88,7 +143,7 @@ export function TranslationPanel() {
         Editing a translation makes a local editable copy of Library content (shared options are copied once).
       </div>
       <div className="flex-1 overflow-auto p-4">
-        {groups.map((g) => {
+        {visibleGroups.map((g) => {
           const rows = untranslatedOnly ? g.rows.filter((r) => !r.done) : g.rows
           if (!rows.length) return null
           return (
@@ -112,7 +167,7 @@ export function TranslationPanel() {
             </div>
           )
         })}
-        {!groups.length && <div className="text-sm text-ed-muted">No translatable content found.</div>}
+        {!visibleGroups.length && <div className="text-sm text-ed-muted">No translatable content found.</div>}
       </div>
     </div>
   )

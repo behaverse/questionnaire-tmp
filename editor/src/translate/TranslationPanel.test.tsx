@@ -31,6 +31,22 @@ describe('TranslationPanel', () => {
   it('shows an empty-state when the editing language is the primary', () => {
     useEditorStore.getState().setEditingLocale('en')
     render(<TranslationPanel />)
-    expect(screen.getByText(/pick a non-primary editing language/i)).toBeInTheDocument()
+    expect(screen.getByText(/translate this questionnaire/i)).toBeInTheDocument()
+  })
+
+  it('empty-state lets you pick an existing target language', () => {
+    useEditorStore.getState().setEditingLocale('en')
+    render(<TranslationPanel />)
+    fireEvent.click(screen.getByRole('button', { name: 'fr' })) // existing available language
+    expect(useEditorStore.getState().editingLocale).toBe('fr')
+  })
+
+  it('empty-state adds a new language and starts translating into it', () => {
+    useEditorStore.getState().setEditingLocale('en')
+    render(<TranslationPanel />)
+    fireEvent.change(screen.getByLabelText('New language code'), { target: { value: 'de' } })
+    fireEvent.click(screen.getByRole('button', { name: /add & translate/i }))
+    expect(useEditorStore.getState().editingLocale).toBe('de')
+    expect((useEditorStore.getState().model!.metadata.available_languages as string[])).toContain('de')
   })
 })

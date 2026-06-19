@@ -15,6 +15,7 @@ import { bisbasSample } from '../samples/sample'
 
 export function App() {
   const { model, loadModel, validation, translateView } = useEditorStore()
+  const setTranslateView = useEditorStore((s) => s.setTranslateView)
   const refreshStaleness = useEditorStore((s) => s.refreshStaleness)
   const pool = useEditorStore((s) => s.pool)
   const picker = useEditorStore((s) => s.picker)
@@ -24,6 +25,7 @@ export function App() {
   const [error, setError] = useState<string | null>(null)
   const [booting, setBooting] = useState(true)
   const [browsing, setBrowsing] = useState(false)
+  const [translateOnLoad, setTranslateOnLoad] = useState(false)
 
   // restore autosaved draft on boot
   useEffect(() => {
@@ -57,7 +59,8 @@ export function App() {
             catch (e) { setError(String(e)) }
           }}
           onLoadSample={() => { loadModel(bisbasSample.questionnaire, { kind: 'sample', id: 'qst_x_bisbas' }, bisbasSample.entities); void refreshStaleness() }}
-          onBrowseLibrary={() => setBrowsing(true)}
+          onBrowseLibrary={() => { setTranslateOnLoad(false); setBrowsing(true) }}
+          onTranslate={() => { setTranslateOnLoad(true); setBrowsing(true) }}
         />
         {browsing && (
           <LibraryQuestionnairePicker
@@ -69,6 +72,7 @@ export function App() {
                 const v = version || (await latestVersion('questionnaire', id)) || version
                 loadModel(await fetchFromLibrary(id, v), { kind: 'library', id, version: v })
                 void refreshStaleness()
+                if (translateOnLoad) { setTranslateView(true); setTranslateOnLoad(false) }
               } catch (e) { setError(String(e)) }
             }}
           />

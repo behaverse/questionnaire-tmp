@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Sparkles, FilePlus2, Upload, Library } from 'lucide-react'
+import { Sparkles, FilePlus2, Upload, Library, Languages } from 'lucide-react'
 import { Button } from '../ui/Button'
 
 interface Props {
@@ -8,9 +8,10 @@ interface Props {
   onOpenLibrary: (id: string, version: string) => void
   onLoadSample: () => void
   onBrowseLibrary: () => void
+  onTranslate: () => void
 }
 
-export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary }: Props) {
+export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary, onTranslate }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [id, setId] = useState('')
   const [version, setVersion] = useState('')
@@ -38,6 +39,17 @@ export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, on
             New questionnaire
           </div>
           <div className="text-sm text-ed-muted">Start from an empty scaffold</div>
+        </button>
+
+        <button
+          onClick={onTranslate}
+          className="rounded-lg border border-ed-border p-4 text-left hover:bg-ed-subtle"
+        >
+          <div className="flex items-center gap-2 font-medium">
+            <Languages size={16} aria-hidden="true" className="text-ed-muted" />
+            Translate a questionnaire
+          </div>
+          <div className="text-sm text-ed-muted">Pick one from the Library and open it in the side-by-side translation view</div>
         </button>
 
         <label className="cursor-pointer rounded-lg border border-ed-border p-4 hover:bg-ed-subtle">
