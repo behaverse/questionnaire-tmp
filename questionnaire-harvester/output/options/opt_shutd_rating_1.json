@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "SHUT-D 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not at all"
+        },
+        {
+          "index": 2,
+          "text": "once a week or less"
+        },
+        {
+          "index": 3,
+          "text": "2-4 time a week"
+        },
+        {
+          "index": 4,
+          "text": "5 or more times a week"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_shutd_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

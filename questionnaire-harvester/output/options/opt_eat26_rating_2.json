@@ -1,0 +1,65 @@
+{
+  "content": {
+    "en": {
+      "label": "EAT-26 6-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Always"
+        },
+        {
+          "index": 2,
+          "text": "Usually"
+        },
+        {
+          "index": 3,
+          "text": "Often"
+        },
+        {
+          "index": 4,
+          "text": "Sometimes"
+        },
+        {
+          "index": 5,
+          "text": "Rarely"
+        },
+        {
+          "index": 6,
+          "text": "Never"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_eat26_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    },
+    {
+      "index": 3,
+      "value": 0.0
+    },
+    {
+      "index": 4,
+      "value": 1.0
+    },
+    {
+      "index": 5,
+      "value": 2.0
+    },
+    {
+      "index": 6,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

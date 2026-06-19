@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "To complete the test, answer each question by placing a check next to the appropriate yes/no column."
+    }
+  },
+  "id": "ins_sast_instruction"
+}

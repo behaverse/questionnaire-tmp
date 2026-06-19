@@ -1,0 +1,425 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The ASSQ provides an early screening tool for Asperger Syndrome and high-functioning autism in school-aged children and young adults.",
+    "id": "qst_assq",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 27
+    },
+    "short_title": "ASSQ",
+    "title": "Autism Spectrum Screening Questionnaire (ASSQ)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/autism-spectrum-screening-questionnaire",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_assq_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_assq_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_assq_27@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

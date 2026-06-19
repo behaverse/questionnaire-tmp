@@ -1,0 +1,817 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Explore ADHD and associated behavioral issues in children with the VADRS, a detailed rating scale focusing on attention, hyperactivity, and conduct.",
+    "id": "qst_vadrs",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 55
+    },
+    "short_title": "VADRS",
+    "title": "Vanderbilt ADHD Diagnostic Rating Scale (VADRS)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/vadrs-vanderbilt-adhd-diagnostic-rating-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_4@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_5@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_6@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_7@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_8@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_9@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_10@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_11@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_12@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_13@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_14@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_15@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_16@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_17@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_18@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_19@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_20@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_21@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_22@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_23@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_24@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_25@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_26@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_27@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_28@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_29@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_30@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_31@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_32@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_33@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_34@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_35@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_36@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_37@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_38@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_39@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_40@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_41@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_42@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_43@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_44@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_45@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_46@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_47@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_48@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_49@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_50@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_51@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_52@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_53@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_54@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_vadrs_rating_2@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_vadrs_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_vadrs_55@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

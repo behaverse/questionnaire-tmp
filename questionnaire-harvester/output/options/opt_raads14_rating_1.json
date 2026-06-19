@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "RAADS-14 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "True Now & When I was Young"
+        },
+        {
+          "index": 2,
+          "text": "True Only Now"
+        },
+        {
+          "index": 3,
+          "text": "True When I Was Young"
+        },
+        {
+          "index": 4,
+          "text": "Never True"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_raads14_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 3.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 1.0
+    },
+    {
+      "index": 4,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

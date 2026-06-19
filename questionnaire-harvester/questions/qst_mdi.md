@@ -10,3 +10,6 @@ Answer inline under each item (replace the `> answer:` line).
 ### 2. No citation captured for **Major Depression Inventory (MDI)** — supply the source publication?
 > answer: 
 
+### 3. Confirm reuse of shared entity `ins_mdi_instruction` for **Major Depression Inventory (MDI)** (vs. minting a new one)?
+> answer: 
+

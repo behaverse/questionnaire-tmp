@@ -1,0 +1,9 @@
+{
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Below is a list of statements. Please read each statement carefully and rate how frequently you feel or act in the manner described. Circle your answer on the response form. There are no right or wrong answers or trick questions. Please answer each question as honestly as you can."
+    }
+  },
+  "id": "ins_teq_instruction"
+}

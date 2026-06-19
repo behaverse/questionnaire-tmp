@@ -1,0 +1,103 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "Evaluate your relationship with alcohol using the CAGE Questionnaire, offering a quick, reliable screening for alcohol-related issues.",
+    "id": "qst_cage",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 4
+    },
+    "short_title": "CAGE",
+    "title": "CAGE Alcohol Questionnaire (CAGE)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/cage-alcohol-questionnaire",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_cage_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cage_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cage_1@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cage_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cage_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cage_2@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cage_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cage_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cage_3@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_cage_rating_1@v26.0618"
+          },
+          "question": {
+            "instruction": {
+              "ref": "ins_cage_instruction@v26.0618"
+            },
+            "prompt": {
+              "ref": "pr_cage_4@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}
