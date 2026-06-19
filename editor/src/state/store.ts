@@ -30,7 +30,7 @@ interface EditorState {
    *  read content (e.g. for the untranslated indicator) for refs that aren't in the local pool. */
   resolved: Record<string, EntityBody | null>
   setResolved: (m: Record<string, EntityBody | null>) => void
-  picker: { etype: string; onPick: (ref: string) => void } | null
+  picker: { etype: string; onPick: (ref: string) => void; onCreate?: () => void } | null
   staleness: Record<string, string>
   fork: { ref: string } | null
   editingLocale: string | null
@@ -44,7 +44,7 @@ interface EditorState {
   toggleExpanded: (key: string) => void
   markSaved: () => void
   togglePreview: () => void
-  openPicker: (etype: string, onPick: (ref: string) => void) => void
+  openPicker: (etype: string, onPick: (ref: string) => void, onCreate?: () => void) => void
   closePicker: () => void
   refreshStaleness: (latestFn?: LatestFn) => Promise<void>
   upgradeRefAction: (oldRef: string, newRef: string) => void
@@ -100,7 +100,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   toggleExpanded: (key) => set((s) => ({ expanded: { ...s.expanded, [key]: !s.expanded[key] } })),
   markSaved: () => set({ dirty: false }),
   togglePreview: () => set((s) => ({ previewOpen: !s.previewOpen })),
-  openPicker: (etype, onPick) => set({ picker: { etype, onPick } }),
+  openPicker: (etype, onPick, onCreate) => set({ picker: { etype, onPick, onCreate } }),
   closePicker: () => set({ picker: null }),
   refreshStaleness: async (latestFn) => {
     const { model, pool } = get()

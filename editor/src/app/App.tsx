@@ -88,7 +88,8 @@ export function App() {
       {translateView ? <TranslationPanel /> : <EditorWorkspace />}
       {picker && model && (
         <LibraryPicker etype={picker.etype} locale={String(model.metadata.language ?? 'en')}
-                       onPick={(ref) => { picker.onPick(ref); closePicker() }} onClose={closePicker} />
+                       onPick={(ref) => { picker.onPick(ref); closePicker() }} onClose={closePicker}
+                       onCreate={picker.onCreate ? () => { picker.onCreate!(); closePicker() } : undefined} />
       )}
       {fork && <ForkDialog refStr={fork.ref} onClose={closeFork} />}
     </div>

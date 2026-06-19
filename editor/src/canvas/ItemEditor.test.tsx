@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useEditorStore } from '../state/store'
 import { ItemEditor } from './ItemEditor'
@@ -67,6 +67,10 @@ test('Add context mints a pool context + sets question.context ref', async () =>
   useEditorStore.getState().upsertPoolEntity(ref, { id: 'pr_p', content: { en: { status: 'draft', text: 'Q' } } })
   render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
   await userEvent.click(screen.getByRole('button', { name: /add context/i }))
+  // "+ Add" opens the picker (reuse-first); "Create new context" runs the mint via onCreate.
+  const picker = useEditorStore.getState().picker
+  expect(picker?.etype).toBe('context')
+  act(() => picker!.onCreate!())
   const q = (useEditorStore.getState().model!.pages[0].elements[0] as { question: { context?: { ref: string } } }).question
   expect(q.context?.ref).toMatch(/^ctx_new_\d+@v26\.0609\.dev1$/)
   expect(useEditorStore.getState().pool[q.context!.ref]).toBeTruthy()

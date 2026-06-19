@@ -12,8 +12,9 @@ const defaultClient: PickerClient = {
   fetchEntityBody: (ref) => realFetchBody(ref),
 }
 
-export function LibraryPicker({ etype, locale, onPick, onClose, client = defaultClient }: {
-  etype: string; locale: string; onPick: (ref: string) => void; onClose: () => void; client?: PickerClient
+export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client = defaultClient }: {
+  etype: string; locale: string; onPick: (ref: string) => void; onClose: () => void
+  onCreate?: () => void; client?: PickerClient
 }) {
   const [q, setQ] = useState('')
   const [all, setAll] = useState<EntitySearchResult[]>([])
@@ -48,14 +49,14 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
       <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-ed-panel shadow-xl">
         <div className="flex items-center gap-2 border-b border-ed-border p-3">
-          <strong className="text-sm">Pick {etype} from Library</strong>
+          <strong className="text-sm">Add {etype}</strong>
           <button onClick={onClose} className="ml-auto text-ed-muted hover:text-ed-text">✕</button>
         </div>
         <div className="p-3">
-          <input autoFocus aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Filter ${etype}s…`}
+          <input autoFocus aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Search ${etype}s to reuse…`}
                  className="w-full rounded border border-ed-border-strong px-2 py-1 text-sm" />
           <div className="mt-1 flex items-center justify-between text-xs text-ed-muted">
-            <span>Filter by id or title.</span>
+            <span>{onCreate ? 'Search to reuse an existing one — or create new if nothing matches.' : 'Filter by id or title.'}</span>
             <span>{loading ? 'loading…' : `${items.length}${q ? ` of ${all.length}` : ''} ${etype}${items.length === 1 ? '' : 's'}`}</span>
           </div>
           {error && <div className="mt-2 text-sm text-red-600">{error}</div>}
@@ -71,7 +72,12 @@ export function LibraryPicker({ etype, locale, onPick, onClose, client = default
               </li>
             ))}
             {!loading && items.length === 0 && !error && (
-              <li className="px-2 py-1 text-sm text-ed-muted">{all.length === 0 ? `No ${etype}s in the Library.` : 'No matches.'}</li>
+              <li className="px-2 py-3 text-sm">
+                <div className="text-ed-muted">{all.length === 0 ? `No ${etype}s in the Library.` : `No ${etype} matches${q ? ` “${q}”` : ''}.`}</div>
+                {onCreate && (
+                  <button onClick={onCreate} className="mt-2 rounded bg-ed-accent px-3 py-1.5 text-sm text-white">+ Create new {etype}</button>
+                )}
+              </li>
             )}
           </ul>
           {selected && (

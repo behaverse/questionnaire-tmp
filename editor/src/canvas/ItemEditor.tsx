@@ -71,12 +71,12 @@ export function ItemEditor({ path }: { path: NodePath }) {
     return opts.length ? opts.join(' · ') : (loc.label ?? null)
   }
 
-  const pickInto = (slotKey: 'prompt' | 'context' | 'instruction', etype: string) => {
+  const pickInto = (slotKey: 'prompt' | 'context' | 'instruction', etype: string, onCreate?: () => void) => {
     const prev = (question?.[slotKey] as { ref?: string } | undefined)?.ref
     openPicker(etype, (ref) => {
       applyEdit((m) => updateNodeProps(m, questionPath, { [slotKey]: { ref } }))
       if (prev && pool[prev]) removePoolEntity(prev) // drop the orphaned pool draft we replaced
-    })
+    }, onCreate)
   }
   const pickOption = () => {
     const prev = typeof option === 'object' && option && 'ref' in option ? (option as { ref: string }).ref : undefined
@@ -113,8 +113,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium text-ed-muted">Context</span>
-              {!ctxRef && <button aria-label="Add context" onClick={addContext} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">+ Add</button>}
-              {!ctxRef && <button aria-label="Pick context" onClick={() => pickInto('context', 'context')} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Pick</button>}
+              {!ctxRef && <button aria-label="Add context" onClick={() => pickInto('context', 'context', addContext)} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">+ Add</button>}
               {ctxRef && poolCtx && <button aria-label="Remove context" onClick={removeContext} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Remove</button>}
             </div>
             {ctxRef && (poolCtx
@@ -124,8 +123,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-medium text-ed-muted">Instruction</span>
-              {!insRef && <button aria-label="Add instruction" onClick={addInstruction} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">+ Add</button>}
-              {!insRef && <button aria-label="Pick instruction" onClick={() => pickInto('instruction', 'instruction')} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Pick</button>}
+              {!insRef && <button aria-label="Add instruction" onClick={() => pickInto('instruction', 'instruction', addInstruction)} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">+ Add</button>}
               {insRef && poolIns && <button aria-label="Remove instruction" onClick={removeInstruction} className="rounded border border-ed-border px-1.5 py-0.5 text-xs hover:bg-ed-subtle">Remove</button>}
             </div>
             {insRef && (poolIns
