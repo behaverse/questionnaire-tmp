@@ -115,3 +115,6 @@
 | qst_npi16 | psytoolkit.org | high | needs-review | 1 | unknown |
 | qst_rotter | psytoolkit.org | high | needs-review | 1 | unknown |
 | qst_pmi | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_epds | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_arc | psytoolkit.org | high | needs-review | 2 | unknown |
+| qst_nfs | psytoolkit.org | high | needs-review | 1 | unknown |

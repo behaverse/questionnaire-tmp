@@ -1,0 +1,57 @@
+{
+  "content": {
+    "en": {
+      "label": "NFS 5-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Always there"
+        },
+        {
+          "index": 2,
+          "text": "Often there"
+        },
+        {
+          "index": 3,
+          "text": "Sometimes there"
+        },
+        {
+          "index": 4,
+          "text": "Rarely there"
+        },
+        {
+          "index": 5,
+          "text": "Never there"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_nfs_rating_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 5.0
+    },
+    {
+      "index": 2,
+      "value": 4.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 2.0
+    },
+    {
+      "index": 5,
+      "value": 1.0
+    }
+  ],
+  "selection": "single"
+}

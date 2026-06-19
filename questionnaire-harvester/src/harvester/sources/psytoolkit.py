@@ -230,6 +230,49 @@ def _parse_multiradio_block(block_lines):
     return " ".join(p for p in q_parts if p), items
 
 
+def _parse_radio_block(block_lines):
+    """From a `t: radio` block, return one RawItem (stem + per-item choice option).
+
+    Each radio block is a single item: `q:` is the stem (the item's prompt), and the
+    `- {score=N} text` lines are that item's own scored options. Values come from each
+    `{score=N}` (else the 1-based position). Refuses (PsyToolkitParseError) a block with
+    no options, an empty option label, or an empty stem — never fabricates."""
+    q_parts, in_q = [], False
+    anchors, values, pos = [], [], 0
+    for ln in block_lines[1:]:
+        s = ln.rstrip()
+        if re.match(r"^-\s", s) or s.strip() == "-":
+            in_q = False
+            pos += 1
+            body = s.strip()
+            am = re.match(r"-\s*\{score=(-?\d+)\}\s*(.+)", body)
+            if am:
+                values.append(float(am.group(1)))
+                anchors.append(am.group(2).strip())
+            else:
+                text = re.sub(r"^(\{[^}]*\}\s*)+", "", re.sub(r"^-\s*", "", body)).strip()
+                values.append(float(pos))
+                anchors.append(text)
+        elif re.match(r"^[a-z]:", s):
+            if s.startswith("q:"):
+                q_parts, in_q = [s[2:].strip()], True
+            else:
+                in_q = False
+        elif in_q and s.strip():
+            q_parts.append(s.strip())
+    stem = " ".join(p for p in q_parts if p)
+    if not anchors:
+        raise PsyToolkitParseError("radio block has no options")
+    if any(not a for a in anchors):
+        raise PsyToolkitParseError("radio block has an empty option label")
+    if not stem:
+        raise PsyToolkitParseError("radio block has no question stem")
+    opt = RawOption(
+        input_data_type="choice", measurement_type="ordinal", selection="single",
+        dimension="rating", anchors=anchors, values=values)
+    return RawItem(text=stem, option=opt)
+
+
 class PsyToolkitAdapter(SourceAdapter):
     site = "psytoolkit.org"
 
@@ -262,6 +305,7 @@ class PsyToolkitAdapter(SourceAdapter):
 
         range_blocks = [b for b in blocks if any(re.match(r"^t:\s*range\b", ln) for ln in b)]
         mr_blocks = [b for b in blocks if any(re.match(r"^t:\s*multiradio\b", ln) for ln in b)]
+        radio_blocks = [b for b in blocks if any(re.match(r"^t:\s*radio\b", ln) for ln in b)]
         scale = None
         shared_prompt_text = None
         instruction_text = None
@@ -297,8 +341,13 @@ class PsyToolkitAdapter(SourceAdapter):
             shared_prompt_text, items = _parse_multiradio_block(mr_blocks[0])
             if not items:
                 raise PsyToolkitParseError("multiradio block has no items")
+        elif radio_blocks:
+            items = [_parse_radio_block(b) for b in radio_blocks]
+            if not items:
+                raise PsyToolkitParseError("radio block has no items")
         else:
-            raise PsyToolkitParseError("no `t: scale`, `t: range`, or `t: multiradio` question block found")
+            raise PsyToolkitParseError(
+                "no `t: scale`, `t: range`, `t: multiradio`, or `t: radio` question block found")
 
         # peel a leading temporal frame ("Over the last 2 weeks,") into a Context
         context_text = None

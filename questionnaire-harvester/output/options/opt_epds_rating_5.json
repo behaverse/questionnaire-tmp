@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "EPDS 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Yes, quite a lot"
+        },
+        {
+          "index": 2,
+          "text": "Yes, sometimes"
+        },
+        {
+          "index": 3,
+          "text": "No, not much"
+        },
+        {
+          "index": 4,
+          "text": "No, not at all"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_epds_rating_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 3.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 1.0
+    },
+    {
+      "index": 4,
+      "value": 0.0
+    }
+  ],
+  "selection": "single"
+}

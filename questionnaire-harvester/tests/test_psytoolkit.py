@@ -295,3 +295,68 @@ def test_parse_refuses_multiple_multiradio_blocks():
     from harvester.sources.psytoolkit import PsyToolkitParseError
     with pytest.raises(PsyToolkitParseError):
         PsyToolkitAdapter().parse(html, "https://x/demo.html")
+
+
+def test_parse_radio_block_stem_and_scored_options():
+    from harvester.sources.psytoolkit import _parse_radio_block
+    block = [
+        "l: epds2",
+        "t: radio",
+        "q: I have looked forward with enjoyment to things",
+        "- {score=0} As much as I ever did",
+        "- {score=1} Rather less than I used to",
+        "- {score=2} Definitely less than I used to",
+        "- {score=3} Hardly at all",
+    ]
+    item = _parse_radio_block(block)
+    assert item.text == "I have looked forward with enjoyment to things"
+    assert item.option.input_data_type == "choice"
+    assert item.option.measurement_type == "ordinal"
+    assert item.option.selection == "single"
+    assert item.option.anchors == ["As much as I ever did", "Rather less than I used to",
+                                   "Definitely less than I used to", "Hardly at all"]
+    assert item.option.values == [0.0, 1.0, 2.0, 3.0]
+
+
+def test_parse_radio_block_positional_when_no_scores():
+    from harvester.sources.psytoolkit import _parse_radio_block
+    block = ["l: q1", "t: radio", "q: Rate this", "- low", "- mid", "- high"]
+    item = _parse_radio_block(block)
+    assert item.option.values == [1.0, 2.0, 3.0]
+    assert item.option.anchors == ["low", "mid", "high"]
+
+
+def test_parse_radio_block_refuses_no_options():
+    from harvester.sources.psytoolkit import _parse_radio_block, PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        _parse_radio_block(["l: q1", "t: radio", "q: A question with no options"])
+
+
+def test_parse_radio_block_refuses_empty_label():
+    from harvester.sources.psytoolkit import _parse_radio_block, PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        _parse_radio_block(["l: q1", "t: radio", "q: Q", "- {score=1}", "- {score=2} ok"])
+
+
+def test_parse_radio_block_refuses_empty_stem():
+    from harvester.sources.psytoolkit import _parse_radio_block, PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        _parse_radio_block(["l: q1", "t: radio", "- {score=1} a", "- {score=2} b"])
+
+
+def test_parse_full_radio_page_via_public_surface():
+    dsl = ("l: sq1\nt: radio\nq: I find it easy to use train timetables.\n"
+           "- {score=2} strongly agree\n- {score=1} slightly agree\n"
+           "- {score=0} slightly disagree\n- {score=0} strongly disagree\n\n"
+           "l: sq2\nt: radio\nq: I like clearly organised shops.\n"
+           "- {score=2} strongly agree\n- {score=1} slightly agree\n"
+           "- {score=0} slightly disagree\n- {score=0} strongly disagree\n")
+    html = f"<html><h1>Systemizing Quotient (SQ)</h1><pre>{dsl}</pre></html>"
+    rq = PsyToolkitAdapter().parse(html, "https://x/systemizing-arc.html")
+    assert rq.scale is None
+    assert rq.instruction_text is None
+    assert rq.shared_prompt_text is None
+    assert len(rq.items) == 2
+    assert rq.items[0].text == "I find it easy to use train timetables."
+    assert rq.items[0].option.values == [2.0, 1.0, 0.0, 0.0]
+    assert rq.items[1].text == "I like clearly organised shops."
