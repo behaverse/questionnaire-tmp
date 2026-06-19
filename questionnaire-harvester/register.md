@@ -119,3 +119,6 @@
 | qst_arc | psytoolkit.org | high | needs-review | 2 | unknown |
 | qst_nfs | psytoolkit.org | high | needs-review | 1 | unknown |
 | qst_happiness | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_hama | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_mdi | psychology-tools.com | high | needs-review | 2 | unknown |
+| qst_gds | psychology-tools.com | high | needs-review | 2 | unknown |
