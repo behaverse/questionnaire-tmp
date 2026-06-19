@@ -41,13 +41,17 @@ function Resizer({ onDrag, label }: { onDrag: (dx: number) => void; label: strin
 
 export function EditorWorkspace() {
   const previewOpen = useEditorStore((s) => s.previewOpen)
+  const inspectorOpen = useEditorStore((s) => s.inspectorOpen)
   const [leftW, setLeftW] = usePersistedWidth('qv-left-w', 260)
   const [previewW, setPreviewW] = usePersistedWidth('qv-preview-w', 480)
   const [rightW, setRightW] = usePersistedWidth('qv-right-w', 320)
 
-  const cols = previewOpen
-    ? `${leftW}px 5px minmax(0,1fr) 5px ${previewW}px 5px ${rightW}px`
-    : `${leftW}px 5px minmax(0,1fr) 5px ${rightW}px`
+  // Columns are assembled from whichever panels are open (each open panel adds a 5px resizer).
+  const cols = [
+    `${leftW}px`, '5px', 'minmax(0,1fr)',
+    ...(previewOpen ? ['5px', `${previewW}px`] : []),
+    ...(inspectorOpen ? ['5px', `${rightW}px`] : []),
+  ].join(' ')
 
   return (
     <div className="grid min-h-0 flex-1 overflow-hidden [&>*]:min-h-0" style={{ gridTemplateColumns: cols }}>
@@ -56,8 +60,8 @@ export function EditorWorkspace() {
       <Canvas />
       {previewOpen && <Resizer label="Resize preview panel" onDrag={(dx) => setPreviewW((w) => clamp(w - dx, 300, 960))} />}
       {previewOpen && <PreviewPane />}
-      <Resizer label="Resize inspector panel" onDrag={(dx) => setRightW((w) => clamp(w - dx, 240, 600))} />
-      <Inspector />
+      {inspectorOpen && <Resizer label="Resize inspector panel" onDrag={(dx) => setRightW((w) => clamp(w - dx, 240, 600))} />}
+      {inspectorOpen && <Inspector />}
     </div>
   )
 }

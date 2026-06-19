@@ -11,8 +11,24 @@ import { collectIds, draftVersion } from '../pool/mint'
 import { UpgradeBadge } from '../library/UpgradeBadge'
 import { ForkButton } from '../library/ForkButton'
 
+/** A read-only Library reference: shows the resolved content (greyed) when available, with the
+ *  ref id + freshness + Edit beneath. Falls back to just the ref when content isn't resolved. */
+function ReadOnlyRef({ refStr, content }: { refStr: string; content: string | null }) {
+  return (
+    <div className="mt-1 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm">
+      {content && <div className="text-ed-muted">{content}</div>}
+      <div className={`flex flex-wrap items-center gap-2 text-[11px] text-ed-muted ${content ? 'mt-1.5' : ''}`}>
+        <span className="font-mono">{refStr}</span>
+        <UpgradeBadge refStr={refStr} />
+        <ForkButton refStr={refStr} />
+      </div>
+    </div>
+  )
+}
+
 export function ItemEditor({ path }: { path: NodePath }) {
   const { model, applyEdit, pool, upsertPoolEntity, removePoolEntity, openPicker } = useEditorStore()
+  const resolved = useEditorStore((s) => s.resolved)
   const editingLocale = useEditorStore((s) => s.editingLocale)
   if (!model) return null
   const node = getAtPath(model, path) as Record<string, unknown>
@@ -36,6 +52,24 @@ export function ItemEditor({ path }: { path: NodePath }) {
   const insRef = (question?.instruction as { ref?: string } | undefined)?.ref
   const poolCtx = ctxRef ? (pool[ctxRef] as ContextBody | undefined) : undefined
   const poolIns = insRef ? (pool[insRef] as InstructionBody | undefined) : undefined
+
+  // Resolved content (pool draft, else the preview-resolved Library body) for read-only refs.
+  const localized = <T,>(c: Record<string, T> | undefined): T | undefined =>
+    c ? (c[locale] ?? c[primaryLocale] ?? Object.values(c)[0]) : undefined
+  const refText = (ref?: string): string | null => {
+    if (!ref) return null
+    const body = (pool[ref] ?? resolved[ref]) as { content?: Record<string, { text?: string }> } | null | undefined
+    const t = (localized(body?.content)?.text ?? '').trim()
+    return t || null
+  }
+  const optionSummary = (ref?: string): string | null => {
+    if (!ref) return null
+    const body = (pool[ref] ?? resolved[ref]) as { content?: Record<string, { label?: string; options?: { text?: string }[] }> } | null | undefined
+    const loc = localized(body?.content)
+    if (!loc) return null
+    const opts = (loc.options ?? []).map((o) => o.text).filter(Boolean)
+    return opts.length ? opts.join(' · ') : (loc.label ?? null)
+  }
 
   const pickInto = (slotKey: 'prompt' | 'context' | 'instruction', etype: string) => {
     const prev = (question?.[slotKey] as { ref?: string } | undefined)?.ref
@@ -70,11 +104,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
               <PromptEditor prompt={poolPrompt} locale={locale} primaryLocale={primaryLocale} onChange={(p) => upsertPoolEntity(promptRef, p)} />
             </div>
           ) : (
-            <div className="mt-1 flex items-center gap-2 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm">
-              <span className="text-ed-muted">◉</span><span className="font-mono">{promptRef}</span>
-              <UpgradeBadge refStr={promptRef} />
-              <span className="ml-auto"><ForkButton refStr={promptRef} /></span>
-            </div>
+            <ReadOnlyRef refStr={promptRef} content={refText(promptRef)} />
           )}
         </div>
       )}
@@ -89,7 +119,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
             </div>
             {ctxRef && (poolCtx
               ? <div className="mt-1"><ContextEditor context={poolCtx} locale={locale} primaryLocale={primaryLocale} onChange={(c) => upsertPoolEntity(ctxRef, c)} /></div>
-              : <div className="mt-1 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm"><span className="font-mono">{ctxRef}</span> <UpgradeBadge refStr={ctxRef} /> <ForkButton refStr={ctxRef} /></div>)}
+              : <ReadOnlyRef refStr={ctxRef} content={refText(ctxRef)} />)}
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -100,7 +130,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
             </div>
             {insRef && (poolIns
               ? <div className="mt-1"><InstructionEditor instruction={poolIns} locale={locale} primaryLocale={primaryLocale} onChange={(i) => upsertPoolEntity(insRef, i)} /></div>
-              : <div className="mt-1 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm"><span className="font-mono">{insRef}</span> <UpgradeBadge refStr={insRef} /> <ForkButton refStr={insRef} /></div>)}
+              : <ReadOnlyRef refStr={insRef} content={refText(insRef)} />)}
           </div>
         </div>
       )}
@@ -113,12 +143,10 @@ export function ItemEditor({ path }: { path: NodePath }) {
           <OptionEditor option={option as EditableOption} locale={locale}
                         onChange={(o) => applyEdit((m) => updateNodeProps(m, path, { [optionKey]: o }))} />
         </div>
+      ) : option && 'ref' in (option as object) ? (
+        <ReadOnlyRef refStr={(option as { ref: string }).ref} content={optionSummary((option as { ref: string }).ref)} />
       ) : (
-        <div className="mt-2 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm text-ed-muted">
-          {option && 'ref' in (option as object) ? (
-            <><span className="font-mono">{(option as { ref: string }).ref}</span> <UpgradeBadge refStr={(option as { ref: string }).ref} /> <ForkButton refStr={(option as { ref: string }).ref} /></>
-          ) : 'No editable option.'}
-        </div>
+        <div className="mt-2 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm text-ed-muted">No editable option.</div>
       )}
     </div>
   )

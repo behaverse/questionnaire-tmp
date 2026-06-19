@@ -1,4 +1,4 @@
-import { ArrowLeft, RefreshCw, Check, AlertTriangle, Eye, Languages, Download, Package, ExternalLink } from 'lucide-react'
+import { ArrowLeft, RefreshCw, Check, AlertTriangle, Eye, PanelRight, Languages, Download, Package, ExternalLink } from 'lucide-react'
 import { useEditorStore } from '../state/store'
 import { exportToFile, exportBundle, bundleData } from '../persistence/file'
 import { EditingLocaleSwitcher } from './EditingLocaleSwitcher'
@@ -6,7 +6,7 @@ import { Button, IconButton } from '../ui/Button'
 import { Menu } from '../ui/Menu'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
-  const { model, dirty, validation, previewOpen, togglePreview, translateView } = useEditorStore()
+  const { model, dirty, validation, previewOpen, togglePreview, inspectorOpen, toggleInspector, translateView } = useEditorStore()
   const pool = useEditorStore((s) => s.pool)
   const staleness = useEditorStore((s) => s.staleness)
   const refreshStaleness = useEditorStore((s) => s.refreshStaleness)
@@ -53,6 +53,13 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
             title="Show/hide the live inline preview pane"
             onClick={togglePreview}
           >Preview</Button>
+          <Button
+            variant={inspectorOpen ? 'primary' : 'ghost'}
+            icon={PanelRight}
+            aria-pressed={inspectorOpen}
+            title="Show/hide the inspector panel"
+            onClick={toggleInspector}
+          >Inspector</Button>
           <Button
             variant={translateView ? 'primary' : 'ghost'}
             icon={Languages}

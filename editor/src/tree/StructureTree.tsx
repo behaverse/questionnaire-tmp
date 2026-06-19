@@ -19,13 +19,31 @@ function nextBlockId(model: Questionnaire): string {
   return `blk_${n}`
 }
 
+/** An item's non-prompt parts (the prompt is the row's primary label) — its response option
+ *  and any instruction/context — as `{kind, bare id}` for an at-a-glance overview in the tree. */
+function itemSubElements(model: Questionnaire, path: TreeRow['path']): { kind: string; id: string }[] {
+  const el = getAtPath(model, path) as Record<string, unknown> | undefined
+  if (!el || !('question' in el)) return []
+  const out: { kind: string; id: string }[] = []
+  const optRef = (el.option as { ref?: string } | undefined)?.ref
+  if (optRef) out.push({ kind: 'option', id: optRef.split('@')[0] })
+  const q = el.question as Record<string, unknown> | undefined
+  const insRef = (q?.instruction as { ref?: string } | undefined)?.ref
+  if (insRef) out.push({ kind: 'instruction', id: insRef.split('@')[0] })
+  const ctxRef = (q?.context as { ref?: string } | undefined)?.ref
+  if (ctxRef) out.push({ kind: 'context', id: ctxRef.split('@')[0] })
+  return out
+}
+
 function Row({
   row,
   label,
+  subElements,
   translation,
 }: {
   row: TreeRow
   label: { text: string | null; id: string | null; ref: string | null }
+  subElements?: { kind: string; id: string }[]
   translation?: { locale: string; done: boolean } | null
 }) {
   const { selection, select } = useEditorStore()
@@ -50,6 +68,11 @@ function Row({
       <span className="flex min-w-0 flex-col" title={label.ref ?? label.id ?? undefined}>
         <span className="truncate">{primary}</span>
         {secondary && <span className="truncate text-[11px] leading-tight text-ed-muted">{secondary}</span>}
+        {subElements && subElements.length > 0 && (
+          <span className="truncate text-[11px] leading-tight text-ed-muted">
+            {subElements.map((s) => `${s.kind} ${s.id}`).join(' · ')}
+          </span>
+        )}
       </span>
       {translation && (
         <span title={translation.done ? `Translated in ${translation.locale}` : `Not translated in ${translation.locale}`}
@@ -128,6 +151,7 @@ export function StructureTree() {
           {rows.map((row) => (
             <Row key={row.key} row={row}
                  label={resolveNodeLabel(model, row.path, pool, resolved, labelLocale)}
+                 subElements={row.kind === 'item' ? itemSubElements(model, row.path) : undefined}
                  translation={translationOf(row)} />
           ))}
         </SortableContext>

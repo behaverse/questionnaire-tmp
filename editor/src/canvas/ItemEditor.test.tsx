@@ -30,6 +30,15 @@ test('shows the prompt ref chip read-only with a fork-to-edit button for Library
   expect(screen.getByRole('button', { name: /^edit$/i })).toBeInTheDocument()
 })
 
+test('shows resolved content (read-only) for a Library ref when available', () => {
+  // prompt ref is NOT in the pool (read-only), but its body is in `resolved` (from the preview).
+  useEditorStore.setState({ resolved: { 'pr_x@v26.0609': { id: 'pr_x', content: { en: { text: 'Resolved prompt text' } } } } as never })
+  render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
+  expect(screen.getByText('Resolved prompt text')).toBeInTheDocument() // content shown greyed
+  expect(screen.getByText('pr_x@v26.0609')).toBeInTheDocument()        // ref still shown below
+  expect(screen.getByRole('button', { name: /^edit$/i })).toBeInTheDocument()
+})
+
 test('edits a pool prompt via the PromptEditor', async () => {
   const ref = 'pr_p@v26.0609.dev1'
   const model = {

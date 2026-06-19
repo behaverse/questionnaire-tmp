@@ -53,3 +53,17 @@ it('shows resolved prompt text for an item row when content is in the pool', () 
   render(<StructureTree />)
   expect(screen.getByText('Readable prompt text')).toBeInTheDocument()
 })
+
+it('lists an item\'s sub-elements (option) under the item row', () => {
+  const model = {
+    metadata: { id: 'qst_t', title: 'T', version: 'v26.0606', language: 'en' },
+    pages: [{ id: 'p1', title: 'P', elements: [
+      { option: { ref: 'opt_agreement_7@v26.0606' },
+        question: { prompt: { ref: 'pr_q1@v26.0606' }, instruction: { ref: 'ins_x@v26.0606' } } },
+    ] }],
+  } as unknown as Questionnaire
+  useEditorStore.getState().reset()
+  useEditorStore.getState().loadModel(model, { kind: 'new' })
+  render(<StructureTree />)
+  expect(screen.getByText(/option opt_agreement_7 · instruction ins_x/)).toBeInTheDocument()
+})
