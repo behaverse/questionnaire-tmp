@@ -29,3 +29,21 @@ test('the search field filters the loaded list by id substring (matches "agree")
   await waitFor(() => expect(screen.queryByText('pr_mood')).toBeNull())
   expect(screen.getByText('pr_agreement_7')).toBeInTheDocument()
 })
+
+test('searches by entity CONTENT, not just id/title (ED-I·F7)', async () => {
+  const c = {
+    listEntities: async () => [
+      { id: 'pr_x1', version: 'v26.0609', title: null, entity_type: 'prompt' },
+      { id: 'pr_x2', version: 'v26.0609', title: null, entity_type: 'prompt' },
+    ],
+    fetchEntityBody: async (ref: string) => ref.startsWith('pr_x1')
+      ? { id: 'pr_x1', content: { en: { text: 'I crave excitement and novelty' } } }
+      : { id: 'pr_x2', content: { en: { text: 'My family matters to me' } } },
+  }
+  render(<LibraryPicker etype="context" locale="en" onPick={() => {}} onClose={() => {}} onCreate={() => {}} client={c} />)
+  await waitFor(() => expect(screen.getByText('pr_x1')).toBeInTheDocument())
+  // "family" is in NO id/title — only in pr_x2's content. Content indexing must surface it.
+  await userEvent.type(screen.getByLabelText(/search/i), 'family')
+  await waitFor(() => expect(screen.queryByText('pr_x1')).toBeNull())
+  expect(screen.getByText('pr_x2')).toBeInTheDocument()
+})

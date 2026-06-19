@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { listAllEntities as realList, fetchEntityBody as realFetchBody, type EntitySearchResult } from '../persistence/library'
-import { buildRef, bodySnippet } from './picker'
+import { mapLimit, withRetry } from '../persistence/concurrency'
+import { buildRef, bodySnippet, searchableText } from './picker'
 import type { EntityBody } from '../model/types'
 
 export interface PickerClient {
@@ -12,6 +13,12 @@ const defaultClient: PickerClient = {
   fetchEntityBody: (ref) => realFetchBody(ref),
 }
 
+// Cap the per-etype content fetch so a large set (e.g. ~793 prompts) can't re-trigger the
+// boot-time fetch storm; dedup-relevant types (options/contexts/instructions/messages) are
+// all well under this. Cached per etype for the session.
+const CONTENT_INDEX_CAP = 300
+const CONTENT_CACHE = new Map<string, Record<string, string>>()
+
 export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client = defaultClient }: {
   etype: string; locale: string; onPick: (ref: string) => void; onClose: () => void
   onCreate?: () => void; client?: PickerClient
@@ -22,9 +29,14 @@ export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client
   const [selected, setSelected] = useState<EntitySearchResult | null>(null)
   const [snippet, setSnippet] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [contentIndex, setContentIndex] = useState<Record<string, string>>({})
+  const [indexing, setIndexing] = useState(false)
+  const indexStarted = useRef(false)
 
-  // Load the full list once; the search field filters it client-side (the server's
-  // full-text search only indexes title/description, which most entities lack).
+  // re-index from scratch when the entity type changes
+  useEffect(() => { indexStarted.current = false; setContentIndex({}) }, [etype])
+
+  // Load the full list once; the search field filters it client-side.
   useEffect(() => {
     let ignore = false
     setLoading(true)
@@ -34,11 +46,36 @@ export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client
     return () => { ignore = true }
   }, [etype, client])
 
+  // Content search: the list endpoint only returns id/title, so to match by CONTENT (prompt
+  // text, scale anchors, …) we fetch entity bodies — lazily (only once the user searches),
+  // throttled + retried (reusing the ED-G concurrency guard), capped, and cached per etype.
+  useEffect(() => {
+    if (!q.trim() || indexStarted.current || loading || all.length === 0) return
+    indexStarted.current = true
+    const cached = CONTENT_CACHE.get(etype)
+    if (cached) { setContentIndex(cached); return }
+    let ignore = false
+    setIndexing(true)
+    const acc: Record<string, string> = {}
+    const targets = all.slice(0, CONTENT_INDEX_CAP)
+    void mapLimit(targets, 5, async (it) => {
+      try {
+        const b = await withRetry(() => client.fetchEntityBody(buildRef(it.id, it.version)))
+        acc[it.id] = searchableText(b as Record<string, unknown> | null)
+        if (!ignore) setContentIndex({ ...acc })
+      } catch { /* skip a failed body — id/title still searchable */ }
+    }).then(() => { if (!ignore) { setIndexing(false); CONTENT_CACHE.set(etype, acc) } })
+    return () => { ignore = true }
+  }, [q, loading, all, etype, client])
+
   const items = useMemo(() => {
     const ql = q.trim().toLowerCase()
     if (!ql) return all
-    return all.filter((it) => it.id.toLowerCase().includes(ql) || (it.title ?? '').toLowerCase().includes(ql))
-  }, [q, all])
+    return all.filter((it) =>
+      it.id.toLowerCase().includes(ql) ||
+      (it.title ?? '').toLowerCase().includes(ql) ||
+      (contentIndex[it.id] ?? '').includes(ql))
+  }, [q, all, contentIndex])
 
   const select = (it: EntitySearchResult) => {
     setSelected(it); setSnippet('')
@@ -56,9 +93,12 @@ export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client
           <input autoFocus aria-label="Search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Search ${etype}s to reuse…`}
                  className="w-full rounded border border-ed-border-strong px-2 py-1 text-sm" />
           <div className="mt-1 flex items-center justify-between text-xs text-ed-muted">
-            <span>{onCreate ? 'Search to reuse an existing one — or create new if nothing matches.' : 'Filter by id or title.'}</span>
-            <span>{loading ? 'loading…' : `${items.length}${q ? ` of ${all.length}` : ''} ${etype}${items.length === 1 ? '' : 's'}`}</span>
+            <span>{onCreate ? 'Search id, title, or content to reuse — or create new if nothing matches.' : 'Search by id, title, or content.'}</span>
+            <span>{loading ? 'loading…' : indexing ? 'searching content…' : `${items.length}${q ? ` of ${all.length}` : ''} ${etype}${items.length === 1 ? '' : 's'}`}</span>
           </div>
+          {q && all.length > CONTENT_INDEX_CAP && (
+            <div className="mt-1 text-[11px] text-ed-muted">Content search covers the first {CONTENT_INDEX_CAP} {etype}s; refine by id for the rest.</div>
+          )}
           {error && <div className="mt-2 text-sm text-red-600">{error}</div>}
           <ul className="mt-2 max-h-72 overflow-auto">
             {items.map((it) => (
