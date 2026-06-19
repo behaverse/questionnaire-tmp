@@ -17,4 +17,40 @@ describe('buildBundle', () => {
       { id: 'opt_a', version: 'v26.0606', type: 'option', content: { fr: { label: 'Accord', options: [{ index: 1, text: 'Oui' }] } } },
     ])
   })
+
+  it('drops "Option N" placeholder entries from a partially-translated options array', () => {
+    // Choice 1 was translated to 'Oui'; choice 2 still has the renumberChoices placeholder 'Option 2'
+    const b = buildBundle('fr', [
+      {
+        id: 'opt_partial', version: 'v26.0606', kind: 'option',
+        body: { id: 'opt_partial', content: { fr: { status: 'draft', label: 'Accord', options: [{ index: 1, text: 'Oui' }, { index: 2, text: 'Option 2' }] } } },
+      },
+    ], '2026-06-20T00:00:00.000Z')
+    expect(b.entries).toEqual([
+      { id: 'opt_partial', version: 'v26.0606', type: 'option', content: { fr: { label: 'Accord', options: [{ index: 1, text: 'Oui' }] } } },
+    ])
+  })
+
+  it('skips an entity entirely when every choice is a placeholder AND label is empty', () => {
+    // All choices are 'Option N' placeholders and label is absent — nothing meaningful remains
+    const b = buildBundle('fr', [
+      {
+        id: 'opt_all_placeholder', version: 'v26.0606', kind: 'option',
+        body: { id: 'opt_all_placeholder', content: { fr: { status: 'draft', options: [{ index: 1, text: 'Option 1' }, { index: 2, text: 'Option 2' }] } } },
+      },
+    ], '2026-06-20T00:00:00.000Z')
+    expect(b.entries).toEqual([])
+  })
+
+  it('keeps a fully-translated multi-choice option intact', () => {
+    const b = buildBundle('fr', [
+      {
+        id: 'opt_full', version: 'v26.0606', kind: 'option',
+        body: { id: 'opt_full', content: { fr: { status: 'draft', label: 'Accord', options: [{ index: 1, text: 'Tout à fait d\'accord' }, { index: 2, text: 'Plutôt d\'accord' }] } } },
+      },
+    ], '2026-06-20T00:00:00.000Z')
+    expect(b.entries).toEqual([
+      { id: 'opt_full', version: 'v26.0606', type: 'option', content: { fr: { label: 'Accord', options: [{ index: 1, text: 'Tout à fait d\'accord' }, { index: 2, text: 'Plutôt d\'accord' }] } } },
+    ])
+  })
 })
