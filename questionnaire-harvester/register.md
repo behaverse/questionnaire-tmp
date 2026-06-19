@@ -156,5 +156,3 @@
 | qst_pti | psychology-tools.com | high | needs-review | 3 | unknown |
 | qst_qchat | psychology-tools.com | high | needs-review | 2 | unknown |
 | qst_ymrs | psychology-tools.com | high | needs-review | 2 | unknown |
-| qst_o | psychology-tools.com | high | needs-review | 2 | unknown |
-| qst_dsm5 | psychology-tools.com | high | needs-review | 2 | unknown |
