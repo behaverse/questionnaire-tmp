@@ -108,3 +108,24 @@ def test_radio_harvest_validates(tmp_path, monkeypatch):
     assert all("instruction" not in e["question"] for e in els)
     opt = json.loads(next((out / "options").glob("*.json")).read_text())
     assert opt["input_data_type"] == "choice" and opt["selection"] == "single"
+
+
+def test_check_harvest_validates(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psytoolkit_check.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/children-happiness.html",
+                   "--out", str(out),
+                   "--scales-index", str(tmp_path / "missing-index.json"),
+                   "--register", str(tmp_path / "register.md"),
+                   "--questions", str(tmp_path / "questions"),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    # h1 "Children's Happiness Scale" (no acronym) -> URL slug "happiness" -> qst_happiness
+    qst = json.loads((out / "questionnaires" / "qst_happiness.json").read_text())
+    els = qst["pages"][0]["elements"]
+    assert len(els) == 1
+    assert "instruction" not in els[0]["question"]
+    opt = json.loads(next((out / "options").glob("*.json")).read_text())
+    assert opt["input_data_type"] == "choice" and opt["selection"] == "multiple"
+    assert opt["measurement_type"] == "nominal"

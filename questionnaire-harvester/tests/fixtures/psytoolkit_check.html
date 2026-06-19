@@ -1,0 +1,23 @@
+<html><head><title>Children's Happiness</title></head><body>
+<h1>Children's Happiness Scale</h1>
+<div id="content"><p>A 20-item checklist of children's happiness.</p></div>
+<pre>
+l: happinessitems
+t: check
+q: Here are some things children might say about themselves. Tick all the ones that are right about you. Leave the others blank.
+- {score=3.64} Life is good for me at the moment
+- {score=1.74} I never feel safe
+- {score=4.25} I have lots of fun
+- {score=1.68} I get lonely
+
+l: happiness1
+t: set
+- sum $happinessitems
+
+l: feedback
+t: info
+q: Your happiness score is {$happiness1}
+</pre>
+<h2 id="refs">References</h2>
+<ul><li>Holder, M. D., &amp; Klassen, A. (2010). Temperament and happiness in children. Journal of Happiness Studies, 11, 419-439.</li></ul>
+</body></html>
