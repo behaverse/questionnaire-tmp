@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "If I had a serious illness I would not feel that I had lost my dignity."
+        },
+        {
+          "index": 2,
+          "text": "If I had a serious illness I would feel that I had lost a little of my dignity."
+        },
+        {
+          "index": 3,
+          "text": "If I had a serious illness I would feel that I had lost quite a lot of my dignity."
+        },
+        {
+          "index": 4,
+          "text": "If I had a serious illness I would feel that I had totally lost my dignity."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_18",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

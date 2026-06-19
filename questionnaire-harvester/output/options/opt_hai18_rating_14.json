@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "My family/friends would say I do not worry enough about my health."
+        },
+        {
+          "index": 2,
+          "text": "My family/friends would say I have a normal attitude to my health."
+        },
+        {
+          "index": 3,
+          "text": "My family/friends would say I worry too much about my health."
+        },
+        {
+          "index": 4,
+          "text": "My family/friends would say I am a hypochondriac."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_14",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

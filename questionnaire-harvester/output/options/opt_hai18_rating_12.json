@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I never think I have a serious illness."
+        },
+        {
+          "index": 2,
+          "text": "I sometimes think I have a serious illness."
+        },
+        {
+          "index": 3,
+          "text": "I often think I have a serious illness."
+        },
+        {
+          "index": 4,
+          "text": "I usually think that I am seriously ill."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_12",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

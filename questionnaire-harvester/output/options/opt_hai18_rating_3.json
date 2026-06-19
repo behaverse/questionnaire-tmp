@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "As a rule I am not aware of bodily sensations or changes."
+        },
+        {
+          "index": 2,
+          "text": "Sometimes I am aware of bodily sensations or changes."
+        },
+        {
+          "index": 3,
+          "text": "I am often aware of bodily sensations or changes."
+        },
+        {
+          "index": 4,
+          "text": "I am constantly aware of bodily sensations or changes."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_3",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

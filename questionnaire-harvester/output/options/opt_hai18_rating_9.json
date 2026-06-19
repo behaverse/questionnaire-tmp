@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "If I hear about an illness I never think I have it myself."
+        },
+        {
+          "index": 2,
+          "text": "If I hear about an illness I sometimes think I have it myself."
+        },
+        {
+          "index": 3,
+          "text": "If I hear about an illness I often think I have it myself."
+        },
+        {
+          "index": 4,
+          "text": "If I hear about an illness I always think I have it myself."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_9",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I usually feel at very low risk for developing a serious illness."
+        },
+        {
+          "index": 2,
+          "text": "I usually feel at fairly low risk for developing a serious illness."
+        },
+        {
+          "index": 3,
+          "text": "I usually feel at moderate risk for developing a serious illness."
+        },
+        {
+          "index": 4,
+          "text": "I usually feel at high risk for developing a serious illness."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_11",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Resisting thoughts of illness is never a problem."
+        },
+        {
+          "index": 2,
+          "text": "Most of the time I can resist thoughts of illness."
+        },
+        {
+          "index": 3,
+          "text": "I try to resist thoughts of illness but am often unable to do so."
+        },
+        {
+          "index": 4,
+          "text": "Thoughts of illness are so strong that I no longer even try to resist them."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "If I had a serious illness I would still be able to enjoy things in my life quite a lot."
+        },
+        {
+          "index": 2,
+          "text": "If I had a serious illness I would still be able to enjoy things in my life a little."
+        },
+        {
+          "index": 3,
+          "text": "If I had a serious illness I would be almost completely unable to enjoy things in my life."
+        },
+        {
+          "index": 4,
+          "text": "If I had a serious illness I would be completely unable to enjoy life at all."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_15",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

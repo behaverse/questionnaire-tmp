@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I notice aches/pains less than most other people (of my age)."
+        },
+        {
+          "index": 2,
+          "text": "I notice aches/pains as much as most other people (of my age)."
+        },
+        {
+          "index": 3,
+          "text": "I notice aches/pains more than most other people (of my age)."
+        },
+        {
+          "index": 4,
+          "text": "I am aware of aches/pains in my body all the time."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

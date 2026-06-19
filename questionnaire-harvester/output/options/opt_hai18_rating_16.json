@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "If I developed a serious illness there is a good chance that modern medicine would be able to cure me."
+        },
+        {
+          "index": 2,
+          "text": "If I developed a serious illness there is a moderate chance that modern medicine would be able to cure me."
+        },
+        {
+          "index": 3,
+          "text": "If I developed a serious illness there is a very small chance that modern medicine would be able to cure me."
+        },
+        {
+          "index": 4,
+          "text": "If I developed a serious illness there is no chance that modern medicine would be able to cure me."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_16",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

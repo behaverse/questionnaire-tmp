@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I do not have images (mental pictures) of myself being ill."
+        },
+        {
+          "index": 2,
+          "text": "I occasionally have images of myself being ill."
+        },
+        {
+          "index": 3,
+          "text": "I frequently have images of myself being ill."
+        },
+        {
+          "index": 4,
+          "text": "I constantly have images of myself being ill."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_6",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

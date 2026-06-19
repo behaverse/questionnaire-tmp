@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I am lastingly relieved if my doctor tells me there is nothing wrong."
+        },
+        {
+          "index": 2,
+          "text": "I am initially relieved but the worries sometimes return later."
+        },
+        {
+          "index": 3,
+          "text": "I am initially relieved but the worries always return later."
+        },
+        {
+          "index": 4,
+          "text": "I am not relieved if my doctor tells me there is nothing wrong."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_8",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

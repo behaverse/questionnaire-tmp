@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "A serious illness would ruin some aspects of my life."
+        },
+        {
+          "index": 2,
+          "text": "A serious illness would ruin many aspects of my life."
+        },
+        {
+          "index": 3,
+          "text": "A serious illness would ruin almost every aspect of my life."
+        },
+        {
+          "index": 4,
+          "text": "A serious illness would ruin every aspect of my life."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_17",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

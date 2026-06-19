@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "HAI-18 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "If I have a bodily sensation or change I rarely wonder what it means."
+        },
+        {
+          "index": 2,
+          "text": "If I have a bodily sensation or change I often wonder what it means."
+        },
+        {
+          "index": 3,
+          "text": "If I have a bodily sensation or change I always wonder what it means."
+        },
+        {
+          "index": 4,
+          "text": "If I have a bodily sensation or change I must know what it means."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_hai18_rating_10",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}
