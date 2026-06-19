@@ -1,6 +1,6 @@
 import pytest
 from harvester.sources.psychology_tools import (
-    PsychologyToolsAdapter, PsychologyToolsParseError, _derive_id)
+    PsychologyToolsAdapter, PsychologyToolsParseError, _derive_id, _sanitize_dimension)
 
 def _page(rows, *, title="Demo Anxiety Scale (DEMO)", instr=True):
     instr_html = '<p>InstructionsRate each statement.</p>' if instr else ''
@@ -236,3 +236,65 @@ def test_all_stem_alt_page_unchanged_no_shared_prompt():
     rq = PsychologyToolsAdapter().parse(_alt_page_instr(rows), "https://psychology-tools.com/test/x")
     assert rq.shared_prompt_text is None
     assert rq.items[0].text == "Real stem one" and rq.items[1].text == "Real stem two"
+
+
+# ---------------------------------------------------------------------------
+# Dimension-table (Liebowitz-style) tests
+# ---------------------------------------------------------------------------
+
+def _dim_table(dims, anchor_groups, rows, *, title="Demo Two-Dim (DTD)"):
+    """dims: [(name, span), ...]; anchor_groups: parallel list of anchor-label lists;
+    rows: [(stem, [values...]), ...]. Builds a two-super-header table page."""
+    h1 = "<tr><td></td>" + "".join(f'<th colspan="{s}">{n}</th>' for n, s in dims) + "</tr>"
+    h2 = "<tr><td></td>" + "".join(f"<th>{a}</th>" for grp in anchor_groups for a in grp) + "</tr>"
+    body = ""
+    for stem, vals in rows:
+        cells = "".join(f'<td><input type="radio" name="x{i}" value="{v}"></td>'
+                        for i, v in enumerate(vals))
+        body += f"<tr><td>{stem}</td>{cells}</tr>"
+    return (f'<html><head><meta name="description" content="demo."></head>'
+            f"<body><h1>{title}</h1><form><table>{h1}{h2}{body}</table></form></body></html>")
+
+_DIMS = [("Fear", 2), ("Avoidance", 2)]
+_FA = [["None", "Mild"], ["Never", "Often"]]
+
+def test_dimension_table_flattens_per_dimension_interleaved():
+    rows = [("Telephoning", [0, 1, 0, 1]), ("Parties", [2, 3, 2, 3])]
+    rq = PsychologyToolsAdapter().parse(_dim_table(_DIMS, _FA, rows),
+                                        "https://psychology-tools.com/test/x")
+    assert len(rq.items) == 4
+    assert rq.shared_prompt_text is None
+    assert [i.text for i in rq.items] == ["Telephoning", "Telephoning", "Parties", "Parties"]
+    assert [i.option.dimension for i in rq.items] == ["fear", "avoidance", "fear", "avoidance"]
+    assert rq.items[0].option.anchors == ["None", "Mild"] and rq.items[0].option.values == [0.0, 1.0]
+    assert rq.items[1].option.anchors == ["Never", "Often"] and rq.items[1].option.values == [0.0, 1.0]
+    assert rq.items[2].option.values == [2.0, 3.0]
+
+def test_dimension_table_strips_leading_item_number():
+    rq = PsychologyToolsAdapter().parse(_dim_table(_DIMS, _FA, [("1. Telephoning", [0, 1, 0, 1])]),
+                                        "https://psychology-tools.com/test/x")
+    assert rq.items[0].text == "Telephoning"
+
+def test_sanitize_dimension():
+    assert _sanitize_dimension("Fear") == "fear"
+    assert _sanitize_dimension("Avoidance") == "avoidance"
+    with pytest.raises(PsychologyToolsParseError):
+        _sanitize_dimension("!")     # sanitizes to "" -> invalid
+    with pytest.raises(PsychologyToolsParseError):
+        _sanitize_dimension("3D")    # leading digit -> invalid
+
+def test_dimension_table_radio_count_mismatch_refused():
+    with pytest.raises(PsychologyToolsParseError):
+        PsychologyToolsAdapter().parse(_dim_table(_DIMS, _FA, [("stem", [0, 1, 0])]),
+                                       "https://psychology-tools.com/test/x")
+
+def test_dimension_table_non_numeric_value_refused():
+    html = _dim_table(_DIMS, _FA, [("stem", [0, 1, 0, 1])]).replace('value="1"', 'value="x"', 1)
+    with pytest.raises(PsychologyToolsParseError):
+        PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+
+def test_standard_page_unaffected_by_dimension_branch():
+    # a non-table standard page still routes to _extract_items
+    rq = PsychologyToolsAdapter().parse(_page(_row("q1", "I feel tense", OPTS3)),
+                                        "https://psychology-tools.com/test/x")
+    assert len(rq.items) == 1 and rq.items[0].text == "I feel tense"

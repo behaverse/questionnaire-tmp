@@ -49,6 +49,95 @@ def _cell_pair(cell):
         raise PsychologyToolsParseError(f"non-numeric radio value {v!r}")
 
 
+def _sanitize_dimension(label: str) -> str:
+    """A column super-header label -> a schema-valid Option.dimension key
+    (pattern ^[a-z][a-z0-9_]+$). 'Fear'->'fear', 'Avoidance'->'avoidance'. Refuses if the
+    result can't satisfy the pattern (too short, or leading non-letter)."""
+    key = re.sub(r"_+", "_", re.sub(r"[^a-z0-9]+", "_", label.lower())).strip("_")
+    if not re.fullmatch(r"[a-z][a-z0-9_]+", key):
+        raise PsychologyToolsParseError(f"dimension label {label!r} -> invalid key {key!r}")
+    return key
+
+
+def _dimension_table(form):
+    """Return the form's two-dimension table iff its first header row has >=2 `<th colspan>`
+    super-header cells, else None. This distinguishes the Liebowitz-style layout from the
+    standard `div.notable-tr` / alternate `li.question-container` layouts (which have no such
+    table)."""
+    for table in form.find_all("table"):
+        head = table.find("tr")
+        if head and len([th for th in head.find_all("th") if th.get("colspan")]) >= 2:
+            return table
+    return None
+
+
+def _radio_value(cell) -> float:
+    """The numeric value of a single-radio table cell (the anchor comes from the column
+    header, not the cell). Raises on a missing/non-numeric value."""
+    inp = cell.find("input", attrs={"type": "radio"})
+    v = inp.get("value") if inp else None
+    if v is None or v == "":
+        raise PsychologyToolsParseError("radio cell has no value")
+    try:
+        return float(v)
+    except ValueError:
+        raise PsychologyToolsParseError(f"non-numeric radio value {v!r}")
+
+
+def _extract_dimension_table(table):
+    """Flatten a two-super-header dimension table into per-(item, dimension) RawItems,
+    interleaved (item1-dim1, item1-dim2, item2-dim1, ...). Parses by column position: the
+    super-header colspans partition both the anchor row and each data row's radio cells."""
+    rows = table.find_all("tr")
+    if len(rows) < 3:
+        raise PsychologyToolsParseError("dimension table has too few rows")
+    supers = [th for th in rows[0].find_all("th") if th.get("colspan")]
+    if len(supers) < 2:
+        raise PsychologyToolsParseError("need >=2 dimension super-headers")
+    dims = []  # (dim_key, span) in column order
+    for th in supers:
+        try:
+            span = int(th.get("colspan"))
+        except (TypeError, ValueError):
+            raise PsychologyToolsParseError(f"bad colspan {th.get('colspan')!r}")
+        if span < 1:
+            raise PsychologyToolsParseError("colspan < 1")
+        dims.append((_sanitize_dimension(th.get_text(" ", strip=True)), span))
+    total = sum(span for _, span in dims)
+    anchors_flat = [th.get_text(" ", strip=True) for th in rows[1].find_all("th")]
+    if len(anchors_flat) != total:
+        raise PsychologyToolsParseError(
+            f"anchor count {len(anchors_flat)} != colspan total {total}")
+    per_dim_anchors, pos = [], 0
+    for _, span in dims:
+        per_dim_anchors.append(anchors_flat[pos:pos + span])
+        pos += span
+    items = []
+    for row in rows[2:]:
+        cells = row.find_all(["td", "th"])
+        radio_cells = [c for c in cells if c.find("input", attrs={"type": "radio"})]
+        if not radio_cells:
+            continue
+        if len(radio_cells) != total:
+            raise PsychologyToolsParseError(
+                f"data row has {len(radio_cells)} radio cells != {total}")
+        stem_cell = next((c for c in cells if not c.find("input", attrs={"type": "radio"})), None)
+        stem = re.sub(r"^\s*\d+[.)]\s*", "",
+                      stem_cell.get_text(" ", strip=True)) if stem_cell else ""
+        if not stem:
+            raise PsychologyToolsParseError("dimension-table row has an empty stem")
+        values = [_radio_value(c) for c in radio_cells]
+        pos = 0
+        for (dim_key, span), anchors in zip(dims, per_dim_anchors):
+            items.append(RawItem(text=stem, option=RawOption(
+                input_data_type="choice", measurement_type="ordinal", selection="single",
+                dimension=dim_key, anchors=list(anchors), values=values[pos:pos + span])))
+            pos += span
+    if not items:
+        raise PsychologyToolsParseError("dimension table has no data rows with radios")
+    return items
+
+
 def _extract_items(form):
     """Parse item rows from whichever template is present: standard
     `div.notable-tr.question` else alternate `li.question-container`. Returns [RawItem].
@@ -90,7 +179,8 @@ class PsychologyToolsAdapter(SourceAdapter):
         form = soup.find("form")
         if form is None:
             raise PsychologyToolsParseError("no <form> — not a /test/ page")
-        items = _extract_items(form)
+        tbl = _dimension_table(form)
+        items = _extract_dimension_table(tbl) if tbl is not None else _extract_items(form)
         if not items:
             raise PsychologyToolsParseError("no items parsed")
 
