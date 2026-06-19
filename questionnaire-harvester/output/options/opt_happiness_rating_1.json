@@ -1,0 +1,177 @@
+{
+  "content": {
+    "en": {
+      "label": "The Children’s Happiness Scale 20-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "Life is good for me at the moment"
+        },
+        {
+          "index": 2,
+          "text": "I am treated fairly"
+        },
+        {
+          "index": 3,
+          "text": "I know what is happening next in my life"
+        },
+        {
+          "index": 4,
+          "text": "I have big problems but am dealing with them"
+        },
+        {
+          "index": 5,
+          "text": "I am quite proud of myself"
+        },
+        {
+          "index": 6,
+          "text": "I am trying to change some things about myself"
+        },
+        {
+          "index": 7,
+          "text": "I don't have any big problems at the moment"
+        },
+        {
+          "index": 8,
+          "text": "I have lots of friends"
+        },
+        {
+          "index": 9,
+          "text": "I get confused about what is going on"
+        },
+        {
+          "index": 10,
+          "text": "I never feel safe"
+        },
+        {
+          "index": 11,
+          "text": "I often get anxious"
+        },
+        {
+          "index": 12,
+          "text": "I get lonely"
+        },
+        {
+          "index": 13,
+          "text": "People are prejudiced against me"
+        },
+        {
+          "index": 14,
+          "text": "I learn from my mistakes"
+        },
+        {
+          "index": 15,
+          "text": "I am a shy person"
+        },
+        {
+          "index": 16,
+          "text": "I get bullied"
+        },
+        {
+          "index": 17,
+          "text": "I am good at learning new things"
+        },
+        {
+          "index": 18,
+          "text": "I am getting all the help I need"
+        },
+        {
+          "index": 19,
+          "text": "I have lots of fun"
+        },
+        {
+          "index": 20,
+          "text": "I am easily depressed"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_happiness_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "nominal",
+  "options": [
+    {
+      "index": 1,
+      "value": 3.64
+    },
+    {
+      "index": 2,
+      "value": 3.13
+    },
+    {
+      "index": 3,
+      "value": 3.15
+    },
+    {
+      "index": 4,
+      "value": 2.55
+    },
+    {
+      "index": 5,
+      "value": 3.65
+    },
+    {
+      "index": 6,
+      "value": 2.57
+    },
+    {
+      "index": 7,
+      "value": 3.22
+    },
+    {
+      "index": 8,
+      "value": 4.01
+    },
+    {
+      "index": 9,
+      "value": 2.43
+    },
+    {
+      "index": 10,
+      "value": 1.74
+    },
+    {
+      "index": 11,
+      "value": 2.32
+    },
+    {
+      "index": 12,
+      "value": 1.68
+    },
+    {
+      "index": 13,
+      "value": 1.77
+    },
+    {
+      "index": 14,
+      "value": 3.18
+    },
+    {
+      "index": 15,
+      "value": 2.63
+    },
+    {
+      "index": 16,
+      "value": 1.68
+    },
+    {
+      "index": 17,
+      "value": 3.7
+    },
+    {
+      "index": 18,
+      "value": 3.38
+    },
+    {
+      "index": 19,
+      "value": 4.25
+    },
+    {
+      "index": 20,
+      "value": 1.75
+    }
+  ],
+  "selection": "multiple"
+}

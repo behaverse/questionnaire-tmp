@@ -118,3 +118,4 @@
 | qst_epds | psytoolkit.org | high | needs-review | 1 | unknown |
 | qst_arc | psytoolkit.org | high | needs-review | 2 | unknown |
 | qst_nfs | psytoolkit.org | high | needs-review | 1 | unknown |
+| qst_happiness | psytoolkit.org | high | needs-review | 1 | unknown |
