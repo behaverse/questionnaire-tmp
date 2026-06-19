@@ -10,3 +10,6 @@ Answer inline under each item (replace the `> answer:` line).
 ### 2. No citation captured for **Liebowitz Social Anxiety Scale** — supply the source publication?
 > answer: 
 
+### 3. Confirm reuse of shared entity `ins_lsas_instruction` for **Liebowitz Social Anxiety Scale** (vs. minting a new one)?
+> answer: 
+
