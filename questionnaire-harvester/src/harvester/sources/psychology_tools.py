@@ -26,6 +26,48 @@ def _derive_id(title: str, url: str) -> str:
     return "qst_" + re.sub(r"[^a-z0-9]", "", seg.lower())
 
 
+def _cell_pair(cell):
+    """From a response cell (standard `.notable-td.response` span or alternate
+    `ul.responses > li`), return (anchor_text, value_float). Anchor may be "" (unlabeled).
+    Raises on a missing/non-numeric radio value."""
+    lab = cell.find("label")
+    text = lab.get_text(" ", strip=True) if lab else ""
+    inp = cell.find("input", attrs={"type": "radio"})
+    v = inp.get("value") if inp else None
+    if v is None or v == "":
+        raise PsychologyToolsParseError("response cell has no radio value")
+    try:
+        return (text, float(v))
+    except ValueError:
+        raise PsychologyToolsParseError(f"non-numeric radio value {v!r}")
+
+
+def _extract_items(form):
+    """Parse item rows from whichever template is present: standard
+    `div.notable-tr.question` else alternate `li.question-container`. Returns [RawItem].
+    Refuses (PsychologyToolsParseError) on no rows, an empty stem, or no response cells."""
+    rows = form.select("div.notable-tr.question") or form.select("li.question-container")
+    if not rows:
+        raise PsychologyToolsParseError("no item rows (neither standard nor alternate layout)")
+    items = []
+    for row in rows:
+        prompt_el = row.select_one(".notable-td.prompt") or row.select_one("span.prompt")
+        num = prompt_el.select_one(".num") if prompt_el else None
+        if num:
+            num.extract()
+        stem = prompt_el.get_text(" ", strip=True) if prompt_el else ""
+        if not stem:
+            raise PsychologyToolsParseError("item has an empty stem")
+        cells = row.select(".notable-td.response") or row.select("ul.responses > li")
+        if not cells:
+            raise PsychologyToolsParseError("item has no response options")
+        pairs = [_cell_pair(c) for c in cells]
+        items.append(RawItem(text=stem, option=RawOption(
+            input_data_type="choice", measurement_type="ordinal", selection="single",
+            dimension="rating", anchors=[a for a, _ in pairs], values=[v for _, v in pairs])))
+    return items
+
+
 class PsychologyToolsAdapter(SourceAdapter):
     site = "psychology-tools.com"
 
@@ -42,42 +84,7 @@ class PsychologyToolsAdapter(SourceAdapter):
         form = soup.find("form")
         if form is None:
             raise PsychologyToolsParseError("no <form> — not a /test/ page")
-        rows = form.select("div.notable-tr.question")
-        if not rows:
-            raise PsychologyToolsParseError("no `.notable-tr.question` item rows found")
-
-        items = []
-        for row in rows:
-            prompt_el = row.select_one(".notable-td.prompt")
-            if prompt_el is None:
-                raise PsychologyToolsParseError("item row has no .prompt cell")
-            num = prompt_el.select_one(".num")
-            if num:
-                num.extract()
-            stem = prompt_el.get_text(" ", strip=True)
-            if not stem:
-                raise PsychologyToolsParseError("item has an empty stem")
-            cells = row.select(".notable-td.response")
-            if not cells:
-                raise PsychologyToolsParseError("item has no response options")
-            anchors, values = [], []
-            for c in cells:
-                lab = c.find("label")
-                text = lab.get_text(" ", strip=True) if lab else ""
-                if not text:
-                    raise PsychologyToolsParseError("response cell has an empty anchor label")
-                inp = c.find("input", attrs={"type": "radio"})
-                v = inp.get("value") if inp else None
-                if v is None or v == "":
-                    raise PsychologyToolsParseError("response cell has no radio value")
-                try:
-                    values.append(float(v))
-                except ValueError:
-                    raise PsychologyToolsParseError(f"non-numeric radio value {v!r}")
-                anchors.append(text)
-            items.append(RawItem(text=stem, option=RawOption(
-                input_data_type="choice", measurement_type="ordinal", selection="single",
-                dimension="rating", anchors=anchors, values=values)))
+        items = _extract_items(form)
         if not items:
             raise PsychologyToolsParseError("no items parsed")
 

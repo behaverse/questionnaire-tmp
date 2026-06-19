@@ -49,11 +49,6 @@ def test_refuses_no_question_rows():
     with pytest.raises(PsychologyToolsParseError):
         PsychologyToolsAdapter().parse(_page(""), "https://psychology-tools.com/test/x")
 
-def test_refuses_empty_anchor_label():
-    bad = _row("q1", "stem", [("", "0"), ("ok", "1")])
-    with pytest.raises(PsychologyToolsParseError):
-        PsychologyToolsAdapter().parse(_page(bad), "https://psychology-tools.com/test/x")
-
 def test_refuses_non_numeric_value():
     bad = _row("q1", "stem", [("Never", "x"), ("Often", "1")])
     with pytest.raises(PsychologyToolsParseError):
@@ -63,3 +58,53 @@ def test_refuses_empty_stem():
     bad = _row("q1", "", OPTS3)
     with pytest.raises(PsychologyToolsParseError):
         PsychologyToolsAdapter().parse(_page(bad), "https://psychology-tools.com/test/x")
+
+
+def _std_row_endpoint_only(name, stem):
+    # standard layout, only first+last labelled (middles blank) — endpoint-anchored scale
+    opts = [("Not at all", "1"), ("", "2"), ("", "3"), ("", "4"), ("Very much", "5")]
+    cells = "".join(
+        f'<span class="notable-td response"><label class="aria-label" for="{name}_{i}">{a}</label>'
+        f'<input id="{name}_{i}" type="radio" name="{name}" value="{v}"></span>'
+        for i, (a, v) in enumerate(opts))
+    return (f'<div class="notable-tr question odd">'
+            f'<span class="notable-td prompt"><span class="num">{name[1:]}.</span>'
+            f'<span>{stem}</span></span>{cells}</div>')
+
+def _alt_row(name, stem, opts):
+    lis = "".join(
+        f'<li class="response"><input id="{name}_{i}" type="radio" name="{name}" value="{v}">'
+        f'<label for="{name}_{i}">{a}</label></li>' for i, (a, v) in enumerate(opts))
+    return (f'<li class="question-container"><span class="prompt">{stem}</span>'
+            f'<ul class="responses">{lis}</ul></li>')
+
+def _alt_page(rows, *, title="Demo Mania Scale (DMS)"):
+    return f'<html><head><meta name="description" content="demo."></head><body><h1>{title}</h1><form>{rows}</form></body></html>'
+
+ALT3 = [("Absent", "0"), ("Mild", "1"), ("Severe", "2")]
+
+def test_standard_endpoint_only_labels_no_refusal():
+    html = _page(_std_row_endpoint_only("q1", "I worry about deadlines"))
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    o = rq.items[0].option
+    assert o.values == [1.0, 2.0, 3.0, 4.0, 5.0]               # all values kept
+    assert o.anchors == ["Not at all", "", "", "", "Very much"]  # blanks kept verbatim
+
+def test_alternate_layout_li_question_container():
+    html = _alt_page(_alt_row("q1", "Elevated mood", ALT3) + _alt_row("q2", "Increased energy", ALT3))
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    assert len(rq.items) == 2
+    assert rq.items[0].text == "Elevated mood"
+    assert rq.items[0].option.anchors == ["Absent", "Mild", "Severe"]
+    assert rq.items[0].option.values == [0.0, 1.0, 2.0]
+
+def test_alternate_stemless_refused():
+    # empty span.prompt -> stem-less Beck-style -> refuse (deferred)
+    html = _alt_page(_alt_row("q1", "", [("Statement A", "0"), ("Statement B", "1")]))
+    with pytest.raises(PsychologyToolsParseError):
+        PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+
+def test_no_rows_either_layout_refused():
+    html = "<html><h1>X (X)</h1><form><p>nothing</p></form></html>"
+    with pytest.raises(PsychologyToolsParseError):
+        PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
