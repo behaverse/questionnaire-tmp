@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I usually am able to stop eating when I want to. I know when “enough is enough.”"
+        },
+        {
+          "index": 2,
+          "text": "Every so often, I experience a compulsion to eat which I can’t seem to control."
+        },
+        {
+          "index": 3,
+          "text": "Frequently, I experience strong urges to eat which I seem unable to control, but at other times I can control my eating urges."
+        },
+        {
+          "index": 4,
+          "text": "I feel incapable of controlling urges to eat. I have a fear of not being able to stop eating voluntarily."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_10",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

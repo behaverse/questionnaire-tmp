@@ -1,0 +1,41 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 3-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I don’t feel any guilt or self-hate after I overeat."
+        },
+        {
+          "index": 2,
+          "text": "After I overeat, occasionally I feel guilt or self-hate."
+        },
+        {
+          "index": 3,
+          "text": "Almost all the time I experience strong guilt or self-hate after I overeat."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_6",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

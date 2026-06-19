@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "My level of calorie intake does not go up very high or go down very low on a regular basis."
+        },
+        {
+          "index": 2,
+          "text": "Sometimes after I overeat, I will try to reduce my caloric intake to almost nothing to compensate for the excess calories I’ve eaten."
+        },
+        {
+          "index": 3,
+          "text": "I have a regular habit of overeating during the night. It seems that my routine is not to be hungry in the morning but overeat in the evening."
+        },
+        {
+          "index": 4,
+          "text": "In my adult years, I have had week-long periods where I practically starve myself. This follows periods when I overeat. It seems I live a life of either “feast or famine.”"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_9",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

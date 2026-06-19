@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I don’t have any problem stopping eating when I feel full."
+        },
+        {
+          "index": 2,
+          "text": "I usually can stop eating when I feel full but occasionally overeat leaving me feeling uncomfortably stuffed."
+        },
+        {
+          "index": 3,
+          "text": "I have a problem stopping eating once I start and usually I feel uncomfortably stuffed after I eat a meal."
+        },
+        {
+          "index": 4,
+          "text": "Because I have a problem not being able to stop eating when I want, I sometimes have to induce vomiting to relieve my stuffed feeling."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_11",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

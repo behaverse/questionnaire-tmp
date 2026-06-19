@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I don’t think much about trying to control unwanted eating urges."
+        },
+        {
+          "index": 2,
+          "text": "At least some of the time, I feel my thoughts are pre-occupied with trying to control my eating urges."
+        },
+        {
+          "index": 3,
+          "text": "I feel that frequently I spend much time thinking about how much I ate or about trying not to eat anymore."
+        },
+        {
+          "index": 4,
+          "text": "It seems to me that most of my waking hours are pre-occupied by thoughts about eating or not eating. I feel like I’m constantly struggling not to eat."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_14",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

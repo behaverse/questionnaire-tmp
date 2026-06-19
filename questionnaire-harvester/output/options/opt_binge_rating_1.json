@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I don’t feel self-conscious about my weight or body size when I’m with others."
+        },
+        {
+          "index": 2,
+          "text": "I feel concerned about how I look to others, but it normally does not make me feel disappointed with myself."
+        },
+        {
+          "index": 3,
+          "text": "I do get self-conscious about my appearance and weight which makes me feel disappointed in myself."
+        },
+        {
+          "index": 4,
+          "text": "I feel very self-conscious about my weight and frequently, I feel intense shame and disgust for myself. I try to avoid social contacts because of my self-consciousness."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_1",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    },
+    {
+      "index": 3,
+      "value": 1.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

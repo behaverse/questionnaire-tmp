@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I don’t have any difficulty eating slowly in the proper manner."
+        },
+        {
+          "index": 2,
+          "text": "Although I seem to “gobble down” foods, I don’t end up feeling stuffed because of eating too much."
+        },
+        {
+          "index": 3,
+          "text": "At times, I tend to eat quickly and then, I feel uncomfortably full afterwards."
+        },
+        {
+          "index": 4,
+          "text": "I have the habit of bolting down my food, without really chewing it. When this happens I usually feel uncomfortably stuffed because I’ve eaten too much."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_2",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

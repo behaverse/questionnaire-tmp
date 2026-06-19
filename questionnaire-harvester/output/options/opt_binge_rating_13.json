@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I eat three meals a day with only an occasional between meal snack."
+        },
+        {
+          "index": 2,
+          "text": "I eat 3 meals a day, but I also normally snack between meals."
+        },
+        {
+          "index": 3,
+          "text": "When I am snacking heavily, I get in the habit of skipping regular meals."
+        },
+        {
+          "index": 4,
+          "text": "There are regular periods when I seem to be continually eating, with no planned meals."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_13",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

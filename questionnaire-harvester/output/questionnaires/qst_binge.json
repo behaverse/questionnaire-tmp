@@ -1,0 +1,230 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "administration_mode": [
+        "self_report"
+      ],
+      "domain": [],
+      "population": []
+    },
+    "description": "The BES is a comprehensive assessment tool for identifying binge eating patterns through a detailed, 16-question behavioral analysis.",
+    "id": "qst_binge",
+    "language": "en",
+    "license": "unknown",
+    "provenance": {
+      "imported_at": "2026-06-17T00:00:00Z",
+      "importer_version": "web-harvest-0.1.0",
+      "source": "web_harvest"
+    },
+    "psychometrics": {
+      "item_count": 16
+    },
+    "publication": {
+      "citation": "J Gormally, S Black, S Daston, D Rardin. The assessment of binge eating severity among obese persons. 7 ( 1 ): Addict Behav 47-55 ( 1982 ).",
+      "year": 1982
+    },
+    "short_title": "BES",
+    "title": "Binge Eating Scale (BES)",
+    "version": "v26.0618",
+    "x_author_contact_needed": true,
+    "x_commercial_use": "unknown",
+    "x_harvest_date": "2026-06-17",
+    "x_license_class": "unknown",
+    "x_license_notes": "license unclear — confirm with author",
+    "x_license_status": "unknown",
+    "x_redistribution": "unknown",
+    "x_references": [
+      "J Gormally, S Black, S Daston, D Rardin. The assessment of binge eating severity among obese persons. 7 ( 1 ): Addict Behav 47-55 ( 1982 )."
+    ],
+    "x_source_site": "psychology-tools.com",
+    "x_source_url": "https://psychology-tools.com/test/binge-eating-scale",
+    "x_translation": "unknown"
+  },
+  "pages": [
+    {
+      "elements": [
+        {
+          "option": {
+            "ref": "opt_binge_rating_1@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_2@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_3@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_4@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_5@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_6@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_7@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_8@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_9@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_10@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_11@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_12@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_13@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_14@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_15@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_binge_rating_16@v26.0618"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_binge_shared@v26.0618"
+            }
+          },
+          "required": true
+        }
+      ],
+      "id": "page_main"
+    }
+  ]
+}

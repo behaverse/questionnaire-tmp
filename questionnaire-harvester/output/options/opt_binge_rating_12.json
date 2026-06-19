@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I seem to eat just as much when I’m with others (family, social gatherings) as when I’m by myself."
+        },
+        {
+          "index": 2,
+          "text": "Sometimes, when I’m with other persons, I don’t eat as much as I want to eat because I’m self-conscious about my eating."
+        },
+        {
+          "index": 3,
+          "text": "Frequently, I eat only a small amount of food when others are present, because I’m very embarrassed about my eating."
+        },
+        {
+          "index": 4,
+          "text": "I feel so ashamed about overeating that I pick times to overeat when I know no one will see me. I feel like a “closet eater.”"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_12",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

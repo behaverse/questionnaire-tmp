@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I’m usually physically hungry when I eat something."
+        },
+        {
+          "index": 2,
+          "text": "Occasionally, I eat something on impulse even though I really am not hungry."
+        },
+        {
+          "index": 3,
+          "text": "I have the regular habit of eating foods, that I might not really enjoy, to satisfy a hungry feeling even though physically, I don’t need the food."
+        },
+        {
+          "index": 4,
+          "text": "Although I’m not physically hungry, I get a hungry feeling in my mouth that only seems to be satisfied when I eat a food, like a sandwich, that fills my mouth. Sometimes, when I eat the food to satisfy my mouth hunger, I then spit the food out so I won’t gain weight."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_5",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

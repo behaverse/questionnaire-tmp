@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I don’t have the habit of eating when I’m bored."
+        },
+        {
+          "index": 2,
+          "text": "I sometimes eat when I’m bored, but often I’m able to “get busy” and get my mind off food."
+        },
+        {
+          "index": 3,
+          "text": "I have a regular habit of eating when I’m bored, but occasionally, I can use some other activity to get my mind off eating."
+        },
+        {
+          "index": 4,
+          "text": "I have a strong habit of eating when I’m bored. Nothing seems to help me break the habit."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 0.0
+    },
+    {
+      "index": 3,
+      "value": 0.0
+    },
+    {
+      "index": 4,
+      "value": 2.0
+    }
+  ],
+  "selection": "single"
+}

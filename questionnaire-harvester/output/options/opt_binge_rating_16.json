@@ -1,0 +1,41 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 3-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I usually know whether or not I’m physically hungry. I take the right portion of food to satisfy me."
+        },
+        {
+          "index": 2,
+          "text": "Occasionally, I feel uncertain about knowing whether or not I’m physically hungry. At these times it’s hard to know how much food I should take to satisfy me."
+        },
+        {
+          "index": 3,
+          "text": "Even though I might know how many calories I should eat, I don’t have any idea what is a “normal” amount of food for me."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_16",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    }
+  ],
+  "selection": "single"
+}

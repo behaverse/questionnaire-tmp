@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I feel capable to control my eating urges when I want to."
+        },
+        {
+          "index": 2,
+          "text": "I feel like I have failed to control my eating more than the average person."
+        },
+        {
+          "index": 3,
+          "text": "I feel utterly helpless when it comes to feeling in control of my eating urges."
+        },
+        {
+          "index": 4,
+          "text": "Because I feel so helpless about controlling my eating I have become very desperate about trying to get in control."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_3",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

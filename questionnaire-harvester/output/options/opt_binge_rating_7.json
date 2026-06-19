@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I don’t lose total control of my eating when dieting even after periods when I overeat."
+        },
+        {
+          "index": 2,
+          "text": "Sometimes when I eat a “forbidden food” on a diet, I feel like I “blew it” and eat even more."
+        },
+        {
+          "index": 3,
+          "text": "Frequently, I have the habit of saying to myself, “I’ve blown it now, why not go all the way” when I overeat on a diet. When that happens I eat even more."
+        },
+        {
+          "index": 4,
+          "text": "I have a regular habit of starting strict diets for myself, but I break the diets by going on an eating binge. My life seems to be either a “feast” or “famine.”"
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_7",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 2.0
+    },
+    {
+      "index": 3,
+      "value": 3.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}

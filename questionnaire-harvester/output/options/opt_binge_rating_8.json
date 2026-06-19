@@ -1,0 +1,49 @@
+{
+  "content": {
+    "en": {
+      "label": "BES 4-point rating",
+      "options": [
+        {
+          "index": 1,
+          "text": "I rarely eat so much food that I feel uncomfortably stuffed afterwards."
+        },
+        {
+          "index": 2,
+          "text": "Usually about once a month, I eat such a quantity of food, I end up feeling very stuffed."
+        },
+        {
+          "index": 3,
+          "text": "I have regular periods during the month when I eat large amounts of food, either at mealtime or at snacks."
+        },
+        {
+          "index": 4,
+          "text": "I eat so much food that I regularly feel quite uncomfortable after eating and sometimes a bit nauseous."
+        }
+      ],
+      "status": "validated"
+    }
+  },
+  "dimension": "rating",
+  "id": "opt_binge_rating_8",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "selection": "single"
+}
