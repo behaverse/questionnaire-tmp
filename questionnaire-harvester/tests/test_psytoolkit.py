@@ -360,3 +360,55 @@ def test_parse_full_radio_page_via_public_surface():
     assert rq.items[0].text == "I find it easy to use train timetables."
     assert rq.items[0].option.values == [2.0, 1.0, 0.0, 0.0]
     assert rq.items[1].text == "I like clearly organised shops."
+
+
+def test_parse_check_block_multiselect_nominal_float_scores():
+    from harvester.sources.psytoolkit import _parse_choice_item_block
+    block = [
+        "l: happinessitems",
+        "t: check",
+        "q: Tick all the ones that are right about you.",
+        "- {score=3.64} Life is good for me at the moment",
+        "- {score=1.74} I never feel safe",
+        "- {score=4.25} I have lots of fun",
+    ]
+    item = _parse_choice_item_block(block, selection="multiple", measurement_type="nominal")
+    assert item.text == "Tick all the ones that are right about you."
+    assert item.option.input_data_type == "choice"
+    assert item.option.selection == "multiple"
+    assert item.option.measurement_type == "nominal"
+    assert item.option.anchors == ["Life is good for me at the moment", "I never feel safe",
+                                   "I have lots of fun"]
+    assert item.option.values == [3.64, 1.74, 4.25]
+
+
+def test_radio_block_still_single_ordinal_after_refactor():
+    from harvester.sources.psytoolkit import _parse_radio_block
+    block = ["l: q1", "t: radio", "q: Rate this",
+             "- {score=0} no", "- {score=1} yes"]
+    item = _parse_radio_block(block)
+    assert item.option.selection == "single"
+    assert item.option.measurement_type == "ordinal"
+    assert item.option.values == [0.0, 1.0]
+
+
+def test_parse_check_block_refuses_no_options():
+    from harvester.sources.psytoolkit import _parse_choice_item_block, PsyToolkitParseError
+    with pytest.raises(PsyToolkitParseError):
+        _parse_choice_item_block(["l: x", "t: check", "q: Q with no options"],
+                                 selection="multiple", measurement_type="nominal")
+
+
+def test_parse_full_check_page_via_public_surface():
+    dsl = ("l: items\nt: check\nq: Tick all that apply.\n"
+           "- {score=3.64} a\n- {score=1.74} b\n- {score=4.25} c\n\n"
+           "l: s1\nt: set\n- sum $items\n\n"
+           "l: fb\nt: info\nq: Your score is {$s1}\n")
+    html = f"<html><h1>Children's Happiness Scale</h1><pre>{dsl}</pre></html>"
+    rq = PsyToolkitAdapter().parse(html, "https://x/children-happiness.html")
+    assert rq.scale is None
+    assert rq.instruction_text is None
+    assert len(rq.items) == 1
+    assert rq.items[0].text == "Tick all that apply."
+    assert rq.items[0].option.selection == "multiple"
+    assert rq.items[0].option.values == [3.64, 1.74, 4.25]
