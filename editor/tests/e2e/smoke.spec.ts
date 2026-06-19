@@ -261,9 +261,9 @@ test('fork a picked Library prompt → derive locally → editable', async ({ pa
   // the "+ insert condition" button that may be visible in the logic/validation panels.
   await page.locator('.fixed.z-50').getByRole('button', { name: /insert/i }).click()
 
-  // the prompt is now a read-only Library chip with "Fork to edit"
-  await page.getByRole('button', { name: /fork to edit/i }).first().click()
-  await page.getByRole('button', { name: /derive locally/i }).click()
+  // the prompt is now a read-only Library chip with "Edit"
+  await page.getByRole('button', { name: /^edit$/i }).first().click()
+  await page.getByRole('button', { name: /create a local copy/i }).click()
 
   // after forking, the editable Prompt text field appears with the forked content
   await expect(page.getByLabel('Prompt text', { exact: true })).toHaveValue('Shared prompt text')

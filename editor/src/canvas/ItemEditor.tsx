@@ -116,7 +116,7 @@ export function ItemEditor({ path }: { path: NodePath }) {
       ) : (
         <div className="mt-2 rounded border border-ed-border bg-ed-subtle px-3 py-2 text-sm text-ed-muted">
           {option && 'ref' in (option as object) ? (
-            <>Referenced option <span className="font-mono">{(option as { ref: string }).ref}</span><UpgradeBadge refStr={(option as { ref: string }).ref} /> <ForkButton refStr={(option as { ref: string }).ref} /></>
+            <><span className="font-mono">{(option as { ref: string }).ref}</span> <UpgradeBadge refStr={(option as { ref: string }).ref} /> <ForkButton refStr={(option as { ref: string }).ref} /></>
           ) : 'No editable option.'}
         </div>
       )}

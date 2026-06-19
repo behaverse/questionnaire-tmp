@@ -53,7 +53,7 @@ test('selecting an item with a ref-based option opens the item editor (not a stu
   useEditorStore.getState().select(['pages', 0, 'elements', 0])
   render(<Canvas />)
   expect(screen.getByText('Option (Response)')).toBeInTheDocument()
-  expect(screen.getByText(/Referenced option/i)).toBeInTheDocument()
+  expect(screen.getByText('opt_agreement_7@v26.0606')).toBeInTheDocument()
   expect(screen.queryByText(/arrives in ED-C/i)).toBeNull()
 })
 

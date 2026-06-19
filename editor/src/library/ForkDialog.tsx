@@ -16,16 +16,16 @@ export function ForkDialog({ refStr, onClose, fetchBody }: {
     else setError('Could not fork — the Library entity could not be fetched.')
   }
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30" onClick={onClose}>
-      <div className="w-[480px] rounded-lg bg-ed-panel shadow-xl" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+      <div className="w-[480px] rounded-lg bg-ed-panel shadow-xl">
         <div className="border-b border-ed-border p-3 text-sm font-semibold">Edit <span className="font-mono">{refStr}</span>?</div>
         <div className="space-y-3 p-4 text-sm">
-          <p className="text-ed-muted">This is a shared Library entity. To change it, fork a local copy or propose a shared change.</p>
+          <p className="text-ed-muted">This is a shared Library entity, so it's read-only. To edit it here, the editor makes a <strong>local copy</strong> in this questionnaire — the shared Library entry is left unchanged.</p>
           <div className="flex flex-col gap-2">
             <button onClick={derive} disabled={busy}
                     className="rounded bg-ed-accent px-3 py-2 text-left text-white disabled:opacity-50">
-              <div className="font-medium">Derive locally</div>
-              <div className="text-xs text-white/70">Copy into this questionnaire as a draft you can edit (study-scoped).</div>
+              <div className="font-medium">Create a local copy &amp; edit</div>
+              <div className="text-xs text-white/70">Copies it into this questionnaire as a draft you can edit (study-scoped).</div>
             </button>
             <button disabled title="Needs Identity / Library write (OD-08)"
                     className="rounded border border-ed-border px-3 py-2 text-left text-ed-muted">

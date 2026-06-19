@@ -31,8 +31,8 @@ export function LibraryQuestionnairePicker({ onPick, onClose, list = realList }:
   }, [q, all])
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30" onClick={onClose}>
-      <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-ed-panel shadow-xl" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+      <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-ed-panel shadow-xl">
         <div className="flex items-center gap-2 border-b border-ed-border p-3">
           <strong className="text-sm">Open a questionnaire from the Library</strong>
           <button onClick={onClose} className="ml-auto text-ed-muted hover:text-ed-text">✕</button>

@@ -27,7 +27,7 @@ test('edits the selected inline item option in the model', async () => {
 test('shows the prompt ref chip read-only with a fork-to-edit button for Library refs', () => {
   render(<ItemEditor path={['pages', 0, 'elements', 0]} />)
   expect(screen.getByText('pr_x@v26.0609')).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: /fork to edit/i })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /^edit$/i })).toBeInTheDocument()
 })
 
 test('edits a pool prompt via the PromptEditor', async () => {

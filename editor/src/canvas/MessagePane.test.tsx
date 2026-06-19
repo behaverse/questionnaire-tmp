@@ -30,6 +30,6 @@ test('a Library-pinned message ref (not in pool) shows a read-only fork note', (
   useEditorStore.getState().reset()
   useEditorStore.getState().loadModel(m, { kind: 'file', name: 't.json' })
   render(<MessagePane path={['pages', 0, 'elements', 0]} />)
-  expect(screen.getByRole('button', { name: /fork to edit/i })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /^edit$/i })).toBeInTheDocument()
   expect(screen.getByText(libRef)).toBeInTheDocument()
 })

@@ -15,7 +15,7 @@ test('Derive locally forks the ref (pool copy + repoint) and closes', async () =
   useEditorStore.getState().openFork('pr_lib@v26.0609')
   const onClose = vi.fn(() => useEditorStore.getState().closeFork())
   render(<ForkDialog refStr="pr_lib@v26.0609" onClose={onClose} fetchBody={async () => ({ id: 'pr_lib', content: { en: { status: 'validated', text: 'Forked' } } })} />)
-  await userEvent.click(screen.getByRole('button', { name: /derive locally/i }))
+  await userEvent.click(screen.getByRole('button', { name: /create a local copy/i }))
   await waitFor(() => expect(onClose).toHaveBeenCalled())
   expect(useEditorStore.getState().pool['pr_lib@v26.0609.dev1']).toBeTruthy()
   const q = useEditorStore.getState().model!.pages[0].elements[0] as { question: { prompt: { ref: string } } }
@@ -30,7 +30,7 @@ test('Propose a new shared version is disabled (OD-08)', () => {
 test('a failed fork shows an error and stays open', async () => {
   const onClose = vi.fn()
   render(<ForkDialog refStr="pr_lib@v26.0609" onClose={onClose} fetchBody={async () => null} />)
-  await userEvent.click(screen.getByRole('button', { name: /derive locally/i }))
+  await userEvent.click(screen.getByRole('button', { name: /create a local copy/i }))
   await waitFor(() => expect(screen.getByText(/could not fork/i)).toBeInTheDocument())
   expect(onClose).not.toHaveBeenCalled()
 })
