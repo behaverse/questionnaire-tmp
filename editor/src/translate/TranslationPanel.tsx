@@ -67,10 +67,11 @@ export function TranslationPanel() {
             <input aria-label="New language code" value={newLang} onChange={(e) => setNewLang(e.target.value)} placeholder="e.g. fr"
                    onKeyDown={(e) => { if (e.key === 'Enter') addAndTranslate() }}
                    className="w-28 rounded border border-ed-border-strong px-2 py-1 text-sm" />
-            <button onClick={addAndTranslate} disabled={!code || invalid}
+            <button onClick={addAndTranslate} disabled={!code || invalid || code === primary}
                     className="rounded-md bg-ed-accent px-3 py-1 text-sm text-white disabled:opacity-40">Add &amp; translate</button>
           </div>
           {invalid && <p className="mt-1 text-[11px] text-red-600">Invalid locale code (e.g. fr, pt-BR).</p>}
+          {!invalid && code === primary && <p className="mt-1 text-[11px] text-red-600">That's already the primary language.</p>}
         </div>
       </div>
     )
