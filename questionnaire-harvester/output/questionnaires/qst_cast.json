@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 39
     },
+    "publication": {
+      "citation": "J G Williams, C Allison, F J Scott, P F Bolton, S Baron-Cohen, F E Matthews, C Brayne. The Childhood Autism Spectrum Test (CAST): Sex Differences. 38(9): J Autism Dev Disord 1731-9. 2008.",
+      "year": 2008
+    },
     "short_title": "CAST",
     "title": "Childhood Autism Spectrum Test (CAST)",
     "version": "v26.0618",
@@ -33,6 +37,12 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "J G Williams, C Allison, F J Scott, P F Bolton, S Baron-Cohen, F E Matthews, C Brayne. The Childhood Autism Spectrum Test (CAST): Sex Differences. 38(9): J Autism Dev Disord 1731-9. 2008.",
+      "J G Williams, C Allison, F J Scott, P F Bolton, S Baron-Cohen, F E Matthews, C Brayne. The CAST (Childhood Asperger Syndrome Test): Test Accuracy. 9(1): Autism 45-68. 2004.",
+      "J Williams, C Allison, F Scott, C Stott, P Bolton, S Baron-Cohen, C Brayne. The Childhood Asperger Syndrome Test (CAST): Test-retest Reliability. 10(4): Autism 415-27. 2006.",
+      "F J Scott, S Baron-Cohen, P Bolton, C Brayne. The CAST (Childhood Asperger Syndrome Test): Preliminary Development Of A UK Screen For Mainstream Primary-school-age Children. 6(1): Autism 9-31. 2002."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/cast",
     "x_translation": "unknown"

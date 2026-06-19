@@ -7,6 +7,6 @@ Answer inline under each item (replace the `> answer:` line).
 ### 1. License for **Trauma-Related Shame Inventory (TRSI-24)** is unclear (https://psychology-tools.com/test/trauma-related-shame-inventory). Confirm class / contact author?
 > answer: 
 
-### 2. No citation captured for **Trauma-Related Shame Inventory (TRSI-24)** — supply the source publication?
+### 2. Confirm reuse of shared entity `ins_trsi24_instruction` for **Trauma-Related Shame Inventory (TRSI-24)** (vs. minting a new one)?
 > answer: 
 

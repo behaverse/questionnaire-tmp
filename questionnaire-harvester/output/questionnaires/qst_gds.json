@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 30
     },
+    "publication": {
+      "citation": "JA Yesavage, TL Brink, et al. Development and Validation of a Geriatric Depression Screening Scale: a Preliminary Report. 17(1): J Psychiatr Res. 37-49. 1983.",
+      "year": 1983
+    },
     "short_title": "GDS",
     "title": "Geriatric Depression Scale (GDS)",
     "version": "v26.0618",
@@ -33,6 +37,11 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "JA Yesavage, TL Brink, et al. Development and Validation of a Geriatric Depression Screening Scale: a Preliminary Report. 17(1): J Psychiatr Res. 37-49. 1983.",
+      "JI Sheikh, JA Yesavage. Geriatric Depression Scale (GDS): Recent Evidence and Development of a Shorter Version. 5(1/2): Clin Gerontol 165-173. 1986.",
+      "EL Lesher, JS Berryhill. Validation of the Geriatric Depression Scale-Short Form Among Inpatients. 50(2): J Clin Psychol 256-260. 1994."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/geriatric-depression-scale",
     "x_translation": "unknown"

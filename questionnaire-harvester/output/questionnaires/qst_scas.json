@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 45
     },
+    "publication": {
+      "citation": "S H Spence. Structure of Anxiety Symptoms Among Children: A Confirmatory Factor-Analytic Study. 106 ( 2 ): Journal of Abnormal Psychology 280-297 ( 1997 ). [ PDF ]",
+      "year": 1997
+    },
     "short_title": "SCAS",
     "title": "Spence Children's Anxiety Scale (SCAS)",
     "version": "v26.0618",
@@ -33,6 +37,11 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "S H Spence. Structure of Anxiety Symptoms Among Children: A Confirmatory Factor-Analytic Study. 106 ( 2 ): Journal of Abnormal Psychology 280-297 ( 1997 ). [ PDF ]",
+      "SH Spence. A Measure of Anxiety Symptoms Among Children. Behaviour Research and Therapy 545-566 ( 1998 ).",
+      "SH Spence, PM Barrett, CM Turner. Psychometric Properties of the Spence Children’s Anxiety Scale with Young Adolescents. 17(6): Journal of Anxiety Disorders 605-625 ( 2003 )."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/spence-childrens-anxiety-scale",
     "x_translation": "unknown"

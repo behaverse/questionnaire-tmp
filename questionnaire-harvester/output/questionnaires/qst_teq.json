@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 16
     },
+    "publication": {
+      "citation": "Spreng RN, McKinnon MC, Mar RA, Levine B. The Toronto Empathy Questionnaire: Scale development and initial validation of a factor-analytic solution to multiple empathy measures. Journal of Personality Assessment. 2009.; 91 ( 1 ): 62-71.",
+      "year": 2009
+    },
     "short_title": "TEQ",
     "title": "Toronto Empathy Questionnaire (TEQ)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "Spreng RN, McKinnon MC, Mar RA, Levine B. The Toronto Empathy Questionnaire: Scale development and initial validation of a factor-analytic solution to multiple empathy measures. Journal of Personality Assessment. 2009.; 91 ( 1 ): 62-71."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/toronto-empathy-questionnaire",
     "x_translation": "unknown"

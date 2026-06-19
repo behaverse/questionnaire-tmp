@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 45
     },
+    "publication": {
+      "citation": "© 2008 PJ Carnes, Sexual Addiction Screening Test - Revised.",
+      "year": 2008
+    },
     "short_title": "SAST",
     "title": "Sexual Addiction Screening Test (SAST)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "© 2008 PJ Carnes, Sexual Addiction Screening Test - Revised."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/sast",
     "x_translation": "unknown"

@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 24
     },
+    "publication": {
+      "citation": "T Øktedalen, KA Hagtvet, A Hoffart, TF Langkaas, M Smucker. The Trauma Related Shame Inventory: Measuring Trauma-Related Shame Among Patients with PTSD. J Psychopathol Behav Assess ( 36 ): 4, 600-615. ( 2014 )",
+      "year": 2014
+    },
     "short_title": "TRSI-24",
     "title": "Trauma-Related Shame Inventory (TRSI-24)",
     "version": "v26.0618",
@@ -33,6 +37,10 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "T Øktedalen, KA Hagtvet, A Hoffart, TF Langkaas, M Smucker. The Trauma Related Shame Inventory: Measuring Trauma-Related Shame Among Patients with PTSD. J Psychopathol Behav Assess ( 36 ): 4, 600-615. ( 2014 )",
+      "C Capone, SB Norman, M Haller, B Davis, MT Shea, K Browne, AJ Lang, PP Schnurr, S Golshan, N Afari, J Pittman, CB Allard, L Westendorf. Trauma Informed Guilt Reduction (TrIGR) therapy for guilt, shame, and moral injury resulting from trauma: Rationale, design, and methodology of a two-site randomized controlled trial. Contemp Clin Trials ( 101 ):106251 ( 2021 )"
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/trauma-related-shame-inventory",
     "x_translation": "unknown"

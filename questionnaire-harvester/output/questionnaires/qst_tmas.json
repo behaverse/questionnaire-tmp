@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 38
     },
+    "publication": {
+      "citation": "Janet A. Taylor. A Personality Scale of Manifest Anxiety. 48 ( 2 ) J. Abnormal and Social Psych. 285-290. 1953.",
+      "year": 1953
+    },
     "short_title": "TMAS",
     "title": "Taylor Manifest Anxiety Scale (TMAS)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "Janet A. Taylor. A Personality Scale of Manifest Anxiety. 48 ( 2 ) J. Abnormal and Social Psych. 285-290. 1953."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/taylor-manifest-anxiety-scale",
     "x_translation": "unknown"

@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 50
     },
+    "publication": {
+      "citation": "C G DeYoung, L C Quilty, and J B Peterson. Between facets and domains: 10 aspects of the Big Five. 63 J Pers Soc Psychol 880-896. 2008.",
+      "year": 2008
+    },
     "short_title": "FFM",
     "title": "Big 5 Personality Test (FFM)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "C G DeYoung, L C Quilty, and J B Peterson. Between facets and domains: 10 aspects of the Big Five. 63 J Pers Soc Psychol 880-896. 2008."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/big-5-personality-test",
     "x_translation": "unknown"

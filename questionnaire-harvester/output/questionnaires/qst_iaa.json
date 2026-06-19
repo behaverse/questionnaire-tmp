@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 18
     },
+    "publication": {
+      "citation": "H Cash, C D Rae, A H Steel, A Winkler. Internet Addiction: A Brief Summary of Research and Practice. 8 ( 4 ): Curr Psychiatry Rev. 292-298. 2012.",
+      "year": 2012
+    },
     "short_title": "IAA",
     "title": "Internet Addiction Assessment (IAA)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "H Cash, C D Rae, A H Steel, A Winkler. Internet Addiction: A Brief Summary of Research and Practice. 8 ( 4 ): Curr Psychiatry Rev. 292-298. 2012."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/internet-addiction-assessment",
     "x_translation": "unknown"

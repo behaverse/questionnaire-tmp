@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 30
     },
+    "publication": {
+      "citation": "Maclean K A. Factor Analysis of the Mystical Experience Questionnaire: A Study of Experiences Occasioned by the Hallucinogen Psilocybin. J Sci Study Relig ( 4 ): 721-737 ( 2012 ).",
+      "year": 2012
+    },
     "short_title": "MEQ-30",
     "title": "Revised Mystical Experience Questionnaire (MEQ-30)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "Maclean K A. Factor Analysis of the Mystical Experience Questionnaire: A Study of Experiences Occasioned by the Hallucinogen Psilocybin. J Sci Study Relig ( 4 ): 721-737 ( 2012 )."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/meq-30",
     "x_translation": "unknown"

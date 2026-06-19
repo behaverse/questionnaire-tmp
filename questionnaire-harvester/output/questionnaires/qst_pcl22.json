@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 22
     },
+    "publication": {
+      "citation": "Hare R D A research scale for the assessment of psychopathy in criminal populations. 1 Pers Indiv Diff 111-119 ( 1980 ).",
+      "year": 1980
+    },
     "short_title": "Original",
     "title": "Hare Psychopathy Checklist (Original) (PCL-22)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "Hare R D A research scale for the assessment of psychopathy in criminal populations. 1 Pers Indiv Diff 111-119 ( 1980 )."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/pcl-22",
     "x_translation": "unknown"

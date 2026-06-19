@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 20
     },
+    "publication": {
+      "citation": "William W K Zung. A Self-Rating Depression Scale. 12: Arch Gen Psychiatry 63-70. 1965.",
+      "year": 1965
+    },
     "short_title": "SDS",
     "title": "Zung Self-Rating Depression Scale (SDS)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "William W K Zung. A Self-Rating Depression Scale. 12: Arch Gen Psychiatry 63-70. 1965."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/zung-depression-scale",
     "x_translation": "unknown"

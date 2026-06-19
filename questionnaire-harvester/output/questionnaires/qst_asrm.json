@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 5
     },
+    "publication": {
+      "citation": "E G Altman, D Hedeker, J L Peterson, J M Davis. The Altman Self-Rating Mania Scale. 42 ( 10 ): Biol Psychiatry 948-55 ( 1997 ).",
+      "year": 1997
+    },
     "short_title": "ASRM",
     "title": "Altman Self-Rating Mania Scale (ASRM)",
     "version": "v26.0618",
@@ -33,6 +37,11 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "E G Altman, D Hedeker, J L Peterson, J M Davis. The Altman Self-Rating Mania Scale. 42 ( 10 ): Biol Psychiatry 948-55 ( 1997 ).",
+      "E G Altman, D Hedeker, J L Peterson, J M Davis. A comparative evaluation of three self-rating scales for acute mania. 50 ( 6 ): Biol Psychiatry 468-71 ( 2001 ).",
+      "STABLE National Coordinating Council Resource Toolkit Workgroup. STABLE Resource Toolkit 50-51. Last accessed: 2013-02-24."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/altman-self-rating-mania-scale",
     "x_translation": "unknown"

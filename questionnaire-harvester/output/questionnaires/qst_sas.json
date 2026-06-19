@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 20
     },
+    "publication": {
+      "citation": "William W K Zung. A Rating Instrument for Anxiety Disorders. 12 ( 6 ): Psychosomatics 371-379. 1971.",
+      "year": 1971
+    },
     "short_title": "SAS",
     "title": "Zung Self-Rating Anxiety Scale (SAS)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "William W K Zung. A Rating Instrument for Anxiety Disorders. 12 ( 6 ): Psychosomatics 371-379. 1971."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/zung-anxiety-scale",
     "x_translation": "unknown"

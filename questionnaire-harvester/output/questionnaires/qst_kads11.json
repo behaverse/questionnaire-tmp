@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 11
     },
+    "publication": {
+      "citation": "Sarah J Brooks, Stanley P Krulewicz, Stan Kutcher. The Kutcher Adolescent Depression Scale: ssessment of its evaluative properties over the course of an 8-week pediatric pharmacotherapy trial. 13 ( 3 ): J Child Adolesc Psychopharmacol 337-49 ( 2003 ).",
+      "year": 2003
+    },
     "short_title": "KADS-11",
     "title": "Kutcher Adolescent Depression Scale - 11-Item (KADS-11)",
     "version": "v26.0618",
@@ -33,6 +37,11 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "Sarah J Brooks, Stanley P Krulewicz, Stan Kutcher. The Kutcher Adolescent Depression Scale: ssessment of its evaluative properties over the course of an 8-week pediatric pharmacotherapy trial. 13 ( 3 ): J Child Adolesc Psychopharmacol 337-49 ( 2003 ).",
+      "Sarah J Brooks, Stan Kutcher. Diagnosis and measurement of anxiety disorder in adolescents: a review of commonly used instruments. 13 ( 3 ): J Child Adolesc Psychopharmacol 351-400 ( 2003 ).",
+      "John C LeBlanc, Anthony Almudevar, Sarah J Brooks, Stan Kutcher. Screening for adolescent depression: comparison of the Kutcher Adolescent Depression Scale with the Beck depression inventory. 12 ( 2 ): J Child Adolesc Psychopharmacol 113-26 ( 2002 )."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/kutcher-adolescent-depression-scale",
     "x_translation": "unknown"

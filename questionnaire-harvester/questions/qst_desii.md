@@ -7,6 +7,6 @@ Answer inline under each item (replace the `> answer:` line).
 ### 1. License for **Dissociative Experiences Scale (DES-II)** is unclear (https://psychology-tools.com/test/dissociative-experiences-scale). Confirm class / contact author?
 > answer: 
 
-### 2. No citation captured for **Dissociative Experiences Scale (DES-II)** — supply the source publication?
+### 2. Confirm reuse of shared entity `ins_desii_instruction` for **Dissociative Experiences Scale (DES-II)** (vs. minting a new one)?
 > answer: 
 

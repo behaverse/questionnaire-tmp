@@ -7,6 +7,6 @@ Answer inline under each item (replace the `> answer:` line).
 ### 1. License for **Diagnostic Screen for Gambling Disorders (NODS-CLiP)** is unclear (https://psychology-tools.com/test/nods-clip). Confirm class / contact author?
 > answer: 
 
-### 2. No citation captured for **Diagnostic Screen for Gambling Disorders (NODS-CLiP)** — supply the source publication?
+### 2. Confirm reuse of shared entity `ins_nodscl_instruction` for **Diagnostic Screen for Gambling Disorders (NODS-CLiP)** (vs. minting a new one)?
 > answer: 
 

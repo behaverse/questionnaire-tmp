@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 4
     },
+    "publication": {
+      "citation": "JA Ewing. Detecting Alcoholism. The CAGE Questionnaire. 252(14): 1905-7. The Journal of the American Medical Association. 1984.",
+      "year": 1905
+    },
     "short_title": "CAGE",
     "title": "CAGE Alcohol Questionnaire (CAGE)",
     "version": "v26.0618",
@@ -33,6 +37,10 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "JA Ewing. Detecting Alcoholism. The CAGE Questionnaire. 252(14): 1905-7. The Journal of the American Medical Association. 1984.",
+      "KA Bradley, DR Kivlahan, KR Bush, MB McDonell, and SD Fihn. Variations On The CAGE Alcohol Screening Questionnaire: Strengths And Limitations In VA General Medical Patients. 25(10): 1472-8. Alcoholism, Clinical and Experimental Research. 2001."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/cage-alcohol-questionnaire",
     "x_translation": "unknown"

@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 16
     },
+    "publication": {
+      "citation": "T J Meyer, M L Miller, R L Metzger, and T D Borkovec. Development and Validation of the Penn State Worry Questionnaire. 28 Behav Res Ther 487-495. 1990.",
+      "year": 1990
+    },
     "short_title": "PSWQ",
     "title": "Penn State Worry Questionnaire (PSWQ)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "T J Meyer, M L Miller, R L Metzger, and T D Borkovec. Development and Validation of the Penn State Worry Questionnaire. 28 Behav Res Ther 487-495. 1990."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/penn-state-worry-questionnaire",
     "x_translation": "unknown"

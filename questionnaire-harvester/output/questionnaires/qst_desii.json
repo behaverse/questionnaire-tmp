@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 28
     },
+    "publication": {
+      "citation": "Carlson E B, Putnam F W. An update on the Dissociative Experience Scale. Dissociation 6 ( 1 ): 16-27 ( 1993 ).",
+      "year": 1993
+    },
     "short_title": "DES-II",
     "title": "Dissociative Experiences Scale (DES-II)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "Carlson E B, Putnam F W. An update on the Dissociative Experience Scale. Dissociation 6 ( 1 ): 16-27 ( 1993 )."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/dissociative-experiences-scale",
     "x_translation": "unknown"

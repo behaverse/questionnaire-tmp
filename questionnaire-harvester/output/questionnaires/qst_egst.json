@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 20
     },
+    "publication": {
+      "citation": "R IF Brown ( 1991 ). Gaming, gambling and other addictive play. See JH Kerr & MJ Apter. Adult place: A reversal theory approach (pp. 101-118).",
+      "year": 1991
+    },
     "short_title": "EGST",
     "title": "Excessive Gaming Screening Tool (EGST)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "R IF Brown ( 1991 ). Gaming, gambling and other addictive play. See JH Kerr & MJ Apter. Adult place: A reversal theory approach (pp. 101-118)."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/excessive-gaming-screening-tool",
     "x_translation": "unknown"

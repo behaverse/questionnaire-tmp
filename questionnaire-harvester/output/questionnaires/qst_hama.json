@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 14
     },
+    "publication": {
+      "citation": "M Hamilton. The Assessment of Anxiety States by Rating. 32 Br J Med Psychol 50-55. 1959.",
+      "year": 1959
+    },
     "short_title": "HAM-A",
     "title": "Hamilton Anxiety Rating Scale (HAM-A)",
     "version": "v26.0618",
@@ -33,6 +37,10 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "M Hamilton. The Assessment of Anxiety States by Rating. 32 Br J Med Psychol 50-55. 1959.",
+      "W Maier, R Buller, M Philipp, & I Heuser. The Hamilton Anxiety Scale: Reliability, Validity and Sensitivity to Change in Anxiety and Depressive Disorders. 14 ( 1 ) J Affect Disord 61-68. 1988."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/hamilton-anxiety-rating-scale",
     "x_translation": "unknown"

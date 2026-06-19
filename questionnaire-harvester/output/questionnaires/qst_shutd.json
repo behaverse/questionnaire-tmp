@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 13
     },
+    "publication": {
+      "citation": "I Schalinski, M Schauer, T Elbert. The Shutdown Dissociation Scale (SHUT-D). Euro. J. of Psychotraumatology, 6(0) ( 2015 ).",
+      "year": 2015
+    },
     "short_title": "SHUT-D",
     "title": "Shutdown Dissociation Scale (SHUT-D)",
     "version": "v26.0618",
@@ -33,6 +37,9 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "I Schalinski, M Schauer, T Elbert. The Shutdown Dissociation Scale (SHUT-D). Euro. J. of Psychotraumatology, 6(0) ( 2015 )."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/shutdown-dissociation-scale",
     "x_translation": "unknown"

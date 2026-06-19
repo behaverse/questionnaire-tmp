@@ -23,6 +23,10 @@
     "psychometrics": {
       "item_count": 50
     },
+    "publication": {
+      "citation": "Simon Baron-Cohen, et al. The Autism-Spectrum Quotient (AQ): Evidence from Asperger Syndrome/High-Functioning Autism, Males and Females, Scientists and Mathematicians. 31: Journal of Autism and Developmental Disorders 5-17. 2001.",
+      "year": 2001
+    },
     "short_title": "AQ",
     "title": "Autism Spectrum Quotient (AQ)",
     "version": "v26.0618",
@@ -33,6 +37,11 @@
     "x_license_notes": "license unclear — confirm with author",
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
+    "x_references": [
+      "Simon Baron-Cohen, et al. The Autism-Spectrum Quotient (AQ): Evidence from Asperger Syndrome/High-Functioning Autism, Males and Females, Scientists and Mathematicians. 31: Journal of Autism and Developmental Disorders 5-17. 2001.",
+      "M Woodbury-Smith. Screening Adults for Asperger Syndrome using the AQ: a Preliminary Study of its Diagnostic Validity in Clinical Practice. 35(3): 331-335. Journal of Autism and Developmental Disorders. 2005.",
+      "Dorothy VM Bishop, et al. Using Self-Report to Identify the Broad Phenotype in Parents of Children with Autistic Spectrum Disorders: A Study using the Autism-Spectrum Quotient. 45(8): 1431-1436. Journal of Child Psychology and Psychiatry ( 2004 )."
+    ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/autism-spectrum-quotient",
     "x_translation": "unknown"
