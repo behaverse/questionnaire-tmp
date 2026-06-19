@@ -23,10 +23,6 @@
     "psychometrics": {
       "item_count": 25
     },
-    "publication": {
-      "citation": "C Allison, S Baron-Cohen, S Wheelwright, T Charman, J Richler, G Pasco, and C Brayne. The Q-CHAT (Quantitative CHecklist for Autism in Toddlers): A Normally Distributed Quantitative Measure of Autistic Traits at 18-24 Months of Age: Preliminary Report. J Autism Dev Disord 38 ( 8 ): 1414-1425 ( 2008 ).",
-      "year": 2008
-    },
     "short_title": "Q-CHAT",
     "title": "Quantitative Checklist for Autism in Toddlers (Q-CHAT)",
     "version": "v26.0618",

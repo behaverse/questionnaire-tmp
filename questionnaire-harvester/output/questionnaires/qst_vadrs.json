@@ -23,10 +23,6 @@
     "psychometrics": {
       "item_count": 55
     },
-    "publication": {
-      "citation": "M Wolraich, W Lambert, M Doffing, L Bickman, T Simmons, K Worley. Psychometric Properties of the Vanderbilt ADHD Diagnostic Parent Rating Scale in a Referred Population. Journal of Pediatric Psychology. 28(8): 559-568 (2003).",
-      "year": 2003
-    },
     "short_title": "VADRS",
     "title": "Vanderbilt ADHD Diagnostic Rating Scale (VADRS)",
     "version": "v26.0618",

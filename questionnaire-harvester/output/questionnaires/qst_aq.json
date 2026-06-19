@@ -23,10 +23,6 @@
     "psychometrics": {
       "item_count": 50
     },
-    "publication": {
-      "citation": "Simon Baron-Cohen, et al. The Autism-Spectrum Quotient (AQ): Evidence from Asperger Syndrome/High-Functioning Autism, Males and Females, Scientists and Mathematicians. 31: Journal of Autism and Developmental Disorders 5-17. 2001.",
-      "year": 2001
-    },
     "short_title": "AQ",
     "title": "Autism Spectrum Quotient (AQ)",
     "version": "v26.0618",

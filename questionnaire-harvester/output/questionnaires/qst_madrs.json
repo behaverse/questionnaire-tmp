@@ -23,10 +23,6 @@
     "psychometrics": {
       "item_count": 10
     },
-    "publication": {
-      "citation": "SA Montgomery, M Asberg. A New Depression Scale Designed to be Sensitive to Change. British Journal of Psychiatry 134 (4): 382-389. 04-1979.",
-      "year": 1979
-    },
     "short_title": "MADRS",
     "title": "Montgomery-Asberg Depression Rating Scale (MADRS)",
     "version": "v26.0618",

@@ -23,10 +23,6 @@
     "psychometrics": {
       "item_count": 11
     },
-    "publication": {
-      "citation": "R Young, et al. A Rating Scale for Mania: Reliability, Validity and Sensitivity. 133: Br J Psychiatry 429-435. 1978.",
-      "year": 1978
-    },
     "short_title": "YMRS",
     "title": "Young Mania Rating Scale (YMRS)",
     "version": "v26.0618",

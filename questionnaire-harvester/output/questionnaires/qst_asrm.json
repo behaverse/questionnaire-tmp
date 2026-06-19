@@ -23,10 +23,6 @@
     "psychometrics": {
       "item_count": 5
     },
-    "publication": {
-      "citation": "E G Altman, D Hedeker, J L Peterson, J M Davis. The Altman Self-Rating Mania Scale. 42 ( 10 ): Biol Psychiatry 948-55 ( 1997 ).",
-      "year": 1997
-    },
     "short_title": "ASRM",
     "title": "Altman Self-Rating Mania Scale (ASRM)",
     "version": "v26.0618",
