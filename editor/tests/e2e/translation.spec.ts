@@ -35,3 +35,28 @@ test('translate a prompt into a second language', async ({ page }) => {
 
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-e-translation.png', fullPage: true })
 })
+
+test('auto-translate fills a row target in the Translate panel (ED-J1)', async ({ page }) => {
+  await page.route('**/v1/entities/item?*', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"total":0}' }))
+  // stub the serverless MT proxy
+  await page.route('**/api/translate', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"translation":"Comment ça va ?"}' }))
+
+  await page.goto('/')
+  await page.getByRole('button', { name: /new questionnaire/i }).click()
+  await page.getByRole('button', { name: /questionnaire settings/i }).click()
+  await page.getByLabel('New language code').fill('fr')
+  await page.getByRole('button', { name: 'Add language' }).click()
+  await page.getByRole('navigation', { name: /structure/i }).getByText(/page 1/i).first().click()
+  await page.getByRole('button', { name: /add item/i }).click()
+  await page.getByRole('button', { name: /create new item/i }).click()
+  await page.getByLabel('Prompt text', { exact: true }).fill('How are you?')
+
+  // Open the side-by-side Translate panel and choose fr as the target.
+  await page.getByRole('button', { name: /^translate$/i }).click()
+  await page.getByRole('button', { name: 'fr' }).click() // empty-state: pick the existing target language
+
+  // The new item also has a default (empty) option → several rows; the prompt row's Auto is the
+  // enabled one (it has a source). Click the first enabled Auto and assert the prompt target fills.
+  await page.locator('button[aria-label="Auto"]:not([disabled])').first().click()
+  await expect(page.getByRole('textbox', { name: /translate pr_/ }).first()).toHaveValue('Comment ça va ?')
+})
