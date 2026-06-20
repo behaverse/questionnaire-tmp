@@ -232,3 +232,25 @@ def test_psychology_tools_dimension_harvest_validates(tmp_path, monkeypatch):
     dims = sorted(json.loads((out / "options" / f"{r}.json").read_text())["dimension"]
                   for r in opt_refs)
     assert dims == ["avoidance", "fear"]
+
+
+def test_document_scoring_cli_lsas(tmp_path):
+    from harvester import cli
+    sc = tmp_path / "scoring"
+    rc = cli.main(["document-scoring", "--out", "questionnaire-harvester/output",
+                   "--scoring", str(sc), "--id", "qst_lsas"])
+    assert rc == 0
+    block = json.loads((sc / "qst_lsas.md").read_text().split("```json", 1)[1].split("```", 1)[0])
+    assert block["item_count"] == 48
+    assert block["dimensions"] == ["avoidance", "fear"]
+    assert len(block["option_scales"]) == 2
+    assert block["uniform_scale"] is False
+
+def test_document_scoring_cli_uniform(tmp_path):
+    from harvester import cli
+    sc = tmp_path / "scoring"
+    assert cli.main(["document-scoring", "--out", "questionnaire-harvester/output",
+                     "--scoring", str(sc), "--id", "qst_gad7"]) == 0
+    block = json.loads((sc / "qst_gad7.md").read_text().split("```json", 1)[1].split("```", 1)[0])
+    assert block["uniform_scale"] is True
+    assert block["option_scales"][0]["values"] == [0, 1, 2, 3]

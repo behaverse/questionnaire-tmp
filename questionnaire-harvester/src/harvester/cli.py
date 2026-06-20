@@ -37,7 +37,16 @@ def main(argv=None) -> int:
     h.add_argument("--questions", default="questionnaire-harvester/questions")
     h.add_argument("--schemas", default="schemas")
     h.add_argument("--version", default="v26.0618")
+    ds = sub.add_parser("document-scoring")
+    ds.add_argument("--out", default="questionnaire-harvester/output")
+    ds.add_argument("--scoring", default="questionnaire-harvester/scoring")
+    ds.add_argument("--id", dest="qst_id", default=None, help="only this questionnaire id")
     a = ap.parse_args(argv)
+    if a.cmd == "document-scoring":
+        from harvester.scoring_doc import write_scoring_docs
+        ids = write_scoring_docs(Path(a.out), Path(a.scoring), only_id=a.qst_id)
+        print(f"wrote {len(ids)} scoring doc(s)")
+        return 0
     if a.cmd != "harvest":
         return 2
 
