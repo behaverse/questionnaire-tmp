@@ -125,9 +125,9 @@ def test_extracts_structured_reference_and_year():
     rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
     assert rq.year == 2008
     assert len(rq.references) == 1
-    assert "Allison, S Baron-Cohen" in rq.references[0]   # space-before-comma tidied
-    assert " ." not in rq.references[0]                    # space-before-period tidied
-    assert rq.citation == rq.references[0]
+    assert "Allison, S Baron-Cohen" in rq.references[0]["citation"]   # space-before-comma tidied
+    assert " ." not in rq.references[0]["citation"]                    # space-before-period tidied
+    assert rq.citation == rq.references[0]["citation"]
 
 def test_two_sources_primary_publication_all_in_references():
     li = ('<li class="source"><span>First A</span> . '
@@ -137,7 +137,7 @@ def test_two_sources_primary_publication_all_in_references():
     rq = PsychologyToolsAdapter().parse(_page_with_sources(li), "https://psychology-tools.com/test/x")
     assert len(rq.references) == 2
     assert rq.year == 1959                 # year from the first source
-    assert rq.citation == rq.references[0]
+    assert rq.citation == rq.references[0]["citation"]
 
 def test_no_sources_section_yields_no_citation():
     html = ('<html><body><h1>Demo Scale (DEMO)</h1>'
@@ -334,3 +334,34 @@ def test_dimension_table_anchor_span_split_and_br_small():
     assert avoid_item.option.anchors == [
         "Never (0%)", "Occasionally (10%)", "Often (50%)", "Usually (90%)"
     ], f"Avoidance anchors wrong: {avoid_item.option.anchors}"
+
+
+def test_reference_link_extracted_as_object():
+    html = ('<html><body><h1>X (X)</h1>'
+            + _row("q1", "stem", OPTS3).join(("<form>", "</form>"))
+            + '<h6>Sources</h6><ol class="sources">'
+              '<li class="source">Author A. Title. '
+              '<a href="https://www.ncbi.nlm.nih.gov/pubmed/123">link</a> '
+              '<time datetime="2001">2001</time>.</li>'
+              '<li class="source">Author B. Untitled. <time datetime="2005">2005</time>.</li>'
+              '</ol></body></html>')
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    assert rq.references[0]["citation"].startswith("Author A.")
+    assert rq.references[0]["url"] == "https://www.ncbi.nlm.nih.gov/pubmed/123"
+    assert "url" not in rq.references[1]            # no <a> -> no url key
+    assert rq.citation == rq.references[0]["citation"]
+
+def test_please_note_paragraph_appended_to_instruction():
+    html = ('<html><body><h1>X (X)</h1>'
+            '<p>Instructions Read each item.</p>'
+            '<p>Please note: "occasionally" means once or twice.</p>'
+            '<form>' + _row("q1", "stem", OPTS3) + '</form></body></html>')
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    assert rq.instruction_text.startswith("Read each item.")
+    assert 'Please note: "occasionally" means once or twice.' in rq.instruction_text
+
+def test_no_please_note_leaves_instruction_unchanged():
+    html = ('<html><body><h1>X (X)</h1><p>Instructions Read each item.</p>'
+            '<form>' + _row("q1", "stem", OPTS3) + '</form></body></html>')
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    assert rq.instruction_text == "Read each item."

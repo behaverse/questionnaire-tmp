@@ -187,7 +187,7 @@ def test_psychology_tools_references_harvest_validates(tmp_path, monkeypatch):
     md = json.loads((out / "questionnaires" / "qst_dws.json").read_text())["metadata"]
     assert md["publication"]["year"] == 2011
     assert "A Demo, B Tester" in md["publication"]["citation"]
-    assert md["x_references"] == [md["publication"]["citation"]]
+    assert md["x_references"] == [{"citation": md["publication"]["citation"]}]
 
 
 def test_psychology_tools_stemless_harvest_validates(tmp_path, monkeypatch):

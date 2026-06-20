@@ -33,6 +33,12 @@ def _clean_citation(li):
     return re.sub(r"\s+([,.;:])", r"\1", t)
 
 
+def _source_link(li):
+    """The first hyperlink in a `li.source` (psychology-tools cites PubMed URLs), or None."""
+    a = li.find("a", href=True)
+    return a["href"].strip() if a and a.get("href", "").strip() else None
+
+
 def _cell_pair(cell):
     """From a response cell (standard `.notable-td.response` span or alternate
     `ul.responses > li`), return (anchor_text, value_float). Anchor may be "" (unlabeled).
@@ -201,6 +207,14 @@ class PsychologyToolsAdapter(SourceAdapter):
                 instruction_text = re.sub(r"^instructions?\s*:?\s*", "", t, flags=re.I).strip() or None
                 break
 
+        notes = []
+        for el in soup.find_all("p"):
+            t = el.get_text(" ", strip=True)
+            if re.match(r"^\s*please note\b[:.]?", t, re.I) and t not in notes:
+                notes.append(t)
+        if notes:
+            instruction_text = ((instruction_text + "\n\n") if instruction_text else "") + "\n\n".join(notes)
+
         shared_prompt_text = None
         stemless = [it for it in items if it.text is None]
         if stemless:
@@ -216,8 +230,17 @@ class PsychologyToolsAdapter(SourceAdapter):
         description = ((meta.get("content").strip() if meta and meta.get("content") else "")
                        or (instruction_text or "") or title)
 
-        references = [c for c in (_clean_citation(li) for li in soup.select("ol.sources li.source")) if c]
-        citation = references[0] if references else ""
+        references = []
+        for li in soup.select("ol.sources li.source"):
+            c = _clean_citation(li)
+            if not c:
+                continue
+            ref = {"citation": c}
+            link = _source_link(li)
+            if link:
+                ref["url"] = link
+            references.append(ref)
+        citation = references[0]["citation"] if references else ""
         year = None
         first = soup.select_one("ol.sources li.source")
         if first:
