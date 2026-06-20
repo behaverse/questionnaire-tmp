@@ -4,9 +4,11 @@ import { updateScores } from '../model/tree'
 import type { Score } from '../model/types'
 import { newScore, summarizeScore, validateScore } from './scoreOps'
 import { ScoreEditor } from './ScoreEditor'
+import { isKnownScorer } from './scorers/registry'
 
 export function ScoringPanel() {
   const { model, applyEdit } = useEditorStore()
+  const previewScores = useEditorStore((s) => s.previewScores)
   const [openIdx, setOpenIdx] = useState<number | null>(null)
   if (!model) return null
   const scores = (model.scores ?? []) as Score[]
@@ -26,13 +28,24 @@ export function ScoringPanel() {
           className="ml-auto rounded border border-ed-border px-2 py-0.5 text-xs text-ed-muted hover:bg-ed-subtle">+ Add</button>
       </div>
       {scores.length === 0 && <p className="text-[11px] text-ed-muted">No scores yet.</p>}
+      {!previewScores && (
+        <p className="text-[11px] text-ed-muted">Open the preview to see live computed scores.</p>
+      )}
       <ul className="space-y-1">
         {scores.map((s, i) => (
           <li key={i}>
-            <button type="button" aria-label={`Edit score ${i + 1}`} onClick={() => setOpenIdx(openIdx === i ? null : i)}
-              className="block w-full truncate rounded px-1 py-0.5 text-left font-mono text-xs hover:bg-ed-subtle">
-              {summarizeScore(s)}
-            </button>
+            <div className="flex items-center gap-2">
+              <button type="button" aria-label={`Edit score ${i + 1}`} onClick={() => setOpenIdx(openIdx === i ? null : i)}
+                className="flex-1 truncate rounded px-1 py-0.5 text-left font-mono text-xs hover:bg-ed-subtle">
+                {summarizeScore(s)}
+              </button>
+              {(() => {
+                const runnable = isKnownScorer(s.scorer)
+                if (!runnable) return <span className="rounded bg-ed-subtle px-1.5 py-0.5 text-[10px] text-ed-muted">unavailable in preview</span>
+                const v = previewScores?.values?.[s.id]
+                return <span className="font-mono text-xs text-ed-text">{v === undefined || v === null ? '—' : String(v)}</span>
+              })()}
+            </div>
             {openIdx === i && (
               <div className="mt-1">
                 <ScoreEditor score={s} allScores={scores} onChange={(score) => edit(i, score)} onDelete={() => del(i)} />
@@ -41,7 +54,6 @@ export function ScoringPanel() {
           </li>
         ))}
       </ul>
-      <p className="text-[11px] text-ed-muted">Scores are computed by the deployed viewer — not shown live in this preview.</p>
     </div>
   )
 }

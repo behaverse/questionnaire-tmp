@@ -32,6 +32,35 @@ describe('ScoringPanel', () => {
   })
 })
 
+describe('ScoringPanel live preview values', () => {
+  const model = {
+    metadata: { id: 'q', title: 'q', language: 'en' }, pages: [],
+    scores: [
+      { id: 'phq9_total', scorer: 'scr_phq9@v26.0602', path: '/total', name: 'Total' },
+      { id: 'x', scorer: 'scr_unknown@v26.0602', path: '/x', name: 'X' },
+    ],
+  } as unknown as Questionnaire
+
+  beforeEach(() => {
+    const s = useEditorStore.getState()
+    s.reset()
+    s.loadModel(structuredClone(model), { kind: 'file', name: 'q.json' })
+  })
+
+  it('shows the live value for a runnable score and an unavailable badge for an unknown scorer', () => {
+    useEditorStore.getState().setPreviewScores({ values: { phq9_total: 12 }, unavailable: ['scr_unknown@v26.0602'] })
+    render(<ScoringPanel />)
+    expect(screen.getByText('12')).toBeInTheDocument()                 // live value
+    expect(screen.getByText(/unavailable in preview/i)).toBeInTheDocument() // unknown scorer badge
+  })
+
+  it('hints to open the preview when no live values are present', () => {
+    useEditorStore.getState().setPreviewScores(null)
+    render(<ScoringPanel />)
+    expect(screen.getByText(/open the preview/i)).toBeInTheDocument()
+  })
+})
+
 describe('Inspector mounts ScoringPanel at the questionnaire root', () => {
   beforeEach(() => useEditorStore.getState().loadModel(structuredClone(base), { kind: 'new' } as never))
   it('shows Scores at root (via Scoring tab)', () => {
