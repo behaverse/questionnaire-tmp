@@ -1,0 +1,214 @@
+{
+  "questionnaire": {
+    "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+    "metadata": {
+      "id": "qst_phq9",
+      "title": "Patient Health Questionnaire-9",
+      "license": "proprietary_open_redistribution",
+      "variant": "base",
+      "version": "v26.0602",
+      "language": "en",
+      "available_languages": ["en"],
+      "instrument_id": "inst_phq9",
+      "description": "Self-report measure of depression severity over the past 2 weeks.",
+      "psychometrics": {
+        "item_count": 9
+      },
+      "classification": {
+        "domain": ["depression", "screening"],
+        "tags": ["depression", "screening"]
+      }
+    },
+    "pages": [
+      {
+        "id": "page_items",
+        "elements": [
+          {
+            "id": "it_phq9_1",
+            "question": { "prompt": { "ref": "pr_phq9_1@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_2",
+            "question": { "prompt": { "ref": "pr_phq9_2@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_3",
+            "question": { "prompt": { "ref": "pr_phq9_3@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_4",
+            "question": { "prompt": { "ref": "pr_phq9_4@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_5",
+            "question": { "prompt": { "ref": "pr_phq9_5@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_6",
+            "question": { "prompt": { "ref": "pr_phq9_6@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_7",
+            "question": { "prompt": { "ref": "pr_phq9_7@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_8",
+            "question": { "prompt": { "ref": "pr_phq9_8@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          },
+          {
+            "id": "it_phq9_9",
+            "question": { "prompt": { "ref": "pr_phq9_9@v26.0602" } },
+            "option": { "ref": "opt_phq9_freq@v26.0602" }
+          }
+        ]
+      }
+    ],
+    "scores": [
+      { "id": "phq9_total",      "scorer": "scr_phq9@v26.0602", "path": "/total",       "name": "PHQ-9 Total" },
+      { "id": "phq9_severity",   "scorer": "scr_phq9@v26.0602", "path": "/severity",    "name": "PHQ-9 Severity Category" },
+      { "id": "phq9_band_label", "scorer": "scr_phq9@v26.0602", "path": "/band/label",  "name": "PHQ-9 Band Label" }
+    ]
+  },
+  "entities": {
+    "opt_phq9_freq@v26.0602": {
+      "id": "opt_phq9_freq",
+      "input_data_type": "choice",
+      "measurement_type": "ordinal",
+      "selection": "single",
+      "dimension": "frequency",
+      "options": [
+        { "index": 1, "value": "0" },
+        { "index": 2, "value": "1" },
+        { "index": 3, "value": "2" },
+        { "index": 4, "value": "3" }
+      ],
+      "content": {
+        "en": {
+          "status": "validated",
+          "options": [
+            { "index": 1, "text": "Not at all" },
+            { "index": 2, "text": "Several days" },
+            { "index": 3, "text": "More than half the days" },
+            { "index": 4, "text": "Nearly every day" }
+          ]
+        }
+      }
+    },
+    "pr_phq9_1@v26.0602": {
+      "id": "pr_phq9_1",
+      "name": "phq9_anhedonia",
+      "content": {
+        "en": {
+          "text": "Little interest or pleasure in doing things",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_2@v26.0602": {
+      "id": "pr_phq9_2",
+      "name": "phq9_depressed_mood",
+      "content": {
+        "en": {
+          "text": "Feeling down, depressed, or hopeless",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_3@v26.0602": {
+      "id": "pr_phq9_3",
+      "name": "phq9_sleep",
+      "content": {
+        "en": {
+          "text": "Trouble falling or staying asleep, or sleeping too much",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_4@v26.0602": {
+      "id": "pr_phq9_4",
+      "name": "phq9_fatigue",
+      "content": {
+        "en": {
+          "text": "Feeling tired or having little energy",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_5@v26.0602": {
+      "id": "pr_phq9_5",
+      "name": "phq9_appetite",
+      "content": {
+        "en": {
+          "text": "Poor appetite or overeating",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_6@v26.0602": {
+      "id": "pr_phq9_6",
+      "name": "phq9_self_worth",
+      "content": {
+        "en": {
+          "text": "Feeling bad about yourself — or that you are a failure or have let yourself or your family down",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_7@v26.0602": {
+      "id": "pr_phq9_7",
+      "name": "phq9_concentration",
+      "content": {
+        "en": {
+          "text": "Trouble concentrating on things, such as reading the newspaper or watching television",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_8@v26.0602": {
+      "id": "pr_phq9_8",
+      "name": "phq9_psychomotor",
+      "content": {
+        "en": {
+          "text": "Moving or speaking so slowly that other people could have noticed. Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    },
+    "pr_phq9_9@v26.0602": {
+      "id": "pr_phq9_9",
+      "name": "phq9_suicidality",
+      "content": {
+        "en": {
+          "text": "Thoughts that you would be better off dead or of hurting yourself in some way",
+          "status": "validated"
+        }
+      },
+      "reversed": false,
+      "dimension": "frequency"
+    }
+  }
+}

@@ -10,9 +10,10 @@ interface Props {
   onBrowseLibrary: () => void
   onTranslate: () => void
   onTranslateWorkbench: () => void
+  onLoadPhq9: () => void
 }
 
-export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary, onTranslate, onTranslateWorkbench }: Props) {
+export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary, onTranslate, onTranslateWorkbench, onLoadPhq9 }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [id, setId] = useState('')
   const [version, setVersion] = useState('')
@@ -29,6 +30,14 @@ export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, on
             Load a sample
           </div>
           <div className="text-sm text-ed-muted">Explore a ready-made questionnaire (BIS/BAS) — works offline</div>
+        </button>
+
+        <button
+          onClick={onLoadPhq9}
+          className="rounded-lg border border-ed-border p-4 text-left hover:bg-ed-subtle"
+        >
+          <div className="flex items-center gap-2 font-medium">Load PHQ-9 sample</div>
+          <div className="text-sm text-ed-muted">A scored questionnaire — see live scores in the preview</div>
         </button>
 
         <button

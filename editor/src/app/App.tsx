@@ -12,7 +12,7 @@ import { LibraryQuestionnairePicker } from '../library/LibraryQuestionnairePicke
 import { ForkDialog } from '../library/ForkDialog'
 import { TranslationPanel } from '../translate/TranslationPanel'
 import { TranslationWorkbench } from '../translate/workbench/TranslationWorkbench'
-import { bisbasSample } from '../samples/sample'
+import { bisbasSample, phq9Sample } from '../samples/sample'
 
 export function App() {
   const { model, loadModel, validation, translateView } = useEditorStore()
@@ -63,6 +63,7 @@ export function App() {
             catch (e) { setError(String(e)) }
           }}
           onLoadSample={() => { loadModel(bisbasSample.questionnaire, { kind: 'sample', id: 'qst_x_bisbas' }, bisbasSample.entities); void refreshStaleness() }}
+          onLoadPhq9={() => { loadModel(phq9Sample.questionnaire, { kind: 'sample', id: 'qst_phq9' }, phq9Sample.entities); void refreshStaleness() }}
           onBrowseLibrary={() => { setTranslateOnLoad(false); setBrowsing(true) }}
           onTranslate={() => { setTranslateOnLoad(true); setBrowsing(true) }}
           onTranslateWorkbench={() => setWorkbench(true)}
