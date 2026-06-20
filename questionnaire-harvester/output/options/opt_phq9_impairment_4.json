@@ -1,0 +1,49 @@
+{
+  "id": "opt_phq9_impairment_4",
+  "input_data_type": "choice",
+  "measurement_type": "ordinal",
+  "selection": "single",
+  "dimension": "impairment",
+  "x_scored": false,
+  "options": [
+    {
+      "index": 1,
+      "value": 0.0
+    },
+    {
+      "index": 2,
+      "value": 1.0
+    },
+    {
+      "index": 3,
+      "value": 2.0
+    },
+    {
+      "index": 4,
+      "value": 3.0
+    }
+  ],
+  "content": {
+    "en": {
+      "status": "validated",
+      "options": [
+        {
+          "index": 1,
+          "text": "Not difficult at all"
+        },
+        {
+          "index": 2,
+          "text": "Somewhat difficult"
+        },
+        {
+          "index": 3,
+          "text": "Very difficult"
+        },
+        {
+          "index": 4,
+          "text": "Extremely difficult"
+        }
+      ]
+    }
+  }
+}

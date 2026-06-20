@@ -25,7 +25,7 @@
       "source": "web_harvest"
     },
     "psychometrics": {
-      "item_count": 9
+      "item_count": 10
     },
     "publication": {
       "citation": "Kroenke K, Spitzer RL, Williams JBW (2001). The PHQ-9. J Gen Intern Med, 16(9), 606-613.",
@@ -194,6 +194,17 @@
             }
           },
           "required": true
+        },
+        {
+          "option": {
+            "ref": "opt_phq9_impairment_4@v26.0617"
+          },
+          "question": {
+            "prompt": {
+              "ref": "pr_phq9_10@v26.0617"
+            }
+          },
+          "required": false
         }
       ],
       "id": "page_main"
