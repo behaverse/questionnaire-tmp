@@ -50,7 +50,9 @@ function renumberChoices(opt: EditableOption): void {
   structural.forEach((row, i) => { row.index = i + 1 })
   for (const entry of Object.values(opt.content ?? {})) {
     const existing = entry.options ?? []
-    entry.options = structural.map((_, i) => ({ index: i + 1, text: existing[i]?.text ?? `Option ${i + 1}` }))
+    // Empty (not a "Option N" placeholder) for choices with no text yet — so untranslated choices
+    // in a target locale stay blank instead of showing a bogus placeholder that could ship as a label.
+    entry.options = structural.map((_, i) => ({ index: i + 1, text: existing[i]?.text ?? '' }))
   }
 }
 

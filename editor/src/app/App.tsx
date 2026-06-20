@@ -39,7 +39,7 @@ export function App() {
     if (!model) return
     const t = setTimeout(() => {
       const { source, pool } = useEditorStore.getState()
-      if (source) saveDraft(model, source, pool)
+      if (source) void saveDraft(model, source, pool).then(() => useEditorStore.getState().markSaved())
     }, 500)
     return () => clearTimeout(t)
   }, [model, pool])

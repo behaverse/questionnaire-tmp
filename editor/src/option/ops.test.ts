@@ -25,7 +25,7 @@ test('addChoice appends an aligned structural + content row and renumbers', () =
   expect(o.options).toHaveLength(3)
   expect(o.options!.map((r) => r.index)).toEqual([1, 2, 3])
   expect(o.content.en.options!.map((r) => r.index)).toEqual([1, 2, 3])
-  expect(o.content.en.options![2].text).toBe('Option 3')
+  expect(o.content.en.options![2].text).toBe('') // new choice starts blank (no "Option N" placeholder)
   expect(o.options![2].value).toBeNull()
 })
 

@@ -81,7 +81,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     // open with the first page selected (so the canvas shows it, not a blank pane) and
     // the preview on by default; the tree's "Questionnaire" root returns to the q-level inspector.
     set({ model, source, selection: model.pages?.length ? ['pages', 0] : null, dirty: false, validation: validateQuestionnaire(model), pool: pool ?? {}, resolved: {}, editingLocale: null, previewOpen: true, inspectorOpen: true, translateView: false }),
-  upsertPoolEntity: (ref, body) => set((s) => ({ pool: { ...s.pool, [ref]: body } })),
+  upsertPoolEntity: (ref, body) => set((s) => ({ pool: { ...s.pool, [ref]: body }, dirty: true })),
   removePoolEntity: (ref) => set((s) => { const p = { ...s.pool }; delete p[ref]; return { pool: p } }),
   applyEdit: (fn) => {
     const { model: cur, selection } = get()

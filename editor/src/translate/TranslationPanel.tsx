@@ -21,6 +21,7 @@ export function TranslationPanel() {
   const applyEdit = useEditorStore((s) => s.applyEdit)
   const [untranslatedOnly, setUntranslatedOnly] = useState(false)
   const [kindFilter, setKindFilter] = useState('all')
+  const [query, setQuery] = useState('')
   const [newLang, setNewLang] = useState('')
   const [busy, setBusy] = useState<Record<string, boolean>>({})
   const [autoErr, setAutoErr] = useState<Record<string, string>>({})
@@ -83,7 +84,14 @@ export function TranslationPanel() {
   }
 
   const kinds = [...new Set(groups.map((g) => g.kind))]
-  const visibleGroups = kindFilter === 'all' ? groups : groups.filter((g) => g.kind === kindFilter)
+  const q = query.trim().toLowerCase()
+  // a row matches the search if the query hits its source/target text or its group's id/kind
+  const rowMatches = (g: typeof groups[number], row: TransRow) =>
+    !q || row.source.toLowerCase().includes(q) || row.target.toLowerCase().includes(q) ||
+    g.title.toLowerCase().includes(q) || g.kind.toLowerCase().includes(q)
+  const visibleGroups = (kindFilter === 'all' ? groups : groups.filter((g) => g.kind === kindFilter))
+    .map((g) => ({ ...g, rows: g.rows.filter((r) => rowMatches(g, r)) }))
+    .filter((g) => g.rows.length > 0)
   const allRows = visibleGroups.flatMap((g) => g.rows)
   const doneCount = allRows.filter((r) => r.done).length
 
@@ -163,7 +171,14 @@ export function TranslationPanel() {
             </select>
           </label>
         )}
-        <label className="ml-auto flex items-center gap-1.5 text-xs text-ed-muted">
+        <input
+          aria-label="Search translations"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search source / translation / id…"
+          className="ml-auto w-64 rounded-md border border-ed-border-strong bg-ed-surface px-2.5 py-1 text-xs outline-none focus:border-ed-accent focus:ring-2 focus:ring-ed-accent-soft"
+        />
+        <label className="flex items-center gap-1.5 text-xs text-ed-muted">
           <input type="checkbox" checked={untranslatedOnly} onChange={(e) => setUntranslatedOnly(e.target.checked)} /> show untranslated only
         </label>
         <button onClick={() => void autoAllUntranslated()}

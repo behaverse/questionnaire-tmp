@@ -27,7 +27,12 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
         onClick={() => { if (!dirty || confirm('Leave this questionnaire? Your draft is autosaved and will be here when you return.')) reset() }}
       >Home</Button>
       <span className="font-medium text-ed-text">{model.metadata.title ?? model.metadata.id}</span>
-      {dirty && <span className="text-xs text-amber-600">● unsaved</span>}
+      <span
+        className={`flex items-center gap-1 text-xs ${dirty ? 'text-amber-600' : 'text-ed-muted'}`}
+        title="Your work autosaves to this browser. Use Export ▾ to download a file or contribution bundle."
+      >
+        {dirty ? <><RefreshCw size={12} className="animate-spin" aria-hidden="true" /> Saving…</> : <><Check size={12} aria-hidden="true" /> Saved</>}
+      </span>
       <div className="ml-auto flex items-center gap-2">
         {/* Utilities */}
         <EditingLocaleSwitcher />
