@@ -9,10 +9,13 @@ export default defineConfig({
   build: {
     outDir: 'dist-lib',
     emptyOutDir: true,
-    lib: { entry: 'src/renderer/lib.ts', formats: ['es'], fileName: () => 'renderer.js' },
+    lib: {
+      entry: { renderer: 'src/renderer/lib.ts', scoring: 'src/scoring/lib.ts' },
+      formats: ['es'],
+    },
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
-      output: { assetFileNames: 'renderer.[ext]' },
+      output: { entryFileNames: '[name].js', assetFileNames: 'renderer.[ext]' },
     },
   },
 })

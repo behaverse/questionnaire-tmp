@@ -20,10 +20,14 @@
   "exports": {
     ".": "./src/main.tsx",
     "./renderer": {
-      "types": "./dist-lib/lib.d.ts",
+      "types": "./dist-lib/renderer/lib.d.ts",
       "import": "./dist-lib/renderer.js"
     },
-    "./renderer/style.css": "./dist-lib/renderer.css"
+    "./renderer/style.css": "./dist-lib/renderer.css",
+    "./scoring": {
+      "types": "./dist-lib/scoring/lib.d.ts",
+      "import": "./dist-lib/scoring.js"
+    }
   },
   "dependencies": {
     "react": "^19.0.0",

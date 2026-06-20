@@ -5,8 +5,8 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist-lib",
-    "rootDir": "src/renderer"
+    "rootDir": "src"
   },
-  "include": ["src/renderer"],
-  "exclude": ["src/renderer/**/*.test.ts", "src/renderer/**/*.test.tsx"]
+  "include": ["src/renderer", "src/scoring", "src/logic"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
 }
