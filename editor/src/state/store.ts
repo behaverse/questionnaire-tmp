@@ -29,6 +29,8 @@ interface EditorState {
   /** Last resolved entity bodies (pool + Library), shared from the preview so the tree can
    *  read content (e.g. for the untranslated indicator) for refs that aren't in the local pool. */
   resolved: Record<string, EntityBody | null>
+  previewScores: { values: Record<string, import('../logic/types').EvalValue>; unavailable: string[] } | null
+  setPreviewScores: (v: EditorState['previewScores']) => void
   setResolved: (m: Record<string, EntityBody | null>) => void
   picker: { etype: string; onPick: (ref: string) => void; onCreate?: () => void } | null
   staleness: Record<string, string>
@@ -69,6 +71,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   pool: {},
   resolved: {},
   setResolved: (m) => set({ resolved: m }),
+  previewScores: null,
+  setPreviewScores: (v) => set({ previewScores: v }),
   picker: null,
   staleness: {},
   editingLocale: null,
@@ -134,5 +138,5 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     set((s) => { const st = { ...s.staleness }; delete st[ref]; return { staleness: st } })
     return true
   },
-  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, inspectorOpen: true, translateView: false, pool: {}, resolved: {}, picker: null, staleness: {}, fork: null, editingLocale: null }),
+  reset: () => set({ model: null, source: null, selection: null, expanded: {}, dirty: false, validation: null, previewOpen: false, inspectorOpen: true, translateView: false, pool: {}, resolved: {}, picker: null, staleness: {}, fork: null, editingLocale: null, previewScores: null }),
 }))
