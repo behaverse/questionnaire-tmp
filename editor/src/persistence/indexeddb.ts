@@ -42,3 +42,26 @@ export async function loadDraft(): Promise<Draft | null> {
 export async function clearDraft(): Promise<void> {
   await tx('readwrite', (s) => s.delete(KEY))
 }
+
+// ── Translation Workbench session (DB-wide "Translate Library entities") ──────────────
+// Persisted separately from the questionnaire draft so in-progress translations + completion
+// status survive a reload. Stored in the same object store under a distinct key (no schema bump).
+const WB_KEY = 'workbench'
+export interface WorkbenchSession {
+  kind: string
+  source: string
+  target: string
+  items: { id: string; version: string; kind: string; body: Record<string, unknown> }[]
+  bodies: Record<string, Record<string, unknown>>
+  savedAt: number
+}
+export async function saveWorkbench(session: WorkbenchSession): Promise<void> {
+  await tx('readwrite', (s) => s.put(session, WB_KEY))
+}
+export async function loadWorkbench(): Promise<WorkbenchSession | null> {
+  const res = await tx<WorkbenchSession | undefined>('readonly', (s) => s.get(WB_KEY))
+  return res ?? null
+}
+export async function clearWorkbench(): Promise<void> {
+  await tx('readwrite', (s) => s.delete(WB_KEY))
+}
