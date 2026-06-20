@@ -9,6 +9,14 @@
 Theoretical overview and empirical update. Cognitive Therapy and Research, 16 , 201-228. (1992)
 - items: 10
 
+## Description
+
+Optimism is a positive attitude
+about the future. In the field of psychology, optimism is viewed as a
+general way of thinking that can be beneficial to, for example, health
+outcomes. The Scheier and Carver paper from 1992 ( see
+references ) is a really good read about this topic.
+
 ## Instructions
 
 Below is a list of statements.<br> For each statement, indicate how much you agree with it.<br> There are no right or wrong answers.<br> Please be as accurate and honest as you can throughout.<br> Try not to let your answer to one statement influence your answers to other statements.<br>
@@ -16,22 +24,22 @@ Below is a list of statements.<br> For each statement, indicate how much you agr
 ## Items
 
 1. **In uncertain times, I usually expect the best.**  _(dimension: agree)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 2. **It's easy for me to relax.**  _(dimension: agree)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 3. **If something can go wrong for me, it will.**  _(dimension: agree; reversed)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 4. **I'm always optimistic about my future.**  _(dimension: agree)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 5. **I enjoy my friends a lot.**  _(dimension: agree)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 6. **It's important for me to keep busy.**  _(dimension: agree)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 7. **I hardly ever expect things to go my way.**  _(dimension: agree; reversed)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 8. **I don't get upset too easily.**  _(dimension: agree)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 9. **I rarely count on good things happening to me.**  _(dimension: agree; reversed)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]
 10. **Overall, I expect more good things to happen to me than bad.**  _(dimension: agree)_
-   - 1. strongly disagree (0) · 2. disagree (1) · 3. neutral (2) · 4. agree (3) · 5. strongly agree (4)
+   - 1. strongly disagree [score: 0] · 2. disagree [score: 1] · 3. neutral [score: 2] · 4. agree [score: 3] · 5. strongly agree [score: 4]

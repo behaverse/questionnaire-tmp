@@ -8,35 +8,43 @@
 - publication: J.B. Rotter. (1966). Generalized expectancies for internal versus external control of reinforcement. Psychological Monographs, 80 , (1, Whole No. 609). (1966)
 - items: 15
 
+## Description
+
+Locus of control is an
+important concept in various areas of psychology. It refers to the
+degree to which a person believes that he or she can influence his or
+her live through his/her own actions. In other words, to what degree
+does someone believe to be in control.
+
 ## Items
 
 1. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. Children get into trouble because their patents punish them too much. (0) · 2. The trouble with most children nowadays is that their parents are too easy with them. (1)
+   - 1. Children get into trouble because their patents punish them too much. [score: 0] · 2. The trouble with most children nowadays is that their parents are too easy with them. [score: 1]
 2. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. One of the major reasons why we have wars is because people don't take enough interest in politics. (0) · 2. There will always be wars, no matter how hard people try to prevent them. (1)
+   - 1. One of the major reasons why we have wars is because people don't take enough interest in politics. [score: 0] · 2. There will always be wars, no matter how hard people try to prevent them. [score: 1]
 3. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. The idea that teachers are unfair to students is nonsense. (0) · 2. Most students don't realize the extent to which their grades are influenced by accidental happenings. (1)
+   - 1. The idea that teachers are unfair to students is nonsense. [score: 0] · 2. Most students don't realize the extent to which their grades are influenced by accidental happenings. [score: 1]
 4. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. People who can't get others to like them don't understand how to get along with others. (0) · 2. No matter how hard you try some people just don't like you. (1)
+   - 1. People who can't get others to like them don't understand how to get along with others. [score: 0] · 2. No matter how hard you try some people just don't like you. [score: 1]
 5. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. Trusting to fate has never turned out as well for me as making a decision to take a definite course of action. (0) · 2. I have often found that what is going to happen will happen. (1)
+   - 1. Trusting to fate has never turned out as well for me as making a decision to take a definite course of action. [score: 0] · 2. I have often found that what is going to happen will happen. [score: 1]
 6. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. Becoming a success is a matter of hard work, luck has little or nothing to do with it. (0) · 2. Getting a good job depends mainly on being in the right place at the right time. (1)
+   - 1. Becoming a success is a matter of hard work, luck has little or nothing to do with it. [score: 0] · 2. Getting a good job depends mainly on being in the right place at the right time. [score: 1]
 7. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. When I make plans, I am almost certain that I can make them work. (0) · 2. It is not always wise to plan too far ahead because many things turn out to- be a matter of good or bad fortune anyhow. (1)
+   - 1. When I make plans, I am almost certain that I can make them work. [score: 0] · 2. It is not always wise to plan too far ahead because many things turn out to- be a matter of good or bad fortune anyhow. [score: 1]
 8. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. In my case getting what I want has little or nothing to do with luck. (0) · 2. Many times we might just as well decide what to do by flipping a coin. (1)
+   - 1. In my case getting what I want has little or nothing to do with luck. [score: 0] · 2. Many times we might just as well decide what to do by flipping a coin. [score: 1]
 9. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. By taking an active part in political and social affairs the people can control world events. (0) · 2. As far as world affairs are concerned, most of us are the victims of forces we can neither understand, nor control. (1)
+   - 1. By taking an active part in political and social affairs the people can control world events. [score: 0] · 2. As far as world affairs are concerned, most of us are the victims of forces we can neither understand, nor control. [score: 1]
 10. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. One should always be willing to admit mistakes. (0) · 2. It is usually best to cover up one's mistakes. (1)
+   - 1. One should always be willing to admit mistakes. [score: 0] · 2. It is usually best to cover up one's mistakes. [score: 1]
 11. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. Most misfortunes are the result of lack of ability, ignorance, laziness, or all three. (0) · 2. In the long run the bad things that happen to us are balanced by the good ones. (1)
+   - 1. Most misfortunes are the result of lack of ability, ignorance, laziness, or all three. [score: 0] · 2. In the long run the bad things that happen to us are balanced by the good ones. [score: 1]
 12. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. There is a direct connection between how hard 1 study and the grades I get. (0) · 2. Sometimes I can't understand how teachers arrive at the grades they give. (1)
+   - 1. There is a direct connection between how hard 1 study and the grades I get. [score: 0] · 2. Sometimes I can't understand how teachers arrive at the grades they give. [score: 1]
 13. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. It is impossible for me to believe that chance or luck plays an important role in my life. (0) · 2. Many times I feel that I have little influence over the things that happen to me. (1)
+   - 1. It is impossible for me to believe that chance or luck plays an important role in my life. [score: 0] · 2. Many times I feel that I have little influence over the things that happen to me. [score: 1]
 14. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. There is too much emphasis on athletics in high school. (0) · 2. Team sports are an excellent way to build character. (1)
+   - 1. There is too much emphasis on athletics in high school. [score: 0] · 2. Team sports are an excellent way to build character. [score: 1]
 15. **For each pair of statements, choose the one you agree with most.<br> If you do not agree with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. In the long run the people are responsible for bad government on a national as well as on a local level. (0) · 2. Most of the time I can't understand why politicians behave the way they do. (1)
+   - 1. In the long run the people are responsible for bad government on a national as well as on a local level. [score: 0] · 2. Most of the time I can't understand why politicians behave the way they do. [score: 1]

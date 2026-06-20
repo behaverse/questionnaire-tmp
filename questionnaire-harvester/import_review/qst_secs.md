@@ -11,6 +11,12 @@ Scale
 access link here (2013)
 - items: 12
 
+## Description
+
+In recent years, psychologists and neuroscientists have discussed the
+psychology underlying political attitudes. Jim Everett developed a
+simple scale to measure political conservatism. It is only 12 items.
+
 ## Instructions
 
 Please indicate the extent to which you feel positive or negative towards each issue.<br> Scores of 0 indicate greater negativity, and scores of 100 indicate greater positivity.<br> Scores of 50 indicate that you feel neutral about the issue.<br>

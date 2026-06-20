@@ -13,9 +13,10 @@
     "year": 2001
   },
   "status": "needs-research",
-  "item_count": 9,
+  "item_count": 10,
   "dimensions": [
-    "frequency"
+    "frequency",
+    "impairment"
   ],
   "option_scales": [
     {
@@ -39,11 +40,33 @@
         "More than half the days",
         "Nearly every day"
       ]
+    },
+    {
+      "ref": "opt_phq9_impairment_4",
+      "dimension": "impairment",
+      "measurement_type": "ordinal",
+      "levels": 4,
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "value_range": [
+        0,
+        3
+      ],
+      "anchors": [
+        "Not difficult at all",
+        "Somewhat difficult",
+        "Very difficult",
+        "Extremely difficult"
+      ]
     }
   ],
   "reversed_items": [],
   "subscales": [],
-  "uniform_scale": true,
+  "uniform_scale": false,
   "per_item": [
     {
       "index": 1,
@@ -161,6 +184,19 @@
         3
       ],
       "reversed": false
+    },
+    {
+      "index": 10,
+      "prompt_id": "pr_phq9_10",
+      "prompt_snippet": "If you checked off any problems, how difficult have these problems made it for y",
+      "dimension": "impairment",
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reversed": false
     }
   ],
   "to_research": {
@@ -174,9 +210,9 @@
 
 ## Known structure
 
-- Items: 9
-- Dimensions: frequency
-- Distinct scales: 1 (uniform)
+- Items: 10
+- Dimensions: frequency, impairment
+- Distinct scales: 2 (mixed)
 - Reverse-scored items: none
 - Subscale refs: none
 
@@ -193,6 +229,7 @@
 | 7 | Trouble concentrating on things, such as reading the newspaper or watching telev | frequency | 0,1,2,3 | no |
 | 8 | Moving or speaking so slowly that other people could have noticed? Or the opposi | frequency | 0,1,2,3 | no |
 | 9 | Thoughts that you would be better off dead, or of hurting yourself in some way | frequency | 0,1,2,3 | no |
+| 10 | If you checked off any problems, how difficult have these problems made it for y | impairment | 0,1,2,3 | no |
 
 ## To research (fill from https://www.phqscreeners.com/)
 

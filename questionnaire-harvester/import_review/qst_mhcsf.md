@@ -8,6 +8,12 @@
 - publication: Keyes, C.L.M. (2006). Mental health in adolescence: Is America’s youth flourishing? American Journal of Orthopsychiatry, 76 , 395–402. (2006)
 - items: 14
 
+## Description
+
+The MHC-SF is a scale measureing emotional wellbeing. The MHC-SF has
+been translated in various languages and has been evaluated
+psychometrically.
+
 ## Instructions
 
 <b>During the PAST MONTH, how often did you feel...</b>
@@ -15,30 +21,30 @@
 ## Items
 
 1. **happy**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 2. **interested in life**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 3. **satisfied with life**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 4. **that you had something important to contribute to society**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 5. **that you belonged to a community (like a social group, or your neighborhood)**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 6. **that our society is a good place, or is becoming a better place, for all people**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 7. **that people are basically good**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 8. **that the way our society works makes sense to you**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 9. **that you liked most parts of your personality**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 10. **good at managing the responsibilities of your daily life**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 11. **that you had warm and trusting relationships with others**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 12. **that you had experiences that challenged you to grow and become a better person**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 13. **confident to think or express your own ideas and opinions**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]
 14. **that your life has a sense of direction or meaning to it**  _(dimension: mhcagree)_
-   - 1. Never (0) · 2. Once or Twice (1) · 3. About once a week (2) · 4. About 2 or 3 times a week (3) · 5. Almost every day (4) · 6. Every day (5)
+   - 1. Never [score: 0] · 2. Once or Twice [score: 1] · 3. About once a week [score: 2] · 4. About 2 or 3 times a week [score: 3] · 5. Almost every day [score: 4] · 6. Every day [score: 5]

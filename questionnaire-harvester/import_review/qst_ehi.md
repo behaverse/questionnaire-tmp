@@ -8,6 +8,14 @@
 - publication: Oldfield, R.C. (1971). The assessment and analysis of handedness: The Edinburgh inventory. Neuropsychologia, 9 , 97-113. (1971)
 - items: 4
 
+## Description
+
+Most people are right handed . The Edinburgh
+Handedness Inventory is a well known short questionnaire for
+determining objectively whether one is left or right handed (Oldfield,
+1971), and there is a short form of it (Vealy, 2014). This PsyToolkit
+implementation uses the short form.
+
 ## Instructions
 
 Please indicate your preferences in the use of hands in the following activities or objects
@@ -15,10 +23,10 @@ Please indicate your preferences in the use of hands in the following activities
 ## Items
 
 1. **Writing**  _(dimension: side)_
-   - 1. Always left (-100) · 2. Usually left (-50) · 3. Both equally (0) · 4. Usually right (50) · 5. Always right (100)
+   - 1. Always left [score: -100] · 2. Usually left [score: -50] · 3. Both equally [score: 0] · 4. Usually right [score: 50] · 5. Always right [score: 100]
 2. **Throwing**  _(dimension: side)_
-   - 1. Always left (-100) · 2. Usually left (-50) · 3. Both equally (0) · 4. Usually right (50) · 5. Always right (100)
+   - 1. Always left [score: -100] · 2. Usually left [score: -50] · 3. Both equally [score: 0] · 4. Usually right [score: 50] · 5. Always right [score: 100]
 3. **Toothbrush**  _(dimension: side)_
-   - 1. Always left (-100) · 2. Usually left (-50) · 3. Both equally (0) · 4. Usually right (50) · 5. Always right (100)
+   - 1. Always left [score: -100] · 2. Usually left [score: -50] · 3. Both equally [score: 0] · 4. Usually right [score: 50] · 5. Always right [score: 100]
 4. **Spoon**  _(dimension: side)_
-   - 1. Always left (-100) · 2. Usually left (-50) · 3. Both equally (0) · 4. Usually right (50) · 5. Always right (100)
+   - 1. Always left [score: -100] · 2. Usually left [score: -50] · 3. Both equally [score: 0] · 4. Usually right [score: 50] · 5. Always right [score: 100]

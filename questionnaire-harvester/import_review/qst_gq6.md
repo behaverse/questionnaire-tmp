@@ -10,6 +10,14 @@ disposition: A conceptual and empirical topography. Journal of
 Personality and Social Psychology, 82 , 112- 127. (2002)
 - items: 6
 
+## Description
+
+Gratitude is a "generalized
+tendency to recognize and respond with grateful emotion to the roles
+of other people’s benevolence in the positive experiences and outcomes
+that one obtains" (McCullough et al., 2002). The study of gratitude is
+a good example of a topic in the area of positive psychology .
+
 ## Instructions
 
 Indicate how much you agree with each statement
@@ -17,14 +25,14 @@ Indicate how much you agree with each statement
 ## Items
 
 1. **I have so much in life to be thankful for.**  _(dimension: agree)_
-   - 1. strongly disagree (1) · 2. disagree (2) · 3. slightly disagree (3) · 4. neutral (4) · 5. slightly agree (5) · 6. agree (6) · 7. strongly agree (7)
+   - 1. strongly disagree [score: 1] · 2. disagree [score: 2] · 3. slightly disagree [score: 3] · 4. neutral [score: 4] · 5. slightly agree [score: 5] · 6. agree [score: 6] · 7. strongly agree [score: 7]
 2. **If I had to list everything that I felt grateful for, it would be a very long list**  _(dimension: agree)_
-   - 1. strongly disagree (1) · 2. disagree (2) · 3. slightly disagree (3) · 4. neutral (4) · 5. slightly agree (5) · 6. agree (6) · 7. strongly agree (7)
+   - 1. strongly disagree [score: 1] · 2. disagree [score: 2] · 3. slightly disagree [score: 3] · 4. neutral [score: 4] · 5. slightly agree [score: 5] · 6. agree [score: 6] · 7. strongly agree [score: 7]
 3. **When I look at the world, I don’t see much to be grateful for.**  _(dimension: agree; reversed)_
-   - 1. strongly disagree (1) · 2. disagree (2) · 3. slightly disagree (3) · 4. neutral (4) · 5. slightly agree (5) · 6. agree (6) · 7. strongly agree (7)
+   - 1. strongly disagree [score: 1] · 2. disagree [score: 2] · 3. slightly disagree [score: 3] · 4. neutral [score: 4] · 5. slightly agree [score: 5] · 6. agree [score: 6] · 7. strongly agree [score: 7]
 4. **I am grateful to a wide variety of people.**  _(dimension: agree)_
-   - 1. strongly disagree (1) · 2. disagree (2) · 3. slightly disagree (3) · 4. neutral (4) · 5. slightly agree (5) · 6. agree (6) · 7. strongly agree (7)
+   - 1. strongly disagree [score: 1] · 2. disagree [score: 2] · 3. slightly disagree [score: 3] · 4. neutral [score: 4] · 5. slightly agree [score: 5] · 6. agree [score: 6] · 7. strongly agree [score: 7]
 5. **As I get older I find myself more able to appreciate the people, events, and situations that have been part of my life history.**  _(dimension: agree)_
-   - 1. strongly disagree (1) · 2. disagree (2) · 3. slightly disagree (3) · 4. neutral (4) · 5. slightly agree (5) · 6. agree (6) · 7. strongly agree (7)
+   - 1. strongly disagree [score: 1] · 2. disagree [score: 2] · 3. slightly disagree [score: 3] · 4. neutral [score: 4] · 5. slightly agree [score: 5] · 6. agree [score: 6] · 7. strongly agree [score: 7]
 6. **Long amounts of time can go by before I feel grateful to something or someone.**  _(dimension: agree; reversed)_
-   - 1. strongly disagree (1) · 2. disagree (2) · 3. slightly disagree (3) · 4. neutral (4) · 5. slightly agree (5) · 6. agree (6) · 7. strongly agree (7)
+   - 1. strongly disagree [score: 1] · 2. disagree [score: 2] · 3. slightly disagree [score: 3] · 4. neutral [score: 4] · 5. slightly agree [score: 5] · 6. agree [score: 6] · 7. strongly agree [score: 7]

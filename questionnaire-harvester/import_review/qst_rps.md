@@ -10,6 +10,11 @@ Tendency to Take Risks: The Risk Propensity Scale. Journal of Applied
 Social Psychology, 38 (6) , 1506-1520. (2008)
 - items: 7
 
+## Description
+
+Some people are more likely to take risks than others. Some people
+might even enjoy taking risks.
+
 ## Instructions
 
 Please indicate the extent to which you agree or disagree with the following statements by sliding the slider.<br> Please do not think too long before answering; usually your first inclination is also the best one.

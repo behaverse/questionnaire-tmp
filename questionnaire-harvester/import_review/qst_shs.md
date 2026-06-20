@@ -8,6 +8,14 @@
 - publication: Lyubomirsky, S. & Lepper, H. S. (1999). A measure of subjective happines: Preliminary reliability and construct validation. Social indicators research, 46 , 137-155. (1999)
 - items: 4
 
+## Description
+
+Happiness and the term more
+commonly used in psychology, subjective
+wellbeing , are frequently studied in the field of psychology
+(including in positive psychology )
+and related applied areas, such as social care .
+
 ## Instructions
 
 For each of the following statements and/or questions, please indicate the point on the scale that you feel is most appropriate in describing you

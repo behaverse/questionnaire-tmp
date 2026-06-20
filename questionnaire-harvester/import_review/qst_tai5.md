@@ -8,6 +8,14 @@
 - publication: Joanne Taylor & Frank P. Deane (2002) Development of a Short Form of the Test Anxiety Inventory (TAI), The Journal of General Psychology, 129:2, 127-136, DOI: 10.1080/00221300209603133 (2002)
 - items: 5
 
+## Description
+
+Test anxiety is fairly common in students. There are several surveys
+to measure this. In practise, you likely want a short one so that you
+can combine it with another survey or experiment (such as the
+dot-probe task). For this, the TAI-5 developed by Taylor and
+Deane (2002) an excellent choice.
+
 ## Instructions
 
 This questionnaire is how you feel during exams and tests. For each item, indicate how often you feel
@@ -15,12 +23,12 @@ This questionnaire is how you feel during exams and tests. For each item, indica
 ## Items
 
 1. **During tests I feel very tense.**  _(dimension: taiagree)_
-   - 1. Rarely or never (1) · 2. Sometimes (2) · 3. Often (3) · 4. Always (4)
+   - 1. Rarely or never [score: 1] · 2. Sometimes [score: 2] · 3. Often [score: 3] · 4. Always [score: 4]
 2. **I wish examinations did not bother me so much.**  _(dimension: taiagree)_
-   - 1. Rarely or never (1) · 2. Sometimes (2) · 3. Often (3) · 4. Always (4)
+   - 1. Rarely or never [score: 1] · 2. Sometimes [score: 2] · 3. Often [score: 3] · 4. Always [score: 4]
 3. **I seem to defeat myself while working on important tests.**  _(dimension: taiagree)_
-   - 1. Rarely or never (1) · 2. Sometimes (2) · 3. Often (3) · 4. Always (4)
+   - 1. Rarely or never [score: 1] · 2. Sometimes [score: 2] · 3. Often [score: 3] · 4. Always [score: 4]
 4. **I feel very panicky when I take an important test.**  _(dimension: taiagree)_
-   - 1. Rarely or never (1) · 2. Sometimes (2) · 3. Often (3) · 4. Always (4)
+   - 1. Rarely or never [score: 1] · 2. Sometimes [score: 2] · 3. Often [score: 3] · 4. Always [score: 4]
 5. **During examinations I get so nervous that I forget facts I really know.**  _(dimension: taiagree)_
-   - 1. Rarely or never (1) · 2. Sometimes (2) · 3. Often (3) · 4. Always (4)
+   - 1. Rarely or never [score: 1] · 2. Sometimes [score: 2] · 3. Often [score: 3] · 4. Always [score: 4]

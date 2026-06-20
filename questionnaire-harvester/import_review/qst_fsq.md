@@ -10,6 +10,11 @@ Questionnaire. Journal of Therapy and Experimental Psychiatry,
 26(1) , 31-34. (1995)
 - items: 18
 
+## Description
+
+Many people dislike spiders and some are even seriously afraid of
+them. A serious fear of spiders is also known as arachnophobia .
+
 ## Instructions
 
 Choose an answer on the scale from "not at all" to "very much" for each of the 18 items

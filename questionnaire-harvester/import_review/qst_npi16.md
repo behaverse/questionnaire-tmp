@@ -10,21 +10,27 @@ measure of narcissism. Journal of Research in Personality, 40 ,
 440-450. (2006)
 - items: 8
 
+## Description
+
+The scientific study of narcism (also known as "narcissism") goes way
+back to the 19th century, and it is a well studied concept in psychiatry . Here is the DSM (3rd edition) description of narcism (as quoted from Raskin and Terry,
+1988):
+
 ## Items
 
 1. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. When people compliment me I sometimes get embarrassed (0) · 2. I know that I am good because everybody keeps telling me so (1)
+   - 1. When people compliment me I sometimes get embarrassed [score: 0] · 2. I know that I am good because everybody keeps telling me so [score: 1]
 2. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. I am no better or worse than most people (0) · 2. I think I am a special person (1)
+   - 1. I am no better or worse than most people [score: 0] · 2. I think I am a special person [score: 1]
 3. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. I don’t like it when I find myself manipulating people (0) · 2. I find it easy to manipulate people (1)
+   - 1. I don’t like it when I find myself manipulating people [score: 0] · 2. I find it easy to manipulate people [score: 1]
 4. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. I try not to be a show off (0) · 2. I am apt to show off if I get the chance (1)
+   - 1. I try not to be a show off [score: 0] · 2. I am apt to show off if I get the chance [score: 1]
 5. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. Sometimes I tell good stories (0) · 2. Everybody likes to hear my stories (1)
+   - 1. Sometimes I tell good stories [score: 0] · 2. Everybody likes to hear my stories [score: 1]
 6. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. It makes me uncomfortable to be the center of attention (0) · 2. I really like to be the center of attention (1)
+   - 1. It makes me uncomfortable to be the center of attention [score: 0] · 2. I really like to be the center of attention [score: 1]
 7. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. I hope I am going to be successful (0) · 2. I am going to be a great person (1)
+   - 1. I hope I am going to be successful [score: 0] · 2. I am going to be a great person [score: 1]
 8. **For each pair of statements, choose the one you identify with most.<br> If you do not identify with either of them, choose the one that is least<br> objectionable or remote.<br>**  _(dimension: rating)_
-   - 1. There is a lot that I can learn from other people (0) · 2. I am more capable than other people (1)
+   - 1. There is a lot that I can learn from other people [score: 0] · 2. I am more capable than other people [score: 1]
