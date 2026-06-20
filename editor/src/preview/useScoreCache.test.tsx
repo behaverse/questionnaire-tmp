@@ -45,4 +45,27 @@ describe('useScoreCache', () => {
     cache.refresh(answers, ev)
     expect(cache.resolver.score('total')).toBe(12)
   })
+
+  it('rebuilds the score-input index when the runtime structure changes (no wasm recompile)', async () => {
+    // The runtime is live in the editor: a later structure carries a different answer-key for the
+    // same prompt. The cache must rebuild its index so the new key still maps (regression: the index
+    // was built once at compile time, leaving live answers unmapped → missing_count, total 0).
+    const mk = (idPrefix: string) => ({
+      provenance: {}, metadata: { id: 'qst', title: 'PHQ', language: 'en' },
+      pages: [{ id: 'p1', elements: [{ id: `${idPrefix}_1`, question: { prompt: { id: 'pr_phq9_1' } },
+        option: { input_data_type: 'choice', measurement_type: 'ordinal', content: {} } }] }],
+      scores: [{ id: 'total', scorer: 'scr_phq9@v26.0602', path: '/total',
+        impl: { kind: 'wasm', url: '/scorers/phq9.wasm', sha256: PHQ9_SHA } }],
+    }) as never
+    const { result, rerender } = renderHook(({ rt }) => useScoreCache(rt, fakeFetch), { initialProps: { rt: mk('itA') } })
+    await waitFor(() => expect(result.current).not.toBeNull())
+    result.current!.refresh({ itA_1: 3 } as never, ev)
+    expect(result.current!.resolver.score('total')).toBe(3)
+
+    // Same scorer set (no recompile), new item key for the same prompt → index must rebuild.
+    rerender({ rt: mk('itB') })
+    await waitFor(() => expect(result.current).not.toBeNull())
+    result.current!.refresh({ itB_1: 2 } as never, ev)
+    expect(result.current!.resolver.score('total')).toBe(2)
+  })
 })

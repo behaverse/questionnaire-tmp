@@ -34,3 +34,28 @@ test('a score can be authored in the Scores panel', async ({ page }) => {
 
   await page.screenshot({ path: 'tests/e2e/screenshots/ed-d4-scoring.png', fullPage: true })
 })
+
+test('ED-D4b: PHQ-9 scores compute live in the preview', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: /load phq-9 sample/i }).click()
+  await expect(page.getByRole('navigation', { name: /structure/i })).toBeVisible()
+
+  // Preview pane is open by default. Show the whole questionnaire so every item renders.
+  const preview = page.getByRole('region', { name: /preview/i })
+  await preview.getByLabel('Scope').selectOption('all')
+
+  // Answer the first two items "Nearly every day" (value 3 each) → total 6 → severity "mild".
+  // Click the <label.qv-option> (the radio input is sr-only / off-viewport).
+  await preview.locator('label.qv-option', { hasText: 'Nearly every day' }).nth(0).click()
+  await preview.locator('label.qv-option', { hasText: 'Nearly every day' }).nth(1).click()
+
+  // Open the Scoring tab in the questionnaire-root Inspector (preview stays mounted → live values publish).
+  await page.getByRole('button', { name: /questionnaire settings/i }).click()
+  await page.getByRole('tab', { name: /scoring/i }).click()
+
+  // The bundled PHQ-9 wasm ran: a live band/severity string appears (proves real computation,
+  // not a coincidental digit). Generous timeout for the async wasm compile.
+  await expect(page.getByText(/mild/i).first()).toBeVisible({ timeout: 15000 })
+
+  await page.screenshot({ path: 'tests/e2e/screenshots/ed-d4b-live-score.png', fullPage: true })
+})
