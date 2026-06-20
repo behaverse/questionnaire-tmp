@@ -296,3 +296,20 @@ def test_psychology_tools_meta_capture_e2e(tmp_path, monkeypatch):
     sidecar = json.loads((sm / f"{qid}.json").read_text())
     assert sidecar["introduction"][0].startswith("The DEMO is a demonstration")
     assert "NOT for redistribution" in sidecar["_notice"]
+
+
+def test_harvest_applies_authored_description_override(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_meta.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    desc = tmp_path / "descriptions"; desc.mkdir()
+    (desc / "qst_demo.md").write_text("The Demo Screening (DEMO) is a 1-item demo measure. It is used to test harvesting.")
+    rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-screening",
+                   "--out", str(out), "--scales-index", str(tmp_path / "missing.json"),
+                   "--register", str(tmp_path / "register.md"), "--questions", str(tmp_path / "questions"),
+                   "--source-metadata", str(tmp_path / "sm"), "--descriptions", str(desc),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    md = json.loads((out / "questionnaires" / "qst_demo.json").read_text())["metadata"]
+    assert md["description"] == "The Demo Screening (DEMO) is a 1-item demo measure. It is used to test harvesting."
+    assert md["x_description_source"] == "authored"

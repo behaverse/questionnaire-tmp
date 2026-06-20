@@ -59,6 +59,7 @@ class RawQuestionnaire:
     references: list = field(default_factory=list)
     keywords: list = field(default_factory=list)
     source_meta: dict | None = None
+    description_source: str | None = None
 
     def __post_init__(self):
         if isinstance(self.scale, dict):
