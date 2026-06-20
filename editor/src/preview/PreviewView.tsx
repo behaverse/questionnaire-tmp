@@ -39,6 +39,7 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
   const evaluator = useEvaluator()
   const cache = useScoreCache(runtime)
   const setPreviewScores = useEditorStore((s) => s.setPreviewScores)
+  const model = useEditorStore((s) => s.model)
 
   // refresh BEFORE bindings so score() is current in this render
   if (cache && evaluator) cache.refresh(answers as Record<string, never>, evaluator)
@@ -46,10 +47,11 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
 
   // publish computed scores + unavailable list to the store
   useEffect(() => {
+    // Derive unavailable from the authored model's scores (not the projected runtime),
+    // because the preview projection drops unknown scorers from runtime.scores.
+    const unavailable = [...new Set(((model?.scores ?? []) as { scorer: string }[])
+      .map((s) => s.scorer).filter((ref) => !isKnownScorer(ref)))]
     if (!cache || !evaluator) {
-      // If there are authored scores with unknown scorers, still publish the unavailable list
-      const unavailable = [...new Set(((runtime.scores ?? []) as { scorer: string }[])
-        .map((s) => s.scorer).filter((ref) => !isKnownScorer(ref)))]
       if (unavailable.length > 0) {
         setPreviewScores({ values: {}, unavailable })
       }
@@ -57,11 +59,9 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
     }
     const values: Record<string, EvalValue> = {}
     for (const s of runtime.scores ?? []) values[s.id] = cache.resolver.score(s.id)
-    const unavailable = [...new Set(((runtime.scores ?? []) as { scorer: string }[])
-      .map((s) => s.scorer).filter((ref) => !isKnownScorer(ref)))]
     setPreviewScores({ values, unavailable })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cache, answers, evaluator])
+  }, [cache, answers, evaluator, model])
 
   // clear on unmount
   useEffect(() => () => setPreviewScores(null), [setPreviewScores])

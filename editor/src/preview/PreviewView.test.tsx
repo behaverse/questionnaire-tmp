@@ -9,6 +9,7 @@ vi.mock('../logic/useEvaluator', async () => {
 import { PreviewView } from './PreviewView'
 import { useEditorStore } from '../state/store'
 import type { Runtime } from '@behaverse/questionnaire-renderer'
+import type { Questionnaire } from '../model/types'
 
 const runtime = {
   provenance: { preview: true },
@@ -55,7 +56,20 @@ describe('PreviewView', () => {
 // The "values becomes live" path (score() returns non-null) is covered by the
 // Task 8 e2e that has full wasm.
 
-const runtimeWithUnknownScorer: Runtime = {
+// The projected runtime has scores DROPPED for unknown scorers (projectForPreview
+// only keeps scorers with a bundled impl). So to test that unavailable badges still
+// appear we must load the authored model (with unknown scorer) into the store.
+const modelWithUnknownScorer: Questionnaire = {
+  metadata: { id: 'qst_score', title: 'Score', language: 'en' },
+  pages: [{ id: 'p1', elements: [
+    { question: { prompt: { content: { en: { status: 'complete', text: 'Q1' } } } },
+      option: { input_data_type: 'text', measurement_type: 'text', content: { en: {} } } },
+  ] }],
+  scores: [{ id: 'total', scorer: 'scr_unknown_xyz@v1.0', path: '/total' }],
+}
+
+// Runtime as produced by the preview projection: unknown scorer stripped from scores
+const runtimeWithUnknownScorerProjected: Runtime = {
   provenance: { preview: true },
   metadata: { id: 'qst_score', title: 'Score', language: 'en' },
   locale: 'en',
@@ -65,7 +79,7 @@ const runtimeWithUnknownScorer: Runtime = {
       question: { prompt: { content: { en: { status: 'complete', text: 'Q1' } } } },
       option: { input_data_type: 'text', measurement_type: 'text', content: { en: {} } } },
   ] }],
-  scores: [{ id: 'total', scorer: 'scr_unknown_xyz@v1.0', path: '/total' }],
+  // scores intentionally omitted — simulates projectForPreview stripping unknown scorers
 } as unknown as Runtime
 
 describe('PreviewView score-cache wiring', () => {
@@ -73,17 +87,21 @@ describe('PreviewView score-cache wiring', () => {
 
   beforeEach(() => {
     spy = vi.spyOn(useEditorStore.getState(), 'setPreviewScores')
+    // Load the authored model into the store so model.scores contains the unknown scorer
+    useEditorStore.getState().loadModel(modelWithUnknownScorer, { kind: 'new' })
   })
 
   afterEach(() => {
     spy.mockRestore()
-    // reset store previewScores
+    // reset store
     useEditorStore.getState().setPreviewScores(null)
+    useEditorStore.getState().reset()
   })
 
   it('calls setPreviewScores with unavailable list for unknown scorer on mount', async () => {
+    // Pass a projected runtime (no scores) — unavailable must come from model.scores in store
     const { unmount } = render(
-      <PreviewView runtime={runtimeWithUnknownScorer} problems={[]} logic={[]} validation={[]} />
+      <PreviewView runtime={runtimeWithUnknownScorerProjected} problems={[]} logic={[]} validation={[]} />
     )
 
     // The useEffect fires after render; wait for the spy to be called
