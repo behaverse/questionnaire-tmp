@@ -47,6 +47,9 @@ def main(argv=None) -> int:
     rv.add_argument("--out", default="questionnaire-harvester/output")
     rv.add_argument("--review-dir", default="questionnaire-harvester/import_review")
     rv.add_argument("--id", dest="qst_id", default=None, help="only this questionnaire id")
+    ad = sub.add_parser("apply-descriptions")
+    ad.add_argument("--out", default="questionnaire-harvester/output")
+    ad.add_argument("--descriptions", default="questionnaire-harvester/descriptions")
     a = ap.parse_args(argv)
     if a.cmd == "document-scoring":
         from harvester.scoring_doc import write_scoring_docs
@@ -57,6 +60,11 @@ def main(argv=None) -> int:
         from harvester.review_export import write_review_export
         ids = write_review_export(Path(a.out), Path(a.review_dir), only_id=a.qst_id)
         print(f"wrote {len(ids)} review doc(s) + README")
+        return 0
+    if a.cmd == "apply-descriptions":
+        from harvester.descriptions import apply_descriptions_to_output
+        ids = apply_descriptions_to_output(Path(a.out), Path(a.descriptions))
+        print(f"applied {len(ids)} authored description(s)")
         return 0
     if a.cmd != "harvest":
         return 2

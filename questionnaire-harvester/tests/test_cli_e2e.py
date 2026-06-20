@@ -298,6 +298,20 @@ def test_psychology_tools_meta_capture_e2e(tmp_path, monkeypatch):
     assert "NOT for redistribution" in sidecar["_notice"]
 
 
+def test_apply_descriptions_cli(tmp_path):
+    from library.importers.survey_db.writer import write_entity
+    out = tmp_path / "output"
+    write_entity(out, "questionnaire", {"@context": "x", "metadata": {"id": "qst_z", "title": "T",
+        "short_title": "T", "description": "old", "x_source_site": "psychology-tools.com"},
+        "pages": [{"id": "page_main", "elements": []}]})
+    desc = tmp_path / "descriptions"; desc.mkdir()
+    (desc / "qst_z.md").write_text("The Z (Z) is authored. It is used to test.")
+    rc = cli.main(["apply-descriptions", "--out", str(out), "--descriptions", str(desc)])
+    assert rc == 0
+    md = json.loads((out / "questionnaires" / "qst_z.json").read_text())["metadata"]
+    assert md["x_description_source"] == "authored" and md["description"].startswith("The Z (Z)")
+
+
 def test_harvest_applies_authored_description_override(tmp_path, monkeypatch):
     fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_meta.html").read_text()
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)

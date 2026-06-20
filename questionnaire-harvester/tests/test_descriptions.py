@@ -22,3 +22,27 @@ def test_apply_authored_noop_when_absent(tmp_path):
     rq = SimpleNamespace(qst_id="qst_y", description="old", description_source=None)
     assert apply_authored_description(rq, tmp_path) is False
     assert rq.description == "old" and rq.description_source is None
+
+import json
+from library.importers.survey_db.writer import write_entity
+from harvester.descriptions import apply_descriptions_to_output
+
+def _q(qid, desc="scraped", src="site_meta"):
+    return {"@context": "x", "metadata": {"id": qid, "title": "T", "short_title": "T",
+            "description": desc, "x_source_site": "psychology-tools.com",
+            "x_description_source": src}, "pages": [{"id": "page_main", "elements": []}]}
+
+def test_apply_descriptions_patches_only_overridden(tmp_path):
+    out = tmp_path / "output"
+    write_entity(out, "questionnaire", _q("qst_a"))
+    write_entity(out, "questionnaire", _q("qst_b"))
+    untouched_before = (out / "questionnaires" / "qst_b.json").read_text()
+    desc = tmp_path / "descriptions"; desc.mkdir()
+    (desc / "qst_a.md").write_text("The A (A) is authored. It is used to test.")
+    patched = apply_descriptions_to_output(out, desc)
+    assert patched == ["qst_a"]
+    a = json.loads((out / "questionnaires" / "qst_a.json").read_text())["metadata"]
+    assert a["description"] == "The A (A) is authored. It is used to test."
+    assert a["x_description_source"] == "authored"
+    # qst_b (no override) byte-identical
+    assert (out / "questionnaires" / "qst_b.json").read_text() == untouched_before
