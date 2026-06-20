@@ -9,6 +9,14 @@ def _words(text):
     return re.findall(r"[a-z0-9]+", (text or "").lower())
 
 
+def _strip_title(text, title):
+    """Remove the instrument title from text (case-insensitive) so the shared name isn't
+    counted as verbatim overlap. Skips very short titles to avoid corrupting prose."""
+    if title and len(title) >= 4:
+        return re.sub(re.escape(title), " ", text or "", flags=re.I)
+    return text or ""
+
+
 def _ngrams(words, n):
     return [words[i:i + n] for i in range(len(words) - n + 1)] if len(words) >= n else []
 
@@ -24,23 +32,31 @@ def check_descriptions(out_dir, descriptions_dir, source_meta_dir, *, n=8, max_l
     for qid, text in sorted(authored.items()):
         issues = []
         qf = qdir / f"{qid}.json"
-        short = ""
+        title = short = ""
         if qf.exists():
-            short = (json.loads(qf.read_text()).get("metadata") or {}).get("short_title") or ""
+            md = json.loads(qf.read_text()).get("metadata") or {}
+            title, short = md.get("title") or "", md.get("short_title") or ""
         if not text.strip():
             issues.append("empty")
         if len(text) > max_len:
             issues.append(f"too long ({len(text)} > {max_len})")
         if "." not in text:
             issues.append("no sentence period")
-        if short and short.lower() not in text.lower():
-            issues.append(f"missing acronym {short!r}")
+        # acronym: the description must contain one of the instrument's ALL-CAPS acronyms
+        # (extracted from title/short_title). Skip when none exist — some short_titles are
+        # descriptive junk ("revised version") with no acronym to enforce.
+        acronyms = re.findall(r"[A-Z][A-Z0-9][A-Z0-9-]*", f"{title} {short}")
+        if acronyms and not any(a.lower() in text.lower() for a in acronyms):
+            issues.append(f"missing acronym (one of {acronyms})")
         smf = smdir / f"{qid}.json"
         if smf.exists():
             sm = json.loads(smf.read_text())
             src = " ".join(sm.get("introduction") or []) + " " + (sm.get("meta_description") or "")
-            src_grams = {tuple(w) for w in _ngrams(_words(src), n)}
-            if src_grams and any(tuple(g) in src_grams for g in _ngrams(_words(text), n)):
+            # ignore the shared instrument title — it legitimately appears in both the
+            # description and the source, and is not copyrightable phrasing.
+            src_grams = {tuple(g) for g in _ngrams(_words(_strip_title(src, title)), n)}
+            if src_grams and any(tuple(g) in src_grams
+                                 for g in _ngrams(_words(_strip_title(text, title)), n)):
                 issues.append(f"verbatim overlap (>= {n} words) with source")
         if issues:
             flagged.append({"id": qid, "issues": issues})

@@ -81,3 +81,29 @@ def test_check_clean_description_passes(tmp_path):
                            "The GAD-7 is a 7-item anxiety screening questionnaire. It is used in primary care.",
                            "completely different wording about worry over fourteen days for screening purposes here")
     assert check_descriptions(out, desc, sm) == []
+
+
+def test_check_ignores_shared_instrument_title(tmp_path):
+    # description + source share only the instrument title (legit) -> NOT flagged
+    out, desc, sm = _setup(
+        tmp_path, "qst_t", "HAM-A",
+        "The Hamilton Anxiety Rating Scale (HAM-A) is a 14-item clinician-rated scale measuring anxiety.",
+        "The Hamilton Anxiety Rating Scale (HAM-A) is a widely used clinical tool to quantify anxiety symptoms.")
+    # patch the title so _strip_title has something to strip
+    import json as _j
+    p = out / "questionnaires" / "qst_t.json"
+    q = _j.loads(p.read_text()); q["metadata"]["title"] = "Hamilton Anxiety Rating Scale (HAM-A)"
+    write_entity(out, "questionnaire", q)
+    issues = {i["id"]: i["issues"] for i in check_descriptions(out, desc, sm)}
+    assert "qst_t" not in issues   # only the shared title overlaps; cleared
+
+def test_check_skips_acronym_when_title_has_none(tmp_path):
+    # junk short_title with no ALL-CAPS acronym -> acronym check skipped (not flagged)
+    out, desc, sm = _setup(tmp_path, "qst_j", "revised version",
+                           "The Self-consciousness scale is a 22-item self-report measure of self-focus.",
+                           "completely unrelated source wording about attention to the inner self here today")
+    import json as _j
+    p = out / "questionnaires" / "qst_j.json"
+    q = _j.loads(p.read_text()); q["metadata"]["title"] = "Self-consciousness scale (revised version)"
+    write_entity(out, "questionnaire", q)
+    assert check_descriptions(out, desc, sm) == []
