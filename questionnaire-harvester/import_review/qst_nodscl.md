@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: H Xian, K R Shah, S M Phillips, J F Scherrer, R Volberg, A Eisen. Association of cognitive distortions with problem and pathological gambling in adult male twins. 160(3): Psychiatry Res 300-307. 2008. (2008)
+- keywords: psychology · pathological · problem · gambling · screening · test
 - items: 17
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_nodscl.json` (flagged).
 
 ## Description
 

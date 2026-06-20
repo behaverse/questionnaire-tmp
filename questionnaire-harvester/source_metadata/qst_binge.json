@@ -1,0 +1,30 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/binge-eating-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_binge",
+  "source_url": "https://psychology-tools.com/test/binge-eating-scale",
+  "meta_description": "The BES is a comprehensive assessment tool for identifying binge eating patterns through a detailed, 16-question behavioral analysis.",
+  "keywords": [
+    "psychology",
+    "mania",
+    "eating",
+    "disorder",
+    "binge",
+    "purge",
+    "test"
+  ],
+  "og": {
+    "title": "Binge Eating Scale (BES) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/binge-eating-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The BES is a comprehensive assessment tool for identifying binge eating patterns through a detailed, 16-question behavioral analysis.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Binge Eating Scale (BES) is a self-report instrument developed to assess the presence and behavioral manifestations of Binge Eating Disorder (BED). Developed by Gormally et al. in 1982, the scale was designed to identify behaviors, emotions, and attitudes related to binge eating episodes among individuals who might be at risk of developing BED. Comprising 16 items, the BES evaluates both the severity and frequency of binge eating episodes, which are central in diagnosing and understanding the disorder.",
+    "Each item on the BES presents a set of four statements arranged in a graded severity format, reflecting an increasing level of binge eating symptomatology. Respondents select the statement that best describes their experience, with higher scores indicating more severe binge eating behaviors. This method allows for the quantification of binge eating tendencies without the need for a clinical interview. The total score ranges from 0 to 46, with higher scores correlating with more frequent and severe binge eating behaviors. This scoring system has been validated through various studies, showing good internal consistency and satisfactory test-retest reliability.",
+    "The utility of the BES extends beyond the diagnosis of Binge Eating Disorder. It is also used in clinical settings to monitor changes in binge eating behavior over time, making it a valuable tool for assessing treatment outcomes. Furthermore, researchers employ the BES in studies to explore the psychopathological features of binge eating and its association with obesity and other psychological disorders. Despite its widespread use, it is advisable for clinicians and researchers to use the BES alongside other diagnostic tools and interviews to ensure comprehensive assessment and accurate diagnosis. Overall, the Binge Eating Scale remains a respected instrument in both clinical and research contexts, contributing to the broader understanding and treatment of binge eating disorders.",
+    "Instructions Below are groups of statements about behavior, thoughts, and emotional states. Please indicate which statement in each group best describes how you feel."
+  ]
+}

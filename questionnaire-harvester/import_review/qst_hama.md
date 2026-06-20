@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: M Hamilton. The Assessment of Anxiety States by Rating. 32 Br J Med Psychol 50-55. 1959. (1959)
+- keywords: psychology · ham-a · anxiety · hamilton
 - items: 14
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_hama.json` (flagged).
 
 ## Description
 

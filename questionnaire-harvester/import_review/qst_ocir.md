@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: EB Foa, Huppert JD, S Leiberg, G Hajcak, R Langner, et al. The Obsessive Compulsive Inventory: Development and validation of a short version. 14 Psychological Assessment 485-496 ( 2002 ). (2002)
+- keywords: psychology · oci · oci-r · ocd · obsessive · compulsive · test
 - items: 18
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_ocir.json` (flagged).
 
 ## Description
 

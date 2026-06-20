@@ -1,0 +1,26 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/dissociative-experiences-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_desii",
+  "source_url": "https://psychology-tools.com/test/dissociative-experiences-scale",
+  "meta_description": "The Dissociative Experiences Scale (DES-II) is a screening tool for dissociative disorders, trauma, and PTSD.",
+  "keywords": [
+    "ptsd",
+    "trauma",
+    "dissociation",
+    "cptsd"
+  ],
+  "og": {
+    "title": "Dissociative Experiences Scale (DES-II) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/dissociative-experiences-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The Dissociative Experiences Scale (DES-II) is a screening tool for dissociative disorders, trauma, and PTSD.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Dissociative Experiences Scale is designed to assess a broad spectrum of dissociative phenomena. This encompasses a range from problematic dissociative states, such as those associated with dissociative disorders, to benign instances like daydreaming. It serves as a pivotal screening instrument for identifying potential dissociative disorders, with a particular focus on conditions like Dissociative Identity Disorder (previously known as Multiple Personality Disorder) and Dissociative Disorder Not Otherwise Specified, which is currently termed Other Specified Dissociative Disorder. Individuals grappling with Posttraumatic Stress Disorder ( PTSD ) frequently exhibit elevated scores on this scale, highlighting the intricate link between PTSD symptoms and dissociative experiences.",
+    "This tool, now in its enhanced second iteration, offers a more user-friendly scoring process compared to its predecessor, making it more accessible for both participants and researchers. As a self-assessment instrument, the Dissociative Experiences Scale plays a crucial role in identifying those who may benefit from a comprehensive clinical evaluation for dissociative disorders, thereby acting as a gateway to further diagnostic exploration and potential treatment pathways. Its widespread acceptance and translation into numerous languages underscore its global applicability and the recognition of its importance in the fields of trauma and dissociative disorders. The DES-II remains a valuable resource for professionals seeking to understand and address the impacts of trauma and dissociation.",
+    "Instructions This questionnaire asks about experiences that you may have in your daily life. It is interested in how often you have these experiences. It is important that your answers show how often these experiences happen to you when you are not under the influence of alcohol or drugs. To answer the questions, please determine to what degree each experience described in the question applies to you, and select the number to show what percentage of the time you have experienced it (0% = Never, 100% = Always)."
+  ]
+}

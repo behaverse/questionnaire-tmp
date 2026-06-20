@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: R Young, et al. A Rating Scale for Mania: Reliability, Validity and Sensitivity. 133: Br J Psychiatry 429-435. 1978. (1978)
+- keywords: psychology · mania · bipolar · manic · behavior · test
 - items: 11
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_ymrs.json` (flagged).
 
 ## Description
 

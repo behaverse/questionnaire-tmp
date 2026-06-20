@@ -5,7 +5,10 @@
 - short_title: SPIN
 - source: psychology-tools.com
 - license: unknown
+- keywords: psychology · social · anxiety · test
 - items: 17
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_spin.json` (flagged).
 
 ## Description
 

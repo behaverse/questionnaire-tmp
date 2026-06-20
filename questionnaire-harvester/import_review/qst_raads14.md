@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: J M Eriksson, L M Andersen, & S Bejerot. RAADS-14 Screen: validity of a screening tool for autism spectrum disorder in an adult psychiatric population. Molecular Autism, ( 4 ): 49. Dec 2013 (2013)
+- keywords: autism · spectrum · disorder · ritvo · revised · psychology · tools
 - items: 14
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_raads14.json` (flagged).
 
 ## Description
 

@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: S Ehlers, C Gillberg, L Wing. A screening questionnaire for Asperger syndrome and other high-functioning autism spectrum disorders in school age children. J Autism Dev Disord. 1999; 29 ( 2 ): 129 – 141. (1999)
+- keywords: ASSQ · Asperger · autism · spectrum · high-functioning · test · questionnaire
 - items: 27
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_assq.json` (flagged).
 
 ## Description
 

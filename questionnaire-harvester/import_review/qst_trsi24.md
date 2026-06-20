@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: T Øktedalen, KA Hagtvet, A Hoffart, TF Langkaas, M Smucker. The Trauma Related Shame Inventory: Measuring Trauma-Related Shame Among Patients with PTSD. J Psychopathol Behav Assess ( 36 ): 4, 600-615. ( 2014 ) (2014)
+- keywords: trauma · shame · ptsd
 - items: 24
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_trsi24.json` (flagged).
 
 ## Description
 

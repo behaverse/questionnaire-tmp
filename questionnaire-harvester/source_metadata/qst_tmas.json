@@ -1,0 +1,31 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/taylor-manifest-anxiety-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_tmas",
+  "source_url": "https://psychology-tools.com/test/taylor-manifest-anxiety-scale",
+  "meta_description": "Assess anxiety as a personality trait with the Taylor Manifest Anxiety Scale through a series of behavior and emotion-focused statements.",
+  "keywords": [
+    "psychology",
+    "test",
+    "anxiety",
+    "taylor",
+    "manifest",
+    "self",
+    "rating",
+    "personality"
+  ],
+  "og": {
+    "title": "Taylor Manifest Anxiety Scale (TMAS) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/taylor-manifest-anxiety-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Assess anxiety as a personality trait with the Taylor Manifest Anxiety Scale through a series of behavior and emotion-focused statements.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Taylor Manifest Anxiety Scale (TMAS) is a psychological assessment tool designed to evaluate the level of manifest anxiety in individuals. Developed by Dr. Janet Taylor Spence, the scale emerged from the need to quantify the anxiety construct in a reliable and valid manner. Originally intended for use in clinical settings, the TMAS has found application in various fields of psychology, including developmental, social, and clinical psychology. The scale comprises a series of statements to which respondents indicate their level of agreement or disagreement, thereby providing insights into their anxiety levels.",
+    "The TMAS operates on the premise that anxiety can be measured as a stable personality trait, as opposed to a transient state. This distinction is crucial in understanding the scale's design and its intended application. The tool measures manifest anxiety, which refers to the observable symptoms and behaviors associated with anxiety, such as tension, nervousness, and worry. The scale's items are crafted to capture these dimensions, offering a quantitative measure of the individual's tendency towards anxiety in their daily life. Over the years, the TMAS has undergone various revisions and adaptations, aiming to improve its reliability, validity, and applicability across different populations and contexts.",
+    "The use of the TMAS in research and clinical practice has contributed significantly to our understanding of anxiety and its impact on individuals' lives. By providing a standardized method for assessing manifest anxiety, the scale facilitates comparisons across studies and populations. Furthermore, it allows for the examination of relationships between anxiety and other psychological constructs, health outcomes, and behavioral patterns.",
+    "Instructions The statements below inquire about your behavior and emotions. Consider each statement carefully. Then indicate whether the statements are generally true or false for you."
+  ]
+}

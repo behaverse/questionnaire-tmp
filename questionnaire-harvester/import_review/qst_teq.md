@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Spreng RN, McKinnon MC, Mar RA, Levine B. The Toronto Empathy Questionnaire: Scale development and initial validation of a factor-analytic solution to multiple empathy measures. Journal of Personality Assessment. 2009.; 91 ( 1 ): 62-71. (2009)
+- keywords: empathy · questionnaire · test · toronto
 - items: 16
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_teq.json` (flagged).
 
 ## Description
 

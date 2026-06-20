@@ -1,0 +1,28 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/big-5-personality-test. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_ffm",
+  "source_url": "https://psychology-tools.com/test/big-5-personality-test",
+  "meta_description": "Assess your personality with the Big 5 Test, exploring how you score in five key traits that influence behavior and preferences.",
+  "keywords": [
+    "psychology",
+    "personality",
+    "test",
+    "big-5",
+    "ffm",
+    "ocean"
+  ],
+  "og": {
+    "title": "Big 5 Personality Test (FFM) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/big-5-personality-test/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Assess your personality with the Big 5 Test, exploring how you score in five key traits that influence behavior and preferences.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Big Five Personality Test (also known as the five factor model, or FFM for short) is a personality model derived from common language descriptors. The model emerged from the work of several Personality Psychologists operating largely independently during the early 1990’s.",
+    "The Big Five is named after the five general groupings of traits that make up one’s personality. Namely O penness, C onscientiousness, E xtravesion, A greeableness, and N euroticism.",
+    "Instructions Please consider the following statements and mark how accurately each statement is regarding you."
+  ]
+}

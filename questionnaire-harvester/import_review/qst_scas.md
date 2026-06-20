@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: S H Spence. Structure of Anxiety Symptoms Among Children: A Confirmatory Factor-Analytic Study. 106 ( 2 ): Journal of Abnormal Psychology 280-297 ( 1997 ). [ PDF ] (1997)
+- keywords: psychology · child · children · anxiety · test
 - items: 45
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_scas.json` (flagged).
 
 ## Description
 

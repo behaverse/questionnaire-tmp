@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: T J Meyer, M L Miller, R L Metzger, and T D Borkovec. Development and Validation of the Penn State Worry Questionnaire. 28 Behav Res Ther 487-495. 1990. (1990)
+- keywords: psychology · general · gad-7 · anxiety · disorder · penn state
 - items: 16
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pswq.json` (flagged).
 
 ## Description
 

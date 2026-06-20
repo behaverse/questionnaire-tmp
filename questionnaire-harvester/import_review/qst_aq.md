@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Simon Baron-Cohen, et al. The Autism-Spectrum Quotient (AQ): Evidence from Asperger Syndrome/High-Functioning Autism, Males and Females, Scientists and Mathematicians. 31: Journal of Autism and Developmental Disorders 5-17. 2001. (2001)
+- keywords: aq · autism · spectrum · aspergers
 - items: 50
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_aq.json` (flagged).
 
 ## Description
 

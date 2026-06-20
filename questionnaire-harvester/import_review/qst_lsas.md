@@ -5,7 +5,10 @@
 - short_title: Liebowitz Social Anxiety Scale
 - source: psychology-tools.com
 - license: unknown
+- keywords: psychology · social · phobia · anxiety · fear · avoidance
 - items: 48
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_lsas.json` (flagged).
 
 ## Description
 

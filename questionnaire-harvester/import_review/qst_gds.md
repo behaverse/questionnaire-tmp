@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: JA Yesavage, TL Brink, et al. Development and Validation of a Geriatric Depression Screening Scale: a Preliminary Report. 17(1): J Psychiatr Res. 37-49. 1983. (1983)
+- keywords: psychology · depression · gds · test · self · elderly · geriatric
 - items: 30
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_gds.json` (flagged).
 
 ## Description
 

@@ -1,0 +1,27 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/spin. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_spin",
+  "source_url": "https://psychology-tools.com/test/spin",
+  "meta_description": "Measure your social anxiety levels with the Social Phobia Inventory (SPIN), a validated tool for assessing fear and avoidance in social situations.",
+  "keywords": [
+    "psychology",
+    "social",
+    "anxiety",
+    "test"
+  ],
+  "og": {
+    "title": "Social Phobia Inventory (SPIN) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/spin/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Measure your social anxiety levels with the Social Phobia Inventory (SPIN), a validated tool for assessing fear and avoidance in social situations.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Social Phobia Inventory (SPIN) is a self-rated scale designed for the screening and measurement of social anxiety disorder, also known as social phobia. Developed by Connor et al., the instrument consists of 17 items that assess fear, avoidance, and physiological discomfort in social or performance situations. Each item on the SPIN is scored on a scale from 0 (not at all) to 4 (extremely), allowing individuals to quantify the severity of their social anxiety symptoms over the past week. This scoring system facilitates a comprehensive assessment, providing a nuanced understanding of the disorder's impact on the individual's daily functioning.",
+    "The development of the SPIN was motivated by the need for an efficient, reliable, and valid tool for clinical and research purposes. Prior to its introduction, assessments of social anxiety disorder often relied on more time-consuming measures or interviews that required administration by trained professionals. The SPIN, however, offers a practical alternative that can be self-administered, making it accessible for use in a variety of settings, including clinical practices, research studies, and even self-help contexts. Its design is based on a thorough review of the literature on social anxiety disorder, ensuring that the items included are relevant to the core aspects of the condition. This relevance is reflected in the SPIN's focus on three dimensions: fear of social situations, avoidance of these situations, and physiological symptoms experienced in these contexts.",
+    "Research on the SPIN has demonstrated its reliability and validity as a measure of social anxiety disorder. Studies have shown that the SPIN possesses good internal consistency, meaning that its items cohesively measure the construct of social anxiety. Furthermore, the inventory has been found to correlate well with other established measures of social anxiety and has shown sensitivity in detecting changes in symptom severity over time. This has led to the SPIN being employed in various research endeavors to understand the prevalence, severity, and treatment outcomes of social anxiety disorder. Additionally, its utility has been recognized in clinical settings for both screening purposes and as a tool to monitor treatment progress. The ease of administration and interpretation of the SPIN contributes to its widespread adoption and use in both clinical and research contexts.",
+    "Instructions Please read each statement and click in the column that indicates how much the statement applied to you over the past week."
+  ]
+}

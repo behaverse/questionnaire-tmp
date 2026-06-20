@@ -5,7 +5,10 @@
 - short_title: SAST
 - source: psychology-tools.com
 - license: unknown
+- keywords: sex · addict · sexual · addiction
 - items: 45
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_sast.json` (flagged).
 
 ## Description
 

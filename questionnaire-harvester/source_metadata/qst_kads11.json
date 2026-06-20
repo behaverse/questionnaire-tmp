@@ -1,0 +1,32 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/kutcher-adolescent-depression-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_kads11",
+  "source_url": "https://psychology-tools.com/test/kutcher-adolescent-depression-scale",
+  "meta_description": "The KADS-11 is a streamlined tool for identifying depression in teens, focusing on mood, behavior, and thoughts for effective screening.",
+  "keywords": [
+    "psychology",
+    "kutcher",
+    "kads",
+    "kads-11",
+    "depression",
+    "teen",
+    "teenage"
+  ],
+  "og": {
+    "title": "Kutcher Adolescent Depression Scale - 11-Item (KADS-11) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/kutcher-adolescent-depression-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The KADS-11 is a streamlined tool for identifying depression in teens, focusing on mood, behavior, and thoughts for effective screening.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Kutcher Adolescent Depression Scale - 11-Item (KADS-11) is a clinical assessment tool specifically designed to diagnose and assess the severity of depressive episodes in adolescents. Developed to address the unique aspects of mood disorders in younger populations, the KADS-11 offers a concise yet effective approach for mental health professionals to identify depression in teenagers. Its focus on adolescent-specific factors makes it a particularly relevant tool in both school-based and clinical settings.",
+    "Comprised of eleven questions, the KADS-11 measures symptoms of depression that are commonly experienced by adolescents. The scale prompts respondents to consider their feelings over the past week, including changes in mood, behavior, and cognition. Each item on the questionnaire is scored on a scale from 0 to 3, with higher scores indicating more severe depressive symptoms. The total score can then be used to evaluate the presence and intensity of depression, guiding further diagnostic and therapeutic decisions.",
+    "The design of the KADS-11 is grounded in clinical research and draws on existing diagnostic criteria from major health organizations. This foundation ensures that the scale not only aligns with professional standards but also remains sensitive to the subtle ways depression can manifest in adolescents. Additionally, the KADS-11 is structured to be self-administered, allowing for ease of use in various environments. This self-reporting format encourages honesty and self-reflection among teens, often leading to more accurate representations of their emotional and mental states.",
+    "The Kutcher Adolescent Depression Scale has been shown to be a reliable tool for detecting depression in adolescents. Its straightforward format and sensitivity to the adolescent experience contribute to its effectiveness in clinical and educational settings alike, supporting timely and appropriate mental health interventions for young individuals.",
+    "Instructions The 11-item version of the KADS presented here is optimized for monitoring outcomes in adolescents (12-17 years) who are receiving treatment for major depressive disorder. Its items are worded using standard and colloquial terminology, and responses are scored on a simple 4 choice scale.",
+    "Over the last week, how have you been “on average” or “usually” regarding the following items."
+  ]
+}

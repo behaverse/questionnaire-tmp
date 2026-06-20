@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Prigerson H G, Maciejewski P K, Reynolds C F 3rd, et al. Inventory of Complicated Grief: A Scale to Measure Maladaptive Symptoms of Loss. 59 ( 1 ): Psychiatry Res 65 - 79 ( 1995 ). (1995)
+- keywords: psychology · icg · grief · test · complicated greif
 - items: 19
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_icg.json` (flagged).
 
 ## Description
 

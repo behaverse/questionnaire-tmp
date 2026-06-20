@@ -1,0 +1,31 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/geriatric-depression-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_gds",
+  "source_url": "https://psychology-tools.com/test/geriatric-depression-scale",
+  "meta_description": "Assess depression in older adults with the GDS, designed to detect symptoms efficiently in elderly populations through simple questions.",
+  "keywords": [
+    "psychology",
+    "depression",
+    "gds",
+    "test",
+    "self",
+    "elderly",
+    "geriatric"
+  ],
+  "og": {
+    "title": "Geriatric Depression Scale (GDS) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/geriatric-depression-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Assess depression in older adults with the GDS, designed to detect symptoms efficiently in elderly populations through simple questions.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Geriatric Depression Scale (GDS) is an assessment tool designed specifically for detecting symptoms of depression in older adults. It was initially developed by Yesavage et al. in 1983 as a response to the need for a more accurate and reliable measure of depression in geriatric populations, who often exhibit different symptomatology compared to younger age groups. The GDS is widely used by healthcare professionals, researchers, and clinicians in various settings, such as nursing homes, hospitals, and community centers.",
+    "The scale consists of 30 items or questions, each of which can be answered with a simple “yes” or “no.” These questions are carefully crafted to assess various aspects of an individual's mental state, including feelings of hopelessness, loss of interest in activities, changes in sleep patterns, and difficulties with concentration. The total score obtained from the GDS is used as an index of depressive symptoms, with higher scores indicating a greater likelihood of depression.",
+    "One key advantage of the GDS lies in its brevity and ease of administration. It can typically be completed within 5-10 minutes, making it less burdensome for older adults who may have limited energy or attention span due to age-related cognitive decline. Additionally, the “yes” or “no” response format simplifies the process for individuals with low educational levels or those experiencing difficulties with language comprehension.",
+    "The Geriatric Depression Scale has demonstrated good reliability and validity in various studies, making it a useful tool for identifying depression among older adults. Despite its limitations, such as potential cultural biases and lack of sensitivity to detect subclinical or mild depressive symptoms, the GDS remains an important component of comprehensive geriatric assessments and contributes valuable information for diagnosing and treating depression in older populations.",
+    "Instructions Please answer “yes” or “no” to the following questions in regards to how you have been feeling recently."
+  ]
+}

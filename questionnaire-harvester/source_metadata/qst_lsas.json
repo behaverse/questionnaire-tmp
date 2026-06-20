@@ -1,0 +1,32 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/liebowitz-social-anxiety-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_lsas",
+  "source_url": "https://psychology-tools.com/test/liebowitz-social-anxiety-scale",
+  "meta_description": "Assess your social anxiety levels with the Liebowitz Social Anxiety Scale (LSAS), focusing on fear and avoidance in social situations.",
+  "keywords": [
+    "psychology",
+    "social",
+    "phobia",
+    "anxiety",
+    "fear",
+    "avoidance"
+  ],
+  "og": {
+    "title": "Liebowitz Social Anxiety Scale - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/liebowitz-social-anxiety-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Assess your social anxiety levels with the Liebowitz Social Anxiety Scale (LSAS), focusing on fear and avoidance in social situations.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Liebowitz Social Anxiety Scale (LSAS) is a psychological assessment tool specifically designed to evaluate the range and severity of social anxiety disorder (SAD) symptoms. Introduced by Dr. Michael R. Liebowitz in 1987, the scale addresses the need for a comprehensive measure to adequately reflect the complex nature of social anxiety.",
+    "The LSAS distinguishes itself by assessing not only the fear associated with social interaction and performance situations, but also the avoidance behaviors that often accompany such fears. This dual focus provides a more complete view of social anxiety, encapsulating both the emotional distress and the consequential behavioral adaptations that characterize the disorder.",
+    "The administration of the original LSAS involves a structured interview, although a self-report version is presented below, broadening its accessibility and applicability in various clinical and research settings. Respondents are asked to rate their level of fear or anxiety and the degree to which they avoid specific social and performance situations on a scale from 0 to 3. This quantification facilitates a better understanding of the severity of social anxiety, distinguishing between mild, moderate, and severe manifestations.",
+    "By providing a detailed profile of an individual's social anxiety, the LSAS assists clinicians and researchers in developing targeted treatment plans and conducting empirical studies on the efficacy of different therapeutic interventions. Its robust psychometric properties have contributed to its widespread acceptance as a reliable and valid instrument for assessing social anxiety.",
+    "Instructions This measure assesses the way that social phobia plays a role in your life across a variety of situations. Read each situation carefully and answer two questions about that situation. The first question asks how anxious or fearful you feel in the situation. The second question asks how often you avoid the situation.",
+    "If you come across a situation that you ordinarily do not experience, imagine “what if you were faced with that situation,” and then, rate the degree to which you would fear this hypothetical situation and how often you would tend to avoid it.",
+    "Please base your ratings on the way that the situations have affected you in the last week. Fill out the following scale with the most suitable answer provided below."
+  ]
+}

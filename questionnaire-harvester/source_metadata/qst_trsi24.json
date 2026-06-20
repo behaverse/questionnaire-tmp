@@ -1,0 +1,28 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/trauma-related-shame-inventory. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_trsi24",
+  "source_url": "https://psychology-tools.com/test/trauma-related-shame-inventory",
+  "meta_description": "The Trauma Related Shame Inventory (TRSI) is a self-assessment that clarifies between shame and guilt in individuals with PTSD.",
+  "keywords": [
+    "trauma",
+    "shame",
+    "ptsd"
+  ],
+  "og": {
+    "title": "Trauma-Related Shame Inventory (TRSI-24) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/trauma-related-shame-inventory/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The Trauma Related Shame Inventory (TRSI) is a self-assessment that clarifies between shame and guilt in individuals with PTSD.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Trauma-Related Shame Inventory (TRSI-24) is a psychological assessment tool specifically designed to quantify the extent of shame associated with traumatic experiences. Recognizing the significant role that shame can play in the aftermath of trauma, this inventory provides clinicians and researchers with a focused method to evaluate this complex emotion. The TRSI-24, consisting of 24 items, assesses feelings of shame that are directly linked to traumatic events, distinguishing itself from other general shame assessments by targeting trauma-induced shame rather than shame as a broader emotional condition.",
+    "The inventory operates through a 4 point scale format, allowing respondents to express the frequency and intensity of their shame-related experiences on a scale from “never” to “almost always.” This scaling system facilitates a better understanding of how deeply shame is felt in the context of an individual’s traumatic memories and ongoing perceptions of self and others. The TRSI-24's structured approach ensures that it captures the persistent and fluctuating nature of trauma-related shame, making it a reliable measure for both initial assessments and subsequent evaluations to monitor changes over time.",
+    "The TRSI-24 is particularly valuable in therapeutic settings where understanding the impact of trauma-related shame is crucial for effective intervention. It assists in tailoring treatment approaches that specifically address the components of shame, which are often deeply intertwined with the trauma itself. By pinpointing these aspects, therapists can more effectively aid individuals in their recovery from traumatic experiences. Additionally, the inventory serves as an important research tool, enhancing the empirical understanding of how shame interacts with trauma and influences recovery processes.",
+    "The Trauma Related Shame Inventory is a useful instrument in the field of psychology for its focused examination of trauma-related shame. It supports clinical diagnostics and therapeutic interventions, providing clear insights into the pervasive and often debilitating effects of shame following traumatic events. Its application is integral to advancing both clinical practices and research methodologies aimed at addressing and ameliorating the consequences of trauma.",
+    "Instructions Individuals who experience traumas often have many different types of reactions. Below are a number of statements that describe thoughts and feelings that people sometimes have about themselves.",
+    "Please read each statement carefully, and decide how much it applies to you. Check the option that best describes how much the statement is true for you over the past week."
+  ]
+}

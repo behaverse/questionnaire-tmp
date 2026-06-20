@@ -1,0 +1,27 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/nods-clip. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_nodscl",
+  "source_url": "https://psychology-tools.com/test/nods-clip",
+  "meta_description": "Utilize the NODS-CLiP for a rapid screening of adult pathological and problem gambling, helping identify potential issues with a concise questionnaire.",
+  "keywords": [
+    "psychology",
+    "pathological",
+    "problem",
+    "gambling",
+    "screening",
+    "test"
+  ],
+  "og": {
+    "title": "Diagnostic Screen for Gambling Disorders (NODS-CLiP) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/nods-clip/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Utilize the NODS-CLiP for a rapid screening of adult pathological and problem gambling, helping identify potential issues with a concise questionnaire.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The NODS-CLiP is a brief psychological assessment tool designed to screen for potential gambling addiction. It is a concise questionnaire that helps identify behaviors indicative of problematic gambling. The test focuses on key aspects of gambling behavior to evaluate the risk of addiction, aiming to prompt early intervention and support. For individuals or professionals seeking to understand gambling habits, the NODS-CLiP offers a reliable starting point for further assessment or treatment considerations.",
+    "Instructions For each question, check YES or NO, taking care to not mark questions you are instructed to skip."
+  ]
+}

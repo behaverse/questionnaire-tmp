@@ -1,0 +1,33 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/montgomery-asberg-depression-rating-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_madrs",
+  "source_url": "https://psychology-tools.com/test/montgomery-asberg-depression-rating-scale",
+  "meta_description": "Take the MADRS test to evaluate depression severity, based on well-researched criteria focusing on mood, thoughts, and physical symptoms.",
+  "keywords": [
+    "psychology",
+    "rating",
+    "test",
+    "montgomery",
+    "asberg",
+    "british",
+    "journal"
+  ],
+  "og": {
+    "title": "Montgomery-Asberg Depression Rating Scale (MADRS) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/montgomery-asberg-depression-rating-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Take the MADRS test to evaluate depression severity, based on well-researched criteria focusing on mood, thoughts, and physical symptoms.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Montgomery-Asberg Depression Rating Scale (MADRS) is a widely recognized clinical assessment tool designed to measure the severity of depressive episodes in patients with mood disorders. Developed by British psychiatrist Stuart Montgomery and Swedish psychiatrist Marie Asberg in 1979, the scale provides a detailed measure of depressive symptoms aimed at evaluating the effectiveness of antidepressant treatments. The MADRS is noted for its sensitivity to changes in depression severity, making it a valuable tool for monitoring patient progress during the course of treatment.",
+    "The scale consists of ten items, each targeting a different aspect of depression such as apparent sadness, reported sadness, inner tension, sleep disturbances, appetite, concentration, lassitude, inability to feel, pessimistic thoughts, and suicidal thoughts. Each item is scored on a scale from 0 to 6, with higher scores indicating more severe symptoms. This scoring system allows clinicians to quantify symptoms in a standardized manner, facilitating both the initial assessment of depression severity and the ongoing monitoring of therapeutic interventions.",
+    "In clinical practice, the MADRS is administered through an interview by a trained health professional. This ensures that the assessment is based on a comprehensive understanding of the patient's emotional and cognitive state, rather than solely on self-reported symptoms. The scale's focus on the psychological rather than somatic symptoms of depression distinguishes it from other scales which may not as effectively differentiate between depression and other co-occurring physical illnesses.",
+    "The Montgomery-Asberg Depression Rating Scale is recognized for its reliability and validity in both research and clinical settings. Its widespread use across diverse populations and its sensitivity to treatment-induced changes in symptoms underscore its adaptability and enduring relevance in the field of psychiatry. The MADRS continues to serve as a fundamental instrument for evaluating depression, supporting improved patient outcomes through precise and targeted treatment strategies.",
+    "Instructions Please note : This test is typically administered by a third-party clinician, but it is provided here informational purposes. This test may not be as accurate when self-administered, as it relies on a somewhat objective assessment.",
+    "Specify one of the choices listed below by clicking the dot next to the appropriate statement. These questions concern how the patient has felt over the past week. Rate each item on a scale from 0 to 6, with 0 being “normal/not present” and 6 being “extreme.”",
+    "Numbers 1, 3, and 5 do not have their own textual rating of severity, rather, these numbers are representative of levels in between two choices."
+  ]
+}

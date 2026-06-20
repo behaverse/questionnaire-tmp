@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: R IF Brown ( 1991 ). Gaming, gambling and other addictive play. See JH Kerr & MJ Apter. Adult place: A reversal theory approach (pp. 101-118). (1991)
+- keywords: video · game · addiction · egst · gaming
 - items: 20
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_egst.json` (flagged).
 
 ## Description
 

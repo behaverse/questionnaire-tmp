@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: A M Wetherby, S Brosnan-Maddox, V Peace, L Newton. ( 2008 ). Validation of the Infant-Toddler Checklist as a broadband screener for autism spectrum disorders from 9 to 24 months of age. Autism, 12 ( 5 ), 487-511. (2008)
+- keywords: autism spectrum · autism spectrum disorders · assessment · ITC · social communication
 - items: 24
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_itc.json` (flagged).
 
 ## Description
 

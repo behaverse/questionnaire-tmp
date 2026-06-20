@@ -1,0 +1,30 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/pcl-22. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_pcl22",
+  "source_url": "https://psychology-tools.com/test/pcl-22",
+  "meta_description": "The Original Hare Psychopathy Checklist is a 22-item psychological assessment tool designed to assess the presence of psychopathy in individuals.",
+  "keywords": [
+    "psychopath",
+    "psychopath test",
+    "psychopathy",
+    "hare",
+    "PCL",
+    "PCL-R",
+    "psychology",
+    "test"
+  ],
+  "og": {
+    "title": "Hare Psychopathy Checklist (Original) (PCL-22) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/pcl-22/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The Original Hare Psychopathy Checklist is a 22-item psychological assessment tool designed to assess the presence of psychopathy in individuals.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Original Hare Psychopathy Checklist is a psychological assessment tool designed to assess the presence of psychopathy in individuals. It consists of a 22-item checklist of perceived personality traits and observable behaviors. It is intended to be completed on the basis of a semi-structured interview along with a review of ancillary information.",
+    "The PCL was originally developed in the 1970s by Canadian psychologist Robert Hare for use in psychology experiments. It has since undergone revision to the newer PCL-R (Psychopathy Checklist - Revised) in which 2 of the questions from the original assessment were removed after statistical analysis showed said questions to be unhelpful.",
+    "Instructions Please mark present, unclear, or absent regarding each of the following personality traits or observed behaviors."
+  ]
+}

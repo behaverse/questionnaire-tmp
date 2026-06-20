@@ -1,0 +1,29 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/vadrs-vanderbilt-adhd-diagnostic-rating-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_vadrs",
+  "source_url": "https://psychology-tools.com/test/vadrs-vanderbilt-adhd-diagnostic-rating-scale",
+  "meta_description": "Explore ADHD and associated behavioral issues in children with the VADRS, a detailed rating scale focusing on attention, hyperactivity, and conduct.",
+  "keywords": [
+    "adhd",
+    "child",
+    "psychology",
+    "rating",
+    "parent",
+    "scale"
+  ],
+  "og": {
+    "title": "Vanderbilt ADHD Diagnostic Rating Scale (VADRS) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/vadrs-vanderbilt-adhd-diagnostic-rating-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Explore ADHD and associated behavioral issues in children with the VADRS, a detailed rating scale focusing on attention, hyperactivity, and conduct.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Vanderbilt ADHD Diagnostic Rating Scale (VADRS) is an assessment tool specifically designed to evaluate symptoms of Attention-Deficit/Hyperactivity Disorder (ADHD) in children and adolescents. Rooted in the criteria established by the Diagnostic and Statistical Manual of Mental Disorders, Fourth Edition (DSM-IV), this scale serves a critical role in both clinical and research settings for the identification and understanding of ADHD behaviors. The scale is distinguished by its comprehensive approach, incorporating inputs from both parents and teachers to provide a multifaceted view of the child's behavior across different environments.",
+    "Structured into two main parts, the Vanderbilt Scale assesses core ADHD symptoms, including inattention, hyperactivity, and impulsivity, as well as additional domains relevant to childhood behavior disorders such as oppositional-defiant behavior, conduct disorder, and anxiety/depression. This broad scope allows for a thorough evaluation of the child's symptoms in relation to ADHD and co-occurring conditions, facilitating a more nuanced diagnostic process.",
+    "The Vanderbilt ADHD Diagnostic Rating Scale's emphasis on multi-informant input enhances its diagnostic accuracy, enabling healthcare professionals to make informed decisions regarding diagnosis and treatment planning. Its structured format and alignment with DSM-IV criteria contribute to its utility as a reliable tool for identifying ADHD and associated behavioral issues in pediatric populations.",
+    "Instructions Consider the context of what is appropriate for the age of your child. How would you rate your child’s behaviors in the following areas over the past 6 months:"
+  ]
+}

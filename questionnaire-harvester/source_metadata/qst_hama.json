@@ -1,0 +1,27 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/hamilton-anxiety-rating-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_hama",
+  "source_url": "https://psychology-tools.com/test/hamilton-anxiety-rating-scale",
+  "meta_description": "The Hamilton Anxiety Rating Scale (HAM-A) offers a detailed framework for evaluating anxiety severity, covering emotional, physical, and cognitive symptoms.",
+  "keywords": [
+    "psychology",
+    "ham-a",
+    "anxiety",
+    "hamilton"
+  ],
+  "og": {
+    "title": "Hamilton Anxiety Rating Scale (HAM-A) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/hamilton-anxiety-rating-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The Hamilton Anxiety Rating Scale (HAM-A) offers a detailed framework for evaluating anxiety severity, covering emotional, physical, and cognitive symptoms.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Hamilton Anxiety Rating Scale (HAM-A) is a widely used clinical tool designed to quantify the severity of anxiety symptoms. Developed by Dr. Max Hamilton in 1959, it is one of the earliest scales of its kind, intended for use with adults particularly in a clinical setting. The HAM-A consists of 14 items, each aimed at assessing a different aspect of anxiety as experienced by the individual. These items are rated on a scale, with the total score providing an overall measure of the person's anxiety level. This test has been important in both the diagnosis and the monitoring of anxiety disorders, facilitating a structured approach to understanding the nuances of an individual’s mental health condition.",
+    "The scale's design reflects a comprehensive approach to assessing anxiety, covering both psychological and somatic symptoms. This includes aspects such as mood, fears, tension, insomnia, intellectual (cognitive) symptoms, and somatic complaints, among others. The scoring system ranges from “not present” to “severe”, allowing clinicians to gauge the intensity of each symptom. The HAM-A’s broad coverage of symptoms makes it a useful instrument, suitable for tracking changes over time and evaluating the effectiveness of treatment interventions. Despite its age, the HAM-A continues to be validated against more contemporary measures of anxiety, affirming its relevance and utility in today's clinical environments.",
+    "The Hamilton Anxiety Rating Scale remains a foundational tool in the field of psychiatry and psychology, widely used for its intended purpose of assessing anxiety levels in adult individuals. Its enduring presence in clinical settings underscores the ongoing importance of standardized measures in the diagnosis and treatment of mental health disorders.",
+    "Instructions Below is a list of phrases that describe certain feeling that people have. Find the answer which best describes the extent to which you experience these conditions. Select one of the five responses for each of the fourteen questions."
+  ]
+}

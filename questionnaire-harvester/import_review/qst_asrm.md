@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: E G Altman, D Hedeker, J L Peterson, J M Davis. The Altman Self-Rating Mania Scale. 42 ( 10 ): Biol Psychiatry 948-55 ( 1997 ). (1997)
+- keywords: psychology · mania · bipolar · self-rating · test
 - items: 5
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_asrm.json` (flagged).
 
 ## Description
 

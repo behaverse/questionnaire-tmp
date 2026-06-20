@@ -5,7 +5,10 @@
 - short_title: MDI
 - source: psychology-tools.com
 - license: unknown
+- keywords: psychology · depression · mdi · who · self · test
 - items: 12
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_mdi.json` (flagged).
 
 ## Description
 

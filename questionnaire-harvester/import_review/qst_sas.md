@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: William W K Zung. A Rating Instrument for Anxiety Disorders. 12 ( 6 ): Psychosomatics 371-379. 1971. (1971)
+- keywords: psychology · anxiety · zung · test · self
 - items: 20
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_sas.json` (flagged).
 
 ## Description
 

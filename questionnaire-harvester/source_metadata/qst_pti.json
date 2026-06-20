@@ -1,0 +1,34 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/personality-type-indicator. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_pti",
+  "source_url": "https://psychology-tools.com/test/personality-type-indicator",
+  "meta_description": "The PTI assesses your personality type based on MBTI, offering insights into preferences in energy, information processing, and decision-making.",
+  "keywords": [
+    "psychology",
+    "personality",
+    "type",
+    "personality type",
+    "jung",
+    "jungian",
+    "archetype",
+    "myers-briggs",
+    "mbti"
+  ],
+  "og": {
+    "title": "Personality Type Indicator (PTI) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/personality-type-indicator/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The PTI assesses your personality type based on MBTI, offering insights into preferences in energy, information processing, and decision-making.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The exploration of personality types has long been a subject of psychological inquiry, with a focus on how individual differences in personality influence behavior, interpersonal relationships, and career choices. One of the most recognized tools for evaluating personality types is the Personality Type Indicator (PTI) is a tool for assessing your MBTI personality type. This instrument is designed to categorize personality into distinct types based on preferences in perception and judgment.",
+    "The framework is grounded in Carl Jung's theory of psychological types, which posits that variations in human behavior are predictable based on differing psychological functions. The PTI assesses these differences through a series of questions that determine preferences in four dichotomous categories: Extraversion versus Introversion, Sensing versus Intuition, Thinking versus Feeling, and Judging versus Perceiving. These categories combine to form 16 unique personality types, each associated with specific traits and behaviors.",
+    "Participants in the PTI complete a questionnaire that includes items designed to gauge their natural preferences across these four dimensions. The instrument does not measure trait levels or aptitudes but rather how individuals prefer to interact with the world around them. This approach helps individuals understand their own behavior, guides them in career choices, and improves their interpersonal relationships by fostering an appreciation of diverse personality styles.",
+    "The PTI is widely used in various settings, including organizational, educational, and personal development areas. Its application in these fields is driven by its utility in facilitating team dynamics, enhancing leadership development, and supporting career counseling and personal growth initiatives. Additionally, the PTI's straightforward typology makes it accessible and useful for self-assessment and mutual understanding among non-professionals.",
+    "The Personality Type Indicator provides a structured method for understanding personality differences through Jungian theory. Its widespread use and enduring popularity underscore its perceived utility in helping individuals and organizations identify and capitalize on the strengths inherent in diverse personality types. As a tool for both personal insight and professional development, the PTI remains a significant instrument in the study and application of personality psychology.",
+    "Instructions This test is designed to measure the 4 dimensions of your MBTI Personality type; it should take about 10 to 15 minutes to complete. There are no “right” answers. You should answer the questions quickly, without over analyzing. And for the most accurate results, answer the questions as “the way you are,” not “the way you would like to be seen by others.”"
+  ]
+}

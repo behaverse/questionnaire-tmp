@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Sarah J Brooks, Stanley P Krulewicz, Stan Kutcher. The Kutcher Adolescent Depression Scale: ssessment of its evaluative properties over the course of an 8-week pediatric pharmacotherapy trial. 13 ( 3 ): J Child Adolesc Psychopharmacol 337-49 ( 2003 ). (2003)
+- keywords: psychology · kutcher · kads · kads-11 · depression · teen · teenage
 - items: 11
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_kads11.json` (flagged).
 
 ## Description
 

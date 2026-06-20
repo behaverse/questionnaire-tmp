@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: William W K Zung. A Self-Rating Depression Scale. 12: Arch Gen Psychiatry 63-70. 1965. (1965)
+- keywords: psychology · depression · zung · test · self
 - items: 20
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_sds.json` (flagged).
 
 ## Description
 

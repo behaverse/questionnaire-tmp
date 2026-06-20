@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: P M Salkovskis, K A Rimes, H MC Warwick, D M Clark. The Health Anxiety Inventory: development and validation of scales for the measurement of health anxiety and hypochondriasis. Psychol Med. 2006; 32 ( 5 ): 843–853. (2006)
+- keywords: anxiety · health · hypochondriac · health anxiety · short
 - items: 18
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_hai18.json` (flagged).
 
 ## Description
 

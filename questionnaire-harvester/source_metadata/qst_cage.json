@@ -1,0 +1,29 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/cage-alcohol-questionnaire. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_cage",
+  "source_url": "https://psychology-tools.com/test/cage-alcohol-questionnaire",
+  "meta_description": "Evaluate your relationship with alcohol using the CAGE Questionnaire, offering a quick, reliable screening for alcohol-related issues.",
+  "keywords": [
+    "psychology",
+    "cage",
+    "alcohol",
+    "substance",
+    "abuse",
+    "test"
+  ],
+  "og": {
+    "title": "CAGE Alcohol Questionnaire (CAGE) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/cage-alcohol-questionnaire/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Evaluate your relationship with alcohol using the CAGE Questionnaire, offering a quick, reliable screening for alcohol-related issues.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The CAGE Alcohol Questionnaire is a brief psychological assessment instrument that plays designed to detect problematic alcohol consumption in its early stages. Developed to be simple and direct, it consists of just four questions that probe into the behaviors and feelings associated with drinking habits. The primary objective of this tool is to screen for alcohol dependence and abuse, making it a first step in recognizing when alcohol use may be crossing into concerning territory. It is structured to be easily administered, whether through self-assessment or by healthcare providers, facilitating a straightforward approach to identifying issues related to alcohol.",
+    "The origins of the CAGE questionnaire trace back to its development for use in both clinical and research settings. Its design is focused on efficiency, enabling a rapid assessment without compromising on the depth of insight into an individual's relationship with alcohol. This efficiency is particularly beneficial in busy clinical environments where time is limited, as well as in situations where a quick preliminary assessment is necessary. The questionnaire’s ability to be self-administered adds to its versatility, allowing individuals to conduct a personal review of their drinking patterns in private. This feature supports its use not only in professional settings but also as a self-help tool for those who have concerns about their alcohol consumption.",
+    "In practice, the CAGE questionnaire is applied across a range of contexts, from primary care settings to mental health clinics, serving as an entry point for further exploration of alcohol use issues. Its utility lies in its capacity to prompt a deeper investigation into a person's drinking behavior, potentially leading to early intervention and support. While it is not a diagnostic tool in itself, the CAGE questionnaire's results can guide healthcare professionals in deciding whether additional, more comprehensive assessments are warranted. In this way, it contributes to a larger framework of strategies aimed at addressing alcohol-related problems, underscoring the importance of early detection and the benefits of proactive intervention.",
+    "Instructions Please answer yes or no to the following questions."
+  ]
+}

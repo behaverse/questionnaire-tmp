@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Carlson E B, Putnam F W. An update on the Dissociative Experience Scale. Dissociation 6 ( 1 ): 16-27 ( 1993 ). (1993)
+- keywords: ptsd · trauma · dissociation · cptsd
 - items: 28
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_desii.json` (flagged).
 
 ## Description
 

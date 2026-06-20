@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Janet A. Taylor. A Personality Scale of Manifest Anxiety. 48 ( 2 ) J. Abnormal and Social Psych. 285-290. 1953. (1953)
+- keywords: psychology · test · anxiety · taylor · manifest · self · rating · personality
 - items: 38
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_tmas.json` (flagged).
 
 ## Description
 

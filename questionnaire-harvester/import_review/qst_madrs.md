@@ -5,7 +5,10 @@
 - short_title: MADRS
 - source: psychology-tools.com
 - license: unknown
+- keywords: psychology · rating · test · montgomery · asberg · british · journal
 - items: 10
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_madrs.json` (flagged).
 
 ## Description
 

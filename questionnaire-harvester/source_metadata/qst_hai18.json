@@ -1,0 +1,28 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/health-anxiety-inventory. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_hai18",
+  "source_url": "https://psychology-tools.com/test/health-anxiety-inventory",
+  "meta_description": "Assess health-related anxiety comprehensively with the Health Anxiety Inventory, a tool to measure concerns over personal health conditions.",
+  "keywords": [
+    "anxiety",
+    "health",
+    "hypochondriac",
+    "health anxiety",
+    "short"
+  ],
+  "og": {
+    "title": "Short Health Anxiety Inventory (HAI-18) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/health-anxiety-inventory/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Assess health-related anxiety comprehensively with the Health Anxiety Inventory, a tool to measure concerns over personal health conditions.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Short Health Anxiety Inventory (HAI-18) is a psychological assessment tool designed to evaluate health anxiety levels in individuals. Health anxiety, previously known as hypochondriasis, is characterized by excessive worry about having a serious illness despite medical reassurance to the contrary. This inventory comprises 18 items that measure the severity of health anxiety based on cognitive, emotional, and behavioral domains. Developed to provide clinicians and researchers with a reliable and valid measure of health anxiety, the HAI-18 facilitates the identification of individuals who may require further psychological intervention or support. Each item on the inventory is rated on a scale, reflecting the frequency and intensity of health-related worries and behaviors over the past six months.",
+    "The development of the HAI-18 was motivated by the need for a concise yet comprehensive tool that could be efficiently used in both clinical settings and research studies. Prior to its development, assessments of health anxiety were often lengthy and not always practical for busy healthcare environments or large-scale surveys. The HAI-18 addresses this issue by offering a brief assessment that does not compromise on depth or breadth of inquiry into health anxiety symptoms. It covers a range of symptoms including worry about illness, awareness of bodily sensations, and behaviors such as checking for signs of illness. This breadth ensures that the HAI-18 captures a wide spectrum of health anxiety manifestations, making it applicable to diverse populations and settings.",
+    "Research supporting the HAI-18 underscores its reliability and validity as a measure of health anxiety. Studies have shown that the inventory has strong psychometric properties, including high internal consistency and construct validity. It has been validated in various populations, demonstrating its utility across different age groups, cultures, and healthcare settings. The HAI-18’s sensitivity to change also makes it valuable for evaluating the effectiveness of interventions aimed at reducing health anxiety. By providing a standardized method for assessing health anxiety, the HAI-18 plays a crucial role in the detection and understanding of this condition, aiding in the development of targeted therapeutic strategies and contributing to improved patient outcomes.",
+    "Instructions Each of the following questions consists of a group of four statements. Please read each group of statements carefully and then select the one which best describes how you have felt over the past six months. If you find that more than one statement applies, please select any of the applicable statements."
+  ]
+}

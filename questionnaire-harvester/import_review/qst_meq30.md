@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Maclean K A. Factor Analysis of the Mystical Experience Questionnaire: A Study of Experiences Occasioned by the Hallucinogen Psilocybin. J Sci Study Relig ( 4 ): 721-737 ( 2012 ). (2012)
+- keywords: MEQ · MEQ-30 · RMEQ · mystical experience · questionnaire · psychology · test
 - items: 30
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_meq30.json` (flagged).
 
 ## Description
 

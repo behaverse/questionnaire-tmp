@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: C G DeYoung, L C Quilty, and J B Peterson. Between facets and domains: 10 aspects of the Big Five. 63 J Pers Soc Psychol 880-896. 2008. (2008)
+- keywords: psychology · personality · test · big-5 · ffm · ocean
 - items: 50
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_ffm.json` (flagged).
 
 ## Description
 

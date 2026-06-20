@@ -1,0 +1,30 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/inventory-complicated-grief. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_icg",
+  "source_url": "https://psychology-tools.com/test/inventory-complicated-grief",
+  "meta_description": "The ICG evaluates the intensity of grief that interferes with daily functioning, providing insights into your emotional well-being after loss.",
+  "keywords": [
+    "psychology",
+    "icg",
+    "grief",
+    "test",
+    "complicated greif"
+  ],
+  "og": {
+    "title": "Inventory of Complicated Grief (ICG) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/inventory-complicated-grief/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "The ICG evaluates the intensity of grief that interferes with daily functioning, providing insights into your emotional well-being after loss.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "Grief is a natural response to loss, encompassing a range of emotional, cognitive, and behavioral reactions. However, in some cases, individuals experience an extended and profound form of grief, known as complicated grief (CG). This condition, also referred to as prolonged grief disorder, is characterized by persistent intense sorrow, preoccupation with the deceased, and difficulty moving on with life, long after the loss has occurred. Complicated grief can lead to significant disruptions in daily functioning and overall well-being.",
+    "In response to the need for a standardized measure to assess this specific form of grief, Prigerson et al. developed the Inventory of Complicated Grief (ICG). The ICG is designed to identify and quantify the symptoms of complicated grief, differentiating them from those typically associated with bereavement-related depression and anxiety. Research has demonstrated that certain symptoms specific to complicated grief, such as persistent yearning, intense sorrow, and avoidance of reminders of the loss, are distinct from the emotional patterns observed in other grief-related psychological conditions.",
+    "The Inventory of Complicated Grief includes items that focus on these unique symptoms. It is a tool used by clinicians and researchers to assess the severity of complicated grief in bereaved individuals, facilitating both diagnostic accuracy and the tailoring of therapeutic interventions. By providing a clear and systematic assessment, the ICG helps in recognizing those who may require specialized grief counseling or interventions aimed at addressing the prolonged and intense grief reactions.",
+    "The development of the ICG was based on empirical research that highlighted the predictive capacity of certain grief-specific symptoms for long-term functional impairments. For example, studies have shown that individuals with high scores on the ICG are more likely to experience ongoing difficulties in personal, social, and occupational functioning. This makes the ICG not only a diagnostic tool but also a prognostic one, aiding in the identification of those at risk for enduring distress and disruption in their daily lives.",
+    "The Inventory of Complicated Grief is a validated instrument used extensively in both clinical and research settings to assess complicated grief. Its development was informed by research distinguishing the symptoms of complicated grief from other psychological responses to bereavement. The ICG serves as a critical resource for effectively identifying and understanding this profound and enduring form of grief, thereby guiding effective treatment and support for affected individuals.",
+    "Instructions For each statement below, please select the response that most accurately applies to how you are feeling."
+  ]
+}

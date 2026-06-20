@@ -1,0 +1,29 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/toronto-empathy-questionnaire. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_teq",
+  "source_url": "https://psychology-tools.com/test/toronto-empathy-questionnaire",
+  "meta_description": "Take the Toronto Empathy Questionnaire to assess your empathetic responses and tendencies in diverse social situations through 16 questions.",
+  "keywords": [
+    "empathy",
+    "questionnaire",
+    "test",
+    "toronto"
+  ],
+  "og": {
+    "title": "Toronto Empathy Questionnaire (TEQ) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/toronto-empathy-questionnaire/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Take the Toronto Empathy Questionnaire to assess your empathetic responses and tendencies in diverse social situations through 16 questions.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "Empathy, a fundamental aspect of human social interaction, involves the capacity to understand and share the feelings of others. This psychological construct is crucial for effective communication, maintaining relationships, and fostering cooperation. Given its importance in various domains of life, including education, healthcare, and community living, there is a clear need for a reliable tool to assess empathy in individuals.",
+    "The Toronto Empathy Questionnaire (TEQ) was developed to meet this need. It is a self-report measure designed to evaluate empathy as a primarily emotional process, distinguishing it from cognitive empathy or the more cognitive aspects of taking another’s perspective. The TEQ primarily focuses on the emotional reactions of individuals in response to the experiences of others, capturing the affective component of empathy through a series of brief, straightforward items.",
+    "This questionnaire consists of 16 items that participants respond to, which gauge their immediate emotional responses to situations that depict someone else’s emotional state. Items are designed to reflect spontaneous empathetic reactions rather than deliberative or moral reasoning. For example, the TEQ asks respondents to rate their agreement with statements that describe feelings of concern or distress when encountering others in emotional need, thereby assessing the instinctive and emotional components of empathic responding.",
+    "The TEQ is widely used in psychological research and clinical settings to measure empathy among various groups, including adults and adolescents. Its utility extends to studies examining the role of empathy in social behavior, mental health, and even neurological conditions. Moreover, the TEQ has been validated through research that confirms its reliability and consistency across different populations and settings. This validation supports its effectiveness as a tool for not only assessing empathy but also for exploring its implications for interpersonal behavior and psychosocial functioning.",
+    "The Toronto Empathy Questionnaire is a valuable instrument that quantifies the affective dimension of empathy. It facilitates a deeper understanding of how individuals emotionally connect with others, which is pivotal in research and practical applications where empathy plays a key role. As such, the TEQ continues to contribute to the broader understanding of social emotions and their impact on various aspects of human life.",
+    "Instructions Below is a list of statements. Please read each statement carefully and rate how frequently you feel or act in the manner described. Circle your answer on the response form. There are no right or wrong answers or trick questions. Please answer each question as honestly as you can."
+  ]
+}

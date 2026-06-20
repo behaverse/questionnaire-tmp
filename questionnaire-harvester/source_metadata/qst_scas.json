@@ -1,0 +1,28 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/spence-childrens-anxiety-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_scas",
+  "source_url": "https://psychology-tools.com/test/spence-childrens-anxiety-scale",
+  "meta_description": "Explore the Spence Children's Anxiety Scale (SCAS) to assess anxiety in children with a scientifically validated questionnaire.",
+  "keywords": [
+    "psychology",
+    "child",
+    "children",
+    "anxiety",
+    "test"
+  ],
+  "og": {
+    "title": "Spence Children's Anxiety Scale (SCAS) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/spence-childrens-anxiety-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Explore the Spence Children's Anxiety Scale (SCAS) to assess anxiety in children with a scientifically validated questionnaire.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Spence Children’s Anxiety Scale (SCAS) is a psychological assessment tool designed to evaluate anxiety symptoms in children and adolescents. Developed by Australian psychologist Susan H. Spence in 1998, the scale aims to identify the presence and severity of anxiety symptoms across various domains specific to this age group. The SCAS is based on the premise that children experience anxiety differently from adults, both in terms of the situations that trigger anxiety and how symptoms are manifested. As such, it covers six domains: separation anxiety, social phobia, obsessive-compulsive disorder, panic attack and agoraphobia, physical injury fears, and generalized anxiety disorder. The scale is widely utilized by researchers and clinicians worldwide to screen for anxiety disorders, to inform treatment planning, and to monitor changes in anxiety symptoms over time.",
+    "The development of the SCAS was guided by the need for a comprehensive, child-specific measure that is both reliable and valid. The scale consists of 44 items that children rate on a 4-point scale, indicating the frequency of their anxiety symptoms. This self-report measure is complemented by a parent version, which assesses the parent’s perception of their child’s anxiety symptoms. The inclusion of a parent version allows for a multi-informant approach to assessing child anxiety, recognizing that children may not always be aware of or able to articulate their anxiety symptoms. The scale has been subject to numerous validation studies and has been found to possess good psychometric properties, including high internal consistency, good test-retest reliability, and valid discrimination between children with and without anxiety disorders.",
+    "The SCAS is not only a tool for clinical assessment but also serves as a valuable resource in research contexts. It has facilitated a deeper understanding of the prevalence and nature of anxiety disorders among children and adolescents. Furthermore, it has contributed to the examination of the efficacy of various treatment approaches for childhood anxiety. The scale’s wide translation and cultural adaptation into over 20 languages underscore its global applicability and relevance. Despite its widespread use, researchers and practitioners are encouraged to consider cultural differences and contextual factors when interpreting SCAS scores, as these can influence children’s responses and the manifestation of anxiety symptoms. Overall, the SCAS is a key instrument in the field of child psychology, providing insights into the complex nature of childhood anxiety and supporting the development of targeted interventions.",
+    "Instructions Click on the circle that shows how often each of these things happen to you. There are no right or wrong answers."
+  ]
+}

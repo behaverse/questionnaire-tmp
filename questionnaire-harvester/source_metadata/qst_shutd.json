@@ -1,0 +1,30 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/shutdown-dissociation-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_shutd",
+  "source_url": "https://psychology-tools.com/test/shutdown-dissociation-scale",
+  "meta_description": "Take the Shut-D online test to assess dissociative responses to trauma. A guided, research-based tool for understanding complex psychological symptoms.",
+  "keywords": [
+    "ptsd",
+    "trauma",
+    "dissociation",
+    "test",
+    "shutdown",
+    "psychology"
+  ],
+  "og": {
+    "title": "Shutdown Dissociation Scale (SHUT-D) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/shutdown-dissociation-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Take the Shut-D online test to assess dissociative responses to trauma. A guided, research-based tool for understanding complex psychological symptoms.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "Introduced in 2011, the Shutdown Dissociation Scale (SHUT-D) serves as a semi-structured interview designed for the assessment of dissociative responses following traumatic stress. Grounded in the defense cascade model, the SHUT-D evaluates biological symptoms emblematic of the body’s innate freeze, fight/flight, fright, and flag/faint reactions to trauma. This scale is instrumental in understanding the physiological aspects of dissociation, particularly how the body and mind react to reminders of trauma.",
+    "Research involving individuals with various dissociation disorders indicates a noteworthy correlation: the presence of childhood trauma, rather than trauma encountered in adulthood, has a significant impact on SHUT-D scores. This finding emphasizes the critical role of early experiences in shaping dissociative responses.",
+    "The SHUT-D questionnaire mirrors the original interview’s format, employing identical questions and scoring methods. However, its effectiveness when used without the direct input and interpretation of a clinician or researcher remains unverified. Users of this test may require a baseline of medical knowledge to accurately distinguish between symptoms attributable to dissociative responses and those resulting from neurological conditions. This adaptation ensures the SHUT-D Scale’s relevance in both clinical and research contexts, facilitating the exploration of dissociation and its ties to trauma.",
+    "Instructions There are 13 questions. These questions have been designed for adults and cover experiences within the last 6 months or in the months since the trauma occurred (for people who have experienced only a single trauma that occurred less than 6 month before).",
+    "Symptoms known to be caused by an “acute or chronic medical condition or peripheral neuropathy”, alcohol or drug use, medication side-effects, or similar effects during adolescence or the beginning of the menopause should be excluded."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/internet-addiction-assessment. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_iaa",
+  "source_url": "https://psychology-tools.com/test/internet-addiction-assessment",
+  "meta_description": "Explore the Internet Addiction Assessment (IAA) to evaluate your digital habits with a nuanced, evidence-based questionnaire.",
+  "keywords": [
+    "psychology",
+    "iat",
+    "internet",
+    "addiction",
+    "test",
+    "computer",
+    "online"
+  ],
+  "og": {
+    "title": "Internet Addiction Assessment (IAA) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/internet-addiction-assessment/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Explore the Internet Addiction Assessment (IAA) to evaluate your digital habits with a nuanced, evidence-based questionnaire.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Internet Addiction Assessment ( IAA ) provides a valuable resource for individuals seeking to understand their online behaviors and potential overuse of digital devices. It offers a structured questionnaire designed to evaluate patterns of internet and smartphone use, drawing on psychological research to identify signs of problematic engagement. This tool aims to facilitate self-reflection and awareness regarding one’s digital habits, highlighting the impact these habits may have on personal and professional life. It is a starting point for anyone concerned about their level of internet use or seeking to make informed decisions about their digital well-being.",
+    "Internet Addiction is a controversial theorized mental disorder, the existence and/or importance of which is still being debated among the psychological community. While this screening test may reveal some of the more pathological aspects of internet and smartphone use, it should not be used as a definitive diagnostic test.",
+    "Instructions Using this scale of 5 choices, answer how often the situations below apply to you and your use of computers or smartphones."
+  ]
+}

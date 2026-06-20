@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: I Schalinski, M Schauer, T Elbert. The Shutdown Dissociation Scale (SHUT-D). Euro. J. of Psychotraumatology, 6(0) ( 2015 ). (2015)
+- keywords: ptsd · trauma · dissociation · test · shutdown · psychology
 - items: 13
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_shutd.json` (flagged).
 
 ## Description
 

@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: A Prins, MJ Bovin, R Kimerling, DG Kaloupek, BP Marx, A Pless-Kaiser, PP Schnurr. The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5): Development and Evaluation Within a Veteran Primary Care Sample. J Gen Intern Med 31 ( 10 ): 1206-1211 ( 2016 ). (2016)
+- keywords: psychology · ptsd · screen · test · dsm-5 · dsm-v
 - items: 6
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pcptsd5.json` (flagged).
 
 ## Description
 

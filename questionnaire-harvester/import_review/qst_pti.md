@@ -5,7 +5,10 @@
 - short_title: PTI
 - source: psychology-tools.com
 - license: unknown
+- keywords: psychology · personality · type · personality type · jung · jungian · archetype · myers-briggs · mbti
 - items: 70
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pti.json` (flagged).
 
 ## Description
 

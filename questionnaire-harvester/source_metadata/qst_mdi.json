@@ -1,0 +1,30 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/major-depression-inventory. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_mdi",
+  "source_url": "https://psychology-tools.com/test/major-depression-inventory",
+  "meta_description": "Take the MDI (Major Depression Inventory) to self-assess for major depressive disorder, based on the World Health Organization's research-backed criteria.",
+  "keywords": [
+    "psychology",
+    "depression",
+    "mdi",
+    "who",
+    "self",
+    "test"
+  ],
+  "og": {
+    "title": "Major Depression Inventory (MDI) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/major-depression-inventory/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Take the MDI (Major Depression Inventory) to self-assess for major depressive disorder, based on the World Health Organization's research-backed criteria.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Major Depression Inventory (MDI) is a self-report questionnaire developed for the detection of depressive symptomatology and the assessment of depression severity. Created by the World Health Organization Collaborating Centre for Mental Health in Denmark, the MDI was designed to align with both the diagnostic criteria of the International Classification of Diseases, Tenth Revision (ICD-10) for depressive episodes, and those of the Diagnostic and Statistical Manual of Mental Disorders, Fourth Edition (DSM-IV) for major depressive episodes. This alignment ensures the MDI's relevance and applicability across different clinical and research settings.",
+    "The MDI consists of 12 items, each addressing a core symptom of depression. Respondents are asked to evaluate how each symptom has affected them over the past two weeks, using a six-point scale ranging from “at no time” to “all the time.” This allows for a nuanced understanding of the individual’s emotional and functional state. The inventory is distinctive in its dual diagnostic capability; it can be scored to reflect the severity of depression as well as to establish a diagnostic threshold, which makes it a comprehensive tool for both screening and detailed assessment.",
+    "In practice, the MDI offers several advantages. It is quick and easy for patients to complete, usually requiring no more than five minutes. This ease of administration makes it particularly useful in both primary care and psychiatric settings, where time and resources may be limited. Additionally, the MDI's structure facilitates straightforward scoring and interpretation, enabling healthcare providers to make informed decisions about further diagnostic evaluations or treatment options.",
+    "The Major Depression Inventory serves as a practical tool in the identification and evaluation of depression. Its development was informed by significant advancements in psychiatric diagnostic criteria, ensuring its utility and relevance in contemporary mental health care. The MDI continues to be employed widely, contributing to the effective management and treatment of individuals experiencing major depressive episodes.",
+    "Instructions The following questions ask how you have been feeling over the last 2 weeks."
+  ]
+}

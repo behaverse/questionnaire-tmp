@@ -1,0 +1,29 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/zung-depression-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_sds",
+  "source_url": "https://psychology-tools.com/test/zung-depression-scale",
+  "meta_description": "Explore the Zung Depression Scale (SDS) for a comprehensive self-assessment of depression, highlighting mood and physical symptoms.",
+  "keywords": [
+    "psychology",
+    "depression",
+    "zung",
+    "test",
+    "self"
+  ],
+  "og": {
+    "title": "Zung Self-Rating Depression Scale (SDS) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/zung-depression-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Explore the Zung Depression Scale (SDS) for a comprehensive self-assessment of depression, highlighting mood and physical symptoms.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Zung Self-Rating Depression Scale (SDS) is an instrument used for measuring the presence and severity of depressive symptoms in individuals. Developed by Dr. William WK Zung, this scale has been widely employed in various settings to assess depression and its associated factors across diverse populations.",
+    "The SDS consists of 20 items, with each item assigned a rating on a scale from 1 (none or some of the time) to 4 (most or all of the time). The total score ranges from 20 to 80, with higher scores indicating more severe depressive symptoms. The scale is designed to measure the affective, psychological, and somatic aspects of depression, enabling clinicians to better understand and diagnose the condition in their patients.",
+    "The development and validation of the Zung Self-Rating Depression Scale followed a systematic approach that involved multiple stages. Dr. Zung began by reviewing existing literature on depression and identifying common themes and symptoms associated with the disorder. He then constructed an initial set of items, which were refined through pilot testing and analysis of psychometric properties. The final version of the scale was established after several iterations and adjustments to ensure its reliability and validity in assessing depression.",
+    "The Zung Self-Rating Depression Scale is a widely used tool for evaluating depressive symptoms across various populations. Its development involved careful consideration of relevant literature, systematic testing, and refinement to produce a reliable and valid assessment instrument. The SDS serves as an important resource for clinicians in diagnosing and treating depression, ultimately helping to improve the lives of those affected by this common mental health disorder.",
+    "Instructions For each item below, please check the column which best describes how often you felt or behaved this way during the past several days."
+  ]
+}

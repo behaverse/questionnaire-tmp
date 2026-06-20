@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: Hare R D A research scale for the assessment of psychopathy in criminal populations. 1 Pers Indiv Diff 111-119 ( 1980 ). (1980)
+- keywords: psychopath · psychopath test · psychopathy · hare · PCL · PCL-R · psychology · test
 - items: 22
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pcl22.json` (flagged).
 
 ## Description
 

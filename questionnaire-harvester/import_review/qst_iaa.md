@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: H Cash, C D Rae, A H Steel, A Winkler. Internet Addiction: A Brief Summary of Research and Practice. 8 ( 4 ): Curr Psychiatry Rev. 292-298. 2012. (2012)
+- keywords: psychology · iat · internet · addiction · test · computer · online
 - items: 18
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_iaa.json` (flagged).
 
 ## Description
 

@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: JA Ewing. Detecting Alcoholism. The CAGE Questionnaire. 252(14): 1905-7. The Journal of the American Medical Association. 1984. (1984)
+- keywords: psychology · cage · alcohol · substance · abuse · test
 - items: 4
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_cage.json` (flagged).
 
 ## Description
 

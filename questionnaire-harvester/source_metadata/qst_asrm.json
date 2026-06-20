@@ -1,0 +1,29 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/altman-self-rating-mania-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_asrm",
+  "source_url": "https://psychology-tools.com/test/altman-self-rating-mania-scale",
+  "meta_description": "Assess manic or hypomanic symptoms with the ASRM (Altman Self-Rating Mania Scale), a concise tool designed for personal and clinical insights.",
+  "keywords": [
+    "psychology",
+    "mania",
+    "bipolar",
+    "self-rating",
+    "test"
+  ],
+  "og": {
+    "title": "Altman Self-Rating Mania Scale (ASRM) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/altman-self-rating-mania-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Assess manic or hypomanic symptoms with the ASRM (Altman Self-Rating Mania Scale), a concise tool designed for personal and clinical insights.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Altman Self-Rating Mania Scale (ASRM) is a diagnostic tool designed to assess the presence and severity of manic symptoms in individuals. Developed by Dr. Edward Altman and colleagues, the scale offers a straightforward method for individuals to report their manic symptoms, facilitating the diagnosis and monitoring of bipolar disorder and related conditions. The ASRM comprises a series of questions that reflect common manic behaviors and thought patterns, including elevated mood, increased self-esteem, decreased need for sleep, talkativeness, and racing thoughts.",
+    "The structure of the ASRM is such that it allows individuals to self-assess their symptoms over a specific period, typically the past week. Respondents rate their experiences on a scale, which then provides a quantifiable measure of manic symptomatology. This self-reporting aspect is particularly useful in clinical settings where quick and reliable assessments are necessary to inform treatment decisions. The scale's design is rooted in clinical research and draws from established diagnostic criteria, aiming to provide an accurate reflection of the severity of manic symptoms.",
+    "In clinical practice, the ASRM serves several functions beyond initial diagnosis. It is often used in the ongoing management of bipolar disorder, enabling healthcare professionals to track the effectiveness of treatment over time and adjust interventions accordingly. The scale's simplicity and ease of use make it an accessible tool for both clinicians and patients, supporting regular monitoring without the need for extensive training or resources.",
+    "Instructions There are 5 groups of statements in this questionnaire, read each group of statements carefully. You should choose the statement in each group that best describes the way you have been feeling for the past week.",
+    "Please note : The word “occasionally” when used here means once or twice; “often” means several times or more and “frequently” means most of the time."
+  ]
+}

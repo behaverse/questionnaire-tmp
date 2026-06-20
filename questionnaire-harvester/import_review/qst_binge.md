@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: J Gormally, S Black, S Daston, D Rardin. The assessment of binge eating severity among obese persons. 7 ( 1 ): Addict Behav 47-55 ( 1982 ). (1982)
+- keywords: psychology · mania · eating · disorder · binge · purge · test
 - items: 16
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_binge.json` (flagged).
 
 ## Description
 

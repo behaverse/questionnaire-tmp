@@ -6,7 +6,10 @@
 - source: psychology-tools.com
 - license: unknown
 - publication: J G Williams, C Allison, F J Scott, P F Bolton, S Baron-Cohen, F E Matthews, C Brayne. The Childhood Autism Spectrum Test (CAST): Sex Differences. 38(9): J Autism Dev Disord 1731-9. 2008. (2008)
+- keywords: autism · spectrum · child · childhood · toddler
 - items: 39
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_cast.json` (flagged).
 
 ## Description
 

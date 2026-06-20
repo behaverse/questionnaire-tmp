@@ -1,0 +1,28 @@
+{
+  "_notice": "Verbatim capture from https://psychology-tools.com/test/zung-anxiety-scale. Copyright of the source site. Internal reference for authoring original descriptions / an about page — NOT for redistribution.",
+  "id": "qst_sas",
+  "source_url": "https://psychology-tools.com/test/zung-anxiety-scale",
+  "meta_description": "Gauge your anxiety levels with the Zung Self-Rating Anxiety Scale (SAS), a detailed tool for assessing symptoms of anxiety.",
+  "keywords": [
+    "psychology",
+    "anxiety",
+    "zung",
+    "test",
+    "self"
+  ],
+  "og": {
+    "title": "Zung Self-Rating Anxiety Scale (SAS) - Psychology Tools",
+    "type": "article",
+    "url": "https://psychology-tools.com/zung-anxiety-scale/",
+    "image": "https://psychology-tools.com/img/favicon-512.png",
+    "site_name": "Psychology Tools",
+    "description": "Gauge your anxiety levels with the Zung Self-Rating Anxiety Scale (SAS), a detailed tool for assessing symptoms of anxiety.",
+    "image:alt": "Psychology Tools Logo"
+  },
+  "introduction": [
+    "The Zung Self-Rating Anxiety Scale (SAS) is a psychological assessment tool designed to quantify a person's level of anxiety. Developed by Dr. William W. K. Zung in 1971, the scale aims to measure the severity of anxiety symptoms in individuals. It consists of 20 items, each of which is scored on a four-point scale ranging from &lqduonone or a little of the time” to “most or all of the time.” This self-administered questionnaire is utilized in both clinical and research settings to evaluate the presence and intensity of anxiety symptoms. The SAS is designed to be simple and straightforward, enabling individuals to complete it without the need for professional supervision.",
+    "The scale covers various dimensions of anxiety, including cognitive, affective, somatic, and autonomic symptoms. By addressing a broad spectrum of anxiety manifestations, the SAS provides a comprehensive overview of an individual's anxiety level. The items on the scale are phrased in a way that is intended to reflect the common experiences of people with anxiety, thus making the scale relatable and understandable for respondents. The scoring system aggregates the responses to give a total score that indicates the severity of anxiety, with higher scores representing more severe anxiety symptoms. This scoring process facilitates the differentiation between normal anxiety levels and those that may require professional intervention.",
+    "The utility of the Zung Self-Rating Anxiety Scale extends beyond mere symptom measurement. It also serves as a valuable tool for monitoring changes in anxiety levels over time, thereby aiding in the evaluation of treatment outcomes. Researchers and clinicians alike employ the SAS to screen for anxiety disorders, to monitor patient progress during treatment, and to conduct epidemiological studies on the prevalence of anxiety in various populations. While the SAS is widely recognized for its accessibility and ease of use, it is important to consider it as part of a comprehensive assessment strategy.",
+    "Instructions For each item below, please check the column which best describes how often you felt or behaved this way during the past several days."
+  ]
+}

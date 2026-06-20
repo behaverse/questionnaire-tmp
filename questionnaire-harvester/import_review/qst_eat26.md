@@ -5,7 +5,10 @@
 - short_title: EAT-26
 - source: psychology-tools.com
 - license: unknown
+- keywords: psychology · eat · eating · test · anorexia · help · questions
 - items: 32
+
+> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_eat26.json` (flagged).
 
 ## Description
 
