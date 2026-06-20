@@ -59,7 +59,7 @@ def render_option(opt):
     for i in sorted(set(anchors) | set(vals)):
         a = anchors.get(i, "")
         v = _num(vals.get(i))
-        parts.append(f"{i}. {a} ({v})" if a else f"{i}. ({v})")
+        parts.append(f"{i}. {a} [score: {v}]" if a else f"{i}. [score: {v}]")
     return " · ".join(parts) if parts else "(no options)"
 
 
@@ -81,6 +81,11 @@ def render_questionnaire_md(qst, entities):
     if pub:
         out.append(f"- publication: {pub.get('citation', '')} ({pub.get('year', '')})")
     out.append(f"- items: {len(elements)}\n")
+
+    desc = (md.get("description") or "").strip()
+    if desc and desc != (md.get("title") or ""):
+        out.append("## Description\n")
+        out.append(desc + "\n")
 
     seen_i, instr_texts, seen_c, ctx_texts = set(), [], set(), []
     for el in elements:
@@ -114,6 +119,20 @@ def render_questionnaire_md(qst, entities):
         tagstr = f"  _({'; '.join(tags)})_" if tags else ""
         out.append(f"{i}. **{ptext}**{tagstr}")
         out.append(f"   - {render_option(opt)}")
+
+    refs = md.get("x_references") or []
+    if refs:
+        out.append("## References\n")
+        for r in refs:
+            if isinstance(r, dict):
+                line = f"- {r.get('citation', '')}"
+                if r.get("url"):
+                    line += f" — [link]({r['url']})"
+            else:
+                line = f"- {r}"
+            out.append(line)
+        out.append("")
+
     out.append("")
     return "\n".join(out)
 

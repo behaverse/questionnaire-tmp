@@ -275,4 +275,4 @@ def test_review_export_cli_gad7(tmp_path):
                      "--review-dir", str(rev), "--id", "qst_gad7"]) == 0
     doc = (rev / "qst_gad7.md").read_text()
     assert "## Items" in doc
-    assert "(0)" in doc          # a choice option line rendered with weights
+    assert "[score: 0]" in doc          # a choice option line rendered with weights

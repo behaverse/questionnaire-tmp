@@ -34,14 +34,14 @@ def _qst(qid, elements, **md):
 
 def test_render_option_choice():
     s = render_option(_choice("o", "rating", [0, 1, 2, 3], ["None", "Mild", "Moderate", "Severe"]))
-    assert s == "1. None (0) · 2. Mild (1) · 3. Moderate (2) · 4. Severe (3)"
+    assert s == "1. None [score: 0] · 2. Mild [score: 1] · 3. Moderate [score: 2] · 4. Severe [score: 3]"
 
 def test_render_option_number_slider():
     s = render_option(_number("o", "rating", 1, 7, 1, "not at all", "very much"))
     assert s == 'number 1–7 (step 1): "not at all" … "very much"'
 
 def test_render_option_blank_anchor_shows_value_only():
-    assert render_option(_choice("o", "rating", [0, 1], ["", ""])) == "1. (0) · 2. (1)"
+    assert render_option(_choice("o", "rating", [0, 1], ["", ""])) == "1. [score: 0] · 2. [score: 1]"
 
 def test_render_option_missing():
     assert render_option(None) == "‹missing option›"
@@ -58,7 +58,7 @@ def test_render_questionnaire_md_resolves_text_and_link():
          "instructions": {"ins_x": ins}, "contexts": {}})
     assert "**Original:** http://src" in md
     assert "I feel tense" in md
-    assert "1. No (0) · 2. Yes (1)" in md
+    assert "1. No [score: 0] · 2. Yes [score: 1]" in md
     assert "reversed" in md and "dimension: fear" in md
     assert "Rate each item." in md
 
@@ -90,3 +90,29 @@ def test_write_review_export_tmp(tmp_path):
     assert ids == ["qst_x"]
     assert (rev / "qst_x.md").exists() and (rev / "README.md").exists()
     assert "- [ ]" in (rev / "README.md").read_text()
+
+def test_render_md_shows_description():
+    o = _choice("opt_x", "rating", [0, 1], ["No", "Yes"])
+    q = _qst("qst_x", [{"option": {"ref": "opt_x@v"}, "question": {"prompt": {"ref": "pr_x_1@v"}}}])
+    q["metadata"]["description"] = "A demo screening measure."
+    md = render_questionnaire_md(q, {"options": {"opt_x": o}, "prompts": {"pr_x_1": _pr("pr_x_1", "q1")},
+                                     "instructions": {}, "contexts": {}})
+    assert "A demo screening measure." in md
+
+def test_render_md_references_string_and_object_shapes():
+    o = _choice("opt_x", "rating", [0, 1], ["No", "Yes"])
+    q = _qst("qst_x", [{"option": {"ref": "opt_x@v"}, "question": {"prompt": {"ref": "pr_x_1@v"}}}])
+    q["metadata"]["x_references"] = ["Plain citation A. 2001.",
+                                     {"citation": "Linked citation B. 2005.", "url": "https://pubmed/2"}]
+    md = render_questionnaire_md(q, {"options": {"opt_x": o}, "prompts": {"pr_x_1": _pr("pr_x_1", "q1")},
+                                     "instructions": {}, "contexts": {}})
+    assert "## References" in md
+    assert "- Plain citation A. 2001." in md
+    assert "- Linked citation B. 2005. — [link](https://pubmed/2)" in md
+
+def test_render_md_no_references_section_when_absent():
+    o = _choice("opt_x", "rating", [0, 1], ["No", "Yes"])
+    q = _qst("qst_x", [{"option": {"ref": "opt_x@v"}, "question": {"prompt": {"ref": "pr_x_1@v"}}}])
+    md = render_questionnaire_md(q, {"options": {"opt_x": o}, "prompts": {"pr_x_1": _pr("pr_x_1", "q1")},
+                                     "instructions": {}, "contexts": {}})
+    assert "## References" not in md
