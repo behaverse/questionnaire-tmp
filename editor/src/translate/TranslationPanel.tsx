@@ -150,53 +150,57 @@ export function TranslationPanel() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-ed-border bg-ed-panel px-4 py-2 text-sm">
-        <span className="font-semibold">Translate → {target}</span>
-        <span className="text-ed-muted">{doneCount} / {allRows.length} translated</span>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-ed-border bg-ed-panel px-5 py-3 text-sm">
+        <span className="font-semibold text-ed-text">Translate <span className="text-ed-muted">→</span> <span className="text-ed-accent">{target}</span></span>
+        <span className="rounded-full bg-ed-subtle px-2 py-0.5 text-xs font-medium text-ed-muted">{doneCount} / {allRows.length} translated</span>
         {kinds.length > 1 && (
-          <label className="flex items-center gap-1 text-xs text-ed-muted">
+          <label className="flex items-center gap-1.5 text-xs text-ed-muted">
             Type
             <select aria-label="Filter by element type" value={kindFilter} onChange={(e) => setKindFilter(e.target.value)}
-                    className="rounded border border-ed-border-strong px-1 py-0.5 text-xs">
+                    className="rounded-md border border-ed-border-strong bg-ed-surface px-2 py-1 text-xs">
               <option value="all">all</option>
               {kinds.map((k) => <option key={k} value={k}>{k}</option>)}
             </select>
           </label>
         )}
-        <label className="ml-auto flex items-center gap-1 text-xs text-ed-muted">
+        <label className="ml-auto flex items-center gap-1.5 text-xs text-ed-muted">
           <input type="checkbox" checked={untranslatedOnly} onChange={(e) => setUntranslatedOnly(e.target.checked)} /> show untranslated only
         </label>
-        <button onClick={() => void autoAllUntranslated()} className="rounded border border-ed-border-strong px-2 py-0.5 text-xs hover:bg-ed-subtle">Auto-translate untranslated</button>
+        <button onClick={() => void autoAllUntranslated()}
+                className="rounded-md border border-ed-border-strong bg-ed-surface px-3 py-1.5 text-xs font-medium text-ed-text hover:bg-ed-subtle">Auto-translate untranslated</button>
       </div>
-      <div className="border-b border-amber-100 bg-amber-50 px-4 py-1 text-[11px] text-amber-700">
+      <div className="border-b border-amber-200/70 bg-amber-50 px-5 py-1.5 text-[11px] text-amber-700">
         Editing a translation makes a local editable copy of Library content (shared options are copied once).
       </div>
-      <div className="flex-1 overflow-auto p-4">
+      <div className="flex-1 overflow-auto bg-ed-surface p-5">
         {visibleGroups.map((g) => {
           const rows = untranslatedOnly ? g.rows.filter((r) => !r.done) : g.rows
           if (!rows.length) return null
           return (
-            <div key={g.groupId} className="mb-4 rounded border border-ed-border">
-              <div className="flex items-center gap-2 border-b border-ed-border bg-ed-subtle px-3 py-1 text-xs text-ed-muted">
-                <span>{g.kind}</span><span className="font-mono">{g.title}</span>
+            <div key={g.groupId} className="mb-5 overflow-hidden rounded-lg border border-ed-border bg-ed-panel shadow-sm">
+              <div className="flex items-center gap-2 border-b border-ed-border bg-ed-subtle px-4 py-2 text-xs">
+                <span className="rounded bg-ed-accent-soft px-1.5 py-0.5 font-medium text-ed-accent">{g.kind}</span>
+                <span className="truncate font-mono text-ed-muted">{g.title}</span>
               </div>
               {rows.map((row: TransRow) => (
-                <div key={row.id} className="grid grid-cols-[7rem_1fr_1fr_auto] items-start gap-2 px-3 py-2">
-                  <span className="pt-1 text-xs text-ed-muted">{row.fieldLabel}</span>
-                  <div className="whitespace-pre-wrap pt-1 text-sm text-ed-muted">{row.source || <span className="text-ed-muted/50">(empty)</span>}</div>
-                  <textarea aria-label={`translate ${row.id}`} key={`${row.id}:${bump[row.id] ?? 0}`} rows={1} defaultValue={row.target}
-                            onChange={(e) => onEditText(g, row, e.target.value)}
-                            className="w-full rounded border border-ed-border-strong px-2 py-1 text-sm" />
-                  <div className="flex flex-col items-end gap-1">
-                    <select aria-label={`status ${row.id}`} value={row.status} onChange={(e) => onEditStatus(g, e.target.value)}
-                            className="rounded border border-ed-border-strong px-1 py-0.5 text-xs">
-                      {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                    <button aria-label="Auto" onClick={() => void autoRow(g, row)} disabled={busy[row.id] || !row.source.trim()}
-                            className="rounded border border-ed-border-strong px-2 py-0.5 text-xs hover:bg-ed-subtle disabled:opacity-40">
-                      {busy[row.id] ? '…' : 'Auto'}
-                    </button>
-                    {autoErr[row.id] && <span className="text-[10px] text-red-600">{autoErr[row.id]}</span>}
+                <div key={row.id} className="grid grid-cols-[6.5rem_minmax(0,1fr)_minmax(0,1fr)] items-start gap-x-4 gap-y-2 border-t border-ed-border px-4 py-3.5 first:border-t-0">
+                  <span className="pt-2 text-xs font-medium text-ed-muted">{row.fieldLabel}</span>
+                  <div className="whitespace-pre-wrap pt-2 text-sm leading-relaxed text-ed-text">{row.source || <span className="italic text-ed-muted/60">(empty)</span>}</div>
+                  <div className="flex flex-col gap-2">
+                    <textarea aria-label={`translate ${row.id}`} key={`${row.id}:${bump[row.id] ?? 0}`} rows={2} defaultValue={row.target}
+                              onChange={(e) => onEditText(g, row, e.target.value)}
+                              className="min-h-[3.5rem] w-full resize-y rounded-md border border-ed-border-strong bg-ed-surface px-3 py-2 text-sm leading-relaxed text-ed-text shadow-sm outline-none transition-colors focus:border-ed-accent focus:ring-2 focus:ring-ed-accent-soft" />
+                    <div className="flex items-center gap-2">
+                      <select aria-label={`status ${row.id}`} value={row.status} onChange={(e) => onEditStatus(g, e.target.value)}
+                              className="rounded-md border border-ed-border-strong bg-ed-surface px-2 py-1 text-xs text-ed-muted">
+                        {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                      <button aria-label="Auto" onClick={() => void autoRow(g, row)} disabled={busy[row.id] || !row.source.trim()}
+                              className="rounded-md border border-ed-border-strong bg-ed-surface px-3 py-1 text-xs font-medium text-ed-text hover:bg-ed-subtle disabled:opacity-40">
+                        {busy[row.id] ? '…' : 'Auto'}
+                      </button>
+                      {autoErr[row.id] && <span className="text-[11px] font-medium text-ed-danger">{autoErr[row.id]}</span>}
+                    </div>
                   </div>
                 </div>
               ))}
