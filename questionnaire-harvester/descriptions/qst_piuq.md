@@ -1,0 +1,1 @@
+The Problematic Internet Use Questionnaire (PIUQ) is an 18-item self-report scale assessing the extent and nature of problematic internet use across dimensions such as obsession, neglect, and control disorder. It is used in research and screening contexts to identify individuals whose internet use may be causing distress or functional impairment.

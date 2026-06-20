@@ -1,0 +1,1 @@
+The Aggressive Behavior Scale for adolescents is an 11-item questionnaire measuring the frequency and intensity of aggressive behaviors in young people. It is used to identify patterns of aggression, supporting clinical assessment and research in adolescent populations.

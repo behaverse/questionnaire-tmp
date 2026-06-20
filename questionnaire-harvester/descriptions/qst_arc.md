@@ -1,0 +1,1 @@
+The Systemizing Quotient (SQ), developed at the Autism Research Centre in Cambridge, is a 75-item self-report measure assessing the drive to analyse or construct rule-based systems. It is used to capture individual differences in systemizing tendencies across general and clinical populations.

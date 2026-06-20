@@ -1,0 +1,1 @@
+The Caffeine Use Disorder Questionnaire (CUDQ) is a 10-item self-report screening tool assessing problematic patterns of caffeine consumption that parallel substance use disorder criteria. It is used to identify individuals whose caffeine intake may constitute a clinically significant behavioral problem.

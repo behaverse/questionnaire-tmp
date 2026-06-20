@@ -1,0 +1,1 @@
+The Healthy Selfishness Scale (HS) is a 10-item self-report measure assessing the degree to which individuals prioritize their own needs and well-being in an adaptive, non-exploitative manner. It is used to distinguish constructive self-care from maladaptive self-centeredness in psychological research.

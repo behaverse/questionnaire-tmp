@@ -1,0 +1,1 @@
+The Revised Mystical Experience Questionnaire (MEQ-30) is a 30-item self-report scale measuring the intensity of mystical experiences across dimensions such as unity, noetic quality, transcendence of time and space, and sacredness. It is used in psychedelic research and consciousness studies to characterize the depth and nature of mystical states.

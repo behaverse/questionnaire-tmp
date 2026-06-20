@@ -1,0 +1,1 @@
+The Satisfaction with Life Scale (SWLS) is a 5-item self-report measure assessing global cognitive judgments of one's life satisfaction. It is widely used in well-being research and clinical contexts to evaluate the subjective quality of life as judged by the respondent against their own standards.

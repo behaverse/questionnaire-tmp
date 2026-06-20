@@ -1,0 +1,1 @@
+The Taylor Manifest Anxiety Scale (TMAS) is a 38-item self-report measure assessing manifest anxiety as a stable personality trait, covering observable symptoms such as tension, worry, and nervousness. It is used in clinical and research settings to quantify chronic anxiety-proneness and to examine its relationship to other psychological constructs and health outcomes.

@@ -1,0 +1,1 @@
+The Nomophobia Questionnaire (NMP-Q) is a 20-item self-report measure assessing fear and discomfort associated with being without a mobile phone or unable to use it. It is used to evaluate the severity of nomophobia — smartphone separation anxiety — in research on technology-related behavioral problems.

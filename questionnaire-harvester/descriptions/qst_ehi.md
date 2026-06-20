@@ -1,0 +1,1 @@
+The Edinburgh Handedness Inventory (short form) is a 4-item self-report questionnaire measuring lateral hand preference for everyday activities such as writing and throwing. It is used to classify individuals as left-handed, right-handed, or ambidextrous in cognitive and neuropsychological research.

@@ -1,0 +1,1 @@
+The Positive and Negative Affect Schedule (PANAS) is a 20-item self-report questionnaire measuring the intensity of positive and negative affective states. It is widely used in clinical and research contexts to assess current mood, emotional well-being, and responses to experimental or therapeutic interventions.

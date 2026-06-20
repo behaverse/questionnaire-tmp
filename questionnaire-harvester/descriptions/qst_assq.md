@@ -1,0 +1,1 @@
+The Autism Spectrum Screening Questionnaire (ASSQ) is a 27-item parent- or teacher-rated screening tool for identifying autism spectrum disorder traits in children and adolescents. It is used as a first-step instrument to flag individuals who may warrant a full diagnostic evaluation for ASD.

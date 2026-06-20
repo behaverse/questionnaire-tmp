@@ -1,0 +1,1 @@
+The Positive Mindset Index (PMI) is a 6-item self-report questionnaire measuring positive mental health and adaptive psychological outlook. It is used as a brief screening and monitoring tool for mental well-being in both general and clinical populations.

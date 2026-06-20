@@ -1,0 +1,1 @@
+The Circadian Energy Scale (CIRENS) is a 2-item self-report measure assessing an individual's chronotype by capturing typical patterns of energy and alertness across morning and evening periods. It is used as a brief indicator of circadian preference in research and health contexts.

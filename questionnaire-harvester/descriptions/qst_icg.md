@@ -1,0 +1,1 @@
+The Inventory of Complicated Grief (ICG) is a 19-item self-report scale measuring the severity of complicated grief symptoms following bereavement, including persistent yearning and difficulty accepting the loss. It is used to distinguish complicated grief from normative bereavement responses and to guide decisions about specialized therapeutic intervention.

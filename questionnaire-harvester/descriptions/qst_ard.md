@@ -1,0 +1,1 @@
+The Dominance Scale (for relationship research) is a 32-item self-report questionnaire measuring the disposition toward dominance in interpersonal and romantic relationships. It is used to assess dominant personality tendencies in the context of partner dynamics and relationship research.

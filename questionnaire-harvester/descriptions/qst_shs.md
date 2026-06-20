@@ -1,0 +1,1 @@
+The Subjective Happiness Scale (SHS) is a 4-item self-report measure assessing global subjective happiness as a stable individual characteristic. It is used in positive psychology research to examine happiness in relation to well-being, personality, and life outcomes.

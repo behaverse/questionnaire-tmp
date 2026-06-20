@@ -1,0 +1,1 @@
+The Rosenberg Self-Esteem Scale (RSES) is a 10-item self-report scale measuring global self-esteem through statements reflecting overall feelings of self-worth and self-acceptance. It is one of the most widely used instruments in social and developmental psychology for assessing individual differences in self-esteem.

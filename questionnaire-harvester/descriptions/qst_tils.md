@@ -1,0 +1,1 @@
+The Three-Item Loneliness Scale (TILS) is a 3-item self-report measure assessing subjective feelings of loneliness and social isolation. It is used as a brief screening instrument in epidemiological and health research where administration time is limited.

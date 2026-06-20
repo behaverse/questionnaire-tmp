@@ -1,0 +1,1 @@
+The Tromsø Social Intelligence Scale (TSIS) is a 21-item self-report measure assessing social intelligence across facets including social skills, social perception, and social awareness. It is used in personality and social psychology research to quantify individual differences in the ability to navigate and understand social situations.

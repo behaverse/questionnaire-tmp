@@ -1,0 +1,1 @@
+The Spheres of Control Scale (SOC-3) is a 30-item self-report questionnaire measuring perceived personal control across three domains: personal efficacy, interpersonal control, and sociopolitical control. It is used in personality and health psychology research to examine locus-of-control beliefs and their relationship with behavior and well-being.

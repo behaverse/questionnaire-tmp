@@ -1,0 +1,1 @@
+The Children's Happiness Scale is a single-item measure capturing a child's global subjective sense of happiness or well-being. It is used as a brief indicator of positive affect in child populations, often embedded within broader survey batteries.

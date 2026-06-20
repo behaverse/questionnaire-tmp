@@ -1,0 +1,1 @@
+The Diagnostic Screen for Gambling Disorders (NODS-CLiP) is a 17-item screening questionnaire identifying behaviors and cognitions associated with problematic or pathological gambling. It is used as a brief first-stage tool to flag individuals who may warrant a more comprehensive gambling disorder assessment.

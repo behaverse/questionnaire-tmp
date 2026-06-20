@@ -1,0 +1,1 @@
+The Toronto Empathy Questionnaire (TEQ) is a 16-item self-report scale measuring empathy primarily as an emotional rather than cognitive process, capturing spontaneous affective responses to others' emotional states. It is used in social, clinical, and neuropsychological research to assess individual differences in affective empathy across diverse populations.

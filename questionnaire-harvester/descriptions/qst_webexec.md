@@ -1,0 +1,1 @@
+The Problems with Executive Control scale (webexec) is a 6-item self-report questionnaire measuring difficulties with executive functions such as planning, inhibition, and cognitive flexibility in everyday contexts. It is used to identify self-reported executive control problems relevant to attention and behavioral regulation.

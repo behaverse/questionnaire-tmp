@@ -1,0 +1,1 @@
+The Concise Conscientiousness Measure (CCM-S) is a 28-item self-report scale assessing the conscientiousness dimension of personality, capturing facets such as orderliness, industriousness, and self-discipline. It is used in personality research and applied settings requiring a brief yet comprehensive measure of this Big Five domain.

@@ -1,0 +1,1 @@
+The Generalized Anxiety Disorder scale (GAD-7) is a 7-item self-report screening tool measuring the frequency of generalised anxiety symptoms over the preceding two weeks. It is widely used in primary care and research settings to detect probable anxiety disorders and track symptom change.

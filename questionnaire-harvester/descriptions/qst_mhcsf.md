@@ -1,0 +1,1 @@
+The Mental Health Continuum Short Form (MHC-SF) is a 14-item self-report scale measuring positive mental health across emotional, social, and psychological well-being dimensions. It is used in research and clinical contexts to assess flourishing and the presence of positive mental health rather than the absence of disorder.

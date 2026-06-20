@@ -1,0 +1,1 @@
+The Social Phobia Inventory (SPIN) is a 17-item self-report scale measuring fear, avoidance, and physiological discomfort in social and performance situations. It is used to screen for social anxiety disorder and to track symptom severity in clinical and research settings.

@@ -1,0 +1,1 @@
+The Test Anxiety Inventory (TAI-5) is a 5-item self-report scale measuring anxiety experienced in academic testing situations. It is used as a brief screening instrument to identify students who experience significant worry or emotionality in the context of evaluations.

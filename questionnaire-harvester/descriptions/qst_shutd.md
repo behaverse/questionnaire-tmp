@@ -1,0 +1,1 @@
+The Shutdown Dissociation Scale (SHUT-D) is a 13-item measure assessing dissociative responses — including freeze, flight/fight, fright, and flag/faint reactions — triggered by trauma reminders in adults. It is used in clinical trauma research to evaluate the severity of peritraumatic and trauma-related dissociation grounded in the defense cascade model.

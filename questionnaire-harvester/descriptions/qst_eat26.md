@@ -1,0 +1,1 @@
+The Eating Attitudes Test - 26 Item (EAT-26) is a 26-item self-report screening tool assessing attitudes, behaviors, and concerns characteristic of eating disorders such as anorexia nervosa and bulimia nervosa. It is widely used in clinical and epidemiological research to identify individuals who may warrant further evaluation for disordered eating.

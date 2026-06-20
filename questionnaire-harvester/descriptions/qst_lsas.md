@@ -1,0 +1,1 @@
+The Liebowitz Social Anxiety Scale (LSAS) is a 48-item questionnaire measuring the severity of fear and avoidance across a range of social interaction and performance situations. It is used to assess social anxiety disorder symptoms and to monitor treatment response in clinical and research contexts.

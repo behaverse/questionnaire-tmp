@@ -1,0 +1,1 @@
+The Single-Item Sleep Quality Scale (SQS) is a 1-item self-report measure capturing an individual's overall subjective assessment of their sleep quality. It is used in research and clinical screening contexts where brevity is essential and a quick index of perceived sleep quality is sufficient for the study purpose.

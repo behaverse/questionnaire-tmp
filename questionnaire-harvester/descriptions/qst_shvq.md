@@ -1,0 +1,1 @@
+The Short Hypermasculinity Values Questionnaire (HVQ) is a 16-item self-report scale measuring endorsement of hypermasculine attitudes toward sexuality, violence, and danger. It is used in gender and aggression research to assess masculine ideology as a potential risk factor for interpersonal violence.

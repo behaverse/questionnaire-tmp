@@ -1,0 +1,1 @@
+The Drinking Motives Questionnaire, Revised (DMQ-R) is a 20-item self-report measure assessing the motivational bases for alcohol consumption across social, enhancement, coping, and conformity dimensions. It is used in research and clinical settings to understand why individuals drink and to identify motivational profiles linked to problematic use.

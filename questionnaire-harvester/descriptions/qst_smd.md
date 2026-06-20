@@ -1,0 +1,1 @@
+The Social Media Disorder Scale (SMD) is a 9-item self-report questionnaire measuring addictive and disordered patterns of social media use, modeled on behavioral addiction criteria. It is used to screen for problematic social media engagement and study its associations with mental health outcomes.

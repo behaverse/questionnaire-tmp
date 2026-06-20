@@ -1,0 +1,1 @@
+The Generalized Self-Efficacy Scale (GSE) is a 10-item self-report questionnaire measuring a person's belief in their capacity to cope with novel or difficult demands across a broad range of situations. It is used in health, educational, and occupational research to assess optimistic self-beliefs as a predictor of motivation and performance.

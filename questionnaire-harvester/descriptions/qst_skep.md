@@ -1,0 +1,1 @@
+The Skepticism towards Advertisements Scale (SKEP) is a 9-item self-report questionnaire measuring consumer skepticism about the truthfulness and motives of advertising claims. It is used in marketing and consumer psychology research to assess critical attitudes toward commercial advertising.

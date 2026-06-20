@@ -1,0 +1,1 @@
+The Short Grit Scale (Grit-S) is an 8-item self-report measure assessing perseverance of effort and consistency of interest as components of the trait known as grit. It is used in educational, organizational, and developmental research to examine long-term goal pursuit and its relationship to achievement and well-being.

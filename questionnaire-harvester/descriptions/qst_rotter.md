@@ -1,0 +1,1 @@
+The Rotter Internal-External Locus of Control Scale (Rotter, 1966) is a 15-item forced-choice self-report measure assessing the extent to which individuals believe outcomes are controlled by their own actions versus external forces. It is used to characterize individual differences in perceived personal agency across a wide range of research contexts.

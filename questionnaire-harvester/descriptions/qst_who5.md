@@ -1,0 +1,1 @@
+The WHO-5 Well-Being Index is a 5-item self-report measure assessing current subjective psychological well-being, covering positive mood, vitality, and general interest. It is used internationally in clinical trials, primary care screening, and population health surveys as a brief indicator of mental well-being and as a preliminary screen for depression.

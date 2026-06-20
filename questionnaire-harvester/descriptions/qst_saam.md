@@ -1,0 +1,1 @@
+The State Adult Attachment Measure (SAAM) is a 21-item self-report scale measuring momentary attachment-related states — specifically feelings of security, anxiety, and avoidance — in close relationships. It is used in attachment research to capture within-person fluctuations in attachment states across situations and relationship contexts.

@@ -1,0 +1,1 @@
+The Adult ADHD Self-Report Scale (ASRS) is an 18-item self-report questionnaire screening for symptoms of attention-deficit/hyperactivity disorder in adults. It is used to identify inattention, hyperactivity, and impulsivity symptom frequency in non-clinical and clinical populations.

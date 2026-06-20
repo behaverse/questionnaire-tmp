@@ -1,0 +1,1 @@
+The Altman Self-Rating Mania Scale (ASRM) is a 5-item self-report measure assessing the presence and severity of manic symptoms over the past week. It is used to support clinical screening and monitoring of manic episodes in individuals with bipolar disorder.

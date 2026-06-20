@@ -1,0 +1,1 @@
+The Buss-Perry Aggression Questionnaire (BPAQ) is a 29-item self-report measure assessing four dimensions of aggression: physical aggression, verbal aggression, anger, and hostility. It is widely used in research and clinical settings to characterize an individual's overall aggressive tendencies and specific aggression subtypes.

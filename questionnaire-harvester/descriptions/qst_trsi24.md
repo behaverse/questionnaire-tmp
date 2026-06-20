@@ -1,0 +1,1 @@
+The Trauma-Related Shame Inventory (TRSI-24) is a 24-item self-report questionnaire measuring the frequency and intensity of shame feelings specifically linked to traumatic experiences. It is used in trauma research and clinical practice to distinguish trauma-induced shame from broader shame constructs and to guide shame-focused therapeutic interventions.

@@ -1,0 +1,1 @@
+The Penn Inventory of Scrupulosity (PIOS) is a 19-item self-report questionnaire measuring fear of committing sin and fear of God's punishment as two core dimensions of religious scrupulosity. It is used in clinical research to assess the religious subtype of obsessive-compulsive symptoms.

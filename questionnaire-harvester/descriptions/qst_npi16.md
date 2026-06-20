@@ -1,0 +1,1 @@
+The Narcissistic Personality Inventory - 16-item version (NPI-16) is an 8-item self-report scale measuring grandiose narcissistic traits in non-clinical populations. It is used in personality and social psychology research as a brief alternative to the full NPI, capturing tendencies toward self-importance, entitlement, and exploitativeness.

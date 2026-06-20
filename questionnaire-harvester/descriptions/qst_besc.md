@@ -1,0 +1,1 @@
+The Belonging, Engagement, and Self-Confidence in Higher Education scale (BES) is a 16-item self-report questionnaire measuring students' sense of belonging, academic engagement, and confidence in a higher education context. It is used to evaluate psychosocial factors associated with student adjustment and persistence at university.

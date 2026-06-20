@@ -1,0 +1,1 @@
+The Short Revised Almost Perfect Scale (SAPS) is an 8-item self-report measure assessing perfectionism, capturing both the pursuit of high standards and concern over discrepancies between performance and goals. It is used in personality and clinical research to distinguish between adaptive and maladaptive perfectionist tendencies.

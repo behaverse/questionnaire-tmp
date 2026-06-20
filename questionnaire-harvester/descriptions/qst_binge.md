@@ -1,0 +1,1 @@
+The Binge Eating Scale (BES) is a 16-item self-report questionnaire assessing the presence and severity of binge eating behaviors, emotions, and attitudes. It is used to identify individuals who may be experiencing binge eating disorder and to track changes in disordered eating patterns over time.

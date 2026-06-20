@@ -1,0 +1,1 @@
+The Abbreviated Math Anxiety Scale (AMAS) is a 9-item self-report measure assessing anxiety specifically related to mathematical situations and tasks. It is used to identify individuals who experience elevated distress in learning and testing contexts involving mathematics.

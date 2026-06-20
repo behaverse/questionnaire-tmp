@@ -1,0 +1,1 @@
+The Perceived Stress Scale (PSS) is a 14-item self-report measure assessing the degree to which situations in one's life are appraised as stressful during the past month. It is used in health and behavioral research to examine how perceived stress relates to physical and psychological outcomes.

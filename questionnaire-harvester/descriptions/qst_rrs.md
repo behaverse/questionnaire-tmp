@@ -1,0 +1,1 @@
+The Rumination Response Scale (RRS) is a 22-item self-report measure assessing the tendency to repetitively and passively focus on symptoms of distress and their possible causes and consequences. It is used in clinical and affective research to examine ruminative response style as a risk and maintaining factor for depression and other mood-related difficulties.

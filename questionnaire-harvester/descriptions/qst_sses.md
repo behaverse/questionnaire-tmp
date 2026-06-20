@@ -1,0 +1,1 @@
+The State Self-Esteem Scale (SSES) is a 20-item self-report questionnaire measuring momentary fluctuations in self-esteem across performance, social, and appearance domains. It is used in experimental and clinical research where capturing the transient, state-level dimension of self-esteem is required.

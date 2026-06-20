@@ -1,0 +1,1 @@
+The Cooperative/Competitive Strategy Scale (CCSS) is a 19-item self-report questionnaire measuring individual tendencies toward cooperative versus competitive interpersonal strategies. It is used in social and organizational psychology research to examine how people approach shared goals and resource allocation.

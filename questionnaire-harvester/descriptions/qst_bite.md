@@ -1,0 +1,1 @@
+The Brief Irritability Test (BITe) is a 5-item self-report scale measuring the frequency and intensity of irritability experienced over a defined period. It is used as a concise screening tool for irritability symptoms relevant to a range of psychiatric and general health contexts.

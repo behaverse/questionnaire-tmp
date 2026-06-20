@@ -1,0 +1,1 @@
+The Spider Fear Questionnaire (SPQ) is a 31-item self-report measure assessing the severity of spider-specific fear across behavioral, cognitive, and physiological response domains. It is used in clinical and experimental settings to evaluate spider phobia and to track treatment-related changes in fear responses.

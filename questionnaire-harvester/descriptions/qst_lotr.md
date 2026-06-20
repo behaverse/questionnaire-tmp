@@ -1,0 +1,1 @@
+The Life Orientation Test-Revised (LOT-R) is a 10-item self-report scale measuring dispositional optimism versus pessimism as a generalised expectancy for positive future outcomes. It is used in health and well-being research to examine how outcome expectancies relate to psychological adjustment and physical health.

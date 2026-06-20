@@ -1,0 +1,1 @@
+The Cognitive Flexibility Scale (CFS) is a 12-item self-report measure assessing an individual's capacity to adapt thinking and behavior across changing situational demands. It is used to evaluate executive function-related flexibility, including the ability to generate alternatives and to perceive situations as controllable.

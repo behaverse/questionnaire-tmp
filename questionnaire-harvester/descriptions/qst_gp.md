@@ -1,0 +1,1 @@
+The General Procrastination Scale is a 20-item self-report questionnaire measuring the tendency to delay the start or completion of intended tasks in everyday situations. It is used in research and applied settings to assess dispositional procrastination as a stable behavioral trait.

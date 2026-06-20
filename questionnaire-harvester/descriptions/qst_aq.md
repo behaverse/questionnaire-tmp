@@ -1,0 +1,1 @@
+The Autism Spectrum Quotient (AQ) is a 50-item self-report measure assessing the degree to which adults exhibit traits associated with the autism spectrum. It is used in both research and clinical contexts to quantify autism-spectrum characteristics across social skill, attention switching, communication, imagination, and attention to detail domains.

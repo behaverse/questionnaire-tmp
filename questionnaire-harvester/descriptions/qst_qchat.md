@@ -1,0 +1,1 @@
+The Quantitative Checklist for Autism in Toddlers (Q-CHAT) is a 25-item parent-rated screening questionnaire designed to detect early signs of autism spectrum disorder in children between 18 and 24 months of age. It is used in pediatric and developmental research to identify toddlers who may benefit from further diagnostic evaluation.

@@ -1,0 +1,1 @@
+The Measure of Acceptance of the Theory of Evolution (MATE) is a 20-item self-report questionnaire assessing the degree to which individuals accept evolutionary theory as a scientific account of biological diversity and human origins. It is used in science education research to examine attitudes toward evolution and the factors that influence them.

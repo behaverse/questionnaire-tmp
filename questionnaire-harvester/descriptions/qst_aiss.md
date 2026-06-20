@@ -1,0 +1,1 @@
+The Arnett Inventory of Sensation Seeking (AISS) is a 20-item self-report measure assessing individual differences in the drive to seek novel, intense, and varied experiences. It is used to quantify sensation-seeking tendencies across cognitive and emotional dimensions in adolescent and adult populations.

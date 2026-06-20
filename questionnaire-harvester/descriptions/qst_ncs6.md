@@ -1,0 +1,1 @@
+The Need for Cognition (NCS-6) is a 6-item self-report scale measuring the degree to which individuals are motivated to engage in and enjoy effortful cognitive activity. It is used in research on thinking styles, attitude formation, and individual differences in information processing.

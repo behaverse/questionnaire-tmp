@@ -1,0 +1,1 @@
+The Ritvo Autism and Asperger Diagnostic Scale (RAADS-14) is a 14-item self-report screening tool for autism spectrum disorder in adults, covering language, social relatedness, sensory-motor, and circumscribed interest domains. It is used to assist clinicians and researchers in identifying adults who may warrant further evaluation for autism spectrum conditions.

@@ -1,0 +1,1 @@
+The Love Attitudes Scale (Short Form) is a 24-item self-report questionnaire measuring individual differences in romantic love styles, based on Lee's typology of love. It is used in relationship research to assess how people characteristically approach and experience romantic partnerships.

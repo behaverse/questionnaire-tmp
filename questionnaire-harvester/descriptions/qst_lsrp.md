@@ -1,0 +1,1 @@
+The Levenson Self-Report Psychopathy Scale (LSRP) is a 26-item self-report measure assessing primary and secondary psychopathic traits in non-institutionalized populations. It is used in personality and forensic psychology research to examine the distribution and correlates of psychopathic features in community samples.

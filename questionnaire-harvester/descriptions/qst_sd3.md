@@ -1,0 +1,1 @@
+The Short Dark Triad (SD3) is a 27-item self-report measure assessing three socially aversive personality traits: Machiavellianism, narcissism, and psychopathy. It is used in personality and social psychology research to examine the correlates and consequences of dark personality tendencies.

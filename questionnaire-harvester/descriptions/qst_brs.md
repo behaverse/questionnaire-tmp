@@ -1,0 +1,1 @@
+The Brief Resilience Scale (BRS) is a 6-item self-report measure designed to assess an individual's ability to recover from stress and adversity. It is used in research and clinical contexts to quantify personal resilience as a distinct psychological construct.

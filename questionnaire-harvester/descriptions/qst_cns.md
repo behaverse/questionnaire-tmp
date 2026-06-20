@@ -1,0 +1,1 @@
+The Connectedness to Nature Scale (CNS) is a 14-item self-report measure assessing the degree to which individuals feel emotionally integrated with the natural world. It is used in environmental psychology research to examine how felt connection to nature relates to pro-environmental attitudes and well-being.

@@ -1,0 +1,1 @@
+The PC-PTSD-5 is a 6-item primary-care screen for probable PTSD (aligned with DSM-5 criteria) in patients who report prior trauma exposure. It flags those who may need a full diagnostic evaluation.

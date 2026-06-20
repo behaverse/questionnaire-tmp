@@ -1,0 +1,1 @@
+The Body Esteem Scale (BES) is a 35-item self-report measure assessing an individual's evaluative attitudes toward their own body and physical appearance. It is used to capture multidimensional aspects of body image, including satisfaction with specific body parts and overall physical self-evaluation.

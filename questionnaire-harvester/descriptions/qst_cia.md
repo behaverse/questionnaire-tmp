@@ -1,0 +1,1 @@
+The Clinical Impairment Assessment Questionnaire (CIA 3.0) is a 16-item self-report measure of the psychosocial impairment resulting from eating disorder psychopathology. It is used to quantify functional consequences in domains such as mood, social functioning, and everyday performance.

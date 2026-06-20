@@ -1,0 +1,1 @@
+The Short Oxford-Liverpool Inventory of Feelings and Experiences (O-LIFE) is a 43-item self-report measure of schizotypal personality traits, covering unusual experiences, cognitive disorganization, introvertive anhedonia, and impulsive nonconformity. It is used in research to study subclinical psychosis-like variation in non-clinical populations.

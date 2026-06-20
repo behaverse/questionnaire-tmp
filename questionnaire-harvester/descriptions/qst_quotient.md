@@ -1,0 +1,1 @@
+The Short Autism Spectrum Quotient is a 10-item self-report screening questionnaire measuring autistic traits related to social skills, attention switching, attention to detail, communication, and imagination. It is used as a brief initial screen to identify adults who may warrant further assessment for autism spectrum conditions.

@@ -1,0 +1,1 @@
+The Loneliness (UPLAS) questionnaire is a 25-item self-report scale measuring subjective feelings of social isolation and the absence of meaningful social connection. It is used in research and applied settings to assess loneliness as a distinct psychological experience across diverse populations.

@@ -1,0 +1,1 @@
+The Impulsivity Scale for Children (ISC) is an 8-item self-report measure assessing impulsive tendencies in children, covering difficulties with inhibitory control and acting without forethought. It is used to screen for impulsivity-related concerns in developmental and clinical research settings.

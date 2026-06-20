@@ -1,0 +1,1 @@
+The Emotional Intelligence questionnaire is a 33-item self-report scale measuring the ability to perceive, understand, manage, and use emotions effectively in oneself and in interactions with others. It is used in occupational, educational, and clinical research to examine emotional competencies and their relationship to well-being and performance.

@@ -1,0 +1,1 @@
+The Penn State Worry Questionnaire (PSWQ) is a 16-item self-report scale measuring the tendency toward excessive, generalized worry as a stable cognitive trait. It is used in clinical and research settings to assess pathological worry, particularly as the defining feature of generalized anxiety disorder.

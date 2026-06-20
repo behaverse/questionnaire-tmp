@@ -1,0 +1,1 @@
+The Obsessive-Compulsive Inventory — Revised short version (OCI-R) is an 18-item self-report measure assessing the distress associated with a range of obsessive-compulsive symptoms, including hoarding, checking, ordering, and washing. It is used to screen for OCD symptomatology and to monitor symptom severity in clinical and research settings.

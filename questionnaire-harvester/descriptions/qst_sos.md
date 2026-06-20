@@ -1,0 +1,1 @@
+The Service to Others in Sobriety (SOS) questionnaire is a 12-item self-report measure assessing the extent to which individuals in recovery from alcohol use disorder engage in helping or supporting others as part of their sobriety. It is used in addiction research to examine prosocial behavior as a component of the recovery process.

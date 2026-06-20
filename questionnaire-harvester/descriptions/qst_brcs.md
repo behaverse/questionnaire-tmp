@@ -1,0 +1,1 @@
+The Brief Resilience Coping Scale (BRCS) is a 4-item self-report scale measuring an individual's tendency to use active, adaptive coping strategies when confronted with stress. It is used in research and clinical contexts to assess resilient coping as a protective factor in relation to psychological and physical health outcomes.

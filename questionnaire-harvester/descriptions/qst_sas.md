@@ -1,0 +1,1 @@
+The Zung Self-Rating Anxiety Scale (SAS) is a 20-item self-report questionnaire measuring the severity of anxiety symptoms across cognitive, affective, somatic, and autonomic dimensions. It is used in clinical and research settings to screen for anxiety and to monitor symptom changes over time.

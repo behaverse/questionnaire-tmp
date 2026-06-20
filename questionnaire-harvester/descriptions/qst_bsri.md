@@ -1,0 +1,1 @@
+The Bem Sex Role Inventory (BSRI) is a 60-item self-report scale measuring the degree to which individuals endorse socially defined masculine and feminine personality attributes. It is used in psychological research to classify respondents along dimensions of masculinity, femininity, and androgyny.

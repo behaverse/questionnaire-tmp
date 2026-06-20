@@ -1,0 +1,1 @@
+The Green et al. Paranoid Thought Scales (GPTS) is a 32-item self-report measure assessing paranoid ideation across two dimensions: ideas of social reference and ideas of persecution. It is used in both clinical and non-clinical research to quantify the frequency and conviction of paranoid thoughts.

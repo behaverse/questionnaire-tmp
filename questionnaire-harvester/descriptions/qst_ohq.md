@@ -1,0 +1,1 @@
+The Oxford Happiness Scale (OHS) is a 29-item self-report questionnaire measuring subjective happiness and psychological well-being across cognitive, affective, and social dimensions. It is used in positive psychology research to assess overall happiness and its correlates in diverse populations.

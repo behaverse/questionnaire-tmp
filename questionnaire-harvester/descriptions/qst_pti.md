@@ -1,0 +1,1 @@
+The Personality Type Indicator (PTI) is a 70-item self-report questionnaire that classifies personality according to four Jungian preference dimensions, yielding one of 16 personality types aligned with the Myers-Briggs framework. It is used in personal development, career counseling, and organizational settings.

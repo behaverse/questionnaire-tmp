@@ -1,0 +1,1 @@
+The Childhood Autism Spectrum Test (CAST) is a 39-item parent-rated screening questionnaire designed to identify children aged 4 to 11 who may show signs of autism spectrum conditions. It is used as a first-stage community screening tool to guide decisions about referral for further diagnostic evaluation.

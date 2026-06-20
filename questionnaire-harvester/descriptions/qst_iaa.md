@@ -1,0 +1,1 @@
+The Internet Addiction Assessment (IAA) is an 18-item self-report questionnaire evaluating patterns of internet and smartphone use associated with problematic or compulsive digital engagement. It is used to promote self-awareness about online habits and to screen for indicators of excessive internet use.

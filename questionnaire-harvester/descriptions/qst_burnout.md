@@ -1,0 +1,1 @@
+The Teacher Burnout questionnaire is a 20-item self-report measure assessing occupational burnout symptoms among teaching professionals. It is used to evaluate the extent of emotional exhaustion, disillusionment, and stress experienced in the teaching role.

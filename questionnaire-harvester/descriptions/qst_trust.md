@@ -1,0 +1,1 @@
+The Trust in Close Relationships scale is a 17-item self-report questionnaire measuring the degree of trust individuals place in their close interpersonal relationships, such as romantic partners or spouses. It is used in relationship psychology research to examine how interpersonal trust relates to relationship quality and stability.

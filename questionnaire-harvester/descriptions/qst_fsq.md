@@ -1,0 +1,1 @@
+The Fear of Spiders Questionnaire (FSQ) is an 18-item self-report measure assessing the severity of spider phobia-related fear, avoidance, and distress. It is used in clinical and experimental research to quantify spider fear and to track changes in phobic responses following treatment or exposure-based interventions.

@@ -1,0 +1,1 @@
+The Montgomery-Åsberg Depression Rating Scale (MADRS) is a 10-item clinician-rated instrument measuring the severity of depressive symptoms, with particular emphasis on psychological rather than somatic features. It is used in clinical trials and psychiatric practice to evaluate depression severity and to track symptom change in response to treatment.

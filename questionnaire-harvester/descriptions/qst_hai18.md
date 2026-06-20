@@ -1,0 +1,1 @@
+The Short Health Anxiety Inventory (HAI-18) is an 18-item self-report measure assessing the severity of health anxiety, including preoccupation with illness and bodily sensations. It is used in clinical and research settings to identify individuals with elevated health anxiety and to evaluate the impact of interventions targeting this condition.

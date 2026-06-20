@@ -1,0 +1,1 @@
+The Risk Propensity Scale (RPS) is a 7-item self-report measure assessing an individual's general tendency to seek out or accept risk across everyday situations. It is used in behavioral and decision science research to capture dispositional risk-taking as a trait-level characteristic.

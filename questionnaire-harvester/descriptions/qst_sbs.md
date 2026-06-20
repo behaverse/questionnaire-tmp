@@ -1,0 +1,1 @@
+The Supernatural Belief Scale (SBS) is a 10-item self-report measure assessing the degree of belief in supernatural phenomena such as ghosts, telepathy, and divine intervention. It is used in psychology of religion and cognition research to examine individual differences in paranormal and religious belief.

@@ -1,0 +1,1 @@
+The Obsessive-Compulsive Inventory-Revised (OCI-R) is an 18-item self-report scale assessing the distress associated with six symptom dimensions of obsessive-compulsive disorder, including hoarding, checking, ordering, neutralising, washing, and obsessing. It is used to screen for OCD symptom severity and to differentiate symptom profiles in clinical and research populations.

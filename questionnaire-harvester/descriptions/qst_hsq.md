@@ -1,0 +1,1 @@
+The Humor Styles Questionnaire (HSQ) is a 32-item self-report scale measuring four distinct ways individuals use humour: affiliative, self-enhancing, aggressive, and self-defeating. It is used in personality and well-being research to examine how humour styles relate to psychological health and social relationships.

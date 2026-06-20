@@ -1,0 +1,1 @@
+The McCroskey Shyness Scale is a 14-item self-report measure assessing the tendency to feel tense, uncomfortable, or inhibited in social interactions. It is used in communication and personality research to examine shyness as a dispositional trait and its relationship to communication apprehension and social behavior.

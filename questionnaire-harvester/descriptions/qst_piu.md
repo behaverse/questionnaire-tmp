@@ -1,0 +1,1 @@
+The Pathological Internet Use scale (PIU) is a 13-item self-report questionnaire screening for maladaptive and compulsive patterns of internet use. It is used to identify individuals whose online behaviors interfere with daily life, relationships, or psychological functioning.

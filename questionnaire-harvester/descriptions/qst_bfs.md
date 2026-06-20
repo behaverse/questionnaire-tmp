@@ -1,0 +1,1 @@
+The Bullshitting Frequency Scale (BFS) is a 12-item self-report measure assessing how often individuals engage in casual deception — making confident-sounding claims without concern for their truth or falsity. It is used to study everyday dishonest communication and its correlates in social and personality psychology.

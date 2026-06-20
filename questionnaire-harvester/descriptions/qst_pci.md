@@ -1,0 +1,1 @@
+The Procrastinatory Cognitions Inventory (PCI) is an 18-item self-report scale measuring the frequency of automatic thoughts associated with task avoidance and delay. It is used in cognitive-behavioral research and clinical assessment to identify the cognitive patterns that sustain procrastinatory behavior.

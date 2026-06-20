@@ -1,0 +1,1 @@
+The Hare Psychopathy Checklist (PCL-22) is a 22-item clinician-rated instrument assessing personality traits and observed behaviors associated with psychopathy, based on a semi-structured interview and collateral information. It is used in forensic and research settings to evaluate the presence and degree of psychopathic characteristics in individuals.

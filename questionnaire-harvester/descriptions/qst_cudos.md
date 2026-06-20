@@ -1,0 +1,1 @@
+The Clinically Useful Depression Outcome Scale (CUDOS) is a 16-item self-report measure assessing the presence and severity of depressive symptoms. It is used to monitor treatment outcomes and symptom change in individuals with depression.

@@ -1,0 +1,1 @@
+The Appearance Anxiety Inventory (AAI) is a 10-item self-report measure assessing cognitive and behavioral responses to concerns about physical appearance, particularly in the context of body dysmorphic disorder. It is used to evaluate the degree to which individuals engage in appearance-checking, avoidance, and threat monitoring related to perceived physical flaws.

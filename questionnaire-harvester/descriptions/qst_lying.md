@@ -1,0 +1,1 @@
+The Lying in Everyday Situations Scale (LiES) is a 14-item self-report questionnaire measuring the frequency and types of deceptive behavior individuals engage in during daily life. It is used in research on honesty, social behavior, and the motivations underlying everyday lying.

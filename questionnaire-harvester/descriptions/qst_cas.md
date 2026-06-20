@@ -1,0 +1,1 @@
+The Clinical Anger Scale (CAS) is a 21-item self-report measure assessing the presence and intensity of anger across cognitive, affective, and behavioral domains. It is used to evaluate clinically significant anger in individuals presenting with emotional or psychological difficulties.

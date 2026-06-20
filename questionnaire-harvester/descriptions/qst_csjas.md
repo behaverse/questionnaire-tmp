@@ -1,0 +1,1 @@
+The Critical Social Justice Attitudes Scale (CSJAS) is a 7-item self-report scale measuring endorsement of beliefs and frameworks associated with critical social justice perspectives. It is used in psychological and sociological research to quantify individual differences in attitudes toward systemic inequality, identity, and social power.

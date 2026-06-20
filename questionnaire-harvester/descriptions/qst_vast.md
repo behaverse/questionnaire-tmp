@@ -1,0 +1,1 @@
+The Varieties of Sadistic Tendencies (VAST) is a 27-item self-report measure assessing two distinct expressions of sadism: direct physical harm and vicarious enjoyment of others' suffering. It is used in dark triad and personality research to distinguish everyday sadistic tendencies from clinical and forensic presentations.

@@ -1,0 +1,1 @@
+The Excessive Gaming Screening Tool (EGST) is a 20-item self-report questionnaire screening for problematic and potentially addictive gaming behaviour. It is used to identify individuals whose video game or internet use may be interfering with daily personal, social, or occupational functioning.
