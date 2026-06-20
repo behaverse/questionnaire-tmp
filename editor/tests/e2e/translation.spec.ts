@@ -60,3 +60,19 @@ test('auto-translate fills a row target in the Translate panel (ED-J1)', async (
   await page.locator('button[aria-label="Auto"]:not([disabled])').first().click()
   await expect(page.getByRole('textbox', { name: /translate pr_/ }).first()).toHaveValue('Comment ça va ?')
 })
+
+test('Translation Workbench: load untranslated Library prompts + auto-translate (ED-J2)', async ({ page }) => {
+  await page.route('**/v1/entities/prompt?*', (r) => r.fulfill({ status: 200, contentType: 'application/json',
+    body: '{"items":[{"id":"pr_a","version":"v26.0606","title":"mood","entity_type":"prompt"}],"total":1}' }))
+  await page.route('**/v1/entities/prompt/pr_a/versions/**/definition', (r) => r.fulfill({ status: 200, contentType: 'application/json',
+    body: '{"id":"pr_a","content":{"en":{"status":"complete","text":"How are you?"}}}' }))
+  await page.route('**/api/translate', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"translation":"Comment ça va ?"}' }))
+
+  await page.goto('/')
+  await page.getByRole('button', { name: /translate library entities/i }).click()
+  await page.getByLabel('Target language').fill('fr')
+  await page.getByRole('button', { name: /^load$/i }).click()
+  await expect(page.getByText('How are you?')).toBeVisible()
+  await page.getByRole('button', { name: /^auto$/i }).first().click()
+  await expect(page.getByRole('textbox', { name: /target pr_a/ }).first()).toHaveValue('Comment ça va ?')
+})
