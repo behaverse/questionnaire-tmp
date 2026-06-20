@@ -46,3 +46,38 @@ def test_apply_descriptions_patches_only_overridden(tmp_path):
     assert a["x_description_source"] == "authored"
     # qst_b (no override) byte-identical
     assert (out / "questionnaires" / "qst_b.json").read_text() == untouched_before
+
+
+from harvester.descriptions import check_descriptions
+
+def _setup(tmp_path, qid, short, desc_text, intro):
+    out = tmp_path / "output"
+    write_entity(out, "questionnaire", _q(qid))
+    # patch short_title
+    import json as _j
+    p = out / "questionnaires" / f"{qid}.json"
+    q = _j.loads(p.read_text()); q["metadata"]["short_title"] = short
+    write_entity(out, "questionnaire", q)
+    desc = tmp_path / "descriptions"; desc.mkdir(exist_ok=True)
+    (desc / f"{qid}.md").write_text(desc_text)
+    sm = tmp_path / "sm"; sm.mkdir(exist_ok=True)
+    (sm / f"{qid}.json").write_text(_j.dumps({"id": qid, "introduction": [intro], "meta_description": ""}))
+    return out, desc, sm
+
+def test_check_flags_verbatim_overlap(tmp_path):
+    intro = "the alpha beta gamma delta epsilon zeta eta theta iota measure is good"
+    out, desc, sm = _setup(tmp_path, "qst_o", "AAA",
+                           "AAA: the alpha beta gamma delta epsilon zeta eta theta iota measure.", intro)
+    issues = {i["id"]: i["issues"] for i in check_descriptions(out, desc, sm)}
+    assert any("overlap" in s for s in issues.get("qst_o", []))
+
+def test_check_flags_shape_problems(tmp_path):
+    out, desc, sm = _setup(tmp_path, "qst_s", "ZZZ", "no acronym here and no period", "unrelated source text")
+    issues = {i["id"]: i["issues"] for i in check_descriptions(out, desc, sm)}
+    assert "qst_s" in issues  # missing acronym + missing period
+
+def test_check_clean_description_passes(tmp_path):
+    out, desc, sm = _setup(tmp_path, "qst_c", "GAD-7",
+                           "The GAD-7 is a 7-item anxiety screening questionnaire. It is used in primary care.",
+                           "completely different wording about worry over fourteen days for screening purposes here")
+    assert check_descriptions(out, desc, sm) == []

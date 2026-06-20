@@ -327,3 +327,17 @@ def test_harvest_applies_authored_description_override(tmp_path, monkeypatch):
     md = json.loads((out / "questionnaires" / "qst_demo.json").read_text())["metadata"]
     assert md["description"] == "The Demo Screening (DEMO) is a 1-item demo measure. It is used to test harvesting."
     assert md["x_description_source"] == "authored"
+
+
+def test_check_descriptions_cli_nonzero_on_overlap(tmp_path):
+    from library.importers.survey_db.writer import write_entity
+    out = tmp_path / "output"
+    q = {"@context": "x", "metadata": {"id": "qst_v", "title": "T", "short_title": "VV",
+         "description": "x"}, "pages": [{"id": "page_main", "elements": []}]}
+    write_entity(out, "questionnaire", q)
+    desc = tmp_path / "descriptions"; desc.mkdir()
+    (desc / "qst_v.md").write_text("VV one two three four five six seven eight nine ten end.")
+    sm = tmp_path / "sm"; sm.mkdir()
+    (sm / "qst_v.json").write_text('{"id":"qst_v","introduction":["one two three four five six seven eight nine ten"],"meta_description":""}')
+    rc = cli.main(["check-descriptions", "--out", str(out), "--descriptions", str(desc), "--source-metadata", str(sm)])
+    assert rc == 1

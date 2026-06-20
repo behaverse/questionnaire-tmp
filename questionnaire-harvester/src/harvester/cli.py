@@ -50,6 +50,10 @@ def main(argv=None) -> int:
     ad = sub.add_parser("apply-descriptions")
     ad.add_argument("--out", default="questionnaire-harvester/output")
     ad.add_argument("--descriptions", default="questionnaire-harvester/descriptions")
+    cd = sub.add_parser("check-descriptions")
+    cd.add_argument("--out", default="questionnaire-harvester/output")
+    cd.add_argument("--descriptions", default="questionnaire-harvester/descriptions")
+    cd.add_argument("--source-metadata", default="questionnaire-harvester/source_metadata")
     a = ap.parse_args(argv)
     if a.cmd == "document-scoring":
         from harvester.scoring_doc import write_scoring_docs
@@ -66,6 +70,13 @@ def main(argv=None) -> int:
         ids = apply_descriptions_to_output(Path(a.out), Path(a.descriptions))
         print(f"applied {len(ids)} authored description(s)")
         return 0
+    if a.cmd == "check-descriptions":
+        from harvester.descriptions import check_descriptions
+        flagged = check_descriptions(Path(a.out), Path(a.descriptions), Path(a.source_metadata))
+        for f in flagged:
+            print(f"FLAG {f['id']}: {'; '.join(f['issues'])}")
+        print(f"{len(flagged)} flagged")
+        return 1 if flagged else 0
     if a.cmd != "harvest":
         return 2
 
