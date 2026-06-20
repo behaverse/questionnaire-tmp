@@ -80,7 +80,14 @@ def render_questionnaire_md(qst, entities):
     pub = md.get("publication")
     if pub:
         out.append(f"- publication: {pub.get('citation', '')} ({pub.get('year', '')})")
+    kws = md.get("x_keywords") or []
+    if kws:
+        out.append(f"- keywords: {' · '.join(kws)}")
     out.append(f"- items: {len(elements)}\n")
+    if md.get("x_description_source") == "site_meta":
+        out.append(f"> ⚠ The description above is the source site's text "
+                   f"(`x_description_source: site_meta`). Verbatim source meta + introduction "
+                   f"captured in `source_metadata/{md.get('id')}.json` (flagged).\n")
 
     desc = (md.get("description") or "").strip()
     if desc and desc != (md.get("title") or ""):

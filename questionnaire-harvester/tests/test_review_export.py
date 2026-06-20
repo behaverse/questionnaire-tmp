@@ -116,3 +116,22 @@ def test_render_md_no_references_section_when_absent():
     md = render_questionnaire_md(q, {"options": {"opt_x": o}, "prompts": {"pr_x_1": _pr("pr_x_1", "q1")},
                                      "instructions": {}, "contexts": {}})
     assert "## References" not in md
+
+def test_render_md_shows_keywords_and_capture_note():
+    o = _choice("opt_x", "rating", [0, 1], ["No", "Yes"])
+    q = _qst("qst_x", [{"option": {"ref": "opt_x@v"}, "question": {"prompt": {"ref": "pr_x_1@v"}}}])
+    q["metadata"]["x_keywords"] = ["alpha", "beta"]
+    q["metadata"]["x_description_source"] = "site_meta"
+    md = render_questionnaire_md(q, {"options": {"opt_x": o}, "prompts": {"pr_x_1": _pr("pr_x_1", "q1")},
+                                     "instructions": {}, "contexts": {}})
+    assert "- keywords: alpha · beta" in md
+    assert "source_metadata/qst_x.json" in md
+    assert "x_description_source: site_meta" in md
+
+def test_render_md_no_keywords_no_note():
+    o = _choice("opt_x", "rating", [0, 1], ["No", "Yes"])
+    q = _qst("qst_x", [{"option": {"ref": "opt_x@v"}, "question": {"prompt": {"ref": "pr_x_1@v"}}}])
+    md = render_questionnaire_md(q, {"options": {"opt_x": o}, "prompts": {"pr_x_1": _pr("pr_x_1", "q1")},
+                                     "instructions": {}, "contexts": {}})
+    assert "- keywords:" not in md
+    assert "source_metadata/" not in md
