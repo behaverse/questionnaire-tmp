@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Gender differences are always a popular subject among psychology\nstudents and in the general population. The well-known social\npsychologist Sandara Bem (1944-2014) developed a sex role\ninventory to measure different aspects of hypothesized psychological\ngender traits.",
+    "description": "The Bem Sex Role Inventory (BSRI) is a 60-item self-report scale measuring the degree to which individuals endorse socially defined masculine and feminine personality attributes. It is used in psychological research to classify respondents along dimensions of masculinity, femininity, and androgyny.",
     "id": "qst_bsri",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

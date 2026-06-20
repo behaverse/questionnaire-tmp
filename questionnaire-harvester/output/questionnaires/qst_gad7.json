@@ -15,7 +15,7 @@
         "adults"
       ]
     },
-    "description": "Generalized\nanxiety disorder is a very common mental problem.",
+    "description": "The Generalized Anxiety Disorder scale (GAD-7) is a 7-item self-report screening tool measuring the frequency of generalised anxiety symptoms over the preceding two weeks. It is widely used in primary care and research settings to detect probable anxiety disorders and track symptom change.",
     "id": "qst_gad7",
     "language": "en",
     "license": "unknown",
@@ -36,6 +36,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

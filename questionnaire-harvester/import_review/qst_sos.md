@@ -10,9 +10,7 @@
 
 ## Description
 
-Alcoholism is a common form
-of addiction. Although alcohol is widely available, it is generally
-considered a harmful substance even when taken in regular small doses.
+The Service to Others in Sobriety (SOS) questionnaire is a 12-item self-report measure assessing the extent to which individuals in recovery from alcohol use disorder engage in helping or supporting others as part of their sobriety. It is used in addiction research to examine prosocial behavior as a component of the recovery process.
 
 ## Instructions
 

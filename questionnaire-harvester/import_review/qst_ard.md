@@ -10,12 +10,7 @@
 
 ## Description
 
-Do you like dominant people? Probably not! Dominance is a negatively
-viewed trait, and it is a trait that plays an important role
-psychological studies about partner violence ( Shamby, 1996 ). People
-that beat their partners up are often dominant and agressive (see also
-the aggression scale here on
-PsyToolkit ).
+The Dominance Scale (for relationship research) is a 32-item self-report questionnaire measuring the disposition toward dominance in interpersonal and romantic relationships. It is used to assess dominant personality tendencies in the context of partner dynamics and relationship research.
 
 ## Instructions
 

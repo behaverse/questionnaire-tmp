@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Evaluate your relationship with alcohol using the CAGE Questionnaire, offering a quick, reliable screening for alcohol-related issues.",
+    "description": "The CAGE Alcohol Questionnaire (CAGE) is a 4-item screening tool used to identify signs of problematic alcohol use, covering feelings about cutting down, annoyance at criticism, guilt about drinking, and morning eye-openers. It is widely used in clinical settings as a rapid first-pass screen for alcohol dependence.",
     "id": "qst_cage",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

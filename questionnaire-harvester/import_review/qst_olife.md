@@ -11,7 +11,7 @@ measuring schizotypy. Schizophrenia Research, 78 , 293-296. (2005)
 
 ## Description
 
-Schizophrenia is a mental disorder with five categories of symptoms (for a review see van Os & Kapur, 2009 ):
+The Short Oxford-Liverpool Inventory of Feelings and Experiences (O-LIFE) is a 43-item self-report measure of schizotypal personality traits, covering unusual experiences, cognitive disorganization, introvertive anhedonia, and impulsive nonconformity. It is used in research to study subclinical psychosis-like variation in non-clinical populations.
 
 ## Instructions
 

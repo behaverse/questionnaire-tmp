@@ -9,11 +9,9 @@
 - keywords: psychology · pathological · problem · gambling · screening · test
 - items: 17
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_nodscl.json` (flagged).
-
 ## Description
 
-Utilize the NODS-CLiP for a rapid screening of adult pathological and problem gambling, helping identify potential issues with a concise questionnaire.
+The Diagnostic Screen for Gambling Disorders (NODS-CLiP) is a 17-item screening questionnaire identifying behaviors and cognitions associated with problematic or pathological gambling. It is used as a brief first-stage tool to flag individuals who may warrant a more comprehensive gambling disorder assessment.
 
 ## Instructions
 

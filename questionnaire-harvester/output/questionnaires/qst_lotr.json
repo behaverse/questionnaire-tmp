@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Optimism is a positive attitude\nabout the future. In the field of psychology, optimism is viewed as a\ngeneral way of thinking that can be beneficial to, for example, health\noutcomes. The Scheier and Carver paper from 1992 ( see\nreferences ) is a really good read about this topic.",
+    "description": "The Life Orientation Test-Revised (LOT-R) is a 10-item self-report scale measuring dispositional optimism versus pessimism as a generalised expectancy for positive future outcomes. It is used in health and well-being research to examine how outcome expectancies relate to psychological adjustment and physical health.",
     "id": "qst_lotr",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

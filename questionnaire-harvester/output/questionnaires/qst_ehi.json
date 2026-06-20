@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Most people are right handed . The Edinburgh\nHandedness Inventory is a well known short questionnaire for\ndetermining objectively whether one is left or right handed (Oldfield,\n1971), and there is a short form of it (Vealy, 2014). This PsyToolkit\nimplementation uses the short form.",
+    "description": "The Edinburgh Handedness Inventory (short form) is a 4-item self-report questionnaire measuring lateral hand preference for everyday activities such as writing and throwing. It is used to classify individuals as left-handed, right-handed, or ambidextrous in cognitive and neuropsychological research.",
     "id": "qst_ehi",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

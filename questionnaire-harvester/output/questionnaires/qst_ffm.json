@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Assess your personality with the Big 5 Test, exploring how you score in five key traits that influence behavior and preferences.",
+    "description": "The Big Five Personality Test (FFM) is a 50-item self-report measure assessing the five broad personality dimensions of Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism. It is used to characterize individual personality profiles across research and applied settings.",
     "id": "qst_ffm",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

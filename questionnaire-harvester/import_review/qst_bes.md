@@ -10,15 +10,7 @@
 
 ## Description
 
-Self esteem refers to how well people feel about themselves. Body
-esteem is part of this. The study of body self esteem is popular among
-psychology students. There is a lot of attention for the role of the
-media on body esteem (in particular for women). For example, it is
-often argued that the media constantly shows beautiful people with
-body features barely anyone has. This makes people feel less confident
-about their own bodies. This can also be a causal factor in eating
-disorders, which are more common in adolescent girls and women than in
-boys/men.
+The Body Esteem Scale (BES) is a 35-item self-report measure assessing an individual's evaluative attitudes toward their own body and physical appearance. It is used to capture multidimensional aspects of body image, including satisfaction with specific body parts and overall physical self-evaluation.
 
 ## Instructions
 

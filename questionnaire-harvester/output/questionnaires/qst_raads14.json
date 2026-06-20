@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Evaluate autism spectrum traits in adults with the RAADS-14 (Ritvo), a concise screening tool designed for self-assessment and clinical use.",
+    "description": "The Ritvo Autism and Asperger Diagnostic Scale (RAADS-14) is a 14-item self-report screening tool for autism spectrum disorder in adults, covering language, social relatedness, sensory-motor, and circumscribed interest domains. It is used to assist clinicians and researchers in identifying adults who may warrant further evaluation for autism spectrum conditions.",
     "id": "qst_raads14",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "autism",

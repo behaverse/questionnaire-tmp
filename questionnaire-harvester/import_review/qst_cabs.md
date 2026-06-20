@@ -12,7 +12,7 @@ new measure. Research in Nursing and Health, 41 , 1-13. (2018)
 
 ## Description
 
-Bullying is a major problem in schools around the world.
+The Child Adolescent Bullying Scale (CABS) is a 40-item self-report questionnaire assessing bullying involvement — including perpetration, victimization, and bystander roles — in children and adolescents. It is used to evaluate the nature and extent of bullying experiences in school and peer contexts.
 
 ## Instructions
 

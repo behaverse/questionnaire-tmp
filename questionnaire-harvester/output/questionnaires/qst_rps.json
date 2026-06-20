@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Some people are more likely to take risks than others. Some people\nmight even enjoy taking risks.",
+    "description": "The Risk Propensity Scale (RPS) is a 7-item self-report measure assessing an individual's general tendency to seek out or accept risk across everyday situations. It is used in behavioral and decision science research to capture dispositional risk-taking as a trait-level characteristic.",
     "id": "qst_rps",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

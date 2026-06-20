@@ -13,8 +13,7 @@ human circadian rhythms. International Journal of Chronobiology, 4 ,
 
 ## Description
 
-People differ in whether they are more of a morning or an evening
-person. Many people are neither. What you are in this respect is your chronotype .
+The Circadian Energy Scale (CIRENS) is a 2-item self-report measure assessing an individual's chronotype by capturing typical patterns of energy and alertness across morning and evening periods. It is used as a brief indicator of circadian preference in research and health contexts.
 
 ## Instructions
 

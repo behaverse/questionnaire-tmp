@@ -13,7 +13,7 @@ Differences, 76 , 972-987. (1999)
 
 ## Description
 
-People seem to have two different modes of thinking:
+The Rational Experiential Inventory (REI) is a 40-item self-report scale measuring individual differences in two cognitive processing styles: analytical-rational thinking and intuitive-experiential thinking. It is used in cognitive and personality research to examine how people prefer to process information and make decisions.
 
 ## Instructions
 

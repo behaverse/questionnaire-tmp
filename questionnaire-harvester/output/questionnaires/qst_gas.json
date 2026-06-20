@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Everybody knows that some people get addicted to computer games. The\nGaming Addiction Scale measures the level of addiction. Game addiction\nis related to loneliness, anxiety, and depression (all things you can\nalso measure with PsyToolkit, check the survey).",
+    "description": "The Gaming Addiction Scale is a 7-item self-report measure assessing the degree to which an individual's video game use exhibits characteristics of addictive behavior. It is used in research to quantify problematic gaming patterns and their relationship with psychological well-being.",
     "id": "qst_gas",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

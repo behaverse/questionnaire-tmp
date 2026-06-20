@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The Autism Research Centre in\nCambridge (UK) has released a number of surveys. One of them is to\nmeasure the Empathy Quotient (copyright by Professor Simon\nBaron-Cohen).",
+    "description": "The Empathy Quotient (EQ) is a 40-item self-report questionnaire measuring the ability to understand and respond to the thoughts and feelings of others. It is used to assess empathic ability in adults, and has been widely applied in research on autism spectrum conditions and social cognition.",
     "id": "qst_eq",
     "language": "en",
     "license": "unknown",
@@ -28,6 +28,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

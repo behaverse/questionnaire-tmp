@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Interviews for job or a colleague or an aware make people nervous. You\nmight know this yourself. If you are preparing for a job interview,\nyou might want to know the following:",
+    "description": "The Measure of Anxiety in Selection Interviews (MASI) is a 30-item self-report scale assessing the anxiety experienced by candidates during employment selection interviews. It is used in occupational and organizational research to study how interview-specific anxiety relates to performance and candidate outcomes.",
     "id": "qst_masi",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

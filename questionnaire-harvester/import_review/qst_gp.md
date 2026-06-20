@@ -11,8 +11,7 @@ Procrastination. Journal of Research in Personality, 20 , 474-495. (1986)
 
 ## Description
 
-Procrastination is the
-postponing of more important activities for less important ones.
+The General Procrastination Scale is a 20-item self-report questionnaire measuring the tendency to delay the start or completion of intended tasks in everyday situations. It is used in research and applied settings to assess dispositional procrastination as a stable behavioral trait.
 
 ## Instructions
 

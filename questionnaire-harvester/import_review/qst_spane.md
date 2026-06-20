@@ -15,11 +15,7 @@ available here . (2009)
 
 ## Description
 
-There are many different ways to describe how you feel . Surely, you
-will know if your feelings are positive or nagative . This is
-considered an important dimention, and there are various scales to
-measure this. One is the well known PANAS, but that requires explicit
-author approval, which might be difficult.
+The Scale of Positive and Negative Experience (SPANE) is a 12-item self-report measure assessing the frequency of positive and negative feelings experienced over a recent period. It is used in well-being research to capture affective balance as a component of subjective well-being.
 
 ## Instructions
 

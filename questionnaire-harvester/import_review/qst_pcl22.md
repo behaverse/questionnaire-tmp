@@ -9,11 +9,9 @@
 - keywords: psychopath · psychopath test · psychopathy · hare · PCL · PCL-R · psychology · test
 - items: 22
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pcl22.json` (flagged).
-
 ## Description
 
-The Original Hare Psychopathy Checklist is a 22-item psychological assessment tool designed to assess the presence of psychopathy in individuals.
+The Hare Psychopathy Checklist (PCL-22) is a 22-item clinician-rated instrument assessing personality traits and observed behaviors associated with psychopathy, based on a semi-structured interview and collateral information. It is used in forensic and research settings to evaluate the presence and degree of psychopathic characteristics in individuals.
 
 ## Instructions
 

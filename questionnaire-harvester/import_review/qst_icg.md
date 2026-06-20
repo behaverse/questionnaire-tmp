@@ -9,11 +9,9 @@
 - keywords: psychology · icg · grief · test · complicated greif
 - items: 19
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_icg.json` (flagged).
-
 ## Description
 
-The ICG evaluates the intensity of grief that interferes with daily functioning, providing insights into your emotional well-being after loss.
+The Inventory of Complicated Grief (ICG) is a 19-item self-report scale measuring the severity of complicated grief symptoms following bereavement, including persistent yearning and difficulty accepting the loss. It is used to distinguish complicated grief from normative bereavement responses and to guide decisions about specialized therapeutic intervention.
 
 ## Instructions
 

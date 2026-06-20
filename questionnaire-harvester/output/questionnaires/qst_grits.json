@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The concept \"grit\" has been made popular by the psychologist Angela\nDuckworth. It refers to \"perseverance and passion for long-term goals\"\n( Duckworth and Quinn (2009 ).",
+    "description": "The Short Grit Scale (Grit-S) is an 8-item self-report measure assessing perseverance of effort and consistency of interest as components of the trait known as grit. It is used in educational, organizational, and developmental research to examine long-term goal pursuit and its relationship to achievement and well-being.",
     "id": "qst_grits",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

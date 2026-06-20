@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "A psychological test assessing the severity of manic symptoms.",
+    "description": "The Young Mania Rating Scale (YMRS) is an 11-item clinician-rated scale measuring the presence and severity of manic symptoms including elevated mood, motor activity, sleep disturbance, and irritability. It is used in clinical and research settings to assess manic episodes and monitor treatment response in individuals with bipolar disorder.",
     "id": "qst_ymrs",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

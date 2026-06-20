@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Attention Deficit Hyperactivity Disorder (ADHD) is a common mental\nhealth issue. At least in the UK, most people will have heard of ADHD.",
+    "description": "The Adult ADHD Self-Report Scale (ASRS) is an 18-item self-report questionnaire screening for symptoms of attention-deficit/hyperactivity disorder in adults. It is used to identify inattention, hyperactivity, and impulsivity symptom frequency in non-clinical and clinical populations.",
     "id": "qst_asrs",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Happiness and the term more\ncommonly used in psychology, subjective\nwellbeing , are frequently studied in the field of psychology\n(including in positive psychology )\nand related applied areas, such as social care .",
+    "description": "The Children's Happiness Scale is a single-item measure capturing a child's global subjective sense of happiness or well-being. It is used as a brief indicator of positive affect in child populations, often embedded within broader survey batteries.",
     "id": "qst_happiness",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

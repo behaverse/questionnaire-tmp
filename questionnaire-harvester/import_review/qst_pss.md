@@ -10,11 +10,7 @@
 
 ## Description
 
-Stress is a
-big topic in psychological research. Humans regularly experience
-stress. It is a feeling of pressure. There is both positive (e.g.,
-wedding) and negative stress (e.g., fleeing from an attack), although
-it is probably more frequently discussed as a negative feeling.
+The Perceived Stress Scale (PSS) is a 14-item self-report measure assessing the degree to which situations in one's life are appraised as stressful during the past month. It is used in health and behavioral research to examine how perceived stress relates to physical and psychological outcomes.
 
 ## Instructions
 

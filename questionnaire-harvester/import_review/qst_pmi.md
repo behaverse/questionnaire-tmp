@@ -10,7 +10,7 @@
 
 ## Description
 
-The Positive Mindset Index (PMI) is a short and easy to complete to measure people’s mental health. The PMI has been validated and has been used in a good number of studies.
+The Positive Mindset Index (PMI) is a 6-item self-report questionnaire measuring positive mental health and adaptive psychological outlook. It is used as a brief screening and monitoring tool for mental well-being in both general and clinical populations.
 
 ## Items
 

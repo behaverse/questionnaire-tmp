@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The Trauma Related Shame Inventory (TRSI) is a self-assessment that clarifies between shame and guilt in individuals with PTSD.",
+    "description": "The Trauma-Related Shame Inventory (TRSI-24) is a 24-item self-report questionnaire measuring the frequency and intensity of shame feelings specifically linked to traumatic experiences. It is used in trauma research and clinical practice to distinguish trauma-induced shame from broader shame constructs and to guide shame-focused therapeutic interventions.",
     "id": "qst_trsi24",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "trauma",

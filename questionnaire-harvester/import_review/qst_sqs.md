@@ -10,10 +10,7 @@
 
 ## Description
 
-Sleep quality affects many psychological processes. Therefore, we
-often need to know how well participants sleep. Many sleep quality
-questionnaires are too long. This SQS with just one item can help, and
-it’s reliability and validity have been tested.
+The Single-Item Sleep Quality Scale (SQS) is a 1-item self-report measure capturing an individual's overall subjective assessment of their sleep quality. It is used in research and clinical screening contexts where brevity is essential and a quick index of perceived sleep quality is sufficient for the study purpose.
 
 ## Instructions
 

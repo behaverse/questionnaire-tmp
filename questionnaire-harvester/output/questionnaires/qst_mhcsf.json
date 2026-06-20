@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The MHC-SF is a scale measureing emotional wellbeing. The MHC-SF has\nbeen translated in various languages and has been evaluated\npsychometrically.",
+    "description": "The Mental Health Continuum Short Form (MHC-SF) is a 14-item self-report scale measuring positive mental health across emotional, social, and psychological well-being dimensions. It is used in research and clinical contexts to assess flourishing and the presence of positive mental health rather than the absence of disorder.",
     "id": "qst_mhcsf",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -13,10 +13,7 @@ Psychology Bulletin, 27 , 151-161. (2001)
 
 ## Description
 
-Self esteem is one’s own
-feeling of worthyness. In the 1960s, Rosenberg developed a 10 item
-scale to measure it (Rosenberg, 1965). There is an alternative scale
-in the survey library as well, namely the State Self Esteem Scale .
+The Rosenberg Self-Esteem Scale (RSES) is a 10-item self-report scale measuring global self-esteem through statements reflecting overall feelings of self-worth and self-acceptance. It is one of the most widely used instruments in social and developmental psychology for assessing individual differences in self-esteem.
 
 ## Instructions
 

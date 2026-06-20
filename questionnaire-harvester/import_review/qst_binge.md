@@ -9,11 +9,9 @@
 - keywords: psychology · mania · eating · disorder · binge · purge · test
 - items: 16
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_binge.json` (flagged).
-
 ## Description
 
-The BES is a comprehensive assessment tool for identifying binge eating patterns through a detailed, 16-question behavioral analysis.
+The Binge Eating Scale (BES) is a 16-item self-report questionnaire assessing the presence and severity of binge eating behaviors, emotions, and attitudes. It is used to identify individuals who may be experiencing binge eating disorder and to track changes in disordered eating patterns over time.
 
 ## Items
 

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Hypermasculinity refers to a set of exaggerated beliefs and values\nabout what it means to be a “real man”. These include the idea that\nmen must always be tough, show no emotion, avoid anything considered\nfeminine, and dominate women, especially in sexual contexts. Men who\nstrongly endorse hypermasculine values are also more likely to enjoy\nviolence, risky behaviour, heavy drinking, and aggressive sports.",
+    "description": "The Short Hypermasculinity Values Questionnaire (HVQ) is a 16-item self-report scale measuring endorsement of hypermasculine attitudes toward sexuality, violence, and danger. It is used in gender and aggression research to assess masculine ideology as a potential risk factor for interpersonal violence.",
     "id": "qst_shvq",
     "language": "en",
     "license": "unknown",
@@ -28,6 +28,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -9,11 +9,9 @@
 - keywords: psychology · cage · alcohol · substance · abuse · test
 - items: 4
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_cage.json` (flagged).
-
 ## Description
 
-Evaluate your relationship with alcohol using the CAGE Questionnaire, offering a quick, reliable screening for alcohol-related issues.
+The CAGE Alcohol Questionnaire (CAGE) is a 4-item screening tool used to identify signs of problematic alcohol use, covering feelings about cutting down, annoyance at criticism, guilt about drinking, and morning eye-openers. It is widely used in clinical settings as a rapid first-pass screen for alcohol dependence.
 
 ## Instructions
 

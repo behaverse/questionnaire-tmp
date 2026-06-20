@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "People differ in whether they are more of a morning or an evening\nperson. Many people are neither. What you are in this respect is your chronotype .",
+    "description": "The Circadian Energy Scale (CIRENS) is a 2-item self-report measure assessing an individual's chronotype by capturing typical patterns of energy and alertness across morning and evening periods. It is used as a brief indicator of circadian preference in research and health contexts.",
     "id": "qst_cirens",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,10 +11,7 @@ prescription. The Clearing House, 57 , pp. 111-113 (1983)
 
 ## Description
 
-Burnout is a
-mental (and possibly physical) state related to disillusionement with
-one’s work. Some jobs are more affected by this than others. Teaching
-is generally considered a stressful job.
+The Teacher Burnout questionnaire is a 20-item self-report measure assessing occupational burnout symptoms among teaching professionals. It is used to evaluate the extent of emotional exhaustion, disillusionment, and stress experienced in the teaching role.
 
 ## Instructions
 

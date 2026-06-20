@@ -10,10 +10,7 @@
 
 ## Description
 
-Mental flexibility is the ability to switch between different thoughts
-and actions. Mental flexibility is considered part of executive funcions ,
-which are the general mental functions that help us to cordinate
-thought and action.
+The Cognitive Flexibility Scale (CFS) is a 12-item self-report measure assessing an individual's capacity to adapt thinking and behavior across changing situational demands. It is used to evaluate executive function-related flexibility, including the ability to generate alternatives and to perceive situations as controllable.
 
 ## Instructions
 

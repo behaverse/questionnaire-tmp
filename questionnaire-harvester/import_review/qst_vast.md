@@ -10,9 +10,7 @@
 
 ## Description
 
-Most people do not want to hurt other people, yet there are those that
-enjoy being cruel (i.e., sadism). Hence, it is a personality trait
-that deservers study (for an excellent overview, see Buckels et al., 2013 ).
+The Varieties of Sadistic Tendencies (VAST) is a 27-item self-report measure assessing two distinct expressions of sadism: direct physical harm and vicarious enjoyment of others' suffering. It is used in dark triad and personality research to distinguish everyday sadistic tendencies from clinical and forensic presentations.
 
 ## Instructions
 

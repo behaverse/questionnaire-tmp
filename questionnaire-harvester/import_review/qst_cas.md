@@ -11,11 +11,7 @@ validity. Journal of Clinical Psychology, 51(2) , 215-226. (1995)
 
 ## Description
 
-Anger is a normal human emotion. Certain people may show clinical
-anger which is a chromic and pervasive anger. The difference between anger and clinical anger maybe comparible to the difference
-between feeling down and clinical depression . In other words, when
-an otherwise common emotion becomes long lasting, it becomes a
-clinical problem.
+The Clinical Anger Scale (CAS) is a 21-item self-report measure assessing the presence and intensity of anger across cognitive, affective, and behavioral domains. It is used to evaluate clinically significant anger in individuals presenting with emotional or psychological difficulties.
 
 ## Items
 

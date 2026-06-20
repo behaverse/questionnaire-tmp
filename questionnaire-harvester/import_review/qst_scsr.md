@@ -12,13 +12,7 @@ Applied Social Psychology, 15, 687-699. (1985)
 
 ## Description
 
-Self consciousness is
-in essence self-reflection. Some people reflect more on themselves
-than others, and the popular self-consciousness scale measures
-this. The revised version used here changed the original one so that
-the language used is more accessible for a very broad population
-(rather than just psychology students, who are often recruited for
-psychological test validation).
+The Self-Consciousness Scale - Revised (SCS-R) is a 21-item self-report questionnaire measuring individual differences in the tendency to attend to oneself, covering public self-consciousness, private self-consciousness, and social anxiety. It is used in personality and social psychology research to examine how self-focused attention relates to behavior, affect, and interpersonal functioning.
 
 ## Instructions
 

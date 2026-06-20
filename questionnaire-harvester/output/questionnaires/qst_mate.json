@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "People may differ in the degree to which they accept certain\nfacts. This can be seen as part of cognitive dissonance or, in other\nwords, a clash between incompatible ideas.",
+    "description": "The Measure of Acceptance of the Theory of Evolution (MATE) is a 20-item self-report questionnaire assessing the degree to which individuals accept evolutionary theory as a scientific account of biological diversity and human origins. It is used in science education research to examine attitudes toward evolution and the factors that influence them.",
     "id": "qst_mate",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

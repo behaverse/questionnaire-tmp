@@ -13,9 +13,7 @@ access link here (2013)
 
 ## Description
 
-In recent years, psychologists and neuroscientists have discussed the
-psychology underlying political attitudes. Jim Everett developed a
-simple scale to measure political conservatism. It is only 12 items.
+The Single-Item Economic and Social Conservatism Scale (SECS) is a 12-item self-report questionnaire measuring political conservatism across economic and social domains. It is used in social psychology and political science research to quantify conservative orientation as a continuous individual-difference variable.
 
 ## Instructions
 

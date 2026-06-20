@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Many people dislike spiders and some are even seriously afraid of\nthem. A serious fear of spiders is also known as arachnophobia .",
+    "description": "The Spider Fear Questionnaire (SPQ) is a 31-item self-report measure assessing the severity of spider-specific fear across behavioral, cognitive, and physiological response domains. It is used in clinical and experimental settings to evaluate spider phobia and to track treatment-related changes in fear responses.",
     "id": "qst_spq",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

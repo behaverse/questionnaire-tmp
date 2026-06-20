@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Irritability is state of mind in which people get more easily\nfrustrated, annoyed, and angry than normally. Most people will have\nbeen irritable at some point in their life. Irritability is a side\neffect of many medical conditions. It also has been reported to occur\nfollowing caffeine (the\nstimulant in coffee and tea) or nicotine (the stimulant in\ntabacco) withdrawal.",
+    "description": "The Brief Irritability Test (BITe) is a 5-item self-report scale measuring the frequency and intensity of irritability experienced over a defined period. It is used as a concise screening tool for irritability symptoms relevant to a range of psychiatric and general health contexts.",
     "id": "qst_bite",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

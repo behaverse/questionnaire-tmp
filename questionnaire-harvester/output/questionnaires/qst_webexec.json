@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Executive control functions are those mental functions that coordinate\nthoughts and behavior.",
+    "description": "The Problems with Executive Control scale (webexec) is a 6-item self-report questionnaire measuring difficulties with executive functions such as planning, inhibition, and cognitive flexibility in everyday contexts. It is used to identify self-reported executive control problems relevant to attention and behavioral regulation.",
     "id": "qst_webexec",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

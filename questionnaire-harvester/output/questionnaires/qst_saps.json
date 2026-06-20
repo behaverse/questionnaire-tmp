@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Perfectionism is the psychological trait of wanting to do things perfectly, that is,\nwithout making mistakes. This means that a perfectionists sets very\nhigh standards and might suffer from disappointment when not reaching\nthe desired level of performance ( Blatt, 1995, reviewed the\nnegative effects of perfectionism).",
+    "description": "The Short Revised Almost Perfect Scale (SAPS) is an 8-item self-report measure assessing perfectionism, capturing both the pursuit of high standards and concern over discrepancies between performance and goals. It is used in personality and clinical research to distinguish between adaptive and maladaptive perfectionist tendencies.",
     "id": "qst_saps",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

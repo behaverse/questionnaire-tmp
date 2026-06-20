@@ -9,11 +9,9 @@
 - keywords: autism spectrum · autism spectrum disorders · assessment · ITC · social communication
 - items: 24
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_itc.json` (flagged).
-
 ## Description
 
-Evaluate early developmental milestones with the ITC, designed for caregivers to assess infants and toddlers for autism spectrum and communication issues.
+The Infant-Toddler Checklist (ITC) is a 24-item parent-rated screening tool assessing early communication and social-symbolic development in children aged 6 to 24 months. It is used to identify infants and toddlers who may benefit from further evaluation for developmental delays or autism spectrum disorder.
 
 ## Instructions
 

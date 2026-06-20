@@ -13,9 +13,7 @@ Teaching, 53(9) , 1289-1315. (2016)
 
 ## Description
 
-People may differ in the degree to which they accept certain
-facts. This can be seen as part of cognitive dissonance or, in other
-words, a clash between incompatible ideas.
+The Generalized Acceptance of EvolutioN Evaluation (GAENE) is a 13-item self-report scale measuring the degree to which individuals accept the scientific theory of evolution. It is used in science education research to assess evolutionary understanding and acceptance independent of religious or personal beliefs.
 
 ## Instructions
 

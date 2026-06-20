@@ -13,11 +13,7 @@ e12379. https://doi.org/10.1111/bjso.12379 (2021)
 
 ## Description
 
-bullshit is the poop of bulls and cows. It has another more commonly
-used meaning: It is used for exaggerations. In the psychological
-research of deception, it is about embellishing and stretching the
-truth to make a better impression. A bullshitter is a person who
-tells bullshit .
+The Bullshitting Frequency Scale (BFS) is a 12-item self-report measure assessing how often individuals engage in casual deception — making confident-sounding claims without concern for their truth or falsity. It is used to study everyday dishonest communication and its correlates in social and personality psychology.
 
 ## Instructions
 

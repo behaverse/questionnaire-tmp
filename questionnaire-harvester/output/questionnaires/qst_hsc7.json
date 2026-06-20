@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Hypoglycemia (or low blood sugar ) is a condition\nin which a person has a low level of blood glucose. Glucose is an\nessential energy provider and blood sugar needs to stay\nwithin a specific range in order to function normally. Hypoglycemia\ncan have a direct profound effect on someone’s mental state, both in\nterms of mood and cognitive performance. The HSC-7 checks for these\neffects.",
+    "description": "The Hypoglycemia Symptoms Checklist (HSC-7) is a 7-item questionnaire assessing the frequency of symptoms associated with hypoglycemic episodes in individuals with diabetes. It is used to monitor hypoglycemia awareness and the burden of low blood glucose events in clinical and research settings.",
     "id": "qst_hsc7",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Emotional\nIntelligence is a concept that every psychology student has to have\nheard of as part of their course on Intelligence and Personality . In short,\nemotional intelligence refers to the ability to use one’s perception\nof their own and other’s intelligence for decision making.",
+    "description": "The Emotional Intelligence questionnaire is a 33-item self-report scale measuring the ability to perceive, understand, manage, and use emotions effectively in oneself and in interactions with others. It is used in occupational, educational, and clinical research to examine emotional competencies and their relationship to well-being and performance.",
     "id": "qst_intelligence",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

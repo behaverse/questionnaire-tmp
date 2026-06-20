@@ -10,8 +10,7 @@
 
 ## Description
 
-For a full description/interpretation see the DASS . This is simply a
-shorter version.
+The Depression, Anxiety, and Stress Scales with 21 items (DASS-21) is a 21-item self-report questionnaire measuring the severity of symptoms across three negative emotional states: depression, anxiety, and stress. It is used in both clinical and research settings to differentiate between these affective states and monitor changes in symptom severity over time.
 
 ## Instructions
 

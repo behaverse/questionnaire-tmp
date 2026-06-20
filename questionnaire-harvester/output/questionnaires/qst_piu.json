@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Problematic\ninternet use is a common phenomenon. The Pathological Internet Use\n(PIU) scale helps to identify people with pathological Internet\nuse. One of the advantages of the PIU is that it is a short and simple\nscale.",
+    "description": "The Pathological Internet Use scale (PIU) is a 13-item self-report questionnaire screening for maladaptive and compulsive patterns of internet use. It is used to identify individuals whose online behaviors interfere with daily life, relationships, or psychological functioning.",
     "id": "qst_piu",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

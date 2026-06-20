@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "OCD,\nObsessive-compulive disorder is a fairly common mental disorder\naffecting between and 1 and 2% of the population (see for US or UK ).",
+    "description": "The Obsessive-Compulsive Inventory — Revised short version (OCI-R) is an 18-item self-report measure assessing the distress associated with a range of obsessive-compulsive symptoms, including hoarding, checking, ordering, and washing. It is used to screen for OCD symptomatology and to monitor symptom severity in clinical and research settings.",
     "id": "qst_shortversionocir",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The MEQ-30 evaluates profound experiences of mystical nature, including sense of unity, sacredness, and ineffability, based on your session reflections.",
+    "description": "The Revised Mystical Experience Questionnaire (MEQ-30) is a 30-item self-report scale measuring the intensity of mystical experiences across dimensions such as unity, noetic quality, transcendence of time and space, and sacredness. It is used in psychedelic research and consciousness studies to characterize the depth and nature of mystical states.",
     "id": "qst_meq30",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "MEQ",

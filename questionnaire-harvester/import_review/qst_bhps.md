@@ -10,11 +10,7 @@
 
 ## Description
 
-We all know what an attention seeker is. Some types of attention
-seeking can be associated with mental problems knowns as Histrionic
-Personality Disorder (HPD) . This disorder affects around 3% of the
-population. One of the traits involved is commonly known as attention
-seeking .
+The Brief Histrionic Personality Scale (BHPS) is an 11-item self-report measure assessing traits associated with histrionic personality, including attention-seeking and emotional expressivity. It is used in research and screening contexts to quantify histrionic personality features in the general population.
 
 ## Instructions
 

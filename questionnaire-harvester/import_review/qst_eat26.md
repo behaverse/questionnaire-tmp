@@ -8,11 +8,9 @@
 - keywords: psychology · eat · eating · test · anorexia · help · questions
 - items: 32
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_eat26.json` (flagged).
-
 ## Description
 
-Take the EAT-26, a self-screening tool to identify possible eating disorders, including anorexia and bulimia, through a 26-item questionnaire.
+The Eating Attitudes Test - 26 Item (EAT-26) is a 26-item self-report screening tool assessing attitudes, behaviors, and concerns characteristic of eating disorders such as anorexia nervosa and bulimia nervosa. It is widely used in clinical and epidemiological research to identify individuals who may warrant further evaluation for disordered eating.
 
 ## Instructions
 

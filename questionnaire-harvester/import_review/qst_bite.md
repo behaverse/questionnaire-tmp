@@ -12,13 +12,7 @@ Irritability for Use Among Men and Women. Assessment, 22 , 101-115. Read it for 
 
 ## Description
 
-Irritability is state of mind in which people get more easily
-frustrated, annoyed, and angry than normally. Most people will have
-been irritable at some point in their life. Irritability is a side
-effect of many medical conditions. It also has been reported to occur
-following caffeine (the
-stimulant in coffee and tea) or nicotine (the stimulant in
-tabacco) withdrawal.
+The Brief Irritability Test (BITe) is a 5-item self-report scale measuring the frequency and intensity of irritability experienced over a defined period. It is used as a concise screening tool for irritability symptoms relevant to a range of psychiatric and general health contexts.
 
 ## Instructions
 

@@ -9,11 +9,9 @@
 - keywords: psychology · iat · internet · addiction · test · computer · online
 - items: 18
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_iaa.json` (flagged).
-
 ## Description
 
-Explore the Internet Addiction Assessment (IAA) to evaluate your digital habits with a nuanced, evidence-based questionnaire.
+The Internet Addiction Assessment (IAA) is an 18-item self-report questionnaire evaluating patterns of internet and smartphone use associated with problematic or compulsive digital engagement. It is used to promote self-awareness about online habits and to screen for indicators of excessive internet use.
 
 ## Instructions
 

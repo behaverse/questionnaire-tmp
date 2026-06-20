@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Postnatal\ndepression (or also known as postpartum depression , PPD) is a type\nof depression following childbirth.",
+    "description": "The Edinburgh Postnatal Depression Scale (EPDS) is a 10-item self-report screening tool assessing depressive symptoms in women during the perinatal period. It is widely used in obstetric and primary care settings to identify mothers who may be experiencing postnatal depression.",
     "id": "qst_epds",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

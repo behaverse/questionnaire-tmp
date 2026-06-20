@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Shyness is a form of inhibition\nand discomfort in the presence of others (for a good overview, see\nHopko et al., 2005). Shyness can be observed in children as young as 2\nyears old (Kagan et al., 1989), and there seems to be a clear\nbiological basis for it (Kagan et al., 1988).",
+    "description": "The McCroskey Shyness Scale is a 14-item self-report measure assessing the tendency to feel tense, uncomfortable, or inhibited in social interactions. It is used in communication and personality research to examine shyness as a dispositional trait and its relationship to communication apprehension and social behavior.",
     "id": "qst_mcss",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Locus of control is an\nimportant concept in various areas of psychology. It refers to the\ndegree to which a person believes that he or she can influence his or\nher live through his/her own actions. In other words, to what degree\ndoes someone believe to be in control.",
+    "description": "The Rotter Internal-External Locus of Control Scale (Rotter, 1966) is a 15-item forced-choice self-report measure assessing the extent to which individuals believe outcomes are controlled by their own actions versus external forces. It is used to characterize individual differences in perceived personal agency across a wide range of research contexts.",
     "id": "qst_rotter",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

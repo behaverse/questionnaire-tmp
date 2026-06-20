@@ -9,11 +9,9 @@
 - keywords: anxiety · health · hypochondriac · health anxiety · short
 - items: 18
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_hai18.json` (flagged).
-
 ## Description
 
-Assess health-related anxiety comprehensively with the Health Anxiety Inventory, a tool to measure concerns over personal health conditions.
+The Short Health Anxiety Inventory (HAI-18) is an 18-item self-report measure assessing the severity of health anxiety, including preoccupation with illness and bodily sensations. It is used in clinical and research settings to identify individuals with elevated health anxiety and to evaluate the impact of interventions targeting this condition.
 
 ## Items
 

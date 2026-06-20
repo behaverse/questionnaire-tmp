@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Depression, anxiety, and stress are all negative feelings. The\nUniversity of New South Wales in Australia developed a questionnaire\nto measure all three of them using one questionnaire, known as DASS.",
+    "description": "The Depression Anxiety Stress Scales (DASS) is a 42-item self-report questionnaire measuring the severity of three negative emotional states: depression, anxiety, and stress. It is used in clinical and research settings to differentiate among these affective dimensions and monitor change over time.",
     "id": "qst_dass",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

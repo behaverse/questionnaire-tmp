@@ -13,10 +13,7 @@ Medicine,15 , 194-200. (2008)
 
 ## Description
 
-Resilience is
-the ability to cope with
-difficulties. The term resilience is often used in the medical world
-to describe patients' coping ability.
+The Brief Resilience Scale (BRS) is a 6-item self-report measure designed to assess an individual's ability to recover from stress and adversity. It is used in research and clinical contexts to quantify personal resilience as a distinct psychological construct.
 
 ## Instructions
 

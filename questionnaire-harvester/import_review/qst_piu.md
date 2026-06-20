@@ -12,11 +12,7 @@ students. Computers in Human Behavior, 16 , 13-29. (2000)
 
 ## Description
 
-Problematic
-internet use is a common phenomenon. The Pathological Internet Use
-(PIU) scale helps to identify people with pathological Internet
-use. One of the advantages of the PIU is that it is a short and simple
-scale.
+The Pathological Internet Use scale (PIU) is a 13-item self-report questionnaire screening for maladaptive and compulsive patterns of internet use. It is used to identify individuals whose online behaviors interfere with daily life, relationships, or psychological functioning.
 
 ## Instructions
 

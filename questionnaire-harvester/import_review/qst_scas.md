@@ -9,11 +9,9 @@
 - keywords: psychology · child · children · anxiety · test
 - items: 45
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_scas.json` (flagged).
-
 ## Description
 
-Explore the Spence Children's Anxiety Scale (SCAS) to assess anxiety in children with a scientifically validated questionnaire.
+The Spence Children's Anxiety Scale (SCAS) is a 45-item self-report instrument that quantifies anxiety symptom frequency across multiple disorder-relevant domains in children and adolescents. It is used to screen for anxiety disorders and to track symptom change in clinical and research contexts.
 
 ## Instructions
 

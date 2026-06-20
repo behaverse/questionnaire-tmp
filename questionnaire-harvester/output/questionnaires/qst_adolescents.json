@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Aggression among school children is a commonly studied and discussed\ntop in the media.",
+    "description": "The Aggressive Behavior Scale for adolescents is an 11-item questionnaire measuring the frequency and intensity of aggressive behaviors in young people. It is used to identify patterns of aggression, supporting clinical assessment and research in adolescent populations.",
     "id": "qst_adolescents",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -12,8 +12,7 @@ Adolescents. Journal of Early Adolescence, 21 , 50-67. (2001)
 
 ## Description
 
-Aggression among school children is a commonly studied and discussed
-top in the media.
+The Aggressive Behavior Scale for adolescents is an 11-item questionnaire measuring the frequency and intensity of aggressive behaviors in young people. It is used to identify patterns of aggression, supporting clinical assessment and research in adolescent populations.
 
 ## Instructions
 

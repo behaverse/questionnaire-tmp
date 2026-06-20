@@ -9,11 +9,9 @@
 - keywords: psychology · ptsd · screen · test · dsm-5 · dsm-v
 - items: 6
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pcptsd5.json` (flagged).
-
 ## Description
 
-The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5) is a 5-item screen designed to identify individuals with probable PTSD.
+The PC-PTSD-5 is a 6-item primary-care screen for probable PTSD (aligned with DSM-5 criteria) in patients who report prior trauma exposure. It flags those who may need a full diagnostic evaluation.
 
 ## Instructions
 

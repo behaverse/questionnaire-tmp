@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "This scale is about the perception of a father’s role in one’s\nlife. Arguably, the expectations about fathers has changed over the\ncourse of the 20th century ( Finley and Schwartz, 2004 ).",
+    "description": "The Nurturant Fathering Scale (NFS) is a 9-item self-report measure assessing the degree to which fathers engage in warm, supportive, and responsive caregiving behaviors toward their children. It is used in family and developmental research to examine paternal nurturance and its relationship to child outcomes.",
     "id": "qst_nfs",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

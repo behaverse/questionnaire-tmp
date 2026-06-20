@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The Connectedness to Nature Scale (CNS) measures to what degree people\nfeel part of nature ( Mayer & McPherson Frantz, 2004 ). The\nstudy shows that this is a personality trait. This trait is predictive\nof responsible environmental behavior and subjective wellbeing.",
+    "description": "The Connectedness to Nature Scale (CNS) is a 14-item self-report measure assessing the degree to which individuals feel emotionally integrated with the natural world. It is used in environmental psychology research to examine how felt connection to nature relates to pro-environmental attitudes and well-being.",
     "id": "qst_cns",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

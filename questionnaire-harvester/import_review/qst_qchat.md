@@ -9,11 +9,9 @@
 - keywords: qchat · autism · spectrum · asc · asd · toddler · test
 - items: 25
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_qchat.json` (flagged).
-
 ## Description
 
-The Q-CHAT offers a quantitative measure of autistic traits for toddlers 18-24 months old, facilitating early autism spectrum condition screening.
+The Quantitative Checklist for Autism in Toddlers (Q-CHAT) is a 25-item parent-rated screening questionnaire designed to detect early signs of autism spectrum disorder in children between 18 and 24 months of age. It is used in pediatric and developmental research to identify toddlers who may benefit from further diagnostic evaluation.
 
 ## Instructions
 

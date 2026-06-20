@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Questionnaires measuring sleep quality are useful in many\nstudies. This because quality of sleep can affect emotion and\nperformance during the day.",
+    "description": "The Groningen Sleep Quality Questionnaire (GSQS) is a 15-item self-report scale measuring subjective sleep quality, including aspects such as sleep onset, waking frequency, and daytime fatigue. It is used in sleep research and clinical studies to detect poor sleep quality and its impact on daily functioning.",
     "id": "qst_gsqs",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The Sexual Addiction Screening Test (SAST) helps identify sexually compulsive behaviors, offering insights for therapeutic guidance.",
+    "description": "The Sexual Addiction Screening Test (SAST) is a 45-item self-report questionnaire screening for patterns of sexual behavior that may indicate compulsivity or addiction. It is used in clinical and treatment settings to identify individuals whose sexual conduct warrants further professional evaluation.",
     "id": "qst_sast",
     "language": "en",
     "license": "unknown",
@@ -28,7 +28,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "sex",

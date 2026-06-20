@@ -8,11 +8,9 @@
 - keywords: adhd · child · psychology · rating · parent · scale
 - items: 55
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_vadrs.json` (flagged).
-
 ## Description
 
-Explore ADHD and associated behavioral issues in children with the VADRS, a detailed rating scale focusing on attention, hyperactivity, and conduct.
+The Vanderbilt ADHD Diagnostic Rating Scale (VADRS) is a 55-item parent-rated questionnaire evaluating ADHD symptom severity and associated behavioral problems in children and adolescents. It is used in pediatric clinical and research settings to support ADHD diagnosis and track co-occurring conditions.
 
 ## Instructions
 

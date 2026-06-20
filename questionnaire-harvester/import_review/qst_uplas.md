@@ -12,9 +12,7 @@ Indicators Research, 106 (2) , 307-321. (2012)
 
 ## Description
 
-Humans are "social animals" and typically do not like to be on their
-own too much. People like to hang out and connect with other
-people. People that lack that connection are called lonely .
+The Loneliness (UPLAS) questionnaire is a 25-item self-report scale measuring subjective feelings of social isolation and the absence of meaningful social connection. It is used in research and applied settings to assess loneliness as a distinct psychological experience across diverse populations.
 
 ## Instructions
 

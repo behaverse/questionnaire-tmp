@@ -9,11 +9,9 @@
 - keywords: psychology · ham-a · anxiety · hamilton
 - items: 14
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_hama.json` (flagged).
-
 ## Description
 
-The Hamilton Anxiety Rating Scale (HAM-A) offers a detailed framework for evaluating anxiety severity, covering emotional, physical, and cognitive symptoms.
+The Hamilton Anxiety Rating Scale (HAM-A) is a 14-item clinician-rated scale measuring the overall severity of anxiety, covering both psychological and somatic symptom domains. It is used in clinical and research settings to quantify anxiety severity and to track symptom changes in response to treatment.
 
 ## Instructions
 

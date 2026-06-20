@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Gauge the severity of your anxiety with the Penn State Worry Questionnaire (PSWQ), a tool designed to distinguish between types of anxiety disorders.",
+    "description": "The Penn State Worry Questionnaire (PSWQ) is a 16-item self-report scale measuring the tendency toward excessive, generalized worry as a stable cognitive trait. It is used in clinical and research settings to assess pathological worry, particularly as the defining feature of generalized anxiety disorder.",
     "id": "qst_pswq",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

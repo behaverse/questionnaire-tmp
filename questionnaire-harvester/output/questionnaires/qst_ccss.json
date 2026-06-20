@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "People vary in the degree to which they view cooperation and\ncompetition as useful strategies to reach their goals. The CCSS,\ndeveloped by Tang (1999) measures a score for both cooperation and competition (on a scale from 1 to 7). There are 8\nquestions for cooperation and 11 questions for competition .",
+    "description": "The Cooperative/Competitive Strategy Scale (CCSS) is a 19-item self-report questionnaire measuring individual tendencies toward cooperative versus competitive interpersonal strategies. It is used in social and organizational psychology research to examine how people approach shared goals and resource allocation.",
     "id": "qst_ccss",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

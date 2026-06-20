@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Conscientiousness means being serious about your work and putting a\nlot of effort into doing it in a careful way (see Cambridge\nDictionary ).",
+    "description": "The Concise Conscientiousness Measure (CCM-S) is a 28-item self-report scale assessing the conscientiousness dimension of personality, capturing facets such as orderliness, industriousness, and self-discipline. It is used in personality research and applied settings requiring a brief yet comprehensive measure of this Big Five domain.",
     "id": "qst_ccms",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

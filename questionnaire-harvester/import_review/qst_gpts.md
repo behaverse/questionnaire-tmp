@@ -10,13 +10,7 @@
 
 ## Description
 
-Paranoia is a way of
-irrational thinking in which a person thinks that others are trying to
-"get him" or her. Because of this a person suffering from paranoia
-might make false accusations against other people. Paranoia is a
-common symptom of psychosis ,
-which is a psychiatric term for a person’s irrational interpretation
-of reality.
+The Green et al. Paranoid Thought Scales (GPTS) is a 32-item self-report measure assessing paranoid ideation across two dimensions: ideas of social reference and ideas of persecution. It is used in both clinical and non-clinical research to quantify the frequency and conviction of paranoid thoughts.
 
 ## Instructions
 

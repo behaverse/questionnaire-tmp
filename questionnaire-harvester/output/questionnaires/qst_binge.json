@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The BES is a comprehensive assessment tool for identifying binge eating patterns through a detailed, 16-question behavioral analysis.",
+    "description": "The Binge Eating Scale (BES) is a 16-item self-report questionnaire assessing the presence and severity of binge eating behaviors, emotions, and attitudes. It is used to identify individuals who may be experiencing binge eating disorder and to track changes in disordered eating patterns over time.",
     "id": "qst_binge",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

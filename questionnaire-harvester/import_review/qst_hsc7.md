@@ -13,13 +13,7 @@ syndrome to controls. Appetite, 57, 73-76. (2011)
 
 ## Description
 
-Hypoglycemia (or low blood sugar ) is a condition
-in which a person has a low level of blood glucose. Glucose is an
-essential energy provider and blood sugar needs to stay
-within a specific range in order to function normally. Hypoglycemia
-can have a direct profound effect on someone’s mental state, both in
-terms of mood and cognitive performance. The HSC-7 checks for these
-effects.
+The Hypoglycemia Symptoms Checklist (HSC-7) is a 7-item questionnaire assessing the frequency of symptoms associated with hypoglycemic episodes in individuals with diabetes. It is used to monitor hypoglycemia awareness and the burden of low blood glucose events in clinical and research settings.
 
 ## Instructions
 

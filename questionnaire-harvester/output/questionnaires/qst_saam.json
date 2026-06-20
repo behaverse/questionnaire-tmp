@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Attachment theory is\nan important and well-known theory in developmental and social\npsychology. It relates to how people feel and behave in long-term\nrelationships, such as those between parent and child or between\nromantic partners (see attachment in\nadults ).",
+    "description": "The State Adult Attachment Measure (SAAM) is a 21-item self-report scale measuring momentary attachment-related states — specifically feelings of security, anxiety, and avoidance — in close relationships. It is used in attachment research to capture within-person fluctuations in attachment states across situations and relationship contexts.",
     "id": "qst_saam",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

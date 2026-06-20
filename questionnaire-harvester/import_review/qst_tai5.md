@@ -10,11 +10,7 @@
 
 ## Description
 
-Test anxiety is fairly common in students. There are several surveys
-to measure this. In practise, you likely want a short one so that you
-can combine it with another survey or experiment (such as the
-dot-probe task). For this, the TAI-5 developed by Taylor and
-Deane (2002) an excellent choice.
+The Test Anxiety Inventory (TAI-5) is a 5-item self-report scale measuring anxiety experienced in academic testing situations. It is used as a brief screening instrument to identify students who experience significant worry or emotionality in the context of evaluations.
 
 ## Instructions
 

@@ -12,9 +12,7 @@ Reliability. Assessment, 10 , 178-182. (2003)
 
 ## Description
 
-Mathematics anxiety is a negative emotion associated to mathematics
-related activities, such as mathematics homework. Mathematics anxiety
-is related to poorer mathematics performance.
+The Abbreviated Math Anxiety Scale (AMAS) is a 9-item self-report measure assessing anxiety specifically related to mathematical situations and tasks. It is used to identify individuals who experience elevated distress in learning and testing contexts involving mathematics.
 
 ## Instructions
 

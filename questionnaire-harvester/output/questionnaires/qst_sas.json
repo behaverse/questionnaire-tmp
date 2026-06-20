@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Gauge your anxiety levels with the Zung Self-Rating Anxiety Scale (SAS), a detailed tool for assessing symptoms of anxiety.",
+    "description": "The Zung Self-Rating Anxiety Scale (SAS) is a 20-item self-report questionnaire measuring the severity of anxiety symptoms across cognitive, affective, somatic, and autonomic dimensions. It is used in clinical and research settings to screen for anxiety and to monitor symptom changes over time.",
     "id": "qst_sas",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

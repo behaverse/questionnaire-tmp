@@ -12,10 +12,7 @@ Version. Assessment, online first , 1-16. Download here . (2018)
 
 ## Description
 
-Need for cognition is people’s desire to engage in difficult
-cognitive activity
-( read more via
-Wikipedia ).
+The Need for Cognition (NCS-6) is a 6-item self-report scale measuring the degree to which individuals are motivated to engage in and enjoy effortful cognitive activity. It is used in research on thinking styles, attitude formation, and individual differences in information processing.
 
 ## Instructions
 

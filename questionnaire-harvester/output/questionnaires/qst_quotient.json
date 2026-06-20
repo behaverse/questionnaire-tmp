@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Autism is a mental health condition which is frequently mentioned in\nthe media. No wonder, given that more and more children and adults are\ndiagnosed as being on the autism spectrum. Therefore, it is important\nto have a short checklist which may be a reason to go see a mental\nhealth specialist. The Short Autism Spectrum Quotient is exactly made\nto be that, and it has been developed by the same team that developed\nthe longer and most used Autism Quotient Scale (under the supervision\nof Simon Baron-Cohen at Cambridge University in the UK).",
+    "description": "The Short Autism Spectrum Quotient is a 10-item self-report screening questionnaire measuring autistic traits related to social skills, attention switching, attention to detail, communication, and imagination. It is used as a brief initial screen to identify adults who may warrant further assessment for autism spectrum conditions.",
     "id": "qst_quotient",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

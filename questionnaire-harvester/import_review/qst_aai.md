@@ -13,9 +13,7 @@ Disorder. Behavioural and Cognitive Psychotherapy, 42 , 605-616. Link to publish
 
 ## Description
 
-Body Dysmorphic
-Disorder (BDD) is a psychological disorder in which people suffer
-from a distorted self body image.
+The Appearance Anxiety Inventory (AAI) is a 10-item self-report measure assessing cognitive and behavioral responses to concerns about physical appearance, particularly in the context of body dysmorphic disorder. It is used to evaluate the degree to which individuals engage in appearance-checking, avoidance, and threat monitoring related to perceived physical flaws.
 
 ## Instructions
 

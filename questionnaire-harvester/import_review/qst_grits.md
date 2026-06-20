@@ -11,9 +11,7 @@ passion for long-term goals. Journal of Personality and Social Psychology, 9 , 1
 
 ## Description
 
-The concept "grit" has been made popular by the psychologist Angela
-Duckworth. It refers to "perseverance and passion for long-term goals"
-( Duckworth and Quinn (2009 ).
+The Short Grit Scale (Grit-S) is an 8-item self-report measure assessing perseverance of effort and consistency of interest as components of the trait known as grit. It is used in educational, organizational, and developmental research to examine long-term goal pursuit and its relationship to achievement and well-being.
 
 ## Instructions
 

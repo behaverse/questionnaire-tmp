@@ -12,7 +12,7 @@ Evidence and Future Implications. Current addiction reports, 1(3) ,
 
 ## Description
 
-Caffeine is a psychoactive substance present in drinks and foods:
+The Caffeine Use Disorder Questionnaire (CUDQ) is a 10-item self-report screening tool assessing problematic patterns of caffeine consumption that parallel substance use disorder criteria. It is used to identify individuals whose caffeine intake may constitute a clinically significant behavioral problem.
 
 ## Instructions
 

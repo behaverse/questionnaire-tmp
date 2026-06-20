@@ -10,8 +10,7 @@
 
 ## Description
 
-The HSNS is a 10-item scale measuring a covert aspect of Narcism,
-while the well known NPI measures a more overt dimension of Narcism (Hendin & Cheek, 1997) .
+The Hypersensitive Narcissism Scale (HSNS) is a 10-item self-report measure assessing covert or vulnerable narcissism, characterized by hypersensitivity, entitlement, and a fragile sense of self. It is used in personality research to distinguish the covert narcissistic style from the more overt, grandiose presentation captured by other narcissism instruments.
 
 ## Instructions
 

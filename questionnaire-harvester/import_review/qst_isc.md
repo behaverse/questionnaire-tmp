@@ -10,10 +10,7 @@
 
 ## Description
 
-Impulsiveness refers to the
-state of mind in which one makes decisions without much thinking. A
-good example of this is an impulse buy (buying something you later
-realise you do not really need).
+The Impulsivity Scale for Children (ISC) is an 8-item self-report measure assessing impulsive tendencies in children, covering difficulties with inhibitory control and acting without forethought. It is used to screen for impulsivity-related concerns in developmental and clinical research settings.
 
 ## Instructions
 

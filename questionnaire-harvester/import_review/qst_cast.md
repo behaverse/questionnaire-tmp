@@ -9,11 +9,9 @@
 - keywords: autism · spectrum · child · childhood · toddler
 - items: 39
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_cast.json` (flagged).
-
 ## Description
 
-Assess autism spectrum characteristics in children with the CAST, a 39-item test developed for parents by experts at the University of Cambridge.
+The Childhood Autism Spectrum Test (CAST) is a 39-item parent-rated screening questionnaire designed to identify children aged 4 to 11 who may show signs of autism spectrum conditions. It is used as a first-stage community screening tool to guide decisions about referral for further diagnostic evaluation.
 
 ## Instructions
 

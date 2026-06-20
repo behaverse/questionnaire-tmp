@@ -14,8 +14,7 @@ screening scale for use in the general population. Psychol Medince ,
 
 ## Description
 
-Attention Deficit Hyperactivity Disorder (ADHD) is a common mental
-health issue. At least in the UK, most people will have heard of ADHD.
+The Adult ADHD Self-Report Scale (ASRS) is an 18-item self-report questionnaire screening for symptoms of attention-deficit/hyperactivity disorder in adults. It is used to identify inattention, hyperactivity, and impulsivity symptom frequency in non-clinical and clinical populations.
 
 ## Instructions
 

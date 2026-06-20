@@ -15,9 +15,7 @@ available here . (2009)
 
 ## Description
 
-Flourishing means doing really well . The Flourishing Scale
-measures people’s success (self rated) in key areas of one’s life,
-such as relationships and having a sense of purpose.
+The Flourishing Scale (FS) is an 8-item self-report measure assessing subjective well-being across dimensions such as purpose, engagement, positive relationships, and competence. It is used to capture a broad sense of psychological flourishing in research and applied settings.
 
 ## Instructions
 

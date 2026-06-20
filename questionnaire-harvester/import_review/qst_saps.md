@@ -11,11 +11,7 @@ Almost Perfect Scale. Journal of Personality Assessment, 96(3) , 368-379. (2014)
 
 ## Description
 
-Perfectionism is the psychological trait of wanting to do things perfectly, that is,
-without making mistakes. This means that a perfectionists sets very
-high standards and might suffer from disappointment when not reaching
-the desired level of performance ( Blatt, 1995, reviewed the
-negative effects of perfectionism).
+The Short Revised Almost Perfect Scale (SAPS) is an 8-item self-report measure assessing perfectionism, capturing both the pursuit of high standards and concern over discrepancies between performance and goals. It is used in personality and clinical research to distinguish between adaptive and maladaptive perfectionist tendencies.
 
 ## Instructions
 

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "According to some alcohol and drug researchers, alcohol is the most\nharmful drug around. This point was made in an influential study by Nutt and colleagues (2010) .",
+    "description": "The Drinking Motives Questionnaire, Revised (DMQ-R) is a 20-item self-report measure assessing the motivational bases for alcohol consumption across social, enhancement, coping, and conformity dimensions. It is used in research and clinical settings to understand why individuals drink and to identify motivational profiles linked to problematic use.",
     "id": "qst_dmqr",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

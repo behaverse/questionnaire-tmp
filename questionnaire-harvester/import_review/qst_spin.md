@@ -8,11 +8,9 @@
 - keywords: psychology · social · anxiety · test
 - items: 17
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_spin.json` (flagged).
-
 ## Description
 
-Measure your social anxiety levels with the Social Phobia Inventory (SPIN), a validated tool for assessing fear and avoidance in social situations.
+The Social Phobia Inventory (SPIN) is a 17-item self-report scale measuring fear, avoidance, and physiological discomfort in social and performance situations. It is used to screen for social anxiety disorder and to track symptom severity in clinical and research settings.
 
 ## Instructions
 

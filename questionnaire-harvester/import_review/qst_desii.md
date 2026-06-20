@@ -9,11 +9,9 @@
 - keywords: ptsd · trauma · dissociation · cptsd
 - items: 28
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_desii.json` (flagged).
-
 ## Description
 
-The Dissociative Experiences Scale (DES-II) is a screening tool for dissociative disorders, trauma, and PTSD.
+The Dissociative Experiences Scale (DES-II) is a 28-item self-report measure assessing the frequency of dissociative experiences across a spectrum from everyday absorption to pathological dissociation. It is used as a screening instrument for dissociative disorders and is commonly administered in trauma and PTSD research contexts.
 
 ## Instructions
 

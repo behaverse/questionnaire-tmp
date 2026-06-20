@@ -12,8 +12,7 @@ in Personality, 37 , 504-528. (2003)
 
 ## Description
 
-The BIG 5 is one of the leading models to express the most important
-dimensions of personality, namely:
+The Ten Item Personality Inventory (TIPI) is a 10-item self-report scale providing brief assessments of the Big Five personality dimensions: openness, conscientiousness, extraversion, agreeableness, and neuroticism. It is used when time or space constraints make a full personality battery impractical, particularly in large-scale surveys.
 
 ## Instructions
 

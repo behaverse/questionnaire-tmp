@@ -9,11 +9,9 @@
 - keywords: ptsd · trauma · dissociation · test · shutdown · psychology
 - items: 13
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_shutd.json` (flagged).
-
 ## Description
 
-Take the Shut-D online test to assess dissociative responses to trauma. A guided, research-based tool for understanding complex psychological symptoms.
+The Shutdown Dissociation Scale (SHUT-D) is a 13-item measure assessing dissociative responses — including freeze, flight/fight, fright, and flag/faint reactions — triggered by trauma reminders in adults. It is used in clinical trauma research to evaluate the severity of peritraumatic and trauma-related dissociation grounded in the defense cascade model.
 
 ## Instructions
 

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "A psychological self-assessment measuring Autism-Spectrum Quotient (AQ for short), which is a measure of the expression of autistic traits in adults.",
+    "description": "The Autism Spectrum Quotient (AQ) is a 50-item self-report measure assessing the degree to which adults exhibit traits associated with the autism spectrum. It is used in both research and clinical contexts to quantify autism-spectrum characteristics across social skill, attention switching, communication, imagination, and attention to detail domains.",
     "id": "qst_aq",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "aq",

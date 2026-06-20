@@ -11,9 +11,7 @@ scale. Personality and Individual Differences, 16 , 289-296. (1994)
 
 ## Description
 
-Sensation seeking is a
-psychological trait characterized by a search for intense and novel
-experiences.
+The Arnett Inventory of Sensation Seeking (AISS) is a 20-item self-report measure assessing individual differences in the drive to seek novel, intense, and varied experiences. It is used to quantify sensation-seeking tendencies across cognitive and emotional dimensions in adolescent and adult populations.
 
 ## Instructions
 

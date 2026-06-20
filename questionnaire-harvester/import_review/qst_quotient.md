@@ -12,14 +12,7 @@ and the Short Quantitative Checklist in 1,000 Cases and 3,000 Controls. Journal 
 
 ## Description
 
-Autism is a mental health condition which is frequently mentioned in
-the media. No wonder, given that more and more children and adults are
-diagnosed as being on the autism spectrum. Therefore, it is important
-to have a short checklist which may be a reason to go see a mental
-health specialist. The Short Autism Spectrum Quotient is exactly made
-to be that, and it has been developed by the same team that developed
-the longer and most used Autism Quotient Scale (under the supervision
-of Simon Baron-Cohen at Cambridge University in the UK).
+The Short Autism Spectrum Quotient is a 10-item self-report screening questionnaire measuring autistic traits related to social skills, attention switching, attention to detail, communication, and imagination. It is used as a brief initial screen to identify adults who may warrant further assessment for autism spectrum conditions.
 
 ## Instructions
 

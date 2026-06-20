@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Procrastination is the\npostponing of more important activities for less important ones.",
+    "description": "The Procrastinatory Cognitions Inventory (PCI) is an 18-item self-report scale measuring the frequency of automatic thoughts associated with task avoidance and delay. It is used in cognitive-behavioral research and clinical assessment to identify the cognitive patterns that sustain procrastinatory behavior.",
     "id": "qst_pci",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

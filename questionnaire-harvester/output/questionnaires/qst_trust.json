@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Trust is an important concept\nin human relationships, even more so in close interpersonal\nrelationships (e.g., romantic partners, married couples, etc).",
+    "description": "The Trust in Close Relationships scale is a 17-item self-report questionnaire measuring the degree of trust individuals place in their close interpersonal relationships, such as romantic partners or spouses. It is used in relationship psychology research to examine how interpersonal trust relates to relationship quality and stability.",
     "id": "qst_trust",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -10,12 +10,7 @@
 
 ## Description
 
-Problematic
-internet use is a common phenomenon. The Problematic Internet Use
-Questionnaire (PIUQ) was first published in 2006 and its psychometric
-properties were checked in a study by Kelly & Gruber
-(2010) . The latter study generally confirmed the three-factor
-structure.
+The Problematic Internet Use Questionnaire (PIUQ) is an 18-item self-report scale assessing the extent and nature of problematic internet use across dimensions such as obsession, neglect, and control disorder. It is used in research and screening contexts to identify individuals whose internet use may be causing distress or functional impairment.
 
 ## Instructions
 

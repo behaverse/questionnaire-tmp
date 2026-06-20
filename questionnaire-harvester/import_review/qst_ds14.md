@@ -13,9 +13,7 @@ Lancet, 347, 417-421. Free link to full text (1996)
 
 ## Description
 
-In medical research, personality traits are related to medial
-outcomes. For example, people with certain personality traits are more
-likely to suffer from heart and other cardiovascular illnesses.
+The Type D Personality scale (DS14) is a 14-item self-report questionnaire measuring two stable personality traits — negative affectivity and social inhibition — that together define Type D (distressed) personality. It is used in health psychology and cardiology research to identify individuals at elevated risk for psychological distress and adverse health outcomes.
 
 ## Instructions
 

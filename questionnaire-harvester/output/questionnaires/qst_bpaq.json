@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The Buss-Perry Aggression Questionnaire (BPAQ) is a popular measure of\naggression in adults. Men show a higher level of aggression than women\n(Archer, 2004).",
+    "description": "The Buss-Perry Aggression Questionnaire (BPAQ) is a 29-item self-report measure assessing four dimensions of aggression: physical aggression, verbal aggression, anger, and hostility. It is widely used in research and clinical settings to characterize an individual's overall aggressive tendencies and specific aggression subtypes.",
     "id": "qst_bpaq",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

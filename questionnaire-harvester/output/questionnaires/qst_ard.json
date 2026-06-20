@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Do you like dominant people? Probably not! Dominance is a negatively\nviewed trait, and it is a trait that plays an important role\npsychological studies about partner violence ( Shamby, 1996 ). People\nthat beat their partners up are often dominant and agressive (see also\nthe aggression scale here on\nPsyToolkit ).",
+    "description": "The Dominance Scale (for relationship research) is a 32-item self-report questionnaire measuring the disposition toward dominance in interpersonal and romantic relationships. It is used to assess dominant personality tendencies in the context of partner dynamics and relationship research.",
     "id": "qst_ard",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

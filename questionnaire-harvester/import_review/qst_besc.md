@@ -10,14 +10,7 @@
 
 ## Description
 
-Having a sense of belonging means that you are part of wherever you
-are. In schools and universities this is important. If you are a
-university student, but you do not really feel part of the university,
-then this might affect your motivation. Educators often talk about
-sense of belonging, but it is not easy to find scales on sense of
-belonging for studies with university students. Fortunately, there is
-the study by Mantz Yorke from Lancaster University in the United
-Kingdom.
+The Belonging, Engagement, and Self-Confidence in Higher Education scale (BES) is a 16-item self-report questionnaire measuring students' sense of belonging, academic engagement, and confidence in a higher education context. It is used to evaluate psychosocial factors associated with student adjustment and persistence at university.
 
 ## Instructions
 

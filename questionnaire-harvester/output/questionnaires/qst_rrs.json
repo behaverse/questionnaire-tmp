@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Rumination is the process of \"compulsively focused attention on the symptoms of\none’s distress, and on its possible causes and consequences, as\nopposed to its solutions\" (Nolen-Hoeksema, 1998). This process has\nbeen studied by the late Susan\nNolen-Hoeksma , who was a professor in psychology at Yale\nUniversity .",
+    "description": "The Rumination Response Scale (RRS) is a 22-item self-report measure assessing the tendency to repetitively and passively focus on symptoms of distress and their possible causes and consequences. It is used in clinical and affective research to examine ruminative response style as a risk and maintaining factor for depression and other mood-related difficulties.",
     "id": "qst_rrs",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The PTI assesses your personality type based on MBTI, offering insights into preferences in energy, information processing, and decision-making.",
+    "description": "The Personality Type Indicator (PTI) is a 70-item self-report questionnaire that classifies personality according to four Jungian preference dimensions, yielding one of 16 personality types aligned with the Myers-Briggs framework. It is used in personal development, career counseling, and organizational settings.",
     "id": "qst_pti",
     "language": "en",
     "license": "unknown",
@@ -28,7 +28,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "People differ in their sexual attitudes. There are different types of\nsexual attitudes, and in the BSAS four are distinguised\n( Hendrick et al, (2005) :",
+    "description": "The Brief Sexual Attitudes Scale (BSAS) is a 23-item self-report questionnaire measuring individual attitudes toward sexuality across dimensions such as permissiveness, birth control, communalism, and instrumentality. It is used to characterize sexual value orientations in research on human sexuality and relationships.",
     "id": "qst_bsas",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

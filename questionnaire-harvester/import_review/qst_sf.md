@@ -11,12 +11,7 @@ love. Journal of Personality and Social Psychology, 50 , 392-402. (1986)
 
 ## Description
 
-Researchers have studied the way people express and experience
-romantic love. The sociologist Lee (1973) became very well
-known for his classification of love styles , also called
-the colors of love . Clyde and Susan Hendrick (University of Texas)
-used this work to develop their lovel attitudes scale; their work is
-plays a dominant role in this field of research.
+The Love Attitudes Scale (Short Form) is a 24-item self-report questionnaire measuring individual differences in romantic love styles, based on Lee's typology of love. It is used in relationship research to assess how people characteristically approach and experience romantic partnerships.
 
 ## Instructions
 

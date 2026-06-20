@@ -12,12 +12,7 @@ of Personality and Social Psychology, 68 , 151-158. (1995)
 
 ## Description
 
-Psychopathy is a personality
-disorder which can occur in non-institutionalised
-population. Psychopaths are also known as sociopaths. Psychopaths are
-often cruel, manipulative, lying, and impulsive. Psychopathy
-fascinates people, and it is easy to find video and audio clips on the
-web about this topic; some are listed below.
+The Levenson Self-Report Psychopathy Scale (LSRP) is a 26-item self-report measure assessing primary and secondary psychopathic traits in non-institutionalized populations. It is used in personality and forensic psychology research to examine the distribution and correlates of psychopathic features in community samples.
 
 ## Instructions
 

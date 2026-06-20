@@ -8,11 +8,9 @@
 - keywords: psychology · depression · mdi · who · self · test
 - items: 12
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_mdi.json` (flagged).
-
 ## Description
 
-Take the MDI (Major Depression Inventory) to self-assess for major depressive disorder, based on the World Health Organization's research-backed criteria.
+The Major Depression Inventory (MDI) is a 12-item self-report questionnaire assessing the presence and severity of depressive symptoms based on ICD-10 and DSM-IV diagnostic criteria for depressive episodes. It is used in clinical and research settings for both dimensional symptom measurement and categorical diagnostic purposes.
 
 ## Instructions
 

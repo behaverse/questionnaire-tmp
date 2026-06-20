@@ -9,11 +9,9 @@
 - keywords: aq · autism · spectrum · aspergers
 - items: 50
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_aq.json` (flagged).
-
 ## Description
 
-A psychological self-assessment measuring Autism-Spectrum Quotient (AQ for short), which is a measure of the expression of autistic traits in adults.
+The Autism Spectrum Quotient (AQ) is a 50-item self-report measure assessing the degree to which adults exhibit traits associated with the autism spectrum. It is used in both research and clinical contexts to quantify autism-spectrum characteristics across social skill, attention switching, communication, imagination, and attention to detail domains.
 
 ## Instructions
 

@@ -11,8 +11,7 @@ of a self-reported questionnaire. Computers in Human Behavior, 49 , 130-137. (20
 
 ## Description
 
-Nomophobia is an fear or phobia for being without one’s cell phone
-(also known as mobile phone or smart phone).
+The Nomophobia Questionnaire (NMP-Q) is a 20-item self-report measure assessing fear and discomfort associated with being without a mobile phone or unable to use it. It is used to evaluate the severity of nomophobia — smartphone separation anxiety — in research on technology-related behavioral problems.
 
 ## Instructions
 

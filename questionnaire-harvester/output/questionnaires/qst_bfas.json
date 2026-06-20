@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Facebook addiction is a specific form of Internet addiction in which a\nperson is addicted to checking Facebook. Anyone travelling on public\ntransportation can observe this phenomenon.",
+    "description": "The Bergen Facebook Addiction Scale (BFAS) is a 6-item self-report scale measuring addictive tendencies in Facebook use. It is used to identify individuals whose engagement with Facebook may resemble the hallmarks of behavioral addiction, including salience, mood modification, tolerance, withdrawal, conflict, and relapse.",
     "id": "qst_bfas",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

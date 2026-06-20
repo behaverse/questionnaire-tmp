@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Think Positive! You surely have heard this before.",
+    "description": "The Positive Thinking Scale is a 22-item self-report questionnaire measuring the tendency to think positively about oneself, the world, and the future. It is used in well-being and cognitive research to assess optimistic thinking patterns as a psychological resource.",
     "id": "qst_pts",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -9,11 +9,9 @@
 - keywords: psychology · personality · test · big-5 · ffm · ocean
 - items: 50
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_ffm.json` (flagged).
-
 ## Description
 
-Assess your personality with the Big 5 Test, exploring how you score in five key traits that influence behavior and preferences.
+The Big Five Personality Test (FFM) is a 50-item self-report measure assessing the five broad personality dimensions of Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism. It is used to characterize individual personality profiles across research and applied settings.
 
 ## Instructions
 

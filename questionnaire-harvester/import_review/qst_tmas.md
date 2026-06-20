@@ -9,11 +9,9 @@
 - keywords: psychology · test · anxiety · taylor · manifest · self · rating · personality
 - items: 38
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_tmas.json` (flagged).
-
 ## Description
 
-Assess anxiety as a personality trait with the Taylor Manifest Anxiety Scale through a series of behavior and emotion-focused statements.
+The Taylor Manifest Anxiety Scale (TMAS) is a 38-item self-report measure assessing manifest anxiety as a stable personality trait, covering observable symptoms such as tension, worry, and nervousness. It is used in clinical and research settings to quantify chronic anxiety-proneness and to examine its relationship to other psychological constructs and health outcomes.
 
 ## Instructions
 

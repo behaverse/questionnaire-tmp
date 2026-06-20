@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Take the OCI-R to evaluate the severity of your OCD symptoms with a scientifically validated 18-item questionnaire designed for quick assessment.",
+    "description": "The Obsessive-Compulsive Inventory-Revised (OCI-R) is an 18-item self-report scale assessing the distress associated with six symptom dimensions of obsessive-compulsive disorder, including hoarding, checking, ordering, neutralising, washing, and obsessing. It is used to screen for OCD symptom severity and to differentiate symptom profiles in clinical and research populations.",
     "id": "qst_ocir",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "psychology",

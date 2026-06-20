@@ -10,7 +10,7 @@
 
 ## Description
 
-A 9-item self-report measure screening for the presence and severity of depression over the past two weeks.
+The Patient Health Questionnaire-9 (PHQ-9) is a 9-item self-report screening tool assessing the frequency of depressive symptoms corresponding to the DSM diagnostic criteria for major depressive disorder. It is used in primary care and mental health settings to screen for depression and to monitor symptom severity over time.
 
 ## Instructions
 

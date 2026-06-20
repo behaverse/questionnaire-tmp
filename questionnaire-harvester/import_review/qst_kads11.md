@@ -9,11 +9,9 @@
 - keywords: psychology · kutcher · kads · kads-11 · depression · teen · teenage
 - items: 11
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_kads11.json` (flagged).
-
 ## Description
 
-The KADS-11 is a streamlined tool for identifying depression in teens, focusing on mood, behavior, and thoughts for effective screening.
+The Kutcher Adolescent Depression Scale - 11-Item (KADS-11) is an 11-item questionnaire designed to assess the presence and severity of depressive symptoms in adolescents. It is used in school-based and clinical settings to support diagnosis and to monitor treatment outcomes in young people aged 12 to 17.
 
 ## Instructions
 

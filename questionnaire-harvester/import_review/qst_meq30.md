@@ -9,11 +9,9 @@
 - keywords: MEQ · MEQ-30 · RMEQ · mystical experience · questionnaire · psychology · test
 - items: 30
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_meq30.json` (flagged).
-
 ## Description
 
-The MEQ-30 evaluates profound experiences of mystical nature, including sense of unity, sacredness, and ineffability, based on your session reflections.
+The Revised Mystical Experience Questionnaire (MEQ-30) is a 30-item self-report scale measuring the intensity of mystical experiences across dimensions such as unity, noetic quality, transcendence of time and space, and sacredness. It is used in psychedelic research and consciousness studies to characterize the depth and nature of mystical states.
 
 ## Instructions
 

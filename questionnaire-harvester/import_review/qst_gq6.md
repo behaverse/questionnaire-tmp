@@ -12,11 +12,7 @@ Personality and Social Psychology, 82 , 112- 127. (2002)
 
 ## Description
 
-Gratitude is a "generalized
-tendency to recognize and respond with grateful emotion to the roles
-of other people’s benevolence in the positive experiences and outcomes
-that one obtains" (McCullough et al., 2002). The study of gratitude is
-a good example of a topic in the area of positive psychology .
+The Gratitude Questionnaire (GQ-6) is a 6-item self-report scale measuring the disposition to recognize and appreciate positive experiences and the role of others in producing them. It is used in positive psychology research to assess gratitude as a stable character trait and its links to well-being.
 
 ## Instructions
 

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "There is a variety of\nrating scales for symptoms of depression , and the Clinically\nUseful Depression Outcome Scale (CUDOS) is one of them. One of the\nadvantages of CUDOS over the well known Beck depression\ninventory (BDI) is that this one can be used freely for research purposes.",
+    "description": "The Clinically Useful Depression Outcome Scale (CUDOS) is a 16-item self-report measure assessing the presence and severity of depressive symptoms. It is used to monitor treatment outcomes and symptom change in individuals with depression.",
     "id": "qst_cudos",
     "language": "en",
     "license": "unknown",
@@ -28,6 +28,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

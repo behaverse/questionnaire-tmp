@@ -10,11 +10,7 @@
 
 ## Description
 
-Happiness and the term more
-commonly used in psychology, subjective
-wellbeing , are frequently studied in the field of psychology
-(including in positive psychology )
-and related applied areas, such as social care .
+The Subjective Happiness Scale (SHS) is a 4-item self-report measure assessing global subjective happiness as a stable individual characteristic. It is used in positive psychology research to examine happiness in relation to well-being, personality, and life outcomes.
 
 ## Instructions
 

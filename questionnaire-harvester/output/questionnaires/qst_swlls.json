@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Love is one of the most important human emotions, and therefore it is\nof no surprise that psychologists study love. That said, my personal\nimpression is that love gets less attention than it deserves in\npsychology.",
+    "description": "The Satisfaction with Love Life Scale (SWLLS) is a 5-item self-report questionnaire measuring global cognitive satisfaction with one's romantic relationship and love life. It is used in well-being and relationship research as a brief domain-specific complement to broader life satisfaction measures.",
     "id": "qst_swlls",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Pretty much all people lie at least occasionally and for different\nreasons. Obviously, this is of great interest.",
+    "description": "The Lying in Everyday Situations Scale (LiES) is a 14-item self-report questionnaire measuring the frequency and types of deceptive behavior individuals engage in during daily life. It is used in research on honesty, social behavior, and the motivations underlying everyday lying.",
     "id": "qst_lying",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The Three Item Loneliness Scale (TILS) is a short scale ideally suited\nfor studies in which many other questions are asked. This reduces\nfatigue of participants. It is based on the longer Revised UCLA scale.",
+    "description": "The Three-Item Loneliness Scale (TILS) is a 3-item self-report measure assessing subjective feelings of loneliness and social isolation. It is used as a brief screening instrument in epidemiological and health research where administration time is limited.",
     "id": "qst_tils",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

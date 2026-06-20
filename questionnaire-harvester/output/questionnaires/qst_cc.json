@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "There are different ways to capture the personality traits that differ\nmost between people. The BIG5 approach is one of them. The\nZuckerman-Kuhlman Personality Questionnaire follows a different\napproach\n( click\nhere for a Wikipedia description of the differences between the\napproaches ). See also the Zuckerman et al. paper, 1993 for\na comparison of the different models of personality.",
+    "description": "The Zuckerman–Kuhlman Personality Questionnaire Shortened version (ZKPQ-50-CC) is a 50-item self-report questionnaire measuring five alternative personality factors including Neuroticism-Anxiety, Activity, Sociability, Impulsive Sensation-Seeking, and Aggression-Hostility. It is used to characterise personality structure through a psychobiological framework distinct from the Big Five model.",
     "id": "qst_cc",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

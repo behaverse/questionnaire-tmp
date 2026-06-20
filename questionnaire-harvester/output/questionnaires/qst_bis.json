@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Impulsiveness refers to the\nstate of mind in which one makes decisions without much thinking. A\ngood example of this is an impulse buy (buying something you later\nrealise you do not really need).",
+    "description": "The Barratt Impulsiveness Scale (BIS) is a 30-item self-report measure assessing impulsivity across motor, attentional, and non-planning dimensions. It is widely used in clinical and research contexts to quantify impulsive tendencies and their relationship to various behavioral and psychiatric conditions.",
     "id": "qst_bis",
     "language": "en",
     "license": "unknown",
@@ -28,6 +28,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

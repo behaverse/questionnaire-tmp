@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Happiness and the term more\ncommonly used in psychology, subjective\nwellbeing , are frequently studied in the field of psychology\n(including in positive psychology )\nand related applied areas, such as social care .",
+    "description": "The Oxford Happiness Scale (OHS) is a 29-item self-report questionnaire measuring subjective happiness and psychological well-being across cognitive, affective, and social dimensions. It is used in positive psychology research to assess overall happiness and its correlates in diverse populations.",
     "id": "qst_ohq",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

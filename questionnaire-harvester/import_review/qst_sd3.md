@@ -10,9 +10,7 @@
 
 ## Description
 
-Apart from the many normal personality traits, some traits are
-unpleasant for others. There are three overlapping types of dark
-personality traits known as the dark triad .
+The Short Dark Triad (SD3) is a 27-item self-report measure assessing three socially aversive personality traits: Machiavellianism, narcissism, and psychopathy. It is used in personality and social psychology research to examine the correlates and consequences of dark personality tendencies.
 
 ## Instructions
 

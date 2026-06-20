@@ -10,11 +10,7 @@
 
 ## Description
 
-Humor is important for human emotion, socialisation, emotion, and
-coping. Although laughing is universal, and even common in babies
-(although we don’t know exactly what they are laughing about, of
-course), there are jokes that require complex thought and reasoning
-(cognitive abilities).
+The Humor Styles Questionnaire (HSQ) is a 32-item self-report scale measuring four distinct ways individuals use humour: affiliative, self-enhancing, aggressive, and self-defeating. It is used in personality and well-being research to examine how humour styles relate to psychological health and social relationships.
 
 ## Instructions
 

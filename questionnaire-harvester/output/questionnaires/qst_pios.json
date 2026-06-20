@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Scrupulosity is a severe\npsychological discomfort due to the belief that one is sinful.\nScruples are defined as uneasy feelings caused by a clash between\nactions/thoughts and conscience.",
+    "description": "The Penn Inventory of Scrupulosity (PIOS) is a 19-item self-report questionnaire measuring fear of committing sin and fear of God's punishment as two core dimensions of religious scrupulosity. It is used in clinical research to assess the religious subtype of obsessive-compulsive symptoms.",
     "id": "qst_pios",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

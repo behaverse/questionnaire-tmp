@@ -12,9 +12,7 @@ measure of narcissism. Journal of Research in Personality, 40 ,
 
 ## Description
 
-The scientific study of narcism (also known as "narcissism") goes way
-back to the 19th century, and it is a well studied concept in psychiatry . Here is the DSM (3rd edition) description of narcism (as quoted from Raskin and Terry,
-1988):
+The Narcissistic Personality Inventory - 16-item version (NPI-16) is an 8-item self-report scale measuring grandiose narcissistic traits in non-clinical populations. It is used in personality and social psychology research as a brief alternative to the full NPI, capturing tendencies toward self-importance, entitlement, and exploitativeness.
 
 ## Items
 

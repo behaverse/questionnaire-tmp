@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The World Health Organization is part of the\nUnited Nations (for historical overview, read\nthis ). This large organization plays an important role in dealing\nwith diseases around the world. As part of their work, they developed\nvarious well-being indices, and the WHO-5 is a short version of\npreviously developed longer well-being indices.",
+    "description": "The WHO-5 Well-Being Index is a 5-item self-report measure assessing current subjective psychological well-being, covering positive mood, vitality, and general interest. It is used internationally in clinical trials, primary care screening, and population health surveys as a brief indicator of mental well-being and as a preliminary screen for depression.",
     "id": "qst_who5",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

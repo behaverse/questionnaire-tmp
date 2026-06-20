@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Schizophrenia is a mental disorder with five categories of symptoms (for a review see van Os & Kapur, 2009 ):",
+    "description": "The Short Oxford-Liverpool Inventory of Feelings and Experiences (O-LIFE) is a 43-item self-report measure of schizotypal personality traits, covering unusual experiences, cognitive disorganization, introvertive anhedonia, and impulsive nonconformity. It is used in research to study subclinical psychosis-like variation in non-clinical populations.",
     "id": "qst_olife",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

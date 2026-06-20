@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Psychopathy is a personality\ndisorder which can occur in non-institutionalised\npopulation. Psychopaths are also known as sociopaths. Psychopaths are\noften cruel, manipulative, lying, and impulsive. Psychopathy\nfascinates people, and it is easy to find video and audio clips on the\nweb about this topic; some are listed below.",
+    "description": "The Levenson Self-Report Psychopathy Scale (LSRP) is a 26-item self-report measure assessing primary and secondary psychopathic traits in non-institutionalized populations. It is used in personality and forensic psychology research to examine the distribution and correlates of psychopathic features in community samples.",
     "id": "qst_lsrp",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

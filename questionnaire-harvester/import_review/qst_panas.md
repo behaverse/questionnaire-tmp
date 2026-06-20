@@ -9,10 +9,7 @@
 
 ## Description
 
-Affect refers to whether you feel emotionally in a positive or
-negative mood. An often used measure of both positive and negative
-affect is the Positive and Negative Affect Schedule PANAS (Watson,
-Clark, and Tellegen, 1988) .
+The Positive and Negative Affect Schedule (PANAS) is a 20-item self-report questionnaire measuring the intensity of positive and negative affective states. It is widely used in clinical and research contexts to assess current mood, emotional well-being, and responses to experimental or therapeutic interventions.
 
 ## Instructions
 

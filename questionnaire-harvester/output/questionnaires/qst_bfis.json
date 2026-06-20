@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The BIG 5 is one of the leading models to express the most important\ndimensions of personality, namely:",
+    "description": "The Short 15-item Big Five Inventory (BFI-S) is a 15-item self-report scale measuring the five broad personality dimensions: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism. It is used when a brief yet reliable assessment of the Big Five personality structure is required.",
     "id": "qst_bfis",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

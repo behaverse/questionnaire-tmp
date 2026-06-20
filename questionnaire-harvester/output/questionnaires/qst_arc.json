@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The Autism Research Centre in\nCambridge (UK) has released a number of surveys. One of them is to\nmeasure the Systemizing Quotient (copyright by Professor Simon\nBaron-Cohen).",
+    "description": "The Systemizing Quotient (SQ), developed at the Autism Research Centre in Cambridge, is a 75-item self-report measure assessing the drive to analyse or construct rule-based systems. It is used to capture individual differences in systemizing tendencies across general and clinical populations.",
     "id": "qst_arc",
     "language": "en",
     "license": "unknown",
@@ -28,6 +28,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -8,11 +8,9 @@
 - keywords: psychology · personality · type · personality type · jung · jungian · archetype · myers-briggs · mbti
 - items: 70
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pti.json` (flagged).
-
 ## Description
 
-The PTI assesses your personality type based on MBTI, offering insights into preferences in energy, information processing, and decision-making.
+The Personality Type Indicator (PTI) is a 70-item self-report questionnaire that classifies personality according to four Jungian preference dimensions, yielding one of 16 personality types aligned with the Myers-Briggs framework. It is used in personal development, career counseling, and organizational settings.
 
 ## Instructions
 

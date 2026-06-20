@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Eating\ndisorders are a major problem, especially in young women. Common\ntypes of eating disorders are:",
+    "description": "The Clinical Impairment Assessment Questionnaire (CIA 3.0) is a 16-item self-report measure of the psychosocial impairment resulting from eating disorder psychopathology. It is used to quantify functional consequences in domains such as mood, social functioning, and everyday performance.",
     "id": "qst_cia",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

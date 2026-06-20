@@ -12,9 +12,7 @@ intelligence. Scandinavian Journal of Psychology, 42 , 313-319. (2001)
 
 ## Description
 
-Human beings are social animals! Humans typically want to be with
-other people. People in social isolation suffer terribly. Loneliness
-(which can be measured with Psytoolkit here ) is a very unpleasant feeling.
+The Tromsø Social Intelligence Scale (TSIS) is a 21-item self-report measure assessing social intelligence across facets including social skills, social perception, and social awareness. It is used in personality and social psychology research to quantify individual differences in the ability to navigate and understand social situations.
 
 ## Instructions
 

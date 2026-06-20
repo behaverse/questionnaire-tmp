@@ -9,11 +9,9 @@
 - keywords: psychology · general · gad-7 · anxiety · disorder · penn state
 - items: 16
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_pswq.json` (flagged).
-
 ## Description
 
-Gauge the severity of your anxiety with the Penn State Worry Questionnaire (PSWQ), a tool designed to distinguish between types of anxiety disorders.
+The Penn State Worry Questionnaire (PSWQ) is a 16-item self-report scale measuring the tendency toward excessive, generalized worry as a stable cognitive trait. It is used in clinical and research settings to assess pathological worry, particularly as the defining feature of generalized anxiety disorder.
 
 ## Items
 

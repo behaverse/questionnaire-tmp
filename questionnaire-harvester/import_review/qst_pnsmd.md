@@ -10,11 +10,7 @@
 
 ## Description
 
-The "positive and negative semantic dimensions of relationship
-satisfaction" scale uses a special way of measuring relationship
-satisfaction. While many relationship scales treat positive and
-negative attitudes as polar opposites, this might not be the best way
-to deal with measuring how people feel about their relationship.
+The Relationship Satisfaction questionnaire (PN-SMD) is a 14-item self-report measure assessing an individual's perceived quality and satisfaction within their romantic partnership. It is used in relationship research and couples-focused clinical work to evaluate the affective and functional dimensions of partnership satisfaction.
 
 ## Instructions
 

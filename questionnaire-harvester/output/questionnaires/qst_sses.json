@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Self esteem is one’s own\nfeeling of worthyness, and there are various scales measuring this\n( see also the PsyToolkit implementation\nof Rosenberg’s scale ).",
+    "description": "The State Self-Esteem Scale (SSES) is a 20-item self-report questionnaire measuring momentary fluctuations in self-esteem across performance, social, and appearance domains. It is used in experimental and clinical research where capturing the transient, state-level dimension of self-esteem is required.",
     "id": "qst_sses",
     "language": "en",
     "license": "unknown",
@@ -28,6 +28,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The scientific study of narcism (also known as \"narcissism\") goes way\nback to the 19th century, and it is a well studied concept in psychiatry . Here is the DSM (3rd edition) description of narcism (as quoted from Raskin and Terry,\n1988):",
+    "description": "The Narcissistic Personality Inventory - 16-item version (NPI-16) is an 8-item self-report scale measuring grandiose narcissistic traits in non-clinical populations. It is used in personality and social psychology research as a brief alternative to the full NPI, capturing tendencies toward self-importance, entitlement, and exploitativeness.",
     "id": "qst_npi16",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

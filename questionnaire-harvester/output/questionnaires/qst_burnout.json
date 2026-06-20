@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Burnout is a\nmental (and possibly physical) state related to disillusionement with\none’s work. Some jobs are more affected by this than others. Teaching\nis generally considered a stressful job.",
+    "description": "The Teacher Burnout questionnaire is a 20-item self-report measure assessing occupational burnout symptoms among teaching professionals. It is used to evaluate the extent of emotional exhaustion, disillusionment, and stress experienced in the teaching role.",
     "id": "qst_burnout",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

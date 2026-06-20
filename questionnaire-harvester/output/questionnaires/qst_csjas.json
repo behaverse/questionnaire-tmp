@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "This scale measures wokeness and was developed by Oskari Lahtinen\n(2024) .",
+    "description": "The Critical Social Justice Attitudes Scale (CSJAS) is a 7-item self-report scale measuring endorsement of beliefs and frameworks associated with critical social justice perspectives. It is used in psychological and sociological research to quantify individual differences in attitudes toward systemic inequality, identity, and social power.",
     "id": "qst_csjas",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

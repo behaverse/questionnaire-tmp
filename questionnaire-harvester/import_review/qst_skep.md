@@ -12,9 +12,7 @@ Psychology, 7 , 159-186. (1998)
 
 ## Description
 
-The field of consumer
-psychology studies the thinking and behavior of consumers. This
-research is particularly relevant as part of applied psychology.
+The Skepticism towards Advertisements Scale (SKEP) is a 9-item self-report questionnaire measuring consumer skepticism about the truthfulness and motives of advertising claims. It is used in marketing and consumer psychology research to assess critical attitudes toward commercial advertising.
 
 ## Instructions
 

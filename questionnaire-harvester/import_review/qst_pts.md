@@ -15,7 +15,7 @@ available here . (2009)
 
 ## Description
 
-Think Positive! You surely have heard this before.
+The Positive Thinking Scale is a 22-item self-report questionnaire measuring the tendency to think positively about oneself, the world, and the future. It is used in well-being and cognitive research to assess optimistic thinking patterns as a psychological resource.
 
 ## Instructions
 

@@ -10,12 +10,7 @@
 
 ## Description
 
-The World Health Organization is part of the
-United Nations (for historical overview, read
-this ). This large organization plays an important role in dealing
-with diseases around the world. As part of their work, they developed
-various well-being indices, and the WHO-5 is a short version of
-previously developed longer well-being indices.
+The WHO-5 Well-Being Index is a 5-item self-report measure assessing current subjective psychological well-being, covering positive mood, vitality, and general interest. It is used internationally in clinical trials, primary care screening, and population health surveys as a brief indicator of mental well-being and as a preliminary screen for depression.
 
 ## Instructions
 

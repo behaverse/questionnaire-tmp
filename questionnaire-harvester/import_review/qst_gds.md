@@ -9,11 +9,9 @@
 - keywords: psychology · depression · gds · test · self · elderly · geriatric
 - items: 30
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_gds.json` (flagged).
-
 ## Description
 
-Assess depression in older adults with the GDS, designed to detect symptoms efficiently in elderly populations through simple questions.
+The Geriatric Depression Scale (GDS) is a 30-item questionnaire designed to screen for depressive symptoms in older adults using a simple yes/no response format. It is used by clinicians and researchers to identify depression in geriatric populations across hospital, community, and residential care settings.
 
 ## Instructions
 

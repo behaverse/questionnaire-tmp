@@ -11,11 +11,7 @@ Theoretical overview and empirical update. Cognitive Therapy and Research, 16 , 
 
 ## Description
 
-Optimism is a positive attitude
-about the future. In the field of psychology, optimism is viewed as a
-general way of thinking that can be beneficial to, for example, health
-outcomes. The Scheier and Carver paper from 1992 ( see
-references ) is a really good read about this topic.
+The Life Orientation Test-Revised (LOT-R) is a 10-item self-report scale measuring dispositional optimism versus pessimism as a generalised expectancy for positive future outcomes. It is used in health and well-being research to examine how outcome expectancies relate to psychological adjustment and physical health.
 
 ## Instructions
 

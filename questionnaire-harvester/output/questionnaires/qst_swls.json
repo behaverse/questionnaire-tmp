@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "A part of subjective well-being and happyness is how satisfied people\nare with their life. The Satisfaction with life scale (SWLS) measures\nthis. It is a short 5-item scale.",
+    "description": "The Satisfaction with Life Scale (SWLS) is a 5-item self-report measure assessing global cognitive judgments of one's life satisfaction. It is widely used in well-being research and clinical contexts to evaluate the subjective quality of life as judged by the respondent against their own standards.",
     "id": "qst_swls",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

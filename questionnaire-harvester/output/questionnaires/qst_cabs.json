@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Bullying is a major problem in schools around the world.",
+    "description": "The Child Adolescent Bullying Scale (CABS) is a 40-item self-report questionnaire assessing bullying involvement — including perpetration, victimization, and bystander roles — in children and adolescents. It is used to evaluate the nature and extent of bullying experiences in school and peer contexts.",
     "id": "qst_cabs",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

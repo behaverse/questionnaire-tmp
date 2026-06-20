@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Caffeine is a psychoactive substance present in drinks and foods:",
+    "description": "The Caffeine Use Disorder Questionnaire (CUDQ) is a 10-item self-report screening tool assessing problematic patterns of caffeine consumption that parallel substance use disorder criteria. It is used to identify individuals whose caffeine intake may constitute a clinically significant behavioral problem.",
     "id": "qst_cudq",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

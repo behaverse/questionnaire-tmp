@@ -11,11 +11,7 @@ Englewood Cliffs, NJ: Prentice Hall. (1986)
 
 ## Description
 
-Self-efficacy is the
-belief that you can effectively reach the goals you have, whether that
-is solving a puzzle, successfully preparing and succeeding in your
-exam, or dealing with hardships. Research on self-efficacy was started
-by one of the most cited and best known psychologists Albert Bandura (e.g., Bandura, 1986 ).
+The Generalized Self-Efficacy Scale (GSE) is a 10-item self-report questionnaire measuring a person's belief in their capacity to cope with novel or difficult demands across a broad range of situations. It is used in health, educational, and occupational research to assess optimistic self-beliefs as a predictor of motivation and performance.
 
 ## Instructions
 

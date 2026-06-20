@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "The ASSQ provides an early screening tool for Asperger Syndrome and high-functioning autism in school-aged children and young adults.",
+    "description": "The Autism Spectrum Screening Questionnaire (ASSQ) is a 27-item parent- or teacher-rated screening tool for identifying autism spectrum disorder traits in children and adolescents. It is used as a first-step instrument to flag individuals who may warrant a full diagnostic evaluation for ASD.",
     "id": "qst_assq",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "ASSQ",

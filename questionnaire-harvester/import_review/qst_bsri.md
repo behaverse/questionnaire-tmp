@@ -12,11 +12,7 @@ androgyny. Journal of Consulting and Clinical Psychology, 42 ,
 
 ## Description
 
-Gender differences are always a popular subject among psychology
-students and in the general population. The well-known social
-psychologist Sandara Bem (1944-2014) developed a sex role
-inventory to measure different aspects of hypothesized psychological
-gender traits.
+The Bem Sex Role Inventory (BSRI) is a 60-item self-report scale measuring the degree to which individuals endorse socially defined masculine and feminine personality attributes. It is used in psychological research to classify respondents along dimensions of masculinity, femininity, and androgyny.
 
 ## Instructions
 

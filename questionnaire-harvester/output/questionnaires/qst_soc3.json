@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Sometimes you may feel you can influence the way things go, that is,\nyou feel in control. But other times you may feel that you have no\ncontrol on how things go, that is, you feel out of control.",
+    "description": "The Spheres of Control Scale (SOC-3) is a 30-item self-report questionnaire measuring perceived personal control across three domains: personal efficacy, interpersonal control, and sociopolitical control. It is used in personality and health psychology research to examine locus-of-control beliefs and their relationship with behavior and well-being.",
     "id": "qst_soc3",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

@@ -13,10 +13,7 @@ and well-being. Journal of Personality and Social Psychology, 85 ,
 
 ## Description
 
-Emotion is a core component of
-human psychology, and is strongly related to physiological responses
-as well ( video about this
-here ).
+The Emotional Regulation Questionnaire (ERQ) is a 10-item self-report scale measuring habitual use of two emotion-regulation strategies: cognitive reappraisal and expressive suppression. It is used in affective science and clinical research to examine individual differences in how people manage their emotional responses.
 
 ## Instructions
 

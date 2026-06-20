@@ -13,11 +13,7 @@ Individual Differences, 25 , 167–177. (1998)
 
 ## Description
 
-Emotional
-Intelligence is a concept that every psychology student has to have
-heard of as part of their course on Intelligence and Personality . In short,
-emotional intelligence refers to the ability to use one’s perception
-of their own and other’s intelligence for decision making.
+The Emotional Intelligence questionnaire is a 33-item self-report scale measuring the ability to perceive, understand, manage, and use emotions effectively in oneself and in interactions with others. It is used in occupational, educational, and clinical research to examine emotional competencies and their relationship to well-being and performance.
 
 ## Instructions
 

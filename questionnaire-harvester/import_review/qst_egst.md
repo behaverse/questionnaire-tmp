@@ -9,11 +9,9 @@
 - keywords: video · game · addiction · egst · gaming
 - items: 20
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_egst.json` (flagged).
-
 ## Description
 
-Discover insights into your gaming and internet behaviors with our questionnaire designed to highlight aspects of potential concern.
+The Excessive Gaming Screening Tool (EGST) is a 20-item self-report questionnaire screening for problematic and potentially addictive gaming behaviour. It is used to identify individuals whose video game or internet use may be interfering with daily personal, social, or occupational functioning.
 
 ## Instructions
 

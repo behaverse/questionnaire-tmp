@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Take the Toronto Empathy Questionnaire to assess your empathetic responses and tendencies in diverse social situations through 16 questions.",
+    "description": "The Toronto Empathy Questionnaire (TEQ) is a 16-item self-report scale measuring empathy primarily as an emotional rather than cognitive process, capturing spontaneous affective responses to others' emotional states. It is used in social, clinical, and neuropsychological research to assess individual differences in affective empathy across diverse populations.",
     "id": "qst_teq",
     "language": "en",
     "license": "unknown",
@@ -32,7 +32,7 @@
     "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
-    "x_description_source": "site_meta",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_keywords": [
       "empathy",

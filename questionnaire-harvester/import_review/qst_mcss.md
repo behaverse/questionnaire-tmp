@@ -12,11 +12,7 @@ Speech Journal, 33 , 458-468. (1982)
 
 ## Description
 
-Shyness is a form of inhibition
-and discomfort in the presence of others (for a good overview, see
-Hopko et al., 2005). Shyness can be observed in children as young as 2
-years old (Kagan et al., 1989), and there seems to be a clear
-biological basis for it (Kagan et al., 1988).
+The McCroskey Shyness Scale is a 14-item self-report measure assessing the tendency to feel tense, uncomfortable, or inhibited in social interactions. It is used in communication and personality research to examine shyness as a dispositional trait and its relationship to communication apprehension and social behavior.
 
 ## Instructions
 

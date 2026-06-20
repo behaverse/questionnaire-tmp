@@ -11,7 +11,7 @@
       "domain": [],
       "population": []
     },
-    "description": "Self consciousness is\nin essence self-reflection. Some people reflect more on themselves\nthan others, and the popular self-consciousness scale measures\nthis. The revised version used here changed the original one so that\nthe language used is more accessible for a very broad population\n(rather than just psychology students, who are often recruited for\npsychological test validation).",
+    "description": "The Self-Consciousness Scale - Revised (SCS-R) is a 21-item self-report questionnaire measuring individual differences in the tendency to attend to oneself, covering public self-consciousness, private self-consciousness, and social anxiety. It is used in personality and social psychology research to examine how self-focused attention relates to behavior, affect, and interpersonal functioning.",
     "id": "qst_scsr",
     "language": "en",
     "license": "unknown",
@@ -32,6 +32,7 @@
     "version": "v26.0617",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
+    "x_description_source": "authored",
     "x_harvest_date": "2026-06-17",
     "x_license_class": "unknown",
     "x_license_notes": "license unclear — confirm with author",

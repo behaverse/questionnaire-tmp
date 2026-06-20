@@ -9,11 +9,9 @@
 - keywords: psychology · depression · zung · test · self
 - items: 20
 
-> ⚠ The description above is the source site's text (`x_description_source: site_meta`). Verbatim source meta + introduction captured in `source_metadata/qst_sds.json` (flagged).
-
 ## Description
 
-Explore the Zung Depression Scale (SDS) for a comprehensive self-assessment of depression, highlighting mood and physical symptoms.
+The Zung Self-Rating Depression Scale (SDS) is a 20-item self-report measure assessing the presence and frequency of depressive symptoms including affective, physiological, and psychological indicators. It is used in clinical and research settings to screen for depression and monitor symptom change over time.
 
 ## Instructions
 
