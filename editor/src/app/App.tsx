@@ -12,6 +12,7 @@ import { LibraryQuestionnairePicker } from '../library/LibraryQuestionnairePicke
 import { ForkDialog } from '../library/ForkDialog'
 import { TranslationPanel } from '../translate/TranslationPanel'
 import { TranslationWorkbench } from '../translate/workbench/TranslationWorkbench'
+import { LibraryBrowser } from '../library/browser/LibraryBrowser'
 import { bisbasSample, phq9Sample } from '../samples/sample'
 
 export function App() {
@@ -28,6 +29,7 @@ export function App() {
   const [browsing, setBrowsing] = useState(false)
   const [translateOnLoad, setTranslateOnLoad] = useState(false)
   const [workbench, setWorkbench] = useState(false)
+  const [libraryBrowser, setLibraryBrowser] = useState(false)
 
   // restore autosaved draft on boot
   useEffect(() => {
@@ -48,6 +50,8 @@ export function App() {
 
   if (workbench) return <div className="h-screen"><TranslationWorkbench onExit={() => setWorkbench(false)} /></div>
 
+  if (libraryBrowser) return <div className="h-screen"><LibraryBrowser onExit={() => setLibraryBrowser(false)} /></div>
+
   if (!model) {
     return (
       <>
@@ -67,6 +71,7 @@ export function App() {
           onBrowseLibrary={() => { setTranslateOnLoad(false); setBrowsing(true) }}
           onTranslate={() => { setTranslateOnLoad(true); setBrowsing(true) }}
           onTranslateWorkbench={() => setWorkbench(true)}
+          onBrowseEntities={() => setLibraryBrowser(true)}
         />
         {browsing && (
           <LibraryQuestionnairePicker

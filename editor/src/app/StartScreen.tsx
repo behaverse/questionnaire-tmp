@@ -11,9 +11,10 @@ interface Props {
   onTranslate: () => void
   onTranslateWorkbench: () => void
   onLoadPhq9: () => void
+  onBrowseEntities: () => void
 }
 
-export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary, onTranslate, onTranslateWorkbench, onLoadPhq9 }: Props) {
+export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary, onTranslate, onTranslateWorkbench, onLoadPhq9, onBrowseEntities }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [id, setId] = useState('')
   const [version, setVersion] = useState('')
@@ -71,6 +72,14 @@ export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, on
             Translate Library entities
           </div>
           <div className="text-sm text-ed-muted">Quality-check and fill translations for options, prompts, and more across the database — export a contribution file</div>
+        </button>
+
+        <button onClick={onBrowseEntities} aria-label="Library entities" className="rounded-lg border border-ed-border p-4 text-left hover:bg-ed-subtle">
+          <div className="flex items-center gap-2 font-medium">
+            <Library size={16} aria-hidden="true" className="text-ed-muted" />
+            Library entities
+          </div>
+          <div className="text-sm text-ed-muted">Browse, inspect, and (soon) edit/translate individual Library entities</div>
         </button>
 
         <label className="cursor-pointer rounded-lg border border-ed-border p-4 hover:bg-ed-subtle">
