@@ -716,3 +716,10 @@ ED-D4b made scorers run live in the inline preview (Approach B: web-viewer expor
 - ed-d4b-4: `useScoreCache` does `JSON.stringify(runtime.pages)` per render for the structure key — fine at editor scale (runtime is memoized in PreviewPane so it's referentially stable), but a lighter structure key (e.g. item-id+prompt-id list) would scale better for very large questionnaires.
 - ed-d4b-5: PreviewView's score-cache unit test only covers the unknown-scorer/unmount branch (jsdom can't run wasm); the live-value path is covered by the e2e + the useScoreCache node integration test.
 - Scope note: only scorers whose wasm the editor bundles preview live (today: `scr_phq9`). Running Library-served scorers needs the Library to serve scorer wasm (owner-gated, separate).
+
+## ED-K1 (Library Entity Browser — browse + inspect) — deferred (final-review triage, 2026-06-21)
+ED-K1 added a read-only "Library entities" workspace (`editor/src/library/browser/`: client + LibraryEntityList + EntityInspector + LibraryBrowser shell) + start-screen card + App `libraryBrowser` flag. Browse by type + id/title search; inspect a selected entity (structural fields + per-locale content), read-only. Final review APPROVE-WITH-FOLLOWUPS (no Critical/Important). Deferred minors:
+- ed-k1-1: `LibraryBrowser` memoizes the `client` with `[client]` in deps — a parent passing an inline client object each render would re-trigger child list/fetch effects. Harmless in K1 (App passes none → `defaultLibraryClient()`); revisit when K2 introduces a shared edit session/client.
+- ed-k1-2: K1 search is id/title only; the spec's content-search (F7-style throttled body index, cap 300) is deferred — fold in during K2 or as a polish task.
+- ed-k1-3: `EntityInspector`'s `ContentEntry` type renders text/label/units/choices only; richer content shapes (e.g. message/help extras) show just those fields. Read-only inspect is fine; richer rendering is a K2+ concern.
+- NEXT: ED-K2 (edit session + structural Edit tab + per-entity status + lock-on-complete + full-body contribution export), then ED-K3 (Translate tab + batch + retire the TranslationWorkbench).
