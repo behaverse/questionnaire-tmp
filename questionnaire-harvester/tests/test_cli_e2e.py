@@ -276,3 +276,23 @@ def test_review_export_cli_gad7(tmp_path):
     doc = (rev / "qst_gad7.md").read_text()
     assert "## Items" in doc
     assert "[score: 0]" in doc          # a choice option line rendered with weights
+
+
+def test_psychology_tools_meta_capture_e2e(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_meta.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    sm = tmp_path / "source_metadata"
+    rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-screening",
+                   "--out", str(out), "--scales-index", str(tmp_path / "missing.json"),
+                   "--register", str(tmp_path / "register.md"), "--questions", str(tmp_path / "questions"),
+                   "--source-metadata", str(sm),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    qid = "qst_demo"
+    md = json.loads((out / "questionnaires" / f"{qid}.json").read_text())["metadata"]
+    assert md["x_keywords"] == ["DEMO", "demo", "screening"]
+    assert md["x_description_source"] == "site_meta"
+    sidecar = json.loads((sm / f"{qid}.json").read_text())
+    assert sidecar["introduction"][0].startswith("The DEMO is a demonstration")
+    assert "NOT for redistribution" in sidecar["_notice"]

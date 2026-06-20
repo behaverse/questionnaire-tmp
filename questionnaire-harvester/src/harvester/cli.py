@@ -35,6 +35,7 @@ def main(argv=None) -> int:
     h.add_argument("--scales-index", default="questionnaire-harvester/dedup/scales-index.json")
     h.add_argument("--register", default="questionnaire-harvester/register.md")
     h.add_argument("--questions", default="questionnaire-harvester/questions")
+    h.add_argument("--source-metadata", default="questionnaire-harvester/source_metadata")
     h.add_argument("--schemas", default="schemas")
     h.add_argument("--version", default="v26.0618")
     ds = sub.add_parser("document-scoring")
@@ -80,6 +81,9 @@ def main(argv=None) -> int:
     instr_index = build_instruction_index(Path(a.out))
     result = draft(rq, a.version, scales_index, instr_index)
     write_draft(result, Path(a.out))
+
+    from harvester.source_meta import write_source_metadata
+    write_source_metadata(rq, Path(a.source_metadata))
 
     errors = validate_tree(Path(a.out), Path(a.schemas), release=a.version)
     if errors:

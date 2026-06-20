@@ -175,6 +175,10 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
         md["publication"] = {"citation": rq.citation, "year": rq.year}
     if rq.references:
         md["x_references"] = rq.references
+    if getattr(rq, "keywords", None):
+        md["x_keywords"] = rq.keywords
+    if getattr(rq, "source_meta", None):
+        md["x_description_source"] = "site_meta"
     qst = {"@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
            "metadata": md, "pages": [{"id": "page_main", "elements": elements}]}
     res.entities["questionnaire"].append(qst)
