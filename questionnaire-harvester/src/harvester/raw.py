@@ -57,6 +57,8 @@ class RawQuestionnaire:
     context_text: str | None = None
     shared_prompt_text: str | None = None
     references: list = field(default_factory=list)
+    keywords: list = field(default_factory=list)
+    source_meta: dict | None = None
 
     def __post_init__(self):
         if isinstance(self.scale, dict):

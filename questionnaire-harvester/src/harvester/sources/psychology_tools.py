@@ -39,6 +39,40 @@ def _source_link(li):
     return a["href"].strip() if a and a.get("href", "").strip() else None
 
 
+def _keywords(soup):
+    """The <meta name="keywords"> content as a trimmed list (empty if absent)."""
+    m = soup.find("meta", attrs={"name": "keywords"})
+    if not m or not m.get("content"):
+        return []
+    return [k.strip() for k in m["content"].split(",") if k.strip()]
+
+
+def _og(soup):
+    """All <meta property="og:..."> tags as {key-without-og-prefix: content}."""
+    og = {}
+    for m in soup.find_all("meta"):
+        p = m.get("property") or ""
+        if p.startswith("og:") and m.get("content"):
+            og[p[3:]] = m["content"].strip()
+    return og
+
+
+def _introduction(soup):
+    """The page's Introduction section paragraphs (verbatim), leading 'Introduction'
+    heading word stripped from the first. Empty list if absent."""
+    sec = soup.select_one("section.introduction") or soup.select_one("section.intro")
+    if not sec:
+        return []
+    paras = []
+    for p in sec.find_all("p"):
+        t = re.sub(r"\s+", " ", p.get_text(" ", strip=True)).strip()
+        if t:
+            paras.append(t)
+    if paras:
+        paras[0] = re.sub(r"^\s*Introduction\b[:\s]*", "", paras[0]).strip()
+    return [p for p in paras if p]
+
+
 def _cell_pair(cell):
     """From a response cell (standard `.notable-td.response` span or alternate
     `ul.responses > li`), return (anchor_text, value_float). Anchor may be "" (unlabeled).
@@ -250,10 +284,19 @@ class PsychologyToolsAdapter(SourceAdapter):
             if ym:
                 year = int(ym.group())
 
+        keywords = _keywords(soup)
+        og = _og(soup)
+        introduction = _introduction(soup)
+        meta_desc = meta.get("content").strip() if meta and meta.get("content") else ""
+        source_meta = None
+        if meta_desc or keywords or og or introduction:
+            source_meta = {"meta_description": meta_desc, "keywords": keywords,
+                           "og": og, "introduction": introduction}
+
         return RawQuestionnaire(
             qst_id=qst_id, title=title, short_title=short_title, description=description,
             citation=citation, year=year, source_site=self.site, source_url=url,
             instruction_text=instruction_text, scale=None, items=items,
             license=LicenseFlag.unknown(url),
             domain=[], population=[], context_text=None, shared_prompt_text=shared_prompt_text,
-            references=references)
+            references=references, keywords=keywords, source_meta=source_meta)

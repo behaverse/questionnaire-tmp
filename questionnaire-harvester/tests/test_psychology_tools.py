@@ -365,3 +365,35 @@ def test_no_please_note_leaves_instruction_unchanged():
             '<form>' + _row("q1", "stem", OPTS3) + '</form></body></html>')
     rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
     assert rq.instruction_text == "Read each item."
+
+
+def _meta_page(rows, *, title="Demo (DEMO)", desc="A demo measure.",
+               keywords="DEMO,demo,test", intro_paras=("Introduction The DEMO is a demo.", "Second para.")):
+    intro = "".join(f"<p>{p}</p>" for p in intro_paras)
+    return (f'<html><head>'
+            f'<meta name="description" content="{desc}">'
+            f'<meta name="keywords" content="{keywords}">'
+            f'<meta property="og:title" content="{title} - Psychology Tools">'
+            f'<meta property="og:url" content="https://psychology-tools.com/demo/">'
+            f'<meta property="og:type" content="article">'
+            f'</head><body><h1>{title}</h1>'
+            f'<section class="intro introduction">{intro}</section>'
+            f'<form>{rows}</form></body></html>')
+
+def test_keywords_and_source_meta_extracted():
+    rq = PsychologyToolsAdapter().parse(_meta_page(_row("q1", "stem", OPTS3)),
+                                        "https://psychology-tools.com/test/x")
+    assert rq.keywords == ["DEMO", "demo", "test"]
+    assert rq.source_meta["meta_description"] == "A demo measure."
+    assert rq.source_meta["keywords"] == ["DEMO", "demo", "test"]
+    assert rq.source_meta["og"]["title"] == "Demo (DEMO) - Psychology Tools"
+    assert rq.source_meta["og"]["type"] == "article"
+    # introduction captured; leading 'Introduction' heading word stripped from para 1
+    assert rq.source_meta["introduction"][0] == "The DEMO is a demo."
+    assert rq.source_meta["introduction"][1] == "Second para."
+
+def test_no_meta_leaves_keywords_empty_and_source_meta_none():
+    html = ('<html><body><h1>X (X)</h1><form>' + _row("q1", "stem", OPTS3) + '</form></body></html>')
+    rq = PsychologyToolsAdapter().parse(html, "https://psychology-tools.com/test/x")
+    assert rq.keywords == []
+    assert rq.source_meta is None
