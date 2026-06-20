@@ -34,8 +34,12 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "DM Garner, PE Garfinkel. The Eating Attitudes Test: An Index of the Symptoms of Anorexia Nervosa. 9 Psychological Medicine 273-279 (1979).",
-      "DM Garner, et al. The Eating Attitudes Test: Psychometric Features and Clinical Correlates. 12 Psychological Medicine 871-878 (1982). (Introduced the 26 item version of the EAT.)"
+      {
+        "citation": "DM Garner, PE Garfinkel. The Eating Attitudes Test: An Index of the Symptoms of Anorexia Nervosa. 9 Psychological Medicine 273-279 (1979)."
+      },
+      {
+        "citation": "DM Garner, et al. The Eating Attitudes Test: Psychometric Features and Clinical Correlates. 12 Psychological Medicine 871-878 (1982). (Introduced the 26 item version of the EAT.)"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/eat-26",

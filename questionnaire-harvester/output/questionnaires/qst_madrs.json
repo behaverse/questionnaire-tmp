@@ -34,8 +34,12 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "SA Montgomery, M Asberg. A New Depression Scale Designed to be Sensitive to Change. British Journal of Psychiatry 134 (4): 382-389. 04-1979.",
-      "JBW Williams, KA Kobak. Development and Reliability of a Structured Interview Guide for the Montgomery-Asberg Depression Rating Scale (SIGMA). The British Journal of Psychiatry 192 (1): 52-58. 2008."
+      {
+        "citation": "SA Montgomery, M Asberg. A New Depression Scale Designed to be Sensitive to Change. British Journal of Psychiatry 134 (4): 382-389. 04-1979."
+      },
+      {
+        "citation": "JBW Williams, KA Kobak. Development and Reliability of a Structured Interview Guide for the Montgomery-Asberg Depression Rating Scale (SIGMA). The British Journal of Psychiatry 192 (1): 52-58. 2008."
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/montgomery-asberg-depression-rating-scale",

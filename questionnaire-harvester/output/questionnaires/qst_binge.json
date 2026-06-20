@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "J Gormally, S Black, S Daston, D Rardin. The assessment of binge eating severity among obese persons. 7 ( 1 ): Addict Behav 47-55 ( 1982 )."
+      {
+        "citation": "J Gormally, S Black, S Daston, D Rardin. The assessment of binge eating severity among obese persons. 7 ( 1 ): Addict Behav 47-55 ( 1982 ).",
+        "url": "https://www.ncbi.nlm.nih.gov/pubmed/7080884"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/binge-eating-scale",

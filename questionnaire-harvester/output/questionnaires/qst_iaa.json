@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "H Cash, C D Rae, A H Steel, A Winkler. Internet Addiction: A Brief Summary of Research and Practice. 8 ( 4 ): Curr Psychiatry Rev. 292-298. 2012."
+      {
+        "citation": "H Cash, C D Rae, A H Steel, A Winkler. Internet Addiction: A Brief Summary of Research and Practice. 8 ( 4 ): Curr Psychiatry Rev. 292-298. 2012.",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3480687/"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/internet-addiction-assessment",

@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "Carlson E B, Putnam F W. An update on the Dissociative Experience Scale. Dissociation 6 ( 1 ): 16-27 ( 1993 )."
+      {
+        "citation": "Carlson E B, Putnam F W. An update on the Dissociative Experience Scale. Dissociation 6 ( 1 ): 16-27 ( 1993 ).",
+        "url": "https://scholarsbank.uoregon.edu/xmlui/bitstream/handle/1794/1539/Diss_6_1_3_OCR_rev.pdf?sequence=4&isAllowed=y"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/dissociative-experiences-scale",

@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "Prigerson H G, Maciejewski P K, Reynolds C F 3rd, et al. Inventory of Complicated Grief: A Scale to Measure Maladaptive Symptoms of Loss. 59 ( 1 ): Psychiatry Res 65 - 79 ( 1995 )."
+      {
+        "citation": "Prigerson H G, Maciejewski P K, Reynolds C F 3rd, et al. Inventory of Complicated Grief: A Scale to Measure Maladaptive Symptoms of Loss. 59 ( 1 ): Psychiatry Res 65 - 79 ( 1995 ).",
+        "url": "https://www.ncbi.nlm.nih.gov/pubmed/8771222"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/inventory-complicated-grief",

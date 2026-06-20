@@ -34,9 +34,16 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "Copyright ©, Jonathan Davidson. 1995, 2008, 2015. All rights reserved. Permission to use the SPIN must be obtained from the copyright holder at [email protected]. The SPIN may not be reproduced or transmitted in any form, or by any means, electronic or mechanical, or by any information storage or retrieval system without permission in writing from the copyright holder.",
-      "KM Connor, et al. Psychometric Properties of the Social Phobia Inventory (SPIN): New Self-Rating Scale. British Journ Psych. 2000.",
-      "Klaus Ranta, et al. Age and Gender Differences in Social Anxiety Symptoms During Adolescence: The Social Phobia Inventory (SPIN) as a Measure. 153(3): Psych Research 261-270. December 2007."
+      {
+        "citation": "Copyright ©, Jonathan Davidson. 1995, 2008, 2015. All rights reserved. Permission to use the SPIN must be obtained from the copyright holder at [email protected]. The SPIN may not be reproduced or transmitted in any form, or by any means, electronic or mechanical, or by any information storage or retrieval system without permission in writing from the copyright holder.",
+        "url": "/pdf/spin.pdf"
+      },
+      {
+        "citation": "KM Connor, et al. Psychometric Properties of the Social Phobia Inventory (SPIN): New Self-Rating Scale. British Journ Psych. 2000."
+      },
+      {
+        "citation": "Klaus Ranta, et al. Age and Gender Differences in Social Anxiety Symptoms During Adolescence: The Social Phobia Inventory (SPIN) as a Measure. 153(3): Psych Research 261-270. December 2007."
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/spin",

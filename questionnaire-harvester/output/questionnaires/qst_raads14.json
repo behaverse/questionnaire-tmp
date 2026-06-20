@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "J M Eriksson, L M Andersen, & S Bejerot. RAADS-14 Screen: validity of a screening tool for autism spectrum disorder in an adult psychiatric population. Molecular Autism, ( 4 ): 49. Dec 2013"
+      {
+        "citation": "J M Eriksson, L M Andersen, & S Bejerot. RAADS-14 Screen: validity of a screening tool for autism spectrum disorder in an adult psychiatric population. Molecular Autism, ( 4 ): 49. Dec 2013",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3907126/"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/raads-14",

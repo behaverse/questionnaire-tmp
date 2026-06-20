@@ -34,8 +34,12 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "P Bech, et al. The sensitivity and specificity of the Major Depression Inventory, using the Present State Examination as the index of diagnostic validity. 66 J Affect Disord 159-164. (2001).",
-      "LR Olsen, et al. The internal and external validity of the Major Depression Inventory in measuring severity of depressive states. 33 Psychological Medicine 351-356. (2003)."
+      {
+        "citation": "P Bech, et al. The sensitivity and specificity of the Major Depression Inventory, using the Present State Examination as the index of diagnostic validity. 66 J Affect Disord 159-164. (2001)."
+      },
+      {
+        "citation": "LR Olsen, et al. The internal and external validity of the Major Depression Inventory in measuring severity of depressive states. 33 Psychological Medicine 351-356. (2003)."
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/major-depression-inventory",

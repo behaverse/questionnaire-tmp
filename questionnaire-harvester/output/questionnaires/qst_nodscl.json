@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "H Xian, K R Shah, S M Phillips, J F Scherrer, R Volberg, A Eisen. Association of cognitive distortions with problem and pathological gambling in adult male twins. 160(3): Psychiatry Res 300-307. 2008."
+      {
+        "citation": "H Xian, K R Shah, S M Phillips, J F Scherrer, R Volberg, A Eisen. Association of cognitive distortions with problem and pathological gambling in adult male twins. 160(3): Psychiatry Res 300-307. 2008.",
+        "url": "https://www.ncbi.nlm.nih.gov/pubmed/18710784"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/nods-clip",

@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "William W K Zung. A Self-Rating Depression Scale. 12: Arch Gen Psychiatry 63-70. 1965."
+      {
+        "citation": "William W K Zung. A Self-Rating Depression Scale. 12: Arch Gen Psychiatry 63-70. 1965.",
+        "url": "http://www.ncbi.nlm.nih.gov/pubmed/14221692"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/zung-depression-scale",

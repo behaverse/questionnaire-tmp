@@ -38,7 +38,9 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "EB Foa, Huppert JD, S Leiberg, G Hajcak, R Langner, et al. The Obsessive Compulsive Inventory: Development and validation of a short version. 14 Psychological Assessment 485-496 ( 2002 )."
+      {
+        "citation": "EB Foa, Huppert JD, S Leiberg, G Hajcak, R Langner, et al. The Obsessive Compulsive Inventory: Development and validation of a short version. 14 Psychological Assessment 485-496 ( 2002 )."
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/obsessive-compulsive-inventory-revised",

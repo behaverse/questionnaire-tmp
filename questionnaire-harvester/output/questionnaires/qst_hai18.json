@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "P M Salkovskis, K A Rimes, H MC Warwick, D M Clark. The Health Anxiety Inventory: development and validation of scales for the measurement of health anxiety and hypochondriasis. Psychol Med. 2006; 32 ( 5 ): 843–853."
+      {
+        "citation": "P M Salkovskis, K A Rimes, H MC Warwick, D M Clark. The Health Anxiety Inventory: development and validation of scales for the measurement of health anxiety and hypochondriasis. Psychol Med. 2006; 32 ( 5 ): 843–853.",
+        "url": "https://www.ncbi.nlm.nih.gov/pubmed/12171378"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/health-anxiety-inventory",

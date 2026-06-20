@@ -38,9 +38,18 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "S H Spence. Structure of Anxiety Symptoms Among Children: A Confirmatory Factor-Analytic Study. 106 ( 2 ): Journal of Abnormal Psychology 280-297 ( 1997 ). [ PDF ]",
-      "SH Spence. A Measure of Anxiety Symptoms Among Children. Behaviour Research and Therapy 545-566 ( 1998 ).",
-      "SH Spence, PM Barrett, CM Turner. Psychometric Properties of the Spence Children’s Anxiety Scale with Young Adolescents. 17(6): Journal of Anxiety Disorders 605-625 ( 2003 )."
+      {
+        "citation": "S H Spence. Structure of Anxiety Symptoms Among Children: A Confirmatory Factor-Analytic Study. 106 ( 2 ): Journal of Abnormal Psychology 280-297 ( 1997 ). [ PDF ]",
+        "url": "http://www.ncbi.nlm.nih.gov/pubmed/9131848"
+      },
+      {
+        "citation": "SH Spence. A Measure of Anxiety Symptoms Among Children. Behaviour Research and Therapy 545-566 ( 1998 ).",
+        "url": "http://www.scaswebsite.com/docs/spence-1998-scas.pdf"
+      },
+      {
+        "citation": "SH Spence, PM Barrett, CM Turner. Psychometric Properties of the Spence Children’s Anxiety Scale with Young Adolescents. 17(6): Journal of Anxiety Disorders 605-625 ( 2003 ).",
+        "url": "http://www.scaswebsite.com/docs/spence-barrett-turner2003.pdf"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/spence-childrens-anxiety-scale",

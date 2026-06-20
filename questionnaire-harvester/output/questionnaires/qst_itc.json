@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "A M Wetherby, S Brosnan-Maddox, V Peace, L Newton. ( 2008 ). Validation of the Infant-Toddler Checklist as a broadband screener for autism spectrum disorders from 9 to 24 months of age. Autism, 12 ( 5 ), 487-511."
+      {
+        "citation": "A M Wetherby, S Brosnan-Maddox, V Peace, L Newton. ( 2008 ). Validation of the Infant-Toddler Checklist as a broadband screener for autism spectrum disorders from 9 to 24 months of age. Autism, 12 ( 5 ), 487-511.",
+        "url": "https://www.ncbi.nlm.nih.gov/pubmed/18805944"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/infant-toddler-checklist",

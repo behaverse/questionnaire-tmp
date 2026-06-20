@@ -38,7 +38,10 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "Spreng RN, McKinnon MC, Mar RA, Levine B. The Toronto Empathy Questionnaire: Scale development and initial validation of a factor-analytic solution to multiple empathy measures. Journal of Personality Assessment. 2009.; 91 ( 1 ): 62-71."
+      {
+        "citation": "Spreng RN, McKinnon MC, Mar RA, Levine B. The Toronto Empathy Questionnaire: Scale development and initial validation of a factor-analytic solution to multiple empathy measures. Journal of Personality Assessment. 2009.; 91 ( 1 ): 62-71.",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2775495/pdf/nihms-74226.pdf"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/toronto-empathy-questionnaire",

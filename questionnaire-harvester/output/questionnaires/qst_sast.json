@@ -34,7 +34,9 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "© 2008 PJ Carnes, Sexual Addiction Screening Test - Revised."
+      {
+        "citation": "© 2008 PJ Carnes, Sexual Addiction Screening Test - Revised."
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/sast",

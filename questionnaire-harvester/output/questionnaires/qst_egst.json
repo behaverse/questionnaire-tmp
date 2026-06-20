@@ -38,7 +38,9 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "R IF Brown ( 1991 ). Gaming, gambling and other addictive play. See JH Kerr & MJ Apter. Adult place: A reversal theory approach (pp. 101-118)."
+      {
+        "citation": "R IF Brown ( 1991 ). Gaming, gambling and other addictive play. See JH Kerr & MJ Apter. Adult place: A reversal theory approach (pp. 101-118)."
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/excessive-gaming-screening-tool",

@@ -38,8 +38,13 @@
     "x_license_status": "unknown",
     "x_redistribution": "unknown",
     "x_references": [
-      "M Hamilton. The Assessment of Anxiety States by Rating. 32 Br J Med Psychol 50-55. 1959.",
-      "W Maier, R Buller, M Philipp, & I Heuser. The Hamilton Anxiety Scale: Reliability, Validity and Sensitivity to Change in Anxiety and Depressive Disorders. 14 ( 1 ) J Affect Disord 61-68. 1988."
+      {
+        "citation": "M Hamilton. The Assessment of Anxiety States by Rating. 32 Br J Med Psychol 50-55. 1959."
+      },
+      {
+        "citation": "W Maier, R Buller, M Philipp, & I Heuser. The Hamilton Anxiety Scale: Reliability, Validity and Sensitivity to Change in Anxiety and Depressive Disorders. 14 ( 1 ) J Affect Disord 61-68. 1988.",
+        "url": "http://www.ncbi.nlm.nih.gov/pubmed/2963053"
+      }
     ],
     "x_source_site": "psychology-tools.com",
     "x_source_url": "https://psychology-tools.com/test/hamilton-anxiety-rating-scale",
