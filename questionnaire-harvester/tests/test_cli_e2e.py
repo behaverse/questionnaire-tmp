@@ -254,3 +254,25 @@ def test_document_scoring_cli_uniform(tmp_path):
     block = json.loads((sc / "qst_gad7.md").read_text().split("```json", 1)[1].split("```", 1)[0])
     assert block["uniform_scale"] is True
     assert block["option_scales"][0]["values"] == [0, 1, 2, 3]
+
+
+def test_review_export_cli_lsas(tmp_path):
+    from harvester import cli
+    rev = tmp_path / "import_review"
+    assert cli.main(["review-export", "--out", "questionnaire-harvester/output",
+                     "--review-dir", str(rev), "--id", "qst_lsas"]) == 0
+    doc = (rev / "qst_lsas.md").read_text()
+    assert "psychology-tools.com/test/liebowitz-social-anxiety-scale" in doc
+    assert "1. **" in doc and "48. **" in doc
+    assert "dimension: fear" in doc and "dimension: avoidance" in doc
+    readme = (rev / "README.md").read_text()
+    assert readme.count("- [ ]") == 158
+
+def test_review_export_cli_gad7(tmp_path):
+    from harvester import cli
+    rev = tmp_path / "import_review"
+    assert cli.main(["review-export", "--out", "questionnaire-harvester/output",
+                     "--review-dir", str(rev), "--id", "qst_gad7"]) == 0
+    doc = (rev / "qst_gad7.md").read_text()
+    assert "## Items" in doc
+    assert "(0)" in doc          # a choice option line rendered with weights

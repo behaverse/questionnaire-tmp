@@ -41,11 +41,20 @@ def main(argv=None) -> int:
     ds.add_argument("--out", default="questionnaire-harvester/output")
     ds.add_argument("--scoring", default="questionnaire-harvester/scoring")
     ds.add_argument("--id", dest="qst_id", default=None, help="only this questionnaire id")
+    rv = sub.add_parser("review-export")
+    rv.add_argument("--out", default="questionnaire-harvester/output")
+    rv.add_argument("--review-dir", default="questionnaire-harvester/import_review")
+    rv.add_argument("--id", dest="qst_id", default=None, help="only this questionnaire id")
     a = ap.parse_args(argv)
     if a.cmd == "document-scoring":
         from harvester.scoring_doc import write_scoring_docs
         ids = write_scoring_docs(Path(a.out), Path(a.scoring), only_id=a.qst_id)
         print(f"wrote {len(ids)} scoring doc(s)")
+        return 0
+    if a.cmd == "review-export":
+        from harvester.review_export import write_review_export
+        ids = write_review_export(Path(a.out), Path(a.review_dir), only_id=a.qst_id)
+        print(f"wrote {len(ids)} review doc(s) + README")
         return 0
     if a.cmd != "harvest":
         return 2
