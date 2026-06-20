@@ -10,6 +10,10 @@ import { makeBindings, filterPageVisible } from '../logic/visibility'
 import { applyPiping } from '../logic/piping'
 import { collectPerQuestionErrors, collectCrossQuestionErrors } from '../logic/validation'
 import type { LogicRule, CrossQuestionValidationRule } from '../model/types'
+import { useScoreCache } from './useScoreCache'
+import { useEditorStore } from '../state/store'
+import { isKnownScorer } from '../logic/scorers/registry'
+import type { EvalValue } from '../logic/types'
 
 const STRINGS: RendererStrings = { required: 'Required', unsupported: 'Unsupported element' }
 
@@ -33,11 +37,39 @@ export function PreviewView({ runtime, problems, logic, validation, initialLocal
   const [scope, setScope] = useState<'page' | 'all'>(initialScope)
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({})
   const evaluator = useEvaluator()
+  const cache = useScoreCache(runtime)
+  const setPreviewScores = useEditorStore((s) => s.setPreviewScores)
+
+  // refresh BEFORE bindings so score() is current in this render
+  if (cache && evaluator) cache.refresh(answers as Record<string, never>, evaluator)
+  const scoreResolver = cache?.resolver ?? { score: () => null }
+
+  // publish computed scores + unavailable list to the store
+  useEffect(() => {
+    if (!cache || !evaluator) {
+      // If there are authored scores with unknown scorers, still publish the unavailable list
+      const unavailable = [...new Set(((runtime.scores ?? []) as { scorer: string }[])
+        .map((s) => s.scorer).filter((ref) => !isKnownScorer(ref)))]
+      if (unavailable.length > 0) {
+        setPreviewScores({ values: {}, unavailable })
+      }
+      return
+    }
+    const values: Record<string, EvalValue> = {}
+    for (const s of runtime.scores ?? []) values[s.id] = cache.resolver.score(s.id)
+    const unavailable = [...new Set(((runtime.scores ?? []) as { scorer: string }[])
+      .map((s) => s.scorer).filter((ref) => !isKnownScorer(ref)))]
+    setPreviewScores({ values, unavailable })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cache, answers, evaluator])
+
+  // clear on unmount
+  useEffect(() => () => setPreviewScores(null), [setPreviewScores])
 
   const locales = runtime.available_locales ?? [runtime.metadata.language]
   const pageId = selectedPageId ?? runtime.pages[0]?.id
   const pages = scope === 'all' ? runtime.pages : runtime.pages.filter((p) => p.id === pageId)
-  const bindings = makeBindings(answers as Record<string, unknown>, { score: () => null })
+  const bindings = makeBindings(answers as Record<string, unknown>, scoreResolver)
   const pipedPages = evaluator ? pages.map((p) => applyPiping(p, logic, evaluator, bindings, locale)) : pages
   const visiblePages = evaluator ? pipedPages.map((p) => filterPageVisible(p, evaluator, bindings, logic)) : pipedPages
   const verrors = collectPerQuestionErrors(visiblePages, answers)
