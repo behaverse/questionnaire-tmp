@@ -134,7 +134,7 @@ export function TranslationWorkbench({ onExit, client, translate = translateText
         </div>
       )}
 
-      <div className="flex-1 overflow-auto p-4">
+      <div className="flex-1 overflow-auto bg-ed-surface p-5">
         {!result && <div className="text-sm text-ed-muted">Pick a type and a target language, then Load.</div>}
         {result && result.items.length === 0 && <div className="text-sm text-ed-muted">Nothing untranslated for {target.trim()} in {kind}.</div>}
         {result?.items.map((e) => {
@@ -142,26 +142,29 @@ export function TranslationWorkbench({ onExit, client, translate = translateText
           const srcFields = entityFields(body, kind, source.trim())
           const tgtFields = entityFields(body, kind, target.trim())
           return (
-            <div key={e.id} className="mb-4 rounded border border-ed-border">
-              <div className="flex items-center gap-2 border-b border-ed-border bg-ed-subtle px-3 py-1 text-xs text-ed-muted">
-                <span>{kind}</span><span className="font-mono">{e.id}@{e.version}</span>
+            <div key={e.id} className="mb-5 overflow-hidden rounded-lg border border-ed-border bg-ed-panel shadow-sm">
+              <div className="flex items-center gap-2 border-b border-ed-border bg-ed-subtle px-4 py-2 text-xs">
+                <span className="rounded bg-ed-accent-soft px-1.5 py-0.5 font-medium text-ed-accent">{kind}</span>
+                <span className="truncate font-mono text-ed-muted">{e.id}@{e.version}</span>
               </div>
               {srcFields.map((sf, fi) => {
                 const k = rowKey(e.id, fi)
                 return (
-                  <div key={k} className="grid grid-cols-[7rem_1fr_1fr_auto] items-start gap-2 px-3 py-2">
-                    <span className="pt-1 text-xs text-ed-muted">{sf.label}</span>
-                    <div className="whitespace-pre-wrap pt-1 text-sm text-ed-muted">{sf.value || <span className="text-ed-muted/50">(empty)</span>}</div>
-                    <textarea aria-label={`target ${e.id} ${fi}`} key={`${k}:${bump[k] ?? 0}`} rows={1}
-                              defaultValue={tgtFields[fi]?.value ?? ''}
-                              onChange={(ev) => writeField(e, fi, ev.target.value)}
-                              className="w-full rounded border border-ed-border-strong px-2 py-1 text-sm" />
-                    <div className="flex flex-col items-end gap-1">
-                      <button aria-label="Auto" onClick={() => void autoField(e, fi)} disabled={busy[k] || !sf.value.trim()}
-                              className="rounded border border-ed-border-strong px-2 py-0.5 text-xs hover:bg-ed-subtle disabled:opacity-40">
-                        {busy[k] ? '…' : 'Auto'}
-                      </button>
-                      {rowErr[k] && <span className="text-[10px] text-red-600">{rowErr[k]}</span>}
+                  <div key={k} className="grid grid-cols-[6.5rem_minmax(0,1fr)_minmax(0,1fr)] items-start gap-x-4 gap-y-2 border-t border-ed-border px-4 py-3.5 first:border-t-0">
+                    <span className="pt-2 text-xs font-medium text-ed-muted">{sf.label}</span>
+                    <div className="whitespace-pre-wrap pt-2 text-sm leading-relaxed text-ed-text">{sf.value || <span className="italic text-ed-muted/60">(empty)</span>}</div>
+                    <div className="flex flex-col gap-2">
+                      <textarea aria-label={`target ${e.id} ${fi}`} key={`${k}:${bump[k] ?? 0}`} rows={2}
+                                defaultValue={tgtFields[fi]?.value ?? ''}
+                                onChange={(ev) => writeField(e, fi, ev.target.value)}
+                                className="min-h-[3.5rem] w-full resize-y rounded-md border border-ed-border-strong bg-ed-surface px-3 py-2 text-sm leading-relaxed text-ed-text shadow-sm outline-none transition-colors focus:border-ed-accent focus:ring-2 focus:ring-ed-accent-soft" />
+                      <div className="flex items-center gap-2">
+                        <button aria-label="Auto" onClick={() => void autoField(e, fi)} disabled={busy[k] || !sf.value.trim()}
+                                className="rounded-md border border-ed-border-strong bg-ed-surface px-3 py-1 text-xs font-medium text-ed-text hover:bg-ed-subtle disabled:opacity-40">
+                          {busy[k] ? '…' : 'Auto'}
+                        </button>
+                        {rowErr[k] && <span className="text-[11px] font-medium text-ed-danger">{rowErr[k]}</span>}
+                      </div>
                     </div>
                   </div>
                 )
