@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       '@behaverse/questionnaire-renderer/style.css': resolve(distLib, 'renderer.css'),
       '@behaverse/questionnaire-renderer': resolve(distLib, 'renderer.js'),
+      '@behaverse/questionnaire-scorer': resolve(distLib, 'scoring.js'),
     },
   },
   build: {

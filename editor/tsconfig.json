@@ -15,7 +15,10 @@
     "noUnusedParameters": true,
     "types": [],
     "baseUrl": ".",
-    "paths": { "@behaverse/questionnaire-renderer": ["../web-viewer/dist-lib/lib.d.ts"] }
+    "paths": {
+      "@behaverse/questionnaire-renderer": ["../web-viewer/dist-lib/renderer/lib.d.ts"],
+      "@behaverse/questionnaire-scorer": ["../web-viewer/dist-lib/scoring/lib.d.ts"]
+    }
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/vitest.setup.ts"],

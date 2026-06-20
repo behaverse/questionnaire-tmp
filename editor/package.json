@@ -4,14 +4,14 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/ensure-renderer.mjs && node scripts/build-evaluator.mjs",
+    "predev": "node scripts/ensure-renderer.mjs && node scripts/build-evaluator.mjs && node scripts/ensure-scorers.mjs",
     "dev": "vite",
-    "prebuild": "node scripts/ensure-renderer.mjs && node scripts/build-evaluator.mjs",
+    "prebuild": "node scripts/ensure-renderer.mjs && node scripts/build-evaluator.mjs && node scripts/ensure-scorers.mjs",
     "build": "tsc -b && tsc -p tsconfig.test.json && vite build",
-    "pretypecheck": "node scripts/ensure-renderer.mjs",
+    "pretypecheck": "node scripts/ensure-renderer.mjs && node scripts/ensure-scorers.mjs",
     "typecheck": "tsc -b && tsc -p tsconfig.test.json",
     "preview": "vite preview --port 4175",
-    "pretest": "node scripts/ensure-renderer.mjs",
+    "pretest": "node scripts/ensure-renderer.mjs && node scripts/ensure-scorers.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test"
