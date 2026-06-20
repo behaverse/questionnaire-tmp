@@ -36,6 +36,16 @@ describe('TranslationWorkbench', () => {
     await waitFor(() => expect((screen.getByLabelText('status pr_a') as HTMLSelectElement).value).toBe('complete'))
   })
 
+  it('locks the target inputs (read-only) once an entity is marked complete', async () => {
+    render(<TranslationWorkbench onExit={() => {}} client={client} translate={translate as never} />)
+    fireEvent.change(screen.getByLabelText('Target language'), { target: { value: 'fr' } })
+    fireEvent.click(screen.getByRole('button', { name: /^load$/i }))
+    await waitFor(() => expect(screen.getByText('How are you?')).toBeInTheDocument())
+    expect(screen.getByRole('textbox', { name: /target pr_a/ })).not.toHaveAttribute('readonly')
+    fireEvent.change(screen.getByLabelText('status pr_a'), { target: { value: 'complete' } })
+    await waitFor(() => expect(screen.getByRole('textbox', { name: /target pr_a/ })).toHaveAttribute('readonly'))
+  })
+
   it('filters entities with the search box', async () => {
     render(<TranslationWorkbench onExit={() => {}} client={client} translate={translate as never} />)
     fireEvent.change(screen.getByLabelText('Target language'), { target: { value: 'fr' } })
