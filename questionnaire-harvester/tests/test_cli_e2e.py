@@ -11,7 +11,7 @@ def test_gad7_harvest_reuses_phq_scale_and_validates(tmp_path, monkeypatch):
     # seed dedup index with the PHQ frequency scale so GAD-7 must reuse it
     idx = REPO / "questionnaire-harvester" / "dedup" / "scales-index.json"
     rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/anxiety-gad7.html",
-                   "--out", str(out), "--scales-index", str(idx),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"), "--scales-index", str(idx),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
                    "--schemas", str(REPO / "schemas"), "--version", "v26.0617"])
@@ -35,7 +35,7 @@ def test_id_override_resolves_collision(tmp_path, monkeypatch):
     idx = REPO / "questionnaire-harvester" / "dedup" / "scales-index.json"
     rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/anxiety-gad7.html",
                    "--id", "qst_custom",
-                   "--out", str(out), "--scales-index", str(idx),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"), "--scales-index", str(idx),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
                    "--schemas", str(REPO / "schemas"), "--version", "v26.0617"])
@@ -50,7 +50,7 @@ def test_range_slider_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/happiness-shs.html",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -71,7 +71,7 @@ def test_multiradio_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/narcism-npi16.html",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -93,7 +93,7 @@ def test_radio_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/depression-epds.html",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -115,7 +115,7 @@ def test_check_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://us.psytoolkit.org/survey-library/children-happiness.html",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -136,7 +136,7 @@ def test_psychology_tools_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-worry-questionnaire",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -157,7 +157,7 @@ def test_psychology_tools_alt_layout_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-mania-rating-scale",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -178,7 +178,7 @@ def test_psychology_tools_references_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-worry-scale",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -195,7 +195,7 @@ def test_psychology_tools_stemless_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-eating-scale",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
@@ -218,7 +218,7 @@ def test_psychology_tools_dimension_harvest_validates(tmp_path, monkeypatch):
     monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
     out = tmp_path / "output"; out.mkdir()
     rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-two-dimension-scale",
-                   "--out", str(out),
+                   "--out", str(out), "--source-metadata", str(out.parent / "source_metadata"),
                    "--scales-index", str(tmp_path / "missing-index.json"),
                    "--register", str(tmp_path / "register.md"),
                    "--questions", str(tmp_path / "questions"),
