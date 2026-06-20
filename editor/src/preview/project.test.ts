@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { projectForPreview } from './project'
 import type { Lookup } from './resolve'
 import type { Questionnaire } from '../model/types'
@@ -33,4 +34,24 @@ test('reports unresolved refs as problems but still returns a runtime', () => {
   const { runtime, problems } = projectForPreview(model, () => null)
   expect(problems.length).toBeGreaterThan(0)
   expect(runtime.pages[0].elements.length).toBe(1)
+})
+
+const noLookup = () => null
+
+describe('projectForPreview scores', () => {
+  it('projects known scorers with a bundled impl and drops unknown ones', () => {
+    const model = {
+      metadata: { id: 'qst_x', title: 'X', language: 'en' },
+      pages: [],
+      scores: [
+        { id: 'phq9_total', scorer: 'scr_phq9@v26.0602', path: '/total', name: 'Total' },
+        { id: 'other', scorer: 'scr_unknown@v26.0602', path: '/x' },
+      ],
+    } as unknown as Questionnaire
+    const { runtime } = projectForPreview(model, noLookup)
+    expect(runtime.scores).toEqual([
+      { id: 'phq9_total', scorer: 'scr_phq9@v26.0602', path: '/total', name: 'Total',
+        impl: { kind: 'wasm', url: '/scorers/phq9.wasm', sha256: 'd5a9aee827b03eb261de8c6ee6aec7d96682909e3ab47cad9361ed77943c505f' } },
+    ])
+  })
 })
