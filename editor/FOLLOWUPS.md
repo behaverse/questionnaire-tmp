@@ -707,3 +707,12 @@ ED-J2 added a database-wide Translation Workbench (start-screen card → `editor
 - ed-j2-5: `stripStatus` is a shallow strip (no nested empty cleanup beyond the options-array case now handled).
 - ed-j2-6: no per-entity load-progress indicator while the (throttled, capped-300) body fetch runs.
 - Option-export path now has bundle tests (placeholder drop); a workbench component/e2e test still only exercises the prompt path.
+
+## ED-D4b (live score preview) — deferred (final-review triage, 2026-06-20)
+ED-D4b made scorers run live in the inline preview (Approach B: web-viewer exports its scoring engine as `@behaverse/questionnaire-renderer/scoring`; the editor reuses `compileScorers`/`makeScoreCache` to run the bundled reference PHQ-9 wasm). The ScoringPanel shows live values + `score(id)` in show_if/logic/validation is live; unknown scorers degrade to "unavailable in preview". `impl` is preview-only (never authored). Loadable PHQ-9 sample added. Final review APPROVE-WITH-FOLLOWUPS (no Critical/Important). Two bugs found+fixed in verification: useScoreCache index-rebuild (commit 657a02ca) + integer sample option values. Deferred minors:
+- ed-d4b-1: ScoringPanel "Open the preview…" hint shows even with 0 scores (alongside "No scores yet.").
+- ed-d4b-2: the "Load PHQ-9 sample" StartScreen card lacks an icon (sibling cards have one).
+- ed-d4b-3: no standalone Ajv unit test asserting `phq9.bundle.json` is Schema-2-valid (the e2e loads it through the real validation path; covered end-to-end, not in isolation).
+- ed-d4b-4: `useScoreCache` does `JSON.stringify(runtime.pages)` per render for the structure key — fine at editor scale (runtime is memoized in PreviewPane so it's referentially stable), but a lighter structure key (e.g. item-id+prompt-id list) would scale better for very large questionnaires.
+- ed-d4b-5: PreviewView's score-cache unit test only covers the unknown-scorer/unmount branch (jsdom can't run wasm); the live-value path is covered by the e2e + the useScoreCache node integration test.
+- Scope note: only scorers whose wasm the editor bundles preview live (today: `scr_phq9`). Running Library-served scorers needs the Library to serve scorer wasm (owner-gated, separate).
