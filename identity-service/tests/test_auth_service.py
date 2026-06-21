@@ -63,3 +63,60 @@ def jwks_verify(conn, token, s):
     doc = jwks.public_jwks(conn)
     return tokens.verify_access(token, public_jwk=doc["keys"][0],
                                 audience="questionnaire-apps", issuer=s.issuer)
+
+
+def test_verify_email_consumes_and_sets_flag(conn):
+    s = _bootstrap(conn); m = NullMailer()
+    auth.register(conn, s, m, email="vera@e.com", password="pw1",
+                  display_name="Vera", audience="questionnaire-apps")
+    # extract raw token from mailer body "verify token: <raw>"
+    body = m.sent[0][2]
+    raw = body.split("verify token: ", 1)[1].strip()
+
+    auth.verify_email(conn, token=raw)
+
+    from identity_service.store import users as ustore
+    user = ustore.by_email(conn, "vera@e.com")
+    assert user["email_verified"] is True
+
+    # consume-once: second call with same token must raise InvalidToken
+    with pytest.raises(auth.InvalidToken):
+        auth.verify_email(conn, token=raw)
+
+
+def test_reset_password_changes_hash_and_revokes_refresh(conn):
+    s = _bootstrap(conn); m = NullMailer()
+    auth.register(conn, s, m, email="rex@e.com", password="oldpass1",
+                  display_name="Rex", audience="questionnaire-apps")
+
+    toks = auth.login(conn, s, email="rex@e.com", password="oldpass1",
+                      audience="questionnaire-apps")
+    old_refresh = toks["refresh_token"]
+
+    m2 = NullMailer()
+    auth.request_password_reset(conn, s, m2, email="rex@e.com")
+    reset_body = m2.sent[0][2]
+    raw_reset = reset_body.split("reset token: ", 1)[1].strip()
+
+    auth.reset_password(conn, token=raw_reset, new_password="newpassword9")
+
+    # (i) old password no longer works
+    with pytest.raises(auth.InvalidCredentials):
+        auth.login(conn, s, email="rex@e.com", password="oldpass1",
+                   audience="questionnaire-apps")
+
+    # (ii) new password works
+    new_toks = auth.login(conn, s, email="rex@e.com", password="newpassword9",
+                          audience="questionnaire-apps")
+    assert new_toks["token_type"] == "Bearer"
+
+    # (iii) old refresh token is revoked — must raise an AuthError subclass
+    with pytest.raises(auth.AuthError):
+        auth.refresh(conn, s, refresh_token=old_refresh)
+
+
+def test_request_password_reset_no_enumeration(conn):
+    s = _bootstrap(conn); m = NullMailer()
+    result = auth.request_password_reset(conn, s, m, email="nobody@nowhere.com")
+    assert result is None
+    assert m.sent == []

@@ -1,8 +1,6 @@
 import uuid
 from datetime import datetime, timedelta, timezone
 
-import psycopg
-
 from .. import tokens, passwords
 from ..store import users as ustore, clients as cstore, refresh as rstore
 from ..store import keys as kstore, email_tokens as etstore
