@@ -29,7 +29,7 @@
     },
     "short_title": "REI",
     "title": "Rational Experiental Inventory (REI)",
-    "version": "v26.0617",
+    "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
     "x_description_source": "authored",
@@ -47,560 +47,560 @@
       "elements": [
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_1@v26.0617"
+              "ref": "pr_rei_1@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_2@v26.0617"
+              "ref": "pr_rei_2@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_3@v26.0617"
+              "ref": "pr_rei_3@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_4@v26.0617"
+              "ref": "pr_rei_4@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_5@v26.0617"
+              "ref": "pr_rei_5@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_6@v26.0617"
+              "ref": "pr_rei_6@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_7@v26.0617"
+              "ref": "pr_rei_7@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_8@v26.0617"
+              "ref": "pr_rei_8@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_9@v26.0617"
+              "ref": "pr_rei_9@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_10@v26.0617"
+              "ref": "pr_rei_10@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_11@v26.0617"
+              "ref": "pr_rei_11@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_12@v26.0617"
+              "ref": "pr_rei_12@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_13@v26.0617"
+              "ref": "pr_rei_13@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_14@v26.0617"
+              "ref": "pr_rei_14@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_15@v26.0617"
+              "ref": "pr_rei_15@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_16@v26.0617"
+              "ref": "pr_rei_16@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_17@v26.0617"
+              "ref": "pr_rei_17@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_18@v26.0617"
+              "ref": "pr_rei_18@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_19@v26.0617"
+              "ref": "pr_rei_19@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_20@v26.0617"
+              "ref": "pr_rei_20@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_21@v26.0617"
+              "ref": "pr_rei_21@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_22@v26.0617"
+              "ref": "pr_rei_22@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_23@v26.0617"
+              "ref": "pr_rei_23@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_24@v26.0617"
+              "ref": "pr_rei_24@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_25@v26.0617"
+              "ref": "pr_rei_25@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_26@v26.0617"
+              "ref": "pr_rei_26@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_27@v26.0617"
+              "ref": "pr_rei_27@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_28@v26.0617"
+              "ref": "pr_rei_28@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_29@v26.0617"
+              "ref": "pr_rei_29@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_30@v26.0617"
+              "ref": "pr_rei_30@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_31@v26.0617"
+              "ref": "pr_rei_31@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_32@v26.0617"
+              "ref": "pr_rei_32@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_33@v26.0617"
+              "ref": "pr_rei_33@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_34@v26.0617"
+              "ref": "pr_rei_34@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_35@v26.0617"
+              "ref": "pr_rei_35@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_36@v26.0617"
+              "ref": "pr_rei_36@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_37@v26.0617"
+              "ref": "pr_rei_37@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_38@v26.0617"
+              "ref": "pr_rei_38@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_39@v26.0617"
+              "ref": "pr_rei_39@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_rei_rei_agree_5@v26.0617"
+            "ref": "opt_rei_rei_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_rei_instruction@v26.0617"
+              "ref": "ins_rei_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_rei_40@v26.0617"
+              "ref": "pr_rei_40@v26.0618"
             }
           },
           "required": true

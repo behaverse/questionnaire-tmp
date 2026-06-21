@@ -29,7 +29,7 @@
     },
     "short_title": "BRS",
     "title": "Resilience (BRS)",
-    "version": "v26.0617",
+    "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
     "x_description_source": "authored",
@@ -47,84 +47,84 @@
       "elements": [
         {
           "option": {
-            "ref": "opt_brs_agree_5@v26.0617"
+            "ref": "opt_brs_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_brs_instruction@v26.0617"
+              "ref": "ins_brs_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_brs_1@v26.0617"
+              "ref": "pr_brs_1@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_brs_agree_5@v26.0617"
+            "ref": "opt_brs_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_brs_instruction@v26.0617"
+              "ref": "ins_brs_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_brs_2@v26.0617"
+              "ref": "pr_brs_2@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_brs_agree_5@v26.0617"
+            "ref": "opt_brs_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_brs_instruction@v26.0617"
+              "ref": "ins_brs_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_brs_3@v26.0617"
+              "ref": "pr_brs_3@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_brs_agree_5@v26.0617"
+            "ref": "opt_brs_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_brs_instruction@v26.0617"
+              "ref": "ins_brs_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_brs_4@v26.0617"
+              "ref": "pr_brs_4@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_brs_agree_5@v26.0617"
+            "ref": "opt_brs_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_brs_instruction@v26.0617"
+              "ref": "ins_brs_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_brs_5@v26.0617"
+              "ref": "pr_brs_5@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_brs_agree_5@v26.0617"
+            "ref": "opt_brs_agree_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_brs_instruction@v26.0617"
+              "ref": "ins_brs_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_brs_6@v26.0617"
+              "ref": "pr_brs_6@v26.0618"
             }
           },
           "required": true

@@ -29,7 +29,7 @@
     },
     "short_title": "SQS",
     "title": "Single-Item Sleep Quality Scale (SQS)",
-    "version": "v26.0617",
+    "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
     "x_description_source": "authored",
@@ -47,14 +47,14 @@
       "elements": [
         {
           "option": {
-            "ref": "opt_sqs_sqsitems_11@v26.0617"
+            "ref": "opt_sqs_sqsitems_11@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_sqs_instruction@v26.0617"
+              "ref": "ins_sqs_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_sqs_1@v26.0617"
+              "ref": "pr_sqs_1@v26.0618"
             }
           },
           "required": true

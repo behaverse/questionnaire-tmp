@@ -29,7 +29,7 @@
     },
     "short_title": "GPTS",
     "title": "Green et al. Paranoid Thought Scales (GPTS)",
-    "version": "v26.0617",
+    "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
     "x_description_source": "authored",
@@ -47,448 +47,448 @@
       "elements": [
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_1@v26.0617"
+              "ref": "pr_gpts_1@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_2@v26.0617"
+              "ref": "pr_gpts_2@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_3@v26.0617"
+              "ref": "pr_gpts_3@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_4@v26.0617"
+              "ref": "pr_gpts_4@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_5@v26.0617"
+              "ref": "pr_gpts_5@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_6@v26.0617"
+              "ref": "pr_gpts_6@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_7@v26.0617"
+              "ref": "pr_gpts_7@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_8@v26.0617"
+              "ref": "pr_gpts_8@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_9@v26.0617"
+              "ref": "pr_gpts_9@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_10@v26.0617"
+              "ref": "pr_gpts_10@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_11@v26.0617"
+              "ref": "pr_gpts_11@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_12@v26.0617"
+              "ref": "pr_gpts_12@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_13@v26.0617"
+              "ref": "pr_gpts_13@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_14@v26.0617"
+              "ref": "pr_gpts_14@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_15@v26.0617"
+              "ref": "pr_gpts_15@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_16@v26.0617"
+              "ref": "pr_gpts_16@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_17@v26.0617"
+              "ref": "pr_gpts_17@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_18@v26.0617"
+              "ref": "pr_gpts_18@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_19@v26.0617"
+              "ref": "pr_gpts_19@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_20@v26.0617"
+              "ref": "pr_gpts_20@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_21@v26.0617"
+              "ref": "pr_gpts_21@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_22@v26.0617"
+              "ref": "pr_gpts_22@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_23@v26.0617"
+              "ref": "pr_gpts_23@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_24@v26.0617"
+              "ref": "pr_gpts_24@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_25@v26.0617"
+              "ref": "pr_gpts_25@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_26@v26.0617"
+              "ref": "pr_gpts_26@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_27@v26.0617"
+              "ref": "pr_gpts_27@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_28@v26.0617"
+              "ref": "pr_gpts_28@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_29@v26.0617"
+              "ref": "pr_gpts_29@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_30@v26.0617"
+              "ref": "pr_gpts_30@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_31@v26.0617"
+              "ref": "pr_gpts_31@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gpts_much_5@v26.0617"
+            "ref": "opt_gpts_much_5@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gpts_instruction@v26.0617"
+              "ref": "ins_gpts_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gpts_32@v26.0617"
+              "ref": "pr_gpts_32@v26.0618"
             }
           },
           "required": true

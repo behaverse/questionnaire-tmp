@@ -29,7 +29,7 @@
     },
     "short_title": "GSE",
     "title": "Generalized Self Efficacy scale (GSE)",
-    "version": "v26.0617",
+    "version": "v26.0618",
     "x_author_contact_needed": true,
     "x_commercial_use": "unknown",
     "x_description_source": "authored",
@@ -47,140 +47,140 @@
       "elements": [
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_1@v26.0617"
+              "ref": "pr_gse_1@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_2@v26.0617"
+              "ref": "pr_gse_2@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_3@v26.0617"
+              "ref": "pr_gse_3@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_4@v26.0617"
+              "ref": "pr_gse_4@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_5@v26.0617"
+              "ref": "pr_gse_5@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_6@v26.0617"
+              "ref": "pr_gse_6@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_7@v26.0617"
+              "ref": "pr_gse_7@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_8@v26.0617"
+              "ref": "pr_gse_8@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_9@v26.0617"
+              "ref": "pr_gse_9@v26.0618"
             }
           },
           "required": true
         },
         {
           "option": {
-            "ref": "opt_gse_true_4@v26.0617"
+            "ref": "opt_gse_true_4@v26.0618"
           },
           "question": {
             "instruction": {
-              "ref": "ins_gse_instruction@v26.0617"
+              "ref": "ins_gse_instruction@v26.0618"
             },
             "prompt": {
-              "ref": "pr_gse_10@v26.0617"
+              "ref": "pr_gse_10@v26.0618"
             }
           },
           "required": true
