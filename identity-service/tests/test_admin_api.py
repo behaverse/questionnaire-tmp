@@ -66,3 +66,33 @@ def test_invalid_role_rejected(client, pg_url):
     r = client.post(f"/v1/admin/users/{uid}/roles", headers=H,
                     json={"client": "questionnaire-apps", "role": "wizard"})
     assert r.status_code == 422
+
+
+def test_admin_cannot_grant_in_other_audience(client, pg_url):
+    """Admin of questionnaire-apps must NOT be able to grant roles in another client."""
+    _bootstrap_admin(pg_url)
+
+    # Create a second client directly via the store
+    with psycopg.connect(pg_url) as c:
+        cstore.create(c, "other-project", "Other Project")
+        c.commit()
+
+    # Admin token is scoped to questionnaire-apps (that is where they hold administrator)
+    tok = _admin_token(client)
+    H = {"Authorization": f"Bearer {tok}"}
+
+    # Register a plain user to be the target of the grant attempt
+    client.post("/v1/auth/register", json={
+        "email": "plain@e.com", "password": "password1", "audience": "questionnaire-apps"})
+    users = client.get("/v1/admin/users", headers=H).json()["users"]
+    target = next(u for u in users if u["email"] == "plain@e.com")
+
+    # Attempt to grant a role in other-project — must be 403
+    r = client.post(f"/v1/admin/users/{target['id']}/roles", headers=H,
+                    json={"client": "other-project", "role": "reviewer"})
+    assert r.status_code == 403, f"Expected 403, got {r.status_code}: {r.text}"
+
+    # Granting in questionnaire-apps (where caller IS admin) must still work
+    r2 = client.post(f"/v1/admin/users/{target['id']}/roles", headers=H,
+                     json={"client": "questionnaire-apps", "role": "reviewer"})
+    assert r2.status_code == 204

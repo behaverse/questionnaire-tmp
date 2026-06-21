@@ -31,12 +31,14 @@ def get_user(user_id: str, _=Depends(require_admin), conn=Depends(get_conn)):
 
 
 @router.post("/v1/admin/users/{user_id}/roles", status_code=204)
-def grant_role(user_id: str, body: RoleIn, _=Depends(require_admin), conn=Depends(get_conn)):
+def grant_role(user_id: str, body: RoleIn, claims=Depends(require_admin), conn=Depends(get_conn)):
     if not is_valid(body.role):
         raise HTTPException(status_code=422, detail="unknown role")
     client = cstore.by_slug(conn, body.client)
     if client is None:
         raise HTTPException(status_code=404, detail="unknown client")
+    if "administrator" not in ustore.roles_for(conn, claims["sub"], client["id"]):
+        raise HTTPException(status_code=403, detail="administrator role required in the target audience")
     if ustore.by_id(conn, user_id) is None:
         raise HTTPException(status_code=404, detail="user not found")
     ustore.grant_role(conn, user_id, client["id"], body.role)
@@ -44,10 +46,12 @@ def grant_role(user_id: str, body: RoleIn, _=Depends(require_admin), conn=Depend
 
 
 @router.delete("/v1/admin/users/{user_id}/roles", status_code=204)
-def revoke_role(user_id: str, body: RoleIn, _=Depends(require_admin), conn=Depends(get_conn)):
+def revoke_role(user_id: str, body: RoleIn, claims=Depends(require_admin), conn=Depends(get_conn)):
     client = cstore.by_slug(conn, body.client)
     if client is None:
         raise HTTPException(status_code=404, detail="unknown client")
+    if "administrator" not in ustore.roles_for(conn, claims["sub"], client["id"]):
+        raise HTTPException(status_code=403, detail="administrator role required in the target audience")
     ustore.revoke_role(conn, user_id, client["id"], body.role)
     conn.commit()
 
