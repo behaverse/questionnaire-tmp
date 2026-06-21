@@ -84,6 +84,16 @@ license flagging, with the compliance burden disclosed to the end user.
 
 ## 4. Project policy (what the harvester does)
 
+> **Deployment status (2026-06-21):** all 158 harvested questionnaires have been **published live**
+> on the Library web app (`questionnaire-library.vercel.app`). **157/158 carry `license: unknown`**
+> (only PHQ-9 is `public_domain`). This was an explicit owner decision to **publish ahead of** the
+> per-questionnaire licensing/review pass, accepting the exposure and planning to correct or withdraw
+> during review. Consequences: (a) the §6 site-wide disclaimer is now **load-bearing** and must remain
+> on the live UI; (b) `library ingest` marks everything `status='published'` (no draft state), so the
+> only post-hoc lever is **withdrawal**; (c) resolving licensing per questionnaire is the top open
+> risk (tracked in `HANDOFF.md`). This deviates from the "promotion after owner review" flow the rest
+> of this section describes — recorded here for the audit trail.
+
 Owner decision: **capture content in full regardless of license**, and manage risk through
 **disclosure and flagging**, not omission.
 

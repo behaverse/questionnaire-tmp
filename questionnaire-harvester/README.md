@@ -5,7 +5,14 @@ creating duplicate shared entities** (response scales, instructions).
 
 **Isolation guarantee:** the harvester writes only to `output/` (tracked, staged for
 review). It never touches the Library database. Promotion to the Library is a **separate
-manual step** (`library ingest`) performed after owner review.
+manual step** (`library ingest --release v26.0618`).
+
+**Status (2026-06-21): DEPLOYED.** All 158 are ingested and **live** on the Library web app
+(`questionnaire-library.vercel.app`), alongside the survey_db catalogue. ⚠ **157/158 are
+`license: unknown`** — published per an explicit owner decision *ahead of* the content-review /
+licensing pass, to be corrected or withdrawn during review. See `about_licenses.md` (§4 Status)
+and `HANDOFF.md`. The site-wide license disclaimer (`about_licenses.md` §6) is load-bearing while
+unknown-license content is served.
 
 **Harvested so far (158):** `psytoolkit.org` (117), `psychology-tools.com` (40),
 `phqscreeners.com` (1 — PHQ-9, curated). Two source adapters (`PsyToolkitAdapter`,
