@@ -26,17 +26,13 @@ def create_app() -> FastAPI:
 
     @app.exception_handler(HTTPException)
     async def _http_exc(request: Request, exc: HTTPException):
-        # If detail is a string error code (from AuthError), use it as-is; otherwise
-        # fall back to the generic HTTP status code label.
         detail = exc.detail
-        if isinstance(detail, str) and detail.replace("_", "").isalpha():
-            code = detail
-            message = detail
-        else:
-            code = _CODE_FOR.get(exc.status_code, "error")
-            message = str(detail)
+        if isinstance(detail, dict) and "code" in detail and "message" in detail:
+            return JSONResponse(status_code=exc.status_code,
+                content={"error": {"code": detail["code"], "message": detail["message"]}})
         return JSONResponse(status_code=exc.status_code,
-            content={"error": {"code": code, "message": message}})
+            content={"error": {"code": _CODE_FOR.get(exc.status_code, "error"),
+                               "message": str(detail)}})
 
     @app.exception_handler(RequestValidationError)
     async def _validation_exc(request: Request, exc: RequestValidationError):

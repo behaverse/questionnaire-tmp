@@ -46,3 +46,4 @@ def test_bad_login_is_401(client, pg_url):
         "email": "a@e.com", "password": "nope", "audience": "questionnaire-apps"})
     assert r.status_code == 401
     assert r.json()["error"]["code"] == "invalid_credentials"
+    assert r.json()["error"]["message"] == "Invalid email or password."

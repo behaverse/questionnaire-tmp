@@ -7,31 +7,31 @@ from ..store import keys as kstore, email_tokens as etstore
 
 
 class AuthError(Exception):
-    code = "auth_error"; status = 400
+    code = "auth_error"; status = 400; message = "authentication error"
 
 
 class InvalidCredentials(AuthError):
-    code = "invalid_credentials"; status = 401
+    code = "invalid_credentials"; status = 401; message = "Invalid email or password."
 
 
 class ReuseDetected(AuthError):
-    code = "refresh_reuse"; status = 401
+    code = "refresh_reuse"; status = 401; message = "Refresh token reuse detected; the session family has been revoked."
 
 
 class UnknownClient(AuthError):
-    code = "unknown_client"; status = 400
+    code = "unknown_client"; status = 400; message = "Unknown client/audience."
 
 
 class EmailInUse(AuthError):
-    code = "email_in_use"; status = 409
+    code = "email_in_use"; status = 409; message = "That email is already registered."
 
 
 class NoSigningKey(AuthError):
-    code = "no_signing_key"; status = 500
+    code = "no_signing_key"; status = 500; message = "No active signing key is configured."
 
 
 class InvalidToken(AuthError):
-    code = "invalid_token"; status = 400
+    code = "invalid_token"; status = 400; message = "Invalid or expired token."
 
 
 def _client_or_raise(conn, slug):

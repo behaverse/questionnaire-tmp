@@ -14,7 +14,7 @@ def _handle(fn):
     try:
         return fn()
     except auth.AuthError as e:
-        raise HTTPException(status_code=e.status, detail=e.code)
+        raise HTTPException(status_code=e.status, detail={"code": e.code, "message": e.message})
 
 
 @router.post("/v1/auth/register", status_code=201)
