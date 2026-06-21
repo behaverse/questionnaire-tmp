@@ -1,0 +1,30 @@
+[project]
+name = "questionnaire-identity-service"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.29",
+  "psycopg[binary]>=3.1",
+  "psycopg_pool>=3.2",
+  "pydantic>=2.6",
+  "pyjwt[crypto]>=2.8",
+  "argon2-cffi>=23",
+  "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "testcontainers[postgres]>=4.0"]
+
+[project.scripts]
+identity = "identity_service.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
