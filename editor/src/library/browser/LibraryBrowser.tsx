@@ -23,7 +23,7 @@ export function LibraryBrowser({ onExit, client }: { onExit: () => void; client?
   // restore an in-progress session on mount
   useEffect(() => {
     let alive = true
-    void loadLibrarySession().then((s) => { if (alive && s && !restored.current) { restored.current = true; setBodies(s.bodies) } })
+    void loadLibrarySession().then((s) => { if (alive && s && !restored.current) { restored.current = true; originals.current = structuredClone(s.bodies); setBodies(s.bodies) } })
     return () => { alive = false }
   }, [])
 
@@ -37,7 +37,8 @@ export function LibraryBrowser({ onExit, client }: { onExit: () => void; client?
                      else if (alive) { setErr('Entity not found.'); setLoading(false) } })
       .catch(() => { if (alive) { setErr('Could not load this entity.'); setLoading(false) } })
     return () => { alive = false }
-  }, [selected, c, bodies])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected, c])
 
   // autosave the session (debounced) on edit
   useEffect(() => {
@@ -64,7 +65,7 @@ export function LibraryBrowser({ onExit, client }: { onExit: () => void; client?
           <ArrowLeft size={16} aria-hidden="true" /> Back
         </button>
         <span className="font-semibold text-ed-text">Library entities</span>
-        {edited.length > 0 && (
+        {(edited.length > 0 || !saved) && (
           <span className={`flex items-center gap-1 text-xs ${saved ? 'text-ed-muted' : 'text-amber-600'}`}
                 title="Edits autosave to this browser. Use &ldquo;Download contribution&rdquo; to export them.">
             {saved ? <><Check size={12} aria-hidden="true" /> Saved</> : <><RefreshCw size={12} className="animate-spin" aria-hidden="true" /> Saving…</>}
