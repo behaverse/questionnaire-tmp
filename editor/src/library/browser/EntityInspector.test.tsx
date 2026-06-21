@@ -27,7 +27,7 @@ describe('EntityInspector', () => {
     const onChange = vi.fn()
     render(<EntityInspector refStr="pr_a@v1" body={body} loading={false} err="" onChange={onChange} />)
     fireEvent.click(screen.getByRole('tab', { name: /edit/i }))
-    fireEvent.change(screen.getByLabelText(/status/i), { target: { value: 'complete' } })
+    fireEvent.change(screen.getByLabelText('Entity status', { exact: true }), { target: { value: 'complete' } })
     // onChange called with a body whose en.status is complete
     const next = onChange.mock.calls.at(-1)![0] as { content: Record<string, { status?: string }> }
     expect(next.content.en.status).toBe('complete')

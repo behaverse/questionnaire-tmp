@@ -95,7 +95,7 @@ export function EntityInspector({ refStr, body, loading, err, onChange }: {
                    className="w-32 rounded-md border border-ed-border-strong bg-ed-surface px-2 py-1 text-xs" />
             {isEditableType && (
               <label className="flex items-center gap-1.5">Status
-                <select aria-label="Status" value={status} onChange={(e) => setStatus(e.target.value)}
+                <select aria-label="Entity status" value={status} onChange={(e) => setStatus(e.target.value)}
                         className="rounded-md border border-ed-border-strong bg-ed-surface px-2 py-1 text-xs">
                   {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>
