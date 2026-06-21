@@ -356,3 +356,25 @@ def test_harvest_applies_short_title_override(tmp_path, monkeypatch):
     assert rc == 0
     md = json.loads((out / "questionnaires" / "qst_demo.json").read_text())["metadata"]
     assert md["short_title"] == "DSC"
+
+
+def test_apply_short_titles_cli(tmp_path):
+    from library.importers.survey_db.writer import write_entity
+    out = tmp_path / "output"
+    write_entity(out, "questionnaire", {"@context": "x", "metadata": {"id": "qst_z",
+        "title": "T", "short_title": "for adolescents", "description": "d"},
+        "pages": [{"id": "page_main", "elements": []}]})
+    st = tmp_path / "short_titles.json"; st.write_text('{"qst_z": "ABS"}')
+    rc = cli.main(["apply-short-titles", "--out", str(out), "--short-titles", str(st)])
+    assert rc == 0
+    md = json.loads((out / "questionnaires" / "qst_z.json").read_text())["metadata"]
+    assert md["short_title"] == "ABS"
+
+def test_check_short_titles_cli_nonzero_on_junk(tmp_path):
+    from library.importers.survey_db.writer import write_entity
+    out = tmp_path / "output"
+    write_entity(out, "questionnaire", {"@context": "x", "metadata": {"id": "qst_j",
+        "title": "T", "short_title": "revised version", "description": "d"},
+        "pages": [{"id": "page_main", "elements": []}]})
+    rc = cli.main(["check-short-titles", "--out", str(out)])
+    assert rc == 1

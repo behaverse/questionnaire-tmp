@@ -55,6 +55,11 @@ def main(argv=None) -> int:
     cd.add_argument("--out", default="questionnaire-harvester/output")
     cd.add_argument("--descriptions", default="questionnaire-harvester/descriptions")
     cd.add_argument("--source-metadata", default="questionnaire-harvester/source_metadata")
+    ast = sub.add_parser("apply-short-titles")
+    ast.add_argument("--out", default="questionnaire-harvester/output")
+    ast.add_argument("--short-titles", default="questionnaire-harvester/short_titles.json")
+    cst = sub.add_parser("check-short-titles")
+    cst.add_argument("--out", default="questionnaire-harvester/output")
     a = ap.parse_args(argv)
     if a.cmd == "document-scoring":
         from harvester.scoring_doc import write_scoring_docs
@@ -76,6 +81,18 @@ def main(argv=None) -> int:
         flagged = check_descriptions(Path(a.out), Path(a.descriptions), Path(a.source_metadata))
         for f in flagged:
             print(f"FLAG {f['id']}: {'; '.join(f['issues'])}")
+        print(f"{len(flagged)} flagged")
+        return 1 if flagged else 0
+    if a.cmd == "apply-short-titles":
+        from harvester.short_titles import apply_short_titles_to_output
+        ids = apply_short_titles_to_output(Path(a.out), Path(a.short_titles))
+        print(f"applied {len(ids)} short_title override(s)")
+        return 0
+    if a.cmd == "check-short-titles":
+        from harvester.short_titles import check_short_titles
+        flagged = check_short_titles(Path(a.out))
+        for f in flagged:
+            print(f"FLAG {f['id']}: {f['short_title']!r}")
         print(f"{len(flagged)} flagged")
         return 1 if flagged else 0
     if a.cmd != "harvest":
