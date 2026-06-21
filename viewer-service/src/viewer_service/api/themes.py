@@ -2,6 +2,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from .deps import get_conn
+from .identity import require_researcher
 from ..models import ThemeCreate
 from ..themes import check_accessibility, ThemeAccessibilityError
 from ..store import themes as store
@@ -10,7 +11,7 @@ router = APIRouter()
 
 
 @router.post("/themes", status_code=201)
-def create(body: ThemeCreate, conn=Depends(get_conn)):
+def create(body: ThemeCreate, conn=Depends(get_conn), claims=Depends(require_researcher)):
     try:
         check_accessibility(body.palette, body.typography)
     except ThemeAccessibilityError as e:
@@ -25,12 +26,12 @@ def create(body: ThemeCreate, conn=Depends(get_conn)):
 
 
 @router.get("/themes")
-def list_(conn=Depends(get_conn)):
+def list_(conn=Depends(get_conn), claims=Depends(require_researcher)):
     return {"items": store.list_themes(conn)}
 
 
 @router.get("/themes/{theme_id}")
-def get(theme_id: str, conn=Depends(get_conn)):
+def get(theme_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
     t = store.get_theme(conn, theme_id)
     if t is None:
         raise HTTPException(status_code=404, detail="theme not found")

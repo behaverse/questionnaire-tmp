@@ -71,3 +71,27 @@ def test_runtime_mint_requires_researcher(client, auth_header, monkeypatch):
                 json={"viewer_id": "web", "viewer_version": "v26.0610"},
                 headers=auth_header(["researcher"]))
     assert ok.status_code in (200, 201), ok.text
+
+
+def test_register_viewer_requires_researcher(client, auth_header):
+    c = _noauth(client)
+    manifest = {"viewer_id": "web", "viewer_version": "v26.0610",
+                "schema_support": {"questionnaire": ["v26.0609"], "instrument": ["v26.0609"]},
+                "evaluator": {"language_version": "v1.0", "functions": ["if"]},
+                "widgets": ["choice.ordinal.single"], "logic_actions": [], "scorer_impl_kinds": ["wasm"]}
+    assert c.post("/v1/viewers", json=manifest).status_code == 401
+    assert c.post("/v1/viewers", json=manifest, headers=auth_header(["participant"])).status_code == 403
+    assert c.post("/v1/viewers", json=manifest, headers=auth_header(["researcher"])).status_code == 201
+
+
+def test_themes_require_researcher(client, auth_header):
+    c = _noauth(client)
+    body = {"name": "T", "palette": {"background": "#ffffff", "foreground": "#111111",
+            "primary": "#1a5fb4", "on_primary": "#ffffff"}, "typography": {"base_size": 16}}
+    assert c.post("/v1/themes", json=body).status_code == 401
+    assert c.get("/v1/themes").status_code == 401
+    created = c.post("/v1/themes", json=body, headers=auth_header(["researcher"]))
+    assert created.status_code == 201, created.text
+    tid = created.json()["theme_id"]
+    assert c.get(f"/v1/themes/{tid}").status_code == 401
+    assert c.get(f"/v1/themes/{tid}", headers=auth_header(["administrator"])).status_code == 200

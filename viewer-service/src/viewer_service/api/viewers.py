@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from jsonschema.exceptions import ValidationError
 from denormaliser import canonical_hash
 from .deps import get_conn
+from .identity import require_researcher
 from ..config import get_settings
 from ..validation import validate_manifest
 from ..store import viewers as store
@@ -11,7 +12,7 @@ router = APIRouter()
 
 
 @router.post("/viewers", status_code=201)
-def register(manifest: dict, conn=Depends(get_conn)):
+def register(manifest: dict, conn=Depends(get_conn), claims=Depends(require_researcher)):
     try:
         validate_manifest(manifest, get_settings().schemas_dir)
     except ValidationError as e:
@@ -25,7 +26,7 @@ def register(manifest: dict, conn=Depends(get_conn)):
 
 
 @router.get("/viewers/{viewer_id}/{viewer_version}")
-def get(viewer_id: str, viewer_version: str, conn=Depends(get_conn)):
+def get(viewer_id: str, viewer_version: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
     v = store.get_viewer(conn, viewer_id, viewer_version)
     if v is None:
         raise HTTPException(status_code=404, detail="viewer not registered")
