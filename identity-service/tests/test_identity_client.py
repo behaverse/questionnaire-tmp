@@ -1,4 +1,5 @@
 import json
+import time
 import pytest
 import jwt
 from identity_service.keys import generate_keypair
@@ -31,6 +32,20 @@ def test_verify_happy_path_and_failures():
     assert claims["roles"] == ["reviewer"]
     with pytest.raises(jwt.InvalidAudienceError):
         identity_client.verify(tok, jwks=cache, audience="other", issuer="http://id")
+
+
+def test_verify_rejects_token_without_kid():
+    kid, jwk, pem = generate_keypair()
+    cache = identity_client.JwksCache("http://id/jwks", fetcher=lambda: {"keys": [jwk]})
+    now = int(time.time())
+    token = jwt.encode(
+        {"sub": "u1", "aud": "questionnaire-apps", "iss": "http://id",
+         "iat": now, "exp": now + 900, "roles": []},
+        pem,
+        algorithm="EdDSA",
+    )  # no headers={"kid": ...} → no kid in header
+    with pytest.raises(jwt.InvalidTokenError):
+        identity_client.verify(token, jwks=cache, audience="questionnaire-apps", issuer="http://id")
 
 
 def test_require_roles_allows_and_denies():

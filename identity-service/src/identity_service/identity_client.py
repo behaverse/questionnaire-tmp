@@ -27,7 +27,7 @@ class JwksCache:
         self._fetched_at = time.monotonic()
 
     def key_for(self, kid: str) -> dict:
-        stale = (time.monotonic() - self._fetched_at) > self._ttl
+        stale = (time.monotonic() - self._fetched_at) >= self._ttl
         if not self._keys or stale:
             self._refresh()
         if kid not in self._keys:
@@ -37,6 +37,8 @@ class JwksCache:
 
 def verify(token: str, *, jwks: JwksCache, audience: str, issuer: str) -> dict:
     kid = jwt.get_unverified_header(token).get("kid")
+    if not kid:
+        raise jwt.InvalidTokenError("token header missing kid")
     jwk = jwks.key_for(kid)
     key = OKPAlgorithm.from_jwk(json.dumps(jwk))
     return jwt.decode(token, key, algorithms=["EdDSA"], audience=audience, issuer=issuer,
