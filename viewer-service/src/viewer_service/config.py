@@ -19,6 +19,9 @@ class Settings:
     forward_max_attempts: int = 8
     forward_batch_size: int = 50
     cors_origins: tuple[str, ...] = ()
+    identity_jwks_url: str = "http://localhost:8100/.well-known/jwks.json"
+    identity_issuer: str = "http://localhost:8100"
+    identity_audience: str = "questionnaire-apps"
     scorer_dir: Path = REPO_ROOT / "questionnaire-scorer" / "dist-wasm"
     public_base_url: str = ""
     scorer_map: dict[str, str] = field(default_factory=dict)
@@ -43,6 +46,9 @@ def get_settings() -> Settings:
         forward_max_attempts=int(os.environ.get("FORWARD_MAX_ATTEMPTS", "8")),
         forward_batch_size=int(os.environ.get("FORWARD_BATCH_SIZE", "50")),
         cors_origins=origins,
+        identity_jwks_url=os.environ.get("IDENTITY_JWKS_URL", "http://localhost:8100/.well-known/jwks.json"),
+        identity_issuer=os.environ.get("IDENTITY_ISSUER", "http://localhost:8100"),
+        identity_audience=os.environ.get("IDENTITY_AUDIENCE", "questionnaire-apps"),
         scorer_dir=Path(os.environ.get("VS_SCORER_DIR") or REPO_ROOT / "questionnaire-scorer" / "dist-wasm"),
         public_base_url=os.environ.get("VS_PUBLIC_BASE", ""),
         scorer_map=scorer_map,
