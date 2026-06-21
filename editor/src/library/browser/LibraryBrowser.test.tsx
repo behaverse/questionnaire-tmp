@@ -1,21 +1,27 @@
-// editor/src/library/browser/LibraryBrowser.test.tsx
-import { describe, it, expect, vi } from 'vitest'
+// editor/src/library/browser/LibraryBrowser.test.tsx (replace)
+import 'fake-indexeddb/auto'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { LibraryBrowser } from './LibraryBrowser'
+import { clearLibrarySession } from '../../persistence/indexeddb'
 import type { LibraryClient } from './client'
 
 const client: LibraryClient = {
   listEntities: async (etype) => etype === 'prompt' ? [{ id: 'pr_a', version: 'v1', title: 'A' }] : [],
-  fetchEntityBody: async () => ({ id: 'pr_a', content: { en: { text: 'Hello' } } }),
+  fetchEntityBody: async () => ({ id: 'pr_a', content: { en: { status: 'draft', text: 'Hello' } } }),
 }
+beforeEach(async () => { await clearLibrarySession() })
 
 describe('LibraryBrowser', () => {
-  it('selecting a list entity shows it in the inspector', async () => {
+  it('selecting an entity loads it into the inspector; editing emits into the session', async () => {
     render(<LibraryBrowser onExit={() => {}} client={client} />)
     await waitFor(() => expect(screen.getByText('pr_a')).toBeInTheDocument())
-    expect(screen.getByText(/select an entity/i)).toBeInTheDocument() // nothing selected yet
     fireEvent.click(screen.getByText('pr_a'))
-    await waitFor(() => expect(screen.getByText('Hello')).toBeInTheDocument()) // inspector loaded
+    await waitFor(() => expect(screen.getByText('Hello')).toBeInTheDocument()) // inspect loaded
+    fireEvent.click(screen.getByRole('tab', { name: /edit/i }))
+    fireEvent.change(screen.getByLabelText('Prompt text', { exact: true }), { target: { value: 'Hi there' } })
+    // the edited value is now the working body (Download button appears once edited)
+    await waitFor(() => expect(screen.getByRole('button', { name: /download contribution/i })).toBeInTheDocument())
   })
   it('Back calls onExit', () => {
     const onExit = vi.fn()

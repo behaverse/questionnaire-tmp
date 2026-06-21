@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto'
 import phq9 from '../__fixtures__/phq9.json'
 import type { Questionnaire } from '../model/types'
-import { saveDraft, loadDraft, clearDraft } from './indexeddb'
+import { saveDraft, loadDraft, clearDraft, saveLibrarySession, loadLibrarySession, clearLibrarySession } from './indexeddb'
 
 test('saveDraft then loadDraft returns the model', async () => {
   await saveDraft(phq9 as Questionnaire, { kind: 'file', name: 'phq9.json' })
@@ -22,4 +22,12 @@ test('saveDraft persists the pool; loadDraft returns it (empty for legacy)', asy
   expect(d?.entities).toEqual({ 'pr_x@v26.0609.dev1': { id: 'pr_x' } })
   await saveDraft(phq9 as Questionnaire, { kind: 'new' }) // no pool arg
   expect((await loadDraft())?.entities).toEqual({})
+})
+
+test('library session round-trips and clears (separate from the draft slot)', async () => {
+  await saveLibrarySession({ bodies: { 'pr_a@v1': { id: 'pr_a', content: { fr: { text: 'Salut' } } } }, savedAt: 1 })
+  const s = await loadLibrarySession()
+  expect(s?.bodies['pr_a@v1']).toEqual({ id: 'pr_a', content: { fr: { text: 'Salut' } } })
+  await clearLibrarySession()
+  expect(await loadLibrarySession()).toBeNull()
 })

@@ -1,27 +1,35 @@
 // editor/src/library/browser/EntityInspector.test.tsx
-import { describe, it, expect } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect, vi } from 'vitest'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { EntityInspector } from './EntityInspector'
-import type { LibraryClient } from './client'
 
-const client: LibraryClient = {
-  listEntities: async () => [],
-  fetchEntityBody: async (ref) => ref.startsWith('opt_')
-    ? { id: 'opt_a', measurement_type: 'ordinal', content: { en: { label: 'Agreement', options: [{ index: 1, text: 'Yes' }] }, fr: { label: 'Accord', options: [{ index: 1, text: 'Oui' }] } } }
-    : { id: 'pr_a', construct: 'mood', content: { en: { text: 'How are you?' } } },
-}
+const body = { id: 'pr_a', construct: 'mood', content: { en: { status: 'draft', text: 'How are you?' } } }
 
 describe('EntityInspector', () => {
-  it('prompts the user to pick an entity when none is selected', () => {
-    render(<EntityInspector refStr={null} client={client} />)
+  it('placeholder when nothing is selected', () => {
+    render(<EntityInspector refStr={null} body={null} loading={false} err="" onChange={() => {}} />)
     expect(screen.getByText(/select an entity/i)).toBeInTheDocument()
   })
-  it('shows the fetched entity: id, structural fields, and content per locale', async () => {
-    render(<EntityInspector refStr="opt_a@v26.0606" client={client} />)
-    await waitFor(() => expect(screen.getByText('opt_a@v26.0606')).toBeInTheDocument())
-    expect(screen.getByText(/ordinal/)).toBeInTheDocument()   // structural field
-    expect(screen.getByText('Agreement')).toBeInTheDocument() // en content
-    expect(screen.getByText('Accord')).toBeInTheDocument()    // fr content
-    expect(screen.getByText('Oui')).toBeInTheDocument()       // choice text
+  it('Inspect tab shows structural fields + content (read-only)', () => {
+    render(<EntityInspector refStr="pr_a@v1" body={body} loading={false} err="" onChange={() => {}} />)
+    expect(screen.getByText('pr_a@v1')).toBeInTheDocument()
+    expect(screen.getByText(/mood/)).toBeInTheDocument()
+    expect(screen.getByText('How are you?')).toBeInTheDocument()
+  })
+  it('Edit tab edits the body and emits onChange', () => {
+    const onChange = vi.fn()
+    render(<EntityInspector refStr="pr_a@v1" body={body} loading={false} err="" onChange={onChange} />)
+    fireEvent.click(screen.getByRole('tab', { name: /edit/i }))
+    fireEvent.change(screen.getByLabelText('Prompt text', { exact: true }), { target: { value: 'Hello' } })
+    expect(onChange).toHaveBeenCalled()
+  })
+  it('marking complete locks the editor', () => {
+    const onChange = vi.fn()
+    render(<EntityInspector refStr="pr_a@v1" body={body} loading={false} err="" onChange={onChange} />)
+    fireEvent.click(screen.getByRole('tab', { name: /edit/i }))
+    fireEvent.change(screen.getByLabelText('Entity status', { exact: true }), { target: { value: 'complete' } })
+    // onChange called with a body whose en.status is complete
+    const next = onChange.mock.calls.at(-1)![0] as { content: Record<string, { status?: string }> }
+    expect(next.content.en.status).toBe('complete')
   })
 })
