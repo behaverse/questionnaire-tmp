@@ -65,3 +65,17 @@ export async function loadWorkbench(): Promise<WorkbenchSession | null> {
 export async function clearWorkbench(): Promise<void> {
   await tx('readwrite', (s) => s.delete(WB_KEY))
 }
+
+// ── Library Entity Browser session (ED-K2) — separate key from the draft + workbench slots ──
+const LIB_KEY = 'library-session'
+export interface LibrarySession { bodies: Record<string, Record<string, unknown>>; savedAt: number }
+export async function saveLibrarySession(s: LibrarySession): Promise<void> {
+  await tx('readwrite', (st) => st.put(s, LIB_KEY))
+}
+export async function loadLibrarySession(): Promise<LibrarySession | null> {
+  const res = await tx<LibrarySession | undefined>('readonly', (st) => st.get(LIB_KEY))
+  return res ?? null
+}
+export async function clearLibrarySession(): Promise<void> {
+  await tx('readwrite', (st) => st.delete(LIB_KEY))
+}
