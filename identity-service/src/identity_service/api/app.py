@@ -16,15 +16,27 @@ def create_app() -> FastAPI:
         app.add_middleware(CORSMiddleware, allow_origins=origins,
                            allow_methods=["*"], allow_headers=["*"])
 
+    from . import auth as auth_routes, wellknown
+    app.include_router(auth_routes.router)
+    app.include_router(wellknown.router)
+
     @app.get("/healthz")
     def healthz():
         return {"status": "ok"}
 
     @app.exception_handler(HTTPException)
     async def _http_exc(request: Request, exc: HTTPException):
+        # If detail is a string error code (from AuthError), use it as-is; otherwise
+        # fall back to the generic HTTP status code label.
+        detail = exc.detail
+        if isinstance(detail, str) and detail.replace("_", "").isalpha():
+            code = detail
+            message = detail
+        else:
+            code = _CODE_FOR.get(exc.status_code, "error")
+            message = str(detail)
         return JSONResponse(status_code=exc.status_code,
-            content={"error": {"code": _CODE_FOR.get(exc.status_code, "error"),
-                               "message": str(exc.detail)}})
+            content={"error": {"code": code, "message": message}})
 
     @app.exception_handler(RequestValidationError)
     async def _validation_exc(request: Request, exc: RequestValidationError):
