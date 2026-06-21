@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from denormaliser import RuntimePolicy
 from .deps import get_conn
+from .identity import require_researcher
 from ..models import DeploymentCreate, DeploymentPatch
 from ..modes import resolve_preset, UnsupportedPreset
 from ..store import deployments as store
@@ -15,7 +16,7 @@ _ALLOWED_FLOW = {"max_time_seconds"}
 
 
 @router.post("/deployments", status_code=201)
-def create(body: DeploymentCreate, conn=Depends(get_conn)):
+def create(body: DeploymentCreate, conn=Depends(get_conn), claims=Depends(require_researcher)):
     try:
         dimensions = resolve_preset(body.mode_preset)
     except UnsupportedPreset:
@@ -44,18 +45,18 @@ def create(body: DeploymentCreate, conn=Depends(get_conn)):
         flow_overrides=body.flow_overrides, redirect_url=body.redirect_url,
         confirmation_message=body.confirmation_message,
         randomization_seed_strategy=body.randomization_seed_strategy,
-        channels=body.channels or _DEFAULT_CHANNELS, created_by=body.created_by,
+        channels=body.channels or _DEFAULT_CHANNELS, created_by=claims["sub"],
         consent_text_ref=body.consent_text_ref)
     return {"deployment_id": deployment_id}
 
 
 @router.get("/deployments")
-def list_(conn=Depends(get_conn)):
+def list_(conn=Depends(get_conn), claims=Depends(require_researcher)):
     return {"items": store.list_deployments(conn)}
 
 
 @router.get("/deployments/{deployment_id}")
-def get(deployment_id: str, conn=Depends(get_conn)):
+def get(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
     dep = store.get_deployment(conn, deployment_id)
     if dep is None:
         raise HTTPException(status_code=404, detail="deployment not found")
@@ -63,7 +64,7 @@ def get(deployment_id: str, conn=Depends(get_conn)):
 
 
 @router.patch("/deployments/{deployment_id}")
-def patch(deployment_id: str, body: DeploymentPatch, conn=Depends(get_conn)):
+def patch(deployment_id: str, body: DeploymentPatch, conn=Depends(get_conn), claims=Depends(require_researcher)):
     kwargs = {}
     if "active_until" in body.model_fields_set:
         kwargs["active_until"] = body.active_until

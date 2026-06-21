@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from denormaliser import PreflightError
 from .deps import get_conn
+from .identity import require_researcher
 from ..models import RuntimeRequest
 from ..library_client import LibraryError
 from ..store import deployments as dep_store
@@ -12,7 +13,7 @@ router = APIRouter()
 
 
 @router.post("/deployments/{deployment_id}/runtime")
-def mint(deployment_id: str, body: RuntimeRequest, conn=Depends(get_conn)):
+def mint(deployment_id: str, body: RuntimeRequest, conn=Depends(get_conn), claims=Depends(require_researcher)):
     dep = dep_store.get_deployment(conn, deployment_id)
     if dep is None:
         raise HTTPException(status_code=404, detail="deployment not found")
