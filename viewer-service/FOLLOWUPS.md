@@ -1,8 +1,9 @@
 # Follow-ups — questionnaire-viewer-service (VS-A)
 
-- **Auth (Identity).** All VS-A endpoints — including `DELETE /runtime_cache` — are
-  unauthenticated. Gate them once the Identity sibling lands (OD-08); admin purge and
-  deployment CRUD are researcher-only operations.
+- **Auth (Identity) — RESOLVED (ID-B, 2026-06-21).** All control-plane endpoints are now
+  gated by `require_researcher` (researcher/reviewer/administrator) or `require_admin`
+  (administrator only for `DELETE /runtime_cache`). Participant `/sessions/*` and
+  `GET /scorers/.../impl.wasm` remain anonymous. See the README Authentication section.
 - **URL-fetch manifest ingestion (OD-18c).** VS-A ingests manifests by direct POST.
   Add the fetch-from-published-URL variant when the Web Viewer ships a real manifest URL.
 - **Full locale precedence.** VS-A resolves locale from deployment config only. The full
@@ -13,6 +14,19 @@
   revisit with an advisory lock or a background sweeper if it matters.
 - **Library client resilience.** No retry/backoff on transient Library 5xx yet (just a
   502 passthrough). Add retry when this path goes to production load.
+
+## ID-B follow-ups (Identity gate — 2026-06-21)
+
+- **Per-record ownership not enforced.** Any authorized researcher can operate on any
+  deployment (CRUD, export, metrics). Record-level ownership (`created_by` is stored but
+  not checked) will be enforced once project scoping exists — revisit in ID-D.
+- **`editor_session` / `platform_session` mode presets still deferred.** These presets
+  require Identity / Platform auth dimensions at `/sessions/new` and are rejected with 422
+  today. Enforcement is deferred to ID-D (editor) / Phase 5 (platform).
+- **JwksCache has no proactive refresh or health endpoint.** The cache is lazy: it
+  re-fetches from the JWKS URL on a kid-miss. A background refresh thread and a
+  `/healthz`-style JWKS probe are acceptable deferred work; the current approach is
+  sufficient for the traffic profile of Phase 2.
 
 ## VS-B follow-ups
 

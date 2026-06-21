@@ -31,6 +31,42 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 The runtime cache is keyed by the OD-18f 5-tuple `(qst_id, qst_version, locale,
 viewer_conformance_hash, deployment_runtime_policy_hash)` with LRU eviction.
 
+## Authentication
+
+The **control-plane** (deployment CRUD, viewer registry, theme writes, runtime mint,
+`export.csv`, and metrics) requires a valid Identity access token (Bearer JWT) issued by
+the sibling `identity-service`.  The token must carry at least one of the roles
+`researcher`, `reviewer`, or `administrator`.
+
+`DELETE /runtime_cache` is stricter: it requires the `administrator` role.
+
+The **participant path** (`/v1/sessions/*`) and `GET /v1/scorers/{ref}/impl.wasm` are
+intentionally **anonymous** — no token is required or checked.
+
+`GET /healthz` is also anonymous.
+
+### Environment variables
+
+| Variable | Description | Default |
+|---|---|---|
+| `IDENTITY_JWKS_URL` | JWKS endpoint of the identity-service (e.g. `http://localhost:9000/.well-known/jwks.json`) | — (required for auth) |
+| `IDENTITY_ISSUER` | Expected `iss` claim in the JWT | — (required for auth) |
+| `IDENTITY_AUDIENCE` | Expected `aud` claim in the JWT | `questionnaire-apps` |
+
+When `IDENTITY_JWKS_URL` is unset the service starts without the gate (development
+convenience only — not for production).
+
+### Obtaining a token
+
+Use the sibling `identity-service`:
+
+```bash
+identity create-admin          # first-time setup
+identity login                 # prints a Bearer token
+```
+
+Pass the token as `Authorization: Bearer <token>` on every control-plane request.
+
 ## Development
 
 ```bash
