@@ -60,6 +60,9 @@ def main(argv=None) -> int:
     ast.add_argument("--short-titles", default="questionnaire-harvester/short_titles.json")
     cst = sub.add_parser("check-short-titles")
     cst.add_argument("--out", default="questionnaire-harvester/output")
+    nv = sub.add_parser("normalize-versions")
+    nv.add_argument("--out", default="questionnaire-harvester/output")
+    nv.add_argument("--release", default="v26.0618")
     a = ap.parse_args(argv)
     if a.cmd == "document-scoring":
         from harvester.scoring_doc import write_scoring_docs
@@ -95,6 +98,11 @@ def main(argv=None) -> int:
             print(f"FLAG {f['id']}: {f['short_title']!r}")
         print(f"{len(flagged)} flagged")
         return 1 if flagged else 0
+    if a.cmd == "normalize-versions":
+        from harvester.versions import normalize_versions
+        ids = normalize_versions(Path(a.out), a.release)
+        print(f"normalized {len(ids)} questionnaire(s)")
+        return 0
     if a.cmd != "harvest":
         return 2
 

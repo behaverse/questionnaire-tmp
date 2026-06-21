@@ -378,3 +378,17 @@ def test_check_short_titles_cli_nonzero_on_junk(tmp_path):
         "pages": [{"id": "page_main", "elements": []}]})
     rc = cli.main(["check-short-titles", "--out", str(out)])
     assert rc == 1
+
+
+def test_normalize_versions_cli(tmp_path):
+    from library.importers.survey_db.writer import write_entity
+    out = tmp_path / "output"
+    write_entity(out, "questionnaire", {"@context": "x",
+        "metadata": {"id": "qst_z", "title": "T", "short_title": "T", "version": "v26.0617"},
+        "pages": [{"id": "page_main", "elements": [
+            {"option": {"ref": "opt_z_1@v26.0617"},
+             "question": {"prompt": {"ref": "pr_z_1@v26.0617"}}}]}]})
+    rc = cli.main(["normalize-versions", "--out", str(out), "--release", "v26.0618"])
+    assert rc == 0
+    md = json.loads((out / "questionnaires" / "qst_z.json").read_text())["metadata"]
+    assert md["version"] == "v26.0618"
