@@ -100,10 +100,10 @@ def test_mint_unknown_viewer_404(setup):
     assert r.status_code == 404
 
 
-def test_admin_purge(setup):
+def test_admin_purge(setup, auth_header):
     client, dep_id = setup
     body = {"viewer_id": "web", "viewer_version": "v26.0610", "locale": "en"}
     client.post(f"/v1/deployments/{dep_id}/runtime", json=body)
-    r = client.delete("/v1/runtime_cache")
+    r = client.delete("/v1/runtime_cache", headers=auth_header(["administrator"]))
     assert r.status_code == 200
     assert r.json()["purged"] >= 1

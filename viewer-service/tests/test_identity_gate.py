@@ -95,3 +95,20 @@ def test_themes_require_researcher(client, auth_header):
     tid = created.json()["theme_id"]
     assert c.get(f"/v1/themes/{tid}").status_code == 401
     assert c.get(f"/v1/themes/{tid}", headers=auth_header(["administrator"])).status_code == 200
+
+
+def test_export_and_metrics_require_researcher(client, auth_header):
+    c = _noauth(client)
+    dep = c.post("/v1/deployments", json=_DEP_BODY, headers=auth_header(["researcher"]))
+    dep_id = dep.json()["deployment_id"]
+    assert c.get(f"/v1/deployments/{dep_id}/export.csv").status_code == 401
+    assert c.get(f"/v1/deployments/{dep_id}/metrics").status_code == 401
+    assert c.get(f"/v1/deployments/{dep_id}/export.csv", headers=auth_header(["researcher"])).status_code == 200
+    assert c.get(f"/v1/deployments/{dep_id}/metrics", headers=auth_header(["reviewer"])).status_code == 200
+
+
+def test_runtime_cache_purge_requires_admin(client, auth_header):
+    c = _noauth(client)
+    assert c.delete("/v1/runtime_cache").status_code == 401
+    assert c.delete("/v1/runtime_cache", headers=auth_header(["researcher"])).status_code == 403   # not admin
+    assert c.delete("/v1/runtime_cache", headers=auth_header(["administrator"])).status_code == 200
