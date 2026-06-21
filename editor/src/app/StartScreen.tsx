@@ -9,12 +9,11 @@ interface Props {
   onLoadSample: () => void
   onBrowseLibrary: () => void
   onTranslate: () => void
-  onTranslateWorkbench: () => void
   onLoadPhq9: () => void
   onBrowseEntities: () => void
 }
 
-export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary, onTranslate, onTranslateWorkbench, onLoadPhq9, onBrowseEntities }: Props) {
+export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, onBrowseLibrary, onTranslate, onLoadPhq9, onBrowseEntities }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [id, setId] = useState('')
   const [version, setVersion] = useState('')
@@ -61,17 +60,6 @@ export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, on
             Translate a questionnaire
           </div>
           <div className="text-sm text-ed-muted">Pick one from the Library and open it in the side-by-side translation view</div>
-        </button>
-
-        <button
-          onClick={onTranslateWorkbench}
-          className="rounded-lg border border-ed-border p-4 text-left hover:bg-ed-subtle"
-        >
-          <div className="flex items-center gap-2 font-medium">
-            <Languages size={16} aria-hidden="true" className="text-ed-muted" />
-            Translate Library entities
-          </div>
-          <div className="text-sm text-ed-muted">Quality-check and fill translations for options, prompts, and more across the database — export a contribution file</div>
         </button>
 
         <button onClick={onBrowseEntities} aria-label="Library entities" className="rounded-lg border border-ed-border p-4 text-left hover:bg-ed-subtle">

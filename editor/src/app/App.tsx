@@ -11,7 +11,6 @@ import { LibraryPicker } from '../library/LibraryPicker'
 import { LibraryQuestionnairePicker } from '../library/LibraryQuestionnairePicker'
 import { ForkDialog } from '../library/ForkDialog'
 import { TranslationPanel } from '../translate/TranslationPanel'
-import { TranslationWorkbench } from '../translate/workbench/TranslationWorkbench'
 import { LibraryBrowser } from '../library/browser/LibraryBrowser'
 import { bisbasSample, phq9Sample } from '../samples/sample'
 
@@ -28,7 +27,6 @@ export function App() {
   const [booting, setBooting] = useState(true)
   const [browsing, setBrowsing] = useState(false)
   const [translateOnLoad, setTranslateOnLoad] = useState(false)
-  const [workbench, setWorkbench] = useState(false)
   const [libraryBrowser, setLibraryBrowser] = useState(false)
 
   // restore autosaved draft on boot
@@ -47,8 +45,6 @@ export function App() {
   }, [model, pool])
 
   if (booting) return <main className="flex h-full items-center justify-center bg-ed-surface text-ed-muted">Loading…</main>
-
-  if (workbench) return <div className="h-screen"><TranslationWorkbench onExit={() => setWorkbench(false)} /></div>
 
   if (libraryBrowser) return <div className="h-screen"><LibraryBrowser onExit={() => setLibraryBrowser(false)} /></div>
 
@@ -70,7 +66,6 @@ export function App() {
           onLoadPhq9={() => { loadModel(phq9Sample.questionnaire, { kind: 'sample', id: 'qst_phq9' }, phq9Sample.entities); void refreshStaleness() }}
           onBrowseLibrary={() => { setTranslateOnLoad(false); setBrowsing(true) }}
           onTranslate={() => { setTranslateOnLoad(true); setBrowsing(true) }}
-          onTranslateWorkbench={() => setWorkbench(true)}
           onBrowseEntities={() => setLibraryBrowser(true)}
         />
         {browsing && (
