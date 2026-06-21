@@ -37,6 +37,7 @@ def main(argv=None) -> int:
     h.add_argument("--questions", default="questionnaire-harvester/questions")
     h.add_argument("--source-metadata", default="questionnaire-harvester/source_metadata")
     h.add_argument("--descriptions", default="questionnaire-harvester/descriptions")
+    h.add_argument("--short-titles", default="questionnaire-harvester/short_titles.json")
     h.add_argument("--schemas", default="schemas")
     h.add_argument("--version", default="v26.0618")
     ds = sub.add_parser("document-scoring")
@@ -99,6 +100,8 @@ def main(argv=None) -> int:
         return 2
     from harvester.descriptions import apply_authored_description
     apply_authored_description(rq, Path(a.descriptions))
+    from harvester.short_titles import apply_short_title
+    apply_short_title(rq, Path(a.short_titles))
     scales_index = load_scales_index(Path(a.scales_index))
     instr_index = build_instruction_index(Path(a.out))
     result = draft(rq, a.version, scales_index, instr_index)

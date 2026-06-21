@@ -341,3 +341,18 @@ def test_check_descriptions_cli_nonzero_on_overlap(tmp_path):
     (sm / "qst_v.json").write_text('{"id":"qst_v","introduction":["one two three four five six seven eight nine ten"],"meta_description":""}')
     rc = cli.main(["check-descriptions", "--out", str(out), "--descriptions", str(desc), "--source-metadata", str(sm)])
     assert rc == 1
+
+
+def test_harvest_applies_short_title_override(tmp_path, monkeypatch):
+    fixture = (Path(__file__).parent / "fixtures" / "psychology_tools_meta.html").read_text()
+    monkeypatch.setattr("harvester.sources.base.SourceAdapter.fetch", lambda self, url: fixture)
+    out = tmp_path / "output"; out.mkdir()
+    st = tmp_path / "short_titles.json"; st.write_text('{"qst_demo": "DSC"}')
+    rc = cli.main(["harvest", "https://psychology-tools.com/test/demo-screening",
+                   "--out", str(out), "--scales-index", str(tmp_path / "missing.json"),
+                   "--register", str(tmp_path / "register.md"), "--questions", str(tmp_path / "questions"),
+                   "--source-metadata", str(tmp_path / "sm"), "--short-titles", str(st),
+                   "--schemas", str(REPO / "schemas"), "--version", "v26.0618"])
+    assert rc == 0
+    md = json.loads((out / "questionnaires" / "qst_demo.json").read_text())["metadata"]
+    assert md["short_title"] == "DSC"
