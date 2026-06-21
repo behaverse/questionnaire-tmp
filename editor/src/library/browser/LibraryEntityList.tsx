@@ -2,12 +2,13 @@
 import { useEffect, useState } from 'react'
 import { LIBRARY_TYPES, type LibraryClient, type LibEntity } from './client'
 
-export function LibraryEntityList({ client, selectedRef, onSelect }: {
+export function LibraryEntityList({ client, etype, onEtype, selectedRef, onSelect }: {
   client: LibraryClient
+  etype: string
+  onEtype: (t: string) => void
   selectedRef: string | null
   onSelect: (ref: string) => void
 }) {
-  const [etype, setEtype] = useState('prompt')
   const [items, setItems] = useState<LibEntity[]>([])
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState('')
@@ -29,7 +30,7 @@ export function LibraryEntityList({ client, selectedRef, onSelect }: {
     <div className="flex h-full flex-col">
       <div className="flex flex-col gap-2 border-b border-ed-border bg-ed-panel px-3 py-2.5">
         <label className="flex items-center gap-1.5 text-xs text-ed-muted">Type
-          <select aria-label="Entity type" value={etype} onChange={(e) => setEtype(e.target.value)}
+          <select aria-label="Entity type" value={etype} onChange={(e) => onEtype(e.target.value)}
                   className="flex-1 rounded-md border border-ed-border-strong bg-ed-surface px-2 py-1 text-xs">
             {LIBRARY_TYPES.map((t) => <option key={t.type} value={t.type}>{t.label}</option>)}
           </select>
