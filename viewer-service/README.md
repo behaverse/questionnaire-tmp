@@ -53,8 +53,11 @@ intentionally **anonymous** — no token is required or checked.
 | `IDENTITY_ISSUER` | Expected `iss` claim in the JWT | — (required for auth) |
 | `IDENTITY_AUDIENCE` | Expected `aud` claim in the JWT | `questionnaire-apps` |
 
-When `IDENTITY_JWKS_URL` is unset the service starts without the gate (development
-convenience only — not for production).
+The control-plane gate is **always active** — there is no "disable auth" mode. If
+`IDENTITY_JWKS_URL` / `IDENTITY_ISSUER` are unset, the gate falls back to the localhost
+defaults; control-plane requests then **fail closed** (token verification cannot reach a real
+JWKS, so they return `401`). For local development, run the sibling `identity-service` and point
+these vars at it.
 
 ### Obtaining a token
 
