@@ -72,7 +72,8 @@ export function LibraryBrowser({ onExit, client, translate = translateText }: { 
       const wb = { listEntities: (et: string) => c.listEntities(et).then((r) => r.map((e) => ({ id: e.id, version: e.version }))), fetchEntityBody: c.fetchEntityBody }
       const { items } = await loadUntranslated(etype as TransKind, srcL, tgt, wb)
       for (const it of items) {
-        let b = it.body as Body
+        const ref = `${it.id}@${it.version}`
+        let b = (bodies[ref] ?? it.body) as Body
         const sf = entityFields(b, etype as TransKind, srcL)
         const tf = entityFields(b, etype as TransKind, tgt)
         for (let i = 0; i < sf.length; i++) {
@@ -81,7 +82,6 @@ export function LibraryBrowser({ onExit, client, translate = translateText }: { 
           }
         }
         b = applyStatus(b, etype as TransKind, tgt, (b.content as Record<string, { status?: string }>)[tgt]?.status ?? 'draft') as Body
-        const ref = `${it.id}@${it.version}`
         if (!originals.current[ref]) originals.current[ref] = it.body
         setBodies((prev) => ({ ...prev, [ref]: b })); setSaved(false)
       }

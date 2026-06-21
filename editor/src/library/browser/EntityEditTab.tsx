@@ -19,15 +19,15 @@ export function EntityEditTab({ type, body, locale, primaryLocale, editable, onC
   let editor: React.ReactNode
   switch (type) {
     case 'prompt':
-      editor = <PromptEditor prompt={body as unknown as PromptBody} locale={locale} primaryLocale={primaryLocale} onChange={change} />; break
+      editor = <PromptEditor prompt={body as unknown as PromptBody} locale={locale} primaryLocale={primaryLocale} showStatus={false} onChange={change} />; break
     case 'option':
-      editor = <OptionEditor option={body as unknown as EditableOption} locale={locale} onChange={change} />; break
+      editor = <OptionEditor option={body as unknown as EditableOption} locale={locale} showStatus={false} onChange={change} />; break
     case 'context':
-      editor = <ContextEditor context={body as unknown as ContextBody} locale={locale} primaryLocale={primaryLocale} onChange={change} />; break
+      editor = <ContextEditor context={body as unknown as ContextBody} locale={locale} primaryLocale={primaryLocale} showStatus={false} onChange={change} />; break
     case 'instruction':
-      editor = <InstructionEditor instruction={body as unknown as InstructionBody} locale={locale} primaryLocale={primaryLocale} onChange={change} />; break
+      editor = <InstructionEditor instruction={body as unknown as InstructionBody} locale={locale} primaryLocale={primaryLocale} showStatus={false} onChange={change} />; break
     case 'message':
-      editor = <MessageEditor message={body as unknown as MessageBody} locale={locale} primaryLocale={primaryLocale} onChange={change} />; break
+      editor = <MessageEditor message={body as unknown as MessageBody} locale={locale} primaryLocale={primaryLocale} showStatus={false} onChange={change} />; break
     default:
       return <div className="rounded-md bg-ed-subtle px-3 py-2 text-sm text-ed-muted">Editing not supported yet for <span className="font-mono">{type}</span> — inspect (and, soon, translate) only.</div>
   }

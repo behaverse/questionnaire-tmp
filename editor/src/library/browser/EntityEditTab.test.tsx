@@ -21,4 +21,9 @@ describe('EntityEditTab', () => {
     render(<EntityEditTab type="solution" body={{ id: 'sol_a' }} locale="en" editable onChange={() => {}} />)
     expect(screen.getByText(/editing.*not supported/i)).toBeInTheDocument()
   })
+  it('hides the per-locale status control inside the browser Edit tab (showStatus=false)', () => {
+    render(<EntityEditTab type="prompt" body={{ id: 'pr_a', content: { en: { status: 'draft', text: 'Hi' } } }}
+                          locale="en" editable onChange={() => {}} />)
+    expect(screen.queryByLabelText('Prompt text status')).not.toBeInTheDocument()
+  })
 })

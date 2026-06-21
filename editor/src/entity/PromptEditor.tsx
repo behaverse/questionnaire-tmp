@@ -12,7 +12,7 @@ export interface PromptBody {
 const LABEL = 'mb-1 block text-xs font-medium text-ed-muted'
 const INPUT = 'w-full rounded border border-ed-border px-2 py-1 text-sm'
 
-export function PromptEditor({ prompt, locale, primaryLocale, onChange }: { prompt: PromptBody; locale: string; primaryLocale?: string; onChange: (p: PromptBody) => void }) {
+export function PromptEditor({ prompt, locale, primaryLocale, showStatus = true, onChange }: { prompt: PromptBody; locale: string; primaryLocale?: string; showStatus?: boolean; onChange: (p: PromptBody) => void }) {
   const entry = prompt.content?.[locale] ?? { status: 'draft' }
   const setText = (text: string) =>
     onChange({ ...prompt, content: { ...prompt.content, [locale]: { ...entry, status: entry.status ?? 'draft', text } } })
@@ -38,13 +38,15 @@ export function PromptEditor({ prompt, locale, primaryLocale, onChange }: { prom
                   className={INPUT} />
       </label>
       {source !== undefined && <p className="-mt-2 text-[11px] text-ed-muted">primary: {source || '(empty)'}</p>}
-      <label className="block">
-        <span className={LABEL}>Status</span>
-        <select aria-label="Prompt text status" value={entry.status ?? 'draft'} onChange={(e) => setStatus(e.target.value)}
-                className={INPUT}>
-          {['draft', 'complete', 'validated'].map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-      </label>
+      {showStatus && (
+        <label className="block">
+          <span className={LABEL}>Status</span>
+          <select aria-label="Prompt text status" value={entry.status ?? 'draft'} onChange={(e) => setStatus(e.target.value)}
+                  className={INPUT}>
+            {['draft', 'complete', 'validated'].map((s) => <option key={s} value={s}>{s}</option>)}
+          </select>
+        </label>
+      )}
       <div className="grid grid-cols-2 gap-x-3 gap-y-3">
         <label className="block">
           <span className={LABEL}>Name</span>

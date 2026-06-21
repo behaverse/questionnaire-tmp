@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Sparkles, FilePlus2, Upload, Library, Languages } from 'lucide-react'
+import { Sparkles, FilePlus2, Upload, Library, Languages, Activity } from 'lucide-react'
 import { Button } from '../ui/Button'
 
 interface Props {
@@ -36,7 +36,10 @@ export function StartScreen({ onNew, onOpenFile, onOpenLibrary, onLoadSample, on
           onClick={onLoadPhq9}
           className="rounded-lg border border-ed-border p-4 text-left hover:bg-ed-subtle"
         >
-          <div className="flex items-center gap-2 font-medium">Load PHQ-9 sample</div>
+          <div className="flex items-center gap-2 font-medium">
+            <Activity size={16} aria-hidden="true" className="text-ed-muted" />
+            Load PHQ-9 sample
+          </div>
           <div className="text-sm text-ed-muted">A scored questionnaire — see live scores in the preview</div>
         </button>
 

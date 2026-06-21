@@ -14,7 +14,7 @@ function inlineText(v: EditableOption['placeholder'], locale: string): string {
   return ''
 }
 
-export function OptionEditor({ option, locale, onChange }: { option: EditableOption; locale: string; onChange: (o: EditableOption) => void }) {
+export function OptionEditor({ option, locale, showStatus = true, onChange }: { option: EditableOption; locale: string; showStatus?: boolean; onChange: (o: EditableOption) => void }) {
   const c = option.content?.[locale]
   return (
     <div className="space-y-4">
@@ -66,12 +66,14 @@ export function OptionEditor({ option, locale, onChange }: { option: EditableOpt
                className="mt-1 w-full rounded border border-ed-border px-2 py-1" aria-label={`Label ${locale}`} />
       </label>
 
-      <label className="text-xs text-ed-muted">Status
-        <select aria-label="Option status" value={c?.status ?? 'draft'} onChange={(e) => onChange(setStatus(option, locale, e.target.value))}
-                className="ml-1 rounded border border-ed-border px-1 py-0.5">
-          {['draft', 'complete', 'validated'].map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-      </label>
+      {showStatus && (
+        <label className="text-xs text-ed-muted">Status
+          <select aria-label="Option status" value={c?.status ?? 'draft'} onChange={(e) => onChange(setStatus(option, locale, e.target.value))}
+                  className="ml-1 rounded border border-ed-border px-1 py-0.5">
+            {['draft', 'complete', 'validated'].map((s) => <option key={s} value={s}>{s}</option>)}
+          </select>
+        </label>
+      )}
 
       {option.input_data_type === 'choice' && <ChoiceRows option={option} locale={locale} onChange={onChange} />}
 

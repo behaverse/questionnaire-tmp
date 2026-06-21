@@ -54,10 +54,19 @@ describe('ScoringPanel live preview values', () => {
     expect(screen.getByText(/unavailable in preview/i)).toBeInTheDocument() // unknown scorer badge
   })
 
-  it('hints to open the preview when no live values are present', () => {
+  it('hints to open the preview when no live values are present (and there are scores)', () => {
     useEditorStore.getState().setPreviewScores(null)
     render(<ScoringPanel />)
     expect(screen.getByText(/open the preview/i)).toBeInTheDocument()
+  })
+
+  it('does NOT show the preview hint when there are 0 scores', () => {
+    const s = useEditorStore.getState()
+    s.reset()
+    s.loadModel({ metadata: { id: 'q', title: 'q', language: 'en' }, pages: [] } as unknown as Questionnaire, { kind: 'file', name: 'q.json' })
+    s.setPreviewScores(null)
+    render(<ScoringPanel />)
+    expect(screen.queryByText(/open the preview/i)).not.toBeInTheDocument()
   })
 })
 

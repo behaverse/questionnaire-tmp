@@ -24,6 +24,16 @@ test('topics round-trip comma <-> array; reversed checkbox', async () => {
   expect(onChange.mock.calls.at(-1)![0].reversed).toBe(true)
 })
 
+test('shows status control by default (showStatus unset)', () => {
+  render(<PromptEditor prompt={prompt()} locale="en" onChange={() => {}} />)
+  expect(screen.getByLabelText('Prompt text status')).toBeInTheDocument()
+})
+
+test('hides status control when showStatus=false', () => {
+  render(<PromptEditor prompt={prompt()} locale="en" showStatus={false} onChange={() => {}} />)
+  expect(screen.queryByLabelText('Prompt text status')).not.toBeInTheDocument()
+})
+
 test('name/construct/dimension write through', async () => {
   const onChange = vi.fn()
   render(<PromptEditor prompt={prompt()} locale="en" onChange={onChange} />)

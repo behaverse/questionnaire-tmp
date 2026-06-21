@@ -43,6 +43,19 @@ describe('TranslationPanel', () => {
     })
   })
 
+  it('disables the bulk auto-translate button while a bulk run is in progress', async () => {
+    const { translateText } = await import('./translateClient')
+    let resolve!: (v: string) => void
+    ;(translateText as ReturnType<typeof vi.fn>).mockImplementationOnce(() => new Promise((r) => { resolve = r }))
+    render(<TranslationPanel />)
+    const btn = screen.getByRole('button', { name: /auto-translate untranslated/i })
+    fireEvent.click(btn)
+    // button should be disabled while the bulk run is in flight
+    expect(btn).toBeDisabled()
+    resolve('done')
+    await waitFor(() => expect(btn).not.toBeDisabled())
+  })
+
   it('shows an empty-state when the editing language is the primary', () => {
     useEditorStore.getState().setEditingLocale('en')
     render(<TranslationPanel />)

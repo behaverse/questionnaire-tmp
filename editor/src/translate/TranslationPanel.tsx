@@ -26,6 +26,7 @@ export function TranslationPanel() {
   const [busy, setBusy] = useState<Record<string, boolean>>({})
   const [autoErr, setAutoErr] = useState<Record<string, string>>({})
   const [bump, setBump] = useState<Record<string, number>>({})
+  const [bulkBusy, setBulkBusy] = useState(false)
 
   const primary = model ? String(model.metadata.language ?? 'en') : 'en'
   const target = editingLocale && editingLocale !== primary ? editingLocale : null
@@ -151,9 +152,15 @@ export function TranslationPanel() {
   }
 
   const autoAllUntranslated = async () => {
-    // only the visible (kind-filtered) untranslated rows, matching the panel's current view
-    const pending = visibleGroups.flatMap((g) => g.rows.filter((r) => !r.done).map((r) => ({ g, r })))
-    await mapLimit(pending, 4, ({ g, r }) => autoRow(g, r))
+    if (bulkBusy) return
+    setBulkBusy(true)
+    try {
+      // only the visible (kind-filtered) untranslated rows, matching the panel's current view
+      const pending = visibleGroups.flatMap((g) => g.rows.filter((r) => !r.done).map((r) => ({ g, r })))
+      await mapLimit(pending, 4, ({ g, r }) => autoRow(g, r))
+    } finally {
+      setBulkBusy(false)
+    }
   }
 
   return (
@@ -181,8 +188,10 @@ export function TranslationPanel() {
         <label className="flex items-center gap-1.5 text-xs text-ed-muted">
           <input type="checkbox" checked={untranslatedOnly} onChange={(e) => setUntranslatedOnly(e.target.checked)} /> show untranslated only
         </label>
-        <button onClick={() => void autoAllUntranslated()}
-                className="rounded-md border border-ed-border-strong bg-ed-surface px-3 py-1.5 text-xs font-medium text-ed-text hover:bg-ed-subtle">Auto-translate untranslated</button>
+        <button onClick={() => void autoAllUntranslated()} disabled={bulkBusy}
+                className="rounded-md border border-ed-border-strong bg-ed-surface px-3 py-1.5 text-xs font-medium text-ed-text hover:bg-ed-subtle disabled:opacity-40">
+          {bulkBusy ? '…' : 'Auto-translate untranslated'}
+        </button>
       </div>
       <div className="border-b border-amber-200/70 bg-amber-50 px-5 py-1.5 text-[11px] text-amber-700">
         Editing a translation makes a local editable copy of Library content (shared options are copied once).

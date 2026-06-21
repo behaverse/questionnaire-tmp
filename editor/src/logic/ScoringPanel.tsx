@@ -28,7 +28,7 @@ export function ScoringPanel() {
           className="ml-auto rounded border border-ed-border px-2 py-0.5 text-xs text-ed-muted hover:bg-ed-subtle">+ Add</button>
       </div>
       {scores.length === 0 && <p className="text-[11px] text-ed-muted">No scores yet.</p>}
-      {!previewScores && (
+      {scores.length > 0 && !previewScores && (
         <p className="text-[11px] text-ed-muted">Open the preview to see live computed scores.</p>
       )}
       <ul className="space-y-1">
