@@ -32,3 +32,9 @@ def require_access(authorization: str | None = Header(default=None), conn=Depend
         except Exception as e:                          # try next kid
             last_err = e
     raise HTTPException(status_code=401, detail="invalid access token")
+
+
+def require_admin(claims=Depends(require_access)):
+    if "administrator" not in claims.get("roles", []):
+        raise HTTPException(status_code=403, detail="administrator role required")
+    return claims
