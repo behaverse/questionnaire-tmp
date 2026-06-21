@@ -39,8 +39,8 @@ export function PromptEditor({ prompt, locale, primaryLocale, onChange }: { prom
       </label>
       {source !== undefined && <p className="-mt-2 text-[11px] text-ed-muted">primary: {source || '(empty)'}</p>}
       <label className="block">
-        <span className={LABEL}>Status</span>
-        <select aria-label="Prompt text status" value={entry.status ?? 'draft'} onChange={(e) => setStatus(e.target.value)}
+        <span className={LABEL}>Review state</span>
+        <select aria-label="Prompt content review" value={entry.status ?? 'draft'} onChange={(e) => setStatus(e.target.value)}
                 className={INPUT}>
           {['draft', 'complete', 'validated'].map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
