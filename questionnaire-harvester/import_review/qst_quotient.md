@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/short-autism-spectrum-quotient.html
 
-- short_title: Short Autism Spectrum Quotient
+- short_title: AQ-10
 - source: psytoolkit.org
 - license: unknown
 - publication: Allison, C., Auyeung, B., & Baron-Cohen, S. (2012). Toward Brief

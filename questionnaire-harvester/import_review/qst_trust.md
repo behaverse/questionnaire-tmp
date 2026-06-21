@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/trust.html
 
-- short_title: Trust in close relationships
+- short_title: TICR
 - source: psytoolkit.org
 - license: unknown
 - publication: Rempel, J.K., Holmes, J.G. & Zanna, M.P. (1985). Trust in close relationships. Journal of

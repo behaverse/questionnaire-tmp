@@ -20,11 +20,11 @@
   "qst_shortversionocir": "OCI-R",
   "qst_tsis": "TSIS",
   "qst_who5": "WHO-5",
-  "qst_adolescents": "TODO: ABS? (Aggressive Behavior Scale)",
-  "qst_ard": "TODO: Dominance Scale (no standard acronym)",
-  "qst_burnout": "TODO: Teacher Burnout (no standard acronym)",
-  "qst_quotient": "TODO: AQ-10?",
-  "qst_rotter": "TODO: Rotter I-E?",
-  "qst_trust": "TODO: Trust Scale (no standard acronym)",
-  "qst_webexec": "TODO: webexec? (stylized lowercase name — confirm WEBEXEC vs webexec)"
+  "qst_adolescents": "ABS",
+  "qst_ard": "Dominance Scale",
+  "qst_burnout": "Teacher Burnout",
+  "qst_quotient": "AQ-10",
+  "qst_rotter": "LoC",
+  "qst_trust": "TICR",
+  "qst_webexec": "webexec"
 }

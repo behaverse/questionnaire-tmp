@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/dominance-ard.html
 
-- short_title: for relationship research
+- short_title: Dominance Scale
 - source: psytoolkit.org
 - license: unknown
 - publication: Hamby, S. L., (1996). The dominance scale: Preliminary Psychometric Properties. Violence and Victims, 11 , 199-212. Link to paper online . (1996)

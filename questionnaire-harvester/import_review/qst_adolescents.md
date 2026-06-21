@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/aggression-adolescents.html
 
-- short_title: for adolescents
+- short_title: ABS
 - source: psytoolkit.org
 - license: unknown
 - publication: Orpinas, P., and Frankowski, R. (2001). The Aggression Scale: A

@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/teacher-burnout.html
 
-- short_title: Teacher burnout
+- short_title: Teacher Burnout
 - source: psytoolkit.org
 - license: unknown
 - publication: Campbell, L.P. (1983). Teacher burnout: Description and

@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/locus-of-control-rotter.html
 
-- short_title: Rotter, 1966
+- short_title: LoC
 - source: psytoolkit.org
 - license: unknown
 - publication: J.B. Rotter. (1966). Generalized expectancies for internal versus external control of reinforcement. Psychological Monographs, 80 , (1, Whole No. 609). (1966)
