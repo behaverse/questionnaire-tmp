@@ -29,4 +29,17 @@ describe('LibraryBrowser', () => {
     fireEvent.click(screen.getByRole('button', { name: /back/i }))
     expect(onExit).toHaveBeenCalled()
   })
+  it('batch translate fills untranslated fields for a target locale into the session', async () => {
+    const translate = vi.fn(async () => 'TRAD')
+    const c = {
+      listEntities: async (etype: string) => etype === 'prompt' ? [{ id: 'pr_a', version: 'v1', title: 'A' }] : [],
+      fetchEntityBody: async () => ({ id: 'pr_a', content: { en: { status: 'complete', text: 'Hello' } } }),
+    }
+    render(<LibraryBrowser onExit={() => {}} client={c as never} translate={translate as never} />)
+    await waitFor(() => expect(screen.getByText('pr_a')).toBeInTheDocument())
+    fireEvent.change(screen.getByLabelText('Batch target locale'), { target: { value: 'fr' } })
+    fireEvent.click(screen.getByRole('button', { name: /batch translate/i }))
+    await waitFor(() => expect(translate).toHaveBeenCalledWith('Hello', 'en', 'fr', 'prompt'))
+    await waitFor(() => expect(screen.getByRole('button', { name: /download contribution/i })).toBeInTheDocument())
+  })
 })
