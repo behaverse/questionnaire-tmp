@@ -3,9 +3,15 @@ import psycopg, pytest
 from pathlib import Path
 from testcontainers.postgres import PostgresContainer
 from viewer_service.store.migrate import apply_schema
+from identity_service.keys import generate_keypair
+from identity_service.tokens import sign_access
+from viewer_service.api import identity as _idmod
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCHEMAS_DIR = REPO_ROOT / "schemas"
+
+_ID_ISSUER = "http://id-test"
+_ID_AUDIENCE = "questionnaire-apps"
 
 
 @pytest.fixture(scope="session")
@@ -24,12 +30,43 @@ def conn(pg_url):
         yield c
 
 
+@pytest.fixture(scope="session")
+def id_key():
+    return generate_keypair()  # (kid, public_jwk, private_pem)
+
+
+@pytest.fixture(autouse=True)
+def _identity(id_key, monkeypatch):
+    kid, jwk, pem = id_key
+    monkeypatch.setenv("IDENTITY_ISSUER", _ID_ISSUER)
+    monkeypatch.setenv("IDENTITY_AUDIENCE", _ID_AUDIENCE)
+    _idmod.install_test_cache(jwk)
+    yield
+
+
+def _mint(id_key, roles, sub):
+    kid, jwk, pem = id_key
+    return sign_access(private_pem=pem, kid=kid, sub=sub, aud=_ID_AUDIENCE,
+                       roles=roles, issuer=_ID_ISSUER, ttl=900)
+
+
 @pytest.fixture
-def client(pg_url, monkeypatch):
+def auth_header(id_key):
+    def make(roles, *, sub="u-researcher"):
+        return {"Authorization": f"Bearer {_mint(id_key, roles, sub)}"}
+    return make
+
+
+@pytest.fixture
+def client(pg_url, id_key, monkeypatch):
     monkeypatch.setenv("DATABASE_URL", pg_url)
+    monkeypatch.setenv("IDENTITY_ISSUER", _ID_ISSUER)
+    monkeypatch.setenv("IDENTITY_AUDIENCE", _ID_AUDIENCE)
+    _idmod.install_test_cache(id_key[1])
     from fastapi.testclient import TestClient
     from viewer_service.api.app import create_app
-    return TestClient(create_app())
+    default = {"Authorization": f"Bearer {_mint(id_key, ['researcher'], 'u-researcher')}"}
+    return TestClient(create_app(), headers=default)
 
 
 @pytest.fixture(autouse=True)
