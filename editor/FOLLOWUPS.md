@@ -698,6 +698,10 @@ ED-J1 added machine auto-translate: a serverless proxy `editor/api/translate` �
 - ed-j1-6: `translateClient` has no request timeout/AbortController — a hung function leaves the row spinner until a network failure; an abort timeout would harden the degradation story.
 - **Deploy note:** real auto-translate needs `AI_GATEWAY_API_KEY` (or Vercel OIDC) set on the editor's deployment; the editor is currently undeployed (it becomes static SPA + 1 function). Without it, auto fails gracefully inline and manual editing is unaffected.
 
+## ED-J2 (Translation Workbench) — ⛔ OBSOLETE (workbench retired in ED-K3, 2026-06-21)
+The standalone Translation Workbench was **deleted** in ED-K3 (folded into the Library entity browser).
+All `ed-j2-*` items below are moot (the component no longer exists). Kept for history only.
+
 ## ED-J2 (Translation Workbench) — deferred (final-review triage, 2026-06-20)
 ED-J2 added a database-wide Translation Workbench (start-screen card → `editor/src/translate/workbench/`): pick entity type + source/target language → list Library entities missing the target translation (F7 fetchers, capped 300) → per-row + bulk auto-translate (reuses J1 `translateText`, status `draft`) into a local working copy → export a contribution bundle. Read-only Library; export-only. Final review APPROVE-WITH-FOLLOWUPS; the one Important (option "Option N" placeholders leaking into the bundle) was FIXED before landing (commit 07c4981f). Deferred minors:
 - ed-j2-1 (was borderline-Important): **stale-selector dead-end** — changing Type/From/To after a Load does not invalidate `result`/`bodies`, so an un-reloaded type switch renders/exports current `kind`/`target` against stale bodies (e.g. entries typed `option` carrying prompt content). Normal flow (Load after every change) avoids it. Fix: clear `result` on any selector change, or disable Load/Download until a matching Load.
@@ -735,3 +739,13 @@ ED-K2 added structural editing to the Library browser: a local edit session (aut
 ED-K3 folded translation into the Library browser and retired the standalone workbench. **ED-K COMPLETE (K1+K2+K3).** Per-entity **Translate** tab (source→target grid + per-field Auto + per-target-locale status + lock-on-complete), list-level **batch translate** (loadUntranslated → auto into the session), and deletion of `TranslationWorkbench.tsx`/`workbench/bundle.ts`/`workbench/export.ts` + the start-screen "Translate Library entities" card + App `workbench` flag (kept `workbench/fields.ts`/`load.ts`, `translate/apply.ts`; the per-questionnaire `TranslationPanel` ED-J1 untouched). 425 unit + 4 library-browser e2e. Final review APPROVE-WITH-FOLLOWUPS (no Critical/Important). Deferred minors:
 - ed-k3-1: batch re-fetches fresh bodies via `loadUntranslated` instead of reading the session `bodies`. Narrow clobber window — if a user edits an entity's SOURCE text in-session but leaves the target untranslated, then runs batch, the fresh fetch overwrites that source edit. (Already-translated entities are safely excluded by `isUntranslated`.) Fix: prefer `bodies[ref]` over the freshly-fetched `it.body` when present.
 - ed-k2-1 (carried): the per-locale status control appears in BOTH the Edit tab and the Translate tab as well as inside the editors — redundant; consider a `showStatus={false}` editor prop.
+
+## ✅ Polish pass — RESOLVED (2026-06-21)
+Batch fix of actionable FOLLOWUP items (commit 0cffc45a; 430 unit + typecheck green):
+- **ed-k2-1 + ed-k3-1 (status redundancy) RESOLVED** — entity editors (Prompt/Option/Context/Instruction/Message + ContentTextEditor) gained `showStatus?: boolean` (default true); the Library browser's Edit tab passes `showStatus={false}` so the inspector's "Entity status" is the single canonical control. The questionnaire editor is unchanged (default true).
+- **ed-k3-1 (batch clobber) RESOLVED** — batch translate now prefers the in-session `bodies[ref]` over the freshly-fetched body, so an in-session source edit isn't overwritten.
+- **ed-d4b-1 RESOLVED** — the ScoringPanel "open the preview" hint is gated on `scores.length > 0`.
+- **ed-d4b-2 RESOLVED** — the "Load PHQ-9 sample" start-screen card now has an `Activity` icon.
+- **ed-j1-3 RESOLVED** — the TranslationPanel bulk "Auto-translate untranslated" button has a `bulkBusy` guard against overlapping runs.
+
+Intentionally NOT changed (deferred-by-design / out of a polish pass): OD-08-gated items (Library write, "Open in viewer" real deploy), schema gaps (validation-message/title localization — upstream), the many "noted so it's not mistaken for a bug" transient-invalid authoring states, block-grouping/style-flow UI stubs, modal a11y (oo — worth a dedicated pass), and the various live-API-unverified notes (the endpoints are live + auto-deployed per (bb)/(ii)).
