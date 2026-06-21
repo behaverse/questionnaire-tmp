@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from harvester.sources.base import SourceAdapter
 from harvester.raw import RawQuestionnaire, RawItem, RawOption
 from harvester.licensing import LicenseFlag
+from harvester.naming import derive_short_title
 
 
 class PsychologyToolsParseError(ValueError):
@@ -222,8 +223,7 @@ class PsychologyToolsAdapter(SourceAdapter):
         h1 = soup.find("h1")
         title = h1.get_text(strip=True) if h1 else (
             soup.title.get_text(strip=True) if soup.title else "")
-        short_m = re.search(r"\(([^)]+)\)", title)
-        short_title = short_m.group(1) if short_m else title
+        short_title = derive_short_title(title)
         qst_id = _derive_id(title, url)
 
         form = soup.find("form")

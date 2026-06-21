@@ -5,6 +5,7 @@ from harvester.sources.base import SourceAdapter
 from harvester.raw import RawQuestionnaire, RawScale, RawItem, RawOption
 from harvester.licensing import LicenseFlag
 from harvester.contexts import split_temporal_context
+from harvester.naming import derive_short_title
 
 
 class PsyToolkitParseError(ValueError):
@@ -288,8 +289,7 @@ class PsyToolkitAdapter(SourceAdapter):
         h1 = soup.find("h1")
         title = h1.get_text(strip=True) if h1 else (
             soup.title.get_text(strip=True) if soup.title else "")
-        short_m = re.search(r"\(([^)]+)\)", title)
-        short_title = short_m.group(1) if short_m else title
+        short_title = derive_short_title(title)
 
         # --- slug / qst_id ---
         qst_id = derive_qst_id(title, url)
