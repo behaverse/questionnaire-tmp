@@ -2,7 +2,7 @@
 
 **Original:** https://psychology-tools.com/test/pcl-22
 
-- short_title: Original
+- short_title: PCL-22
 - source: psychology-tools.com
 - license: unknown
 - publication: Hare R D A research scale for the assessment of psychopathy in criminal populations. 1 Pers Indiv Diff 111-119 ( 1980 ). (1980)

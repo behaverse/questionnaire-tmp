@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/obsessiveness-oci-r.html
 
-- short_title: short version, OCI-R
+- short_title: OCI-R
 - source: psytoolkit.org
 - license: unknown
 - publication: Foa, E.B., Huppert, J.D., Leiberg, S. Langner, R., Kichic, R., Hajcak,

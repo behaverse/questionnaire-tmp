@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/addiction-gaming-gas.html
 
-- short_title: Gaming Addiction Scale
+- short_title: GAS
 - source: psytoolkit.org
 - license: unknown
 - publication: Lemmens, J.S., Valkenburg, P.M. & Peter, J. (2009). Development and validation of a game addiction scale for adolescents. Media Psychology, 12(1) , 77-95. (2009)

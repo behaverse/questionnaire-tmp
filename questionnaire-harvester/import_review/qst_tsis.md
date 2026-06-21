@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/social-intelligence-tsis.html
 
-- short_title: Tromsø Social Intelligence Scale, TSIS
+- short_title: TSIS
 - source: psytoolkit.org
 - license: unknown
 - publication: D.H. Silvera, M. Martinussen, & T. I. Dahl. (2001). The Tromsø

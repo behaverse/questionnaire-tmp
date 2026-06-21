@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/children-happiness.html
 
-- short_title: The Children’s Happiness Scale
+- short_title: CHS
 - source: psytoolkit.org
 - license: unknown
 - publication: Morgan, R. (2014). The children’s happiness scale. Children’s

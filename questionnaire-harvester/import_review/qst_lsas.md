@@ -2,7 +2,7 @@
 
 **Original:** https://psychology-tools.com/test/liebowitz-social-anxiety-scale
 
-- short_title: Liebowitz Social Anxiety Scale
+- short_title: LSAS
 - source: psychology-tools.com
 - license: unknown
 - keywords: psychology · social · phobia · anxiety · fear · avoidance

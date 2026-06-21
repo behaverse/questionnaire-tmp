@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/who5.html
 
-- short_title: The WHO-5 Well-Being Index
+- short_title: WHO-5
 - source: psytoolkit.org
 - license: unknown
 - publication: Topp, C.W., Østergaard, S.D., Søndergaard, S., & Bech, P. (2015). The WHO-5 Well-Being Index: A Systematic Review of the Literature. Psychotherapy and Psychosomatics, 84 , 167-176. Open access link (2015)

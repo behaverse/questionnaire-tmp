@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/handedness-ehi.html
 
-- short_title: short form
+- short_title: EHI
 - source: psytoolkit.org
 - license: unknown
 - publication: Oldfield, R.C. (1971). The assessment and analysis of handedness: The Edinburgh inventory. Neuropsychologia, 9 , 97-113. (1971)

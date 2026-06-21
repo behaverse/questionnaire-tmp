@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/self-consciousness-scale-scsr.html
 
-- short_title: revised version
+- short_title: SCS-R
 - source: psytoolkit.org
 - license: unknown
 - publication: Scheier, M. F. & Carver, C. S. (1985). The self-consciousnes scale -

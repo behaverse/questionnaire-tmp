@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/emotional-intelligence.html
 
-- short_title: Emotional Intelligence
+- short_title: EI
 - source: psytoolkit.org
 - license: unknown
 - publication: Schutte, N. S., Malouff, J. M., Hall, L. E., Haggerty, D. J.,

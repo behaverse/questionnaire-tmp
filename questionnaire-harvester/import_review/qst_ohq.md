@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/happiness-ohq.html
 
-- short_title: Oxford Happiness Scale
+- short_title: OHQ
 - source: psytoolkit.org
 - license: unknown
 - publication: Hills, P. & Argyle, M. (2002). The Oxford Happiness Questionnaire: a compact scale for the measurement of psychological well-being. Personality and Individual Differences, 33 , 1073-1082. (2002)

@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/love-styles-hendrick-sf.html
 
-- short_title: Short Form
+- short_title: LAS-SF
 - source: psytoolkit.org
 - license: unknown
 - publication: Hendrick, C. & Hendrick, S. (1986). A theory and method of

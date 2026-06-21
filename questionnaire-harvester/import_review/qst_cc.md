@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/zkpq-50-cc.html
 
-- short_title: Shortened, ZKPQ-50-CC
+- short_title: ZKPQ-50-CC
 - source: psytoolkit.org
 - license: unknown
 - publication: Aluja, A., Rossier, J., García, L. F., Angleitner, A., Kuhlman, M., & Zuckerman, M. (2006). A cros-cultural shortened form of the ZKPQ (ZKPQ-50-c) adapted to English, French, German, and Spanish languages. Personality and Individual Differences, 41 , 619-628. (2006)

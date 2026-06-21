@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/pts.html
 
-- short_title: Positive Thinking Scale
+- short_title: PTS
 - source: psytoolkit.org
 - license: unknown
 - publication: Diener, E., Wirtz, D., Tov, W., Kim-Prieto, C., Choi. D., Oishi, S.,

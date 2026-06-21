@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/systemizing-arc.html
 
-- short_title: Systemizing Quotient
+- short_title: SQ
 - source: psytoolkit.org
 - license: unknown
 - items: 75

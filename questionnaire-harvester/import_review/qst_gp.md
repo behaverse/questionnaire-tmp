@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/procrastination-gp.html
 
-- short_title: General Procrastination Scale
+- short_title: GPS
 - source: psytoolkit.org
 - license: unknown
 - publication: Lay, C.H. (1986). At Last, My Research Article on

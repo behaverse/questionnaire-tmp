@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/supernatural-sbs.html
 
-- short_title: Supernatural Belief Scale
+- short_title: SBS
 - source: psytoolkit.org
 - license: unknown
 - publication: Jong, J., Bluemke, M., & Halberstadt, J. (2013). Fear of death and supernatural beliefs: Developing a new supernatural belief scale to test the relationship. European Journal of Personality, 27 , 495-506. (2013)

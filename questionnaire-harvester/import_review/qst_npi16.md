@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/narcism-npi16.html
 
-- short_title: 16-item version
+- short_title: NPI-16
 - source: psytoolkit.org
 - license: unknown
 - publication: Ames, D.R., Rose, P., Anderson, C.P. (2006).The NPI-16 as a short

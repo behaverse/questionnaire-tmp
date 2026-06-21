@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/gsqs.html
 
-- short_title: Groningen Sleep Quality Questionnaire
+- short_title: GSQS
 - source: psytoolkit.org
 - license: unknown
 - publication: Meijman, T. F., de Vries-Griever, A. H., de Vries, G. (1988): The

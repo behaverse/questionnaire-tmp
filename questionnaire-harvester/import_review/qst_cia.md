@@ -2,7 +2,7 @@
 
 **Original:** https://us.psytoolkit.org/survey-library/eating-cia.html
 
-- short_title: CIA 3.0
+- short_title: CIA
 - source: psytoolkit.org
 - license: unknown
 - publication: Bohn, K., Doll, H. A., Cooper, Z., O’Connor, M., Palmer, R. L., & Fairburn, C. G. (2008). The measurement of impairment due to eating disorder psychopathology. Behaviour research and therapy, 46 , 1105-1110. This is an open-access paper, click here to download . (2008)
