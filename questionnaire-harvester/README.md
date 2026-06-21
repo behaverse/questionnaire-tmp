@@ -7,13 +7,19 @@ creating duplicate shared entities** (response scales, instructions).
 review). It never touches the Library database. Promotion to the Library is a **separate
 manual step** (`library ingest`) performed after owner review.
 
-**Harvested so far (PsyToolkit, 40):** single-Likert scales including PHQ-9, GAD-7, RSES,
-SWLS, WHO-5, PSS, LOT-R, GSE, GRIT-S, BRS, NCS-6, GQ-6, FS, TILS, SQS, PANAS, TIPI (Big-5),
-SPANE, HSQ, MHC-SF, AAI, AMAS, TAI-5, OCI-R, BITe, CUDQ, NPI-16, PIOS, BFS, CFS, SBS, AISS,
-RRS, BIS, BRCS, SAPS, CNS, SSES, ERQ, trust. GAD-7 reuses PHQ-9's frequency scale; otherwise
-distinct scales are kept as faithful separate entities (no false merge). The harvest list is
-in `register.md`. Pages the adapter can't faithfully represent are skipped cleanly (logged),
-not partially imported — see "adapter coverage" below.
+**Harvested so far (158):** `psytoolkit.org` (117), `psychology-tools.com` (40),
+`phqscreeners.com` (1 — PHQ-9, curated). Two source adapters (`PsyToolkitAdapter`,
+`PsychologyToolsAdapter`); the CLI dispatches by host. Item formats covered include
+single-Likert, sliders (`t: range`), matrix (`t: multiradio`), per-item radio, multi-select
+checkbox, stem-less Beck-style (shared-prompt), and two-dimension tables (Liebowitz). Distinct
+scales are kept as faithful separate entities (no false merge); the harvest list is in
+`register.md`. Pages the adapter can't faithfully represent are skipped cleanly (logged), not
+partially imported — see "adapter coverage" below.
+
+Each harvested questionnaire also carries: an **authored** copyright-safe `description`
+(`descriptions/`), captured source metadata (`source_metadata/`, flagged, not redistributed),
+a cleaned `short_title` acronym (`short_titles.json`), a faithful scoring descriptor
+(`scoring/`), and a human-readable review export (`import_review/`). See **Commands** below.
 
 ---
 
@@ -80,8 +86,46 @@ All paths are relative to the repo root. Override with CLI flags:
 | `--scales-index` | `questionnaire-harvester/dedup/scales-index.json` |
 | `--register` | `questionnaire-harvester/register.md` |
 | `--questions` | `questionnaire-harvester/questions` |
+| `--source-metadata` | `questionnaire-harvester/source_metadata` |
+| `--descriptions` | `questionnaire-harvester/descriptions` |
+| `--short-titles` | `questionnaire-harvester/short_titles.json` |
 | `--schemas` | `schemas` |
 | `--version` | `v26.0618` |
+
+During `harvest`, the `--descriptions` and `--short-titles` override stores are applied to the
+questionnaire (so a re-harvest never reverts an authored description or curated short_title),
+and captured source metadata is written to `--source-metadata` (outside `output/`).
+
+---
+
+## Commands
+
+All run as `PYTHONPATH=library/src:questionnaire-harvester/src python -m harvester.cli <cmd>`.
+
+| Command | Purpose |
+|---|---|
+| `harvest <url>` | Harvest one page → canonical entities in `output/` (+ source_metadata, applies overrides). |
+| `review-export` | (Re)generate `import_review/<id>.md` (human-readable export) + `import_review/README.md` (a review checklist) for every questionnaire — for side-by-side comparison with the source. |
+| `document-scoring` | (Re)generate `scoring/<id>.md` — a faithful scoring descriptor (weights, dimensions, reversed items) with aggregation/cut-offs flagged `needs-research` for later `scr_*` Scorer authoring. |
+| `apply-descriptions` | Bulk-apply authored `descriptions/<id>.md` to canonical `metadata.description` (`x_description_source: authored`), no re-fetch. |
+| `check-descriptions` | Originality/shape guard: flags any authored description with ≥8-word verbatim overlap vs the captured source (copyright), or bad shape. Non-zero exit when any flagged. |
+| `apply-short-titles` | Bulk-apply curated acronyms from `short_titles.json` to canonical `metadata.short_title` (skips `TODO` entries). |
+| `check-short-titles` | Flags junk short_titles (qualifier fragments / version cruft / sentence-like). Non-zero exit when any flagged. |
+
+### Curation / override stores (durable across re-harvest)
+
+| Path | Holds |
+|---|---|
+| `descriptions/<id>.md` | authored two-sentence description per questionnaire |
+| `short_titles.json` | `{id: acronym}` short_title overrides (`TODO:`-prefixed = unfilled placeholder) |
+| `source_metadata/<id>.json` | verbatim captured meta description / keywords / og / introduction (source-copyrighted, **internal — not redistributed**) |
+
+### Generated review/scoring artifacts (tracked staging, regenerable)
+
+| Path | Holds |
+|---|---|
+| `import_review/` | per-questionnaire readable export + review checklist |
+| `scoring/` | per-questionnaire faithful scoring descriptor (`needs-research` for cut-offs) |
 
 ---
 
@@ -89,7 +133,7 @@ All paths are relative to the repo root. Override with CLI flags:
 
 | Module | Responsibility |
 |---|---|
-| `sources/` | Source adapters — `SourceAdapter` base + `PsyToolkitAdapter` (built); extend here for new sites. The PsyToolkit adapter parses the survey-script DSL in the page `<pre>`: a `scale:` definition (explicit `{score=N}` or 1-based positional default) + the `t: scale` question block(s) for the single scale in use. It handles flexible directive ordering (`l:`/`o:`/`q:`/`t:`), a multi-line `q:`, `{reverse}` item markers (→ `Prompt.reversed`), merges items across multi-page same-scale blocks, derives the id from the title acronym (`(SWLS)` → `qst_swls`) else the URL, and raises `PsyToolkitParseError` (→ CLI `SKIP`) on shapes it can't faithfully represent (multi-scale, label-less numeric, non-`scale` blocks). |
+| `sources/` | Source adapters — `SourceAdapter` base + `PsyToolkitAdapter` + `PsychologyToolsAdapter` (both built); the CLI dispatches by host (`dispatch_adapter`). Extend here for new sites. The `psychology-tools.com` adapter parses `/test/` radio-form pages (standard + alternate `li.question-container` layouts, stem-less Beck-style → shared prompt, and two-super-header dimension tables → per-dimension flattening), extracts `ol.sources` references with links + a Sources year, and captures meta/keywords/og/Introduction. The PsyToolkit adapter parses the survey-script DSL in the page `<pre>`: a `scale:` definition (explicit `{score=N}` or 1-based positional default) + the `t: scale` question block(s) for the single scale in use. It handles flexible directive ordering (`l:`/`o:`/`q:`/`t:`), a multi-line `q:`, `{reverse}` item markers (→ `Prompt.reversed`), merges items across multi-page same-scale blocks, derives the id from the title acronym (`(SWLS)` → `qst_swls`) else the URL, and raises `PsyToolkitParseError` (→ CLI `SKIP`) on shapes it can't faithfully represent (multi-scale, label-less numeric, non-`scale` blocks). |
 | `raw.py` | Neutral intermediate dataclasses: `RawQuestionnaire`, `RawScale`, `RawItem`; source-agnostic |
 | `dedup.py` | Fingerprinting + index lookups: `option_fingerprint`, `lookup_option`, `build_instruction_index`, `lookup_instruction` |
 | `contexts.py` | `split_temporal_context()` peels a leading temporal frame ("Over the last 2 weeks,") off the instruction into a Context, minted verbatim (faithfulness policy — no number/word folding) |
@@ -97,7 +141,13 @@ All paths are relative to the repo root. Override with CLI flags:
 | `draft.py` | Reuse-or-mint logic: checks dedup indexes, builds canonical entities, writes via Library writer |
 | `tracking.py` | Progress surface: `upsert_register_row()` (register.md) + `write_questions()` (questions/<id>.md) |
 | `validate.py` | Thin wrapper: runs `build_registry` + `validate_artifact` from `library.validation` over every entity in `output/` |
-| `cli.py` | `harvest <url>` entry point; wires all stages together |
+| `naming.py` | `derive_short_title(title)` — shared clean-acronym derivation used by both adapters |
+| `source_meta.py` | `write_source_metadata()` — flagged source-metadata sidecar (outside `output/`) |
+| `descriptions.py` | authored-description override store: load / apply (harvest) / bulk-patch / originality guard |
+| `short_titles.py` | short_title override store: load / apply (harvest) / bulk-patch / junk guard |
+| `scoring_doc.py` | `scoring/<id>.md` generator (faithful descriptor; `needs-research` cut-offs) |
+| `review_export.py` | `import_review/` generator (readable export + review checklist) |
+| `cli.py` | subcommands: `harvest`, `review-export`, `document-scoring`, `apply-/check-descriptions`, `apply-/check-short-titles` |
 
 ---
 
