@@ -179,7 +179,7 @@ input, `503` if `INVITE_SIGNING_SECRET` is not configured.
 | Variable | Description | Default |
 |---|---|---|
 | `INVITE_SIGNING_SECRET` | 32 + byte secret for HMAC-SHA256 signing. Required for `invite_link` mode. If unset, mint returns 503 and verify returns None (fail-closed). | — (required) |
-| `INVITE_DEFAULT_TTL_SECONDS` | Default invite TTL if `ttl_seconds` is omitted at mint time. | `604800` (7 days) |
+| `INVITE_DEFAULT_TTL_SECONDS` | Default invite TTL if `ttl_seconds` is omitted at mint time. | `2592000` (30 days) |
 | `VS_PUBLIC_BASE` | Public base URL prepended to the `url` field on minted invites. If unset, `url` is relative. | — (optional) |
 
 ### `authenticated` mode (PP-A)
