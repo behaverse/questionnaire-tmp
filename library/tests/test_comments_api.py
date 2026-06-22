@@ -75,3 +75,15 @@ def test_tombstone_preserves_replies(client, qid, auth_header):
     client.delete(f"/v1/comments/{top_id}", headers=h)
     top = client.get(f"/v1/questionnaires/{qid}/comments").json()["comments"][0]
     assert top["deleted"] is True and [r["body"] for r in top["replies"]] == ["r"]
+
+
+def test_delete_malformed_comment_id_404(client, auth_header):
+    r = client.delete("/v1/comments/not-a-uuid", headers=auth_header(["participant"]))
+    assert r.status_code == 404
+
+
+def test_post_malformed_parent_id_422(client, qid, auth_header):
+    h = auth_header(["participant"])
+    r = client.post(f"/v1/questionnaires/{qid}/comments",
+                    json={"body": "x", "parent_id": "not-a-uuid"}, headers=h)
+    assert r.status_code == 422

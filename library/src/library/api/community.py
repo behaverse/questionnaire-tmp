@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 from .deps import get_conn
@@ -24,6 +26,10 @@ def post_comment(qid: str, body: CommentIn, conn=Depends(get_conn), claims=Depen
     if not text:
         raise HTTPException(status_code=422, detail="comment body must not be empty")
     if body.parent_id is not None:
+        try:
+            uuid.UUID(body.parent_id)
+        except ValueError:
+            raise HTTPException(status_code=422, detail="invalid parent_id")
         parent = store.get_comment(conn, body.parent_id)
         if parent is None or parent["questionnaire_id"] != qid:
             raise HTTPException(status_code=422, detail="invalid parent_id")
@@ -42,6 +48,10 @@ def get_comments(qid: str, conn=Depends(get_conn)):
 
 @router.delete("/comments/{comment_id}", status_code=204)
 def delete_comment(comment_id: str, conn=Depends(get_conn), claims=Depends(require_user)):
+    try:
+        uuid.UUID(comment_id)
+    except ValueError:
+        raise HTTPException(status_code=404, detail="comment not found")
     c = store.get_comment(conn, comment_id)
     if c is None:
         raise HTTPException(status_code=404, detail="comment not found")
