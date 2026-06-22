@@ -54,3 +54,27 @@ CREATE TABLE IF NOT EXISTS facet (
   FOREIGN KEY (id, version) REFERENCES entity (id, version) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS facet_lookup_idx ON facet (facet_type, value);
+
+CREATE TABLE IF NOT EXISTS comment (
+  id               uuid PRIMARY KEY,
+  questionnaire_id text NOT NULL,
+  parent_id        uuid REFERENCES comment(id) ON DELETE CASCADE,
+  author_sub       text,
+  author_name      text,
+  body             text,
+  created_at       timestamptz NOT NULL DEFAULT now(),
+  deleted_at       timestamptz
+);
+CREATE INDEX IF NOT EXISTS comment_qid_idx ON comment (questionnaire_id, created_at);
+CREATE INDEX IF NOT EXISTS comment_author_idx ON comment (author_sub);
+
+CREATE TABLE IF NOT EXISTS rating (
+  questionnaire_id text NOT NULL,
+  author_sub       text NOT NULL,
+  score            int  NOT NULL,
+  created_at       timestamptz NOT NULL DEFAULT now(),
+  updated_at       timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (questionnaire_id, author_sub),
+  CONSTRAINT rating_score_chk CHECK (score BETWEEN 1 AND 5)
+);
+CREATE INDEX IF NOT EXISTS rating_author_idx ON rating (author_sub);
