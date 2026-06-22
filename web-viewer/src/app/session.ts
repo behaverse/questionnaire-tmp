@@ -3,6 +3,9 @@ import type { MintErr } from './bootstrap'
 import type { Theme } from './theme'
 import { requiredUnanswered, type Step } from './steps'
 
+// auth_required is intercepted in App.tsx (→ LoginView) before any boot_error dispatch
+type ErrorKind = Exclude<MintErr['kind'], 'auth_required'>
+
 export type SessionState = {
   phase: 'booting' | 'error' | 'ready' | 'finishing' | 'finished' | 'completed'
   session: { id: string; token: string } | null
@@ -14,7 +17,7 @@ export type SessionState = {
   answers: Record<string, AnswerValue>
   stepErrors: string[]
   validationErrors: { key: string; message: string }[]
-  error: { kind: MintErr['kind']; code: string } | null
+  error: { kind: ErrorKind; code: string } | null
   submitError: boolean
 }
 
@@ -26,7 +29,7 @@ export const initialState: SessionState = {
 
 export type Action =
   | { type: 'boot_success'; session: { id: string; token: string }; runtime: Runtime; theme: Theme; steps: Step[] }
-  | { type: 'boot_error'; kind: MintErr['kind']; code: string }
+  | { type: 'boot_error'; kind: ErrorKind; code: string }
   | { type: 'retry' }
   | { type: 'answer'; key: string; value: AnswerValue }
   | { type: 'next' }

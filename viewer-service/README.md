@@ -112,11 +112,31 @@ the deployment's resolved `theme` bundle (or null) for the viewer to apply.
 
 ## Deployment modes & lifecycle (VS-C)
 
-`POST /deployments` takes a `mode_preset` (default `anonymous_link`; `demo` also supported —
-other presets require Identity/Platform and are rejected with 422). The preset resolves to the
-four orthogonal dimensions (auth/persistence/lifecycle/rendering_context). At `/sessions/new` the
-active window (`active_from`/`active_until`) and a per-deployment `quota.max_sessions` are enforced:
-minting past `active_until` → `410`, before `active_from` or over quota → `409`. **Demo (ephemeral)**
-deployments mint sessions whose submissions are validated but never forwarded ("no data leaves VS"),
-and which refuse resume (`409 ephemeral_no_resume`). Resume of an in-progress session is allowed even
-after `active_until` (asymmetric, OD-14).
+`POST /deployments` takes a `mode_preset` (default `anonymous_link`; `demo` and `authenticated`
+also supported — other presets require Identity/Platform and are rejected with 422). The preset
+resolves to the four orthogonal dimensions (auth/persistence/lifecycle/rendering_context). At
+`/sessions/new` the active window (`active_from`/`active_until`) and a per-deployment
+`quota.max_sessions` are enforced: minting past `active_until` → `410`, before `active_from` or
+over quota → `409`. **Demo (ephemeral)** deployments mint sessions whose submissions are validated
+but never forwarded ("no data leaves VS"), and which refuse resume (`409 ephemeral_no_resume`).
+Resume of an in-progress session is allowed even after `active_until` (asymmetric, OD-14).
+
+### `authenticated` mode (PP-A)
+
+Deployments created with `mode_preset: "authenticated"` require the participant to hold a valid
+Identity access token **at session-mint time**.
+
+`POST /v1/sessions/new` for an `authenticated` deployment:
+
+- Requires `Authorization: Bearer <Identity access token>` (audience `questionnaire-apps`,
+  issued by the sibling `identity-service`).  Any valid token is accepted — role is not checked.
+- Returns `401 { error: { code: "auth_required" } }` if no token is present or the token is
+  invalid/expired.
+- On success, tags the session with `participant_sub` (= the token's `sub` claim, which is
+  the stable `agent_id` for this participant) and increments `session_index` per participant
+  (count of prior sessions for this `participant_sub` + 1).
+- The mint response includes `participant_sub` alongside the usual `session_id`,
+  `session_token`, and `runtime`.
+
+`anonymous_link` and `demo` deployments are unchanged — no `Authorization` header is required or
+examined.

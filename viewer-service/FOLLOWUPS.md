@@ -67,6 +67,25 @@
 - **Deferred:** Behaverse reconciliation + the `validated` session state (reconciliation needs a
   Behaverse query endpoint that doesn't exist yet; `validated` is a no-op stub).
 
+## PP-A follow-ups (authenticated participant sessions — 2026-06-22)
+
+- **"My data" participant export (PP-C).** Participants cannot yet request or download their
+  own response data. Deferred to PP-C.
+- **Signed invite links (PP-B).** Authenticated deployments currently rely on participants
+  logging in via the viewer's login screen; time-limited signed invite links (eliminating the
+  manual login step) are deferred to PP-B.
+- **Dedicated `participant` role + self-registration.** Participants are currently verified by
+  any valid Identity token (role-agnostic). A dedicated participant role and a self-service
+  registration flow are deferred — decide on Identity service scope (PP-B or ID-E).
+- **Per-deployment `agent_id` pseudonymisation.** `participant_sub` is stored verbatim (= the
+  stable `sub` from the Identity token). Per-deployment pseudonymous `agent_id`s (so that the
+  same participant appears under a different id across deployments) are deferred to a future OD.
+- **Concurrent-mint race on `session_index`.** `session_index` is computed as
+  `count(existing sessions for this participant_sub) + 1`. This is not a serialised transaction,
+  so two near-simultaneous mints for the same participant could receive the same index. Fix with
+  a `SELECT ... FOR UPDATE` on the count or a `SERIAL`-per-participant counter if collision-free
+  indices are required.
+
 ## VS-E follow-ups
 
 - **SSE dashboard transport.** The metrics endpoint is a pollable JSON snapshot; add the 08a SSE

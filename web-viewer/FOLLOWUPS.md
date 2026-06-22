@@ -1,5 +1,18 @@
 # web-viewer — deferred work / follow-ups
 
+## PP-A follow-ups (authenticated participant sessions — 2026-06-22)
+
+- **Login only — no self-register screen (PP-B).** The login form (`LoginView`) is email +
+  password only; there is no "create account" path. Self-registration is deferred to PP-B
+  (signed invite links or a dedicated participant registration flow).
+- **Access token used once at mint (no refresh).** The Identity access token is fetched at
+  login and passed once to `POST /v1/sessions/new`. It is not stored and not refreshed. If the
+  token expires between login and mint (the window is tiny, but possible on slow networks), the
+  user will see a generic network/auth error. Full token-refresh handling is deferred.
+- **"My data" view is PP-C.** Participants cannot yet view or export their own response history
+  from within the web viewer. This is deferred to PP-C (requires a participant-scoped VS query
+  endpoint).
+
 - Renderer types are hand-written against the faithful projection; add a type-conformance test against the canonical runtime examples once they are regenerated (denormaliser follow-up).
 - `style.layout` refinements (dropdown / slider-like) unrendered until WV-D — base widgets shown meanwhile.
 - Matrix on very narrow viewports relies on horizontal scroll (contract-compliant); author-defined breakpoints remain a schema-reserved future.

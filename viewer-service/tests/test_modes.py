@@ -13,7 +13,7 @@ def test_demo_dimensions_are_ephemeral():
 
 
 def test_supported_set():
-    assert SUPPORTED == {"anonymous_link", "demo"}
+    assert SUPPORTED == {"anonymous_link", "demo", "authenticated"}
 
 
 def test_unsupported_preset_raises():

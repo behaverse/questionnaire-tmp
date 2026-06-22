@@ -184,7 +184,8 @@ export function App() {
       document.title = res.runtime.metadata.title
       document.documentElement.lang = res.runtime.locale ?? 'en'
     } else {
-      dispatch({ type: 'boot_error', kind: res.kind, code: res.code })
+      // auth_required was already intercepted above; cast to exclude it for the type system
+      dispatch({ type: 'boot_error', kind: res.kind as Exclude<typeof res.kind, 'auth_required'>, code: res.code })
     }
   }
 

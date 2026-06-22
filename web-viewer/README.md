@@ -29,7 +29,38 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
 | `deployment` | yes | Deployment id to mint a session against. |
 | `locale` | no | Requested locale (BCP-47); VS resolves it against the deployment's locales. |
 | `viewer_url` | no | VS base URL override; default `VITE_VS_BASE_URL`, else `http://localhost:8001`. |
+| `identity_url` | no | Identity service base URL for authenticated deployments; default `VITE_IDENTITY_BASE_URL`. |
 | `fixture` | dev only | Render a bundled fixture runtime; no network. |
+
+## Participant login (PP-A)
+
+When the Viewer Service returns `401 auth_required` on session-mint, the viewer shows a
+**login screen** (email + password) before the questionnaire begins.
+
+**Flow:**
+1. The viewer tries to mint a session anonymously.
+2. If the deployment is `authenticated`, the VS returns `401 auth_required`.
+3. The viewer presents `LoginView` — a minimal email/password form.
+4. On submit, the viewer calls the Identity service (`POST /v1/auth/login`) at the URL
+   resolved from `?identity_url=` or `VITE_IDENTITY_BASE_URL`.
+5. On success, the access token is attached to the mint request (`Authorization: Bearer …`).
+6. The VS mints the session, tags it with `participant_sub`, and returns `session_id` /
+   `session_token` / `participant_sub` — the viewer proceeds normally.
+
+**Configuration:**
+
+| Source | Variable / Param | Purpose |
+|---|---|---|
+| URL param | `?identity_url=<base>` | Identity base URL for this session |
+| Build-time env | `VITE_IDENTITY_BASE_URL` | Default Identity base URL |
+
+If neither is set and the deployment requires auth, the login form still renders but
+the submit call will fail with a network error (displayed inline).
+
+**Token posture:** The access token is used **once**, at mint. It is not stored and not
+sent on any subsequent VS call — the session token (`session_token`) authorises all
+further participant requests. See FOLLOWUPS for deferred work on token refresh and the
+"my data" view.
 
 ## Presentation modes
 
