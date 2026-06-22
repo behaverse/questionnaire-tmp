@@ -19,8 +19,8 @@ export default defineConfig(({ mode }) =>
       build: {
         rollupOptions: {
           input: mode === 'production'
-            ? { main: resolve(__dirname, 'index.html') }
-            : { main: resolve(__dirname, 'index.html'), gallery: resolve(__dirname, 'gallery.html') },
+            ? { main: resolve(__dirname, 'index.html'), mydata: resolve(__dirname, 'mydata.html') }
+            : { main: resolve(__dirname, 'index.html'), gallery: resolve(__dirname, 'gallery.html'), mydata: resolve(__dirname, 'mydata.html') },
         },
       },
     }),
