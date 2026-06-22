@@ -3,22 +3,24 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
-from . import questionnaires, entities, search
+from . import questionnaires, entities, search, community
 from ..config import get_settings
 
-_CODE_FOR = {400: "bad_request", 404: "not_found", 410: "gone", 422: "unprocessable"}
+_CODE_FOR = {400: "bad_request", 401: "unauthorized", 403: "forbidden",
+             404: "not_found", 410: "gone", 422: "unprocessable"}
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Questionnaire Library", version="v1")
     app.add_middleware(
         CORSMiddleware,
         allow_origins=list(get_settings().cors_origins),
-        allow_methods=["GET", "OPTIONS"],
+        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allow_headers=["*"],
     )
     app.include_router(questionnaires.router, prefix="/v1")
     app.include_router(entities.router, prefix="/v1")
     app.include_router(search.router, prefix="/v1")
+    app.include_router(community.router, prefix="/v1")
 
     @app.get("/healthz")
     def healthz():
