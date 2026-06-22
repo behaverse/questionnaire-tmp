@@ -88,6 +88,47 @@ sent on any subsequent VS call — the session token (`session_token`) authorise
 further participant requests. See FOLLOWUPS for deferred work on token refresh and the
 "my data" view.
 
+## MyData portal (`mydata.html`) (PP-C)
+
+A lightweight single-page app bundled as a **separate Vite entry** (`mydata.html`)
+that lets a logged-in participant view and download their own questionnaire history.
+
+### URL contract
+
+| Param | Required | Meaning |
+|---|---|---|
+| `identity_url` | no | Identity service base URL; default `VITE_IDENTITY_BASE_URL`, else `http://localhost:9000`. |
+| `viewer_url` | no | Viewer Service base URL; default `VITE_VS_BASE_URL`, else `http://localhost:8001`. |
+
+### Flow
+
+1. Participant opens `mydata.html` (directly or via a link from the study platform).
+2. The portal shows a `LoginView` (email + password) and calls
+   `POST /v1/auth/login` on the Identity service.
+3. On success, the access token is held in memory and passed as
+   `Authorization: Bearer <token>` on every VS call.
+4. The portal calls `GET /v1/me/sessions` → displays a table of the participant's
+   completed questionnaire sessions (instrument id/version, status, session index,
+   submitted-at timestamp).
+5. A **"Download my responses (CSV)"** button calls `GET /v1/me/responses.csv` and
+   triggers a browser file download.
+6. If the participant has no sessions, the empty-state message
+   **"No completed questionnaires yet."** is shown.
+
+### Building
+
+`mydata.html` is produced by `npm run build` alongside the main viewer.  The
+compiled output lives at `dist/mydata.html` plus `dist/assets/mydata-*.js`.
+
+### Configuration
+
+| Source | Variable / Param | Purpose |
+|---|---|---|
+| URL param | `?identity_url=<base>` | Identity base URL for this session |
+| Build-time env | `VITE_IDENTITY_BASE_URL` | Default Identity base URL |
+| URL param | `?viewer_url=<base>` | VS base URL for this session |
+| Build-time env | `VITE_VS_BASE_URL` | Default VS base URL |
+
 ## Presentation modes
 
 - **focus** (default): one step per view, keyboard shortcuts, auto-advance after a

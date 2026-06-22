@@ -67,6 +67,26 @@
 - **Deferred:** Behaverse reconciliation + the `validated` session state (reconciliation needs a
   Behaverse query endpoint that doesn't exist yet; `validated` is a no-op stub).
 
+## PP-C follow-ups (my-data participant export — 2026-06-22)
+
+- **Human questionnaire titles.** `GET /v1/me/sessions` returns `instrument_id` and
+  `instrument_version` but no human-readable title. The title lives in the Library
+  (`GET /v1/questionnaires/{id}/versions/{v}`); add a Library lookup (with caching)
+  so the portal can show a friendly name. Deferred — requires the Library to be
+  reachable from the VS at all times.
+- **JSON download.** `/v1/me/responses.csv` is CSV-only (BDM-native). A
+  `GET /v1/me/responses.json` endpoint returning a structured JSON array would improve
+  client-side rendering and match the researcher's future JSON export format. Deferred.
+- **Participant response erasure ("delete my data").** No `DELETE /v1/me` or
+  `DELETE /v1/me/sessions/{id}` endpoint exists. GDPR-style erasure needs a cascade
+  through responses, events, and the outbox. Deferred to a dedicated privacy-compliance
+  sprint (PP-E or later).
+- **Outbox retention affects what "my data" returns.** If outbox rows are ever pruned
+  (see VS-B FOLLOWUPS), and the responses table is pruned alongside them, the export
+  will silently lose historical rows. Ensure the pruning policy documents what "my data"
+  can guarantee, and consider a separate participant-facing archive table if long-term
+  participant access is needed.
+
 ## PP-B follow-ups (signed invite links — 2026-06-22)
 
 - **Single-use invites.** Invites are currently multi-use until expiry. Single-use enforcement

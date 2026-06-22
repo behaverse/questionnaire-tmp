@@ -182,6 +182,58 @@ input, `503` if `INVITE_SIGNING_SECRET` is not configured.
 | `INVITE_DEFAULT_TTL_SECONDS` | Default invite TTL if `ttl_seconds` is omitted at mint time. | `2592000` (30 days) |
 | `VS_PUBLIC_BASE` | Public base URL prepended to the `url` field on minted invites. If unset, `url` is relative. | — (optional) |
 
+### "My data" participant export (PP-C)
+
+Authenticated participants can retrieve their own session list and download their
+full response history via two **Identity-gated** endpoints.  Both endpoints scope
+their results to the `sub` claim of the bearer token — a participant can only ever
+see their own data.
+
+#### `GET /v1/me/sessions`
+
+Returns a JSON array of the caller's completed sessions across all deployments.
+
+**Auth:** `Authorization: Bearer <Identity access token>` (any valid token; role is
+not checked).  Returns `401 { error: { code: "auth_required" } }` if absent or invalid.
+
+**Response (200):**
+
+```json
+[
+  {
+    "session_id": "ses_…",
+    "deployment_id": "dep_…",
+    "instrument_id": "qst_example",
+    "instrument_version": "v26.0618",
+    "status": "submitted",
+    "session_index": 1,
+    "submitted_at": "2026-06-21T10:00:00Z"
+  }
+]
+```
+
+Returns `[]` if the participant has no sessions.
+
+**Scoping note:** `participant_sub` is matched exactly against `claims["sub"]`.
+Invite-link sessions are tagged `participant_sub = "invite:<code>"`, which is
+**never** equal to a real Identity `sub` — they are excluded automatically.
+
+#### `GET /v1/me/responses.csv`
+
+Streams a BDM-native CSV of all response rows across the caller's sessions.
+Re-uses the same `iter_response_rows_for_participant` iterator and `to_csv`
+column layout as the researcher export (`GET /v1/deployments/{id}/export.csv`).
+
+**Auth:** Same as `/v1/me/sessions` — `Authorization: Bearer <Identity access token>`.
+Returns `401` if absent or invalid.
+
+**Response (200):** `Content-Type: text/csv`, streaming.
+Returns a header-only CSV row with no data rows if the participant has no responses.
+
+**Scoping:** same `claims["sub"]` match; invite participants excluded by namespace.
+
+---
+
 ### `authenticated` mode (PP-A)
 
 Deployments created with `mode_preset: "authenticated"` require the participant to hold a valid

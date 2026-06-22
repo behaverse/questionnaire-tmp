@@ -1,5 +1,17 @@
 # web-viewer — deferred work / follow-ups
 
+## PP-C follow-ups (MyData portal — 2026-06-22)
+
+- **Login-only — no self-register.** The portal shows the `LoginView` (email + password)
+  but has no "create account" path. Self-registration is deferred (PP-B/PP-D or later).
+- **Merges with PP-D pick-a-questionnaire into one participant home.** PP-D will add
+  a "start a new questionnaire" flow (browsing / launching deployments). The MyData portal
+  and the PP-D questionnaire picker should eventually merge into a single participant
+  home page rather than two separate HTML entries.
+- **No human titles yet.** The session table shows `instrument_id` + `instrument_version`
+  (machine identifiers). The VS `/v1/me/sessions` endpoint does not yet return a human
+  title; a Library lookup is needed (tracked in the VS FOLLOWUPS).
+
 ## PP-B follow-ups (signed invite links — 2026-06-22)
 
 - **Invite participants cannot recover data across devices (by design).** Invite sessions are
