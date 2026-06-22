@@ -30,7 +30,33 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
 | `locale` | no | Requested locale (BCP-47); VS resolves it against the deployment's locales. |
 | `viewer_url` | no | VS base URL override; default `VITE_VS_BASE_URL`, else `http://localhost:8001`. |
 | `identity_url` | no | Identity service base URL for authenticated deployments; default `VITE_IDENTITY_BASE_URL`. |
+| `invite` | no | Signed invite token for `invite_link` deployments. If present, passed to `POST /v1/sessions/new`. |
 | `fixture` | dev only | Render a bundled fixture runtime; no network. |
+
+## Invite links (PP-B)
+
+When a deployment uses `invite_link` mode the participant receives a URL with a
+`?invite=<token>` query parameter. No login is required.
+
+**Flow:**
+1. The viewer reads `?invite=<token>` from the URL on startup.
+2. `POST /v1/sessions/new` is called with `{ deployment_id, invite: "<token>" }`.
+3. On success, the session is minted (tagged `participant_sub=invite:<participant_id>` by the
+   VS) and the questionnaire begins normally.
+4. If the token is invalid, expired, or bound to a different deployment, the VS returns
+   `401 invite_required` and the viewer shows the **InvalidInviteScreen** — a static error
+   page explaining that the link is invalid or has expired, with no retry path.
+
+**URL contract addition:**
+
+| Param | Required | Meaning |
+|---|---|---|
+| `invite` | no | Signed invite token for `invite_link` deployments. If present, passed to `POST /v1/sessions/new`. |
+
+**Token posture:** The invite token is passed once, at session-mint time. It is not stored
+in IndexedDB and not sent on any subsequent VS call — the session token (`session_token`)
+authorises all further participant requests. Because invite participants have no account, they
+cannot resume from a different device (see FOLLOWUPS).
 
 ## Participant login (PP-A)
 

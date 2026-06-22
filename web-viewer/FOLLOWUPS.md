@@ -1,5 +1,14 @@
 # web-viewer — deferred work / follow-ups
 
+## PP-B follow-ups (signed invite links — 2026-06-22)
+
+- **Invite participants cannot recover data across devices (by design).** Invite sessions are
+  anonymous — no Identity account is attached. The session token persists to IndexedDB on the
+  same device/browser, so a reload within the same origin resumes normally. But switching
+  devices or clearing the browser store means the session is unrecoverable. This is the
+  expected posture for PP-B (no account = no cross-device continuity). PP-C is account-only;
+  an optional "attach an account" upgrade path is tracked in the VS FOLLOWUPS.
+
 ## PP-A follow-ups (authenticated participant sessions — 2026-06-22)
 
 - **Login only — no self-register screen (PP-B).** The login form (`LoginView`) is email +

@@ -67,6 +67,23 @@
 - **Deferred:** Behaverse reconciliation + the `validated` session state (reconciliation needs a
   Behaverse query endpoint that doesn't exist yet; `validated` is a no-op stub).
 
+## PP-B follow-ups (signed invite links — 2026-06-22)
+
+- **Single-use invites.** Invites are currently multi-use until expiry. Single-use enforcement
+  requires a `consumed_invites` table (keyed by token hash) and an atomic check-and-insert at
+  session-mint time — deferred until a study design requires single-use guarantees.
+- **Bulk invite generation.** The current endpoint mints one invite per request. A bulk endpoint
+  (`POST /v1/deployments/{id}/invites/bulk`, body `[{participant_id, ttl_seconds}, …]`) returning
+  a list of signed tokens + URLs is deferred.
+- **"Attach an account to recover data" upgrade for invite participants.** Invite sessions are
+  tagged `participant_sub=invite:<code>`. Participants cannot currently link this session to an
+  Identity account (which would let them resume from another device or access their data via PP-C).
+  An account-attach flow (POST a token from the invite session to an Identity-owned session, merging
+  `participant_sub`) is deferred to a future PP iteration.
+- **`url` is relative unless `VS_PUBLIC_BASE` is set.** The `url` field in the mint response is a
+  relative path (`/v1/invites/<token>`) unless the `VS_PUBLIC_BASE` env var is configured. In
+  production, set `VS_PUBLIC_BASE=https://<viewer-service-host>`.
+
 ## PP-A follow-ups (authenticated participant sessions — 2026-06-22)
 
 - **"My data" participant export (PP-C).** Participants cannot yet request or download their

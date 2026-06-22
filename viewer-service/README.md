@@ -112,14 +112,75 @@ the deployment's resolved `theme` bundle (or null) for the viewer to apply.
 
 ## Deployment modes & lifecycle (VS-C)
 
-`POST /deployments` takes a `mode_preset` (default `anonymous_link`; `demo` and `authenticated`
-also supported — other presets require Identity/Platform and are rejected with 422). The preset
-resolves to the four orthogonal dimensions (auth/persistence/lifecycle/rendering_context). At
+`POST /deployments` takes a `mode_preset` (default `anonymous_link`; `demo`, `authenticated`,
+and `invite_link` also supported — other presets require Identity/Platform and are rejected with
+422). The preset resolves to the four orthogonal dimensions
+(auth/persistence/lifecycle/rendering_context). At
 `/sessions/new` the active window (`active_from`/`active_until`) and a per-deployment
 `quota.max_sessions` are enforced: minting past `active_until` → `410`, before `active_from` or
 over quota → `409`. **Demo (ephemeral)** deployments mint sessions whose submissions are validated
 but never forwarded ("no data leaves VS"), and which refuse resume (`409 ephemeral_no_resume`).
 Resume of an in-progress session is allowed even after `active_until` (asymmetric, OD-14).
+
+### `invite_link` mode (PP-B)
+
+Deployments created with `mode_preset: "invite_link"` allow access via **stateless
+HMAC-signed invite tokens** — no Identity login is required. Invites are multi-use until
+they expire.
+
+**Minting an invite (researcher):**
+
+```
+POST /v1/deployments/{id}/invites
+Authorization: Bearer <researcher token>
+Content-Type: application/json
+
+{ "participant_id": "alice", "ttl_seconds": 86400 }   # ttl_seconds is optional
+```
+
+Returns `201`:
+
+```json
+{
+  "invite_token": "<signed token>",
+  "participant_id": "alice",
+  "deployment_id": "dep_...",
+  "expires_at": "2026-06-23T12:00:00Z",
+  "url": "/v1/invites/<signed token>"
+}
+```
+
+The `url` field is relative unless `VS_PUBLIC_BASE` is set (e.g.
+`VS_PUBLIC_BASE=https://viewer.example` → `url` becomes an absolute URL).
+
+Returns `404` if the deployment does not exist or is not `invite_link` mode, `422` on bad
+input, `503` if `INVITE_SIGNING_SECRET` is not configured.
+
+**Redeeming an invite (participant):**
+
+`POST /v1/sessions/new` with the `invite` field in the request body:
+
+```json
+{ "deployment_id": "dep_...", "invite": "<invite_token>" }
+```
+
+- If the invite is valid and unexpired: the session is minted and tagged
+  `participant_sub = "invite:<participant_id>"` (namespaced to distinguish invite participants
+  from Identity-backed participants). `agent_id` = `<participant_id>`;
+  `session_index` = count of prior invite sessions for this `participant_sub` + 1.
+- If the invite is invalid, expired, or bound to a different deployment: `401 invite_required`.
+- If `INVITE_SIGNING_SECRET` is unset: the verify call returns `None` → `401 invite_required`
+  (fail-closed).
+
+`anonymous_link`, `demo`, and `authenticated` deployments do not accept the `invite` field.
+
+**Configuration:**
+
+| Variable | Description | Default |
+|---|---|---|
+| `INVITE_SIGNING_SECRET` | 32 + byte secret for HMAC-SHA256 signing. Required for `invite_link` mode. If unset, mint returns 503 and verify returns None (fail-closed). | — (required) |
+| `INVITE_DEFAULT_TTL_SECONDS` | Default invite TTL if `ttl_seconds` is omitted at mint time. | `604800` (7 days) |
+| `VS_PUBLIC_BASE` | Public base URL prepended to the `url` field on minted invites. If unset, `url` is relative. | — (optional) |
 
 ### `authenticated` mode (PP-A)
 
