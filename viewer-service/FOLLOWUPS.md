@@ -67,6 +67,28 @@
 - **Deferred:** Behaverse reconciliation + the `validated` session state (reconciliation needs a
   Behaverse query endpoint that doesn't exist yet; `validated` is a no-op stub).
 
+## PP-D follow-ups (participant catalogue — 2026-06-22)
+
+- **Auto-fill title/description from the Library (cross-service).** When a deployment
+  is created without an explicit `title`, the VS could fetch the questionnaire's human-readable
+  name from the Library (`GET /v1/questionnaires/{id}/versions/{v}`) and store it in the
+  `title` column automatically. Deferred — requires the Library to be reachable at deployment
+  creation time and a caching strategy for the Library call.
+- **Per-participant assignment (Phase 5).** The catalogue today is the same for every
+  participant. Personalised assignment (participant enrolled in study → only their assigned
+  questionnaires appear) requires a Platform/study-assignment layer — deferred to Phase 5.
+- **Catalogue search and filter.** `GET /v1/catalogue` returns all listed+open deployments
+  with no pagination, keyword search, or tag/category filter. Add these once the catalogue
+  grows beyond a handful of entries.
+- **Catalogue N+1.** The endpoint runs one `count_for_deployment` query per listed candidate
+  inside the loop. Fine at the current handful-of-deployments scale; fold the counts into a
+  single `GROUP BY` (or the candidates query) if the listed set grows large.
+- **Quota "full" badges.** A deployment that has reached its `max_sessions` quota passes the
+  `listed` filter but fails `check_deployable` (409), so it drops out of the catalogue. The
+  participant portal has no way to know whether a study is "full" vs. not yet open. Add an
+  optional `status` field (`open`/`full`/`not_yet_open`) to catalogue items so the portal can
+  display a "study full" badge rather than silently omitting the entry.
+
 ## PP-C follow-ups (my-data participant export — 2026-06-22)
 
 - **Human questionnaire titles.** `GET /v1/me/sessions` returns `instrument_id` and

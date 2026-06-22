@@ -11,8 +11,9 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 |---|---|
 | `POST /viewers` | Register a viewer by POSTing its Schema 7 manifest (validated + hashed). |
 | `GET /viewers/{id}/{version}` | Fetch a stored manifest. |
-| `POST /deployments` | Create a minimal deployment (questionnaire_ref + runtime_policy + locales). |
-| `GET /v1/deployments` | List deployment summaries. |
+| `POST /deployments` | Create a deployment (questionnaire_ref + runtime_policy + locales + optional `listed`/`title`/`description`). |
+| `GET /v1/deployments` | List deployment summaries (researcher-gated). |
+| `GET /v1/catalogue` | **Public** — list catalogue candidates (see below). |
 | `PATCH /v1/deployments/{id}` | Narrow update — `active_until` and/or `quota` only. |
 | `GET /v1/deployments/{id}/export.csv` | Stream a BDM-native CSV of all collected responses for the deployment (UC-11). |
 | `GET /v1/deployments/{id}/metrics` | Per-deployment monitoring snapshot (UC-12): active/completion/quota/recent + forwarding alert. |
@@ -30,6 +31,48 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 
 The runtime cache is keyed by the OD-18f 5-tuple `(qst_id, qst_version, locale,
 viewer_conformance_hash, deployment_runtime_policy_hash)` with LRU eviction.
+
+## Participant catalogue (`GET /v1/catalogue`) (PP-D)
+
+`GET /v1/catalogue` is **public** (no token required). It returns the deployments that a
+participant is allowed to start on their own — the intersection of three filters:
+
+1. **Listed** — the deployment was created with `listed: true`.
+2. **Open** — `check_deployable` passes: `active_from` ≤ now ≤ `active_until` (if set) and
+   quota not reached.
+3. **Browse-startable** — `dimensions.auth` is `none` or `identity` (i.e. `anonymous_link`,
+   `demo`, or `authenticated`). `invite_link` is excluded — its `auth` is `invite` and it
+   requires an out-of-band per-participant token, so it can't be started by browsing.
+
+Each item in the `catalogue` array has the shape:
+
+```json
+{
+  "deployment_id": "dep_...",
+  "title": "PHQ-9 Depression Scale",
+  "description": "Brief self-report questionnaire for depression screening.",
+  "questionnaire_ref": "qst_phq9@v26.0618",
+  "auth": "none"
+}
+```
+
+- `title` falls back to `questionnaire_ref` when the deployment's `title` field is empty.
+- `description` is `null` when not set.
+- `auth` is `"none"` for `anonymous_link` deployments and `"identity"` for `authenticated`
+  deployments (so the participant portal can show a login badge before starting).
+
+### `listed` / `title` / `description` deployment fields
+
+`POST /deployments` accepts three new optional fields:
+
+| Field | Type | Default | Purpose |
+|---|---|---|---|
+| `listed` | boolean | `false` | Opt in to the public catalogue. |
+| `title` | string \| null | `null` | Human-readable title shown in the catalogue. Falls back to `questionnaire_ref` if absent. |
+| `description` | string \| null | `null` | Short description shown in the catalogue. |
+
+These fields are also returned by `GET /v1/deployments/{id}`. (The `GET /v1/deployments`
+researcher summary list is unchanged and does not include them.)
 
 ## Authentication
 

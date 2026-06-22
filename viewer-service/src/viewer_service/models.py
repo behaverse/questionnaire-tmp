@@ -20,6 +20,9 @@ class DeploymentCreate(BaseModel):
     channels: dict | None = None
     created_by: str | None = None
     consent_text_ref: str | None = None
+    listed: bool = False
+    title: str | None = None
+    description: str | None = None
 
 
 class DeploymentPatch(BaseModel):

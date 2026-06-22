@@ -86,6 +86,9 @@ ALTER TABLE deployment ADD COLUMN IF NOT EXISTS randomization_seed_strategy text
 ALTER TABLE deployment ADD COLUMN IF NOT EXISTS channels                    jsonb;
 ALTER TABLE deployment ADD COLUMN IF NOT EXISTS created_by                  text;
 ALTER TABLE deployment ADD COLUMN IF NOT EXISTS consent_text_ref            text;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS listed                     boolean NOT NULL DEFAULT false;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS title                      text;
+ALTER TABLE deployment ADD COLUMN IF NOT EXISTS description                text;
 
 ALTER TABLE session ADD COLUMN IF NOT EXISTS ephemeral boolean NOT NULL DEFAULT false;
 ALTER TABLE session ADD COLUMN IF NOT EXISTS scorer_outputs jsonb;
