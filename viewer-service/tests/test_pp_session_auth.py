@@ -40,7 +40,8 @@ def _mint(client, dep_id, headers=None):
 
 def test_authenticated_deploy_requires_token(auth_dep):
     client, dep_id = auth_dep
-    r = _mint(client, dep_id)                         # no Authorization header
+    client.headers.pop("authorization", None)         # strip default researcher token
+    r = _mint(client, dep_id)                         # now genuinely no Authorization header
     assert r.status_code == 401
     assert r.json()["error"]["code"] == "auth_required"
 
