@@ -40,8 +40,9 @@ participant is allowed to start on their own — the intersection of three filte
 1. **Listed** — the deployment was created with `listed: true`.
 2. **Open** — `check_deployable` passes: `active_from` ≤ now ≤ `active_until` (if set) and
    quota not reached.
-3. **Browse-startable** — `mode_preset` is `anonymous_link` or `authenticated` (not `demo` or
-   `invite_link`, which require out-of-band distribution).
+3. **Browse-startable** — `dimensions.auth` is `none` or `identity` (i.e. `anonymous_link`,
+   `demo`, or `authenticated`). `invite_link` is excluded — its `auth` is `invite` and it
+   requires an out-of-band per-participant token, so it can't be started by browsing.
 
 Each item in the `catalogue` array has the shape:
 
@@ -70,8 +71,8 @@ Each item in the `catalogue` array has the shape:
 | `title` | string \| null | `null` | Human-readable title shown in the catalogue. Falls back to `questionnaire_ref` if absent. |
 | `description` | string \| null | `null` | Short description shown in the catalogue. |
 
-These fields are also returned by `GET /v1/deployments/{id}` and included in the deployment
-summary rows from `GET /v1/deployments`.
+These fields are also returned by `GET /v1/deployments/{id}`. (The `GET /v1/deployments`
+researcher summary list is unchanged and does not include them.)
 
 ## Authentication
 

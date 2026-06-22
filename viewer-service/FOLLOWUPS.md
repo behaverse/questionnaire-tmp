@@ -80,6 +80,9 @@
 - **Catalogue search and filter.** `GET /v1/catalogue` returns all listed+open deployments
   with no pagination, keyword search, or tag/category filter. Add these once the catalogue
   grows beyond a handful of entries.
+- **Catalogue N+1.** The endpoint runs one `count_for_deployment` query per listed candidate
+  inside the loop. Fine at the current handful-of-deployments scale; fold the counts into a
+  single `GROUP BY` (or the candidates query) if the listed set grows large.
 - **Quota "full" badges.** A deployment that has reached its `max_sessions` quota passes the
   `listed` filter but fails `check_deployable` (409), so it drops out of the catalogue. The
   participant portal has no way to know whether a study is "full" vs. not yet open. Add an
