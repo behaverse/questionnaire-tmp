@@ -4,8 +4,8 @@ import type { MintErr } from '../bootstrap'
 // auth_required is intercepted by App.tsx (→ LoginView) and never reaches ErrorScreen
 type ErrorKind = Exclude<MintErr['kind'], 'auth_required'>
 
-const TITLE_KEY = { invalid_link: 'error_invalid_link_title', not_open: 'error_not_open_title', closed: 'error_closed_title', failed: 'error_failed_title' } as const
-const BODY_KEY = { invalid_link: 'error_invalid_link_body', not_open: 'error_not_open_body', closed: 'error_closed_body', failed: 'error_failed_body' } as const
+const TITLE_KEY = { invalid_link: 'error_invalid_link_title', not_open: 'error_not_open_title', closed: 'error_closed_title', failed: 'error_failed_title', invite_invalid: 'error_invite_invalid_title' } as const
+const BODY_KEY = { invalid_link: 'error_invalid_link_body', not_open: 'error_not_open_body', closed: 'error_closed_body', failed: 'error_failed_body', invite_invalid: 'error_invite_invalid_body' } as const
 
 export function ErrorScreen({ locale, kind, code, onRetry }: { locale: string; kind: ErrorKind; code: string; onRetry: () => void }) {
   return (

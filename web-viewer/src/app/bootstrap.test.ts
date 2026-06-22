@@ -7,9 +7,9 @@ afterEach(() => {
 test('parseParams reads deployment/locale/viewer_url/fixture/theme', () => {
   expect(parseParams('?deployment=dpl_1&locale=pt&viewer_url=http://vs:9&fixture=mini&theme=sage')).toEqual({
     deploymentId: 'dpl_1', locale: 'pt', vsBaseUrl: 'http://vs:9', fixture: 'mini', theme: 'sage',
-    identityBaseUrl: 'http://localhost:8100',
+    identityBaseUrl: 'http://localhost:8100', invite: null,
   })
-  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100' })
+  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null })
 })
 
 const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false, participant_sub: null }
@@ -96,4 +96,25 @@ test('mintSession maps 401 auth_required to kind auth_required', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 401 })))
   const res = await mintSession('http://vs', 'dpl_1', null)
   expect(res).toEqual({ ok: false, kind: 'auth_required', code: 'auth_required' })
+})
+
+test('parseParams reads invite', () => {
+  expect(parseParams('?deployment=d&invite=abc.def').invite).toBe('abc.def')
+})
+
+test('mintSession sends invite in the body when given', async () => {
+  const ok = { session_id: 's', session_token: 't', agent_id: 'P-1', session_index: 1,
+               runtime: {}, theme: null, ephemeral: false, participant_sub: 'invite:P-1' }
+  const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(ok), { status: 201 }))
+  vi.stubGlobal('fetch', fetchMock)
+  await mintSession('http://vs', 'dpl_1', null, undefined, 'tok.sig')
+  const [, init] = fetchMock.mock.calls[0]
+  expect(JSON.parse((init as RequestInit).body as string)).toMatchObject({ invite: 'tok.sig' })
+})
+
+test('mintSession maps 401 invite_required to kind invite_invalid', async () => {
+  const body = { error: { code: 'invite_required', message: 'bad invite' } }
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 401 })))
+  const res = await mintSession('http://vs', 'dpl_1', null)
+  expect(res).toEqual({ ok: false, kind: 'invite_invalid', code: 'invite_required' })
 })

@@ -168,7 +168,7 @@ export function App() {
       return
     }
     if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
-    const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale, accessTokenRef.current)])
+    const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale, accessTokenRef.current, params.invite ?? undefined)])
     if (!res.ok && res.kind === 'auth_required') { setNeedLogin(true); return }
     if (res.ok) {
       const scorerSet = await compileScorers(res.runtime)
