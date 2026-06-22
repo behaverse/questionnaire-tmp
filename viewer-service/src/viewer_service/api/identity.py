@@ -42,3 +42,19 @@ def require_admin(authorization: str | None = Header(default=None)) -> dict:
     if "administrator" not in claims.get("roles", []):
         raise HTTPException(status_code=403, detail="administrator role required")
     return claims
+
+
+def verify_participant(authorization: str | None) -> dict | None:
+    """Return claims if a valid Identity access token with the participant role is present, else None.
+    Used by the session-mint path of an `auth: identity` deployment."""
+    if not authorization or not authorization.startswith("Bearer "):
+        return None
+    token = authorization[len("Bearer "):]
+    s = get_settings()
+    try:
+        claims = verify(token, jwks=_get_cache(), audience=s.identity_audience, issuer=s.identity_issuer)
+    except Exception:
+        return None
+    if "participant" not in claims.get("roles", []):
+        return None
+    return claims

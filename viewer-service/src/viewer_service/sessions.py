@@ -11,27 +11,37 @@ from .store import themes as themes_store
 
 
 def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_version: str,
-                requested_locale: str | None) -> dict:
-    """Gate against the active window + quota, mint the runtime, allocate session + token."""
+                requested_locale: str | None, participant_claims: dict | None = None) -> dict:
+    """Gate against the active window + quota, mint the runtime, allocate session + token.
+    For an `auth: identity` deployment, tag the session with the participant's Identity sub."""
     session_count = session_store.count_for_deployment(conn, deployment["deployment_id"])
     deploy_svc.check_deployable(deployment, datetime.now(timezone.utc), session_count)
     runtime = mint_runtime(conn, deployment, viewer, requested_locale)
     locale = runtime["locale"]
     session_id = str(uuid.uuid4())
     token = tokens.mint_token()
-    agent_id = "agent_" + uuid.uuid4().hex[:8]
+    auth_mode = (deployment.get("dimensions") or {}).get("auth", "none")
+    if auth_mode == "identity" and participant_claims is not None:
+        participant_sub = participant_claims["sub"]
+        agent_id = participant_sub
+        session_index = session_store.count_for_agent(conn, agent_id) + 1
+    else:
+        participant_sub = None
+        agent_id = "agent_" + uuid.uuid4().hex[:8]
+        session_index = 1
     qst_id, _, qst_version = deployment["questionnaire_ref"].partition("@")
     ephemeral = (deployment.get("dimensions") or {}).get("persistence") == "ephemeral"
     session_store.insert_session(
-        conn, ephemeral=ephemeral, session_id=session_id, session_index=1,
-        deployment_id=deployment["deployment_id"], viewer_id=viewer_id,
+        conn, ephemeral=ephemeral, participant_sub=participant_sub, session_id=session_id,
+        session_index=session_index, deployment_id=deployment["deployment_id"], viewer_id=viewer_id,
         viewer_version=viewer_version, agent_id=agent_id, instrument_id=qst_id,
         instrument_version=qst_version, status="in_progress", token_hash=tokens.hash_token(token),
         initial_locale=locale, last_active_locale=locale)
     conn.commit()
     theme = themes_store.get_theme(conn, deployment["theme_id"]) if deployment.get("theme_id") else None
     return {"session_id": session_id, "session_token": token, "runtime": runtime, "theme": theme,
-            "agent_id": agent_id, "session_index": 1, "ephemeral": ephemeral}
+            "agent_id": agent_id, "session_index": session_index, "ephemeral": ephemeral,
+            "participant_sub": participant_sub}
 
 
 def session_runtime(conn, session: dict) -> dict:

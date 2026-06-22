@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Header
 from fastapi.responses import JSONResponse
 from denormaliser import PreflightError
 from .deps import get_conn, require_session
@@ -9,20 +9,28 @@ from ..store import viewers as viewer_store
 from ..store import outbox as outbox_store
 from .. import sessions as sessions_svc
 from .. import deployments as deploy_svc
+from . import identity
 
 router = APIRouter()
 
 
 @router.post("/sessions/new", status_code=201)
-def new(body: SessionNew, conn=Depends(get_conn)):
+def new(body: SessionNew, authorization: str | None = Header(default=None), conn=Depends(get_conn)):
     dep = dep_store.get_deployment(conn, body.deployment_id)
     if dep is None:
         raise HTTPException(status_code=404, detail="deployment not found")
     viewer = viewer_store.get_viewer(conn, body.viewer_id, body.viewer_version)
     if viewer is None:
         raise HTTPException(status_code=404, detail="viewer not registered")
+    participant_claims = None
+    if (dep.get("dimensions") or {}).get("auth") == "identity":
+        participant_claims = identity.verify_participant(authorization)
+        if participant_claims is None:
+            return JSONResponse(status_code=401, content={"error": {
+                "code": "auth_required", "message": "this deployment requires participant login"}})
     try:
-        return sessions_svc.new_session(conn, dep, viewer, body.viewer_id, body.viewer_version, body.locale)
+        return sessions_svc.new_session(conn, dep, viewer, body.viewer_id, body.viewer_version,
+                                        body.locale, participant_claims)
     except deploy_svc.DeploymentClosed:
         return JSONResponse(status_code=410, content={"error": {"code": "gone", "message": "deployment is closed (past active_until)"}})
     except deploy_svc.NotYetOpen:
