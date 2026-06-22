@@ -1,5 +1,16 @@
 # web-viewer — deferred work / follow-ups
 
+## PP-D follow-ups (participant home portal — 2026-06-22)
+
+- **Merge home + my-data into one tabbed portal.** `home.html` (browse + start) and
+  `mydata.html` (session history + download) are currently two separate HTML entries.
+  They should eventually be unified into a single participant home page with tabs
+  ("Browse" / "My data") — deferred until the auth story stabilises and the two pages
+  see meaningful concurrent use.
+- **No search or filter on the catalogue.** The home portal renders all listed+open
+  deployments as a flat list. Search (by title/description), category/tag filtering,
+  and pagination are deferred until the catalogue grows beyond a handful of entries.
+
 ## PP-C follow-ups (MyData portal — 2026-06-22)
 
 - **Login-only — no self-register.** The portal shows the `LoginView` (email + password)

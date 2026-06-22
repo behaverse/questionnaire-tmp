@@ -129,6 +129,37 @@ compiled output lives at `dist/mydata.html` plus `dist/assets/mydata-*.js`.
 | URL param | `?viewer_url=<base>` | VS base URL for this session |
 | Build-time env | `VITE_VS_BASE_URL` | Default VS base URL |
 
+## Participant home portal (`home.html`) (PP-D)
+
+A lightweight participant entry-point bundled as a **separate Vite entry** (`home.html`).
+It lets a participant browse all publicly listed questionnaires and launch one with a
+single click.
+
+### URL contract
+
+| Param | Required | Meaning |
+|---|---|---|
+| `viewer_url` | no | VS base URL; default `VITE_VS_BASE_URL`, else `http://localhost:8001`. |
+| `identity_url` | no | Identity service base URL carried through to the runner; default `VITE_IDENTITY_BASE_URL`. |
+
+### Flow
+
+1. Participant opens `home.html`.
+2. The portal calls `GET /v1/catalogue` on the Viewer Service — no login required.
+3. Each returned deployment is shown as a card with its `title` (falls back to
+   `questionnaire_ref`) and `description`.
+4. Clicking **Start** navigates to `index.html?deployment=<id>` with `viewer_url` and
+   `identity_url` forwarded as query parameters so the runner uses the same service endpoints.
+5. The portal also shows a **"My data"** link to `mydata.html` (carrying the same
+   `viewer_url`/`identity_url`) so an authenticated participant can reach their history.
+6. If the catalogue is empty, the empty-state message **"No questionnaires available right now."**
+   is shown.
+
+### Building
+
+`home.html` is produced by `npm run build` alongside `index.html` and `mydata.html`.
+The compiled output lives at `dist/home.html` plus `dist/assets/home-*.js`.
+
 ## Presentation modes
 
 - **focus** (default): one step per view, keyboard shortcuts, auto-advance after a
