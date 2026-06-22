@@ -7,6 +7,9 @@ choice. Stages WV-A (shell + Schema 3 renderer), WV-B (submission), and WV-C/D
 (embedded expression evaluator + logic/branching/validation/scoring) are built;
 resume (WV-E) comes later. Spec: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md`.
 
+> **Try the whole participant journey end-to-end** (create an account → pick a questionnaire from the
+> catalogue → complete it → download your data): see [`docs/testing-participant-flow.md`](../docs/testing-participant-flow.md).
+
 ## Dev quickstart (no backend)
 
 ```bash

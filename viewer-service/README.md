@@ -5,6 +5,9 @@ FastAPI + Postgres service that mints **cached Schema 3 runtimes** by calling th
 **Library** over HTTP. VS-A is the runtime-generation spine; sessions, submission
 forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 
+> **End-to-end manual test** (run all four services, create a deployment, pick + complete it as a
+> participant): see [`docs/testing-participant-flow.md`](../docs/testing-participant-flow.md).
+
 ## Endpoints (`/v1`)
 
 | Endpoint | Purpose |
