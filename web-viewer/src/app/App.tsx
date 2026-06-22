@@ -18,6 +18,8 @@ import { isFramed, observeHeight, postToHost } from './embed'
 import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
 import { ErrorScreen } from './chrome/ErrorScreen'
+import { LoginView } from './chrome/LoginView'
+import { loginParticipant } from './auth'
 import { LocaleSwitcher } from './chrome/LocaleSwitcher'
 import { NavButtons } from './chrome/NavButtons'
 import { ProgressBar } from './chrome/ProgressBar'
@@ -71,6 +73,10 @@ export function App() {
   const pipeline = useRef<Pipeline | null>(null)
   const store = getResumeStore()
   const [demoCleared, setDemoCleared] = useState(false)
+  const [needLogin, setNeedLogin] = useState(false)
+  const [loginErr, setLoginErr] = useState<string | null>(null)
+  const [loginBusy, setLoginBusy] = useState(false)
+  const accessTokenRef = useRef<string | undefined>(undefined)
   const ephemeralRef = useRef(false)
   const params = parseParams(window.location.search)
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
@@ -126,65 +132,78 @@ export function App() {
     batcher.add(ev.started(pipeline.current.engine, sessionId, nowIso()))
   }
 
+  async function runBoot() {
+    if (import.meta.env.DEV && params.fixture && FIXTURES[params.fixture]) {
+      const runtime = (await FIXTURES[params.fixture]()).default as Runtime
+      const [evaluator, scorerSet] = await Promise.all([loadEvaluator(), compileScorers(runtime)])
+      buildPipeline(evaluator, scorerSet, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
+      applyTheme(getTheme(resolveThemeId({ themeParam: params.theme })))
+      dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
+      return
+    }
+    if (!params.deploymentId) {
+      dispatch({ type: 'boot_error', kind: 'invalid_link', code: 'missing_deployment_param' })
+      return
+    }
+    // PERF-01: kick off the (heavy) evaluator WASM load now, then await the network in parallel.
+    const evaluatorPromise = loadEvaluator()
+    const outcome = await resolveResume(params.vsBaseUrl, params.deploymentId, store, { getSession, getRuntime })
+    if (outcome.kind === 'retry') { dispatch({ type: 'boot_error', kind: 'failed', code: 'resume_unreachable' }); return }
+    if (outcome.kind === 'completed') { dispatch({ type: 'completed' }); return }
+    if (outcome.kind === 'resume') {
+      const { record, runtime } = outcome
+      const evaluator = await evaluatorPromise
+      const scorerSet = await compileScorers(runtime)
+      ephemeralRef.current = false
+      localeRef.current = record.lastActiveLocale
+      applyTheme(getTheme(DEFAULT_THEME_ID))
+      buildPipeline(evaluator, scorerSet, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
+      const steps = flattenSteps(runtime)
+      const p = pipeline.current!
+      const resumeBindings = makeBindings(record.answers, runtime, nullResolver)
+      const land = firstUnansweredStep(steps, p.programs, p.evaluator, resumeBindings, record.answers, record.stepIndex)
+      dispatch({ type: 'rehydrate', session: { id: record.sessionId, token: record.token }, runtime, theme: null, steps, answers: record.answers, stepIndex: land, visited: record.visited })
+      document.title = runtime.metadata.title
+      document.documentElement.lang = record.lastActiveLocale
+      return
+    }
+    if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
+    const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale, accessTokenRef.current)])
+    if (!res.ok && res.kind === 'auth_required') { setNeedLogin(true); return }
+    if (res.ok) {
+      const scorerSet = await compileScorers(res.runtime)
+      ephemeralRef.current = res.ephemeral
+      localeRef.current = res.runtime.locale ?? 'en'
+      const bundle = res.theme as Theme
+      applyTheme(getTheme(resolveThemeId({ bundleId: bundleToThemeId(bundle) })), bundle)
+      buildPipeline(evaluator, scorerSet, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
+      dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
+      if (!res.ephemeral && !params.fixture && params.deploymentId) {
+        void store.put({ deploymentId: params.deploymentId, sessionId: res.session_id, token: res.session_token, lastActiveLocale: res.runtime.locale ?? 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: new Date().toISOString() })
+      }
+      document.title = res.runtime.metadata.title
+      document.documentElement.lang = res.runtime.locale ?? 'en'
+    } else {
+      dispatch({ type: 'boot_error', kind: res.kind, code: res.code })
+    }
+  }
+
+  async function handleLogin(email: string, password: string) {
+    setLoginBusy(true); setLoginErr(null)
+    const res = await loginParticipant(params.identityBaseUrl, email, password)
+    setLoginBusy(false)
+    if (!res.ok) { setLoginErr(res.error === 'invalid_credentials' ? 'Invalid email or password' : 'Network error — try again'); return }
+    accessTokenRef.current = res.accessToken
+    setNeedLogin(false)
+    bootStarted.current = false
+    void runBoot()
+  }
+
   useEffect(() => {
     if (state.phase !== 'booting') return
     if (bootStarted.current) return
     bootStarted.current = true
-    async function boot() {
-      if (import.meta.env.DEV && params.fixture && FIXTURES[params.fixture]) {
-        const runtime = (await FIXTURES[params.fixture]()).default as Runtime
-        const [evaluator, scorerSet] = await Promise.all([loadEvaluator(), compileScorers(runtime)])
-        buildPipeline(evaluator, scorerSet, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
-        applyTheme(getTheme(resolveThemeId({ themeParam: params.theme })))
-        dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
-        return
-      }
-      if (!params.deploymentId) {
-        dispatch({ type: 'boot_error', kind: 'invalid_link', code: 'missing_deployment_param' })
-        return
-      }
-      // PERF-01: kick off the (heavy) evaluator WASM load now, then await the network in parallel.
-      const evaluatorPromise = loadEvaluator()
-      const outcome = await resolveResume(params.vsBaseUrl, params.deploymentId, store, { getSession, getRuntime })
-      if (outcome.kind === 'retry') { dispatch({ type: 'boot_error', kind: 'failed', code: 'resume_unreachable' }); return }
-      if (outcome.kind === 'completed') { dispatch({ type: 'completed' }); return }
-      if (outcome.kind === 'resume') {
-        const { record, runtime } = outcome
-        const evaluator = await evaluatorPromise
-        const scorerSet = await compileScorers(runtime)
-        ephemeralRef.current = false
-        localeRef.current = record.lastActiveLocale
-        applyTheme(getTheme(DEFAULT_THEME_ID))
-        buildPipeline(evaluator, scorerSet, record.sessionId, record.token, record.agentId ?? 'agent_resumed', record.sessionIndex ?? 1, runtime)
-        const steps = flattenSteps(runtime)
-        const p = pipeline.current!
-        const resumeBindings = makeBindings(record.answers, runtime, nullResolver)
-        const land = firstUnansweredStep(steps, p.programs, p.evaluator, resumeBindings, record.answers, record.stepIndex)
-        dispatch({ type: 'rehydrate', session: { id: record.sessionId, token: record.token }, runtime, theme: null, steps, answers: record.answers, stepIndex: land, visited: record.visited })
-        document.title = runtime.metadata.title
-        document.documentElement.lang = record.lastActiveLocale
-        return
-      }
-      if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
-      const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale)])
-      if (res.ok) {
-        const scorerSet = await compileScorers(res.runtime)
-        ephemeralRef.current = res.ephemeral
-        localeRef.current = res.runtime.locale ?? 'en'
-        const bundle = res.theme as Theme
-        applyTheme(getTheme(resolveThemeId({ bundleId: bundleToThemeId(bundle) })), bundle)
-        buildPipeline(evaluator, scorerSet, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
-        dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
-        if (!res.ephemeral && !params.fixture && params.deploymentId) {
-          void store.put({ deploymentId: params.deploymentId, sessionId: res.session_id, token: res.session_token, lastActiveLocale: res.runtime.locale ?? 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: new Date().toISOString() })
-        }
-        document.title = res.runtime.metadata.title
-        document.documentElement.lang = res.runtime.locale ?? 'en'
-      } else {
-        dispatch({ type: 'boot_error', kind: res.kind, code: res.code })
-      }
-    }
-    void boot()
+    void runBoot()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase])
 
@@ -431,6 +450,7 @@ export function App() {
     dispatch({ type: 'goto', index: target })
   }
 
+  if (needLogin) return <LoginView onSubmit={handleLogin} error={loginErr} busy={loginBusy} />
   if (state.phase === 'booting') return <main className="min-h-screen font-theme" aria-busy="true" />
   if (state.phase === 'finishing') {
     return (

@@ -490,6 +490,32 @@ test('emits behaverse:completed to the host on finish (when framed)', async () =
   expect(posts.some((e) => (e as { type: string }).type === 'behaverse:completed')).toBe(true)
 })
 
+// Task 5 — authenticated boot
+test('authenticated deployment: 401 shows login, then completes after login', async () => {
+  setUrl('?deployment=dpl_auth')
+  const calls: string[] = []
+  vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
+    calls.push(url as string)
+    if ((url as string).endsWith('/v1/sessions/new')) {
+      const authed = !!(init?.headers as Record<string, string> | undefined)?.authorization
+      return authed
+        ? new Response(JSON.stringify(mintOk), { status: 200 })
+        : new Response(JSON.stringify({ error: { code: 'auth_required', message: 'login' } }), { status: 401 })
+    }
+    if ((url as string).endsWith('/v1/auth/login')) return new Response(JSON.stringify({ access_token: 'AT' }), { status: 200 })
+    return new Response('{}', { status: 200 })
+  }))
+  render(<App />)
+  // login screen appears
+  expect(await screen.findByRole('button', { name: /log in/i })).toBeInTheDocument()
+  await userEvent.type(screen.getByLabelText(/email/i), 'a@e.com')
+  await userEvent.type(screen.getByLabelText(/password/i), 'pw')
+  await userEvent.click(screen.getByRole('button', { name: /log in/i }))
+  // after login, the second mint (with Bearer) runs and the questionnaire renders
+  expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
+  expect(calls.filter((u) => u.endsWith('/v1/sessions/new')).length).toBe(2)
+})
+
 // Task 3 — PERF-01 overlap
 test('boot kicks off the evaluator load before awaiting the mint (PERF-01 overlap)', async () => {
   setUrl('?deployment=dpl_1')
