@@ -78,3 +78,10 @@ def delete_rating(qid: str, conn=Depends(get_conn), claims=Depends(require_user)
     store.delete_rating(conn, qid, claims["sub"])
     conn.commit()
     return store.rating_summary(conn, qid)
+
+
+@router.delete("/me/community-data")
+def erase_my_community_data(conn=Depends(get_conn), claims=Depends(require_user)):
+    res = store.purge_user_community_data(conn, claims["sub"])
+    conn.commit()
+    return res

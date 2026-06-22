@@ -99,3 +99,13 @@ def caller_rating(conn, qid, author_sub) -> int | None:
 
 def delete_rating(conn, qid, author_sub) -> None:
     conn.execute("DELETE FROM rating WHERE questionnaire_id=%s AND author_sub=%s", (qid, author_sub))
+
+
+def purge_user_community_data(conn, author_sub) -> dict:
+    cur = conn.execute(
+        "UPDATE comment SET deleted_at = now(), body = NULL, author_sub = NULL, author_name = NULL "
+        "WHERE author_sub = %s AND deleted_at IS NULL", (author_sub,))
+    tombstoned = cur.rowcount
+    cur = conn.execute("DELETE FROM rating WHERE author_sub = %s", (author_sub,))
+    deleted = cur.rowcount
+    return {"comments_tombstoned": tombstoned, "ratings_deleted": deleted}
