@@ -44,6 +44,12 @@ def require_admin(authorization: str | None = Header(default=None)) -> dict:
     return claims
 
 
+def require_participant(authorization: str | None = Header(default=None)) -> dict:
+    """Require a valid Identity access token (any role). Returns the verified claims; raises 401 if
+    missing/invalid. The 'my data' endpoints scope strictly to claims['sub']."""
+    return _claims(authorization)
+
+
 def verify_participant(authorization: str | None) -> dict | None:
     """Return claims if a valid Identity access token is present, else None.
     Role-agnostic: any valid token suffices (the verified sub is what matters).

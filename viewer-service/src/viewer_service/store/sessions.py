@@ -61,6 +61,13 @@ def set_scorer_outputs(conn: psycopg.Connection, session_id: str, outputs: dict)
     conn.execute("UPDATE session SET scorer_outputs=%s WHERE session_id=%s", (Json(outputs), session_id))
 
 
+def list_sessions_for_participant(conn: psycopg.Connection, participant_sub: str) -> list[dict]:
+    cur = conn.execute(
+        f"SELECT {', '.join(_SELECT_COLS)} FROM session WHERE participant_sub=%s "
+        "ORDER BY started_at DESC", (participant_sub,))
+    return [_row_to_dict(r) for r in cur.fetchall()]
+
+
 def count_for_deployment(conn: psycopg.Connection, deployment_id: str) -> int:
     return conn.execute("SELECT count(*) FROM session WHERE deployment_id=%s",
                         (deployment_id,)).fetchone()[0]
