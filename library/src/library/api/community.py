@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from .deps import get_conn
-from .identity import require_user
+from .identity import require_user, optional_user
 from ..store import community as store
 
 router = APIRouter()
@@ -50,3 +50,31 @@ def delete_comment(comment_id: str, conn=Depends(get_conn), claims=Depends(requi
         raise HTTPException(status_code=403, detail="not the author")
     store.soft_delete_comment(conn, comment_id)
     conn.commit()
+
+
+class RatingIn(BaseModel):
+    score: int = Field(ge=1, le=5)
+
+
+@router.put("/questionnaires/{qid}/rating")
+def put_rating(qid: str, body: RatingIn, conn=Depends(get_conn), claims=Depends(require_user)):
+    if not store.questionnaire_exists(conn, qid):
+        raise HTTPException(status_code=404, detail="questionnaire not found")
+    store.upsert_rating(conn, qid=qid, author_sub=claims["sub"], score=body.score)
+    conn.commit()
+    return store.rating_summary(conn, qid)
+
+
+@router.get("/questionnaires/{qid}/rating")
+def get_rating(qid: str, conn=Depends(get_conn), claims=Depends(optional_user)):
+    summary = store.rating_summary(conn, qid)
+    if claims is not None:
+        summary["my_score"] = store.caller_rating(conn, qid, claims["sub"])
+    return summary
+
+
+@router.delete("/questionnaires/{qid}/rating")
+def delete_rating(qid: str, conn=Depends(get_conn), claims=Depends(require_user)):
+    store.delete_rating(conn, qid, claims["sub"])
+    conn.commit()
+    return store.rating_summary(conn, qid)

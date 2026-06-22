@@ -66,3 +66,36 @@ def soft_delete_comment(conn, comment_id) -> None:
     conn.execute(
         "UPDATE comment SET deleted_at = now(), body = NULL, author_sub = NULL, author_name = NULL "
         "WHERE id=%s AND deleted_at IS NULL", (comment_id,))
+
+
+def upsert_rating(conn, *, qid, author_sub, score) -> None:
+    conn.execute(
+        "INSERT INTO rating (questionnaire_id, author_sub, score) VALUES (%s,%s,%s) "
+        "ON CONFLICT (questionnaire_id, author_sub) "
+        "DO UPDATE SET score = EXCLUDED.score, updated_at = now()",
+        (qid, author_sub, score))
+
+
+def rating_summary(conn, qid) -> dict:
+    cur = conn.execute(
+        "SELECT score, count(*) FROM rating WHERE questionnaire_id=%s GROUP BY score", (qid,))
+    hist = {str(i): 0 for i in range(1, 6)}
+    total = 0
+    n = 0
+    for score, c in cur.fetchall():
+        hist[str(score)] = c
+        total += score * c
+        n += c
+    mean = round(total / n, 2) if n else None
+    return {"mean": mean, "count": n, "histogram": hist}
+
+
+def caller_rating(conn, qid, author_sub) -> int | None:
+    row = conn.execute(
+        "SELECT score FROM rating WHERE questionnaire_id=%s AND author_sub=%s",
+        (qid, author_sub)).fetchone()
+    return row[0] if row else None
+
+
+def delete_rating(conn, qid, author_sub) -> None:
+    conn.execute("DELETE FROM rating WHERE questionnaire_id=%s AND author_sub=%s", (qid, author_sub))
