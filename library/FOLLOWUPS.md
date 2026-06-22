@@ -23,6 +23,18 @@ Surfaced during the OD-21 instrument/variant follow-up (2026-06-10):
 - **Variant labels for legacy imports.** All 64 imported questionnaires have `variant: "base"`; the genuine per-form variants (8 instrument families) are distinguished only by id + item count. Curating human-readable variant labels (e.g. ASRS "Full" / "Part A screener" / "Inattentive" / "Part A + Inattentive") needs editing/curation tooling.
 - **Surface the response-scale distinction.** The multi-form families are genuine variants differing by their answer scale (e.g. `grit8` 5-pt similarity vs `x_grit8` 7-pt agreement; ASRS Part-A's 5-pt ARCES frequency vs the full form's 7-pt frequency). This scale / measurement-type distinction is not surfaced on cards; surfacing it is a QA-pass enhancement.
 
+## Community signals — ID-C1 deferrals (2026-06-22)
+
+Added with the ID-C1 community-signals feature (threaded comments + 1–5 ratings + GDPR erasure).
+
+- **Usage-stats aggregation from the Viewer Service.** View/start/completion counts live in the Viewer Service (VS-D export). Surfacing them on library catalogue cards requires a cross-service read or a periodic aggregation feed; deferred (no cross-service calls yet).
+- **Community signals in search ranking.** `search_tsv`-based ranking currently ignores comment volume and mean rating. Incorporating community signals into relevance scoring is a search-layer enhancement; deferred to a dedicated search-ranking pass.
+- **Contribution write/review workflow + `draft`/`in_review` lifecycle (ID-C2).** Currently all library content is ingested read-only. The authoring workflow (propose, draft, peer-review, publish, withdraw) with per-entry visibility is the next identity milestone.
+- **DOI minting (ID-C3).** Assigning persistent DOIs to published questionnaires on library acceptance; deferred.
+- **Comment editing.** No edit endpoint exists; the intended UX is delete + repost. A PATCH /v1/comments/{id} with edit history could be added; deferred.
+- **Use-case-suitability ratings.** Star ratings capture general quality but not use-case fit (e.g. "suitable for clinical screening", "validated for adolescents"). A structured suitability taxonomy and per-use-case rating model would be needed; deferred.
+- **GET/DELETE rating do not 404 on unknown qid (deliberate minor).** `GET /v1/questionnaires/{qid}/rating` and `DELETE /v1/questionnaires/{qid}/rating` return a zero-ratings summary (or no-op) for a qid that does not exist in the catalogue. This is intentional (idempotent delete; zero-state read) but diverges from the 404 behaviour of PUT. Could be made consistent in a future pass.
+
 ## Search — content indexing (2026-06-18)
 - **Index entity content in `search_tsv`** so `q` search matches a prompt's text / an option's
   scale anchors, not just title/description (today reusable entities effectively match only by id).
