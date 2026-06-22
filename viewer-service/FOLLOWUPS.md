@@ -81,8 +81,9 @@
   An account-attach flow (POST a token from the invite session to an Identity-owned session, merging
   `participant_sub`) is deferred to a future PP iteration.
 - **`url` is relative unless `VS_PUBLIC_BASE` is set.** The `url` field in the mint response is a
-  relative path (`/v1/invites/<token>`) unless the `VS_PUBLIC_BASE` env var is configured. In
-  production, set `VS_PUBLIC_BASE=https://<viewer-service-host>`.
+  bare query string (`?deployment=<id>&invite=<token>`) unless `VS_PUBLIC_BASE` is configured, in
+  which case it becomes `{VS_PUBLIC_BASE}/?deployment=<id>&invite=<token>`. The link is opened in the
+  Web Viewer, so in production set `VS_PUBLIC_BASE` to the public Web-Viewer base URL.
 
 ## PP-A follow-ups (authenticated participant sessions — 2026-06-22)
 
