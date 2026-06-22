@@ -191,7 +191,7 @@ see their own data.
 
 #### `GET /v1/me/sessions`
 
-Returns a JSON array of the caller's completed sessions across all deployments.
+Returns the caller's sessions across all deployments, wrapped in a `sessions` array.
 
 **Auth:** `Authorization: Bearer <Identity access token>` (any valid token; role is
 not checked).  Returns `401 { error: { code: "auth_required" } }` if absent or invalid.
@@ -199,20 +199,24 @@ not checked).  Returns `401 { error: { code: "auth_required" } }` if absent or i
 **Response (200):**
 
 ```json
-[
-  {
-    "session_id": "ses_…",
-    "deployment_id": "dep_…",
-    "instrument_id": "qst_example",
-    "instrument_version": "v26.0618",
-    "status": "submitted",
-    "session_index": 1,
-    "submitted_at": "2026-06-21T10:00:00Z"
-  }
-]
+{
+  "sessions": [
+    {
+      "session_id": "ses_…",
+      "deployment_id": "dep_…",
+      "instrument_id": "qst_example",
+      "instrument_version": "v26.0618",
+      "status": "submitted",
+      "session_index": 1,
+      "started_at": "2026-06-21T09:58:00Z",
+      "completed_at": null,
+      "submitted_at": "2026-06-21T10:00:00Z"
+    }
+  ]
+}
 ```
 
-Returns `[]` if the participant has no sessions.
+Returns `{"sessions": []}` if the participant has no sessions.
 
 **Scoping note:** `participant_sub` is matched exactly against `claims["sub"]`.
 Invite-link sessions are tagged `participant_sub = "invite:<code>"`, which is
