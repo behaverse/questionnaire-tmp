@@ -9,6 +9,8 @@ PRESETS = {
                        "lifecycle": "standard", "rendering_context": "standalone"},
     "demo": {"auth": "none", "persistence": "ephemeral",
              "lifecycle": "standard", "rendering_context": "standalone"},
+    "authenticated": {"auth": "identity", "persistence": "persisted",
+                      "lifecycle": "standard", "rendering_context": "standalone"},
 }
 SUPPORTED = set(PRESETS)
 

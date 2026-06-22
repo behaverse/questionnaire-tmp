@@ -6,18 +6,19 @@ _INSERT_COLS = ("session_id", "session_index", "deployment_id", "viewer_id", "vi
                 "initial_locale", "last_active_locale")
 
 
-def insert_session(conn: psycopg.Connection, ephemeral: bool = False, **fields) -> None:
-    cols = ", ".join(_INSERT_COLS + ("ephemeral",))
-    placeholders = ", ".join(["%s"] * (len(_INSERT_COLS) + 1))
+def insert_session(conn: psycopg.Connection, ephemeral: bool = False,
+                   participant_sub: str | None = None, **fields) -> None:
+    cols = ", ".join(_INSERT_COLS + ("participant_sub", "ephemeral"))
+    placeholders = ", ".join(["%s"] * (len(_INSERT_COLS) + 2))
     conn.execute(f"INSERT INTO session ({cols}) VALUES ({placeholders})",
-                 tuple(fields[c] for c in _INSERT_COLS) + (ephemeral,))
+                 tuple(fields[c] for c in _INSERT_COLS) + (participant_sub, ephemeral))
 
 
 _SELECT_COLS = ("session_id", "session_index", "deployment_id", "viewer_id", "viewer_version",
                 "agent_id", "instrument_id", "instrument_version", "status", "token_hash",
                 "initial_locale", "last_active_locale", "started_at", "completed_at",
                 "submitted_at", "forwarded_at", "forward_attempts", "forward_failure_reason",
-                "ephemeral", "scorer_outputs")
+                "ephemeral", "scorer_outputs", "participant_sub")
 
 
 def _row_to_dict(row) -> dict:
@@ -63,3 +64,8 @@ def set_scorer_outputs(conn: psycopg.Connection, session_id: str, outputs: dict)
 def count_for_deployment(conn: psycopg.Connection, deployment_id: str) -> int:
     return conn.execute("SELECT count(*) FROM session WHERE deployment_id=%s",
                         (deployment_id,)).fetchone()[0]
+
+
+def count_for_agent(conn: psycopg.Connection, agent_id: str) -> int:
+    return conn.execute("SELECT count(*) FROM session WHERE agent_id=%s",
+                        (agent_id,)).fetchone()[0]
