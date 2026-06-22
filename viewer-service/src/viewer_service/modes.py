@@ -11,6 +11,8 @@ PRESETS = {
              "lifecycle": "standard", "rendering_context": "standalone"},
     "authenticated": {"auth": "identity", "persistence": "persisted",
                       "lifecycle": "standard", "rendering_context": "standalone"},
+    "invite_link": {"auth": "invite", "persistence": "persisted",
+                    "lifecycle": "standard", "rendering_context": "standalone"},
 }
 SUPPORTED = set(PRESETS)
 

@@ -51,3 +51,8 @@ class ThemeCreate(BaseModel):
     spacing: dict | None = None
     logo_url: str | None = None
     custom_css: str | None = None
+
+
+class InviteCreate(BaseModel):
+    participant_id: str
+    ttl_seconds: int | None = None
