@@ -7,11 +7,12 @@ afterEach(() => {
 test('parseParams reads deployment/locale/viewer_url/fixture/theme', () => {
   expect(parseParams('?deployment=dpl_1&locale=pt&viewer_url=http://vs:9&fixture=mini&theme=sage')).toEqual({
     deploymentId: 'dpl_1', locale: 'pt', vsBaseUrl: 'http://vs:9', fixture: 'mini', theme: 'sage',
+    identityBaseUrl: 'http://localhost:8100',
   })
-  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null })
+  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100' })
 })
 
-const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false }
+const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false, participant_sub: null }
 
 test('mintSession posts viewer identity and returns the bundle', async () => {
   const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(ok), { status: 200 }))
@@ -73,4 +74,26 @@ test('getRuntime fetches the resumed runtime; switchLocale posts the new locale'
   vi.stubGlobal('fetch', fetchMock)
   expect(await switchLocale('http://vs:9', 's1', 't1', 'pt')).toMatchObject({ metadata: { id: 'qst_x' } })
   expect(JSON.parse((fetchMock.mock.calls[0][1] as RequestInit).body as string)).toEqual({ locale: 'pt' })
+})
+
+test('parseParams reads identity_url', () => {
+  expect(parseParams('?deployment=d&identity_url=http://id:7').identityBaseUrl).toBe('http://id:7')
+})
+
+test('mintSession sends Authorization when a token is given', async () => {
+  const ok = { session_id: 's', session_token: 't', agent_id: 'alice', session_index: 1,
+               runtime: {}, theme: null, ephemeral: false, participant_sub: 'alice' }
+  const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(ok), { status: 201 }))
+  vi.stubGlobal('fetch', fetchMock)
+  const res = await mintSession('http://vs', 'dpl_1', null, 'tok-123')
+  expect(res).toMatchObject({ ok: true, participant_sub: 'alice' })
+  const [, init] = fetchMock.mock.calls[0]
+  expect((init as RequestInit).headers).toMatchObject({ authorization: 'Bearer tok-123' })
+})
+
+test('mintSession maps 401 auth_required to kind auth_required', async () => {
+  const body = { error: { code: 'auth_required', message: 'login' } }
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 401 })))
+  const res = await mintSession('http://vs', 'dpl_1', null)
+  expect(res).toEqual({ ok: false, kind: 'auth_required', code: 'auth_required' })
 })

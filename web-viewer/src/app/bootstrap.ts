@@ -5,7 +5,7 @@ import type { Theme } from './theme'
 export const VIEWER_ID = 'behaverse-web-viewer'
 export const VIEWER_VERSION = 'v26.0612'
 
-export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null }
+export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string }
 
 export function parseParams(search: string): Params {
   const q = new URLSearchParams(search)
@@ -15,21 +15,25 @@ export function parseParams(search: string): Params {
     vsBaseUrl: q.get('viewer_url') ?? import.meta.env.VITE_VS_BASE_URL ?? 'http://localhost:8001',
     fixture: q.get('fixture'),
     theme: q.get('theme'),
+    identityBaseUrl: q.get('identity_url') ?? import.meta.env.VITE_IDENTITY_BASE_URL ?? 'http://localhost:8100',
   }
 }
 
-export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean }
-export type MintErr = { ok: false; kind: 'invalid_link' | 'not_open' | 'closed' | 'failed'; code: string }
+export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean; participant_sub: string | null }
+export type MintErr = { ok: false; kind: 'invalid_link' | 'not_open' | 'closed' | 'auth_required' | 'failed'; code: string }
 export type MintResult = MintOk | MintErr
 
 const KIND_BY_STATUS: Record<number, MintErr['kind']> = { 404: 'invalid_link', 409: 'not_open', 410: 'closed' }
 
-export async function mintSession(vsBaseUrl: string, deploymentId: string, locale: string | null): Promise<MintResult> {
+export async function mintSession(vsBaseUrl: string, deploymentId: string, locale: string | null, accessToken?: string): Promise<MintResult> {
   let resp: Response
   try {
     resp = await fetch(`${vsBaseUrl}/v1/sessions/new`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json',
+        ...(accessToken ? { authorization: `Bearer ${accessToken}` } : {}),
+      },
       body: JSON.stringify({
         deployment_id: deploymentId, viewer_id: VIEWER_ID, viewer_version: VIEWER_VERSION,
         ...(locale ? { locale } : {}),
@@ -40,10 +44,11 @@ export async function mintSession(vsBaseUrl: string, deploymentId: string, local
   }
   if (resp.ok) {
     const body = await resp.json()
-    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false }
+    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false, participant_sub: body.participant_sub ?? null }
   }
   const code = await resp.json().then((b) => b?.error?.code ?? String(resp.status)).catch(() => String(resp.status))
-  return { ok: false, kind: KIND_BY_STATUS[resp.status] ?? 'failed', code }
+  const kind: MintErr['kind'] = code === 'auth_required' ? 'auth_required' : (KIND_BY_STATUS[resp.status] ?? 'failed')
+  return { ok: false, kind, code }
 }
 
 export async function completeSession(vsBaseUrl: string, sessionId: string, token: string): Promise<boolean> {
