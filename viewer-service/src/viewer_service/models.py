@@ -38,6 +38,7 @@ class SessionNew(BaseModel):
     viewer_id: str
     viewer_version: str
     locale: str | None = None
+    invite: str | None = None
 
 
 class LocaleSwitch(BaseModel):

@@ -9,6 +9,8 @@ from ..store import viewers as viewer_store
 from ..store import outbox as outbox_store
 from .. import sessions as sessions_svc
 from .. import deployments as deploy_svc
+from .. import invites as invites_svc
+from ..config import get_settings
 from . import identity
 
 router = APIRouter()
@@ -22,15 +24,23 @@ def new(body: SessionNew, authorization: str | None = Header(default=None), conn
     viewer = viewer_store.get_viewer(conn, body.viewer_id, body.viewer_version)
     if viewer is None:
         raise HTTPException(status_code=404, detail="viewer not registered")
+    auth = (dep.get("dimensions") or {}).get("auth")
     participant_claims = None
-    if (dep.get("dimensions") or {}).get("auth") == "identity":
+    invite_payload = None
+    if auth == "identity":
         participant_claims = identity.verify_participant(authorization)
         if participant_claims is None:
             return JSONResponse(status_code=401, content={"error": {
                 "code": "auth_required", "message": "this deployment requires participant login"}})
+    elif auth == "invite":
+        invite_payload = invites_svc.verify_invite(
+            get_settings().invite_signing_secret, body.invite, deployment_id=body.deployment_id)
+        if invite_payload is None:
+            return JSONResponse(status_code=401, content={"error": {
+                "code": "invite_required", "message": "this deployment requires a valid invite link"}})
     try:
         return sessions_svc.new_session(conn, dep, viewer, body.viewer_id, body.viewer_version,
-                                        body.locale, participant_claims)
+                                        body.locale, participant_claims, invite_payload)
     except deploy_svc.DeploymentClosed:
         return JSONResponse(status_code=410, content={"error": {"code": "gone", "message": "deployment is closed (past active_until)"}})
     except deploy_svc.NotYetOpen:

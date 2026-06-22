@@ -11,9 +11,11 @@ from .store import themes as themes_store
 
 
 def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_version: str,
-                requested_locale: str | None, participant_claims: dict | None = None) -> dict:
+                requested_locale: str | None, participant_claims: dict | None = None,
+                invite_payload: dict | None = None) -> dict:
     """Gate against the active window + quota, mint the runtime, allocate session + token.
-    For an `auth: identity` deployment, tag the session with the participant's Identity sub."""
+    For an `auth: identity` deployment, tag the session with the participant's Identity sub.
+    For an `auth: invite` deployment, tag the session with the invite participant_id."""
     session_count = session_store.count_for_deployment(conn, deployment["deployment_id"])
     deploy_svc.check_deployable(deployment, datetime.now(timezone.utc), session_count)
     runtime = mint_runtime(conn, deployment, viewer, requested_locale)
@@ -24,6 +26,10 @@ def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_ver
     if auth_mode == "identity" and participant_claims is not None:
         participant_sub = participant_claims["sub"]
         agent_id = participant_sub
+        session_index = session_store.count_for_agent(conn, agent_id) + 1
+    elif auth_mode == "invite" and invite_payload is not None:
+        agent_id = invite_payload["participant_id"]
+        participant_sub = "invite:" + agent_id
         session_index = session_store.count_for_agent(conn, agent_id) + 1
     else:
         participant_sub = None
