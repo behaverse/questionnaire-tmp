@@ -70,7 +70,7 @@ A shared **persistent session** (`src/session/`) replaces the one-shot access-to
 | File | Responsibility |
 |---|---|
 | `src/session/storage.ts` | Read/write the opaque refresh token at `localStorage` key `behaverse.participant.refresh`. Throws are caught and surfaced as `null`. |
-| `src/session/client.ts` | Typed `Tokens` / `User` shapes; `loginCall`, `refreshCall`, `meCall`, `revokeCall` — thin `fetch` wrappers around the Identity service. |
+| `src/session/client.ts` | Typed `Tokens` / `User` shapes; `login`, `refresh`, `logout`, `fetchMe` — thin `fetch` wrappers around the Identity service. |
 | `src/session/authFetch.ts` | `makeAuthFetch(getAccess, doRefresh)` — wraps any `fetch` call; on a `401` it single-flights a refresh and retries once. Concurrent callers share the same in-flight refresh promise. |
 | `src/session/SessionProvider.tsx` | React context provider.  On mount it reads the stored refresh token and silently calls `/v1/auth/refresh` + `/v1/auth/me` (boot restore).  Exposes `{ status, user, accessToken, login, logout, authFetch }` via `useSession()`. |
 | `src/session/SessionStrip.tsx` | Thin header bar: shows the logged-in user's email + a **Log out** button (used by `HomeApp` and `MyDataApp`); renders nothing while `status === 'anon'`. |
@@ -80,7 +80,7 @@ A shared **persistent session** (`src/session/`) replaces the one-shot access-to
 - The **refresh token** is stored in `localStorage` (`behaverse.participant.refresh`) so a reload resumes the session without prompting for credentials.
 - The **access token** is kept **in memory only** (never written to storage or the DOM).
 - On boot the provider silently refreshes; on any `authFetch` `401` it silently refreshes and retries once.
-- **Logout**: calls `POST /v1/auth/revoke` (best-effort), then clears the refresh token from storage and resets provider state to `anon` regardless of whether the revoke succeeded.
+- **Logout**: calls `POST /v1/auth/logout` (best-effort), then clears the refresh token from storage and resets provider state to `anon` regardless of whether the logout succeeded.
 
 ### Configuration
 
@@ -92,9 +92,9 @@ A shared **persistent session** (`src/session/`) replaces the one-shot access-to
 const { status, user, accessToken, login, logout, authFetch } = useSession()
 ```
 
-- `status`: `'loading' | 'anon' | 'authenticated'`
+- `status`: `'loading' | 'authed' | 'anon'`
 - `login(email, password)`: returns `{ok:true}` or `{ok:false, error:'invalid_credentials'|'network'}`
-- `logout()`: revokes + clears
+- `logout()`: calls logout + clears
 - `authFetch`: a `fetch`-compatible function that attaches `Authorization: Bearer <token>` and silently refreshes on 401
 
 ## Participant login (PP-A)
