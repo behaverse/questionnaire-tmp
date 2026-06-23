@@ -157,7 +157,17 @@ The nav-shell routes are all within the same SPA (`/`):
 |---|---|---|---|
 | `/` | `CatalogueView` | none | Browse listed + open deployments; Start → runner. |
 | `/my-data` | `MyDataView` | identity (redirects to `/account` if anon) | Sessions table + CSV download. |
-| `/account` | `AccountView` | none (auto-redirect if anon) | Create account (auto-login) or profile + log-out + change password. |
+| `/account` | `AccountView` | none (auto-redirect if anon) | Create account (auto-login) or profile + log-out + change password. A **"Forgot password?"** link on the login tab opens the reset-password flow. |
+| `/reset-password` | `ResetPasswordView` | none | **Request mode** (no `?token`): accepts an email address and calls `requestPasswordReset`; shows a confirmation. **Set mode** (`?token=…`): accepts a new password and calls `resetPassword`; on success shows a confirmation with a **Sign in** link. |
+| `/verify-email` | `VerifyEmailView` | none | Reads `?token=…` from the URL, calls `verifyEmail` automatically, and shows a success or error message. |
+
+### Email-flow client calls (`src/session/client.ts`)
+
+| Function | Identity endpoint | Description |
+|---|---|---|
+| `verifyEmail(base, token)` | `POST /v1/auth/verify-email` | Verifies the email address using the token from the verify link. Returns `{ok:true}` or `{ok:false, error:'invalid'|'network'}`. |
+| `requestPasswordReset(base, email)` | `POST /v1/auth/request-password-reset` | Requests a password-reset email. Returns `{ok:true}` (always, to avoid enumeration). |
+| `resetPassword(base, token, newPassword)` | `POST /v1/auth/reset-password` | Sets a new password using the reset token. Returns `{ok:true}` or `{ok:false, error:'invalid_token'|'weak_password'|'network'}`. |
 
 `CatalogueView` calls `GET /v1/catalogue` (public).  `MyDataView` calls `GET /v1/me/sessions` and `GET /v1/me/responses.csv` via the authenticated `authFetch`.  Each card's **Start** link is `index.html?deployment=<id>` (the full runner URL).
 

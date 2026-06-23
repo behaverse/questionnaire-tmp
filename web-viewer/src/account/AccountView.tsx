@@ -2,11 +2,8 @@ import { useState } from 'react'
 import { parseParams } from '../app/bootstrap'
 import { useSession } from '../session/SessionProvider'
 import { register, changePassword } from '../session/client'
-
-const inputCls =
-  'w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10'
-const primaryBtn =
-  'w-full rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60'
+import { inputCls, primaryBtn } from './ui'
+import { Link } from '../shell/router'
 
 function ChangePasswordForm() {
   const s = useSession()
@@ -130,6 +127,9 @@ export function AccountView() {
       <button type="submit" disabled={busy} className={primaryBtn}>
         {busy ? 'Please wait…' : mode === 'register' ? 'Sign up' : 'Log in'}
       </button>
+      {mode === 'login' ? (
+        <Link to="/reset-password" className="block text-center text-sm text-zinc-500 underline">Forgot password?</Link>
+      ) : null}
     </form>
   )
 }

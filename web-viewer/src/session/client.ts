@@ -99,3 +99,50 @@ export async function changePassword(
   if (resp.status === 422) return { ok: false, error: 'invalid' }
   return { ok: false, error: 'network' }
 }
+
+export async function verifyEmail(
+  identityBaseUrl: string, token: string,
+): Promise<{ ok: true } | { ok: false; error: 'invalid' | 'network' }> {
+  let resp: Response
+  try {
+    resp = await fetch(`${identityBaseUrl}/v1/auth/verify-email`, {
+      method: 'POST', headers: JSON_HEADERS, body: JSON.stringify({ token }),
+    })
+  } catch {
+    return { ok: false, error: 'network' }
+  }
+  if (resp.ok) return { ok: true }
+  if (resp.status === 400) return { ok: false, error: 'invalid' }
+  return { ok: false, error: 'network' }
+}
+
+export async function requestPasswordReset(
+  identityBaseUrl: string, email: string,
+): Promise<{ ok: true } | { ok: false; error: 'network' }> {
+  let resp: Response
+  try {
+    resp = await fetch(`${identityBaseUrl}/v1/auth/request-password-reset`, {
+      method: 'POST', headers: JSON_HEADERS, body: JSON.stringify({ email }),
+    })
+  } catch {
+    return { ok: false, error: 'network' }
+  }
+  return resp.ok ? { ok: true } : { ok: false, error: 'network' }
+}
+
+export async function resetPassword(
+  identityBaseUrl: string, token: string, newPassword: string,
+): Promise<{ ok: true } | { ok: false; error: 'invalid_token' | 'weak_password' | 'network' }> {
+  let resp: Response
+  try {
+    resp = await fetch(`${identityBaseUrl}/v1/auth/reset-password`, {
+      method: 'POST', headers: JSON_HEADERS, body: JSON.stringify({ token, new_password: newPassword }),
+    })
+  } catch {
+    return { ok: false, error: 'network' }
+  }
+  if (resp.ok) return { ok: true }
+  if (resp.status === 400) return { ok: false, error: 'invalid_token' }
+  if (resp.status === 422) return { ok: false, error: 'weak_password' }
+  return { ok: false, error: 'network' }
+}

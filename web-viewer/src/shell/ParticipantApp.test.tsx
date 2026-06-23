@@ -39,3 +39,19 @@ test('unknown path falls back to the catalogue', async () => {
   stubAnon(); renderAt('/nope')
   expect(await screen.findByText(/no questionnaires available right now/i)).toBeInTheDocument()
 })
+
+test('/reset-password renders the reset request form', async () => {
+  stubAnon(); renderAt('/reset-password')
+  expect(await screen.findByRole('button', { name: /send reset link/i })).toBeInTheDocument()
+})
+
+test('/verify-email renders the verifier', async () => {
+  window.history.pushState(null, '', '/verify-email?token=bad')
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+    if ((url as string).endsWith('/v1/auth/refresh')) return new Response('{}', { status: 401 })
+    if ((url as string).endsWith('/v1/auth/verify-email')) return new Response('{}', { status: 400 })
+    return new Response('{}', { status: 200 })
+  }))
+  render(<SessionProvider identityBaseUrl="http://id"><ParticipantApp /></SessionProvider>)
+  expect(await screen.findByText(/invalid or expired/i)).toBeInTheDocument()
+})

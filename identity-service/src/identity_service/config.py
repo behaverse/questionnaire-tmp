@@ -12,6 +12,12 @@ class Settings:
     reset_token_ttl: int = 3_600     # seconds (1 hour)
     default_register_role: str = "researcher"
     cors_origins: tuple[str, ...] = ()
+    web_viewer_base_url: str = "http://localhost:5173"
+    smtp_host: str | None = None
+    smtp_port: int = 587
+    smtp_username: str | None = None
+    smtp_password: str | None = None
+    smtp_from: str = "no-reply@behaverse.local"
 
 
 def get_settings() -> Settings:
@@ -26,4 +32,10 @@ def get_settings() -> Settings:
         reset_token_ttl=int(os.environ.get("RESET_TOKEN_TTL", "3600")),
         default_register_role=os.environ.get("DEFAULT_REGISTER_ROLE", "researcher"),
         cors_origins=origins,
+        web_viewer_base_url=os.environ.get("WEB_VIEWER_BASE_URL", "http://localhost:5173"),
+        smtp_host=os.environ.get("SMTP_HOST") or None,
+        smtp_port=int(os.environ.get("SMTP_PORT", "587")),
+        smtp_username=os.environ.get("SMTP_USERNAME") or None,
+        smtp_password=os.environ.get("SMTP_PASSWORD") or None,
+        smtp_from=os.environ.get("SMTP_FROM", "no-reply@behaverse.local"),
     )

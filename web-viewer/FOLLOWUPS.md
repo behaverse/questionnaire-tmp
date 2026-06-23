@@ -6,10 +6,8 @@
   password" section (old + new ≥ 8 chars) when signed in; calls `changePassword(authFetch,
   identityBaseUrl, old, new)`; the participant stays logged in on success. Remaining email work
   and display-name editing are tracked below.
-- **Email verification + forgot/reset-password UIs deferred to the "email" slice.** The Identity
-  service has the `verify-email`, `request-password-reset`, and `reset-password` endpoints, but
-  they depend on a real SMTP mailer (`NullMailer` today — see identity-service FOLLOWUPS). No UI
-  for these flows exists yet; build them once a mailer is wired.
+- ~~**Email verification + forgot/reset-password UIs deferred to the "email" slice.**~~ **DONE (email slice, 2026-06-23)** — `VerifyEmailView` (`/verify-email?token=`) auto-verifies on load; `ResetPasswordView` (`/reset-password`) handles both request (email form) and set (new-password form with `?token=`) modes; a **"Forgot password?"** link on the AccountView login tab opens `/reset-password`. Identity client functions `verifyEmail`, `requestPasswordReset`, `resetPassword` added to `src/session/client.ts`.
+- **Resend-verification still deferred.** There is no resend button or endpoint yet. A participant whose verification email expired must wait for the Identity service to add a `POST /v1/auth/resend-verification` endpoint (tracked in identity-service FOLLOWUPS).
 - **Display-name editing not yet supported.** The Account page shows the logged-in email address
   but there is no field to set or change a display name. Add a `PATCH /v1/auth/me` Identity
   endpoint + an `AccountView` name field in the same slice that adds the profile fields.

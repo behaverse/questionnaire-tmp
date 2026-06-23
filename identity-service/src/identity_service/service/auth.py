@@ -1,9 +1,12 @@
+import logging
 import uuid
 from datetime import datetime, timedelta, timezone
 
 from .. import tokens, passwords
 from ..store import users as ustore, clients as cstore, refresh as rstore
 from ..store import keys as kstore, email_tokens as etstore
+
+_log = logging.getLogger("identity.service.auth")
 
 
 class AuthError(Exception):
@@ -73,7 +76,8 @@ def register(conn, settings, mailer, *, email, password, display_name, audience)
     raw = tokens.mint_refresh()
     etstore.issue(conn, uid, "verify", tokens.hash_token(raw),
                   _now() + timedelta(seconds=settings.verify_token_ttl))
-    mailer.send(email, "Verify your email", f"verify token: {raw}")
+    link = f"{settings.web_viewer_base_url}/verify-email?token={raw}"
+    mailer.send(email, "Verify your email", f"Verify your email: {link}")
     return profile(conn, user_id=uid, audience=audience)
 
 
@@ -144,7 +148,11 @@ def request_password_reset(conn, settings, mailer, *, email) -> None:
     raw = tokens.mint_refresh()
     etstore.issue(conn, user["id"], "reset", tokens.hash_token(raw),
                   _now() + timedelta(seconds=settings.reset_token_ttl))
-    mailer.send(email, "Reset your password", f"reset token: {raw}")
+    link = f"{settings.web_viewer_base_url}/reset-password?token={raw}"
+    try:
+        mailer.send(email, "Reset your password", f"Reset your password: {link}")
+    except Exception:                                   # keep 202 + no enumeration even if SMTP fails
+        _log.warning("reset email send failed", exc_info=True)
 
 
 def reset_password(conn, *, token, new_password) -> None:

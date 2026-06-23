@@ -66,12 +66,33 @@
   everywhere on password change" policy is wanted; also note the ≤15 min access-token window
   (same trade-off as `reset_password` — see "Access JWT revocation on password reset" above).
 
-## NullMailer blocks email delivery (PA-3)
+## ~~NullMailer blocks email delivery (PA-3)~~ DONE (email slice)
 
-- The `verify-email`, `request-password-reset`, and `reset-password` endpoints are fully
+- ~~The `verify-email`, `request-password-reset`, and `reset-password` endpoints are fully
   implemented but **not deliverable** in production: `NullMailer` silently drops every
   outbound message. Wire a real SMTP mailer (or a transactional email provider) before
-  enabling email-verification or self-service forgot/reset-password flows.
+  enabling email-verification or self-service forgot/reset-password flows.~~
+- **RESOLVED:** `make_mailer(settings)` now selects `SmtpMailer` (when `SMTP_HOST` is set) or
+  `ConsoleMailer` (default — logs the link at INFO). `NullMailer` is test-only. Emails carry
+  `{WEB_VIEWER_BASE_URL}/verify-email?token=` / `/reset-password?token=` links.
+
+## Resend-verification endpoint (deferred)
+
+- There is no `POST /v1/auth/resend-verification` endpoint. Participants whose verification
+  email was lost or expired must ask an admin to re-trigger (or re-register). Add a
+  rate-limited resend endpoint in a follow-up slice.
+
+## Email-change (deferred)
+
+- Changing the account email address is not yet supported. Add a
+  `POST /v1/auth/change-email` endpoint (requires re-verification of the new address) in a
+  future slice alongside `PATCH /v1/auth/me` profile edits.
+
+## HTML email templates / deliverability (deferred)
+
+- Outgoing emails are plain-text only. Switch to an HTML+plain-text multipart format
+  (branded templates, clickable button) and add SPF/DKIM/DMARC guidance when switching
+  from Mailpit to a real transactional provider.
 
 ## CLI `_opt` edge cases
 
