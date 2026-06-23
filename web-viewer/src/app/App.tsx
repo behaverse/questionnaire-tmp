@@ -19,7 +19,7 @@ import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
 import { ErrorScreen } from './chrome/ErrorScreen'
 import { LoginView } from './chrome/LoginView'
-import { loginParticipant } from './auth'
+import { useSession } from '../session/SessionProvider'
 import { LocaleSwitcher } from './chrome/LocaleSwitcher'
 import { NavButtons } from './chrome/NavButtons'
 import { ProgressBar } from './chrome/ProgressBar'
@@ -72,11 +72,11 @@ export function App() {
   const stepContainer = useRef<HTMLDivElement | null>(null)
   const pipeline = useRef<Pipeline | null>(null)
   const store = getResumeStore()
+  const session = useSession()
   const [demoCleared, setDemoCleared] = useState(false)
   const [needLogin, setNeedLogin] = useState(false)
   const [loginErr, setLoginErr] = useState<string | null>(null)
   const [loginBusy, setLoginBusy] = useState(false)
-  const accessTokenRef = useRef<string | undefined>(undefined)
   const ephemeralRef = useRef(false)
   const params = parseParams(window.location.search)
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
@@ -168,7 +168,7 @@ export function App() {
       return
     }
     if (outcome.kind === 'ephemeral_cleared') setDemoCleared(true)
-    const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale, accessTokenRef.current, params.invite ?? undefined)])
+    const [evaluator, res] = await Promise.all([evaluatorPromise, mintSession(params.vsBaseUrl, params.deploymentId, params.locale, session.accessToken ?? undefined, params.invite ?? undefined)])
     if (!res.ok && res.kind === 'auth_required') { setNeedLogin(true); return }
     if (res.ok) {
       const scorerSet = await compileScorers(res.runtime)
@@ -191,22 +191,22 @@ export function App() {
 
   async function handleLogin(email: string, password: string) {
     setLoginBusy(true); setLoginErr(null)
-    const res = await loginParticipant(params.identityBaseUrl, email, password)
+    const res = await session.login(email, password)
     setLoginBusy(false)
     if (!res.ok) { setLoginErr(res.error === 'invalid_credentials' ? 'Invalid email or password' : 'Network error — try again'); return }
-    accessTokenRef.current = res.accessToken
     setNeedLogin(false)
     bootStarted.current = false
-    void runBoot()
+    // session.accessToken is updated async (React setState); runBoot() will be re-triggered
+    // by the useEffect watching session.status ('anon' → 'authed'), at which point the token is ready.
   }
 
   useEffect(() => {
-    if (state.phase !== 'booting') return
+    if (session.status === 'loading') return
     if (bootStarted.current) return
     bootStarted.current = true
     void runBoot()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.phase])
+  }, [session.status, state.phase])
 
   // Task 2 (embed): tell the host when the session is interactive — once, when first ready.
   useEffect(() => {
