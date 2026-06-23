@@ -1,5 +1,5 @@
 import { test, expect, vi, beforeEach } from 'vitest'
-import { login, refresh, logout, fetchMe, register, changePassword } from './client'
+import { login, refresh, logout, fetchMe, register, changePassword, verifyEmail, requestPasswordReset, resetPassword } from './client'
 import type { AuthFetch } from './authFetch'
 
 beforeEach(() => vi.restoreAllMocks())
@@ -119,4 +119,50 @@ test('changePassword maps 422 to invalid', async () => {
 test('changePassword maps a thrown authFetch to network', async () => {
   const throwing: AuthFetch = () => { throw new Error('down') }
   expect(await changePassword(throwing, 'http://id', 'oldpass12', 'newpass34')).toEqual({ ok: false, error: 'network' })
+})
+
+test('verifyEmail maps 204→ok, 400→invalid, thrown→network', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: 204 })))
+  expect(await verifyEmail('http://id', 't')).toEqual({ ok: true })
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 400 })))
+  expect(await verifyEmail('http://id', 't')).toEqual({ ok: false, error: 'invalid' })
+  vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('x')))
+  expect(await verifyEmail('http://id', 't')).toEqual({ ok: false, error: 'network' })
+})
+
+test('verifyEmail posts the token', async () => {
+  const f = vi.fn().mockResolvedValue(new Response(null, { status: 204 }))
+  vi.stubGlobal('fetch', f)
+  await verifyEmail('http://id', 'tok')
+  expect(f.mock.calls[0][0]).toBe('http://id/v1/auth/verify-email')
+  expect(JSON.parse((f.mock.calls[0][1] as RequestInit).body as string)).toEqual({ token: 'tok' })
+})
+
+test('requestPasswordReset maps 202→ok, thrown→network and posts the email', async () => {
+  const f = vi.fn().mockResolvedValue(new Response(JSON.stringify({ status: 'accepted' }), { status: 202 }))
+  vi.stubGlobal('fetch', f)
+  expect(await requestPasswordReset('http://id', 'a@e.com')).toEqual({ ok: true })
+  expect(f.mock.calls[0][0]).toBe('http://id/v1/auth/request-password-reset')
+  expect(JSON.parse((f.mock.calls[0][1] as RequestInit).body as string)).toEqual({ email: 'a@e.com' })
+  vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('x')))
+  expect(await requestPasswordReset('http://id', 'a@e.com')).toEqual({ ok: false, error: 'network' })
+})
+
+test('resetPassword maps 204→ok, 400→invalid_token, 422→weak_password, thrown→network', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: 204 })))
+  expect(await resetPassword('http://id', 'tok', 'newpassword9')).toEqual({ ok: true })
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 400 })))
+  expect(await resetPassword('http://id', 'tok', 'newpassword9')).toEqual({ ok: false, error: 'invalid_token' })
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 422 })))
+  expect(await resetPassword('http://id', 'tok', 'short')).toEqual({ ok: false, error: 'weak_password' })
+  vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('x')))
+  expect(await resetPassword('http://id', 'tok', 'newpassword9')).toEqual({ ok: false, error: 'network' })
+})
+
+test('resetPassword posts token + new_password', async () => {
+  const f = vi.fn().mockResolvedValue(new Response(null, { status: 204 }))
+  vi.stubGlobal('fetch', f)
+  await resetPassword('http://id', 'tok', 'newpassword9')
+  expect(f.mock.calls[0][0]).toBe('http://id/v1/auth/reset-password')
+  expect(JSON.parse((f.mock.calls[0][1] as RequestInit).body as string)).toEqual({ token: 'tok', new_password: 'newpassword9' })
 })
