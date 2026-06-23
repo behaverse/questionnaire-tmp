@@ -108,3 +108,11 @@
 - **In-session scoring (SP2a, done):** `score(id)` runs live for branching (boot-compile + page-submit refresh; sentinel-null on failure). SP2b adds score **display** (`show_score`/`show_score_live`) + Schema 6 `scorer_outputs` persistence (new VS endpoint). The vendored scorer host (`src/scoring/vendor/`) is generated from `questionnaire-scorer/host` — run `scripts/build-scorer-host.mjs` if the drift test fails.
 - **Score display convention (SP2b):** display scores = `PinnedScore`s with a non-empty `name` (`src/scoring/display.ts`). This is a SOFT convention — a questionnaire that mixes display + branching-only scores under `show_score=true` could mis-show a named branching score or omit an unnamed display score (cosmetic, fixable via the `name`). If it becomes a real authoring problem, add an explicit `display?: boolean` to the Schema 2 `Score` (additive CalVer bump + denormaliser passthrough); `displayScores()` centralises the rule so the switch is one function.
 - **In-session scoring (SP2b, done):** scores display at terminal + live (root flags `runtime.x_show_score`/`x_show_score_live`, emitted by the denormaliser via the `^x_` extension — no Schema 3 bump); `scorer_outputs` persisted to the session (JSONB) via `POST /sessions/{id}/scorer_outputs`. SP3: forward `scorer_outputs` to Behaverse; server-side http/python/r executors; Library scorer-artifact storage.
+
+## Resume dead-end (2026-06-23, found during PA-2 manual testing)
+
+- **`resume_unreachable` is a dead-end "Try again" loop.** When `resolveResume`'s `getSession`/`getRuntime`
+  returns a network/5xx (e.g. VS 500s building an unsupported locale, or VS is briefly down), the runner
+  shows "Something went wrong … Try again" with no escape. It should offer a **"Start fresh"** action
+  (clear the IndexedDB resume record for that deployment + mint a new session) rather than trapping the
+  participant, and ideally treat a failed runtime fetch as recoverable-to-fresh after N retries.

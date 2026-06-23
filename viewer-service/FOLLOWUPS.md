@@ -160,3 +160,15 @@
 - **Scorer artifact storage:** SP2a serves scorer wasm from a VS-local dir (`VS_SCORER_DIR`) and rewrites `impl.url` at mint (`VS_PUBLIC_BASE`). Real storage belongs in the Library (`GET /v1/scorers/{id}/versions/{v}/impl.wasm`) — SP3.
 - **Scoring deploy config (SP2a):** in-session scoring requires the VS to (1) serve the scorer wasm — set `VS_SCORER_DIR` to a dir containing the binaries and `VS_SCORER_MAP` (JSON `{"scr_<id>@v<ver>": "<file>.wasm"}`) mapping each scorer ref to its file (default falls back to `<ref>.wasm`); and (2) rewrite impl URLs — set `VS_PUBLIC_BASE` to the VS's public base. Example for the reference PHQ-9: `VS_SCORER_DIR=…/questionnaire-scorer/dist-wasm VS_SCORER_MAP='{"scr_phq9@v26.0602":"phq9.wasm"}' VS_PUBLIC_BASE=https://<vs>`.
 - **scorer_outputs forwarding (SP3):** SP2b stores `scorer_outputs` on the session (JSONB column) via `POST /sessions/{id}/scorer_outputs`. Forwarding it to Behaverse (the outbox sink learning the Schema 6 session-metadata payload) is deferred to SP3.
+
+## Deployment locale validation (2026-06-23, found during PA-2 manual testing)
+
+- **VS does not validate `available_locales` against the questionnaire's content at deployment-create.**
+  A deployment created with `available_locales: ["en","pt"]` for a questionnaire that only has `en`
+  content builds fine for `en` but the denormaliser raises an **unhandled `PreflightError` → 500**
+  when a runtime is built for the missing locale (`missing_locale: <id> has no locale 'pt'`). This
+  surfaced as a `resume_unreachable` dead-end in the web viewer. Fixes (pick one): (a) at
+  `POST /v1/deployments`, fetch the questionnaire and reject `available_locales` not fully supported
+  (clean 4xx); and/or (b) map the denormaliser `PreflightError` to a clean `4xx` (e.g. 422) instead of
+  letting it 500. Mint with an unsupported *requested* locale already returns 422; the gap is the
+  runtime build for a deployment-declared locale.
