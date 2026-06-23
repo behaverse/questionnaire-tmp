@@ -1,13 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from .deps import get_conn, require_access
 from ..config import get_settings
-from ..mailer import NullMailer
+from ..mailer import make_mailer
 from ..service import auth
 from ..models import (RegisterIn, LoginIn, RefreshIn, LogoutIn, VerifyEmailIn,
                       RequestResetIn, ResetPasswordIn, ChangePasswordIn)
 
 router = APIRouter()
-_mailer = NullMailer()                                 # stub; swapped for SMTP in a later slice
 
 
 def _handle(fn):
@@ -21,7 +20,7 @@ def _handle(fn):
 def register(body: RegisterIn, conn=Depends(get_conn)):
     s = get_settings()
     def go():
-        out = auth.register(conn, s, _mailer, email=body.email, password=body.password,
+        out = auth.register(conn, s, make_mailer(s), email=body.email, password=body.password,
                             display_name=body.display_name, audience=body.audience)
         conn.commit()
         return out
@@ -69,7 +68,8 @@ def verify_email(body: VerifyEmailIn, conn=Depends(get_conn)):
 
 @router.post("/v1/auth/request-password-reset", status_code=202)
 def request_reset(body: RequestResetIn, conn=Depends(get_conn)):
-    auth.request_password_reset(conn, get_settings(), _mailer, email=body.email)
+    s = get_settings()
+    auth.request_password_reset(conn, s, make_mailer(s), email=body.email)
     conn.commit()
     return {"status": "accepted"}
 
