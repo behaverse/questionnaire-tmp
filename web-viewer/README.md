@@ -80,6 +80,36 @@ in IndexedDB and not sent on any subsequent VS call — the session token (`sess
 authorises all further participant requests. Because invite participants have no account, they
 cannot resume from a different device (see FOLLOWUPS).
 
+## Consent gate + completion polish (PA-4)
+
+### Consent gate
+
+When `POST /v1/sessions/new` returns a non-null `consent` locale-map, the runner shows a
+**ConsentScreen** before the first questionnaire step.
+
+- The consent text is resolved from the locale-map using the session's active locale, falling
+  back to the first available locale entry.
+- The text is rendered as **rich text** (markdown + sanitised HTML — the same `RichText`
+  component used for question prompts).
+- **Accept**: posts a `bdm:consented` event to the VS outbox, then transitions to the first
+  questionnaire step normally (the session is considered `started` at this point).
+- **Decline**: posts a `bdm:consent_declined` event and shows an **exit screen** — a static
+  message explaining the session was not started. No questionnaire steps are rendered and no
+  response rows are emitted.
+- When `consent` is null the screen is skipped entirely and the runner boots directly to step 1.
+
+### Finished screen — confirmation message + redirect
+
+The finished screen now honours two optional deployment-level fields (from the mint response):
+
+| Field | Behaviour |
+|---|---|
+| `confirmation_message` | Locale-map of markdown text. Rendered in place of the default "Thank you" string. Locale + fallback resolution is the same as `consent`. |
+| `redirect_url` | When set, an automatic redirect fires **5 seconds** after the completion screen appears. A manual **"click here"** link is always shown immediately so the participant is not blocked if the auto-redirect fails. |
+
+Both are `null` when not configured on the deployment — the finished screen then shows the
+built-in thank-you text and no redirect.
+
 ## Session layer (PA-1)
 
 A shared **persistent session** (`src/session/`) wraps the entire SPA.  Both the runner and the participant shell consume it via `useSession()`.
@@ -354,7 +384,7 @@ deployments — revisit when authenticated deployments arrive (see FOLLOWUPS).
 ## Tests
 
 ```bash
-npm test            # vitest (290 tests) + Schema 7 manifest validation
+npm test            # vitest (315 tests) + Schema 7 manifest validation
 npm run typecheck   # tests mock loadEvaluator — no prior wasm build needed
 npm run build       # tsc + builds evaluator --target web + bundles the wasm
 npm run build:lib   # renderer library (OD-03) → dist-lib/ (ESM + dts + CSS)

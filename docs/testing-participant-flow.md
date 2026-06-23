@@ -214,6 +214,40 @@ curl -s http://localhost:8001/v1/catalogue
 Everything is strictly self-scoped: my-data returns only sessions tied to *your* Identity id — never
 anyone else's.
 
+### Step 6 — Consent gate + custom completion (PA-4, optional)
+
+To see the consent gate and custom finished screen, create a deployment that includes
+`consent`, `confirmation_message`, and/or `redirect_url`:
+
+```bash
+curl -s -X POST http://localhost:8001/v1/deployments \
+  -H "authorization: Bearer $TOKEN" \
+  -H 'content-type: application/json' \
+  -d '{
+    "questionnaire_ref": "qst_min@v26.0601",
+    "runtime_policy": {"scorer_impl_preference": ["wasm"], "show_score": false},
+    "default_locale": "en",
+    "available_locales": ["en"],
+    "mode_preset": "anonymous_link",
+    "listed": true,
+    "title": "Consented check-in",
+    "consent": {"en": "By continuing you agree that your responses may be used for research purposes."},
+    "confirmation_message": {"en": "**Thank you for participating!**\n\nYour responses have been recorded."},
+    "redirect_url": "https://example.com/done"
+  }'
+```
+
+Open `http://localhost:5173/?deployment=<dep_id>` and you will see:
+
+1. A **ConsentScreen** with the consent text rendered as markdown — **Accept** proceeds to Q1;
+   **Decline** shows an exit screen (no responses are recorded; a `bdm:consent_declined` event is
+   logged to the VS outbox — check the Identity terminal for the console mailer note about the
+   event).
+2. After completing the questionnaire, the finished screen shows the `confirmation_message`
+   rendered as markdown rather than the default "Thank you" text.
+3. A **"click here"** link appears immediately, and an **automatic redirect** fires after 5 seconds,
+   both pointing to the `redirect_url`.
+
 ---
 
 ## 4. The other two start modes (optional)

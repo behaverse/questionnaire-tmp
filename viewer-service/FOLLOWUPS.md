@@ -161,6 +161,21 @@
 - **Scoring deploy config (SP2a):** in-session scoring requires the VS to (1) serve the scorer wasm — set `VS_SCORER_DIR` to a dir containing the binaries and `VS_SCORER_MAP` (JSON `{"scr_<id>@v<ver>": "<file>.wasm"}`) mapping each scorer ref to its file (default falls back to `<ref>.wasm`); and (2) rewrite impl URLs — set `VS_PUBLIC_BASE` to the VS's public base. Example for the reference PHQ-9: `VS_SCORER_DIR=…/questionnaire-scorer/dist-wasm VS_SCORER_MAP='{"scr_phq9@v26.0602":"phq9.wasm"}' VS_PUBLIC_BASE=https://<vs>`.
 - **scorer_outputs forwarding (SP3):** SP2b stores `scorer_outputs` on the session (JSONB column) via `POST /sessions/{id}/scorer_outputs`. Forwarding it to Behaverse (the outbox sink learning the Schema 6 session-metadata payload) is deferred to SP3.
 
+## PA-4 follow-ups — consent lifecycle (2026-06-24)
+
+- **Full consent lifecycle is Phase-5 Platform.** The current `consent` field is a simple
+  locale-map of text stored per-deployment. The full lifecycle — versioned consent forms,
+  re-consent on form change, explicit withdrawal (`DELETE /v1/me/consent`), and recording
+  which consent version was accepted — is deferred to the Phase-5 Platform layer.
+- **`consent_text_ref` (external ref) is still unused.** The schema design reserves a
+  `consent_text_ref` field for pointing to an external consent document URL rather than
+  inlining text. It is accepted by the model but not read by the Web Viewer; wire it up
+  when an external-document consent workflow is needed.
+- **No `bdm:consent_declined` forwarding.** A `bdm:consent_declined` event is emitted by
+  the Web Viewer and stored in the VS outbox, but the outbox forwarder treats it identically
+  to any other event row. If Behaverse needs to suppress declined-consent sessions from its
+  pipeline, add a session-level `consent_declined` flag and filter at the forwarder.
+
 ## Deployment locale validation (2026-06-23, found during PA-2 manual testing)
 
 - **VS does not validate `available_locales` against the questionnaire's content at deployment-create.**
