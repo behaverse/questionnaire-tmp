@@ -47,6 +47,7 @@ def create(body: DeploymentCreate, conn=Depends(get_conn), claims=Depends(requir
         randomization_seed_strategy=body.randomization_seed_strategy,
         channels=body.channels or _DEFAULT_CHANNELS, created_by=claims["sub"],
         consent_text_ref=body.consent_text_ref,
+        consent=body.consent,
         listed=body.listed, title=body.title, description=body.description)
     return {"deployment_id": deployment_id}
 

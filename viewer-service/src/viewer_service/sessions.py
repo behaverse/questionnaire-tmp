@@ -47,7 +47,10 @@ def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_ver
     theme = themes_store.get_theme(conn, deployment["theme_id"]) if deployment.get("theme_id") else None
     return {"session_id": session_id, "session_token": token, "runtime": runtime, "theme": theme,
             "agent_id": agent_id, "session_index": session_index, "ephemeral": ephemeral,
-            "participant_sub": participant_sub}
+            "participant_sub": participant_sub,
+            "consent": deployment.get("consent"),
+            "confirmation_message": deployment.get("confirmation_message"),
+            "redirect_url": deployment.get("redirect_url")}
 
 
 def session_runtime(conn, session: dict) -> dict:
