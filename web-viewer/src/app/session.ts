@@ -7,7 +7,7 @@ import { requiredUnanswered, type Step } from './steps'
 type ErrorKind = Exclude<MintErr['kind'], 'auth_required'>
 
 export type SessionState = {
-  phase: 'booting' | 'error' | 'ready' | 'finishing' | 'finished' | 'completed'
+  phase: 'booting' | 'error' | 'ready' | 'finishing' | 'finished' | 'completed' | 'consent' | 'declined'
   session: { id: string; token: string } | null
   runtime: Runtime | null
   theme: Theme
@@ -19,16 +19,23 @@ export type SessionState = {
   validationErrors: { key: string; message: string }[]
   error: { kind: ErrorKind; code: string } | null
   submitError: boolean
+  consent: Record<string, string> | null
+  confirmationMessage: Record<string, string> | null
+  redirectUrl: string | null
 }
 
 export const initialState: SessionState = {
   phase: 'booting', session: null, runtime: null, theme: null,
   steps: [], stepIndex: 0, visited: [], answers: {}, stepErrors: [], validationErrors: [], error: null,
   submitError: false,
+  consent: null, confirmationMessage: null, redirectUrl: null,
 }
 
 export type Action =
-  | { type: 'boot_success'; session: { id: string; token: string }; runtime: Runtime; theme: Theme; steps: Step[] }
+  | { type: 'boot_success'; session: { id: string; token: string }; runtime: Runtime; theme: Theme; steps: Step[]; confirmationMessage: Record<string, string> | null; redirectUrl: string | null }
+  | { type: 'boot_consent'; session: { id: string; token: string }; runtime: Runtime; theme: Theme; steps: Step[]; consent: Record<string, string> | null; confirmationMessage: Record<string, string> | null; redirectUrl: string | null }
+  | { type: 'consent_accepted' }
+  | { type: 'consent_declined' }
   | { type: 'boot_error'; kind: ErrorKind; code: string }
   | { type: 'retry' }
   | { type: 'answer'; key: string; value: AnswerValue }
@@ -46,7 +53,13 @@ export type Action =
 export function reducer(state: SessionState, action: Action): SessionState {
   switch (action.type) {
     case 'boot_success':
-      return { ...state, phase: 'ready', session: action.session, runtime: action.runtime, theme: action.theme, steps: action.steps, stepIndex: 0 }
+      return { ...state, phase: 'ready', session: action.session, runtime: action.runtime, theme: action.theme, steps: action.steps, stepIndex: 0, confirmationMessage: action.confirmationMessage, redirectUrl: action.redirectUrl }
+    case 'boot_consent':
+      return { ...state, phase: 'consent', session: action.session, runtime: action.runtime, theme: action.theme, steps: action.steps, stepIndex: 0, consent: action.consent, confirmationMessage: action.confirmationMessage, redirectUrl: action.redirectUrl }
+    case 'consent_accepted':
+      return { ...state, phase: 'ready' }
+    case 'consent_declined':
+      return { ...state, phase: 'declined' }
     case 'boot_error':
       return { ...state, phase: 'error', error: { kind: action.kind, code: action.code } }
     case 'retry':
