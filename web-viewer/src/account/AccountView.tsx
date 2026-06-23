@@ -68,9 +68,8 @@ export function AccountView() {
         <button type="button" onClick={() => { setMode('login'); setErr(null) }}
           className={'flex-1 rounded-full px-4 py-1.5 transition ' + (mode === 'login' ? 'bg-white text-zinc-900 shadow-sm' : 'text-zinc-500')}>Sign in</button>
         <button type="button" onClick={() => { setMode('register'); setErr(null) }}
-          className={'flex-1 rounded-full px-4 py-1.5 transition ' + (mode === 'register' ? 'bg-white text-zinc-900 shadow-sm' : 'text-zinc-500')}
-          aria-label={mode === 'register' ? 'New account tab' : 'Create account'}>
-          {mode === 'register' ? 'New account' : 'Create account'}
+          className={'flex-1 rounded-full px-4 py-1.5 transition ' + (mode === 'register' ? 'bg-white text-zinc-900 shadow-sm' : 'text-zinc-500')}>
+          Create account
         </button>
       </div>
 
