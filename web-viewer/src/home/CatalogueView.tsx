@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { parseParams } from '../app/bootstrap'
 import { fetchCatalogue, type CatalogueItem } from './client'
-import { SessionStrip } from '../session/SessionStrip'
 
 function carry(base: string, extra: Record<string, string>): string {
   const q = new URLSearchParams()
@@ -21,14 +20,10 @@ function Card({ item }: { item: CatalogueItem }) {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <h2 className="truncate text-lg font-semibold tracking-tight text-zinc-900">{item.title}</h2>
-          {item.description ? (
-            <p className="mt-1 text-sm leading-relaxed text-zinc-500">{item.description}</p>
-          ) : null}
+          {item.description ? <p className="mt-1 text-sm leading-relaxed text-zinc-500">{item.description}</p> : null}
         </div>
-        <a
-          href={carry('index.html', { deployment: item.deployment_id })}
-          className="inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:self-auto"
-        >
+        <a href={carry('index.html', { deployment: item.deployment_id })}
+          className="inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:self-auto">
           Start
           <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
         </a>
@@ -51,7 +46,7 @@ function Skeleton() {
   )
 }
 
-export function HomeApp() {
+export function CatalogueView() {
   const params = parseParams(window.location.search)
   const [items, setItems] = useState<CatalogueItem[]>([])
   const [loaded, setLoaded] = useState(false)
@@ -64,27 +59,13 @@ export function HomeApp() {
     })()
   }, [params.vsBaseUrl])
 
-  return (
-    <div className="min-h-screen bg-zinc-50 font-theme text-zinc-900 antialiased">
-      <div className="mx-auto max-w-2xl px-6 py-10 sm:py-16">
-        <SessionStrip />
-        {!loaded ? (
-          <ul className="space-y-4">
-            <Skeleton />
-            <Skeleton />
-          </ul>
-        ) : items.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-zinc-300 bg-white/60 px-6 py-16 text-center">
-            <p className="text-base font-medium text-zinc-700">No questionnaires available right now.</p>
-          </div>
-        ) : (
-          <ul className="space-y-4">
-            {items.map((it) => (
-              <Card key={it.deployment_id} item={it} />
-            ))}
-          </ul>
-        )}
+  if (!loaded) return <ul className="space-y-4"><Skeleton /><Skeleton /></ul>
+  if (items.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-zinc-300 bg-white/60 px-6 py-16 text-center">
+        <p className="text-base font-medium text-zinc-700">No questionnaires available right now.</p>
       </div>
-    </div>
-  )
+    )
+  }
+  return <ul className="space-y-4">{items.map((it) => <Card key={it.deployment_id} item={it} />)}</ul>
 }
