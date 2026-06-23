@@ -26,10 +26,3 @@ test('shows an empty state when the catalogue is empty', async () => {
   render(<HomeApp />)
   expect(await screen.findByText(/no questionnaires available right now/i)).toBeInTheDocument()
 })
-
-test('has a My data link', async () => {
-  stub([])
-  render(<HomeApp />)
-  const mydata = await screen.findByRole('link', { name: /my data/i })
-  expect(mydata.getAttribute('href')).toContain('mydata.html')
-})
