@@ -270,14 +270,14 @@ When a new account is created the Identity service sends a verification email.
 2. Watch the **Identity terminal (Terminal A)** for a log line like:
 
    ```
-   INFO identity.mailer EMAIL to=alice@example.com subject=Verify your email address body=...
+   INFO identity.mailer EMAIL to=alice@example.com subject=Verify your email body=...
    verify-email?token=<raw_token>
    ```
 
 3. Copy the full `http://localhost:5173/verify-email?token=<raw_token>` URL from the log and
    open it in the browser.
 4. `VerifyEmailView` reads the `?token=` parameter, calls `POST /v1/auth/verify-email`
-   automatically, and shows "Email verified!" on success.
+   automatically, and shows "Email verified." on success.
 
 > **Set `SMTP_HOST`** to use Mailpit (or a real SMTP relay) instead of the console.
 > With Mailpit:
@@ -300,11 +300,10 @@ When a new account is created the Identity service sends a verification email.
    ```
 
 4. Copy the full `http://localhost:5173/reset-password?token=<raw_token>` URL and open it.
-5. Enter and confirm a new password (≥ 8 chars) and click **Set new password**.
-6. On success, you are redirected to `/account` where you can log in with the new password.
+5. Enter and confirm a new password (≥ 8 chars) and click **Reset password**.
+6. On success, click **Sign in** to log in with the new password.
 
-> **No-enumeration guarantee:** the request-reset form always shows "If that email is
-> registered, a reset link has been sent" — it never reveals whether an address exists.
+> **No-enumeration guarantee:** the request-reset form always shows "If an account exists for that email, we've sent a reset link." — it never reveals whether an address exists.
 
 > **Reset send failures are swallowed (202):** if the Identity service fails to send the
 > email (e.g. SMTP unreachable), the endpoint still returns `202 Accepted` — the participant
