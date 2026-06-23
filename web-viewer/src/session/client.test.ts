@@ -1,11 +1,15 @@
 import { test, expect, vi, beforeEach } from 'vitest'
-import { login, refresh, logout, fetchMe, register } from './client'
+import { login, refresh, logout, fetchMe, register, changePassword } from './client'
+import type { AuthFetch } from './authFetch'
 
 beforeEach(() => vi.restoreAllMocks())
 
 function stub(status: number, body: unknown) {
   return vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status }))
 }
+
+// a pass-through authFetch: the stubbed global fetch's Response status drives the mapping
+const af: AuthFetch = (url, init) => fetch(url, init) as Promise<Response>
 
 test('login posts credentials + audience and returns tokens', async () => {
   const f = stub(200, { access_token: 'AT', refresh_token: 'RT', expires_in: 900, token_type: 'Bearer' })
@@ -90,4 +94,29 @@ test('register maps 422 to invalid', async () => {
 test('register maps a thrown fetch to network', async () => {
   vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('down')))
   expect(await register('http://id', 'a@e.com', 'password1', '')).toEqual({ ok: false, error: 'network' })
+})
+
+test('changePassword posts old+new via authFetch and returns ok on 204', async () => {
+  const f = vi.fn().mockResolvedValue(new Response(null, { status: 204 }))
+  vi.stubGlobal('fetch', f)
+  const r = await changePassword(af, 'http://id', 'oldpass12', 'newpass34')
+  expect(r).toEqual({ ok: true })
+  const [url, init] = f.mock.calls[0]
+  expect(url).toBe('http://id/v1/auth/change-password')
+  expect(JSON.parse((init as RequestInit).body as string)).toEqual({ old_password: 'oldpass12', new_password: 'newpass34' })
+})
+
+test('changePassword maps 403 to wrong_password', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 403 })))
+  expect(await changePassword(af, 'http://id', 'x', 'newpass34')).toEqual({ ok: false, error: 'wrong_password' })
+})
+
+test('changePassword maps 422 to invalid', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 422 })))
+  expect(await changePassword(af, 'http://id', 'oldpass12', 'short')).toEqual({ ok: false, error: 'invalid' })
+})
+
+test('changePassword maps a thrown authFetch to network', async () => {
+  const throwing: AuthFetch = () => { throw new Error('down') }
+  expect(await changePassword(throwing, 'http://id', 'oldpass12', 'newpass34')).toEqual({ ok: false, error: 'network' })
 })

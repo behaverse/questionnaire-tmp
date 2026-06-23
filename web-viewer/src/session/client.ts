@@ -1,3 +1,5 @@
+import type { AuthFetch } from './authFetch'
+
 export type User = { id: string; email: string; display_name: string; email_verified: boolean; roles: string[] }
 export type Tokens = { access: string; refresh: string; expiresIn: number }
 export type LoginResult = { ok: true; tokens: Tokens } | { ok: false; error: 'invalid_credentials' | 'network' }
@@ -76,6 +78,24 @@ export async function register(
   }
   if (resp.ok) return { ok: true }
   if (resp.status === 409) return { ok: false, error: 'email_in_use' }
+  if (resp.status === 422) return { ok: false, error: 'invalid' }
+  return { ok: false, error: 'network' }
+}
+
+export async function changePassword(
+  authFetch: AuthFetch, identityBaseUrl: string, oldPassword: string, newPassword: string,
+): Promise<{ ok: true } | { ok: false; error: 'wrong_password' | 'invalid' | 'network' }> {
+  let resp: Response
+  try {
+    resp = await authFetch(`${identityBaseUrl}/v1/auth/change-password`, {
+      method: 'POST', headers: JSON_HEADERS,
+      body: JSON.stringify({ old_password: oldPassword, new_password: newPassword }),
+    })
+  } catch {
+    return { ok: false, error: 'network' }
+  }
+  if (resp.ok) return { ok: true }
+  if (resp.status === 403) return { ok: false, error: 'wrong_password' }
   if (resp.status === 422) return { ok: false, error: 'invalid' }
   return { ok: false, error: 'network' }
 }
