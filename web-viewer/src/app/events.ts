@@ -31,6 +31,8 @@ export const ev = {
   trialEnded: (a: Actor, trialId: string, resultExt: Record<string, unknown>, c: EventContext, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:trial_ended', object: { objectType: 'bdm:Trial', id: trialId }, result: { extensions: resultExt }, ...ctxExt(c) }),
   completed: (a: Actor, sid: string, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:completed', object: runtimeObj(sid), ...ctxExt({ sessionId: sid }) }),
   submitted: (a: Actor, sid: string, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:submitted', object: runtimeObj(sid), ...ctxExt({ sessionId: sid }) }),
+  consented: (a: Actor, sid: string, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:consented', object: runtimeObj(sid), ...ctxExt({ sessionId: sid }) }),
+  consentDeclined: (a: Actor, sid: string, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:consent_declined', object: runtimeObj(sid), ...ctxExt({ sessionId: sid }) }),
 }
 
 export class EventBatcher {
