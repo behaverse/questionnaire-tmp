@@ -1,3 +1,5 @@
+import type { AuthFetch } from '../session/authFetch'
+
 export type MySession = {
   session_id: string; instrument_id: string; instrument_version: string; deployment_id: string
   status: string; session_index: number
@@ -5,10 +7,10 @@ export type MySession = {
 }
 export type SessionsResult = { ok: true; sessions: MySession[] } | { ok: false; error: 'unauthorized' | 'network' }
 
-export async function fetchMySessions(vsBaseUrl: string, token: string): Promise<SessionsResult> {
+export async function fetchMySessions(vsBaseUrl: string, authFetch: AuthFetch): Promise<SessionsResult> {
   let resp: Response
   try {
-    resp = await fetch(`${vsBaseUrl}/v1/me/sessions`, { headers: { authorization: `Bearer ${token}` } })
+    resp = await authFetch(`${vsBaseUrl}/v1/me/sessions`)
   } catch {
     return { ok: false, error: 'network' }
   }
@@ -17,18 +19,15 @@ export async function fetchMySessions(vsBaseUrl: string, token: string): Promise
   return { ok: false, error: 'network' }
 }
 
-export async function downloadMyData(vsBaseUrl: string, token: string): Promise<void> {
-  const resp = await fetch(`${vsBaseUrl}/v1/me/responses.csv`, { headers: { authorization: `Bearer ${token}` } })
+export async function downloadMyData(vsBaseUrl: string, authFetch: AuthFetch): Promise<void> {
+  const resp = await authFetch(`${vsBaseUrl}/v1/me/responses.csv`)
   if (!resp.ok) throw new Error(`download failed: ${resp.status}`)
   const blob = await resp.blob()
   const objectUrl = URL.createObjectURL(blob)
   try {
     const a = document.createElement('a')
-    a.href = objectUrl
-    a.download = 'my_responses.csv'
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
+    a.href = objectUrl; a.download = 'my_responses.csv'
+    document.body.appendChild(a); a.click(); a.remove()
   } finally {
     URL.revokeObjectURL(objectUrl)
   }

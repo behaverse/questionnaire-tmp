@@ -1,19 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { parseParams } from '../app/bootstrap'
-import { loginParticipant } from '../app/auth'
 import { LoginView } from '../app/chrome/LoginView'
+import { useSession } from '../session/SessionProvider'
+import { SessionStrip } from '../session/SessionStrip'
 import { fetchMySessions, downloadMyData, type MySession } from './client'
-
-function carry(base: string): string {
-  const q = new URLSearchParams()
-  const cur = new URLSearchParams(window.location.search)
-  for (const k of ['viewer_url', 'identity_url']) {
-    const v = cur.get(k)
-    if (v) q.set(k, v)
-  }
-  const qs = q.toString()
-  return qs ? `${base}?${qs}` : base
-}
 
 function StatusBadge({ status }: { status: string }) {
   const done = status === 'submitted' || status === 'completed' || status === 'forwarded' || status === 'validated'
@@ -73,34 +63,35 @@ function Skeleton() {
 
 export function MyDataApp() {
   const params = parseParams(window.location.search)
-  const [token, setToken] = useState<string | null>(null)
+  const session = useSession()
   const [sessions, setSessions] = useState<MySession[]>([])
+  const [loaded, setLoaded] = useState(false)
   const [loginErr, setLoginErr] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
-  const [loaded, setLoaded] = useState(false)
   const [downloading, setDownloading] = useState(false)
+
+  useEffect(() => {
+    if (session.status !== 'authed') return
+    void (async () => {
+      const list = await fetchMySessions(params.vsBaseUrl, session.authFetch)
+      setLoaded(true)
+      if (list.ok) setSessions(list.sessions)
+    })()
+  }, [session.status, params.vsBaseUrl, session.authFetch])
 
   async function handleLogin(email: string, password: string) {
     setBusy(true); setLoginErr(null)
-    const res = await loginParticipant(params.identityBaseUrl, email, password)
-    if (!res.ok) {
-      setBusy(false)
-      setLoginErr(res.error === 'invalid_credentials' ? 'Invalid email or password' : 'Network error — try again')
-      return
-    }
-    setToken(res.accessToken)
-    const list = await fetchMySessions(params.vsBaseUrl, res.accessToken)
+    const res = await session.login(email, password)
     setBusy(false)
-    setLoaded(true)
-    if (list.ok) setSessions(list.sessions)
+    if (!res.ok) setLoginErr(res.error === 'invalid_credentials' ? 'Invalid email or password' : 'Network error — try again')
   }
 
-  if (!token) return <LoginView onSubmit={handleLogin} error={loginErr} busy={busy} />
+  if (session.status === 'loading') return null
+  if (session.status === 'anon') return <LoginView onSubmit={handleLogin} error={loginErr} busy={busy} />
 
   async function handleDownload() {
-    if (!token) return
     setDownloading(true)
-    try { await downloadMyData(params.vsBaseUrl, token) }
+    try { await downloadMyData(params.vsBaseUrl, session.authFetch) }
     catch (e) { console.error(e) }
     finally { setDownloading(false) }
   }
@@ -108,72 +99,32 @@ export function MyDataApp() {
   return (
     <div className="min-h-screen bg-zinc-50 font-theme text-zinc-900 antialiased">
       <div className="mx-auto max-w-2xl px-6 py-10 sm:py-16">
-        <div className="mb-6 flex items-center justify-between">
-          <span className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400">
-            <span className="h-2 w-2 rounded-full bg-violet-500" aria-hidden />
-            Behaverse
-          </span>
-          <a
-            href={carry('home.html')}
-            className="rounded-full px-3 py-1.5 text-sm font-medium text-zinc-500 transition hover:bg-zinc-200/60 hover:text-zinc-800"
-          >
-            Questionnaires
-          </a>
-        </div>
-
+        <SessionStrip />
         <header className="mb-8">
           <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">My data</h1>
-          <p className="mt-2 text-base text-zinc-500">
-            The questionnaires you've completed. Download a copy of your responses anytime.
-          </p>
+          <p className="mt-2 text-base text-zinc-500">The questionnaires you've completed. Download a copy of your responses anytime.</p>
         </header>
-
         {!loaded ? (
-          <ul className="space-y-4">
-            <Skeleton />
-            <Skeleton />
-          </ul>
+          <ul className="space-y-4"><Skeleton /><Skeleton /></ul>
         ) : sessions.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-zinc-300 bg-white/60 px-6 py-16 text-center">
             <p className="text-base font-medium text-zinc-700">No completed questionnaires yet.</p>
-            <p className="mx-auto mt-1 max-w-sm text-sm text-zinc-400">
-              Once you finish a questionnaire it will appear here.
-            </p>
-            <a
-              href={carry('home.html')}
-              className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-700"
-            >
-              Browse questionnaires
-              <span aria-hidden>→</span>
-            </a>
           </div>
         ) : (
-          <ul className="space-y-4">
-            {sessions.map((s) => (
-              <SessionRow key={s.session_id} s={s} />
-            ))}
-          </ul>
+          <ul className="space-y-4">{sessions.map((s) => <SessionRow key={s.session_id} s={s} />)}</ul>
         )}
-
         {loaded && sessions.length > 0 ? (
           <div className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm sm:p-6">
             <div className="min-w-0">
               <div className="text-sm font-semibold text-zinc-900">Export your responses</div>
               <div className="mt-0.5 text-sm text-zinc-500">A CSV of every answer you've submitted.</div>
             </div>
-            <button
-              onClick={() => { void handleDownload() }}
-              disabled={downloading}
-              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
-            >
+            <button onClick={() => void handleDownload()} disabled={downloading}
+              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60">
               {downloading ? 'Preparing…' : 'Download my data (CSV)'}
             </button>
           </div>
         ) : null}
-
-        <footer className="mt-12 text-center text-xs text-zinc-400">
-          Powered by the Behaverse questionnaire platform
-        </footer>
       </div>
     </div>
   )

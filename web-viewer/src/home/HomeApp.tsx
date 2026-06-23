@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { parseParams } from '../app/bootstrap'
 import { fetchCatalogue, type CatalogueItem } from './client'
+import { SessionStrip } from '../session/SessionStrip'
 
 function carry(base: string, extra: Record<string, string>): string {
   const q = new URLSearchParams()
@@ -66,6 +67,7 @@ export function HomeApp() {
   return (
     <div className="min-h-screen bg-zinc-50 font-theme text-zinc-900 antialiased">
       <div className="mx-auto max-w-2xl px-6 py-10 sm:py-16">
+        <SessionStrip />
         {!loaded ? (
           <ul className="space-y-4">
             <Skeleton />
