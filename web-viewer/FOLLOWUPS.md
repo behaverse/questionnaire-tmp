@@ -1,5 +1,15 @@
 # web-viewer — deferred work / follow-ups
 
+## PA-1 follow-ups (session layer — 2026-06-23)
+
+- **Register UI + full nav shell (PA-2/PA-3).** The session layer has login + logout; there is no self-registration screen, no account page, no password-change or verify-email flow, and no persistent top-nav shell across pages. These are deferred to PA-2 (register + nav) and PA-3 (profile / password / verify).
+- **httpOnly-cookie hardening.** The refresh token is stored in `localStorage`. A future hardening pass should move it to an httpOnly cookie (set by the Identity service) so it is not reachable by injected JavaScript. This requires a server-side cookie endpoint and a CORS-cookie posture review.
+- **Multi-tab storage-event sync.** If a participant logs in or out in one tab, other open tabs do not automatically update their session state. A `storage` event listener on `window` should propagate the change across tabs.
+- **Proactive pre-expiry refresh.** The provider refreshes lazily (on `401`). A proactive refresh ~60 s before `expires_in` would eliminate the brief window where any concurrent call might see a 401.
+- **"Log out everywhere" (revoke all).** The current `logout()` revokes only the current refresh token. A "log out everywhere" action (revoke all tokens for the account) requires a VS or Identity endpoint (`DELETE /v1/auth/sessions`) — deferred.
+- **Runner mint uses raw access token (not `authFetch`).** `App.tsx` calls `POST /v1/sessions/new` with the plain `accessToken` from the session context, outside of `authFetch`. If the token expires in the narrow window between the provider's boot refresh and the mint call, the VS returns a `401 auth_required` and the runner shows the login screen instead of silently refreshing. Fix: pass `authFetch` into the mint call so the 401-retry path covers it.
+- **MyData empty-state lost its "Browse questionnaires" CTA + footer (cosmetic).** The PP-C `MyDataApp` originally rendered a "Browse questionnaires →" link and a footer in its empty state. These were dropped during the PA-1 rewire. Restore in PA-2 alongside the nav-shell unification.
+
 ## PP-D follow-ups (participant home portal — 2026-06-22)
 
 - **Merge home + my-data into one tabbed portal.** `home.html` (browse + start) and
