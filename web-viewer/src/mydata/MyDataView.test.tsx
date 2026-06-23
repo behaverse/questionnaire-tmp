@@ -1,5 +1,5 @@
 import { test, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { SessionProvider } from '../session/SessionProvider'
 import { MyDataView } from './MyDataView'
 
