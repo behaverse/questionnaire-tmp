@@ -2,8 +2,13 @@ import { StrictMode } from 'react'
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { App } from './App'
+import { SessionProvider } from '../session/SessionProvider'
 import mini from '../fixtures/mini.json'
 import { makeFakeStore } from '../resume/store'
+
+function renderApp() {
+  return render(<SessionProvider identityBaseUrl="http://id"><App /></SessionProvider>)
+}
 
 vi.mock('../logic/evaluator', async (orig) => {
   const actual = await orig<typeof import('../logic/evaluator')>()
@@ -22,12 +27,13 @@ vi.mock('../resume/store', async (orig) => {
 function setUrl(qs: string) { window.history.replaceState(null, '', `/${qs}`) }
 const mintOk = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: mini, theme: { palette: { primary: '#112233' } }, ephemeral: false }
 
+beforeEach(() => { localStorage.clear() })
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); (globalThis as Record<string, unknown>).__evalTable = {}; fakeStore = makeFakeStore() })
 
 test('boots a session, applies the theme, renders step 1 (message) then navigates', async () => {
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 })))
-  render(<App />)
+  renderApp()
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
   expect(document.documentElement.style.getPropertyValue('--qv-primary')).toBe('#112233')
   await userEvent.click(screen.getByRole('button', { name: /next/i }))
@@ -39,7 +45,7 @@ test('retry after a failed mint re-runs boot and recovers', async () => {
     .mockResolvedValueOnce(new Response(JSON.stringify({ error: { code: 'boom' } }), { status: 500 }))
     .mockResolvedValueOnce(new Response(JSON.stringify(mintOk), { status: 200 }))
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /try again/i }))
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
   expect(fetchMock).toHaveBeenCalledTimes(2)
@@ -47,7 +53,7 @@ test('retry after a failed mint re-runs boot and recovers', async () => {
 test('required gating blocks Next and announces the error', async () => {
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 })))
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await screen.findByRole('heading', { name: /Little interest/ })
   await userEvent.click(screen.getByRole('button', { name: /next/i }))
@@ -56,7 +62,7 @@ test('required gating blocks Next and announces the error', async () => {
 test('single-choice answer auto-advances after the confirmation beat', async () => {
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 })))
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   expect(await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })).toBeInTheDocument()
@@ -64,7 +70,7 @@ test('single-choice answer auto-advances after the confirmation beat', async () 
 test('finishing shows the thank-you screen', async () => {
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 })))
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
@@ -76,14 +82,14 @@ test.each([
 ])('mint HTTP %i shows its error screen', async (status, title) => {
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ error: { code: 'c' } }), { status })))
-  render(<App />)
+  renderApp()
   expect(await screen.findByRole('heading', { name: title })).toBeInTheDocument()
 })
 test('missing deployment param → config error, no fetch', async () => {
   setUrl('')
   const fetchMock = vi.fn()
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   expect(await screen.findByRole('heading', { name: /not valid/i })).toBeInTheDocument()
   expect(fetchMock).not.toHaveBeenCalled()
 })
@@ -91,7 +97,7 @@ test('fixture mode renders without network (dev only)', async () => {
   setUrl('?fixture=mini')
   const fetchMock = vi.fn()
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
   expect(fetchMock).not.toHaveBeenCalled()
 })
@@ -100,14 +106,14 @@ test('fixture mode renders without network (dev only)', async () => {
 test('boots under StrictMode (dev double-effect) — fixture path', async () => {
   setUrl('?fixture=mini')
   vi.stubGlobal('fetch', vi.fn())
-  render(<StrictMode><App /></StrictMode>)
+  render(<StrictMode><SessionProvider identityBaseUrl="http://id"><App /></SessionProvider></StrictMode>)
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
 })
 test('boots under StrictMode — mint path, exactly one fetch', async () => {
   setUrl('?deployment=dpl_1')
   const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 }))
   vi.stubGlobal('fetch', fetchMock)
-  render(<StrictMode><App /></StrictMode>)
+  render(<StrictMode><SessionProvider identityBaseUrl="http://id"><App /></SessionProvider></StrictMode>)
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
   expect(fetchMock).toHaveBeenCalledTimes(1)
 })
@@ -124,7 +130,7 @@ test('Enter on the focused Next button advances exactly one step', async () => {
   }
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ ...mintOk, runtime: msgs }), { status: 200 })))
-  render(<App />)
+  renderApp()
   await screen.findByText('First message')
   const next = screen.getByRole('button', { name: /next/i })
   next.focus()
@@ -139,7 +145,7 @@ test('Enter on the focused Next button advances exactly one step', async () => {
 test('step change moves focus to the new step heading; gating failure focuses the widget', async () => {
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 })))
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   const heading = await screen.findByRole('heading', { name: /Little interest/ })
   await waitFor(() => expect(heading).toHaveFocus(), { timeout: 1000 })
@@ -152,7 +158,7 @@ test('classic mode renders the whole page as one step', async () => {
   const classic = { ...mini, style: { x_presentation: 'classic' } }
   setUrl('?deployment=dpl_1')
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ ...mintOk, runtime: classic }), { status: 200 })))
-  render(<App />)
+  renderApp()
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: /Little interest/ })).toBeInTheDocument()   // same step
 })
@@ -170,7 +176,7 @@ const respond202 = (fetchMock: ReturnType<typeof vi.fn>) =>
 test('walking the questionnaire submits message + item rows, events, then complete', async () => {
   setUrl('?deployment=dpl_1')
   const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
@@ -198,7 +204,7 @@ test('walking the questionnaire submits message + item rows, events, then comple
 test('back-and-change emits an attempt row with x_response_revises', async () => {
   setUrl('?deployment=dpl_1')
   const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
@@ -213,7 +219,7 @@ test('back-and-change emits an attempt row with x_response_revises', async () =>
 test('going back without changing the answer emits nothing new', async () => {
   setUrl('?deployment=dpl_1')
   const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
@@ -232,7 +238,7 @@ test('complete failure shows retry; retry completes', async () => {
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
@@ -250,7 +256,7 @@ test('x_summary_rt:false strips response_time from rows', async () => {
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   const rows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0])
   expect(rows[0].response_time).toBeUndefined()
@@ -291,7 +297,7 @@ test('branch routing skips a page when the branch condition fires', async () => 
   setUrl('?deployment=dpl_1')
   ;(globalThis as Record<string, unknown>).__evalTable = { route_b: true }
   const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
   expect(await screen.findByRole('heading', { name: /Question three/, level: 2 }, { timeout: 2000 })).toBeInTheDocument()
   expect(screen.queryByRole('heading', { name: /Question two/ })).not.toBeInTheDocument()
@@ -309,7 +315,7 @@ test('without the branch condition, the next page renders normally', async () =>
   setUrl('?deployment=dpl_1')
   ;(globalThis as Record<string, unknown>).__evalTable = { route_b: false }
   const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
   expect(await screen.findByRole('heading', { name: /Question two/, level: 2 }, { timeout: 2000 })).toBeInTheDocument()
 })
@@ -323,7 +329,7 @@ test('show_if:false on a step skips that step entirely', async () => {
   setUrl('?deployment=dpl_1')
   ;(globalThis as Record<string, unknown>).__evalTable = { show_it: false }
   const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
   expect(await screen.findByRole('heading', { name: /Question three/, level: 2 }, { timeout: 2000 })).toBeInTheDocument()
   expect(screen.queryByRole('heading', { name: /Question two/ })).not.toBeInTheDocument()
@@ -340,7 +346,7 @@ test('cross-validation blocks Next, shows the message, and emits no row; clearin
   setUrl('?deployment=dpl_1')
   ;(globalThis as Record<string, unknown>).__evalTable = { bad: true }
   const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('radio', { name: 'No' }))
   // auto-advance fires; with validation failing we stay on p1 with the message
   expect(await screen.findByText('Please fix')).toBeInTheDocument()
@@ -366,7 +372,7 @@ test('reversed item carries a post-reversal score in the posted row', async () =
   const runtime = rtWith([{ id: 'p1', elements: [reversed] }])
   setUrl('?deployment=dpl_1')
   const fetchMock = vi.fn(); mintRuntime(fetchMock, runtime); vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('radio', { name: 'V1' }))   // raw value 1 → reversed 6+0-1 = 5
   await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
   const itemRows = postCalls(fetchMock, '/sessions/s1/responses').map((p) => p.responses[0]).filter((r) => r.stimulus_type !== 'instruction')
@@ -386,7 +392,7 @@ test('reload with a stored in_progress session resumes prior answers + lands at 
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   expect(await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })).toBeInTheDocument()
   expect(fetchMock.mock.calls.some(([u]) => String(u).endsWith('/sessions/new'))).toBe(false)
 })
@@ -394,7 +400,7 @@ test('stored session already completed → already-completed screen, store clear
   setUrl('?deployment=dpl_1')
   fakeStore = makeFakeStore([{ deploymentId: 'dpl_1', sessionId: 's1', token: 't1', lastActiveLocale: 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: 'x' }])
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ status: 'submitted', last_active_locale: 'en', agent_id: 'agent_r', session_index: 1 }), { status: 200 })))
-  render(<App />)
+  renderApp()
   expect(await screen.findByRole('heading', { name: /already completed|thank you/i })).toBeInTheDocument()
   expect(await fakeStore.get('dpl_1')).toBeNull()
 })
@@ -407,7 +413,7 @@ test('ephemeral 409 on resume → wipes store, mints fresh, shows demo notice', 
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   expect(await screen.findByText(/demo|prior session/i)).toBeInTheDocument()
   expect(await screen.findByText(/Welcome\. Answer honestly\./)).toBeInTheDocument()
 })
@@ -421,7 +427,7 @@ test('answering persists a resume record to the store (non-ephemeral)', async ()
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await vi.waitFor(async () => {
@@ -438,7 +444,7 @@ test('completion clears the store', async () => {
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
@@ -463,7 +469,7 @@ test('locale switch swaps runtime text and preserves answers', async () => {
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await screen.findByText(/Welcome\. Answer honestly\./)
   await userEvent.selectOptions(screen.getByRole('combobox', { name: /language/i }), 'pt')
   expect(await screen.findByText(/Bem-vindo/)).toBeInTheDocument()
@@ -481,7 +487,7 @@ test('emits behaverse:completed to the host on finish (when framed)', async () =
     return new Response('{"enqueued":1}', { status: 202 })
   })
   vi.stubGlobal('fetch', fetchMock)
-  render(<App />)
+  renderApp()
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
   await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
@@ -502,10 +508,11 @@ test('authenticated deployment: 401 shows login, then completes after login', as
         ? new Response(JSON.stringify(mintOk), { status: 200 })
         : new Response(JSON.stringify({ error: { code: 'auth_required', message: 'login' } }), { status: 401 })
     }
-    if ((url as string).endsWith('/v1/auth/login')) return new Response(JSON.stringify({ access_token: 'AT' }), { status: 200 })
+    if ((url as string).endsWith('/v1/auth/login')) return new Response(JSON.stringify({ access_token: 'AT', refresh_token: 'RT', expires_in: 900, token_type: 'Bearer' }), { status: 200 })
+    if ((url as string).endsWith('/v1/auth/me')) return new Response(JSON.stringify({ id: 'u', email: 'a@e.com', display_name: '', email_verified: false, roles: [] }), { status: 200 })
     return new Response('{}', { status: 200 })
   }))
-  render(<App />)
+  renderApp()
   // login screen appears
   expect(await screen.findByRole('button', { name: /log in/i })).toBeInTheDocument()
   await userEvent.type(screen.getByLabelText(/email/i), 'a@e.com')
@@ -527,7 +534,7 @@ test('boot kicks off the evaluator load before awaiting the mint (PERF-01 overla
   })
   vi.stubGlobal('fetch', fetchMock)
   ;(globalThis as Record<string, unknown>).__onLoadEvaluator = () => order.push('load')
-  render(<App />)
+  renderApp()
   await screen.findByText(/Welcome\. Answer honestly\./)
   expect(order[0]).toBe('load')
   delete (globalThis as Record<string, unknown>).__onLoadEvaluator
