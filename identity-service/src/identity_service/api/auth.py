@@ -4,7 +4,7 @@ from ..config import get_settings
 from ..mailer import NullMailer
 from ..service import auth
 from ..models import (RegisterIn, LoginIn, RefreshIn, LogoutIn, VerifyEmailIn,
-                      RequestResetIn, ResetPasswordIn)
+                      RequestResetIn, ResetPasswordIn, ChangePasswordIn)
 
 router = APIRouter()
 _mailer = NullMailer()                                 # stub; swapped for SMTP in a later slice
@@ -78,5 +78,14 @@ def request_reset(body: RequestResetIn, conn=Depends(get_conn)):
 def reset_password(body: ResetPasswordIn, conn=Depends(get_conn)):
     def go():
         auth.reset_password(conn, token=body.token, new_password=body.new_password)
+        conn.commit()
+    return _handle(go)
+
+
+@router.post("/v1/auth/change-password", status_code=204)
+def change_password(body: ChangePasswordIn, claims=Depends(require_access), conn=Depends(get_conn)):
+    def go():
+        auth.change_password(conn, user_id=claims["sub"], old_password=body.old_password,
+                             new_password=body.new_password)
         conn.commit()
     return _handle(go)

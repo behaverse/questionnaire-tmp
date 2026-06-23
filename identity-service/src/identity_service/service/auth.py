@@ -34,6 +34,10 @@ class InvalidToken(AuthError):
     code = "invalid_token"; status = 400; message = "Invalid or expired token."
 
 
+class WrongPassword(AuthError):
+    code = "wrong_password"; status = 403; message = "Current password is incorrect."
+
+
 def _client_or_raise(conn, slug):
     c = cstore.by_slug(conn, slug)
     if c is None:
@@ -150,3 +154,10 @@ def reset_password(conn, *, token, new_password) -> None:
     ustore.set_password(conn, row["user_id"], passwords.hash_password(new_password))
     conn.execute("UPDATE refresh_tokens SET revoked_at = now() "
                  "WHERE user_id = %s AND revoked_at IS NULL", (row["user_id"],))
+
+
+def change_password(conn, *, user_id, old_password, new_password) -> None:
+    user = ustore.by_id(conn, user_id)
+    if user is None or not passwords.verify_password(old_password, user["password_hash"]):
+        raise WrongPassword()
+    ustore.set_password(conn, user_id, passwords.hash_password(new_password))
