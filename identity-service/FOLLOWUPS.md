@@ -57,6 +57,22 @@
 - `admin.py get_user` issues one query per client in `cstore.list_all`. Replace
   with a single JOIN query when the client list grows.
 
+## Revoke other sessions on password change (PA-3)
+
+- `POST /v1/auth/change-password` only updates the stored password hash; it does **not**
+  revoke existing refresh families or invalidate outstanding access JWTs. A participant who
+  changes their password while signed in on multiple devices remains signed in everywhere.
+  Add a `revoke_all_families(user_id)` call inside `change_password` when a "sign out
+  everywhere on password change" policy is wanted; also note the ≤15 min access-token window
+  (same trade-off as `reset_password` — see "Access JWT revocation on password reset" above).
+
+## NullMailer blocks email delivery (PA-3)
+
+- The `verify-email`, `request-password-reset`, and `reset-password` endpoints are fully
+  implemented but **not deliverable** in production: `NullMailer` silently drops every
+  outbound message. Wire a real SMTP mailer (or a transactional email provider) before
+  enabling email-verification or self-service forgot/reset-password flows.
+
 ## CLI `_opt` edge cases
 
 - `cli.py _opt` raises `IndexError` when a flag appears at the end of argv

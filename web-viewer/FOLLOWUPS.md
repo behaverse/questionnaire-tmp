@@ -1,11 +1,22 @@
 # web-viewer — deferred work / follow-ups
 
+## PA-3 follow-ups (change-password + session layer — 2026-06-23)
+
+- ~~**Change-password UI.**~~ **DONE (PA-3, 2026-06-23)** — `AccountView` now shows a "Change
+  password" section (old + new ≥ 8 chars) when signed in; calls `changePassword(authFetch,
+  identityBaseUrl, old, new)`; the participant stays logged in on success. Remaining email work
+  and display-name editing are tracked below.
+- **Email verification + forgot/reset-password UIs deferred to the "email" slice.** The Identity
+  service has the `verify-email`, `request-password-reset`, and `reset-password` endpoints, but
+  they depend on a real SMTP mailer (`NullMailer` today — see identity-service FOLLOWUPS). No UI
+  for these flows exists yet; build them once a mailer is wired.
+- **Display-name editing not yet supported.** The Account page shows the logged-in email address
+  but there is no field to set or change a display name. Add a `PATCH /v1/auth/me` Identity
+  endpoint + an `AccountView` name field in the same slice that adds the profile fields.
+
 ## PA-2 follow-ups (consolidated SPA — 2026-06-23)
 
-- **Change-password / email-verification / password-reset UI (PA-3).** The Account page can register
-  and show a profile, but there is no change-password form, no email-verification flow (the Identity
-  service has the endpoints; a real mailer is needed), and no password-reset/forgot-password UI.
-  Deferred to PA-3.
+- ~~**Change-password / email-verification / password-reset UI (PA-3).**~~ **DONE (PA-3, 2026-06-23)** — change-password shipped; email flows remain deferred (see PA-3 follow-ups above).
 - **Prod SPA-fallback rewrite.** When the web-viewer is deployed as a static site (Vercel or
   equivalent), the server must rewrite all non-asset paths to `index.html` so that direct navigation
   to `/my-data` or `/account` works.  Mirror `library-web`'s `vercel.json` pattern:
