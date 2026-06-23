@@ -20,7 +20,7 @@ export function parseParams(search: string): Params {
   }
 }
 
-export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean; participant_sub: string | null }
+export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean; participant_sub: string | null; consent: Record<string, string> | null; confirmation_message: Record<string, string> | null; redirect_url: string | null }
 export type MintErr = { ok: false; kind: 'invalid_link' | 'not_open' | 'closed' | 'auth_required' | 'invite_invalid' | 'failed'; code: string }
 export type MintResult = MintOk | MintErr
 
@@ -46,7 +46,7 @@ export async function mintSession(vsBaseUrl: string, deploymentId: string, local
   }
   if (resp.ok) {
     const body = await resp.json()
-    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false, participant_sub: body.participant_sub ?? null }
+    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false, participant_sub: body.participant_sub ?? null, consent: body.consent ?? null, confirmation_message: body.confirmation_message ?? null, redirect_url: body.redirect_url ?? null }
   }
   const code = await resp.json().then((b) => b?.error?.code ?? String(resp.status)).catch(() => String(resp.status))
   const kind: MintErr['kind'] =

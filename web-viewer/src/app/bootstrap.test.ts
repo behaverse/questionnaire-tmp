@@ -12,7 +12,7 @@ test('parseParams reads deployment/locale/viewer_url/fixture/theme', () => {
   expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null })
 })
 
-const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false, participant_sub: null }
+const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false, participant_sub: null, consent: null, confirmation_message: null, redirect_url: null }
 
 test('mintSession posts viewer identity and returns the bundle', async () => {
   const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(ok), { status: 200 }))
@@ -117,4 +117,28 @@ test('mintSession maps 401 invite_required to kind invite_invalid', async () => 
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 401 })))
   const res = await mintSession('http://vs', 'dpl_1', null)
   expect(res).toEqual({ ok: false, kind: 'invite_invalid', code: 'invite_required' })
+})
+
+test('mintSession surfaces consent / confirmation_message / redirect_url', async () => {
+  const body = { session_id: 's1', session_token: 't1', agent_id: 'a', session_index: 1, runtime: { metadata: { title: 'x' }, pages: [] }, theme: null, ephemeral: false, participant_sub: null, consent: { en: 'C' }, confirmation_message: { en: 'D' }, redirect_url: 'https://x/done' }
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 200 })))
+  const r = await mintSession('http://vs', 'dep_1', null)
+  expect(r.ok).toBe(true)
+  if (r.ok) {
+    expect(r.consent).toEqual({ en: 'C' })
+    expect(r.confirmation_message).toEqual({ en: 'D' })
+    expect(r.redirect_url).toBe('https://x/done')
+  }
+})
+
+test('mintSession defaults the new fields to null when absent', async () => {
+  const body = { session_id: 's1', session_token: 't1', agent_id: 'a', session_index: 1, runtime: { metadata: { title: 'x' }, pages: [] }, theme: null, ephemeral: false, participant_sub: null }
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 200 })))
+  const r = await mintSession('http://vs', 'dep_1', null)
+  expect(r.ok).toBe(true)
+  if (r.ok) {
+    expect(r.consent).toBeNull()
+    expect(r.confirmation_message).toBeNull()
+    expect(r.redirect_url).toBeNull()
+  }
 })
