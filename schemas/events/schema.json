@@ -58,7 +58,7 @@
         "bdm:presented",
         "bdm:clicked", "bdm:drag_and_dropped", "bdm:key_pressed", "bdm:typed",
         "bdm:selected", "bdm:deselected", "bdm:adjusted",
-        "bdm:got_focus", "bdm:lost_focus", "bdm:consented",
+        "bdm:got_focus", "bdm:lost_focus", "bdm:consented", "bdm:consent_declined",
         "bdm:trial_started", "bdm:trial_ended", "bdm:state_changed",
         "bdm:recording_started", "bdm:recording_ended",
         "bdm:navigated"

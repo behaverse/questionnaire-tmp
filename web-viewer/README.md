@@ -105,7 +105,7 @@ The finished screen now honours two optional deployment-level fields (from the m
 | Field | Behaviour |
 |---|---|
 | `confirmation_message` | Locale-map of markdown text. Rendered in place of the default "Thank you" string. Locale + fallback resolution is the same as `consent`. |
-| `redirect_url` | When set, an automatic redirect fires **5 seconds** after the completion screen appears. A manual **"click here"** link is always shown immediately so the participant is not blocked if the auto-redirect fails. |
+| `redirect_url` | When set, an automatic redirect fires **3 seconds** after the completion screen appears. A manual **"click here"** link is always shown immediately so the participant is not blocked if the auto-redirect fails. |
 
 Both are `null` when not configured on the deployment — the finished screen then shows the
 built-in thank-you text and no redirect.

@@ -245,7 +245,7 @@ Open `http://localhost:5173/?deployment=<dep_id>` and you will see:
    event).
 2. After completing the questionnaire, the finished screen shows the `confirmation_message`
    rendered as markdown rather than the default "Thank you" text.
-3. A **"click here"** link appears immediately, and an **automatic redirect** fires after 5 seconds,
+3. A **"click here"** link appears immediately, and an **automatic redirect** fires after 3 seconds,
    both pointing to the `redirect_url`.
 
 ---
