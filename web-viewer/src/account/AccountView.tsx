@@ -3,6 +3,7 @@ import { parseParams } from '../app/bootstrap'
 import { useSession } from '../session/SessionProvider'
 import { register, changePassword } from '../session/client'
 import { inputCls, primaryBtn } from './ui'
+import { Link } from '../shell/router'
 
 function ChangePasswordForm() {
   const s = useSession()
@@ -126,6 +127,9 @@ export function AccountView() {
       <button type="submit" disabled={busy} className={primaryBtn}>
         {busy ? 'Please wait…' : mode === 'register' ? 'Sign up' : 'Log in'}
       </button>
+      {mode === 'login' ? (
+        <Link to="/reset-password" className="block text-center text-sm text-zinc-500 underline">Forgot password?</Link>
+      ) : null}
     </form>
   )
 }

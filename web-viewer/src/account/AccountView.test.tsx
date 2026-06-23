@@ -112,3 +112,11 @@ test('authed: a short new password is rejected before any request', async () => 
   expect(await screen.findByText(/at least 8 characters/i)).toBeInTheDocument()
   expect(calls.length).toBe(0)
 })
+
+test('the login tab shows a Forgot password? link to /reset-password', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (url: string) =>
+    new Response('{}', { status: (url as string).endsWith('/v1/auth/refresh') ? 401 : 200 })))
+  renderView()
+  const link = await screen.findByRole('link', { name: /forgot password/i })
+  expect(link.getAttribute('href')).toBe('/reset-password')
+})
