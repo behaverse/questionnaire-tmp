@@ -16,7 +16,7 @@ const runtime: Runtime = {
 }
 const booted = reducer(initialState, {
   type: 'boot_success',
-  session: { id: 's1', token: 't1' }, runtime, theme: null, steps: flattenSteps(runtime),
+  session: { id: 's1', token: 't1' }, runtime, theme: null, steps: flattenSteps(runtime), confirmationMessage: null, redirectUrl: null,
 })
 
 test('boot_success → ready at step 0', () => {

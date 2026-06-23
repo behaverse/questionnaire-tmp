@@ -31,6 +31,8 @@ const STRINGS = {
     consent_decline: 'I do not agree',
     declined_title: 'You declined to take part',
     declined_body: 'You can close this window.',
+    redirecting: 'Redirecting you…',
+    redirect_here: 'click here',
   },
   pt: {
     next: 'Seguinte', back: 'Voltar', enter_hint: 'prima Enter ↵',
@@ -64,6 +66,8 @@ const STRINGS = {
     consent_decline: 'Não concordo',
     declined_title: 'Recusou a participação',
     declined_body: 'Pode fechar esta janela.',
+    redirecting: 'A redirecionar…',
+    redirect_here: 'clique aqui',
   },
 } as const
 
