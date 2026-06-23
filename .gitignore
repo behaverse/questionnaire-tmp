@@ -14,3 +14,10 @@ schemas/*/versions/*/README_files/
 # wasm-pack output and JS deps
 questionnaire-expression-evaluator/web/pkg*/
 questionnaire-expression-evaluator/web/node_modules/
+
+# archived predecessor projects + stale snapshots (superseded; kept locally for reference)
+archive/
+
+# python build artifacts + tool scratch
+*/build/
+.playwright-mcp/

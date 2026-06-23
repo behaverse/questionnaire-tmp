@@ -3,11 +3,7 @@
 .venv
 node_modules
 content
-survey_database
-survey_system
-qv_godot
 archive_do_not_edit
-survey_database_2025.zip
 docs
 design
 plan
