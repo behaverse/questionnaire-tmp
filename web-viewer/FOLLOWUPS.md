@@ -19,7 +19,7 @@
   `/my-data`, they see both the `NavShell` **Account** link and the `MyDataView` inline prompt
   (`"Log in to see your data"`).  Minor redundancy; de-dupe in a polish pass (e.g. the view could
   simply redirect to `/account` immediately).
-- **Router uses `flushSync` on navigate.** `src/shell/router.ts` wraps `pushState` + the
+- **Router uses `flushSync` on navigate.** `src/shell/router.tsx` wraps `pushState` + the
   `useSyncExternalStore` snapshot update in `flushSync` to ensure the new route is committed before
   the browser paints.  This is correct and sound; noted here because `flushSync` inside React
   render trees requires care if the router is ever refactored.

@@ -191,9 +191,10 @@ curl -s http://localhost:8001/v1/catalogue
 1. Open the **participant catalogue**: http://localhost:5173/
 2. You'll see the **"Mini wellbeing check-in"** card. Click **Start**.
 3. Because the deployment is `authenticated`, the runner shows a **login screen** — log in with
-   `alice@example.com` / `password1`.  (If you used the Account form in Step 1, you are already
-   logged in in the shell, but the runner mints its own session and will prompt you to log in there
-   too.)
+   `alice@example.com` / `password1`.  If you are already signed in (e.g. you used the Account form
+   in Step 1), Start runs immediately — the runner silently refreshes from the stored token and mints
+   the session without re-prompting.  You only see the login screen if you were not already signed in
+   (e.g. a fresh browser).
 4. Answer the questions and submit. Your responses are stored in VS, tagged with your Identity id.
 
 > The catalogue card links to `index.html?deployment=<id>`; the runner handles auth itself. For

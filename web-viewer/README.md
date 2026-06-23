@@ -89,8 +89,8 @@ A shared **persistent session** (`src/session/`) wraps the entire SPA.  Both the
 | `src/session/client.ts` | Typed `Tokens` / `User` shapes; `login`, `refresh`, `logout`, `fetchMe` — thin `fetch` wrappers around the Identity service. |
 | `src/session/authFetch.ts` | `makeAuthFetch(getAccess, doRefresh)` — wraps any `fetch` call; on a `401` it single-flights a refresh and retries once. Concurrent callers share the same in-flight refresh promise. |
 | `src/session/SessionProvider.tsx` | React context provider.  On mount it reads the stored refresh token and silently calls `/v1/auth/refresh` + `/v1/auth/me` (boot restore).  Exposes `{ status, user, accessToken, login, logout, authFetch }` via `useSession()`. |
-| `src/shell/NavShell.tsx` | Nav shell header: shows the logged-in user's email, nav links (Home / My data / Account), and a **Log out** button; renders the active route as its child. |
-| `src/shell/router.ts` | Tiny `useSyncExternalStore`-based router: `useRoute()`, `navigate()`, `Link`. Preserves `viewer_url`/`identity_url` query params across pushState navigations. |
+| `src/shell/NavShell.tsx` | Nav shell header: shows the logged-in user's email, nav links (Questionnaires / My data / Account), and a **Log out** button; renders the active route as its child. |
+| `src/shell/router.tsx` | Tiny `useSyncExternalStore`-based router: `useRoute()`, `navigate()`, `Link`. Preserves `viewer_url`/`identity_url` query params across pushState navigations. |
 | `src/shell/ParticipantApp.tsx` | Wraps `NavShell` + routes `/` → `CatalogueView`, `/my-data` → `MyDataView`, `/account` → `AccountView`. |
 | `src/account/AccountView.tsx` | **Create account** form (register auto-logs-in) when anonymous; profile + log-out when signed in. |
 

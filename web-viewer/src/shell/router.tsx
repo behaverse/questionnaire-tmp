@@ -4,8 +4,7 @@ import { flushSync } from 'react-dom'
 const listeners = new Set<() => void>()
 function notify() { flushSync(() => { listeners.forEach((l) => l()) }) }
 
-function onPopState() { flushSync(() => { listeners.forEach((l) => l()) }) }
-window.addEventListener('popstate', onPopState)
+window.addEventListener('popstate', notify)
 
 function preservedSearch(): string {
   const cur = new URLSearchParams(window.location.search)
