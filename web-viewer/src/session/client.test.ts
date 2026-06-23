@@ -1,5 +1,5 @@
 import { test, expect, vi, beforeEach } from 'vitest'
-import { login, refresh, logout, fetchMe } from './client'
+import { login, refresh, logout, fetchMe, register } from './client'
 
 beforeEach(() => vi.restoreAllMocks())
 
@@ -65,4 +65,29 @@ test('fetchMe sends Bearer and parses the user', async () => {
 test('fetchMe returns ok:false on 401', async () => {
   vi.stubGlobal('fetch', stub(401, {}))
   expect(await fetchMe('http://id', 'AT')).toEqual({ ok: false })
+})
+
+test('register posts the profile fields with audience and returns ok on 201', async () => {
+  const f = vi.fn().mockResolvedValue(new Response(JSON.stringify({ id: 'u1' }), { status: 201 }))
+  vi.stubGlobal('fetch', f)
+  const r = await register('http://id', 'a@e.com', 'password1', 'Al')
+  expect(r).toEqual({ ok: true })
+  const [url, init] = f.mock.calls[0]
+  expect(url).toBe('http://id/v1/auth/register')
+  expect(JSON.parse((init as RequestInit).body as string)).toEqual({ email: 'a@e.com', password: 'password1', display_name: 'Al', audience: 'questionnaire-apps' })
+})
+
+test('register maps 409 to email_in_use', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 409 })))
+  expect(await register('http://id', 'a@e.com', 'password1', '')).toEqual({ ok: false, error: 'email_in_use' })
+})
+
+test('register maps 422 to invalid', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 422 })))
+  expect(await register('http://id', 'a@e.com', 'short', '')).toEqual({ ok: false, error: 'invalid' })
+})
+
+test('register maps a thrown fetch to network', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('down')))
+  expect(await register('http://id', 'a@e.com', 'password1', '')).toEqual({ ok: false, error: 'network' })
 })

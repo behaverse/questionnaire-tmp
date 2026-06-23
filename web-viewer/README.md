@@ -1,11 +1,27 @@
-# questionnaire-web-viewer (WV-A: shell + renderer)
+# questionnaire-web-viewer (WV-A..F + PA-1..2)
 
 Participant-facing **custom React/TS viewer** (OD-01 S1) that renders **Schema 3
 runtimes** minted by the Viewer Service. The default presentation is a
 Typeform-like **focus mode** — one question per view, auto-advance on single
-choice. Stages WV-A (shell + Schema 3 renderer), WV-B (submission), and WV-C/D
-(embedded expression evaluator + logic/branching/validation/scoring) are built;
-resume (WV-E) comes later. Spec: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md`.
+choice.
+
+**This is now a single SPA** (`index.html` / `dist/index.html`).  A top-level
+`SessionProvider` reads the URL on load and branches into two modes:
+
+- **Runner** (`?deployment=`, `?invite=`, or `?fixture=`): the full
+  questionnaire runner (`<App/>`), as before.  No nav shell — intentional focus
+  mode.
+- **Participant shell** (no runner params): a `<ParticipantApp/>` with a
+  `NavShell` header and a path-based router (`src/shell/`).  Three routes:
+  - `/` — `CatalogueView`: lists published deployments; each card links into the
+    runner via `?deployment=<id>`.
+  - `/my-data` — `MyDataView`: lists and downloads the signed-in participant's
+    own sessions.
+  - `/account` — `AccountView`: **Create account** form (auto-logs-in on
+    success) when the participant is anonymous; profile + log-out when signed in.
+
+Specs: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md` and the
+PA-1/PA-2 design docs in the same directory.
 
 > **Try the whole participant journey end-to-end** (create an account → pick a questionnaire from the
 > catalogue → complete it → download your data): see [`docs/testing-participant-flow.md`](../docs/testing-participant-flow.md).
@@ -63,7 +79,7 @@ cannot resume from a different device (see FOLLOWUPS).
 
 ## Session layer (PA-1)
 
-A shared **persistent session** (`src/session/`) replaces the one-shot access-token pattern that existed in PP-A..D.  All three entry points (runner `index.html`, MyData `mydata.html`, home `home.html`) now consume it via `useSession()`.
+A shared **persistent session** (`src/session/`) wraps the entire SPA.  Both the runner and the participant shell consume it via `useSession()`.
 
 ### Modules
 
@@ -73,7 +89,10 @@ A shared **persistent session** (`src/session/`) replaces the one-shot access-to
 | `src/session/client.ts` | Typed `Tokens` / `User` shapes; `login`, `refresh`, `logout`, `fetchMe` — thin `fetch` wrappers around the Identity service. |
 | `src/session/authFetch.ts` | `makeAuthFetch(getAccess, doRefresh)` — wraps any `fetch` call; on a `401` it single-flights a refresh and retries once. Concurrent callers share the same in-flight refresh promise. |
 | `src/session/SessionProvider.tsx` | React context provider.  On mount it reads the stored refresh token and silently calls `/v1/auth/refresh` + `/v1/auth/me` (boot restore).  Exposes `{ status, user, accessToken, login, logout, authFetch }` via `useSession()`. |
-| `src/session/SessionStrip.tsx` | Thin header bar: shows the logged-in user's email + a **Log out** button (used by `HomeApp` and `MyDataApp`); renders nothing while `status === 'anon'`. |
+| `src/shell/NavShell.tsx` | Nav shell header: shows the logged-in user's email, nav links (Questionnaires / My data / Account), and a **Log out** button; renders the active route as its child. |
+| `src/shell/router.tsx` | Tiny `useSyncExternalStore`-based router: `useRoute()`, `navigate()`, `Link`. Preserves `viewer_url`/`identity_url` query params across pushState navigations. |
+| `src/shell/ParticipantApp.tsx` | Wraps `NavShell` + routes `/` → `CatalogueView`, `/my-data` → `MyDataView`, `/account` → `AccountView`. |
+| `src/account/AccountView.tsx` | **Create account** form (register auto-logs-in) when anonymous; profile + log-out when signed in. |
 
 ### Persistent login
 
@@ -127,77 +146,17 @@ sent on any subsequent VS call — the session token (`session_token`) authorise
 further participant requests. See FOLLOWUPS for deferred work on token refresh and the
 "my data" view.
 
-## MyData portal (`mydata.html`) (PP-C)
+## Participant routes (PA-2)
 
-A lightweight single-page app bundled as a **separate Vite entry** (`mydata.html`)
-that lets a logged-in participant view and download their own questionnaire history.
+The nav-shell routes are all within the same SPA (`/`):
 
-### URL contract
+| Path | Component | Auth | Description |
+|---|---|---|---|
+| `/` | `CatalogueView` | none | Browse listed + open deployments; Start → runner. |
+| `/my-data` | `MyDataView` | identity (redirects to `/account` if anon) | Sessions table + CSV download. |
+| `/account` | `AccountView` | none (auto-redirect if anon) | Create account (auto-login) or profile + log-out. |
 
-| Param | Required | Meaning |
-|---|---|---|
-| `identity_url` | no | Identity service base URL; default `VITE_IDENTITY_BASE_URL`, else `http://localhost:9000`. |
-| `viewer_url` | no | Viewer Service base URL; default `VITE_VS_BASE_URL`, else `http://localhost:8001`. |
-
-### Flow
-
-1. Participant opens `mydata.html` (directly or via a link from the study platform).
-2. The portal shows a `LoginView` (email + password) and calls
-   `POST /v1/auth/login` on the Identity service.
-3. On success, the access token is held in memory and passed as
-   `Authorization: Bearer <token>` on every VS call.
-4. The portal calls `GET /v1/me/sessions` → displays a table of the participant's
-   completed questionnaire sessions (instrument id/version, status, session index,
-   submitted-at timestamp).
-5. A **"Download my responses (CSV)"** button calls `GET /v1/me/responses.csv` and
-   triggers a browser file download.
-6. If the participant has no sessions, the empty-state message
-   **"No completed questionnaires yet."** is shown.
-
-### Building
-
-`mydata.html` is produced by `npm run build` alongside the main viewer.  The
-compiled output lives at `dist/mydata.html` plus `dist/assets/mydata-*.js`.
-
-### Configuration
-
-| Source | Variable / Param | Purpose |
-|---|---|---|
-| URL param | `?identity_url=<base>` | Identity base URL for this session |
-| Build-time env | `VITE_IDENTITY_BASE_URL` | Default Identity base URL |
-| URL param | `?viewer_url=<base>` | VS base URL for this session |
-| Build-time env | `VITE_VS_BASE_URL` | Default VS base URL |
-
-## Participant home portal (`home.html`) (PP-D)
-
-A lightweight participant entry-point bundled as a **separate Vite entry** (`home.html`).
-It lets a participant browse all publicly listed questionnaires and launch one with a
-single click.
-
-### URL contract
-
-| Param | Required | Meaning |
-|---|---|---|
-| `viewer_url` | no | VS base URL; default `VITE_VS_BASE_URL`, else `http://localhost:8001`. |
-| `identity_url` | no | Identity service base URL carried through to the runner; default `VITE_IDENTITY_BASE_URL`. |
-
-### Flow
-
-1. Participant opens `home.html`.
-2. The portal calls `GET /v1/catalogue` on the Viewer Service — no login required.
-3. Each returned deployment is shown as a card with its `title` (falls back to
-   `questionnaire_ref`) and `description`.
-4. Clicking **Start** navigates to `index.html?deployment=<id>` with `viewer_url` and
-   `identity_url` forwarded as query parameters so the runner uses the same service endpoints.
-5. The portal also shows a **"My data"** link to `mydata.html` (carrying the same
-   `viewer_url`/`identity_url`) so an authenticated participant can reach their history.
-6. If the catalogue is empty, the empty-state message **"No questionnaires available right now."**
-   is shown.
-
-### Building
-
-`home.html` is produced by `npm run build` alongside `index.html` and `mydata.html`.
-The compiled output lives at `dist/home.html` plus `dist/assets/home-*.js`.
+`CatalogueView` calls `GET /v1/catalogue` (public).  `MyDataView` calls `GET /v1/me/sessions` and `GET /v1/me/responses.csv` via the authenticated `authFetch`.  Each card's **Start** link is `index.html?deployment=<id>` (the full runner URL).
 
 ## Presentation modes
 
@@ -382,7 +341,7 @@ deployments — revisit when authenticated deployments arrive (see FOLLOWUPS).
 ## Tests
 
 ```bash
-npm test            # vitest (~265 tests) + Schema 7 manifest validation
+npm test            # vitest (283 tests) + Schema 7 manifest validation
 npm run typecheck   # tests mock loadEvaluator — no prior wasm build needed
 npm run build       # tsc + builds evaluator --target web + bundles the wasm
 npm run build:lib   # renderer library (OD-03) → dist-lib/ (ESM + dts + CSS)

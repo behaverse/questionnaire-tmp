@@ -1,34 +1,50 @@
 # web-viewer — deferred work / follow-ups
 
+## PA-2 follow-ups (consolidated SPA — 2026-06-23)
+
+- **Change-password / email-verification / password-reset UI (PA-3).** The Account page can register
+  and show a profile, but there is no change-password form, no email-verification flow (the Identity
+  service has the endpoints; a real mailer is needed), and no password-reset/forgot-password UI.
+  Deferred to PA-3.
+- **Prod SPA-fallback rewrite.** When the web-viewer is deployed as a static site (Vercel or
+  equivalent), the server must rewrite all non-asset paths to `index.html` so that direct navigation
+  to `/my-data` or `/account` works.  Mirror `library-web`'s `vercel.json` pattern:
+  `"source": "/((?!api/).*)", "destination": "/index.html"`.
+- **Runner has no nav shell — intentional.** The questionnaire runner (entered via `?deployment=`,
+  `?invite=`, or `?fixture=`) renders without the `NavShell` header so the participant stays in
+  uninterrupted focus mode.  Returning to the catalogue after completing a run is via the
+  deployment's redirect URL (if configured) or the browser back button.  This is by design, not a
+  gap.
+- **Anon `/my-data` shows two "Log in" signals.** When an anonymous participant navigates to
+  `/my-data`, they see both the `NavShell` **Account** link and the `MyDataView` inline prompt
+  (`"Log in to see your data"`).  Minor redundancy; de-dupe in a polish pass (e.g. the view could
+  simply redirect to `/account` immediately).
+- **Router uses `flushSync` on navigate.** `src/shell/router.tsx` wraps `pushState` + the
+  `useSyncExternalStore` snapshot update in `flushSync` to ensure the new route is committed before
+  the browser paints.  This is correct and sound; noted here because `flushSync` inside React
+  render trees requires care if the router is ever refactored.
+
 ## PA-1 follow-ups (session layer — 2026-06-23)
 
-- **Register UI + full nav shell (PA-2/PA-3).** The session layer has login + logout; there is no self-registration screen, no account page, no password-change or verify-email flow, and no persistent top-nav shell across pages. These are deferred to PA-2 (register + nav) and PA-3 (profile / password / verify).
+- ~~**Register UI + full nav shell (PA-2/PA-3).**~~ **DONE (PA-2, 2026-06-23)** — register + nav shell + `/account` route shipped. Remaining: change-password / email-verification / password-reset (PA-3) — see PA-2 follow-ups above.
 - **httpOnly-cookie hardening.** The refresh token is stored in `localStorage`. A future hardening pass should move it to an httpOnly cookie (set by the Identity service) so it is not reachable by injected JavaScript. This requires a server-side cookie endpoint and a CORS-cookie posture review.
 - **Multi-tab storage-event sync.** If a participant logs in or out in one tab, other open tabs do not automatically update their session state. A `storage` event listener on `window` should propagate the change across tabs.
 - **Proactive pre-expiry refresh.** The provider refreshes lazily (on `401`). A proactive refresh ~60 s before `expires_in` would eliminate the brief window where any concurrent call might see a 401.
 - **"Log out everywhere" (revoke all).** The current `logout()` revokes only the current refresh token. A "log out everywhere" action (revoke all tokens for the account) requires a VS or Identity endpoint (`DELETE /v1/auth/sessions`) — deferred.
 - **Runner mint uses raw access token (not `authFetch`).** `App.tsx` calls `POST /v1/sessions/new` with the plain `accessToken` from the session context, outside of `authFetch`. If the token expires in the narrow window between the provider's boot refresh and the mint call, the VS returns a `401 auth_required` and the runner shows the login screen instead of silently refreshing. Fix: pass `authFetch` into the mint call so the 401-retry path covers it.
-- **MyData empty-state lost its "Browse questionnaires" CTA + footer (cosmetic).** The PP-C `MyDataApp` originally rendered a "Browse questionnaires →" link and a footer in its empty state. These were dropped during the PA-1 rewire. Restore in PA-2 alongside the nav-shell unification.
+- **MyData empty-state "Browse questionnaires" CTA.** The PA-2 `MyDataView` shows `"No completed questionnaires yet."` in the empty state without a browse link. The `NavShell` **Home** link is always present, so this is not a dead end — but a dedicated CTA would be more helpful. Restore in a polish pass (see PA-2 follow-ups: anon `/my-data` redundancy note).
 
 ## PP-D follow-ups (participant home portal — 2026-06-22)
 
-- **Merge home + my-data into one tabbed portal.** `home.html` (browse + start) and
-  `mydata.html` (session history + download) are currently two separate HTML entries.
-  They should eventually be unified into a single participant home page with tabs
-  ("Browse" / "My data") — deferred until the auth story stabilises and the two pages
-  see meaningful concurrent use.
+- ~~**Merge home + my-data into one tabbed portal.**~~ **DONE (PA-2, 2026-06-23)** — `home.html` and `mydata.html` are removed; the SPA provides `/` (catalogue), `/my-data`, and `/account` under a single `NavShell`.
 - **No search or filter on the catalogue.** The home portal renders all listed+open
   deployments as a flat list. Search (by title/description), category/tag filtering,
   and pagination are deferred until the catalogue grows beyond a handful of entries.
 
 ## PP-C follow-ups (MyData portal — 2026-06-22)
 
-- **Login-only — no self-register.** The portal shows the `LoginView` (email + password)
-  but has no "create account" path. Self-registration is deferred (PP-B/PP-D or later).
-- **Merges with PP-D pick-a-questionnaire into one participant home.** PP-D will add
-  a "start a new questionnaire" flow (browsing / launching deployments). The MyData portal
-  and the PP-D questionnaire picker should eventually merge into a single participant
-  home page rather than two separate HTML entries.
+- ~~**Login-only — no self-register.**~~ **DONE (PA-2, 2026-06-23)** — `AccountView` at `/account` provides both register (auto-login) and profile/logout.
+- ~~**Merges with PP-D pick-a-questionnaire into one participant home.**~~ **DONE (PA-2, 2026-06-23)** — unified into the SPA shell.
 - **No human titles yet.** The session table shows `instrument_id` + `instrument_version`
   (machine identifiers). The VS `/v1/me/sessions` endpoint does not yet return a human
   title; a Library lookup is needed (tracked in the VS FOLLOWUPS).
@@ -44,9 +60,7 @@
 
 ## PP-A follow-ups (authenticated participant sessions — 2026-06-22)
 
-- **Login only — no self-register screen (PP-B).** The login form (`LoginView`) is email +
-  password only; there is no "create account" path. Self-registration is deferred to PP-B
-  (signed invite links or a dedicated participant registration flow).
+- ~~**Login only — no self-register screen.**~~ **DONE (PA-2, 2026-06-23)** — see `AccountView` at `/account`.
 - **Access token used once at mint (no refresh).** The Identity access token is fetched at
   login and passed once to `POST /v1/sessions/new`. It is not stored and not refreshed. If the
   token expires between login and mint (the window is tiny, but possible on slow networks), the

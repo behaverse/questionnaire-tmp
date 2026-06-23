@@ -61,3 +61,21 @@ export async function fetchMe(identityBaseUrl: string, access: string): Promise<
   if (resp.ok) return { ok: true, user: await resp.json() }
   return { ok: false }
 }
+
+export async function register(
+  identityBaseUrl: string, email: string, password: string, displayName: string,
+): Promise<{ ok: true } | { ok: false; error: 'email_in_use' | 'invalid' | 'network' }> {
+  let resp: Response
+  try {
+    resp = await fetch(`${identityBaseUrl}/v1/auth/register`, {
+      method: 'POST', headers: JSON_HEADERS,
+      body: JSON.stringify({ email, password, display_name: displayName, audience: AUDIENCE }),
+    })
+  } catch {
+    return { ok: false, error: 'network' }
+  }
+  if (resp.ok) return { ok: true }
+  if (resp.status === 409) return { ok: false, error: 'email_in_use' }
+  if (resp.status === 422) return { ok: false, error: 'invalid' }
+  return { ok: false, error: 'network' }
+}
