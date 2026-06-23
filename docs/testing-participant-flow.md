@@ -127,9 +127,13 @@ All four are now up. Identity = 8100, Library = 8000, VS = 8001, Web Viewer = 51
 
 ### Step 1 — Create an account
 
-Self-registration is public; a new account gets the **`researcher`** role by default (which is enough
-to also create deployments — and, because the participant path is role-agnostic, the *same* account
-can complete questionnaires as a participant).
+Self-registration is built into the web viewer.
+
+1. Open **http://localhost:5173/account** in your browser.
+2. Fill in the **Create account** form (email, password, display name) and click **Create account**.
+3. On success you are automatically logged in and the page switches to your profile view (showing your email).
+
+Alternatively, if you need a token for the researcher API calls below, you can register via curl:
 
 ```bash
 curl -s -X POST http://localhost:8100/v1/auth/register \
@@ -137,6 +141,8 @@ curl -s -X POST http://localhost:8100/v1/auth/register \
   -d '{"email":"alice@example.com","password":"password1","display_name":"Alice","audience":"questionnaire-apps"}'
 # → {"id":"…","email":"alice@example.com","roles":["researcher"], …}
 ```
+
+> **Note:** The in-app form and the curl call create the same account; use whichever is convenient.
 
 ### Step 2 — Log in and grab a token
 
@@ -182,21 +188,25 @@ curl -s http://localhost:8001/v1/catalogue
 
 ### Step 4 — Pick it and complete it (participant)
 
-1. Open the **participant home**: http://localhost:5173/home.html
+1. Open the **participant catalogue**: http://localhost:5173/
 2. You'll see the **"Mini wellbeing check-in"** card. Click **Start**.
 3. Because the deployment is `authenticated`, the runner shows a **login screen** — log in with
-   `alice@example.com` / `password1`.
+   `alice@example.com` / `password1`.  (If you used the Account form in Step 1, you are already
+   logged in in the shell, but the runner mints its own session and will prompt you to log in there
+   too.)
 4. Answer the questions and submit. Your responses are stored in VS, tagged with your Identity id.
 
-> The catalogue card just links to `index.html?deployment=<id>`; the runner handles auth itself. For
+> The catalogue card links to `index.html?deployment=<id>`; the runner handles auth itself. For
 > an **anonymous** deployment (`"mode_preset":"anonymous_link"`) there's no login — Start runs it
 > immediately (but anonymous sessions won't appear in "my data", since there's no account to tie them
-> to).
+> to).  To log in to the Account/Account page: go to **http://localhost:5173/account**.
 
 ### Step 5 — See and download your own data
 
-1. Open the **my-data portal**: http://localhost:5173/mydata.html
-2. Log in as `alice@example.com` / `password1`.
+1. Open the **my-data page**: http://localhost:5173/my-data
+   (or click **My data** in the top nav while on http://localhost:5173/).
+2. If not already signed in, the page redirects you to **http://localhost:5173/account** — log in
+   there and then navigate back to My data.
 3. You'll see the session you just completed. Click **Download my data (CSV)** to get a
    BDM-native CSV of your responses.
 
@@ -236,13 +246,13 @@ the invite link).
 
 | Symptom | Cause / fix |
 |---|---|
-| `home.html` is empty ("No questionnaires available right now.") | No deployment is `listed` + open + browse-startable. Create one with `"listed": true` and `mode_preset` `anonymous_link`/`demo`/`authenticated` (not `invite_link`). |
+| `http://localhost:5173/` is empty ("No questionnaires available right now.") | No deployment is `listed` + open + browse-startable. Create one with `"listed": true` and `mode_preset` `anonymous_link`/`demo`/`authenticated` (not `invite_link`). |
 | Browser console CORS error calling VS or Identity | Set `VS_CORS_ORIGINS=http://localhost:5173` (Terminal C) and `IDENTITY_CORS_ORIGINS=http://localhost:5173` (Terminal A), then restart that service. |
 | Start fails with **404 "questionnaire not found in library"** | The deployment's `questionnaire_ref` doesn't match a seeded questionnaire. Use exactly `qst_min@v26.0601`, and make sure Terminal B ran `library ingest …` before starting VS. |
 | Start fails with **502 "library unreachable"** | The Library (port 8000) isn't running, or `LIBRARY_BASE_URL` is wrong on VS. |
 | Runner shows a login screen for an anonymous deployment | The deployment was created `authenticated` — that's expected; log in, or recreate it `anonymous_link`. |
 | **401** creating a deployment | Missing/expired `Authorization: Bearer $TOKEN`. Re-run Step 2 (tokens expire in 15 min). |
-| `mydata.html` shows nothing after completing | The session was anonymous or invite (no account). Use an **`authenticated`** deployment and log in with the same account in both the runner and my-data. |
+| `/my-data` shows nothing after completing | The session was anonymous or invite (no account). Use an **`authenticated`** deployment and log in with the same account in both the runner and my-data. |
 
 ---
 
@@ -250,6 +260,10 @@ the invite link).
 
 - Catalogue endpoint: `viewer-service/src/viewer_service/api/catalogue.py` (public `GET /v1/catalogue`).
 - Deployment fields (`listed`/`title`/`description`) + filter: `viewer-service/src/viewer_service/store/deployments.py`, `models.py`, `api/deployments.py`.
-- Participant home + runner + my-data: `web-viewer/src/home/`, `web-viewer/src/app/`, `web-viewer/src/mydata/`.
+- Participant shell (nav + routes): `web-viewer/src/shell/` (router, NavShell, ParticipantApp).
+- Catalogue view: `web-viewer/src/home/CatalogueView.tsx`.
+- My-data view: `web-viewer/src/mydata/MyDataView.tsx`.
+- Account / register: `web-viewer/src/account/AccountView.tsx`.
+- Runner: `web-viewer/src/app/`; SPA entry: `web-viewer/src/main.tsx`.
 - Per-service run details: each service's own `README.md`.
 - Design/spec: `docs/superpowers/specs/2026-06-22-participant-pp-d-design.md` (+ pp-a/b/c).
