@@ -257,8 +257,66 @@ the invite link).
 
 ---
 
-## 6. Where the code lives
+## 6. Email flows — verify email + forgot/reset password
 
+These flows require the Identity service to be running (Terminal A). No SMTP server is needed
+by default — the **ConsoleMailer** prints the link to the Identity service's **stdout**.
+
+### 6a. Verify email after registration
+
+When a new account is created the Identity service sends a verification email.
+
+1. Register (via the Account form at `http://localhost:5173/account` or via `curl`).
+2. Watch the **Identity terminal (Terminal A)** for a log line like:
+
+   ```
+   INFO identity.mailer EMAIL to=alice@example.com subject=Verify your email address body=...
+   verify-email?token=<raw_token>
+   ```
+
+3. Copy the full `http://localhost:5173/verify-email?token=<raw_token>` URL from the log and
+   open it in the browser.
+4. `VerifyEmailView` reads the `?token=` parameter, calls `POST /v1/auth/verify-email`
+   automatically, and shows "Email verified!" on success.
+
+> **Set `SMTP_HOST`** to use Mailpit (or a real SMTP relay) instead of the console.
+> With Mailpit:
+> ```bash
+> export SMTP_HOST=localhost
+> export SMTP_PORT=1025    # Mailpit SMTP default
+> ```
+> Open http://localhost:8025 (Mailpit UI) to read the email.
+
+### 6b. Forgot / reset password
+
+1. Open `http://localhost:5173/account` and click **"Forgot password?"** on the login tab
+   (or navigate directly to `http://localhost:5173/reset-password`).
+2. Enter the account email address and click **Send reset link**.
+3. Watch the **Identity terminal (Terminal A)** for:
+
+   ```
+   INFO identity.mailer EMAIL to=alice@example.com subject=Reset your password body=...
+   reset-password?token=<raw_token>
+   ```
+
+4. Copy the full `http://localhost:5173/reset-password?token=<raw_token>` URL and open it.
+5. Enter and confirm a new password (≥ 8 chars) and click **Set new password**.
+6. On success, you are redirected to `/account` where you can log in with the new password.
+
+> **No-enumeration guarantee:** the request-reset form always shows "If that email is
+> registered, a reset link has been sent" — it never reveals whether an address exists.
+
+> **Reset send failures are swallowed (202):** if the Identity service fails to send the
+> email (e.g. SMTP unreachable), the endpoint still returns `202 Accepted` — the participant
+> sees the confirmation screen and the failure is logged server-side.
+
+---
+
+## 7. Where the code lives
+
+- Email views: `web-viewer/src/account/VerifyEmailView.tsx`, `web-viewer/src/account/ResetPasswordView.tsx`.
+- Email client functions: `web-viewer/src/session/client.ts` (`verifyEmail`, `requestPasswordReset`, `resetPassword`).
+- Identity mailer: `identity-service/src/identity_service/mailer.py` (`make_mailer`, `ConsoleMailer`, `SmtpMailer`).
 - Catalogue endpoint: `viewer-service/src/viewer_service/api/catalogue.py` (public `GET /v1/catalogue`).
 - Deployment fields (`listed`/`title`/`description`) + filter: `viewer-service/src/viewer_service/store/deployments.py`, `models.py`, `api/deployments.py`.
 - Participant shell (nav + routes): `web-viewer/src/shell/` (router, NavShell, ParticipantApp).

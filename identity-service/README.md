@@ -43,6 +43,38 @@ jwks = JwksCache("http://localhost:8100/.well-known/jwks.json")
 claims = verify(token, jwks=jwks, audience="questionnaire-apps", issuer="http://localhost:8100")
 ```
 
+## Mailer (email slice)
+
+Verify-email and password-reset emails are sent via a config-selected mailer:
+
+| Mailer | When | Behaviour |
+|---|---|---|
+| `SmtpMailer` | `SMTP_HOST` env var is set | Sends via SMTP with STARTTLS. Credentials optional. |
+| `ConsoleMailer` | `SMTP_HOST` not set (default) | Logs the full email body (including the link) at INFO level — zero-setup local dev. |
+| `NullMailer` | tests only | Records messages in `.sent`; never logs or connects. |
+
+`make_mailer(settings)` (in `identity_service/mailer.py`) chooses between `SmtpMailer` and
+`ConsoleMailer` at startup; tests inject `NullMailer` directly.
+
+**Email link format:**
+
+- Verify-email: `{WEB_VIEWER_BASE_URL}/verify-email?token={raw_token}`
+- Password-reset: `{WEB_VIEWER_BASE_URL}/reset-password?token={raw_token}`
+
+### New environment variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `WEB_VIEWER_BASE_URL` | `http://localhost:5173` | Base URL of the web viewer; used to build the verify/reset links in outgoing emails. |
+| `SMTP_HOST` | *(unset)* | SMTP server hostname. Unset → ConsoleMailer. |
+| `SMTP_PORT` | `587` | SMTP port (STARTTLS). |
+| `SMTP_USERNAME` | *(unset)* | SMTP auth username (optional). |
+| `SMTP_PASSWORD` | *(unset)* | SMTP auth password (optional). |
+| `SMTP_FROM` | `no-reply@behaverse.local` | Sender address on outgoing emails. |
+
+With the default ConsoleMailer (no SMTP config), look for the verify/reset link in the **Identity
+service console** (`uvicorn` stdout at INFO level). Copy the URL into the browser.
+
 ## Out of scope for ID-A
 Real email sending (NullMailer stub only), social/ORCID/GitHub federation, hosted login UI,
 full OAuth2/OIDC, MFA, JS/TS verifier, and wiring existing consumers — all later slices.
