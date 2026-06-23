@@ -1,12 +1,47 @@
 import { useState } from 'react'
 import { parseParams } from '../app/bootstrap'
 import { useSession } from '../session/SessionProvider'
-import { register } from '../session/client'
+import { register, changePassword } from '../session/client'
 
 const inputCls =
   'w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10'
 const primaryBtn =
   'w-full rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60'
+
+function ChangePasswordForm() {
+  const s = useSession()
+  const identityBaseUrl = parseParams(window.location.search).identityBaseUrl
+  const [current, setCurrent] = useState('')
+  const [next, setNext] = useState('')
+  const [err, setErr] = useState<string | null>(null)
+  const [msg, setMsg] = useState<string | null>(null)
+  const [busy, setBusy] = useState(false)
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault(); setErr(null); setMsg(null)
+    if (next.length < 8) { setErr('New password must be at least 8 characters.'); return }
+    setBusy(true)
+    const r = await changePassword(s.authFetch, identityBaseUrl, current, next)
+    setBusy(false)
+    if (r.ok) { setMsg('Password updated.'); setCurrent(''); setNext(''); return }
+    setErr(r.error === 'wrong_password' ? 'Current password is incorrect.'
+      : r.error === 'invalid' ? 'New password must be at least 8 characters.'
+      : 'Network error — try again.')
+  }
+
+  return (
+    <form onSubmit={submit} className="space-y-3 border-t border-zinc-100 pt-4">
+      <div className="text-sm font-semibold text-zinc-900">Change password</div>
+      <input aria-label="Current password" type="password" autoComplete="current-password" value={current}
+             onChange={(e) => setCurrent(e.target.value)} required className={inputCls} placeholder="Current password" />
+      <input aria-label="New password" type="password" autoComplete="new-password" value={next}
+             onChange={(e) => setNext(e.target.value)} required className={inputCls} placeholder="New password" />
+      {err ? <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{err}</p> : null}
+      {msg ? <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{msg}</p> : null}
+      <button type="submit" disabled={busy} className={primaryBtn}>{busy ? 'Saving…' : 'Update password'}</button>
+    </form>
+  )
+}
 
 function Profile() {
   const s = useSession()
@@ -22,6 +57,7 @@ function Profile() {
       {!s.user.email_verified ? (
         <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700">Your email isn't verified yet.</p>
       ) : null}
+      <ChangePasswordForm />
       <button onClick={() => void s.logout()} className={primaryBtn}>Log out</button>
     </div>
   )

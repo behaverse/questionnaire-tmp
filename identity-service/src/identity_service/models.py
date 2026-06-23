@@ -36,6 +36,11 @@ class ResetPasswordIn(BaseModel):
     new_password: str = Field(min_length=8)
 
 
+class ChangePasswordIn(BaseModel):
+    old_password: str
+    new_password: str = Field(min_length=8)
+
+
 class RoleIn(BaseModel):
     client: str
     role: str

@@ -18,7 +18,10 @@ choice.
   - `/my-data` — `MyDataView`: lists and downloads the signed-in participant's
     own sessions.
   - `/account` — `AccountView`: **Create account** form (auto-logs-in on
-    success) when the participant is anonymous; profile + log-out when signed in.
+    success) when the participant is anonymous; profile + log-out when signed in;
+    **Change password** section (old password + new password ≥ 8 chars) when signed in
+    — calls `changePassword(authFetch, identityBaseUrl, old, new)` and stays logged in
+    on success.
 
 Specs: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md` and the
 PA-1/PA-2 design docs in the same directory.
@@ -92,7 +95,7 @@ A shared **persistent session** (`src/session/`) wraps the entire SPA.  Both the
 | `src/shell/NavShell.tsx` | Nav shell header: shows the logged-in user's email, nav links (Questionnaires / My data / Account), and a **Log out** button; renders the active route as its child. |
 | `src/shell/router.tsx` | Tiny `useSyncExternalStore`-based router: `useRoute()`, `navigate()`, `Link`. Preserves `viewer_url`/`identity_url` query params across pushState navigations. |
 | `src/shell/ParticipantApp.tsx` | Wraps `NavShell` + routes `/` → `CatalogueView`, `/my-data` → `MyDataView`, `/account` → `AccountView`. |
-| `src/account/AccountView.tsx` | **Create account** form (register auto-logs-in) when anonymous; profile + log-out when signed in. |
+| `src/account/AccountView.tsx` | **Create account** form (register auto-logs-in) when anonymous; profile + log-out + **Change password** section when signed in. |
 
 ### Persistent login
 
@@ -154,7 +157,7 @@ The nav-shell routes are all within the same SPA (`/`):
 |---|---|---|---|
 | `/` | `CatalogueView` | none | Browse listed + open deployments; Start → runner. |
 | `/my-data` | `MyDataView` | identity (redirects to `/account` if anon) | Sessions table + CSV download. |
-| `/account` | `AccountView` | none (auto-redirect if anon) | Create account (auto-login) or profile + log-out. |
+| `/account` | `AccountView` | none (auto-redirect if anon) | Create account (auto-login) or profile + log-out + change password. |
 
 `CatalogueView` calls `GET /v1/catalogue` (public).  `MyDataView` calls `GET /v1/me/sessions` and `GET /v1/me/responses.csv` via the authenticated `authFetch`.  Each card's **Start** link is `index.html?deployment=<id>` (the full runner URL).
 
@@ -341,7 +344,7 @@ deployments — revisit when authenticated deployments arrive (see FOLLOWUPS).
 ## Tests
 
 ```bash
-npm test            # vitest (283 tests) + Schema 7 manifest validation
+npm test            # vitest (290 tests) + Schema 7 manifest validation
 npm run typecheck   # tests mock loadEvaluator — no prior wasm build needed
 npm run build       # tsc + builds evaluator --target web + bundles the wasm
 npm run build:lib   # renderer library (OD-03) → dist-lib/ (ESM + dts + CSS)

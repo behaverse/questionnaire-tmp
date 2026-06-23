@@ -72,3 +72,43 @@ test('login works from the login tab', async () => {
   await userEvent.click(screen.getByRole('button', { name: /^log in$/i }))
   expect(await screen.findByText(/a@e.com/)).toBeInTheDocument()
 })
+
+function authedFetch(extra?: (url: string) => Response | null) {
+  localStorage.setItem('behaverse.participant.refresh', 'RT0')
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+    if ((url as string).endsWith('/v1/auth/refresh')) return new Response(JSON.stringify({ access_token: 'AT', refresh_token: 'RT1', expires_in: 900, token_type: 'Bearer' }), { status: 200 })
+    if ((url as string).endsWith('/v1/auth/me')) return new Response(JSON.stringify(ME), { status: 200 })
+    const e = extra?.(url as string)
+    if (e) return e
+    return new Response('{}', { status: 200 })
+  }))
+}
+
+test('authed: change-password succeeds and shows confirmation', async () => {
+  authedFetch((url) => url.endsWith('/v1/auth/change-password') ? new Response(null, { status: 204 }) : null)
+  renderView()
+  await userEvent.type(await screen.findByLabelText(/current password/i), 'password1')
+  await userEvent.type(screen.getByLabelText(/new password/i), 'newpassword2')
+  await userEvent.click(screen.getByRole('button', { name: /update password/i }))
+  expect(await screen.findByText(/password updated/i)).toBeInTheDocument()
+})
+
+test('authed: wrong current password shows the error', async () => {
+  authedFetch((url) => url.endsWith('/v1/auth/change-password') ? new Response('{}', { status: 403 }) : null)
+  renderView()
+  await userEvent.type(await screen.findByLabelText(/current password/i), 'wrongpass')
+  await userEvent.type(screen.getByLabelText(/new password/i), 'newpassword2')
+  await userEvent.click(screen.getByRole('button', { name: /update password/i }))
+  expect(await screen.findByText(/current password is incorrect/i)).toBeInTheDocument()
+})
+
+test('authed: a short new password is rejected before any request', async () => {
+  const calls: string[] = []
+  authedFetch((url) => { if (url.endsWith('/v1/auth/change-password')) calls.push(url); return null })
+  renderView()
+  await userEvent.type(await screen.findByLabelText(/current password/i), 'password1')
+  await userEvent.type(screen.getByLabelText(/new password/i), 'short')
+  await userEvent.click(screen.getByRole('button', { name: /update password/i }))
+  expect(await screen.findByText(/at least 8 characters/i)).toBeInTheDocument()
+  expect(calls.length).toBe(0)
+})

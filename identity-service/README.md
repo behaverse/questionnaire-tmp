@@ -20,6 +20,10 @@ uvicorn identity_service.api.app:create_app --factory --reload --port 8100
 
 - `POST /v1/auth/register | login | refresh | logout`
 - `GET  /v1/auth/me` (Bearer access token)
+- `POST /v1/auth/change-password` (Bearer access token; `{old_password, new_password≥8}`; **204**
+  on success; **403** `wrong_password` if `old_password` is incorrect; **422** if `new_password`
+  is shorter than 8 characters; **401** if the Bearer token is missing or invalid; does **not**
+  revoke existing sessions)
 - `POST /v1/auth/verify-email | request-password-reset | reset-password`
 - `GET  /v1/admin/users`, `GET /v1/admin/users/{id}`,
   `POST|DELETE /v1/admin/users/{id}/roles`, `GET|POST /v1/admin/clients` (administrator only)
