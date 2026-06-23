@@ -5,9 +5,9 @@ _COLS = ("deployment_id", "questionnaire_ref", "runtime_policy", "default_locale
          "available_locales", "theme_id", "mode_preset", "dimensions", "active_from",
          "active_until", "quota", "style_overrides", "flow_overrides", "redirect_url",
          "confirmation_message", "randomization_seed_strategy", "channels", "created_by",
-         "consent_text_ref", "listed", "title", "description")
+         "consent_text_ref", "listed", "title", "description", "consent")
 _JSONB = {"runtime_policy", "available_locales", "dimensions", "quota", "style_overrides",
-          "flow_overrides", "confirmation_message", "channels"}
+          "flow_overrides", "confirmation_message", "channels", "consent"}
 _SELECT_COLS = _COLS + ("created_at",)
 
 

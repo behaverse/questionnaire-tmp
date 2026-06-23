@@ -523,6 +523,56 @@ test('authenticated deployment: 401 shows login, then completes after login', as
   expect(calls.filter((u) => u.endsWith('/v1/sessions/new')).length).toBe(2)
 })
 
+// Task 6 — consent gate + completion polish
+test('consent: shows the consent screen before Q1; Accept posts a consented event then starts', async () => {
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn(); respond202(fetchMock)
+  fetchMock.mockImplementation(async (url: string) => {
+    if ((url as string).endsWith('/v1/sessions/new')) return new Response(JSON.stringify({ ...mintOk, consent: { en: 'Please consent.' } }), { status: 200 })
+    return new Response('{}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  expect(await screen.findByText(/please consent/i)).toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: /next/i })).not.toBeInTheDocument()  // no question yet
+  await userEvent.click(screen.getByRole('button', { name: /i agree/i }))
+  await screen.findByRole('button', { name: /next/i })                              // Q1 now renders
+  // a consented event was posted to /events
+  const evCalls = fetchMock.mock.calls.filter((c) => (c[0] as string).includes('/events'))
+  const verbs = evCalls.flatMap((c) => JSON.parse((c[1] as RequestInit).body as string).events.map((e: { verb: string }) => e.verb))
+  expect(verbs).toContain('bdm:consented')
+})
+
+test('consent: Decline shows the exit screen, posts consent_declined, and no responses', async () => {
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn(async (url: string) =>
+    (url as string).endsWith('/v1/sessions/new')
+      ? new Response(JSON.stringify({ ...mintOk, consent: { en: 'Please consent.' } }), { status: 200 })
+      : new Response('{}', { status: 202 }))
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /do not agree/i }))
+  expect(await screen.findByText(/declined/i)).toBeInTheDocument()
+  expect(fetchMock.mock.calls.some((c) => (c[0] as string).includes('/responses'))).toBe(false)
+})
+
+test('completion: confirmation_message + redirect link are shown on finish', async () => {
+  setUrl('?deployment=dpl_1')
+  vi.stubGlobal('fetch', vi.fn(async (url: string) =>
+    (url as string).endsWith('/v1/sessions/new')
+      ? new Response(JSON.stringify({ ...mintOk, confirmation_message: { en: 'Custom thanks!' }, redirect_url: 'https://example.org/done' }), { status: 200 })
+      : new Response('{}', { status: 202 })))
+  renderApp()
+  // advance to the end (mirror the existing 'finishing shows the thank-you screen' test's clicks)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  expect(await screen.findByText(/custom thanks/i)).toBeInTheDocument()
+  const link = screen.getByRole('link', { name: /here/i })
+  expect(link.getAttribute('href')).toBe('https://example.org/done')
+})
+
 // Task 3 — PERF-01 overlap
 test('boot kicks off the evaluator load before awaiting the mint (PERF-01 overlap)', async () => {
   setUrl('?deployment=dpl_1')

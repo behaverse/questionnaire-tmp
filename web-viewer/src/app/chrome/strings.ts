@@ -26,6 +26,13 @@ const STRINGS = {
     submit_failed_body: 'Your answers are held in this tab but could not be submitted. Check your connection and try again.',
     unsupported: 'This element cannot be displayed by this viewer.',
     language: 'Language',
+    consent_title: 'Before you begin',
+    consent_agree: 'I agree',
+    consent_decline: 'I do not agree',
+    declined_title: 'You declined to take part',
+    declined_body: 'You can close this window.',
+    redirecting: 'Redirecting you…',
+    redirect_here: 'click here',
   },
   pt: {
     next: 'Seguinte', back: 'Voltar', enter_hint: 'prima Enter ↵',
@@ -54,6 +61,13 @@ const STRINGS = {
     submit_failed_body: 'As suas respostas estão guardadas neste separador mas não foi possível enviá-las. Verifique a ligação e tente novamente.',
     unsupported: 'Este elemento não pode ser apresentado por este visualizador.',
     language: 'Idioma',
+    consent_title: 'Antes de começar',
+    consent_agree: 'Concordo',
+    consent_decline: 'Não concordo',
+    declined_title: 'Recusou a participação',
+    declined_body: 'Pode fechar esta janela.',
+    redirecting: 'A redirecionar…',
+    redirect_here: 'clique aqui',
   },
 } as const
 

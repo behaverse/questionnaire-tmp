@@ -23,7 +23,7 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 | `POST /v1/themes` · `GET /v1/themes` · `GET /v1/themes/{id}` | Theme infrastructure (UC-13 infra): create (WCAG-AA-checked), list, get. |
 | `GET /deployments/{id}` | Fetch a deployment. |
 | `POST /deployments/{id}/runtime` | Mint (or return cached) Schema 3 for `{viewer_id, viewer_version, locale?}`. |
-| `POST /v1/sessions/new` | Mint a session for a deployment → `{session_id, session_token, runtime}`. |
+| `POST /v1/sessions/new` | Mint a session for a deployment → `{session_id, session_token, runtime, consent?, confirmation_message?, redirect_url?}`. |
 | `GET /v1/sessions/{id}` | (Bearer session token) status + last_active_locale + outbox counts (resume read). |
 | `GET /v1/sessions/{id}/runtime` | (token) Schema 3 runtime in the session's last_active_locale. |
 | `POST /v1/sessions/{id}/locale` | (token) switch locale → re-minted runtime. |
@@ -303,3 +303,31 @@ Identity access token **at session-mint time**.
 
 `anonymous_link` and `demo` deployments are unchanged — no `Authorization` header is required or
 examined.
+
+---
+
+### Consent gate + completion polish (PA-4)
+
+`POST /deployments` (and `GET /v1/deployments/{id}`) now accept three additional optional fields:
+
+| Field | Type | Default | Purpose |
+|---|---|---|---|
+| `consent` | `{locale: string}` \| null | `null` | Locale-map of consent text. When present, the Web Viewer shows a **ConsentScreen** before Q1. |
+| `confirmation_message` | `{locale: string}` \| null | `null` | Locale-map of markdown text shown on the finished screen in place of the default thank-you string. |
+| `redirect_url` | string \| null | `null` | URL the viewer redirects to after completion (5 s delay + a manual "click here" link). |
+
+`POST /v1/sessions/new` returns these three fields alongside `session_id`, `session_token`, and `runtime`:
+
+```json
+{
+  "session_id": "ses_…",
+  "session_token": "…",
+  "runtime": { … },
+  "consent": {"en": "By continuing you agree to …"},
+  "confirmation_message": {"en": "Thank you for completing this survey."},
+  "redirect_url": "https://example.com/done"
+}
+```
+
+All three are `null` when not set on the deployment.  The Web Viewer reads them at boot; see the
+`web-viewer/README.md` **Consent gate + completion polish (PA-4)** section for the runner behaviour.

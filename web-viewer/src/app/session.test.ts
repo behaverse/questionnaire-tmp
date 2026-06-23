@@ -16,7 +16,7 @@ const runtime: Runtime = {
 }
 const booted = reducer(initialState, {
   type: 'boot_success',
-  session: { id: 's1', token: 't1' }, runtime, theme: null, steps: flattenSteps(runtime),
+  session: { id: 's1', token: 't1' }, runtime, theme: null, steps: flattenSteps(runtime), confirmationMessage: null, redirectUrl: null,
 })
 
 test('boot_success → ready at step 0', () => {
@@ -96,4 +96,29 @@ test('set_runtime swaps runtime + steps, preserves answers/position', () => {
   const s = reducer(answered, { type: 'set_runtime', runtime, steps: flattenSteps(runtime) })
   expect(s.answers).toEqual({ it_1: 0 })
   expect(s.runtime).toBe(runtime)
+})
+
+// Task 4: consent + declined phases, completion config
+const S = { id: 's1', token: 't1' }
+const RT = { metadata: { title: 'x' }, locale: 'en' } as never
+
+test('boot_consent → consent phase carrying consent + completion config', () => {
+  const s = reducer(initialState, { type: 'boot_consent', session: S, runtime: RT, theme: null, steps: [], consent: { en: 'C' }, confirmationMessage: { en: 'D' }, redirectUrl: 'u' })
+  expect(s.phase).toBe('consent')
+  expect(s.consent).toEqual({ en: 'C' })
+  expect(s.confirmationMessage).toEqual({ en: 'D' })
+  expect(s.redirectUrl).toBe('u')
+})
+
+test('consent_accepted → ready, consent_declined → declined', () => {
+  const c = reducer(initialState, { type: 'boot_consent', session: S, runtime: RT, theme: null, steps: [], consent: { en: 'C' }, confirmationMessage: null, redirectUrl: null })
+  expect(reducer(c, { type: 'consent_accepted' }).phase).toBe('ready')
+  expect(reducer(c, { type: 'consent_declined' }).phase).toBe('declined')
+})
+
+test('boot_success carries completion config', () => {
+  const s = reducer(initialState, { type: 'boot_success', session: S, runtime: RT, theme: null, steps: [], confirmationMessage: { en: 'D' }, redirectUrl: 'u' })
+  expect(s.phase).toBe('ready')
+  expect(s.confirmationMessage).toEqual({ en: 'D' })
+  expect(s.redirectUrl).toBe('u')
 })

@@ -54,3 +54,13 @@ test('batcher flushes at 20 events or 5 s, batch ids sequence, batch is schema-v
   expect(flushed).toHaveLength(2)
   vi.useRealTimers()
 })
+test('consented + consent_declined build runtime-instance events', () => {
+  const a = engineActor('web@v1')
+  const c = ev.consented(a, 's1', '2026-01-01T00:00:00Z')
+  expect(c.verb).toBe('bdm:consented')
+  expect(c.object).toEqual({ objectType: 'bdm:RuntimeInstance', id: 's1' })
+  expect(c.context?.extensions['bdm:session_id']).toBe('s1')
+  const d = ev.consentDeclined(a, 's1', '2026-01-01T00:00:00Z')
+  expect(d.verb).toBe('bdm:consent_declined')
+  expect(d.object).toEqual({ objectType: 'bdm:RuntimeInstance', id: 's1' })
+})

@@ -1,5 +1,19 @@
 # web-viewer — deferred work / follow-ups
 
+## PA-4 follow-ups — consent gate + completion polish (2026-06-24)
+
+- **Resumed sessions use the default finished screen.** The `confirmation_message` and
+  `redirect_url` from the deployment mint are held in the runner's in-memory state; they
+  are **not persisted** to IndexedDB. A resumed session (page reload after completion) will
+  show the default "Thank you" screen and no redirect, because the mint is not re-run on
+  resume. Fix by either (a) persisting these two fields alongside the resume record, or
+  (b) always re-minting on resume so the latest deployment values are available.
+- **Consent is not versioned.** The runner records `bdm:consented` but does not record
+  *which version* of the consent text was accepted. If the researcher edits the deployment's
+  `consent` field after some participants have already consented, there is no way to
+  distinguish between old- and new-form acceptances. Versioned consent tracking is
+  Phase-5 Platform (see VS FOLLOWUPS → PA-4).
+
 ## PA-3 follow-ups (change-password + session layer — 2026-06-23)
 
 - ~~**Change-password UI.**~~ **DONE (PA-3, 2026-06-23)** — `AccountView` now shows a "Change

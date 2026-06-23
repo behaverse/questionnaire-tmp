@@ -17,6 +17,7 @@ import { completeSession, getRuntime, getSession, mintSession, parseParams, subm
 import { isFramed, observeHeight, postToHost } from './embed'
 import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
+import { ConsentScreen } from './chrome/ConsentScreen'
 import { ErrorScreen } from './chrome/ErrorScreen'
 import { LoginView } from './chrome/LoginView'
 import { useSession } from '../session/SessionProvider'
@@ -26,6 +27,7 @@ import { ProgressBar } from './chrome/ProgressBar'
 import { ScoreSummary } from './chrome/ScoreSummary'
 import { StepTransition } from './chrome/StepTransition'
 import { t } from './chrome/strings'
+import { RichText } from '../renderer/RichText'
 import { displayScores } from '../scoring/display'
 import { agentActor, engineActor, ev, EventBatcher } from './events'
 import { buildItemRow, buildMessageRow, buildRuntimeIndex, stimulusFor } from './responses'
@@ -98,6 +100,7 @@ export function App() {
     sessionIndex: number,
     runtime: Runtime,
     fetchImpl?: typeof fetch,
+    deferStart = false,
   ) {
     const identity: SessionIdentity = {
       sessionId,
@@ -128,8 +131,18 @@ export function App() {
       resolver: cache.resolver,
       cache,
     }
-    batcher.add(ev.initialized(pipeline.current.engine, sessionId, nowIso()))
-    batcher.add(ev.started(pipeline.current.engine, sessionId, nowIso()))
+    if (!deferStart) {
+      batcher.add(ev.initialized(pipeline.current.engine, sessionId, nowIso()))
+      batcher.add(ev.started(pipeline.current.engine, sessionId, nowIso()))
+    }
+  }
+
+  function startEvents(sid: string, withConsent: boolean) {
+    const p = pipeline.current!
+    p.batcher.add(ev.initialized(p.engine, sid, nowIso()))
+    p.batcher.add(ev.started(p.engine, sid, nowIso()))
+    if (withConsent) p.batcher.add(ev.consented(p.engine, sid, nowIso()))
+    p.batcher.flush()
   }
 
   async function runBoot() {
@@ -138,7 +151,7 @@ export function App() {
       const [evaluator, scorerSet] = await Promise.all([loadEvaluator(), compileScorers(runtime)])
       buildPipeline(evaluator, scorerSet, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
       applyTheme(getTheme(resolveThemeId({ themeParam: params.theme })))
-      dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime) })
+      dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime), confirmationMessage: null, redirectUrl: null })
       return
     }
     if (!params.deploymentId) {
@@ -176,8 +189,13 @@ export function App() {
       localeRef.current = res.runtime.locale ?? 'en'
       const bundle = res.theme as Theme
       applyTheme(getTheme(resolveThemeId({ bundleId: bundleToThemeId(bundle) })), bundle)
-      buildPipeline(evaluator, scorerSet, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime)
-      dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps: flattenSteps(res.runtime) })
+      buildPipeline(evaluator, scorerSet, res.session_id, res.session_token, res.agent_id, res.session_index, res.runtime, undefined, !!res.consent)
+      const steps = flattenSteps(res.runtime)
+      if (res.consent) {
+        dispatch({ type: 'boot_consent', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps, consent: res.consent, confirmationMessage: res.confirmation_message, redirectUrl: res.redirect_url })
+      } else {
+        dispatch({ type: 'boot_success', session: { id: res.session_id, token: res.session_token }, runtime: res.runtime, theme: res.theme as Theme, steps, confirmationMessage: res.confirmation_message, redirectUrl: res.redirect_url })
+      }
       if (!res.ephemeral && !params.fixture && params.deploymentId) {
         void store.put({ deploymentId: params.deploymentId, sessionId: res.session_id, token: res.session_token, lastActiveLocale: res.runtime.locale ?? 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: new Date().toISOString() })
       }
@@ -223,6 +241,14 @@ export function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase])
+
+  // Task 6: auto-redirect after completion when a redirect_url is present
+  useEffect(() => {
+    if (state.phase !== 'finished' || !state.redirectUrl) return
+    const url = state.redirectUrl
+    const id = setTimeout(() => { window.location.href = url }, 3000)
+    return () => clearTimeout(id)
+  }, [state.phase, state.redirectUrl])
 
   // Task 2 (embed): when framed, report content-height changes so the host can resize the iframe.
   useEffect(() => {
@@ -452,6 +478,22 @@ export function App() {
   }
 
   if (needLogin) return <LoginView onSubmit={handleLogin} error={loginErr} busy={loginBusy} />
+  if (state.phase === 'consent' && state.consent) {
+    const text = state.consent[locale] ?? Object.values(state.consent)[0] ?? ''
+    return <ConsentScreen text={text} locale={locale}
+      onAccept={() => { startEvents(state.session!.id, true); dispatch({ type: 'consent_accepted' }) }}
+      onDecline={() => { const p = pipeline.current!; p.batcher.add(ev.consentDeclined(p.engine, state.session!.id, nowIso())); p.batcher.flush(); dispatch({ type: 'consent_declined' }) }} />
+  }
+  if (state.phase === 'declined') {
+    return (
+      <main className="min-h-screen grid place-items-center px-6 font-theme text-center">
+        <div className="qv-step-enter max-w-md space-y-3">
+          <h1 className="text-3xl font-semibold">{t(locale, 'declined_title')}</h1>
+          <p className="text-lg text-slate-600">{t(locale, 'declined_body')}</p>
+        </div>
+      </main>
+    )
+  }
   if (state.phase === 'booting') return <main className="min-h-screen font-theme" aria-busy="true" />
   if (state.phase === 'finishing') {
     return (
@@ -482,8 +524,17 @@ export function App() {
     return (
       <main className="min-h-screen grid place-items-center px-6 font-theme text-center">
         <div className="qv-step-enter max-w-md space-y-3">
-          <h1 className="text-3xl font-semibold">{t(locale, 'finished_title')}</h1>
-          <p className="text-lg text-slate-600">{t(locale, 'finished_body')}</p>
+          {state.confirmationMessage ? (
+            <div className="prose prose-sm mx-auto max-w-none text-zinc-700"><RichText>{state.confirmationMessage[locale] ?? Object.values(state.confirmationMessage)[0] ?? ''}</RichText></div>
+          ) : (
+            <>
+              <h1 className="text-3xl font-semibold">{t(locale, 'finished_title')}</h1>
+              <p className="text-lg text-slate-600">{t(locale, 'finished_body')}</p>
+            </>
+          )}
+          {state.redirectUrl ? (
+            <p className="text-sm text-slate-500">{t(locale, 'redirecting')} <a className="underline" href={state.redirectUrl}>{t(locale, 'redirect_here')}</a></p>
+          ) : null}
           {dscores.length > 0 && (
             <div className="grid place-items-center">
               <ScoreSummary title={t(locale, 'results_title')} scores={dscores} score={scoreFn} />
