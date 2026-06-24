@@ -1,0 +1,10 @@
+{
+  "id": "pr_wb_rested",
+  "construct": "wellbeing",
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Over the past week, I woke up feeling fresh and rested."
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "pr_wb_interest",
+  "construct": "wellbeing",
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Over the past week, my daily life has been filled with things that interest me."
+    }
+  }
+}
