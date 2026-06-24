@@ -73,11 +73,14 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
 4. **#5 library-web "Try" links** (+ the VS preview-mint it needs).
 5. Slot in **#6/#7/#8** opportunistically (small).
 
-## Open decisions (need owner input before #1)
+## Decisions (owner, 2026-06-24)
 
-- **Project-split shape:** (a) one monorepo, two packages (`participant-app/` + `web-viewer/` as the
-  player) deployed **same-origin** so the Identity session is shared via localStorage and the player
-  restores login automatically; (b) two fully separate apps/origins (then the player needs the
-  participant's token passed safely — a redirect handoff, not a URL token). Recommendation: **(a)**.
-- **library-web preview auth:** anonymous ephemeral preview (no account, no stored data) vs a real
-  listed deployment. Recommendation: an **anonymous ephemeral "preview" mint** in viewer-service.
+- **Project-split shape:** **two fully separate apps/origins** (owner's choice). The player and the
+  participant app are independent deployments on different origins. Consequence for #1/#3: the player
+  **cannot** rely on a shared-localStorage session for authenticated deployments — it needs the
+  participant's auth handed over via a **redirect handoff** (NOT a token in the URL). The launch-time
+  `return_url` (#3) is the return half of that handoff. (Item #1 / return-URL itself is independent of
+  auth and is safe to build first.)
+- **library-web preview auth:** (still open) — recommendation: an **anonymous ephemeral "preview"
+  mint** in viewer-service (no account, no stored data).
+- **First slice:** **#3 (viewer return-URL on finish)** — owner's choice; independent of the split.

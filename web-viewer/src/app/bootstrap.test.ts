@@ -1,4 +1,4 @@
-import { mintSession, parseParams, completeSession, getSession, getRuntime, switchLocale } from './bootstrap'
+import { mintSession, parseParams, safeReturnUrl, completeSession, getSession, getRuntime, switchLocale } from './bootstrap'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -7,9 +7,22 @@ afterEach(() => {
 test('parseParams reads deployment/locale/viewer_url/fixture/theme', () => {
   expect(parseParams('?deployment=dpl_1&locale=pt&viewer_url=http://vs:9&fixture=mini&theme=sage')).toEqual({
     deploymentId: 'dpl_1', locale: 'pt', vsBaseUrl: 'http://vs:9', fixture: 'mini', theme: 'sage',
-    identityBaseUrl: 'http://localhost:8100', invite: null,
+    identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null,
   })
-  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null })
+  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null })
+})
+
+test('safeReturnUrl accepts http(s), rejects everything else', () => {
+  expect(safeReturnUrl('https://app.example/done')).toBe('https://app.example/done')
+  expect(safeReturnUrl('http://x/y')).toBe('http://x/y')
+  for (const bad of [null, '', 'javascript:alert(1)', '/relative', 'ftp://x', 'not a url'])
+    expect(safeReturnUrl(bad as string | null)).toBeNull()
+})
+
+test('parseParams reads + validates return_url', () => {
+  expect(parseParams('?return_url=https://app.example/x').returnUrl).toBe('https://app.example/x')
+  expect(parseParams('?return_url=javascript:alert(1)').returnUrl).toBeNull()
+  expect(parseParams('').returnUrl).toBeNull()
 })
 
 const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false, participant_sub: null, consent: null, confirmation_message: null, redirect_url: null }

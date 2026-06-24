@@ -589,3 +589,52 @@ test('boot kicks off the evaluator load before awaiting the mint (PERF-01 overla
   expect(order[0]).toBe('load')
   delete (globalThis as Record<string, unknown>).__onLoadEvaluator
 })
+
+// return_url keystone — a Done button returns to the launcher; never a dead-end
+test('return_url: the finished screen shows a Done link to the return_url', async () => {
+  setUrl('?deployment=dpl_1&return_url=https://app.example/done')
+  const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.type(screen.getByRole('spinbutton'), '8')
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
+  expect(await screen.findByRole('link', { name: /done/i })).toHaveAttribute('href', 'https://app.example/done')
+})
+
+test('no return_url: the finished screen has no Done link', async () => {
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn(); respond202(fetchMock); vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.type(screen.getByRole('spinbutton'), '8')
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
+  expect(screen.queryByRole('link', { name: /done/i })).toBeNull()
+})
+
+test('return_url: the already-completed screen shows a Done link', async () => {
+  setUrl('?deployment=dpl_1&return_url=https://app.example/done')
+  fakeStore = makeFakeStore([{ deploymentId: 'dpl_1', sessionId: 's1', token: 't1', lastActiveLocale: 'en', answers: {}, stepIndex: 0, visited: [], updatedAt: 'x' }])
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ status: 'submitted', last_active_locale: 'en', agent_id: 'agent_r', session_index: 1 }), { status: 200 })))
+  renderApp()
+  await screen.findByRole('heading', { name: /already completed|thank you/i })
+  expect(await screen.findByRole('link', { name: /done/i })).toHaveAttribute('href', 'https://app.example/done')
+})
+
+test('return_url: the declined screen shows a Done link', async () => {
+  setUrl('?deployment=dpl_1&return_url=https://app.example/done')
+  const fetchMock = vi.fn(async (url: string) =>
+    (url as string).endsWith('/v1/sessions/new')
+      ? new Response(JSON.stringify({ ...mintOk, consent: { en: 'Please consent.' } }), { status: 200 })
+      : new Response('{}', { status: 202 }))
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /do not agree/i }))
+  await screen.findByText(/declined/i)
+  expect(await screen.findByRole('link', { name: /done/i })).toHaveAttribute('href', 'https://app.example/done')
+})
