@@ -29,7 +29,9 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
    once → fresh token pair. The portal mints it at launch for `identity` cards (signed in) → `&handoff=`;
    the player's `SessionProvider` exchanges it on boot (else falls back to its login). Identity 61 +
    participant-app 86 + web-viewer 253 tests; opus review APPROVE (all 10 security properties verified).
-   **Followup:** a shared TTL reaper for the token tables (handoff/email/refresh) — unbounded growth.
+   **Followup ✅ DONE (merge `1959248f`):** the shared TTL reaper — `identity reap [--grace-seconds N]`
+   (`service/maintenance.reap_expired`) deletes expired rows from handoff_codes/email_tokens/
+   refresh_tokens (cron-friendly; safe for refresh reuse-detection). Identity 64 tests.
 
 1. **✅ DONE (2026-06-24, merge `c83641ad`). Untangle the participant app from the web-viewer.** Split
    into three packages: **`participant-session/`** (shared SessionProvider + Identity client, single
