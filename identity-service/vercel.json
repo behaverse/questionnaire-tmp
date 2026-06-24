@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "rewrites": [
+    { "source": "/v1/:path*", "destination": "/api/index" },
+    { "source": "/.well-known/:path*", "destination": "/api/index" },
+    { "source": "/internal/:path*", "destination": "/api/index" },
+    { "source": "/healthz", "destination": "/api/index" }
+  ],
+  "crons": [
+    { "path": "/internal/reap", "schedule": "0 4 * * *" }
+  ]
+}
