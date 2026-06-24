@@ -16,6 +16,20 @@ identity create-admin --email you@example.com --password 'change-me'
 uvicorn identity_service.api.app:create_app --factory --reload --port 8100
 ```
 
+### Housekeeping — `identity reap`
+
+The token tables (`handoff_codes`, `email_tokens`, `refresh_tokens`) accumulate rows; once a row is
+past its `expires_at` it is useless. Run the reaper periodically (e.g. a daily cron) to delete expired
+rows and bound table growth:
+
+```bash
+identity reap                      # delete everything already expired
+identity reap --grace-seconds 86400  # keep rows for a day past expiry (audit buffer)
+```
+
+It is safe for `refresh_tokens`: reuse-detection only needs still-valid rotated rows, which the reaper
+never touches (expired refresh tokens are already rejected on use).
+
 ## Endpoints
 
 - `POST /v1/auth/register | login | refresh | logout`
