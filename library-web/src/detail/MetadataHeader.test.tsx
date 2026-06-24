@@ -14,7 +14,7 @@ describe('MetadataHeader', () => {
   it('shows the title, a download button, and a language switcher when multilingual', () => {
     render(
       <MemoryRouter>
-        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" onLang={() => {}} onDownload={() => {}} />
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} />
       </MemoryRouter>,
     )
     expect(screen.getByRole('heading', { name: /PHQ-9/ })).toBeInTheDocument()
@@ -29,7 +29,7 @@ describe('MetadataHeader', () => {
     const onLang = vi.fn()
     render(
       <MemoryRouter>
-        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" onLang={onLang} onDownload={() => {}} />
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={onLang} onDownload={() => {}} />
       </MemoryRouter>,
     )
     await userEvent.selectOptions(screen.getByLabelText(/language/i), 'pt')
@@ -40,17 +40,27 @@ describe('MetadataHeader', () => {
     const onDownload = vi.fn()
     render(
       <MemoryRouter>
-        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" onLang={() => {}} onDownload={onDownload} />
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={onDownload} />
       </MemoryRouter>,
     )
     await userEvent.click(screen.getByRole('button', { name: /download json/i }))
     expect(onDownload).toHaveBeenCalled()
   })
 
+  it('renders a Try it link pointing at the player preview', () => {
+    render(
+      <MemoryRouter>
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602&locale=en" onLang={() => {}} onDownload={() => {}} />
+      </MemoryRouter>,
+    )
+    const tryLink = screen.getByRole('link', { name: /try it/i })
+    expect(tryLink).toHaveAttribute('href', 'http://localhost:5173/?preview=qst_phq9@v26.0602&locale=en')
+  })
+
   it('shows the variant tag when the form has a non-base variant', () => {
     render(
       <MemoryRouter>
-        <MetadataHeader meta={{ ...meta, variant: 'Part A screener' }} version="v26.0602" allVersions={[]} lang="en" onLang={() => {}} onDownload={() => {}} />
+        <MetadataHeader meta={{ ...meta, variant: 'Part A screener' }} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} />
       </MemoryRouter>,
     )
     expect(screen.getByText('Part A screener')).toBeInTheDocument()

@@ -9,12 +9,13 @@ export interface MetadataHeaderProps {
   lang: string
   onLang: (l: string) => void
   onDownload: () => void
+  previewHref: string
 }
 
 const selectCls =
   'cursor-pointer rounded-md border border-rule bg-paper-raised px-2.5 py-1 text-sm text-ink shadow-card transition-colors hover:border-ink-faint/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
 
-export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDownload }: MetadataHeaderProps) {
+export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDownload, previewHref }: MetadataHeaderProps) {
   const navigate = useNavigate()
   const langs = meta.available_languages ?? (meta.language ? [meta.language] : [])
   return (
@@ -79,8 +80,17 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
             </select>
           </label>
         )}
+        <a
+          className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-ink/15 bg-paper-raised px-3.5 py-2 text-sm font-medium text-ink shadow-card transition-colors hover:border-accent hover:text-accent"
+          href={previewHref}
+        >
+          <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
+            <path d="M5 3.5v9l7-4.5-7-4.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          </svg>
+          Try it
+        </a>
         <button
-          className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent"
           onClick={onDownload}
         >
           <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">

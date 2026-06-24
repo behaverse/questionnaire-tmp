@@ -638,3 +638,22 @@ test('return_url: the declined screen shows a Done link', async () => {
   await screen.findByText(/declined/i)
   expect(await screen.findByRole('link', { name: /done/i })).toHaveAttribute('href', 'https://app.example/done')
 })
+
+// preview (roadmap #5) — render-only "try it": fetch the runtime, run it, capture nothing
+test('preview: ?preview= fetches the preview runtime and runs it without minting a session', async () => {
+  setUrl('?preview=qst_x@v26.0601&return_url=https://lib.example/q')
+  const fetchMock = vi.fn(async (url: string) =>
+    String(url).includes('/v1/preview/runtime')
+      ? new Response(JSON.stringify({ runtime: mini }), { status: 200 })
+      : new Response('{}', { status: 202 }))
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  // the questionnaire renders (mini: a message step → a radio question)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await screen.findByRole('radio', { name: /Not at all/ })
+  // it fetched the preview runtime …
+  expect(fetchMock.mock.calls.some(([u]) => String(u).includes('/v1/preview/runtime'))).toBe(true)
+  // … and minted NO session / posted NO responses (render-only)
+  expect(fetchMock.mock.calls.some(([u]) => String(u).endsWith('/sessions/new'))).toBe(false)
+  expect(fetchMock.mock.calls.some(([u]) => String(u).includes('/responses'))).toBe(false)
+})

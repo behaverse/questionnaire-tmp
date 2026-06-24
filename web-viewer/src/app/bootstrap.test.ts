@@ -7,9 +7,14 @@ afterEach(() => {
 test('parseParams reads deployment/locale/viewer_url/fixture/theme', () => {
   expect(parseParams('?deployment=dpl_1&locale=pt&viewer_url=http://vs:9&fixture=mini&theme=sage')).toEqual({
     deploymentId: 'dpl_1', locale: 'pt', vsBaseUrl: 'http://vs:9', fixture: 'mini', theme: 'sage',
-    identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null,
+    identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null,
   })
-  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null })
+  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null })
+})
+
+test('parseParams reads preview (a questionnaire_ref)', () => {
+  expect(parseParams('?preview=qst_x@v26.0601').preview).toBe('qst_x@v26.0601')
+  expect(parseParams('').preview).toBeNull()
 })
 
 test('safeReturnUrl accepts http(s), rejects everything else', () => {

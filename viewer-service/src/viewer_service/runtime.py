@@ -59,3 +59,19 @@ def mint_runtime(conn, deployment: dict, viewer: dict, requested_locale: str | N
     rewrite_scorer_urls(runtime, settings.public_base_url)
     cache.put(conn, key, runtime, deployment["deployment_id"], cap=settings.runtime_cache_cap)
     return runtime
+
+
+def preview_runtime(conn, ref: str, viewer: dict, requested_locale: str | None) -> dict:
+    """Build a runtime for a bare questionnaire_ref with no deployment — the public "try it"
+    preview. Synthesises a pseudo-deployment with a default policy and a single locale (so
+    resolve_locale always succeeds), then reuses mint_runtime (and its cache). No session, no
+    storage. Raises PreflightError / LibraryError exactly like mint_runtime."""
+    loc = requested_locale or "en"
+    deployment = {
+        "deployment_id": "preview",
+        "questionnaire_ref": ref,
+        "available_locales": [loc],
+        "default_locale": loc,
+        "runtime_policy": RuntimePolicy(scorer_impl_preference=["wasm"]).to_canonical_dict(),
+    }
+    return mint_runtime(conn, deployment, viewer, loc)

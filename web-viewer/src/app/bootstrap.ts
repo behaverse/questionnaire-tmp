@@ -5,7 +5,7 @@ import type { Theme } from './theme'
 export const VIEWER_ID = 'behaverse-web-viewer'
 export const VIEWER_VERSION = 'v26.0612'
 
-export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null; returnUrl: string | null }
+export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null; returnUrl: string | null; preview: string | null }
 
 /** Accept a return URL only if it is a well-formed http(s) URL; otherwise treat it as absent
  *  (guards against open-redirect/phishing via javascript:, data:, relative, or garbage values). */
@@ -30,7 +30,26 @@ export function parseParams(search: string): Params {
     identityBaseUrl: q.get('identity_url') ?? import.meta.env.VITE_IDENTITY_BASE_URL ?? 'http://localhost:8100',
     invite: q.get('invite'),
     returnUrl: safeReturnUrl(q.get('return_url')),
+    preview: q.get('preview'),
   }
+}
+
+export type PreviewResult = { ok: true; runtime: Runtime } | { ok: false; code: string }
+
+/** Render-only preview: fetch a runtime for a bare questionnaire_ref from the public VS preview
+ *  endpoint. No session, no token — the runner runs it with the no-capture pipeline. */
+export async function fetchPreviewRuntime(vsBaseUrl: string, ref: string, viewerId: string, viewerVersion: string, locale: string | null): Promise<PreviewResult> {
+  const q = new URLSearchParams({ ref, viewer_id: viewerId, viewer_version: viewerVersion })
+  if (locale) q.set('locale', locale)
+  let resp: Response
+  try {
+    resp = await fetch(`${vsBaseUrl}/v1/preview/runtime?${q.toString()}`)
+  } catch {
+    return { ok: false, code: 'network' }
+  }
+  if (!resp.ok) return { ok: false, code: `preview_${resp.status}` }
+  const body = await resp.json()
+  return { ok: true, runtime: body.runtime as Runtime }
 }
 
 export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean; participant_sub: string | null; consent: Record<string, string> | null; confirmation_message: Record<string, string> | null; redirect_url: string | null }
