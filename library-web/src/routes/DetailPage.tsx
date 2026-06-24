@@ -12,6 +12,7 @@ import { Skeleton } from '../components/Skeleton'
 import { ErrorState } from '../components/ErrorState'
 import { NotFoundPage } from './NotFoundPage'
 import { definitionFilename, downloadJson } from '../lib/download'
+import { previewPlayerUrl } from '../lib/preview'
 
 const SECTIONS = [
   { id: 'description', label: 'Description' },
@@ -97,6 +98,7 @@ export function DetailPage() {
               allVersions={versionsQ.data ?? []}
               lang={effectiveLang}
               onLang={setLang}
+              previewHref={previewPlayerUrl(`${id}@${latest}`, effectiveLang)}
               onDownload={() => { void downloadJson(resolvedDefinitionUrl(id, latest), definitionFilename(id, latest)).catch((e) => console.error(e)) }}
             />
             {present.description && <Section id="description" title="Description"><p className="max-w-2xl text-[15px] leading-7 text-ink-soft">{meta.description}</p></Section>}
