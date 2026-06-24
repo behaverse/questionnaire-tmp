@@ -36,11 +36,13 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
    pick→run→**return to the app**, a post-completion confirmation *in the app*, and obvious
    navigation everywhere. *(Medium; depends on #3.)*
 
-3. **Viewer redirect/return-URL on finish (keystone).** The player should accept a launch-time
-   **`?return_url=`** (controlled by the embedder — the participant app or library-web) and, on
-   finish / decline / already-completed, navigate back to it (and always offer a manual "Done / back"
-   link so the runner is never a dead-end). Complements the existing per-deployment `redirect_url`
-   (researcher-config) added in PA-4. *(Small–medium; do FIRST — unblocks #1, #2, #5.)*
+3. **✅ DONE (2026-06-24, merge `0a1bc2f3`). Viewer return-URL on finish (keystone).** The player
+   accepts a launch-time **`?return_url=`** (embedder-controlled), validated as a well-formed http(s)
+   URL (`safeReturnUrl`, open-redirect guard), surfaced as a manual **"Done"** button on the finished /
+   declined / already-completed screens — so the runner is never a dead-end. Manual only (no
+   auto-redirect); the per-deployment `redirect_url` (PA-4) is untouched and complementary. web-viewer
+   only; 321 tests + clean build. **NB (followup):** a *permanent* submission failure still strands the
+   participant on the `finishing` + Retry screen with no Done escape — see #8.
 
 4. **Participant app: pick a questionnaire from the list and run it.** The catalogue → **Start** →
    player(with return_url) → back to the app, landing on a "thanks / pick another" state. Make
@@ -61,9 +63,10 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
    fully support makes the denormaliser raise an unhandled `PreflightError` → 500 (surfaced as a
    `resume_unreachable` dead-end). Validate at deploy-create and/or map to a clean 4xx.
    *(Small; viewer-service.)*
-8. **Runner `resume_unreachable` dead-end.** A failed resume (network/5xx) traps the participant on a
-   "Try again" loop with no escape — offer a **"Start fresh"** (clear the IndexedDB record + new
-   mint). *(Small; web-viewer.)*
+8. **Runner dead-ends on failure.** (a) A failed *resume* (network/5xx) traps the participant on a
+   "Try again" loop; (b) a *permanent submission* failure traps them on the `finishing` + Retry screen
+   (flagged in #3's review). Both lack an escape — offer a **"Start fresh"** / Done exit (clear the
+   IndexedDB record + new mint, or return via `return_url`). *(Small; web-viewer.)*
 
 ## Recommended sequence
 
