@@ -1,0 +1,10 @@
+{
+  "id": "pr_wb_calm",
+  "construct": "wellbeing",
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Over the past week, I have felt calm and relaxed."
+    }
+  }
+}

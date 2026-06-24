@@ -1,0 +1,433 @@
+{
+  "@context": "https://behaverse.org/schemas/questionnaire/context.jsonld",
+  "metadata": {
+    "id": "qst_wellbeing",
+    "version": "v26.0601",
+    "title": "Wellbeing check-in",
+    "short_title": "Wellbeing",
+    "description": "A short six-item wellbeing self-report (past-week mood, calm, energy, rest, interest, connection).",
+    "language": "en",
+    "available_languages": [
+      "en"
+    ],
+    "classification": {
+      "domain": [
+        "wellbeing"
+      ],
+      "population": [
+        "adults"
+      ],
+      "administration_mode": [
+        "self_report"
+      ]
+    },
+    "psychometrics": {
+      "item_count": 6,
+      "estimated_minutes": 2
+    }
+  },
+  "pages": [
+    {
+      "id": "page_1",
+      "elements": [
+        {
+          "question": {
+            "prompt": {
+              "ref": "pr_wb_mood@v26.0601"
+            }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              {
+                "index": 1,
+                "value": 0
+              },
+              {
+                "index": 2,
+                "value": 1
+              },
+              {
+                "index": 3,
+                "value": 2
+              },
+              {
+                "index": 4,
+                "value": 3
+              },
+              {
+                "index": 5,
+                "value": 4
+              }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Agreement",
+                "options": [
+                  {
+                    "index": 1,
+                    "text": "Strongly disagree"
+                  },
+                  {
+                    "index": 2,
+                    "text": "Disagree"
+                  },
+                  {
+                    "index": 3,
+                    "text": "Neither agree nor disagree"
+                  },
+                  {
+                    "index": 4,
+                    "text": "Agree"
+                  },
+                  {
+                    "index": 5,
+                    "text": "Strongly agree"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_2",
+      "elements": [
+        {
+          "question": {
+            "prompt": {
+              "ref": "pr_wb_calm@v26.0601"
+            }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              {
+                "index": 1,
+                "value": 0
+              },
+              {
+                "index": 2,
+                "value": 1
+              },
+              {
+                "index": 3,
+                "value": 2
+              },
+              {
+                "index": 4,
+                "value": 3
+              },
+              {
+                "index": 5,
+                "value": 4
+              }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Agreement",
+                "options": [
+                  {
+                    "index": 1,
+                    "text": "Strongly disagree"
+                  },
+                  {
+                    "index": 2,
+                    "text": "Disagree"
+                  },
+                  {
+                    "index": 3,
+                    "text": "Neither agree nor disagree"
+                  },
+                  {
+                    "index": 4,
+                    "text": "Agree"
+                  },
+                  {
+                    "index": 5,
+                    "text": "Strongly agree"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_3",
+      "elements": [
+        {
+          "question": {
+            "prompt": {
+              "ref": "pr_wb_active@v26.0601"
+            }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              {
+                "index": 1,
+                "value": 0
+              },
+              {
+                "index": 2,
+                "value": 1
+              },
+              {
+                "index": 3,
+                "value": 2
+              },
+              {
+                "index": 4,
+                "value": 3
+              },
+              {
+                "index": 5,
+                "value": 4
+              }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Agreement",
+                "options": [
+                  {
+                    "index": 1,
+                    "text": "Strongly disagree"
+                  },
+                  {
+                    "index": 2,
+                    "text": "Disagree"
+                  },
+                  {
+                    "index": 3,
+                    "text": "Neither agree nor disagree"
+                  },
+                  {
+                    "index": 4,
+                    "text": "Agree"
+                  },
+                  {
+                    "index": 5,
+                    "text": "Strongly agree"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_4",
+      "elements": [
+        {
+          "question": {
+            "prompt": {
+              "ref": "pr_wb_rested@v26.0601"
+            }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              {
+                "index": 1,
+                "value": 0
+              },
+              {
+                "index": 2,
+                "value": 1
+              },
+              {
+                "index": 3,
+                "value": 2
+              },
+              {
+                "index": 4,
+                "value": 3
+              },
+              {
+                "index": 5,
+                "value": 4
+              }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Agreement",
+                "options": [
+                  {
+                    "index": 1,
+                    "text": "Strongly disagree"
+                  },
+                  {
+                    "index": 2,
+                    "text": "Disagree"
+                  },
+                  {
+                    "index": 3,
+                    "text": "Neither agree nor disagree"
+                  },
+                  {
+                    "index": 4,
+                    "text": "Agree"
+                  },
+                  {
+                    "index": 5,
+                    "text": "Strongly agree"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_5",
+      "elements": [
+        {
+          "question": {
+            "prompt": {
+              "ref": "pr_wb_interest@v26.0601"
+            }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              {
+                "index": 1,
+                "value": 0
+              },
+              {
+                "index": 2,
+                "value": 1
+              },
+              {
+                "index": 3,
+                "value": 2
+              },
+              {
+                "index": 4,
+                "value": 3
+              },
+              {
+                "index": 5,
+                "value": 4
+              }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Agreement",
+                "options": [
+                  {
+                    "index": 1,
+                    "text": "Strongly disagree"
+                  },
+                  {
+                    "index": 2,
+                    "text": "Disagree"
+                  },
+                  {
+                    "index": 3,
+                    "text": "Neither agree nor disagree"
+                  },
+                  {
+                    "index": 4,
+                    "text": "Agree"
+                  },
+                  {
+                    "index": 5,
+                    "text": "Strongly agree"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_6",
+      "elements": [
+        {
+          "question": {
+            "prompt": {
+              "ref": "pr_wb_connect@v26.0601"
+            }
+          },
+          "option": {
+            "input_data_type": "choice",
+            "measurement_type": "ordinal",
+            "selection": "single",
+            "options": [
+              {
+                "index": 1,
+                "value": 0
+              },
+              {
+                "index": 2,
+                "value": 1
+              },
+              {
+                "index": 3,
+                "value": 2
+              },
+              {
+                "index": 4,
+                "value": 3
+              },
+              {
+                "index": 5,
+                "value": 4
+              }
+            ],
+            "content": {
+              "en": {
+                "status": "validated",
+                "label": "Agreement",
+                "options": [
+                  {
+                    "index": 1,
+                    "text": "Strongly disagree"
+                  },
+                  {
+                    "index": 2,
+                    "text": "Disagree"
+                  },
+                  {
+                    "index": 3,
+                    "text": "Neither agree nor disagree"
+                  },
+                  {
+                    "index": 4,
+                    "text": "Agree"
+                  },
+                  {
+                    "index": 5,
+                    "text": "Strongly agree"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

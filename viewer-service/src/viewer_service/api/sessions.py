@@ -16,6 +16,14 @@ from . import identity
 router = APIRouter()
 
 
+def _preflight_422(e: PreflightError) -> JSONResponse:
+    """Map a denormaliser pre-flight failure (e.g. a deployment locale the questionnaire doesn't
+    support) to a clean 422 — never a 500 — so the viewer can surface it / start fresh."""
+    return JSONResponse(status_code=422, content={"error": {
+        "code": "preflight_failed", "message": "runtime pre-flight failed",
+        "detail": [{"kind": p.kind, "where": p.where, "detail": p.detail} for p in e.problems]}})
+
+
 @router.post("/sessions/new", status_code=201)
 def new(body: SessionNew, authorization: str | None = Header(default=None), conn=Depends(get_conn)):
     dep = dep_store.get_deployment(conn, body.deployment_id)
@@ -48,9 +56,7 @@ def new(body: SessionNew, authorization: str | None = Header(default=None), conn
     except deploy_svc.QuotaExhausted:
         return JSONResponse(status_code=409, content={"error": {"code": "quota_exhausted", "message": "deployment session quota reached"}})
     except PreflightError as e:
-        return JSONResponse(status_code=422, content={"error": {
-            "code": "preflight_failed", "message": "runtime pre-flight failed",
-            "detail": [{"kind": p.kind, "where": p.where, "detail": p.detail} for p in e.problems]}})
+        return _preflight_422(e)
     except LibraryError as e:
         raise HTTPException(status_code=e.status, detail=e.message)
 
@@ -74,7 +80,10 @@ def get(session_id: str, session=Depends(require_session), conn=Depends(get_conn
 def runtime(session_id: str, session=Depends(require_session), conn=Depends(get_conn)):
     if session["ephemeral"]:
         return _ephemeral_409()
-    return sessions_svc.session_runtime(conn, session)
+    try:
+        return sessions_svc.session_runtime(conn, session)
+    except PreflightError as e:
+        return _preflight_422(e)
 
 
 @router.post("/sessions/{session_id}/locale")
@@ -86,3 +95,5 @@ def locale(session_id: str, body: LocaleSwitch, session=Depends(require_session)
     except sessions_svc.LocaleNotAvailable:
         return JSONResponse(status_code=422, content={"error": {
             "code": "invalid", "message": f"locale '{body.locale}' not in deployment.available_locales"}})
+    except PreflightError as e:
+        return _preflight_422(e)

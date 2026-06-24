@@ -1,0 +1,10 @@
+{
+  "id": "pr_wb_connect",
+  "construct": "wellbeing",
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Over the past week, I have felt close to and supported by other people."
+    }
+  }
+}

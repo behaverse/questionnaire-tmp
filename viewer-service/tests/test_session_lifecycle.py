@@ -61,3 +61,22 @@ def test_demo_session_refuses_resume_409(env):
     assert client.get(f"/v1/sessions/{s['session_id']}", headers=h).status_code == 409
     assert client.get(f"/v1/sessions/{s['session_id']}/runtime", headers=h).status_code == 409
     assert client.post(f"/v1/sessions/{s['session_id']}/locale", json={"locale": "pt"}, headers=h).status_code == 409
+
+
+def test_resume_runtime_preflight_is_422_not_500(env, monkeypatch):
+    # a misconfigured deployment (e.g. a locale the questionnaire lacks) makes the denormaliser
+    # raise PreflightError on the resume runtime fetch — it must surface as a clean 422, not a 500
+    # (the 500 was what stranded the participant on "resume_unreachable").
+    import viewer_service.sessions as svc
+    from denormaliser import PreflightError
+    from denormaliser.errors import Problem
+    client, make_dep = env
+    s = _mint(client, make_dep()).json()
+    h = {"Authorization": f"Bearer {s['session_token']}"}
+
+    def boom(conn, session):
+        raise PreflightError([Problem(kind="missing_locale", where="de", detail="no de content")])
+    monkeypatch.setattr(svc, "session_runtime", boom)
+    r = client.get(f"/v1/sessions/{s['session_id']}/runtime", headers=h)
+    assert r.status_code == 422, r.text
+    assert r.json()["error"]["code"] == "preflight_failed"

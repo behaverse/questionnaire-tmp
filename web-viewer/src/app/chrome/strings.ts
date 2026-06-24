@@ -34,6 +34,7 @@ const STRINGS = {
     redirecting: 'Redirecting you…',
     redirect_here: 'click here',
     done: 'Done',
+    start_fresh: 'Start fresh',
   },
   pt: {
     next: 'Seguinte', back: 'Voltar', enter_hint: 'prima Enter ↵',
@@ -70,6 +71,7 @@ const STRINGS = {
     redirecting: 'A redirecionar…',
     redirect_here: 'clique aqui',
     done: 'Concluído',
+    start_fresh: 'Começar de novo',
   },
 } as const
 

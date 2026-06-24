@@ -522,9 +522,13 @@ export function App() {
             <>
               <h1 className="text-2xl font-semibold">{t(locale, 'submit_failed_title')}</h1>
               <p className="text-slate-600">{t(locale, 'submit_failed_body')}</p>
-              <button onClick={() => dispatch({ type: 'submit_retry' })} className="rounded-lg bg-primary px-5 py-2.5 text-white font-medium">
-                {t(locale, 'retry')}
-              </button>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <button onClick={() => dispatch({ type: 'submit_retry' })} className="rounded-lg bg-primary px-5 py-2.5 text-white font-medium">
+                  {t(locale, 'retry')}
+                </button>
+                {/* never strand the participant: if the launcher gave a return_url, let them leave */}
+                {doneLink}
+              </div>
             </>
           ) : (
             <p aria-live="polite" className="text-lg text-slate-600">{t(locale, 'submitting')}</p>
@@ -534,7 +538,9 @@ export function App() {
     )
   }
   if (state.phase === 'error' && state.error) {
-    return <ErrorScreen locale={locale} kind={state.error.kind} code={state.error.code} onRetry={() => { bootStarted.current = false; dispatch({ type: 'retry' }) }} />
+    return <ErrorScreen locale={locale} kind={state.error.kind} code={state.error.code}
+      onRetry={() => { bootStarted.current = false; dispatch({ type: 'retry' }) }}
+      onStartFresh={() => { void (async () => { if (params.deploymentId) await store.clear(params.deploymentId); bootStarted.current = false; dispatch({ type: 'retry' }) })() }} />
   }
   if (state.phase === 'finished') {
     const showScore = state.runtime?.x_show_score === true

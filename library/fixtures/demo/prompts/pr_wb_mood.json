@@ -1,0 +1,10 @@
+{
+  "id": "pr_wb_mood",
+  "construct": "wellbeing",
+  "content": {
+    "en": {
+      "status": "validated",
+      "text": "Over the past week, I have felt cheerful and in good spirits."
+    }
+  }
+}
