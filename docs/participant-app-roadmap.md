@@ -52,11 +52,13 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
    catalogue with the "All done — pick another" banner. The select→run→return flow is cohesive
    (still a full-page hand-off under the hood — embedding-in-shell is #1).
 
-5. **library-web: a "Try / Preview" link per questionnaire.** Each questionnaire card in
-   `library-web/` gets a link that **launches the player** to experience that questionnaire, with a
-   return_url back to the Library. Needs a way to run a Library questionnaire without a full
-   researcher deployment (a "preview"/ephemeral mint in viewer-service) + the player's return-URL
-   (#3). *(Medium; #3 + a VS preview-mint.)*
+5. **✅ DONE (2026-06-24, merge `1efaa0e1`). library-web "Try it" per questionnaire.** A **Try it**
+   link on the Library DetailPage launches the player in **render-only preview** (no data captured) and
+   returns to the Library on Done. Backed by a **public `GET /v1/preview/runtime`** in VS (builds a
+   runtime from a bare `questionnaire_ref` via a synthesized pseudo-deployment — no deployment/session/
+   auth/storage; reuses the runtime cache) + a player `?preview=<ref>` no-capture boot path. Locale =
+   the questionnaire's own default, so #7's locale-500 is sidestepped here. VS 198 + web-viewer 249 +
+   library-web 62 tests.
 
 ## Also-open (carried from earlier testing)
 
