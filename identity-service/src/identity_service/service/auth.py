@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 
 from .. import tokens, passwords
 from ..store import users as ustore, clients as cstore, refresh as rstore
-from ..store import keys as kstore, email_tokens as etstore
+from ..store import keys as kstore, email_tokens as etstore, handoff as hstore
 
 _log = logging.getLogger("identity.service.auth")
 
@@ -41,6 +41,10 @@ class WrongPassword(AuthError):
     code = "wrong_password"; status = 403; message = "Current password is incorrect."
 
 
+class InvalidHandoff(AuthError):
+    code = "handoff_invalid"; status = 401; message = "Invalid, expired, or already-used handoff code."
+
+
 def _client_or_raise(conn, slug):
     c = cstore.by_slug(conn, slug)
     if c is None:
@@ -65,6 +69,29 @@ def _issue_tokens(conn, settings, user, client) -> dict:
                  uuid.uuid4(), _now() + timedelta(seconds=settings.refresh_ttl))
     return {"access_token": access, "refresh_token": raw_refresh,
             "expires_in": settings.access_ttl, "token_type": "Bearer"}
+
+
+def mint_handoff(conn, settings, *, user_id, audience) -> dict:
+    """Mint a single-use, short-TTL code that another origin (the player) can exchange for its own
+    token pair — the cross-origin SSO handoff. Bound to the caller's user + client/audience."""
+    client = _client_or_raise(conn, audience)
+    raw = tokens.mint_refresh()
+    hstore.issue(conn, user_id, client["id"], tokens.hash_token(raw),
+                 _now() + timedelta(seconds=settings.handoff_ttl))
+    return {"handoff_code": raw, "expires_in": settings.handoff_ttl}
+
+
+def exchange_handoff(conn, settings, *, code) -> dict:
+    """Consume a handoff code (single-use) and issue a fresh token pair for its bound user+client.
+    Any invalid/expired/used code raises InvalidHandoff (the player then falls back to login)."""
+    row = hstore.consume(conn, tokens.hash_token(code))
+    if row is None:
+        raise InvalidHandoff()
+    user = ustore.by_id(conn, row["user_id"])
+    client = cstore.by_id(conn, row["client_id"])
+    if user is None or user["status"] != "active" or client is None:
+        raise InvalidHandoff()
+    return _issue_tokens(conn, settings, user, client)
 
 
 def register(conn, settings, mailer, *, email, password, display_name, audience) -> dict:

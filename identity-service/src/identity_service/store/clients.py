@@ -21,6 +21,10 @@ def by_slug(conn: psycopg.Connection, slug: str) -> dict | None:
     return _row(conn.execute("SELECT id, slug, name FROM clients WHERE slug = %s", (slug,)))
 
 
+def by_id(conn: psycopg.Connection, client_id) -> dict | None:
+    return _row(conn.execute("SELECT id, slug, name FROM clients WHERE id = %s", (client_id,)))
+
+
 def list_all(conn: psycopg.Connection) -> list[dict]:
     cur = conn.execute("SELECT id, slug, name FROM clients ORDER BY slug")
     cols = [d.name for d in cur.description]

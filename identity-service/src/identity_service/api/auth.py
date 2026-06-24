@@ -4,7 +4,7 @@ from ..config import get_settings
 from ..mailer import make_mailer
 from ..service import auth
 from ..models import (RegisterIn, LoginIn, RefreshIn, LogoutIn, VerifyEmailIn,
-                      RequestResetIn, ResetPasswordIn, ChangePasswordIn)
+                      RequestResetIn, ResetPasswordIn, ChangePasswordIn, HandoffExchangeIn)
 
 router = APIRouter()
 
@@ -88,4 +88,27 @@ def change_password(body: ChangePasswordIn, claims=Depends(require_access), conn
         auth.change_password(conn, user_id=claims["sub"], old_password=body.old_password,
                              new_password=body.new_password)
         conn.commit()
+    return _handle(go)
+
+
+@router.post("/v1/auth/handoff")
+def handoff(claims=Depends(require_access), conn=Depends(get_conn)):
+    """Mint a single-use SSO handoff code for the signed-in participant (used by the portal to launch
+    the player on another origin without a re-login). Bound to the caller's user + audience."""
+    s = get_settings()
+    def go():
+        out = auth.mint_handoff(conn, s, user_id=claims["sub"], audience=claims["aud"])
+        conn.commit()
+        return out
+    return _handle(go)
+
+
+@router.post("/v1/auth/handoff/exchange")
+def handoff_exchange(body: HandoffExchangeIn, conn=Depends(get_conn)):
+    """Public — exchange a handoff code (single-use) for a fresh token pair on this origin."""
+    s = get_settings()
+    def go():
+        out = auth.exchange_handoff(conn, s, code=body.handoff_code)
+        conn.commit()
+        return out
     return _handle(go)

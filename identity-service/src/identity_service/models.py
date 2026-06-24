@@ -41,6 +41,10 @@ class ChangePasswordIn(BaseModel):
     new_password: str = Field(min_length=8)
 
 
+class HandoffExchangeIn(BaseModel):
+    handoff_code: str
+
+
 class RoleIn(BaseModel):
     client: str
     role: str

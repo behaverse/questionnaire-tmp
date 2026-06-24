@@ -10,6 +10,7 @@ class Settings:
     refresh_ttl: int = 2_592_000     # seconds (30 days)
     verify_token_ttl: int = 86_400   # seconds (1 day)
     reset_token_ttl: int = 3_600     # seconds (1 hour)
+    handoff_ttl: int = 60            # seconds (cross-origin SSO handoff code)
     default_register_role: str = "researcher"
     cors_origins: tuple[str, ...] = ()
     web_viewer_base_url: str = "http://localhost:5173"
@@ -30,6 +31,7 @@ def get_settings() -> Settings:
         refresh_ttl=int(os.environ.get("REFRESH_TOKEN_TTL", "2592000")),
         verify_token_ttl=int(os.environ.get("VERIFY_TOKEN_TTL", "86400")),
         reset_token_ttl=int(os.environ.get("RESET_TOKEN_TTL", "3600")),
+        handoff_ttl=int(os.environ.get("HANDOFF_TTL", "60")),
         default_register_role=os.environ.get("DEFAULT_REGISTER_ROLE", "researcher"),
         cors_origins=origins,
         web_viewer_base_url=os.environ.get("WEB_VIEWER_BASE_URL", "http://localhost:5173"),
