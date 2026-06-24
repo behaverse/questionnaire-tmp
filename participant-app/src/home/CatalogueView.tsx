@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSession, mintHandoff } from '@behaverse/participant-session'
 import { parseParams } from '../params'
 import { fetchCatalogue, type CatalogueItem } from './client'
 
@@ -12,6 +13,11 @@ function carry(base: string, extra: Record<string, string>): string {
   }
   const qs = q.toString()
   return qs ? `${base}?${qs}` : base
+}
+
+/** The player URL that runs a deployment, carrying a return_url back to this catalogue. */
+function launchUrl(playerBaseUrl: string, deploymentId: string): string {
+  return carry(`${playerBaseUrl}/`, { deployment: deploymentId, return_url: returnUrlFor(deploymentId) })
 }
 
 /** Absolute URL back to this catalogue, marked so we can greet the returning participant.
@@ -51,7 +57,10 @@ function DoneBanner({ items }: { items: CatalogueItem[] }) {
   )
 }
 
-function Card({ item, playerBaseUrl }: { item: CatalogueItem; playerBaseUrl: string }) {
+const startCls = 'inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:self-auto'
+
+function Card({ item, playerBaseUrl, identityStart }: { item: CatalogueItem; playerBaseUrl: string; identityStart?: () => void }) {
+  const arrow = <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
   return (
     <li className="group rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -59,11 +68,11 @@ function Card({ item, playerBaseUrl }: { item: CatalogueItem; playerBaseUrl: str
           <h2 className="truncate text-lg font-semibold tracking-tight text-zinc-900">{item.title}</h2>
           {item.description ? <p className="mt-1 text-sm leading-relaxed text-zinc-500">{item.description}</p> : null}
         </div>
-        <a href={carry(`${playerBaseUrl}/`, { deployment: item.deployment_id, return_url: returnUrlFor(item.deployment_id) })}
-          className="inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:self-auto">
-          Start
-          <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
-        </a>
+        {/* a signed-in participant launching an authenticated questionnaire gets a one-time SSO
+            handoff so the player doesn't re-prompt login; everything else is a plain link */}
+        {identityStart
+          ? <button onClick={identityStart} className={startCls}>Start {arrow}</button>
+          : <a href={launchUrl(playerBaseUrl, item.deployment_id)} className={startCls}>Start {arrow}</a>}
       </div>
     </li>
   )
@@ -85,8 +94,22 @@ function Skeleton() {
 
 export function CatalogueView() {
   const params = parseParams(window.location.search)
+  const session = useSession()
   const [items, setItems] = useState<CatalogueItem[]>([])
   const [loaded, setLoaded] = useState(false)
+
+  // For an authenticated questionnaire while signed in: mint a one-time handoff code, then launch
+  // the player with it (no re-login on the player origin). Falls back to a plain launch on failure.
+  function identityStartFor(item: CatalogueItem): (() => void) | undefined {
+    if (item.auth !== 'identity' || session.status !== 'authed' || !session.accessToken) return undefined
+    return () => {
+      void (async () => {
+        const base = launchUrl(params.playerBaseUrl, item.deployment_id)
+        const r = await mintHandoff(params.identityBaseUrl, session.accessToken!)
+        window.location.href = r.ok ? `${base}&handoff=${encodeURIComponent(r.code)}` : base
+      })()
+    }
+  }
 
   useEffect(() => {
     void (async () => {
@@ -107,7 +130,7 @@ export function CatalogueView() {
   return (
     <>
       <DoneBanner items={items} />
-      <ul className="space-y-4">{items.map((it) => <Card key={it.deployment_id} item={it} playerBaseUrl={params.playerBaseUrl} />)}</ul>
+      <ul className="space-y-4">{items.map((it) => <Card key={it.deployment_id} item={it} playerBaseUrl={params.playerBaseUrl} identityStart={identityStartFor(it)} />)}</ul>
     </>
   )
 }

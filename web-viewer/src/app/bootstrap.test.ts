@@ -7,9 +7,14 @@ afterEach(() => {
 test('parseParams reads deployment/locale/viewer_url/fixture/theme', () => {
   expect(parseParams('?deployment=dpl_1&locale=pt&viewer_url=http://vs:9&fixture=mini&theme=sage')).toEqual({
     deploymentId: 'dpl_1', locale: 'pt', vsBaseUrl: 'http://vs:9', fixture: 'mini', theme: 'sage',
-    identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null,
+    identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null, handoff: null,
   })
-  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null })
+  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null, handoff: null })
+})
+
+test('parseParams reads the SSO handoff code', () => {
+  expect(parseParams('?handoff=HC123').handoff).toBe('HC123')
+  expect(parseParams('').handoff).toBeNull()
 })
 
 test('parseParams reads preview (a questionnaire_ref)', () => {
