@@ -1,27 +1,24 @@
-# questionnaire-web-viewer (WV-A..F + PA-1..2)
+# questionnaire-web-viewer (the player)
 
 Participant-facing **custom React/TS viewer** (OD-01 S1) that renders **Schema 3
 runtimes** minted by the Viewer Service. The default presentation is a
 Typeform-like **focus mode** — one question per view, auto-advance on single
 choice.
 
-**This is now a single SPA** (`index.html` / `dist/index.html`).  A top-level
-`SessionProvider` reads the URL on load and branches into two modes:
+**This package is now the player only** (`index.html` → `<App/>`, the runner).
+The participant **portal** (catalogue / account / my-data / nav shell) moved to
+the sibling **`participant-app/`** package; the shared auth/session layer lives in
+**`@behaverse/participant-session`** (consumed by both via a source alias). The
+portal launches the player with `?deployment=…&return_url=…`; the player returns
+the participant to the portal via the **Done** button / `return_url`.
 
-- **Runner** (`?deployment=`, `?invite=`, or `?fixture=`): the full
-  questionnaire runner (`<App/>`), as before.  No nav shell — intentional focus
-  mode.
-- **Participant shell** (no runner params): a `<ParticipantApp/>` with a
-  `NavShell` header and a path-based router (`src/shell/`).  Three routes:
-  - `/` — `CatalogueView`: lists published deployments; each card links into the
-    runner via `?deployment=<id>`.
-  - `/my-data` — `MyDataView`: lists and downloads the signed-in participant's
-    own sessions.
-  - `/account` — `AccountView`: **Create account** form (auto-logs-in on
-    success) when the participant is anonymous; profile + log-out when signed in;
-    **Change password** section (old password + new password ≥ 8 chars) when signed in
-    — calls `changePassword(authFetch, identityBaseUrl, old, new)` and stays logged in
-    on success.
+- **Runner** (`?deployment=`, `?invite=`, or `?fixture=`): the full questionnaire
+  runner (`<App/>`). No nav shell — intentional focus mode.
+- **Auth**: anonymous / invite / demo deployments need no login. **Authenticated**
+  deployments prompt login here (the player's own `LoginView`); a seamless
+  cross-origin SSO handoff from the portal is a planned follow-up.
+- The **renderer** / **scoring** libraries (`build:lib` → `dist-lib`, consumed by
+  the editor) are unchanged by the split.
 
 Specs: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md` and the
 PA-1/PA-2 design docs in the same directory.
