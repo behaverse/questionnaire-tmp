@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { parseParams } from '../app/bootstrap'
 import { Link } from '../shell/router'
-import { verifyEmail } from '../session/client'
+import { verifyEmail } from '@behaverse/participant-session'
 import { cardCls } from './ui'
 
 export function VerifyEmailView() {

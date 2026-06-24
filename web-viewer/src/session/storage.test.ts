@@ -1,5 +1,5 @@
 import { test, expect, beforeEach } from 'vitest'
-import { loadRefreshToken, saveRefreshToken, clearRefreshToken } from './storage'
+import { loadRefreshToken, saveRefreshToken, clearRefreshToken } from '@behaverse/participant-session'
 
 beforeEach(() => localStorage.clear())
 

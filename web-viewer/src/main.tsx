@@ -4,7 +4,7 @@ import './index.css'
 import { App } from './app/App'
 import { ParticipantApp } from './shell/ParticipantApp'
 import { parseParams } from './app/bootstrap'
-import { SessionProvider } from './session/SessionProvider'
+import { SessionProvider } from '@behaverse/participant-session'
 
 const params = parseParams(window.location.search)
 const runQuestionnaire = Boolean(params.deploymentId || params.invite || params.fixture)

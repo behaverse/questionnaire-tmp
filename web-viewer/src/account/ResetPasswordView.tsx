@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { parseParams } from '../app/bootstrap'
 import { Link } from '../shell/router'
-import { requestPasswordReset, resetPassword } from '../session/client'
+import { requestPasswordReset, resetPassword } from '@behaverse/participant-session'
 import { inputCls, primaryBtn, cardCls } from './ui'
 
 export function ResetPasswordView() {

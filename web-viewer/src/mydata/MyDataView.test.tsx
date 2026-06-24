@@ -1,6 +1,6 @@
 import { test, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { SessionProvider } from '../session/SessionProvider'
+import { SessionProvider } from '@behaverse/participant-session'
 import { MyDataView } from './MyDataView'
 
 beforeEach(() => { vi.restoreAllMocks(); localStorage.clear() })

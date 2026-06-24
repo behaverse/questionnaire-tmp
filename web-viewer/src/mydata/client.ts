@@ -1,4 +1,4 @@
-import type { AuthFetch } from '../session/authFetch'
+import type { AuthFetch } from '@behaverse/participant-session'
 
 export type MySession = {
   session_id: string; instrument_id: string; instrument_version: string; deployment_id: string

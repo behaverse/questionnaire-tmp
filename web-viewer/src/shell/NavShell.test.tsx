@@ -1,7 +1,7 @@
 import { test, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { SessionProvider } from '../session/SessionProvider'
+import { SessionProvider } from '@behaverse/participant-session'
 import { NavShell } from './NavShell'
 
 beforeEach(() => { vi.restoreAllMocks(); localStorage.clear(); window.history.pushState(null, '', '/') })

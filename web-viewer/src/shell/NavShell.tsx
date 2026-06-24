@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { useSession } from '../session/SessionProvider'
+import { useSession } from '@behaverse/participant-session'
 import { useRoute, Link } from './router'
 
 const NAV = [

@@ -1,8 +1,8 @@
 import { test, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { SessionProvider, useSession } from './SessionProvider'
-import { saveRefreshToken, loadRefreshToken } from './storage'
+import { SessionProvider, useSession } from '@behaverse/participant-session'
+import { saveRefreshToken, loadRefreshToken } from '@behaverse/participant-session'
 
 beforeEach(() => { vi.restoreAllMocks(); localStorage.clear() })
 

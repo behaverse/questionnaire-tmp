@@ -1,6 +1,6 @@
 import { test, expect, vi, beforeEach } from 'vitest'
 import { fetchMySessions, downloadMyData } from './client'
-import type { AuthFetch } from '../session/authFetch'
+import type { AuthFetch } from '@behaverse/participant-session'
 
 beforeEach(() => { vi.restoreAllMocks() })
 

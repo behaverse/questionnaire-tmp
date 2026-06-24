@@ -16,6 +16,11 @@ export default defineConfig(({ mode }) =>
           runtimeCaching: [{ urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith('/v1/'), handler: 'NetworkOnly' }],
         },
       }) as never],
+      resolve: {
+        alias: {
+          '@behaverse/participant-session': resolve(__dirname, '../participant-session/src/index.ts'),
+        },
+      },
       build: {
         rollupOptions: {
           input: mode === 'production'

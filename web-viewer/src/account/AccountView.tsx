@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { parseParams } from '../app/bootstrap'
-import { useSession } from '../session/SessionProvider'
-import { register, changePassword } from '../session/client'
+import { useSession } from '@behaverse/participant-session'
+import { register, changePassword } from '@behaverse/participant-session'
 import { inputCls, primaryBtn } from './ui'
 import { Link } from '../shell/router'
 
