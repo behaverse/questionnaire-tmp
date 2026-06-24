@@ -46,3 +46,12 @@ test('authed shows the email and a working Log out', async () => {
   await userEvent.click(logout)
   await waitFor(() => expect(screen.queryByText(/a@e.com/)).not.toBeInTheDocument())
 })
+
+test('authed shows an avatar chip with the initial alongside the email', async () => {
+  localStorage.setItem('behaverse.participant.refresh', 'RT0')
+  authedFetch()
+  renderShell()
+  // display_name 'Al' → initial 'A'
+  expect(await screen.findByText(/a@e.com/)).toBeInTheDocument()
+  expect(screen.getByText('A', { selector: 'span' })).toBeInTheDocument()
+})
