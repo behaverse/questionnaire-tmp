@@ -26,6 +26,7 @@ class Settings:
     invite_default_ttl_seconds: int = 2_592_000
     scorer_dir: Path = REPO_ROOT / "questionnaire-scorer" / "dist-wasm"
     public_base_url: str = ""
+    cron_secret: str | None = None
     scorer_map: dict[str, str] = field(default_factory=dict)
 
 
@@ -55,5 +56,6 @@ def get_settings() -> Settings:
         invite_default_ttl_seconds=int(os.environ.get("INVITE_DEFAULT_TTL_SECONDS", "2592000")),
         scorer_dir=Path(os.environ.get("VS_SCORER_DIR") or REPO_ROOT / "questionnaire-scorer" / "dist-wasm"),
         public_base_url=os.environ.get("VS_PUBLIC_BASE", ""),
+        cron_secret=os.environ.get("CRON_SECRET") or None,
         scorer_map=scorer_map,
     )
