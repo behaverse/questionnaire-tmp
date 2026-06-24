@@ -64,9 +64,14 @@ the Library; each detail page has a **Try it** button that runs it in the player
 account, nothing stored** — and returns to the Library on Done. (Backed by the public VS
 `GET /v1/preview/runtime`; roadmap #5.)
 
-**Seed the full catalogue first** (otherwise the Library only has the two test fixtures). The Schema-2
-importer converts the bundled `survey_database` sqlite into ~64 real instruments (ASRS, BIS/BAS, Big
-Five, Grit, Emotion Regulation, …):
+> **The canonical catalogue is already live** at **https://questionnaire-library.vercel.app** (212
+> questionnaires, on Supabase) — the deployed app just doesn't have Try-it wired yet. The local seed
+> below is **only** for an isolated local test; do **not** treat re-importing as "adding"
+> questionnaires (see [`operational-gotchas.md`](operational-gotchas.md) #3).
+
+**Seed the full catalogue first** (otherwise the local Library only has the two test fixtures). The
+Schema-2 importer converts the bundled `survey_database` sqlite into ~64 real instruments (ASRS,
+BIS/BAS, Big Five, Grit, Emotion Regulation, …):
 
 ```bash
 # 1) generate Schema-2 content from the sqlite (release version must NOT collide with existing entities)
@@ -81,7 +86,9 @@ Then run the Library web UI + the player (the player serves the runs), and the s
 ```bash
 cd library-web && VITE_API_BASE_URL=http://localhost:8000 npm run dev -- --port 5175   # the Library UI
 cd web-viewer && npm run dev                                                            # the player (:5173)
-# Identity :8100, Library :8000, VS :8001 must also be up (see §2). VS CORS must allow :5175.
+# Identity :8100, Library :8000, VS :8001 must also be up (see §2).
+# ⚠️ CORS: the Library API must allow this app's origin — LIBRARY_CORS_ORIGINS=http://localhost:5175
+#    (its default is only :5173, so otherwise the catalogue shows "Could not load questionnaires").
 ```
 
 Open **http://localhost:5175**, pick any questionnaire, and click **Try it**. (No login; nothing is
@@ -121,6 +128,7 @@ uvicorn identity_service.api.app:create_app --factory --reload --port 8100
 cd <repo-root>
 pip install -e ./library
 export DATABASE_URL=postgresql://localhost/library
+export LIBRARY_CORS_ORIGINS=http://localhost:5175,http://localhost:5173   # let library-web (and the editor) call the API
 
 library migrate
 library ingest library/tests/fixtures/content --release v26.0601   # seeds qst_min@v26.0601

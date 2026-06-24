@@ -1,36 +1,71 @@
 # Questionnaire Apps
 
-This repository holds the design and implementation of the **Questionnaire Apps Ecosystem** — an open, modular platform for designing, distributing, and analysing psychological-research questionnaires.
+An open, modular platform for designing, distributing, running, and analysing psychological-research
+questionnaires. This monorepo holds the **design**, the **canonical JSON schemas**, and the
+**implementations** of every component.
 
-**Status (2026-06-06):** Design complete — all 20 originally-tracked design decisions resolved (see [design/10_open_decisions.md](design/10_open_decisions.md)) and all 8 data-model schemas authored/tagged/validated. **Implementation underway:** the **Library Core** (catalogue + ingestion + public read API) and the **legacy `survey_database/` importer** are built, tested, and merged (`library/`; 86 library + 308 schema tests pass). Repo topology is locked ([design/14_repository_topology.md](design/14_repository_topology.md)); the multi-repo split is deferred and an interim backup lives in the private `behaverse/questionnaire-tmp`. See [HANDOFF.md](HANDOFF.md) for the full status and what's next. Versioning per the [Behaverse schemas policy](https://behaverse.org/schemas/#versioning) (CalVer `vYY.MMDD`).
+**Status (2026-06-24).** Phase 1 (schemas + Library) **shipped and live**; Phase 2 (Web Viewer +
+deployments) and the full **participant experience** are **built**; Phase 3 (Editor) is built and
+parked. The public Library is deployed at **https://questionnaire-library.vercel.app** with **212
+questionnaires** (the `survey_database` import + 158 from the harvester). Remaining major tracks:
+**Phase 4** (Godot native viewer) and **Phase 5** (Participant Platform — studies/protocols/scheduling).
+See **[HANDOFF.md](HANDOFF.md)** for the live status and what's next, and
+**[docs/operational-gotchas.md](docs/operational-gotchas.md)** before running the stack.
 
 ## Start here
 
-- **New agent or contributor?** → [HANDOFF.md](HANDOFF.md) — orients you in 5 minutes, names the conventions and anti-patterns, and points at the suggested next work.
-- **What the system is →** [design/00_index.md](design/00_index.md)
-- **How and when it gets built →** [plan/00_index.md](plan/00_index.md)
+- **New agent or contributor?** → **[HANDOFF.md](HANDOFF.md)** — current status, conventions,
+  anti-patterns, suggested next work.
+- **Running / demoing the stack?** → **[docs/operational-gotchas.md](docs/operational-gotchas.md)** +
+  **[docs/testing-participant-flow.md](docs/testing-participant-flow.md)**.
+- **What the system is →** [design/00_index.md](design/00_index.md) (authoritative).
+- **How and when it gets built →** [plan/00_index.md](plan/00_index.md) (roadmap, phases).
 
-The design folder is the single authoritative source. The plan folder records roadmap, MVP scope, and phasing. HANDOFF.md is the navigation aid. Nothing else at the root is authoritative.
+The `design/` folder is the single authoritative source of *what the system is*; `plan/` records the
+roadmap/MVP/phasing; `HANDOFF.md` is the navigation aid. Versioning is CalVer `vYY.MMDD`.
 
-## Folder layout
+## Components (implementations)
 
-| Path | What's there |
-|---|---|
-| [HANDOFF.md](HANDOFF.md) | Navigation aid for a new agent / contributor — current status, conventions, anti-patterns, suggested next work. |
-| [design/](design/) | The authoritative design: vision, terminology, use cases, architecture, data model, per-component specs, open decisions. |
-| [plan/](plan/) | The roadmap and phasing: MVP scope, use-case priority, feature priority. |
-| [schemas/](schemas/) | The 8 implemented canonical JSON Schemas (+ archived `versions/`, `CHANGELOG`, `examples/`). |
-| [tools/](tools/) | Schema validator + tests (`validate_schemas.py`). |
-| [library/](library/) | **The built Library Core + legacy importer** (Python/FastAPI/PostgreSQL). Will become `behaverse/questionnaire-library-service` at the repo split. |
-| [docs/superpowers/](docs/superpowers/) | Implementation specs + plans (one pair per build). |
-| [archive_do_not_edit/](archive_do_not_edit/) | Earlier scattered specs, superseded by `design/` and `plan/`. Do not edit; do not cite as authoritative. |
-| [qv_godot/](qv_godot/) | Godot-based survey runner — **prototype**, reference-only. Predates the current design. |
-| [survey_database/](survey_database/) | Python/SQLite survey database — **prototype**, reference-only. Contains 59 questionnaires and 792 questions to be migrated into the Library during MVP. |
-| [survey_system/](survey_system/) | FastAPI + React + xAPI skeleton — **prototype**, reference-only. Abandoned. |
-| `survey_database_2025.zip` | Archived snapshot of an earlier `survey_database/` state. |
+| Path | What it is | State |
+|---|---|---|
+| [schemas/](schemas/) | The 8 canonical JSON Schemas (questionnaire, runtime, events, response, …) | ✅ authored/validated |
+| [tools/](tools/) | Schema validator (`validate_schemas.py`) | ✅ |
+| [library/](library/) | **Library Core** — catalogue, ingestion, public read API, `survey_database` importer, community signals (FastAPI + Postgres) | ✅ built + deployed |
+| [library-web/](library-web/) | **Library web UI** — read-only catalogue (search → view → download) + **"Try it"** demo links (Vite/React) | ✅ built + deployed |
+| [questionnaire-runtime-denormaliser/](questionnaire-runtime-denormaliser/) | Schema 2 → Schema 3 runtime denormaliser (Python lib) | ✅ |
+| [questionnaire-expression-evaluator/](questionnaire-expression-evaluator/) | Logic/expression evaluator (Rust → WASM) | ✅ |
+| [questionnaire-scorer/](questionnaire-scorer/) | Scorer ABI + conformance runner (Rust → WASM) | ✅ |
+| [viewer-service/](viewer-service/) | **Viewer Service** — deployments, sessions, runtime cache, response/event outbox, public catalogue + `preview` (FastAPI + Postgres) | ✅ |
+| [identity-service/](identity-service/) | **Identity** — accounts, JWT/JWKS, RBAC, the cross-origin SSO handoff (FastAPI + Postgres) | ✅ |
+| [web-viewer/](web-viewer/) | **The player** — the focus-mode questionnaire runner (Vite/React); also exports the renderer/scoring libs for the editor | ✅ |
+| [participant-app/](participant-app/) | **The participant portal** — sign in, browse, pick → run → return, my-data (Vite/React) | ✅ |
+| [participant-session/](participant-session/) | Shared auth/session package consumed by the portal + the player | ✅ |
+| [editor/](editor/) | **The Editor** — visual authoring (Vite/React) | ✅ built, ⏸ parked |
+| [questionnaire-harvester/](questionnaire-harvester/) | Web → Schema-2 questionnaire harvester (separate concurrent track) | ✅ 158 live |
+| [api/](api/) | Vercel serverless entry for the deployed Library | — |
 
-## What the prototypes are for
+> **The participant experience is three apps + a shared package**, not one: the **portal**
+> (`participant-app/`, :5174) lets a participant browse and pick; the **player** (`web-viewer/`, :5173)
+> runs one questionnaire and returns; **`participant-session/`** is the shared login. Authentication
+> across the two origins uses Identity's one-time **SSO handoff**. (Historically `web-viewer/` was both;
+> it is now the player only.)
 
-The three prototype folders are kept as references for the implementation phase. They are **not** authoritative descriptions of the system. The design in [design/](design/) is written from clean principles; the prototypes inform tactical decisions (component-reuse model from `survey_database/`, Godot rendering patterns from `qv_godot/`, xAPI integration from `survey_system/`) but do not constrain the design.
+## Running locally
 
-In particular, the 792 questions catalogued in `survey_database/` will be migrated into the Library as part of the MVP (see [plan/02_mvp_scope.md](plan/02_mvp_scope.md)).
+See **[docs/testing-participant-flow.md](docs/testing-participant-flow.md)** for the full multi-service
+setup. Default local ports: Identity **8100**, Library **8000**, Viewer Service **8001**, player
+**5173**, portal **5174**, Library web **5175**. ⚠️ **Read [docs/operational-gotchas.md](docs/operational-gotchas.md)
+first** — every frontend on a new port must be added to the backends' CORS allow-lists, or the page
+silently fails to load.
+
+## docs/, design/, plan/
+
+- [docs/](docs/) — operational guides + `docs/superpowers/` implementation specs & plans (one pair per
+  build slice).
+- [design/](design/) — the authoritative design (vision, terminology, use cases, architecture, data
+  model, per-component specs, open decisions).
+- [plan/](plan/) — the roadmap and phasing.
+
+Superseded predecessor projects (the old `survey_database`/`survey_system`/`qv_godot` prototypes) were
+moved to a gitignored, local-only `archive/` during the 2026-06-23 cleanup; they are reference-only and
+not authoritative.
