@@ -85,6 +85,11 @@ export function App() {
   const localeRef = useRef(locale)
   localeRef.current = locale
   const embedOrigin = new URLSearchParams(window.location.search).get('embed_origin') ?? '*'
+  // return_url keystone: a manual "Done" button that returns the participant to the launcher,
+  // so the runner's terminal screens are never a dead-end (no auto-redirect — user-initiated).
+  const doneLink = params.returnUrl
+    ? <a href={params.returnUrl} className="qv-focusable inline-block rounded-lg bg-primary px-5 py-2.5 text-white font-medium">{t(locale, 'done')}</a>
+    : null
 
   const nowIso = () => new Date().toISOString()
 
@@ -490,6 +495,7 @@ export function App() {
         <div className="qv-step-enter max-w-md space-y-3">
           <h1 className="text-3xl font-semibold">{t(locale, 'declined_title')}</h1>
           <p className="text-lg text-slate-600">{t(locale, 'declined_body')}</p>
+          {doneLink}
         </div>
       </main>
     )
@@ -540,6 +546,7 @@ export function App() {
               <ScoreSummary title={t(locale, 'results_title')} scores={dscores} score={scoreFn} />
             </div>
           )}
+          {doneLink}
         </div>
       </main>
     )
@@ -550,6 +557,7 @@ export function App() {
         <div className="qv-step-enter max-w-md space-y-3">
           <h1 className="text-3xl font-semibold">{t(locale, 'completed_title')}</h1>
           <p className="text-lg text-slate-600">{t(locale, 'completed_body')}</p>
+          {doneLink}
         </div>
       </main>
     )

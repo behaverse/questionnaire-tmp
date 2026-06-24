@@ -33,6 +33,7 @@ const STRINGS = {
     declined_body: 'You can close this window.',
     redirecting: 'Redirecting you…',
     redirect_here: 'click here',
+    done: 'Done',
   },
   pt: {
     next: 'Seguinte', back: 'Voltar', enter_hint: 'prima Enter ↵',
@@ -68,6 +69,7 @@ const STRINGS = {
     declined_body: 'Pode fechar esta janela.',
     redirecting: 'A redirecionar…',
     redirect_here: 'clique aqui',
+    done: 'Concluído',
   },
 } as const
 

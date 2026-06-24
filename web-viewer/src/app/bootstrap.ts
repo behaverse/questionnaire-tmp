@@ -5,7 +5,19 @@ import type { Theme } from './theme'
 export const VIEWER_ID = 'behaverse-web-viewer'
 export const VIEWER_VERSION = 'v26.0612'
 
-export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null }
+export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null; returnUrl: string | null }
+
+/** Accept a return URL only if it is a well-formed http(s) URL; otherwise treat it as absent
+ *  (guards against open-redirect/phishing via javascript:, data:, relative, or garbage values). */
+export function safeReturnUrl(raw: string | null): string | null {
+  if (!raw) return null
+  try {
+    const u = new URL(raw)
+    return u.protocol === 'http:' || u.protocol === 'https:' ? raw : null
+  } catch {
+    return null
+  }
+}
 
 export function parseParams(search: string): Params {
   const q = new URLSearchParams(search)
@@ -17,6 +29,7 @@ export function parseParams(search: string): Params {
     theme: q.get('theme'),
     identityBaseUrl: q.get('identity_url') ?? import.meta.env.VITE_IDENTITY_BASE_URL ?? 'http://localhost:8100',
     invite: q.get('invite'),
+    returnUrl: safeReturnUrl(q.get('return_url')),
   }
 }
 
