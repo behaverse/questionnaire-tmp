@@ -22,13 +22,15 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
 
 ## Items
 
-1. **Untangle the participant app from the web-viewer (two projects).** Today `web-viewer/src/`
-   mixes the portal (`shell/`, `session/`, `account/`, `home/`, `mydata/`) with the runner (`app/`,
-   `renderer/`, `logic/`, `resume/`, `scoring/`, `theme/`, `chrome/`). Split into: **(A)** the viewer/
-   player (the runner + renderer; already exports a renderer lib for the editor) and **(B)** the
-   participant app (portal). Decision needed: same-repo two-package split sharing the Identity session
-   via same-origin localStorage, vs fully separate apps. *(Large; architecture decision — see Open
-   decisions.)*
+1. **✅ DONE (2026-06-24, merge `c83641ad`). Untangle the participant app from the web-viewer.** Split
+   into three packages: **`participant-session/`** (shared SessionProvider + Identity client, single
+   source of truth, source-aliased — no build step), **`participant-app/`** (the portal: catalogue/
+   account/my-data, dev :5174, launches the player at `VITE_PLAYER_BASE_URL` with a `return_url`), and
+   **`web-viewer/`** (player only, dev :5173). Anonymous/invite/demo seamless cross-origin;
+   **authenticated deployments re-prompt login on the player** (SSO deferred — see #1-SSO). Editor's
+   renderer/scoring lib untouched. participant-app 79 + web-viewer 247 tests; both builds + build:lib
+   green; live two-origin CORS verified. **#1-SSO (deferred):** a seamless cross-origin auth handoff so
+   authenticated deployments don't re-login on the player.
 
 2. **✅ PARTLY DONE (2026-06-24, merge `fbd4f16f`, with #4). Redesign the participant user journey.**
    Done so far: the pick→run→**return** loop is closed (Start passes a `return_url`; the catalogue
