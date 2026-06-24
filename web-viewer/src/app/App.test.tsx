@@ -248,6 +248,23 @@ test('complete failure shows retry; retry completes', async () => {
   await userEvent.click(screen.getByRole('button', { name: /try again/i }))
   expect(await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })).toBeInTheDocument()
 })
+
+test('a permanent submit failure with a return_url offers a Done escape (no dead-end)', async () => {
+  setUrl('?deployment=dpl_1&return_url=https://app.example/done')
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    if (String(url).endsWith('/complete')) return new Response('{}', { status: 500 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Submission problem/i }, { timeout: 3000 })
+  expect(screen.getByRole('link', { name: /done/i })).toHaveAttribute('href', 'https://app.example/done')
+})
 test('x_summary_rt:false strips response_time from rows', async () => {
   const noRt = { ...mini, style: { x_summary_rt: false } }
   setUrl('?deployment=dpl_1')
