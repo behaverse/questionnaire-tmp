@@ -57,6 +57,39 @@ collection. For the real participant journey, do the full setup below.
 
 ---
 
+## 1b. Browse the Library and **try any questionnaire** (the demo link)
+
+This is the "demo" surface: the **Library web UI** (`library-web/`, :5175) lists every questionnaire in
+the Library; each detail page has a **Try it** button that runs it in the player **render-only — no
+account, nothing stored** — and returns to the Library on Done. (Backed by the public VS
+`GET /v1/preview/runtime`; roadmap #5.)
+
+**Seed the full catalogue first** (otherwise the Library only has the two test fixtures). The Schema-2
+importer converts the bundled `survey_database` sqlite into ~64 real instruments (ASRS, BIS/BAS, Big
+Five, Grit, Emotion Regulation, …):
+
+```bash
+# 1) generate Schema-2 content from the sqlite (release version must NOT collide with existing entities)
+library import-survey-db archive/survey_database/data/survey_db.sqlite \
+  --out /tmp/sdb --release v26.0624 --imported-at 2026-06-24T00:00:00Z
+# 2) ingest it into the running Library (uses DATABASE_URL)
+DATABASE_URL=postgresql://localhost/library library ingest /tmp/sdb --release v26.0624
+```
+
+Then run the Library web UI + the player (the player serves the runs), and the services it calls:
+
+```bash
+cd library-web && VITE_API_BASE_URL=http://localhost:8000 npm run dev -- --port 5175   # the Library UI
+cd web-viewer && npm run dev                                                            # the player (:5173)
+# Identity :8100, Library :8000, VS :8001 must also be up (see §2). VS CORS must allow :5175.
+```
+
+Open **http://localhost:5175**, pick any questionnaire, and click **Try it**. (No login; nothing is
+stored — this is distinct from the *participant portal* in §3, which runs researcher-published
+**deployments** and does record data.)
+
+---
+
 ## 2. Full local stack (4 terminals)
 
 Create the three databases once (names are the service defaults):
