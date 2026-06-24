@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { parseParams } from '../app/bootstrap'
+import { parseParams } from '../params'
 import { fetchCatalogue, type CatalogueItem } from './client'
 
 function carry(base: string, extra: Record<string, string>): string {
@@ -51,7 +51,7 @@ function DoneBanner({ items }: { items: CatalogueItem[] }) {
   )
 }
 
-function Card({ item }: { item: CatalogueItem }) {
+function Card({ item, playerBaseUrl }: { item: CatalogueItem; playerBaseUrl: string }) {
   return (
     <li className="group rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -59,7 +59,7 @@ function Card({ item }: { item: CatalogueItem }) {
           <h2 className="truncate text-lg font-semibold tracking-tight text-zinc-900">{item.title}</h2>
           {item.description ? <p className="mt-1 text-sm leading-relaxed text-zinc-500">{item.description}</p> : null}
         </div>
-        <a href={carry('index.html', { deployment: item.deployment_id, return_url: returnUrlFor(item.deployment_id) })}
+        <a href={carry(`${playerBaseUrl}/`, { deployment: item.deployment_id, return_url: returnUrlFor(item.deployment_id) })}
           className="inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:self-auto">
           Start
           <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
@@ -107,7 +107,7 @@ export function CatalogueView() {
   return (
     <>
       <DoneBanner items={items} />
-      <ul className="space-y-4">{items.map((it) => <Card key={it.deployment_id} item={it} />)}</ul>
+      <ul className="space-y-4">{items.map((it) => <Card key={it.deployment_id} item={it} playerBaseUrl={params.playerBaseUrl} />)}</ul>
     </>
   )
 }

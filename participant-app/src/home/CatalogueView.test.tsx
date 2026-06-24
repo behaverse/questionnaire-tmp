@@ -18,7 +18,8 @@ test('renders a card per catalogue item with a Start link into the runner', asyn
   expect(await screen.findByText('Wellbeing survey')).toBeInTheDocument()
   expect(screen.getByText('A short check-in.')).toBeInTheDocument()
   const start = screen.getByRole('link', { name: /start/i })
-  expect(start.getAttribute('href')).toContain('index.html?')
+  // launches the player on its own origin (default dev base) carrying the deployment
+  expect(start.getAttribute('href')).toContain('localhost:5173')
   expect(start.getAttribute('href')).toContain('deployment=d1')
 })
 

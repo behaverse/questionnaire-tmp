@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { parseParams } from '../app/bootstrap'
+import { parseParams } from '../params'
 import { useSession } from '@behaverse/participant-session'
 import { Link } from '../shell/router'
 import { fetchMySessions, downloadMyData, type MySession } from './client'

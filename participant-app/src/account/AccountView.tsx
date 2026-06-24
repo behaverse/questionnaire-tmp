@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { parseParams } from '../app/bootstrap'
+import { parseParams } from '../params'
 import { useSession } from '@behaverse/participant-session'
 import { register, changePassword } from '@behaverse/participant-session'
 import { inputCls, primaryBtn } from './ui'
