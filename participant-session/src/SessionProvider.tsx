@@ -21,7 +21,7 @@ export function useSession(): Session {
   return s
 }
 
-export function SessionProvider({ identityBaseUrl, children }: { identityBaseUrl: string; children: ReactNode }) {
+export function SessionProvider({ identityBaseUrl, handoffCode, children }: { identityBaseUrl: string; handoffCode?: string; children: ReactNode }) {
   const [status, setStatus] = useState<SessionStatus>('loading')
   const [user, setUser] = useState<User | null>(null)
   const [accessToken, setAccessToken] = useState<string | null>(null)
@@ -61,12 +61,20 @@ export function SessionProvider({ identityBaseUrl, children }: { identityBaseUrl
     booted.current = true
     void (async () => {
       const rt = loadRefreshToken()
-      if (!rt) { setStatus('anon'); return }
-      const r = await client.refresh(identityBaseUrl, rt)
-      if (r.ok && (await adopt(r.tokens))) setStatus('authed')
-      else reset()
+      if (rt) {
+        const r = await client.refresh(identityBaseUrl, rt)
+        if (r.ok && (await adopt(r.tokens))) setStatus('authed')
+        else reset()
+        return
+      }
+      // no stored session on this origin — accept a one-time SSO handoff code if the launcher passed one
+      if (handoffCode) {
+        const ex = await client.exchangeHandoff(identityBaseUrl, handoffCode)
+        if (ex.ok && (await adopt(ex.tokens))) { setStatus('authed'); return }
+      }
+      setStatus('anon')
     })()
-  }, [identityBaseUrl])
+  }, [identityBaseUrl, handoffCode])
 
   async function login(email: string, password: string) {
     const r = await client.login(identityBaseUrl, email, password)

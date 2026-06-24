@@ -53,6 +53,35 @@ export async function logout(identityBaseUrl: string, refreshToken: string): Pro
   }
 }
 
+/** Mint a single-use SSO handoff code (the portal, signed in, calls this to launch the player on
+ *  another origin without a re-login). */
+export async function mintHandoff(identityBaseUrl: string, access: string): Promise<{ ok: true; code: string } | { ok: false }> {
+  try {
+    const resp = await fetch(`${identityBaseUrl}/v1/auth/handoff`, {
+      method: 'POST', headers: { ...JSON_HEADERS, authorization: `Bearer ${access}` },
+    })
+    if (!resp.ok) return { ok: false }
+    const body = await resp.json()
+    return { ok: true, code: body.handoff_code as string }
+  } catch {
+    return { ok: false }
+  }
+}
+
+/** Exchange a handoff code (single-use) for this origin's own token pair. */
+export async function exchangeHandoff(identityBaseUrl: string, code: string): Promise<{ ok: true; tokens: Tokens } | { ok: false }> {
+  try {
+    const resp = await fetch(`${identityBaseUrl}/v1/auth/handoff/exchange`, {
+      method: 'POST', headers: JSON_HEADERS,
+      body: JSON.stringify({ handoff_code: code }),
+    })
+    if (!resp.ok) return { ok: false }
+    return { ok: true, tokens: tokensOf(await resp.json()) }
+  } catch {
+    return { ok: false }
+  }
+}
+
 export async function fetchMe(identityBaseUrl: string, access: string): Promise<{ ok: true; user: User } | { ok: false }> {
   let resp: Response
   try {

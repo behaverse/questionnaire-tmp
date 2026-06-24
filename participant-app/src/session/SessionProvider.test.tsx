@@ -96,3 +96,20 @@ test('boot refresh failure clears storage and goes anon', async () => {
   await waitFor(() => expect(screen.getByTestId('status').textContent).toBe('anon'))
   expect(loadRefreshToken()).toBeNull()
 })
+
+test('boot with a handoff code (no stored token) exchanges it and stores the session', async () => {
+  routeFetch({
+    '/v1/auth/handoff/exchange': () => new Response(JSON.stringify(TOKENS('9')), { status: 200 }),
+    '/v1/auth/me': () => new Response(JSON.stringify(ME), { status: 200 }),
+  })
+  render(<SessionProvider identityBaseUrl="http://id" handoffCode="HC1"><Probe /></SessionProvider>)
+  await waitFor(() => expect(screen.getByTestId('status').textContent).toBe('authed'))
+  expect(screen.getByTestId('email').textContent).toBe('a@e.com')
+  expect(loadRefreshToken()).toBe('RT9') // stored so reloads stay signed in
+})
+
+test('a failed handoff exchange settles to anon (player falls back to login)', async () => {
+  routeFetch({ '/v1/auth/handoff/exchange': () => new Response('{}', { status: 401 }) })
+  render(<SessionProvider identityBaseUrl="http://id" handoffCode="bad"><Probe /></SessionProvider>)
+  await waitFor(() => expect(screen.getByTestId('status').textContent).toBe('anon'))
+})
