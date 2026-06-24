@@ -13,7 +13,7 @@ import { pipedText } from '../logic/piping'
 import { validateStep } from '../logic/validation'
 import { visibleEntries } from '../logic/visibility'
 import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
-import { completeSession, getRuntime, getSession, mintSession, parseParams, submitScorerOutputs, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { completeSession, fetchPreviewRuntime, getRuntime, getSession, mintSession, parseParams, submitScorerOutputs, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
 import { isFramed, observeHeight, postToHost } from './embed'
 import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
@@ -157,6 +157,18 @@ export function App() {
       buildPipeline(evaluator, scorerSet, 'fixture', 'fixture', 'agent_fixture', 1, runtime, async () => new Response('{}', { status: 202 }))
       applyTheme(getTheme(resolveThemeId({ themeParam: params.theme })))
       dispatch({ type: 'boot_success', session: { id: 'fixture', token: 'fixture' }, runtime, theme: null, steps: flattenSteps(runtime), confirmationMessage: null, redirectUrl: null })
+      return
+    }
+    if (params.preview) {
+      // render-only "try it" — fetch a runtime for a bare questionnaire_ref; capture nothing.
+      const res = await fetchPreviewRuntime(params.vsBaseUrl, params.preview, VIEWER_ID, VIEWER_VERSION, params.locale)
+      if (!res.ok) { dispatch({ type: 'boot_error', kind: 'failed', code: res.code }); return }
+      const runtime = res.runtime
+      const [evaluator, scorerSet] = await Promise.all([loadEvaluator(), compileScorers(runtime)])
+      buildPipeline(evaluator, scorerSet, 'preview', 'preview', 'agent_preview', 1, runtime, async () => new Response('{}', { status: 202 }))
+      applyTheme(getTheme(resolveThemeId({ themeParam: params.theme })))
+      dispatch({ type: 'boot_success', session: { id: 'preview', token: 'preview' }, runtime, theme: null, steps: flattenSteps(runtime), confirmationMessage: null, redirectUrl: null })
+      document.title = runtime.metadata.title
       return
     }
     if (!params.deploymentId) {
@@ -334,10 +346,11 @@ export function App() {
       if (outcome === 'timeout') { dispatch({ type: 'submit_failed' }); return }
       pl.cache.refresh(stateRef.current.answers, pl.evaluator)
       const scorerOutputs = pl.cache.scorerOutputs()
-      if (!ephemeralRef.current && pl.identity.sessionId !== 'fixture' && Object.keys(scorerOutputs).length > 0) {
+      const localRun = pl.identity.sessionId === 'fixture' || pl.identity.sessionId === 'preview'
+      if (!ephemeralRef.current && !localRun && Object.keys(scorerOutputs).length > 0) {
         await submitScorerOutputs(params.vsBaseUrl, pl.identity.sessionId, token, scorerOutputs)
       }
-      const ok = pl.identity.sessionId === 'fixture' || (await completeSession(params.vsBaseUrl, pl.identity.sessionId, token))
+      const ok = localRun || (await completeSession(params.vsBaseUrl, pl.identity.sessionId, token))
       if (cancelled) return
       if (!ok) { dispatch({ type: 'submit_failed' }); return }
       pl.batcher.add(ev.submitted(pl.engine, pl.identity.sessionId, nowIso()))
