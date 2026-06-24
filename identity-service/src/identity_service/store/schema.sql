@@ -53,6 +53,17 @@ CREATE TABLE IF NOT EXISTS email_tokens (
   CONSTRAINT email_tokens_kind_chk CHECK (kind IN ('verify','reset'))
 );
 
+-- single-use, short-TTL codes for the cross-origin SSO handoff (portal → player)
+CREATE TABLE IF NOT EXISTS handoff_codes (
+  id          uuid PRIMARY KEY,
+  user_id     uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  client_id   uuid NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+  code_hash   text UNIQUE NOT NULL,
+  expires_at  timestamptz NOT NULL,
+  consumed_at timestamptz,
+  created_at  timestamptz NOT NULL DEFAULT now()
+);
+
 CREATE TABLE IF NOT EXISTS signing_keys (
   kid         text PRIMARY KEY,
   alg         text NOT NULL DEFAULT 'EdDSA',

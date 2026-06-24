@@ -6,12 +6,21 @@ import { parseParams } from './app/bootstrap'
 import { SessionProvider } from '@behaverse/participant-session'
 
 // web-viewer is now the player only — the portal lives in the participant-app package.
-// The player still uses the session (for authenticated deployments it re-prompts login here).
+// The player still uses the session: authenticated deployments either accept a one-time SSO
+// handoff code from the portal (no re-login) or fall back to the player's own LoginView.
 const params = parseParams(window.location.search)
+
+// Strip the (single-use) handoff code from the URL so a reload/history entry doesn't carry it;
+// it's already captured below and passed to the provider.
+if (params.handoff) {
+  const u = new URL(window.location.href)
+  u.searchParams.delete('handoff')
+  window.history.replaceState(null, '', u.toString())
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <SessionProvider identityBaseUrl={params.identityBaseUrl}>
+    <SessionProvider identityBaseUrl={params.identityBaseUrl} handoffCode={params.handoff ?? undefined}>
       <App />
     </SessionProvider>
   </StrictMode>,

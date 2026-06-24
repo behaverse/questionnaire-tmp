@@ -1,5 +1,5 @@
 import { test, expect, vi, beforeEach } from 'vitest'
-import { login, refresh, logout, fetchMe, register, changePassword, verifyEmail, requestPasswordReset, resetPassword } from '@behaverse/participant-session'
+import { login, refresh, logout, fetchMe, register, changePassword, verifyEmail, requestPasswordReset, resetPassword, mintHandoff, exchangeHandoff } from '@behaverse/participant-session'
 import type { AuthFetch } from '@behaverse/participant-session'
 
 beforeEach(() => vi.restoreAllMocks())
@@ -165,4 +165,25 @@ test('resetPassword posts token + new_password', async () => {
   await resetPassword('http://id', 'tok', 'newpassword9')
   expect(f.mock.calls[0][0]).toBe('http://id/v1/auth/reset-password')
   expect(JSON.parse((f.mock.calls[0][1] as RequestInit).body as string)).toEqual({ token: 'tok', new_password: 'newpassword9' })
+})
+
+test('mintHandoff posts with the bearer token and returns the code', async () => {
+  const f = stub(200, { handoff_code: 'HC1', expires_in: 60 })
+  vi.stubGlobal('fetch', f)
+  expect(await mintHandoff('http://id', 'AT')).toEqual({ ok: true, code: 'HC1' })
+  const [url, init] = f.mock.calls[0]
+  expect(url).toBe('http://id/v1/auth/handoff')
+  expect((init as RequestInit).headers).toMatchObject({ authorization: 'Bearer AT' })
+})
+
+test('mintHandoff maps a non-200 to ok:false', async () => {
+  vi.stubGlobal('fetch', stub(401, {}))
+  expect(await mintHandoff('http://id', 'AT')).toEqual({ ok: false })
+})
+
+test('exchangeHandoff returns tokens on success, ok:false on rejection', async () => {
+  vi.stubGlobal('fetch', stub(200, { access_token: 'AT', refresh_token: 'RT', expires_in: 900, token_type: 'Bearer' }))
+  expect(await exchangeHandoff('http://id', 'HC1')).toEqual({ ok: true, tokens: { access: 'AT', refresh: 'RT', expiresIn: 900 } })
+  vi.stubGlobal('fetch', stub(401, { error: { code: 'handoff_invalid' } }))
+  expect(await exchangeHandoff('http://id', 'bad')).toEqual({ ok: false })
 })
