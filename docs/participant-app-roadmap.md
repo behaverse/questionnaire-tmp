@@ -22,6 +22,15 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
 
 ## Items
 
+0. **✅ #1-SSO DONE (2026-06-24, merge `f1e5370b`). Cross-origin auth handoff.** Authenticated
+   deployments no longer re-prompt login on the player. Owner chose a **one-time handoff code**:
+   Identity `POST /v1/auth/handoff` (Bearer) mints a single-use, 60 s code (hash-at-rest,
+   `handoff_codes` table) bound to user+client; `POST /v1/auth/handoff/exchange` (public) consumes it
+   once → fresh token pair. The portal mints it at launch for `identity` cards (signed in) → `&handoff=`;
+   the player's `SessionProvider` exchanges it on boot (else falls back to its login). Identity 61 +
+   participant-app 86 + web-viewer 253 tests; opus review APPROVE (all 10 security properties verified).
+   **Followup:** a shared TTL reaper for the token tables (handoff/email/refresh) — unbounded growth.
+
 1. **✅ DONE (2026-06-24, merge `c83641ad`). Untangle the participant app from the web-viewer.** Split
    into three packages: **`participant-session/`** (shared SessionProvider + Identity client, single
    source of truth, source-aliased — no build step), **`participant-app/`** (the portal: catalogue/
