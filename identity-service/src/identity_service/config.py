@@ -19,6 +19,8 @@ class Settings:
     smtp_username: str | None = None
     smtp_password: str | None = None
     smtp_from: str = "no-reply@behaverse.local"
+    resend_api_key: str | None = None
+    cron_secret: str | None = None
 
 
 def get_settings() -> Settings:
@@ -40,4 +42,6 @@ def get_settings() -> Settings:
         smtp_username=os.environ.get("SMTP_USERNAME") or None,
         smtp_password=os.environ.get("SMTP_PASSWORD") or None,
         smtp_from=os.environ.get("SMTP_FROM", "no-reply@behaverse.local"),
+        resend_api_key=os.environ.get("RESEND_API_KEY") or None,
+        cron_secret=os.environ.get("CRON_SECRET") or None,
     )
