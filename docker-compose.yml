@@ -37,6 +37,7 @@ services:
       VS_CORS_ORIGINS: http://localhost:5173,http://localhost:5174
       IDENTITY_JWKS_URL: http://identity:8100/.well-known/jwks.json
       IDENTITY_ISSUER: http://localhost:8100
+      IDENTITY_AUDIENCE: questionnaire-apps
       INVITE_SIGNING_SECRET: dev-invite-secret
       CRON_SECRET: dev-cron-secret
       PORT: "8001"

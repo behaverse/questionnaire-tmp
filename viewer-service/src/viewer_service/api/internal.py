@@ -1,6 +1,6 @@
 import psycopg
 from fastapi import APIRouter, Depends, Header, HTTPException
-from ..config import get_settings
+from ..config import get_settings, forwarding_enabled
 from ..forwarding import process_outbox_batch
 from ..sinks import HTTPBehaverseSink
 
@@ -17,6 +17,8 @@ def _require_cron(authorization: str | None = Header(default=None)):
 @router.get("/internal/forward")
 def forward(_=Depends(_require_cron)):
     s = get_settings()
+    if not forwarding_enabled(s):
+        return {"forwarded": {"skipped": "forwarding disabled (no Behaverse sink configured)"}}
     sink = HTTPBehaverseSink(s.behaverse_base_url, s.behaverse_bearer_token)
     with psycopg.connect(s.database_url) as conn:          # context commits on success
         summary = process_outbox_batch(conn, sink, batch_size=s.forward_batch_size,

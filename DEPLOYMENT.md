@@ -262,7 +262,7 @@ this file and routes all rewrites (defined in each `vercel.json`) through it.
 - Confirm Argon2id cold-start completes within Vercel's function timeout (default 10s).
   If the first request after a cold start times out, increase the function timeout in
   `vercel.json` under `functions.api/index.py.maxDuration`.
-- `POST https://<preview>.vercel.app/internal/reap` with `Authorization: Bearer <CRON_SECRET>` → 200
+- `GET https://<preview>.vercel.app/internal/reap` with `Authorization: Bearer <CRON_SECRET>` → 200
 
 **Viewer Service preview checks:**
 - `GET https://<preview>.vercel.app/healthz` → `{"status":"ok"}`
@@ -283,6 +283,21 @@ The Viewer Service `vercel.json` uses:
 This glob is relative to the Root Directory (`viewer-service/`), so it resolves to the
 sibling `schemas/` and `questionnaire-scorer/dist-wasm/` directories at the repo root.
 Verify this bundling works on every deploy that changes those directories.
+
+**Player and Portal sibling-directory build check:**
+Both the player (`web-viewer/`) and portal (`participant-app/`) Vite builds reach outside their
+Root Directory into sibling directories:
+- Portal references `../participant-session/src` via the `@behaverse/participant-session` alias.
+- Player additionally references `../questionnaire-expression-evaluator` (wasm artifacts) and
+  `../questionnaire-scorer` (scorer wasm).
+
+These sibling-directory references work in Docker and locally but are **unverified on Vercel**
+until a preview deploy succeeds. Add to the preview-deploy validation checklist: confirm that
+the player and portal preview builds complete without errors, and that the runner renders a
+questionnaire end-to-end. If a build fails with a "cannot find module" or "ENOENT" error
+pointing into a sibling directory, the Root Directory isolation on Vercel may be stripping that
+directory — contact Vercel support or restructure the build (e.g. move the shared code inside
+the Root Directory).
 
 ### 5.5 WASM artifacts — no Rust required at build time
 

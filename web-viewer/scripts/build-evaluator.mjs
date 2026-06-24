@@ -7,7 +7,16 @@ const here = dirname(fileURLToPath(import.meta.url))
 const evalWeb = join(here, '..', '..', 'questionnaire-expression-evaluator', 'web')
 const dest = join(here, '..', 'src', 'logic', 'wasm')
 
-execSync('. "$HOME/.cargo/env" && wasm-pack build --target web --out-dir pkg-web', { cwd: evalWeb, stdio: 'inherit', shell: '/bin/bash' })
+try {
+  execSync('. "$HOME/.cargo/env" && wasm-pack build --target web --out-dir pkg-web', { cwd: evalWeb, stdio: 'inherit', shell: '/bin/bash' })
+} catch (err) {
+  const vendored = join(evalWeb, 'pkg-web', 'questionnaire_expr_web_bg.wasm')
+  if (existsSync(vendored)) {
+    console.warn('wasm-pack unavailable; using vendored pkg-web artifacts (no Rust toolchain required)')
+  } else {
+    throw err
+  }
+}
 rmSync(dest, { recursive: true, force: true })
 mkdirSync(dest, { recursive: true })
 for (const f of ['questionnaire_expr_web.js', 'questionnaire_expr_web_bg.wasm', 'questionnaire_expr_web.d.ts', 'questionnaire_expr_web_bg.wasm.d.ts']) {

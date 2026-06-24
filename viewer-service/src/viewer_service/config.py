@@ -30,6 +30,16 @@ class Settings:
     scorer_map: dict[str, str] = field(default_factory=dict)
 
 
+def forwarding_enabled(settings: "Settings") -> bool:
+    """Forwarding is OFF unless a real (non-localhost) Behaverse sink URL is configured."""
+    from urllib.parse import urlparse
+    url = (settings.behaverse_base_url or "").strip()
+    if not url:
+        return False
+    host = (urlparse(url).hostname or "").lower()
+    return host not in ("", "localhost", "127.0.0.1", "::1")
+
+
 def get_settings() -> Settings:
     raw = os.environ.get("VS_CORS_ORIGINS")
     origins = tuple(o.strip() for o in raw.split(",") if o.strip()) if raw is not None else ()
