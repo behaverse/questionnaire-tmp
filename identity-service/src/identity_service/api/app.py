@@ -16,10 +16,11 @@ def create_app() -> FastAPI:
         app.add_middleware(CORSMiddleware, allow_origins=origins,
                            allow_methods=["*"], allow_headers=["*"])
 
-    from . import auth as auth_routes, wellknown, admin as admin_routes
+    from . import auth as auth_routes, wellknown, admin as admin_routes, internal
     app.include_router(auth_routes.router)
     app.include_router(wellknown.router)
     app.include_router(admin_routes.router)
+    app.include_router(internal.router)
 
     @app.get("/healthz")
     def healthz():
