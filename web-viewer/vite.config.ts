@@ -20,6 +20,9 @@ export default defineConfig(({ mode }) =>
         alias: {
           '@behaverse/participant-session': resolve(__dirname, '../participant-session/src/index.ts'),
         },
+        // the shared package's source is aliased in from a sibling dir that has its own
+        // (peer-installed) React — dedupe so only the player's single React copy is bundled
+        dedupe: ['react', 'react-dom'],
       },
       build: {
         rollupOptions: {

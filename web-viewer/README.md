@@ -107,44 +107,9 @@ The finished screen now honours two optional deployment-level fields (from the m
 Both are `null` when not configured on the deployment — the finished screen then shows the
 built-in thank-you text and no redirect.
 
-## Session layer (PA-1)
+## Session layer (shared)
 
-A shared **persistent session** (`src/session/`) wraps the entire SPA.  Both the runner and the participant shell consume it via `useSession()`.
-
-### Modules
-
-| File | Responsibility |
-|---|---|
-| `src/session/storage.ts` | Read/write the opaque refresh token at `localStorage` key `behaverse.participant.refresh`. Throws are caught and surfaced as `null`. |
-| `src/session/client.ts` | Typed `Tokens` / `User` shapes; `login`, `refresh`, `logout`, `fetchMe` — thin `fetch` wrappers around the Identity service. |
-| `src/session/authFetch.ts` | `makeAuthFetch(getAccess, doRefresh)` — wraps any `fetch` call; on a `401` it single-flights a refresh and retries once. Concurrent callers share the same in-flight refresh promise. |
-| `src/session/SessionProvider.tsx` | React context provider.  On mount it reads the stored refresh token and silently calls `/v1/auth/refresh` + `/v1/auth/me` (boot restore).  Exposes `{ status, user, accessToken, login, logout, authFetch }` via `useSession()`. |
-| `src/shell/NavShell.tsx` | Nav shell header: shows the logged-in user's email, nav links (Questionnaires / My data / Account), and a **Log out** button; renders the active route as its child. |
-| `src/shell/router.tsx` | Tiny `useSyncExternalStore`-based router: `useRoute()`, `navigate()`, `Link`. Preserves `viewer_url`/`identity_url` query params across pushState navigations. |
-| `src/shell/ParticipantApp.tsx` | Wraps `NavShell` + routes `/` → `CatalogueView`, `/my-data` → `MyDataView`, `/account` → `AccountView`. |
-| `src/account/AccountView.tsx` | **Create account** form (register auto-logs-in) when anonymous; profile + log-out + **Change password** section when signed in. |
-
-### Persistent login
-
-- The **refresh token** is stored in `localStorage` (`behaverse.participant.refresh`) so a reload resumes the session without prompting for credentials.
-- The **access token** is kept **in memory only** (never written to storage or the DOM).
-- On boot the provider silently refreshes; on any `authFetch` `401` it silently refreshes and retries once.
-- **Logout**: calls `POST /v1/auth/logout` (best-effort), then clears the refresh token from storage and resets provider state to `anon` regardless of whether the logout succeeded.
-
-### Configuration
-
-`VITE_IDENTITY_BASE_URL` (build-time env var) sets the default Identity service base URL.  It can be overridden per-request with the `?identity_url=` query param.
-
-### Consuming `useSession()`
-
-```tsx
-const { status, user, accessToken, login, logout, authFetch } = useSession()
-```
-
-- `status`: `'loading' | 'authed' | 'anon'`
-- `login(email, password)`: returns `{ok:true}` or `{ok:false, error:'invalid_credentials'|'network'}`
-- `logout()`: calls logout + clears
-- `authFetch`: a `fetch`-compatible function that attaches `Authorization: Bearer <token>` and silently refreshes on 401
+The persistent session (login / silent refresh / logout) is the shared **`@behaverse/participant-session`** package (`participant-session/`), consumed via a source alias and exposed as `useSession()`. The player uses it only for **authenticated-deployment login** (below); the full account/catalogue/my-data UI lives in the **`participant-app/`** portal. See `participant-session/README.md`.
 
 ## Participant login (PP-A)
 
@@ -176,27 +141,7 @@ sent on any subsequent VS call — the session token (`session_token`) authorise
 further participant requests. See FOLLOWUPS for deferred work on token refresh and the
 "my data" view.
 
-## Participant routes (PA-2)
-
-The nav-shell routes are all within the same SPA (`/`):
-
-| Path | Component | Auth | Description |
-|---|---|---|---|
-| `/` | `CatalogueView` | none | Browse listed + open deployments; Start → runner. |
-| `/my-data` | `MyDataView` | identity (redirects to `/account` if anon) | Sessions table + CSV download. |
-| `/account` | `AccountView` | none (auto-redirect if anon) | Create account (auto-login) or profile + log-out + change password. A **"Forgot password?"** link on the login tab opens the reset-password flow. |
-| `/reset-password` | `ResetPasswordView` | none | **Request mode** (no `?token`): accepts an email address and calls `requestPasswordReset`; shows a confirmation. **Set mode** (`?token=…`): accepts a new password and calls `resetPassword`; on success shows a confirmation with a **Sign in** link. |
-| `/verify-email` | `VerifyEmailView` | none | Reads `?token=…` from the URL, calls `verifyEmail` automatically, and shows a success or error message. |
-
-### Email-flow client calls (`src/session/client.ts`)
-
-| Function | Identity endpoint | Description |
-|---|---|---|
-| `verifyEmail(base, token)` | `POST /v1/auth/verify-email` | Verifies the email address using the token from the verify link. Returns `{ok:true}` or `{ok:false, error:'invalid'|'network'}`. |
-| `requestPasswordReset(base, email)` | `POST /v1/auth/request-password-reset` | Requests a password-reset email. Returns `{ok:true}` (always, to avoid enumeration). |
-| `resetPassword(base, token, newPassword)` | `POST /v1/auth/reset-password` | Sets a new password using the reset token. Returns `{ok:true}` or `{ok:false, error:'invalid_token'|'weak_password'|'network'}`. |
-
-`CatalogueView` calls `GET /v1/catalogue` (public).  `MyDataView` calls `GET /v1/me/sessions` and `GET /v1/me/responses.csv` via the authenticated `authFetch`.  Each card's **Start** link is `index.html?deployment=<id>` (the full runner URL).
+The portal routes (catalogue / my-data / account / reset-password / verify-email) moved to the **`participant-app/`** package — see `participant-app/README.md`. The portal launches the player with `?deployment=<id>&return_url=<portal>` and the player returns the participant via the **Done** button.
 
 ## Presentation modes
 
