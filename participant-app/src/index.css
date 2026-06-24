@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --qv-primary: #18181b;
+  --qv-font-family: Inter, system-ui, sans-serif;
+  --qv-surface-bg: #ffffff;
+}
+body { font-family: var(--qv-font-family); }

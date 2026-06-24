@@ -16,6 +16,14 @@ export default defineConfig(({ mode }) =>
           runtimeCaching: [{ urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith('/v1/'), handler: 'NetworkOnly' }],
         },
       }) as never],
+      resolve: {
+        alias: {
+          '@behaverse/participant-session': resolve(__dirname, '../participant-session/src/index.ts'),
+        },
+        // the shared package's source is aliased in from a sibling dir that has its own
+        // (peer-installed) React — dedupe so only the player's single React copy is bundled
+        dedupe: ['react', 'react-dom'],
+      },
       build: {
         rollupOptions: {
           input: mode === 'production'

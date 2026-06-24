@@ -15,11 +15,19 @@ This exercises the participant-flow slices **PP-A** (authenticated sessions), **
 | **Identity** | `identity-service/` | **8100** | accounts, login, JWT/JWKS |
 | **Library** | `library/` | **8000** | the questionnaire catalogue (definitions) |
 | **Viewer Service (VS)** | `viewer-service/` | **8001** | deployments, public catalogue, sessions, response storage |
-| **Web Viewer** | `web-viewer/` | **5173** | the participant UI (runner + home + my-data) |
+| **Participant App** (portal) | `participant-app/` | **5174** | sign in, browse the catalogue, my-data — where the participant starts |
+| **Web Viewer** (player) | `web-viewer/` | **5173** | runs a single questionnaire (the runner) |
 
-The ports above are the **web-viewer's built-in defaults** (`vsBaseUrl=http://localhost:8001`,
-`identityBaseUrl=http://localhost:8100`), so if you use these exact ports you need **no** web-viewer
-env config. (Library runs on 8000; VS talks to it; the browser never calls the Library directly.)
+The participant browses + signs in on the **portal (5174)**; clicking **Start** launches the
+**player (5173)** for that questionnaire, and **Done** returns to the portal. The ports above are the
+apps' built-in defaults (`vsBaseUrl=http://localhost:8001`, `identityBaseUrl=http://localhost:8100`,
+and the portal's `playerBaseUrl=http://localhost:5173`), so with these exact ports you need **no** env
+config. (Library runs on 8000; VS talks to it; the browser never calls the Library directly.)
+
+> **CORS:** because the portal (5174) makes the login + catalogue + my-data calls and the player
+> (5173) makes the mint + response calls, **both** origins must be in the Identity and VS CORS
+> allow-lists: `IDENTITY_CORS_ORIGINS=http://localhost:5173,http://localhost:5174` and
+> `VS_CORS_ORIGINS=http://localhost:5173,http://localhost:5174`.
 
 **Prerequisites:** Python 3.12 + a virtualenv, Node 20+, and a local **PostgreSQL** you can create
 databases in. The repo venv is uv-managed; `source .venv/bin/activate` (or use `.venv/bin/python`).
@@ -66,7 +74,7 @@ cd identity-service
 pip install -e '.[dev]'
 export DATABASE_URL=postgresql://localhost/identity_service
 export IDENTITY_ISSUER=http://localhost:8100
-export IDENTITY_CORS_ORIGINS=http://localhost:5173   # let the browser log in from the web-viewer
+export IDENTITY_CORS_ORIGINS=http://localhost:5173,http://localhost:5174   # portal login (5174) + player re-login (5173)
 
 identity migrate         # create tables + seed the "questionnaire-apps" client
 identity generate-key    # mint the first Ed25519 signing key (required to issue tokens)
@@ -104,14 +112,14 @@ export LIBRARY_BASE_URL=http://localhost:8000
 export IDENTITY_JWKS_URL=http://localhost:8100/.well-known/jwks.json
 export IDENTITY_ISSUER=http://localhost:8100
 export IDENTITY_AUDIENCE=questionnaire-apps
-export VS_CORS_ORIGINS=http://localhost:5173           # let the browser call VS from the web-viewer
+export VS_CORS_ORIGINS=http://localhost:5173,http://localhost:5174           # portal catalogue/my-data (5174) + player mint/responses (5173)
 
 viewer-service migrate
 
 uvicorn viewer_service.api.app:create_app --factory --reload --port 8001
 ```
 
-### Terminal D — Web Viewer (port 5173)
+### Terminal D — Web Viewer / player (port 5173)
 
 ```bash
 cd web-viewer
@@ -119,7 +127,16 @@ npm install
 npm run dev
 ```
 
-All four are now up. Identity = 8100, Library = 8000, VS = 8001, Web Viewer = 5173.
+### Terminal E — Participant App / portal (port 5174)
+
+```bash
+cd participant-app
+npm install
+npm run dev          # http://localhost:5174  ← start here as a participant
+```
+
+All five are now up. Identity = 8100, Library = 8000, VS = 8001, player = 5173, **portal = 5174**.
+Open **http://localhost:5174** to begin (sign in → browse → Start → run on 5173 → Done → back).
 
 ---
 
@@ -127,9 +144,9 @@ All four are now up. Identity = 8100, Library = 8000, VS = 8001, Web Viewer = 51
 
 ### Step 1 — Create an account
 
-Self-registration is built into the web viewer.
+Self-registration is built into the **portal** (5174).
 
-1. Open **http://localhost:5173/account** in your browser.
+1. Open **http://localhost:5174/account** in your browser.
 2. Fill in the **Create account** form (email, password, display name) and click **Create account**.
 3. On success you are automatically logged in and the page switches to your profile view (showing your email).
 
@@ -282,7 +299,7 @@ the invite link).
 | Symptom | Cause / fix |
 |---|---|
 | `http://localhost:5173/` is empty ("No questionnaires available right now.") | No deployment is `listed` + open + browse-startable. Create one with `"listed": true` and `mode_preset` `anonymous_link`/`demo`/`authenticated` (not `invite_link`). |
-| Browser console CORS error calling VS or Identity | Set `VS_CORS_ORIGINS=http://localhost:5173` (Terminal C) and `IDENTITY_CORS_ORIGINS=http://localhost:5173` (Terminal A), then restart that service. |
+| Browser console CORS error calling VS or Identity | Set `VS_CORS_ORIGINS=http://localhost:5173,http://localhost:5174` (Terminal C) and `IDENTITY_CORS_ORIGINS=http://localhost:5173,http://localhost:5174` (Terminal A), then restart that service. |
 | Start fails with **404 "questionnaire not found in library"** | The deployment's `questionnaire_ref` doesn't match a seeded questionnaire. Use exactly `qst_min@v26.0601`, and make sure Terminal B ran `library ingest …` before starting VS. |
 | Start fails with **502 "library unreachable"** | The Library (port 8000) isn't running, or `LIBRARY_BASE_URL` is wrong on VS. |
 | Runner shows a login screen for an anonymous deployment | The deployment was created `authenticated` — that's expected; log in, or recreate it `anonymous_link`. |

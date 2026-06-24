@@ -2,17 +2,17 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { App } from './app/App'
-import { ParticipantApp } from './shell/ParticipantApp'
 import { parseParams } from './app/bootstrap'
-import { SessionProvider } from './session/SessionProvider'
+import { SessionProvider } from '@behaverse/participant-session'
 
+// web-viewer is now the player only — the portal lives in the participant-app package.
+// The player still uses the session (for authenticated deployments it re-prompts login here).
 const params = parseParams(window.location.search)
-const runQuestionnaire = Boolean(params.deploymentId || params.invite || params.fixture)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <SessionProvider identityBaseUrl={params.identityBaseUrl}>
-      {runQuestionnaire ? <App /> : <ParticipantApp />}
+      <App />
     </SessionProvider>
   </StrictMode>,
 )

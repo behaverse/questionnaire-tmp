@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { App } from './App'
-import { SessionProvider } from '../session/SessionProvider'
+import { SessionProvider } from '@behaverse/participant-session'
 import mini from '../fixtures/mini.json'
 import { makeFakeStore } from '../resume/store'
 
