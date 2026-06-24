@@ -2,3 +2,7 @@ target/
 web/pkg*/
 web/node_modules/
 Cargo.lock
+
+# vendored build artifacts (consumed by the web-viewer Docker/Vercel build, like questionnaire-scorer/dist-wasm)
+!web/pkg-web/
+!web/pkg-web/**

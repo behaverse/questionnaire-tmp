@@ -22,6 +22,11 @@ COPY web-viewer/ ./web-viewer/
 # Run prebuild step 1: vendor scorerHost.ts (pure file ops, no Rust needed)
 RUN cd web-viewer && node scripts/build-scorer-host.mjs
 
+# Fail loud if the vendored evaluator wasm is missing from the build context
+# (these artifacts are tracked in git so a clean checkout builds without Rust/wasm-pack)
+RUN test -f questionnaire-expression-evaluator/web/pkg-web/questionnaire_expr_web_bg.wasm || \
+    (echo 'ERROR: pre-built evaluator wasm missing from build context (run: cd questionnaire-expression-evaluator/web && wasm-pack build --target web --out-dir pkg-web)' && exit 1)
+
 # Run prebuild step 2: copy the pre-built wasm artifacts into place (skip wasm-pack rebuild)
 RUN mkdir -p web-viewer/src/logic/wasm web-viewer/public/scorers && \
     cp questionnaire-expression-evaluator/web/pkg-web/questionnaire_expr_web.js web-viewer/src/logic/wasm/ && \
