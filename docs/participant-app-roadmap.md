@@ -30,11 +30,12 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
    via same-origin localStorage, vs fully separate apps. *(Large; architecture decision — see Open
    decisions.)*
 
-2. **Redesign the participant user journey.** The portal↔runner seam is jarring (Start "leaves" the
-   app; no way back). Define the end-to-end journeys + screens (see
-   `docs/` description / the session notes) and make navigation consistent: a clear signed-in state,
-   pick→run→**return to the app**, a post-completion confirmation *in the app*, and obvious
-   navigation everywhere. *(Medium; depends on #3.)*
+2. **✅ PARTLY DONE (2026-06-24, merge `fbd4f16f`, with #4). Redesign the participant user journey.**
+   Done so far: the pick→run→**return** loop is closed (Start passes a `return_url`; the catalogue
+   greets the returning participant with a dismissable "All done — pick another" banner); a **clearer
+   signed-in state** (avatar initial + always-visible email in the nav). Still open under the bigger
+   #1: running the runner *inside* the shell (today it's still a full-page hand-off), and a richer
+   post-completion view. *(Remaining work folds into #1.)*
 
 3. **✅ DONE (2026-06-24, merge `0a1bc2f3`). Viewer return-URL on finish (keystone).** The player
    accepts a launch-time **`?return_url=`** (embedder-controlled), validated as a well-formed http(s)
@@ -44,10 +45,10 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
    only; 321 tests + clean build. **NB (followup):** a *permanent* submission failure still strands the
    participant on the `finishing` + Retry screen with no Done escape — see #8.
 
-4. **Participant app: pick a questionnaire from the list and run it.** The catalogue → **Start** →
-   player(with return_url) → back to the app, landing on a "thanks / pick another" state. Make
-   "select among the list and run" feel like one cohesive flow rather than jumping to a separate
-   surface. *(Medium; #3 + #2.)*
+4. **✅ DONE (2026-06-24, merge `fbd4f16f`, with #2). Participant app: pick a questionnaire and run it.**
+   The catalogue → **Start** (now launches the player with `return_url`) → run → **Done** → back to the
+   catalogue with the "All done — pick another" banner. The select→run→return flow is cohesive
+   (still a full-page hand-off under the hood — embedding-in-shell is #1).
 
 5. **library-web: a "Try / Preview" link per questionnaire.** Each questionnaire card in
    `library-web/` gets a link that **launches the player** to experience that questionnaire, with a
