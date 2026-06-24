@@ -52,6 +52,7 @@ test('shows a dismissable all-done banner naming the finished questionnaire when
   expect(banner).toHaveTextContent('PHQ-9')
   await userEvent.click(within(banner).getByRole('button', { name: /dismiss/i }))
   expect(screen.queryByRole('status')).toBeNull()
+  expect(window.location.search).not.toContain('done') // dismiss also strips the marker from the URL
 })
 
 test('no all-done banner without ?done', async () => {
