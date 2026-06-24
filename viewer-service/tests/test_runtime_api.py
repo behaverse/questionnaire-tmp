@@ -100,6 +100,46 @@ def test_mint_unknown_viewer_404(setup):
     assert r.status_code == 404
 
 
+def test_preview_runtime_renders_a_questionnaire(setup):
+    client, _ = setup
+    r = client.get("/v1/preview/runtime", params={
+        "ref": "qst_mini@v26.0609", "viewer_id": "web", "viewer_version": "v26.0610", "locale": "en"})
+    assert r.status_code == 200, r.text
+    rt = r.json()["runtime"]
+    assert rt["provenance"]["source_questionnaire_id"] == "qst_mini"
+    assert rt["pages"][0]["elements"][0]["question"]["prompt"]["content"] == {
+        "en": {"status": "validated", "text": "Interest?"}}
+
+
+def test_preview_runtime_is_public_no_auth(setup):
+    # a fresh client with NO Authorization header — preview must not be researcher-gated
+    from fastapi.testclient import TestClient
+    from viewer_service.api.app import create_app
+    anon = TestClient(create_app())
+    r = anon.get("/v1/preview/runtime", params={
+        "ref": "qst_mini@v26.0609", "viewer_id": "web", "viewer_version": "v26.0610", "locale": "en"})
+    assert r.status_code == 200, r.text
+    assert r.json()["runtime"]["provenance"]["source_questionnaire_id"] == "qst_mini"
+
+
+def test_preview_unregistered_viewer_404(setup):
+    client, _ = setup
+    r = client.get("/v1/preview/runtime", params={
+        "ref": "qst_mini@v26.0609", "viewer_id": "ghost", "viewer_version": "v1"})
+    assert r.status_code == 404
+
+
+def test_preview_creates_no_session_or_deployment_rows(setup, conn):
+    client, _ = setup
+    client.get("/v1/preview/runtime", params={
+        "ref": "qst_mini@v26.0609", "viewer_id": "web", "viewer_version": "v26.0610", "locale": "en"})
+    with conn.cursor() as c:
+        c.execute("SELECT count(*) FROM session")
+        assert c.fetchone()[0] == 0
+        c.execute("SELECT count(*) FROM outbox")
+        assert c.fetchone()[0] == 0
+
+
 def test_admin_purge(setup, auth_header):
     client, dep_id = setup
     body = {"viewer_id": "web", "viewer_version": "v26.0610", "locale": "en"}
