@@ -60,18 +60,19 @@ pick→run→return journey cohesive, and is what lets the two projects be clean
    the questionnaire's own default, so #7's locale-500 is sidestepped here. VS 198 + web-viewer 249 +
    library-web 62 tests.
 
-## Also-open (carried from earlier testing)
+## Also-open (carried from earlier testing) — ALL DONE 2026-06-24 (merge `86d4e510`)
 
-6. **Seed a richer, multi-question questionnaire** for the demo (today only the tiny `qst_min`
-   "cold-water" sample is available, so "pick + complete" feels thin). *(Tiny; data/seed.)*
-7. **VS unsupported-locale 500.** A deployment with `available_locales` the questionnaire doesn't
-   fully support makes the denormaliser raise an unhandled `PreflightError` → 500 (surfaced as a
-   `resume_unreachable` dead-end). Validate at deploy-create and/or map to a clean 4xx.
-   *(Small; viewer-service.)*
-8. **Runner dead-ends on failure.** (a) A failed *resume* (network/5xx) traps the participant on a
-   "Try again" loop; (b) a *permanent submission* failure traps them on the `finishing` + Retry screen
-   (flagged in #3's review). Both lack an escape — offer a **"Start fresh"** / Done exit (clear the
-   IndexedDB record + new mint, or return via `return_url`). *(Small; web-viewer.)*
+6. **✅ DONE. Richer demo questionnaire.** `qst_wellbeing@v26.0601` (6-item "Wellbeing check-in",
+   EN-only, self-contained) in `library/fixtures/demo/` (outside tests/fixtures). Seed:
+   `library ingest library/fixtures/demo --release v26.0601`. Live: in the Library + library-web Try-it
+   + a participant-catalogue deployment.
+7. **✅ DONE. VS unsupported-locale 500 → 422.** The resume-runtime (`GET /sessions/{id}/runtime`) +
+   locale-switch endpoints now map `PreflightError → 422 preflight_failed` (shared `_preflight_422`,
+   already used by `new_session`) — no more 500. (Deploy-create validation against the questionnaire's
+   locales remains a deeper optional follow-up; the 422 fully removes the dead-end.)
+8. **✅ DONE. Runner failure escapes.** `resume_unreachable` now offers a **"Start fresh"** button
+   (clears the saved IndexedDB session + re-mints); a permanent submit failure shows the `return_url`
+   **Done** link. The runner is never a dead-end on the failure paths either.
 
 ## Recommended sequence
 
