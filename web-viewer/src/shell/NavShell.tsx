@@ -31,8 +31,11 @@ export function NavShell({ children }: { children: ReactNode }) {
           </nav>
           <div className="text-sm">
             {session.status === 'authed' && session.user ? (
-              <span className="flex items-center gap-3 text-zinc-500">
-                <span className="hidden sm:inline">{session.user.email}</span>
+              <span className="flex items-center gap-2 text-zinc-500">
+                <span aria-hidden className="grid h-7 w-7 place-items-center rounded-full bg-zinc-900 text-xs font-semibold text-white">
+                  {(session.user.display_name || session.user.email).charAt(0).toUpperCase()}
+                </span>
+                <span className="max-w-[12rem] truncate text-zinc-700">{session.user.email}</span>
                 <button onClick={() => void session.logout()}
                   className="rounded-full px-3 py-1.5 font-medium text-zinc-500 transition hover:bg-zinc-200/60 hover:text-zinc-800">
                   Log out
