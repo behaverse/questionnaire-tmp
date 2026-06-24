@@ -36,5 +36,5 @@ def _truncate(request):
     url = request.getfixturevalue("pg_url")
     with psycopg.connect(url) as c:
         c.execute("TRUNCATE users, clients, user_roles, refresh_tokens, "
-                  "email_tokens, signing_keys CASCADE")
+                  "email_tokens, handoff_codes, signing_keys CASCADE")
         c.commit()

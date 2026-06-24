@@ -5,11 +5,13 @@ from .config import get_settings
 from .store.migrate import apply_schema
 from .store import clients as cstore, users as ustore, keys as kstore
 from .keys import generate_keypair
+from .service import maintenance
 from . import passwords
 
 _USAGE = ("usage: identity {migrate | generate-key [--retire-others] | "
           "create-client --slug S [--name N] | "
-          "create-admin --email E --password P [--audience A]}")
+          "create-admin --email E --password P [--audience A] | "
+          "reap [--grace-seconds N]}")
 
 
 def _opt(argv, name, default=None):
@@ -68,6 +70,16 @@ def main(argv: list[str] | None = None) -> int:
             ustore.grant_role(conn, uid, client["id"], "administrator")
             conn.commit()
         print(f"admin {email} ready in {audience}")
+        return 0
+
+    if cmd == "reap":
+        grace = int(_opt(argv, "--grace-seconds", "0"))
+        with psycopg.connect(url) as conn:
+            counts = maintenance.reap_expired(conn, grace_seconds=grace)
+            conn.commit()
+        total = sum(counts.values())
+        print(f"reaped {total} expired rows ("
+              + ", ".join(f"{k}={v}" for k, v in counts.items()) + ")")
         return 0
 
     print(_USAGE)
