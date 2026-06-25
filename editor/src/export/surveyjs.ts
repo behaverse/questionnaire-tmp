@@ -65,7 +65,7 @@ export function toSurveyJS(runtime: Runtime, model: Questionnaire, locale: strin
       if (entry.message) continue // SurveyJS html could carry these; omitted by design (review export)
       if (!entry.item) continue
       n += 1
-      const q = questionFor(itemView(entry.item, locale, `q${n}`), dropped, n)
+      const q = questionFor(itemView(entry.item, locale, `__export_q${n}`), dropped, n)
       if (q) elements.push(q)
     }
     pages.push({ name: page.id || `page${i + 1}`, ...(page.title ? { title: page.title } : {}), elements })

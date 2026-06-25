@@ -21,7 +21,10 @@ function headerBlock(meta: Record<string, unknown>): string {
 }
 
 function optionLines(widget: string | null, choices: { text: string }[], opt: { min?: number; max?: number }): string {
-  if (widget && widget.startsWith('choice')) return choices.map((c) => `   - ${c.text}`).join('\n')
+  if (widget && widget.startsWith('choice')) {
+    if (choices.length === 0) return '   - _(choices unavailable in this language)_'
+    return choices.map((c) => `   - ${c.text}`).join('\n')
+  }
   if (widget && widget.startsWith('number')) {
     const range = opt.min != null && opt.max != null ? ` ${opt.min}–${opt.max}` : ''
     return `   - [ number${range} ]`

@@ -103,3 +103,34 @@ describe('toMarkdown', () => {
     expect(nullWidgetMd).toContain('_(unsupported input)_')
   })
 })
+
+describe('toMarkdown — choice item with no option texts in active locale', () => {
+  // Option has structural options[] but content[en] has no `options` key → mergeOptions throws RenderError
+  // → itemView sets choicesError and leaves choices:[] → optionLines should emit the fallback line
+  const missingLocaleRuntime: Runtime = {
+    provenance: { preview: true },
+    metadata: { id: 'qst_missing', title: 'Missing Locale Test', language: 'en' },
+    locale: 'en',
+    pages: [
+      {
+        id: 'p1', title: 'Page',
+        elements: [
+          {
+            id: 'it_q1',
+            question: { prompt: { content: { en: { text: 'Pick one.' } } } },
+            option: {
+              input_data_type: 'choice', measurement_type: 'nominal', selection: 'single',
+              options: [{ index: 0, value: 1 }],
+              content: { en: {} }, // no `options` key under en → mergeOptions throws RenderError
+            },
+          },
+        ],
+      },
+    ],
+  }
+
+  it('renders the unavailable-choices placeholder when option texts are missing in the export locale', () => {
+    const md = toMarkdown(missingLocaleRuntime, model, 'en')
+    expect(md).toContain('_(choices unavailable in this language)_')
+  })
+})
