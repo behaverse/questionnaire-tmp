@@ -173,5 +173,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "GAD-7 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_gad7@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "GAD-7 severity band",
+      "path": "/scores/total/severity",
+      "scorer": "scr_gad7@v26.0618"
+    }
   ]
 }

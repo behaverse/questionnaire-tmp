@@ -123,5 +123,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SWLS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_swls@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "SWLS interpretation",
+      "path": "/scores/total/severity",
+      "scorer": "scr_swls@v26.0618"
+    }
   ]
 }

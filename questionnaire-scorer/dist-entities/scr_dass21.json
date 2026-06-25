@@ -8,7 +8,7 @@
       "description": "Depression Anxiety Stress Scales - 21 (Lovibond & Lovibond, 1995). Three 7-item subscales (Depression, Anxiety, Stress), each item 0-3; each subscale total is multiplied by 2 to align with DASS-42 norms (range 0-42). Severity bands follow the standard DASS manual cut-offs, which differ per subscale."
     }
   },
-  "publication": {
+  "x_publication": {
     "citation": "Lovibond SH, Lovibond PF (1995). Manual for the Depression Anxiety Stress Scales (2nd ed.). Sydney: Psychology Foundation.",
     "year": 1995
   },

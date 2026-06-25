@@ -71,11 +71,31 @@ subscale. Multi-form transforms: WHO-5 uses `transform.mul = 4`; DASS-21 subscal
 | `who5` | sum × 4 + bands | Topp et al. 2015 |
 | `dass21` | 3 subscales × 2 + per-subscale bands | Lovibond & Lovibond 1995 |
 
-## Not yet done (integration follow-ups)
+## Wired vertical slice (done)
 
-- **Link to questionnaires:** add `scores[]: { id, scorer, path }` (OD-16, JSON-Pointer into the
-  output) to each `qst_<id>.json`, referencing the `scr_<id>` entity.
-- **Publish:** host the `dist-wasm/*.wasm` at the `implementations[].url`, and ingest the
-  `scr_<id>.json` entities into the Library (the `checkScorer` publish gate — see `FOLLOWUPS.md`).
-- **Coverage:** ~150 instruments remain; each is a `specs/<id>.json` + sourced cut-offs. Instruments
-  needing non-linear / lookup-table scoring (e.g. MBTI-type categorical) still want a bespoke crate.
+The 4 scorers above are wired end-to-end:
+- each `qst_<id>.json` declares `scores[]: { id, scorer, path }` (OD-16; JSON-Pointer into the
+  scorer output, e.g. `/scores/total/value`), referencing `scr_<id>@v26.0618`;
+- the Scorer entities live in `questionnaire-harvester/output/scorers/scr_<id>.json` (ingested
+  with the harvested tree; the denormaliser's `pin_scorers` resolves them and embeds the impl);
+- `node scripts/verify-slice.mjs` runs each real wasm on a sample response set and resolves every
+  declared path (the local end-to-end proof).
+
+## Going live (deploy)
+
+1. **Library:** re-seed so the questionnaires carry `scores[]` and the `scr_*` entities exist
+   (adding `scores[]` changes content → `ImmutabilityError` on a plain re-ingest, so use the
+   delete-then-ingest reseed: `scripts/reseed_classification.py` already deletes questionnaire
+   entities + re-ingests the harvested tree, which now includes `output/scorers/`).
+2. **Viewer-service:** the VS already bundles `questionnaire-scorer/dist-wasm` (see
+   `viewer-service/vercel.json` `includeFiles`) and serves `/v1/scorers/{ref}/impl.wasm`. Set two
+   env vars and redeploy the VS:
+   - `VS_SCORER_MAP` = contents of `scorer_map.json` (maps `scr_<id>@v26.0618` → `<id>.wasm`,
+     since the wasm files are named by id, not by the versioned ref);
+   - `VS_PUBLIC_BASE` = the VS public URL (so `rewrite_scorer_urls` points impls at the VS).
+   The web-viewer already fetches + sha256-verifies the wasm and displays scores (SP2a/SP2b).
+
+## Coverage
+
+~150 instruments remain; each is a `specs/<id>.json` + sourced cut-offs. Instruments needing
+non-linear / lookup-table scoring (e.g. MBTI-type categorical) still want a bespoke crate.

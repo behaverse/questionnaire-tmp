@@ -1,0 +1,210 @@
+{
+  "content": {
+    "en": {
+      "description": "Standard GAD-7 scoring (Spitzer et al., 2006). Total = sum of the 7 items (each 0-3), range 0-21. Severity bands: 0-4 minimal, 5-9 mild, 10-14 moderate, 15-21 severe; a total of 10 or more is the usual cut-off for probable generalized anxiety disorder.",
+      "name": "GAD-7 Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_gad7",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "986687dbd269b2d10bbdf060b257fc15cbe2640dd38181c0dd0c844d6eea1687",
+      "url": "https://behaverse.org/scorers/gad7/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_gad7_1|pr_gad7_2|pr_gad7_3|pr_gad7_4|pr_gad7_5|pr_gad7_6|pr_gad7_7)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "GAD-7 Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "minimal",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Moderate anxiety",
+              "max": 14,
+              "min": 10
+            },
+            "severity": "moderate",
+            "value": 12
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gad7_1": 2,
+          "pr_gad7_2": 2,
+          "pr_gad7_3": 2,
+          "pr_gad7_4": 2,
+          "pr_gad7_5": 2,
+          "pr_gad7_6": 1,
+          "pr_gad7_7": 1
+        }
+      },
+      "name": "moderate-no-missing"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Minimal anxiety",
+              "max": 4,
+              "min": 0
+            },
+            "severity": "minimal",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gad7_1": 0,
+          "pr_gad7_2": 0,
+          "pr_gad7_3": 0,
+          "pr_gad7_4": 0,
+          "pr_gad7_5": 0,
+          "pr_gad7_6": 0,
+          "pr_gad7_7": 0
+        }
+      },
+      "name": "minimal-floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Severe anxiety",
+              "max": 21,
+              "min": 15
+            },
+            "severity": "severe",
+            "value": 21
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gad7_1": 3,
+          "pr_gad7_2": 3,
+          "pr_gad7_3": 3,
+          "pr_gad7_4": 3,
+          "pr_gad7_5": 3,
+          "pr_gad7_6": 3,
+          "pr_gad7_7": 3
+        }
+      },
+      "name": "severe-ceiling"
+    },
+    {
+      "expected": {
+        "missing_count": 5,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Mild anxiety",
+              "max": 9,
+              "min": 5
+            },
+            "severity": "mild",
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "bogus": 9,
+          "pr_gad7_1": 3,
+          "pr_gad7_2": 2
+        }
+      },
+      "name": "partial-with-missing-ignores-unknown"
+    }
+  ],
+  "x_publication": {
+    "citation": "Spitzer RL, Kroenke K, Williams JBW, Löwe B (2006). A brief measure for assessing generalized anxiety disorder: the GAD-7. Arch Intern Med, 166(10), 1092-1097.",
+    "year": 2006
+  }
+}

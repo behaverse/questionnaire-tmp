@@ -1,0 +1,183 @@
+{
+  "content": {
+    "en": {
+      "description": "Satisfaction With Life Scale (Diener et al., 1985). Total = sum of the 5 items (each 1-7), range 5-35. Interpretation bands: 31-35 extremely satisfied, 26-30 satisfied, 21-25 slightly satisfied, 20 neutral, 15-19 slightly dissatisfied, 10-14 dissatisfied, 5-9 extremely dissatisfied.",
+      "name": "SWLS Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_swls",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "d2e0d5d79b0146fce7bd87e24fcfe169b5ff70be00a33f2fcdf7edde212bc5f3",
+      "url": "https://behaverse.org/scorers/swls/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_swls_1|pr_swls_2|pr_swls_3|pr_swls_4|pr_swls_5)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SWLS Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "extremely_dissatisfied",
+                  "dissatisfied",
+                  "slightly_dissatisfied",
+                  "neutral",
+                  "slightly_satisfied",
+                  "satisfied",
+                  "extremely_satisfied"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Extremely satisfied",
+              "max": 35,
+              "min": 31
+            },
+            "severity": "extremely_satisfied",
+            "value": 35
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_swls_1": 7,
+          "pr_swls_2": 7,
+          "pr_swls_3": 7,
+          "pr_swls_4": 7,
+          "pr_swls_5": 7
+        }
+      },
+      "name": "extremely-satisfied-ceiling"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Neutral",
+              "max": 20,
+              "min": 20
+            },
+            "severity": "neutral",
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_swls_1": 5,
+          "pr_swls_2": 5,
+          "pr_swls_3": 4,
+          "pr_swls_4": 4,
+          "pr_swls_5": 2
+        }
+      },
+      "name": "neutral-exact"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Extremely dissatisfied",
+              "max": 9,
+              "min": 5
+            },
+            "severity": "extremely_dissatisfied",
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_swls_1": 1,
+          "pr_swls_2": 1,
+          "pr_swls_3": 1,
+          "pr_swls_4": 1,
+          "pr_swls_5": 1
+        }
+      },
+      "name": "extremely-dissatisfied-floor"
+    }
+  ],
+  "x_publication": {
+    "citation": "Diener E, Emmons RA, Larsen RJ, Griffin S (1985). The Satisfaction with Life Scale. J Pers Assess, 49(1), 71-75.",
+    "year": 1985
+  }
+}

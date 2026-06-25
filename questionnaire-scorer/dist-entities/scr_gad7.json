@@ -8,7 +8,7 @@
       "description": "Standard GAD-7 scoring (Spitzer et al., 2006). Total = sum of the 7 items (each 0-3), range 0-21. Severity bands: 0-4 minimal, 5-9 mild, 10-14 moderate, 15-21 severe; a total of 10 or more is the usual cut-off for probable generalized anxiety disorder."
     }
   },
-  "publication": {
+  "x_publication": {
     "citation": "Spitzer RL, Kroenke K, Williams JBW, Löwe B (2006). A brief measure for assessing generalized anxiety disorder: the GAD-7. Arch Intern Med, 166(10), 1092-1097.",
     "year": 2006
   },

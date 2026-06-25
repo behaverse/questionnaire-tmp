@@ -350,5 +350,43 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "depression",
+      "name": "DASS-21 depression",
+      "path": "/scores/depression/value",
+      "scorer": "scr_dass21@v26.0618"
+    },
+    {
+      "id": "depression_severity",
+      "name": "DASS-21 depression severity",
+      "path": "/scores/depression/severity",
+      "scorer": "scr_dass21@v26.0618"
+    },
+    {
+      "id": "anxiety",
+      "name": "DASS-21 anxiety",
+      "path": "/scores/anxiety/value",
+      "scorer": "scr_dass21@v26.0618"
+    },
+    {
+      "id": "anxiety_severity",
+      "name": "DASS-21 anxiety severity",
+      "path": "/scores/anxiety/severity",
+      "scorer": "scr_dass21@v26.0618"
+    },
+    {
+      "id": "stress",
+      "name": "DASS-21 stress",
+      "path": "/scores/stress/value",
+      "scorer": "scr_dass21@v26.0618"
+    },
+    {
+      "id": "stress_severity",
+      "name": "DASS-21 stress severity",
+      "path": "/scores/stress/severity",
+      "scorer": "scr_dass21@v26.0618"
+    }
   ]
 }

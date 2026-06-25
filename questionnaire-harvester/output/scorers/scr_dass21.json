@@ -1,0 +1,305 @@
+{
+  "content": {
+    "en": {
+      "description": "Depression Anxiety Stress Scales - 21 (Lovibond & Lovibond, 1995). Three 7-item subscales (Depression, Anxiety, Stress), each item 0-3; each subscale total is multiplied by 2 to align with DASS-42 norms (range 0-42). Severity bands follow the standard DASS manual cut-offs, which differ per subscale.",
+      "name": "DASS-21 Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_dass21",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "7fb0aeafa80c407396ccb3ea49136d15f3f20d4a3ff1c6f213c62a01e0a26f53",
+      "url": "https://behaverse.org/scorers/dass21/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_dass21_3|pr_dass21_5|pr_dass21_10|pr_dass21_13|pr_dass21_16|pr_dass21_17|pr_dass21_21|pr_dass21_2|pr_dass21_4|pr_dass21_7|pr_dass21_9|pr_dass21_15|pr_dass21_19|pr_dass21_20|pr_dass21_1|pr_dass21_6|pr_dass21_8|pr_dass21_11|pr_dass21_12|pr_dass21_14|pr_dass21_18)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "DASS-21 Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "anxiety": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "normal",
+                  "mild",
+                  "moderate",
+                  "severe",
+                  "extremely_severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "depression": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "normal",
+                  "mild",
+                  "moderate",
+                  "severe",
+                  "extremely_severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "stress": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "normal",
+                  "mild",
+                  "moderate",
+                  "severe",
+                  "extremely_severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "depression",
+          "anxiety",
+          "stress"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "anxiety": {
+            "band": {
+              "label": "Normal",
+              "max": 7,
+              "min": 0
+            },
+            "severity": "normal",
+            "value": 0
+          },
+          "depression": {
+            "band": {
+              "label": "Normal",
+              "max": 9,
+              "min": 0
+            },
+            "severity": "normal",
+            "value": 0
+          },
+          "stress": {
+            "band": {
+              "label": "Normal",
+              "max": 14,
+              "min": 0
+            },
+            "severity": "normal",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_dass21_1": 0,
+          "pr_dass21_10": 0,
+          "pr_dass21_11": 0,
+          "pr_dass21_12": 0,
+          "pr_dass21_13": 0,
+          "pr_dass21_14": 0,
+          "pr_dass21_15": 0,
+          "pr_dass21_16": 0,
+          "pr_dass21_17": 0,
+          "pr_dass21_18": 0,
+          "pr_dass21_19": 0,
+          "pr_dass21_2": 0,
+          "pr_dass21_20": 0,
+          "pr_dass21_21": 0,
+          "pr_dass21_3": 0,
+          "pr_dass21_4": 0,
+          "pr_dass21_5": 0,
+          "pr_dass21_6": 0,
+          "pr_dass21_7": 0,
+          "pr_dass21_8": 0,
+          "pr_dass21_9": 0
+        }
+      },
+      "name": "all-normal-zero"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "anxiety": {
+            "band": {
+              "label": "Moderate",
+              "max": 14,
+              "min": 10
+            },
+            "severity": "moderate",
+            "value": 14
+          },
+          "depression": {
+            "band": {
+              "label": "Extremely severe",
+              "max": 42,
+              "min": 28
+            },
+            "severity": "extremely_severe",
+            "value": 28
+          },
+          "stress": {
+            "band": {
+              "label": "Extremely severe",
+              "max": 42,
+              "min": 34
+            },
+            "severity": "extremely_severe",
+            "value": 42
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_dass21_1": 3,
+          "pr_dass21_10": 2,
+          "pr_dass21_11": 3,
+          "pr_dass21_12": 3,
+          "pr_dass21_13": 2,
+          "pr_dass21_14": 3,
+          "pr_dass21_15": 1,
+          "pr_dass21_16": 2,
+          "pr_dass21_17": 2,
+          "pr_dass21_18": 3,
+          "pr_dass21_19": 1,
+          "pr_dass21_2": 1,
+          "pr_dass21_20": 1,
+          "pr_dass21_21": 2,
+          "pr_dass21_3": 2,
+          "pr_dass21_4": 1,
+          "pr_dass21_5": 2,
+          "pr_dass21_6": 3,
+          "pr_dass21_7": 1,
+          "pr_dass21_8": 3,
+          "pr_dass21_9": 1
+        }
+      },
+      "name": "mixed-subscale-severities"
+    }
+  ],
+  "x_publication": {
+    "citation": "Lovibond SH, Lovibond PF (1995). Manual for the Depression Anxiety Stress Scales (2nd ed.). Sydney: Psychology Foundation.",
+    "year": 1995
+  }
+}

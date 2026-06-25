@@ -124,5 +124,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "wellbeing",
+      "name": "WHO-5 percentage (0-100)",
+      "path": "/scores/wellbeing/value",
+      "scorer": "scr_who5@v26.0618"
+    },
+    {
+      "id": "wellbeing_severity",
+      "name": "WHO-5 interpretation",
+      "path": "/scores/wellbeing/severity",
+      "scorer": "scr_who5@v26.0618"
+    }
   ]
 }

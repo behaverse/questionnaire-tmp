@@ -111,7 +111,7 @@ const entity = {
   id: scorerId,
   name: spec.name,
   content: { en: { status: spec.status || 'needs-review', name: spec.name, description: spec.description } },
-  ...(spec.publication ? { publication: spec.publication } : {}),
+  ...(spec.publication ? { x_publication: spec.publication } : {}),
   inputs,
   output_schema,
   implementations: [
