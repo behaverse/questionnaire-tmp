@@ -8,7 +8,20 @@ it does, how it connects, and where it stands. For the authoritative design see
 
 > **Maintenance note.** This document is a hand-maintained summary; the per-component
 > details drift as work lands. When in doubt, the component READMEs, the agent memory
-> index, and `HANDOFF.md` are more current. Last refreshed: **2026-06-24**.
+> index, and `HANDOFF.md` are more current. Last refreshed: **2026-06-25**.
+
+> **🟢 LIVE (2026-06-25).** The **entire participant stack is deployed** on Vercel + Supabase
+> (free tier, $0): **portal** [portal-henna-seven-32.vercel.app](https://portal-henna-seven-32.vercel.app),
+> **player** [player-sooty-six.vercel.app](https://player-sooty-six.vercel.app),
+> **Viewer Service** [viewer-service.vercel.app](https://viewer-service.vercel.app),
+> **Identity** [identity-service-three.vercel.app](https://identity-service-three.vercel.app)
+> (with **real email via Resend**, domain `xcit.org`). The whole pick → run → submit →
+> download journey is browser-verified end-to-end. The **Library**
+> ([questionnaire-library.vercel.app](https://questionnaire-library.vercel.app)) had a broken
+> build (uv requirements) now fixed — its **Try-it** preview is live and acronym **search**
+> is fixed (`bis` → BIS/BAS). Identity + Viewer Service share **one** Supabase DB. See
+> [`../DEPLOYMENT.md`](../DEPLOYMENT.md) §0 (as-built) + `scripts/redeploy-participant-stack.sh`.
+> Remaining: **M2** deploy the editor, **M3** polish.
 
 ---
 
@@ -117,10 +130,10 @@ graph TD
 | **library** | Library Core read API | 🟢 complete | 🟢 **live** (Vercel + Supabase) |
 | **library-web** | catalogue web UI | 🟢 complete | 🟢 **live** (Vercel) |
 | **api/** | Vercel serverless entry | 🟢 thin wrapper | 🟢 **live** |
-| **viewer-service** | runtime gen + deployments + sessions | 🟢 complete (VS-A..E) | local-only |
-| **identity-service** | accounts / auth (OD-08) | 🟢 complete (ID-A..C1) | local-only |
-| **web-viewer** (player) | runs one questionnaire | 🟢 complete (WV-A..F) | local-only |
-| **participant-app** (portal) | browse / pick / my-data | 🟢 complete (PA-1..4) | local-only |
+| **viewer-service** | runtime gen + deployments + sessions | 🟢 complete (VS-A..E) | 🟢 **live** ([viewer-service.vercel.app](https://viewer-service.vercel.app)) |
+| **identity-service** | accounts / auth (OD-08) + Resend email | 🟢 complete (ID-A..C1) | 🟢 **live** ([identity-service-three.vercel.app](https://identity-service-three.vercel.app)) |
+| **web-viewer** (player) | runs one questionnaire | 🟢 complete (WV-A..F) | 🟢 **live** ([player-sooty-six.vercel.app](https://player-sooty-six.vercel.app)) |
+| **participant-app** (portal) | browse / pick / my-data | 🟢 complete (PA-1..4) | 🟢 **live** ([portal-henna-seven-32.vercel.app](https://portal-henna-seven-32.vercel.app)) |
 | **participant-session** | shared auth/session lib | 🟢 complete | aliased (not published) |
 | **runtime-denormaliser** | Schema 2 → Schema 3 | 🟢 complete | imported lib |
 | **expression-evaluator** | OD-11 logic engine | 🟢 complete | WASM artifact |
@@ -430,12 +443,17 @@ graph TD
 
 ## Project-wide concerns
 
-- **Deployment posture.** Only the **Library** is hosted: `library-web` + `api/` (which
-  boots `library` + `identity-service` packages) on **Vercel**, backed by **Supabase**
-  Postgres (eu-central-1), at https://questionnaire-library.vercel.app. The
-  viewer-service, identity-service (as a service), player, and portal are **local-only**.
-  The standout deliverable is a **public full-stack deployment** (host the VS + player +
-  portal) which also unlocks the public **"Try it"** demo.
+- **Deployment posture (2026-06-25: participant stack LIVE).** Everything except the
+  **editor** is now hosted on **Vercel + Supabase** (free tier, $0): the **Library**
+  (`library-web` + `api/`), plus **Identity**, **Viewer Service**, **player**, and **portal**
+  — each its own Vercel project. Identity + Viewer Service share **one** Supabase Postgres
+  (`questionnaire-identity`, eu-central-1; the free tier caps an org at 2 active projects and
+  their tables don't collide); the Library keeps its own. **Real email** runs via **Resend**
+  (`xcit.org`). The public **"Try it"** demo is live. Mechanics that diverged from the
+  original runbook (assembled-VS dir, locally-built static frontends, Vercel-API env, the
+  Library `uv` requirements fix) are documented in [`../DEPLOYMENT.md`](../DEPLOYMENT.md) §0,
+  with `scripts/redeploy-participant-stack.sh` for one-command redeploys. **Editor (M2)** is
+  the only remaining unhosted started component.
 
 - **Repo topology / reorg.** The design locks a future **multi-repo** layout
   (`behaverse/questionnaire-*`), but the physical split is **deferred** — everything lives
