@@ -92,19 +92,18 @@ if want portal; then
   rm -rf "$(dirname "$Q")"
 fi
 
-# --- editor: local build (needs the renderer dist-lib + evaluator wasm siblings), deploy static
-#     dist/. Authoring/preview/export only; the /api/translate function (auto-translate) is a
-#     follow-up gated on an AI key. NOTE the Library's LIBRARY_CORS_ORIGINS must include the
-#     editor origin (it fetches the Library cross-origin). ---
+# --- editor: SPA (aliases sibling renderer/wasm) + the /api/translate Vercel Function. Build
+#     locally with `vercel build` (siblings present) then deploy --prebuilt so the function ships.
+#     The function reads ANTHROPIC_API_KEY + TRANSLATE_MODEL (set as project env). The editor reads
+#     the Library cross-origin → its origin must be in the Library's LIBRARY_CORS_ORIGINS. The
+#     editor dir must be linked to the editor-static project (vercel link --project editor-static). ---
 if want editor; then
-  echo "==> editor (local build + static deploy)"
+  echo "==> editor (vercel build --prebuilt; includes /api/translate)"
   ( cd editor
-    VITE_LIBRARY_BASE_URL="$LIBRARY_URL" VITE_TRANSLATE_URL="/api/translate" npm run build >/dev/null )
-  R="$(mktemp -d)/editor"; cp -r editor/dist "$R"
-  printf '%s' '{ "rewrites": [{ "source": "/((?!assets/|preview).*)", "destination": "/index.html" }] }' > "$R/vercel.json"
-  cp -r editor/.vercel "$R/.vercel" 2>/dev/null || true
-  ( cd "$R" && vercel deploy --prod --yes --scope "$SCOPE" >/dev/null && echo "  deployed" )
-  rm -rf "$(dirname "$R")"
+    source "$HOME/.cargo/env" 2>/dev/null || true   # evaluator wasm needs Rust (or vendored fallback)
+    vercel pull --yes --environment=production --scope "$SCOPE" >/dev/null 2>&1
+    vercel build --prod >/dev/null
+    vercel deploy --prebuilt --prod --yes --scope "$SCOPE" >/dev/null && echo "  deployed" )
 fi
 
 echo "Done. Live: portal https://portal-henna-seven-32.vercel.app | editor https://editor-static.vercel.app"

@@ -1,6 +1,8 @@
 // editor/api/translate.ts — Vercel Function (web-standard). Thin wrapper around translateField.
-import { translateField } from '../src/translate/translateCore'
-import { makeGenerate } from './_provider'
+// .js extensions: Vercel deploys these functions as raw Node ESM (trace-mode, not bundled),
+// where extensionless relative imports don't resolve. moduleResolution "bundler" maps .js → .ts.
+import { translateField } from '../src/translate/translateCore.js'
+import { makeGenerate } from './_provider.js'
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })

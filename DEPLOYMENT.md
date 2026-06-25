@@ -59,10 +59,12 @@ the current master SHA), then:
 **Email (Resend): DONE** — `RESEND_API_KEY` + `SMTP_FROM=no-reply@xcit.org` set on Identity;
 domain `xcit.org` verified; register→verify-email proven end-to-end.
 
-**Editor (M2): DONE** — live at `editor-static.vercel.app` (built locally + static deploy,
-like the player/portal). It reads the Library cross-origin, so the editor origin must be in
-the Library project's `LIBRARY_CORS_ORIGINS`. Its `/api/translate` auto-translate function is
-deferred (needs an AI key — would deploy via `vercel build --prebuilt` to include the function).
+**Editor (M2): DONE** — live at `editor-static.vercel.app`, deployed via **`vercel build
+--prebuilt`** (siblings present locally; the prebuilt output ships both the SPA **and** the
+`/api/translate` Vercel Function). It reads the Library cross-origin, so the editor origin must
+be in the Library project's `LIBRARY_CORS_ORIGINS`. **Auto-translate is live** — the function
+reads `ANTHROPIC_API_KEY` + `TRANSLATE_MODEL=claude-sonnet-4-6` (project env). Note: the function
+files use **`.js`-extension relative imports** (Vercel deploys them as raw Node ESM, trace-mode).
 Redeploy with `scripts/redeploy-participant-stack.sh editor`.
 
 ---

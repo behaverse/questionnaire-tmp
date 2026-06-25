@@ -140,7 +140,7 @@ graph TD
 | **runtime-denormaliser** | Schema 2 → Schema 3 | 🟢 complete | imported lib |
 | **expression-evaluator** | OD-11 logic engine | 🟢 complete | WASM artifact |
 | **questionnaire-scorer** | OD-16 scoring engine | 🟠 engine + conformance only | WASM artifact |
-| **editor** | authoring SPA | 🟢 feature-complete + a11y modals | 🟢 **live** ([editor-static.vercel.app](https://editor-static.vercel.app); auto-translate fn = follow-up) |
+| **editor** | authoring SPA | 🟢 feature-complete + a11y modals | 🟢 **live** ([editor-static.vercel.app](https://editor-static.vercel.app); auto-translate via Anthropic) |
 | **questionnaire-harvester** | web → canonical content | 🟢 built (content/license review ongoing) | local CLI; output ingested live |
 | **Native / Godot viewer** | offline / embedded viewer | 🔴 not started (Phase 4) | — |
 | **Participant Platform** | studies / scheduling | 🔴 not started (Phase 5) | — |
@@ -457,7 +457,8 @@ graph TD
   with `scripts/redeploy-participant-stack.sh` for one-command redeploys. The **editor** is now
   hosted too ([editor-static.vercel.app](https://editor-static.vercel.app); its cross-origin
   Library reads required adding the editor origin to the Library's `LIBRARY_CORS_ORIGINS`). The
-  editor's `/api/translate` auto-translate function is the one deferred piece (needs an AI key).
+  editor's `/api/translate` **auto-translate function is live** (Vercel Function via `vercel build
+  --prebuilt`; Anthropic `claude-sonnet-4-6`). **Every started component is now hosted.**
 
 - **Repo topology / reorg.** The design locks a future **multi-repo** layout
   (`behaverse/questionnaire-*`), but the physical split is **deferred** — everything lives
