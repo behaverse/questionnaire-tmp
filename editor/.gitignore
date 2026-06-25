@@ -20,3 +20,4 @@ src/logic/wasm/
 
 # copied by scripts/ensure-scorers.mjs (prebuild/predev)
 public/scorers/
+.vercel
