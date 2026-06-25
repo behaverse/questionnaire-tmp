@@ -39,3 +39,14 @@ python3 -c "import psycopg,os; c=psycopg.connect(os.environ['DATABASE_URL']); c.
 # then re-run BOTH ingest commands of step 2 (survey_db AND harvester) — the truncate
 # clears everything, so the harvester ingest must be re-run too or those 158 vanish.
 ```
+
+
+
+
+export DATABASE_URL='postgresql://postgres.bmtpeswbtugyoiycelwz:[YOUR-PASSWORD]@aws-1-eu-central-1.pooler.supabase.com:5432/postgres'
+python -m library.cli migrate
+python -m library.cli ingest /tmp/content --release v26.0606
+
+export DATABASE_URL='postgresql://postgres.bmtpeswbtugyoiycelwz:[YOUR-PASSWORD]@aws-1-eu-central-1.pooler.supabase.com:5432/postgres'
+
+export DATABASE_URL='postgresql://postgres.bmtpeswbtugyoiycelwz:[YOUR-PASSWORD]@aws-1-eu-central-1.pooler.supabase.com:6543/postgres'

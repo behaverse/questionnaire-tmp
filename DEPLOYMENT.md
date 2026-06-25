@@ -14,13 +14,19 @@ are kept for reference, but **this section is the source of truth**.
 
 **Live URLs**
 
-| | |
+| Component | Live URL |
 |---|---|
 | Portal (participant-app) | https://portal-henna-seven-32.vercel.app |
 | Player (web-viewer) | https://player-sooty-six.vercel.app |
 | Viewer Service | https://viewer-service.vercel.app |
 | Identity | https://identity-service-three.vercel.app |
-| Library (existing) | https://questionnaire-library.vercel.app |
+| Library catalogue (+ Try-it) | https://questionnaire-library.vercel.app |
+
+> ⚠ **`web-viewer.vercel.app` is NOT ours** — that alias is squatted by an unrelated app
+> ("Vespucci"). Vercel auto-named our player **`player-sooty-six.vercel.app`** because the nice
+> name was taken. Always use the auto-generated names above. The **player is launched _with_ a
+> questionnaire** (catalogue "Try it", a portal Start link, or an invite `?invite=`); opening its
+> bare root shows nothing. "Try it" is live — it opens the player and renders the questionnaire.
 
 **Key divergences from the runbook (and why)**
 

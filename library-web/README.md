@@ -37,8 +37,10 @@ npm run build
 
 ## Deploy / public Try-it (status)
 
-The deployed Library currently has **212 questionnaires** but **no live Try-it** — the demo works only
-locally. Making Try-it public is a deployment slice: stand up the **Viewer Service** + the **player**
-(web-viewer) publicly (pointing at the same Supabase), then set `VITE_PLAYER_BASE_URL` /
-`VITE_VS_BASE_URL` on this app's build to those origins and add this app's origin to the VS CORS. No
-content re-import is needed — the catalogue already lives on Supabase.
+✅ **Live.** The deployed Library hosts **222 questionnaires** and **Try-it works in production**:
+this app's Vercel build sets `VITE_PLAYER_BASE_URL=https://player-sooty-six.vercel.app` and
+`VITE_VS_BASE_URL=https://viewer-service.vercel.app`, and the VS CORS allows this origin. Clicking
+**Try it** opens the player and renders the questionnaire (browser-verified 2026-06-25).
+
+> ⚠ The player is **`player-sooty-six.vercel.app`** — *not* `web-viewer.vercel.app`, which is an
+> unrelated squatted alias ("Vespucci"). See [`../DEPLOYMENT.md`](../DEPLOYMENT.md) "Live URLs".

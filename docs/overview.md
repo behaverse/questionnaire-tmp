@@ -12,7 +12,9 @@ it does, how it connects, and where it stands. For the authoritative design see
 
 > **🟢 LIVE (2026-06-25).** The **entire participant stack is deployed** on Vercel + Supabase
 > (free tier, $0): **portal** [portal-henna-seven-32.vercel.app](https://portal-henna-seven-32.vercel.app),
-> **player** [player-sooty-six.vercel.app](https://player-sooty-six.vercel.app),
+> **player** [player-sooty-six.vercel.app](https://player-sooty-six.vercel.app) (⚠ **not**
+> `web-viewer.vercel.app` — that alias is squatted by an unrelated "Vespucci" app; the player is
+> launched _with_ a questionnaire, its bare root shows nothing),
 > **Viewer Service** [viewer-service.vercel.app](https://viewer-service.vercel.app),
 > **Identity** [identity-service-three.vercel.app](https://identity-service-three.vercel.app)
 > (with **real email via Resend**, domain `xcit.org`). The whole pick → run → submit →

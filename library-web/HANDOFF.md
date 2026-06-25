@@ -27,7 +27,7 @@ VITE_API_BASE_URL=http://localhost:8000 npm run dev -- --port 5175   # Library A
 This component is **largely complete**. Open items are small or cross-cutting.
 
 **Now**
-- **Carry Try-it env into the prod build** — `VITE_PLAYER_BASE_URL` + `VITE_VS_BASE_URL` must be set on this app's Vercel build (pointing at the public player + VS origins), and this app's origin added to the VS CORS allow-list, or "Try it" stays local-only. The deployed catalogue (212 questionnaires) currently has **no live Try-it**. See [README.md](README.md) "Deploy / public Try-it".
+- ✅ **DONE — public Try-it is live (2026-06-25).** This app's Vercel build sets `VITE_PLAYER_BASE_URL=https://player-sooty-six.vercel.app` + `VITE_VS_BASE_URL=https://viewer-service.vercel.app`, and the VS CORS allows this origin. "Try it" opens the player and renders the questionnaire (browser-verified). ⚠ The player is **`player-sooty-six.vercel.app`**, *not* `web-viewer.vercel.app` (a squatted unrelated alias). Catalogue now has **222** questionnaires.
 
 **Next**
 - **Visual / UX & accessibility polish** — genuinely open from the code: facet sidebar, grouped rows, and stats bar have no a11y audit (keyboard nav, ARIA on expand/collapse, focus management). Curate against the live site before investing.
