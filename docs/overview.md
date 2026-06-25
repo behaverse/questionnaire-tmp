@@ -21,7 +21,9 @@ it does, how it connects, and where it stands. For the authoritative design see
 > build (uv requirements) now fixed — its **Try-it** preview is live and acronym **search**
 > is fixed (`bis` → BIS/BAS). Identity + Viewer Service share **one** Supabase DB. See
 > [`../DEPLOYMENT.md`](../DEPLOYMENT.md) §0 (as-built) + `scripts/redeploy-participant-stack.sh`.
-> Remaining: **M2** deploy the editor, **M3** polish.
+> The **editor** is now live too ([editor-static.vercel.app](https://editor-static.vercel.app),
+> M2 — authoring/preview/export; auto-translate function is a follow-up gated on an AI key).
+> **Everything started is now hosted.** Remaining: **M3** polish.
 
 ---
 
@@ -138,7 +140,7 @@ graph TD
 | **runtime-denormaliser** | Schema 2 → Schema 3 | 🟢 complete | imported lib |
 | **expression-evaluator** | OD-11 logic engine | 🟢 complete | WASM artifact |
 | **questionnaire-scorer** | OD-16 scoring engine | 🟠 engine + conformance only | WASM artifact |
-| **editor** | authoring SPA | 🟠 feature-complete but **parked** | not deployed |
+| **editor** | authoring SPA | 🟢 feature-complete + a11y modals | 🟢 **live** ([editor-static.vercel.app](https://editor-static.vercel.app); auto-translate fn = follow-up) |
 | **questionnaire-harvester** | web → canonical content | 🟢 built (content/license review ongoing) | local CLI; output ingested live |
 | **Native / Godot viewer** | offline / embedded viewer | 🔴 not started (Phase 4) | — |
 | **Participant Platform** | studies / scheduling | 🔴 not started (Phase 5) | — |
@@ -452,8 +454,10 @@ graph TD
   (`xcit.org`). The public **"Try it"** demo is live. Mechanics that diverged from the
   original runbook (assembled-VS dir, locally-built static frontends, Vercel-API env, the
   Library `uv` requirements fix) are documented in [`../DEPLOYMENT.md`](../DEPLOYMENT.md) §0,
-  with `scripts/redeploy-participant-stack.sh` for one-command redeploys. **Editor (M2)** is
-  the only remaining unhosted started component.
+  with `scripts/redeploy-participant-stack.sh` for one-command redeploys. The **editor** is now
+  hosted too ([editor-static.vercel.app](https://editor-static.vercel.app); its cross-origin
+  Library reads required adding the editor origin to the Library's `LIBRARY_CORS_ORIGINS`). The
+  editor's `/api/translate` auto-translate function is the one deferred piece (needs an AI key).
 
 - **Repo topology / reorg.** The design locks a future **multi-repo** layout
   (`behaverse/questionnaire-*`), but the physical split is **deferred** — everything lives

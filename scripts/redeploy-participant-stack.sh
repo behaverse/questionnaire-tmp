@@ -29,8 +29,10 @@ IDENTITY_URL="https://identity-service-three.vercel.app"
 VS_URL="https://viewer-service.vercel.app"
 PLAYER_URL="https://player-sooty-six.vercel.app"
 
+LIBRARY_URL="https://questionnaire-library.vercel.app"
+
 want() { [[ " $* " == *" ${TARGET:-all} "* || "${TARGET:-all}" == "all" ]]; }
-TARGET="${1:-all}"   # all | identity | vs | player | portal
+TARGET="${1:-all}"   # all | identity | vs | player | portal | editor
 
 # --- Identity (self-contained; deploys straight from its dir) ---
 if want identity; then
@@ -90,4 +92,19 @@ if want portal; then
   rm -rf "$(dirname "$Q")"
 fi
 
-echo "Done. Live: portal $( [[ ${TARGET} == all || ${TARGET} == portal ]] && echo '(redeployed) ' )https://portal-henna-seven-32.vercel.app"
+# --- editor: local build (needs the renderer dist-lib + evaluator wasm siblings), deploy static
+#     dist/. Authoring/preview/export only; the /api/translate function (auto-translate) is a
+#     follow-up gated on an AI key. NOTE the Library's LIBRARY_CORS_ORIGINS must include the
+#     editor origin (it fetches the Library cross-origin). ---
+if want editor; then
+  echo "==> editor (local build + static deploy)"
+  ( cd editor
+    VITE_LIBRARY_BASE_URL="$LIBRARY_URL" VITE_TRANSLATE_URL="/api/translate" npm run build >/dev/null )
+  R="$(mktemp -d)/editor"; cp -r editor/dist "$R"
+  printf '%s' '{ "rewrites": [{ "source": "/((?!assets/|preview).*)", "destination": "/index.html" }] }' > "$R/vercel.json"
+  cp -r editor/.vercel "$R/.vercel" 2>/dev/null || true
+  ( cd "$R" && vercel deploy --prod --yes --scope "$SCOPE" >/dev/null && echo "  deployed" )
+  rm -rf "$(dirname "$R")"
+fi
+
+echo "Done. Live: portal https://portal-henna-seven-32.vercel.app | editor https://editor-static.vercel.app"

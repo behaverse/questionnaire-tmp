@@ -56,9 +56,14 @@ the current master SHA), then:
 ./scripts/redeploy-participant-stack.sh vs         # just one of: identity|vs|player|portal
 ```
 
-**Still open:** real email (Resend) — set `RESEND_API_KEY` on the Identity project +
-`WEB_VIEWER_BASE_URL` (the portal URL) and redeploy Identity; anonymous/invite/demo flows
-work without it.
+**Email (Resend): DONE** — `RESEND_API_KEY` + `SMTP_FROM=no-reply@xcit.org` set on Identity;
+domain `xcit.org` verified; register→verify-email proven end-to-end.
+
+**Editor (M2): DONE** — live at `editor-static.vercel.app` (built locally + static deploy,
+like the player/portal). It reads the Library cross-origin, so the editor origin must be in
+the Library project's `LIBRARY_CORS_ORIGINS`. Its `/api/translate` auto-translate function is
+deferred (needs an AI key — would deploy via `vercel build --prebuilt` to include the function).
+Redeploy with `scripts/redeploy-participant-stack.sh editor`.
 
 ---
 
