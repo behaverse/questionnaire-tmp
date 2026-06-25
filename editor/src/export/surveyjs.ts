@@ -22,7 +22,10 @@ function questionFor(v: ItemView, dropped: string[], n: number): Record<string, 
   const base: Record<string, unknown> = { name: v.id, title: v.prompt }
   if (v.required) base.isRequired = true
 
-  if (v.choicesError) dropped.push(`Question ${n} ("${v.prompt}"): no choice texts in this language`)
+  if (v.choicesError) {
+    dropped.push(`Question ${n} ("${v.id}"): no choice texts in this language`)
+    return null
+  }
   const choices = v.choices.map((c) => ({ value: c.value, text: c.text }))
 
   const w = v.widget
@@ -41,7 +44,7 @@ function questionFor(v: ItemView, dropped: string[], n: number): Record<string, 
     if (validators.length) base.validators = validators
   }
   else if (w && w.startsWith('text')) { base.type = 'text' }
-  else { dropped.push(`Question ${n} ("${v.prompt}"): input type not supported by SurveyJS`); return null }
+  else { dropped.push(`Question ${n} ("${v.id}"): input type not supported by SurveyJS`); return null }
 
   const t = translateShowIf(v.show_if)
   if (t.dropped) dropped.push(`Question ${n} ("${v.id}"): visibility rule (show_if) too complex to translate`)
