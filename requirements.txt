@@ -1,2 +1,2 @@
-./identity-service
+questionnaire-identity-service @ ./identity-service
 ./library
