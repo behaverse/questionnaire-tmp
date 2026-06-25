@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "mood"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Scale of Positive and Negative Experience (SPANE) is a 12-item self-report measure assessing the frequency of positive and negative feelings experienced over a recent period. It is used in well-being research to capture affective balance as a component of subjective well-being.",
     "id": "qst_spane",
+    "instrument_id": "inst_spane",
     "language": "en",
     "license": "unknown",
     "provenance": {

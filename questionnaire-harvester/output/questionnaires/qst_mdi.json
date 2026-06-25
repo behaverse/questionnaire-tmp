@@ -8,11 +8,17 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "depression"
+      ],
+      "population": [
+        "adults",
+        "clinical"
+      ]
     },
     "description": "The Major Depression Inventory (MDI) is a 12-item self-report questionnaire assessing the presence and severity of depressive symptoms based on ICD-10 and DSM-IV diagnostic criteria for depressive episodes. It is used in clinical and research settings for both dimensional symptom measurement and categorical diagnostic purposes.",
     "id": "qst_mdi",
+    "instrument_id": "inst_mdi",
     "language": "en",
     "license": "unknown",
     "provenance": {

@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Short Dark Triad (SD3) is a 27-item self-report measure assessing three socially aversive personality traits: Machiavellianism, narcissism, and psychopathy. It is used in personality and social psychology research to examine the correlates and consequences of dark personality tendencies.",
     "id": "qst_sd3",
+    "instrument_id": "inst_sd3",
     "language": "en",
     "license": "unknown",
     "provenance": {

@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Zuckerman–Kuhlman Personality Questionnaire Shortened version (ZKPQ-50-CC) is a 50-item self-report questionnaire measuring five alternative personality factors including Neuroticism-Anxiety, Activity, Sociability, Impulsive Sensation-Seeking, and Aggression-Hostility. It is used to characterise personality structure through a psychobiological framework distinct from the Big Five model.",
     "id": "qst_cc",
+    "instrument_id": "inst_zkpq50cc",
     "language": "en",
     "license": "unknown",
     "provenance": {

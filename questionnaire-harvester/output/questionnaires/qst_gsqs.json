@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "sleep"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Groningen Sleep Quality Questionnaire (GSQS) is a 15-item self-report scale measuring subjective sleep quality, including aspects such as sleep onset, waking frequency, and daytime fatigue. It is used in sleep research and clinical studies to detect poor sleep quality and its impact on daily functioning.",
     "id": "qst_gsqs",
+    "instrument_id": "inst_gsqs",
     "language": "en",
     "license": "unknown",
     "provenance": {

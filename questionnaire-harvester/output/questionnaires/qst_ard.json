@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "relationships"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Dominance Scale (for relationship research) is a 32-item self-report questionnaire measuring the disposition toward dominance in interpersonal and romantic relationships. It is used to assess dominant personality tendencies in the context of partner dynamics and relationship research.",
     "id": "qst_ard",
+    "instrument_id": "inst_dominancescale",
     "language": "en",
     "license": "unknown",
     "provenance": {

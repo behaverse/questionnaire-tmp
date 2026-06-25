@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "autism"
+      ],
+      "population": [
+        "children"
+      ]
     },
     "description": "The Infant-Toddler Checklist (ITC) is a 24-item parent-rated screening tool assessing early communication and social-symbolic development in children aged 6 to 24 months. It is used to identify infants and toddlers who may benefit from further evaluation for developmental delays or autism spectrum disorder.",
     "id": "qst_itc",
+    "instrument_id": "inst_itc",
     "language": "en",
     "license": "unknown",
     "provenance": {

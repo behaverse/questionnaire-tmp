@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Short 15-item Big Five Inventory (BFI-S) is a 15-item self-report scale measuring the five broad personality dimensions: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism. It is used when a brief yet reliable assessment of the Big Five personality structure is required.",
     "id": "qst_bfis",
+    "instrument_id": "inst_bfis",
     "language": "en",
     "license": "unknown",
     "provenance": {

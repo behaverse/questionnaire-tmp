@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "addiction"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Gaming Addiction Scale is a 7-item self-report measure assessing the degree to which an individual's video game use exhibits characteristics of addictive behavior. It is used in research to quantify problematic gaming patterns and their relationship with psychological well-being.",
     "id": "qst_gas",
+    "instrument_id": "inst_gas",
     "language": "en",
     "license": "unknown",
     "provenance": {

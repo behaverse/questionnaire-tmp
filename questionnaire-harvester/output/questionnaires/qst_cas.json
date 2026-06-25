@@ -8,11 +8,17 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "aggression"
+      ],
+      "population": [
+        "adults",
+        "clinical"
+      ]
     },
     "description": "The Clinical Anger Scale (CAS) is a 21-item self-report measure assessing the presence and intensity of anger across cognitive, affective, and behavioral domains. It is used to evaluate clinically significant anger in individuals presenting with emotional or psychological difficulties.",
     "id": "qst_cas",
+    "instrument_id": "inst_cas",
     "language": "en",
     "license": "unknown",
     "provenance": {

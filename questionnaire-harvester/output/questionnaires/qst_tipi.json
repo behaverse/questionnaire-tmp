@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Ten Item Personality Inventory (TIPI) is a 10-item self-report scale providing brief assessments of the Big Five personality dimensions: openness, conscientiousness, extraversion, agreeableness, and neuroticism. It is used when time or space constraints make a full personality battery impractical, particularly in large-scale surveys.",
     "id": "qst_tipi",
+    "instrument_id": "inst_tipi",
     "language": "en",
     "license": "unknown",
     "provenance": {

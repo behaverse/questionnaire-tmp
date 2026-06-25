@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Type D Personality scale (DS14) is a 14-item self-report questionnaire measuring two stable personality traits — negative affectivity and social inhibition — that together define Type D (distressed) personality. It is used in health psychology and cardiology research to identify individuals at elevated risk for psychological distress and adverse health outcomes.",
     "id": "qst_ds14",
+    "instrument_id": "inst_ds14",
     "language": "en",
     "license": "unknown",
     "provenance": {
