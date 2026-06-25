@@ -6,6 +6,62 @@
 
 ---
 
+## 0. AS-BUILT (the live deployment, 2026-06-25) — read this first
+
+The participant stack went live on **Vercel + Supabase (free tier, $0)**. The actual
+go-live diverged from the original runbook below in a few important ways — those sections
+are kept for reference, but **this section is the source of truth**.
+
+**Live URLs**
+
+| | |
+|---|---|
+| Portal (participant-app) | https://portal-henna-seven-32.vercel.app |
+| Player (web-viewer) | https://player-sooty-six.vercel.app |
+| Viewer Service | https://viewer-service.vercel.app |
+| Identity | https://identity-service-three.vercel.app |
+| Library (existing) | https://questionnaire-library.vercel.app |
+
+**Key divergences from the runbook (and why)**
+
+- **One shared Supabase DB** (`questionnaire-identity`, ref `vknmmbcenrgorexxqhxv`) hosts
+  **both** the Identity and Viewer Service tables — the free tier caps an org at 2 active
+  projects, and the two services' table names don't collide. (The Library keeps its own.)
+  Migrations were applied via the **Supabase MCP** (the sandbox couldn't reach the pooler
+  directly). `DATABASE_URL` uses the **session pooler `:5432`**; consider the transaction
+  pooler `:6543` for production scale.
+- **Backends deploy per-service via the authenticated `vercel` CLI**, not the MCP deploy
+  tool. **Identity** deploys straight from `identity-service/`. The **Viewer Service does
+  NOT** deploy from `viewer-service/` (Vercel uploads only the project dir + builds from
+  `pyproject.toml`, so its sibling packages + `schemas`/scorer are missing) — it deploys
+  from a **self-contained assembled dir** (siblings as PEP 508 git deps pinned to the
+  master commit + `schemas`/scorer bundled locally + `SCHEMAS_DIR`/`VS_SCORER_DIR` env).
+- **Frontends are built locally and deployed as static `dist/`** (their Vite builds
+  source-alias sibling dirs that don't upload).
+- **Set Vercel env via the API** (`POST /v10/projects/{id}/env?upsert=true`). **Do NOT use
+  `printf | vercel env add`** — it silently stored empty values during go-live.
+- **The Library build was broken** (uv rejects the bare `./identity-service` path dep —
+  pkg name ≠ dir name): every Library deploy ERRORed since Vercel adopted uv, stranding the
+  live site on an old build. Fixed in root `requirements.txt` with the PEP 508 named form
+  `questionnaire-identity-service @ ./identity-service`. The Library auto-deploys from
+  master; its **Try-it** button needs `VITE_PLAYER_BASE_URL` + `VITE_VS_BASE_URL` build env
+  (now set).
+
+**Redeploying** — use **`scripts/redeploy-participant-stack.sh`** (encodes the assembled-VS
++ static-frontend mechanics). Push the commit you want first (the VS sibling deps pin to
+the current master SHA), then:
+
+```bash
+./scripts/redeploy-participant-stack.sh            # all four
+./scripts/redeploy-participant-stack.sh vs         # just one of: identity|vs|player|portal
+```
+
+**Still open:** real email (Resend) — set `RESEND_API_KEY` on the Identity project +
+`WEB_VIEWER_BASE_URL` (the portal URL) and redeploy Identity; anonymous/invite/demo flows
+work without it.
+
+---
+
 ## 1. Overview
 
 The system is split into six Vercel projects, each deployed from a sub-directory of this mono-repo:
