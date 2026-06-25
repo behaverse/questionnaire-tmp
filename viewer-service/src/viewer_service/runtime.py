@@ -72,6 +72,11 @@ def preview_runtime(conn, ref: str, viewer: dict, requested_locale: str | None) 
         "questionnaire_ref": ref,
         "available_locales": [loc],
         "default_locale": loc,
-        "runtime_policy": RuntimePolicy(scorer_impl_preference=["wasm"]).to_canonical_dict(),
+        # "Try it" preview shows scores (render-only, no data stored): keep declared scores in the
+        # runtime and flag them for display (live + on the results screen). Questionnaires without
+        # scores[] are unaffected.
+        "runtime_policy": RuntimePolicy(
+            scorer_impl_preference=["wasm"], show_score=True, show_score_live=True
+        ).to_canonical_dict(),
     }
     return mint_runtime(conn, deployment, viewer, loc)
