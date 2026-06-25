@@ -12,6 +12,6 @@
     { "source": "/healthz", "destination": "/api/index" }
   ],
   "crons": [
-    { "path": "/internal/forward", "schedule": "*/10 * * * *" }
+    { "path": "/internal/forward", "schedule": "0 3 * * *" }
   ]
 }
