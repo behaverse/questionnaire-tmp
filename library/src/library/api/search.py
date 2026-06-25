@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from .deps import get_conn
 from ..models import PaginatedCards, CatalogueCard
 from ..entity_types import ENTITY_TYPES
-from ..query import _CARD_COLS
+from ..query import _CARD_COLS, _q_filter
 
 _TABLE_FACETS = {"domain", "population", "administration_mode", "tag"}
 _COLUMN_FACETS = {"license": "effective_license"}  # language + instrument handled separately
@@ -13,8 +13,9 @@ router = APIRouter()
 def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
     if type is not None and type not in ENTITY_TYPES:
         raise HTTPException(status_code=422, detail=f"unknown type: {type!r}; must be one of {ENTITY_TYPES}")
-    where = ["c.status='published'", "c.search_tsv @@ websearch_to_tsquery('english', %s)"]
-    params: list = [q]
+    _clause, _qp = _q_filter(q)
+    where = ["c.status='published'", _clause]
+    params: list = list(_qp)
     if type:
         where.append("c.entity_type=%s"); params.append(type)
     w = " AND ".join(where)

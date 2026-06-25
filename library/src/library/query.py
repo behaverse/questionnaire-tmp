@@ -6,6 +6,16 @@ def latest_versions_cte() -> str:
 
 _VALID_SORTS = {"relevance", "title", "recency"}
 
+def _q_filter(q: str) -> tuple[str, list]:
+    """A catalogue text-search predicate: full-text (title+description) OR a case-insensitive
+    substring on title/short_title. The substring arm lets acronym queries like 'bis' find
+    'BIS/BAS' — Postgres FTS tokenises 'BIS/BAS' as the single lexeme 'bis/bas', which a plain
+    tsquery for 'bis' never matches; short_title isn't in search_tsv at all. Returns the SQL
+    fragment (referencing alias `c`) and its bind params."""
+    like = f"%{q}%"
+    return ("(c.search_tsv @@ websearch_to_tsquery('english', %s) "
+            "OR c.title ILIKE %s OR c.short_title ILIKE %s)", [q, like, like])
+
 def list_entries(conn: psycopg.Connection, entity_type: str, *, q: str | None,
                  limit: int, offset: int,
                  domain: str | None = None, population: str | None = None,
@@ -15,8 +25,8 @@ def list_entries(conn: psycopg.Connection, entity_type: str, *, q: str | None,
     where = ["c.entity_type=%s", "c.status='published'"]
     params: list = [entity_type]
     if q:
-        where.append("c.search_tsv @@ websearch_to_tsquery('english', %s)")
-        params.append(q)
+        clause, qp = _q_filter(q)
+        where.append(clause); params.extend(qp)
     if domain is not None:
         where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version AND f.facet_type='domain' AND f.value=%s)")
         params.append(domain)
@@ -100,7 +110,8 @@ def _card_where_sort(entity_type, *, q, domain, population, language, license,
     where = ["c.entity_type=%s", "c.status='published'"]
     params: list = [entity_type]
     if q:
-        where.append("c.search_tsv @@ websearch_to_tsquery('english', %s)"); params.append(q)
+        clause, qp = _q_filter(q)
+        where.append(clause); params.extend(qp)
     if domain is not None:
         where.append("EXISTS (SELECT 1 FROM facet f WHERE f.id=c.id AND f.version=c.version "
                      "AND f.facet_type='domain' AND f.value=%s)"); params.append(domain)
