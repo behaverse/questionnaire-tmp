@@ -44,6 +44,8 @@ export interface VersionInfo {
 export interface FacetValue { value: string; count: number; label?: string }
 export interface FacetResponse { facet_type: string; values: FacetValue[] }
 
+export interface CatalogueStats { questionnaires: number; questions: number; options: number; languages: number }
+
 // Resolved Schema-2 definition (only the fields the UI reads; unknown keys allowed).
 export interface LangContent {
   status?: string

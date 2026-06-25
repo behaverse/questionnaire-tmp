@@ -1,5 +1,5 @@
 import { useCatalogueParams, type FacetKey } from '../catalogue/useCatalogueParams'
-import { useQuestionnaires, useFacets } from '../api/queries'
+import { useQuestionnaires, useFacets, useStats } from '../api/queries'
 import { CatalogueGroup } from '../catalogue/CatalogueGroup'
 import { FacetSidebar, type FacetGroup } from '../catalogue/FacetSidebar'
 import { SearchBar } from '../catalogue/SearchBar'
@@ -27,6 +27,7 @@ export function CataloguePage() {
     sort: params.sort, limit, offset,
   })
 
+  const stats = useStats()
   const domain = useFacets('domain')
   const population = useFacets('population')
   const instrument = useFacets('instrument')
@@ -53,6 +54,21 @@ export function CataloguePage() {
           A curated, read-only library of research questionnaires and cognitive instruments — search,
           filter, and inspect canonical definitions.
         </p>
+        {stats.data && (
+          <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1.5 text-sm">
+            {([
+              ['Questionnaires', stats.data.questionnaires],
+              ['Questions', stats.data.questions],
+              ['Options', stats.data.options],
+              ['Languages', stats.data.languages],
+            ] as const).map(([label, n]) => (
+              <div key={label} className="flex items-baseline gap-1.5">
+                <dd className="font-semibold tabular-nums text-ink">{n.toLocaleString()}</dd>
+                <dt className="text-ink-soft">{label}</dt>
+              </div>
+            ))}
+          </dl>
+        )}
       </div>
       <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="flex-1"><SearchBar value={params.q ?? ''} onChange={(v) => setParam('q', v || undefined)} /></div>

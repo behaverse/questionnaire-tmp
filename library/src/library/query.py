@@ -16,6 +16,26 @@ def _q_filter(q: str) -> tuple[str, list]:
     return ("(c.search_tsv @@ websearch_to_tsquery('english', %s) "
             "OR c.title ILIKE %s OR c.short_title ILIKE %s)", [q, like, like])
 
+def catalogue_stats(conn: psycopg.Connection) -> dict:
+    """Headline counts of the latest-published catalogue: questionnaires, question (prompt)
+    entities, option entities, and the number of distinct languages questionnaires are
+    available in. Reflects the live content of the Library."""
+    row = conn.execute(
+        latest_versions_cte() +
+        " SELECT count(*) FILTER (WHERE c.entity_type='questionnaire') AS questionnaires,"
+        "        count(*) FILTER (WHERE c.entity_type='prompt')        AS questions,"
+        "        count(*) FILTER (WHERE c.entity_type='option')        AS options"
+        " FROM catalogue_entry c JOIN latest l ON c.id=l.id AND c.version=l.version"
+    ).fetchone()
+    langs = conn.execute(
+        latest_versions_cte() +
+        " SELECT count(DISTINCT lang)"
+        " FROM catalogue_entry c JOIN latest l ON c.id=l.id AND c.version=l.version,"
+        "      unnest(coalesce(c.available_languages, ARRAY[c.language])) AS lang"
+        " WHERE c.entity_type='questionnaire' AND lang IS NOT NULL"
+    ).fetchone()[0]
+    return {"questionnaires": row[0], "questions": row[1], "options": row[2], "languages": langs}
+
 def list_entries(conn: psycopg.Connection, entity_type: str, *, q: str | None,
                  limit: int, offset: int,
                  domain: str | None = None, population: str | None = None,

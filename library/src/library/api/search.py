@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from .deps import get_conn
 from ..models import PaginatedCards, CatalogueCard
 from ..entity_types import ENTITY_TYPES
-from ..query import _CARD_COLS, _q_filter
+from ..query import _CARD_COLS, _q_filter, catalogue_stats
 
 _TABLE_FACETS = {"domain", "population", "administration_mode", "tag"}
 _COLUMN_FACETS = {"license": "effective_license"}  # language + instrument handled separately
@@ -33,6 +33,11 @@ def search(q: str, type: str | None = None, limit: int = Query(20, le=100), offs
         params + [q, limit, offset]).fetchall()
     items = [CatalogueCard(**dict(zip(_CARD_COLS, r))) for r in rows]
     return PaginatedCards(items=items, total=total, limit=limit, offset=offset)
+
+@router.get("/stats")
+def stats(conn=Depends(get_conn)):
+    """Headline catalogue counts for the homepage."""
+    return catalogue_stats(conn)
 
 @router.get("/facets")
 def facets(facet_type: str, conn=Depends(get_conn)):

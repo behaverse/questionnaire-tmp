@@ -7,6 +7,9 @@ export const useQuestionnaires = (q: QuestionnaireQuery) =>
 export const useFacets = (facetType: string) =>
   useQuery({ queryKey: ['facets', facetType], queryFn: () => api.facets(facetType) })
 
+export const useStats = () =>
+  useQuery({ queryKey: ['stats'], queryFn: () => api.stats(), staleTime: 5 * 60_000 })
+
 export const useResolvedDefinition = (id: string, version: string | undefined, enabled = true) =>
   useQuery({
     queryKey: ['definition', id, version],
