@@ -1,0 +1,43 @@
+{
+  "id": "who5",
+  "scorer_id": "scr_who5",
+  "name": "WHO-5 Well-Being Index Scoring",
+  "status": "validated",
+  "description": "WHO-5 Well-Being Index. Raw score = sum of the 5 items (each 0-5), range 0-25; the percentage score = raw x 4 (range 0-100). A percentage of 50 or below indicates reduced wellbeing and 28 or below suggests likely depression warranting further assessment.",
+  "publication": {
+    "citation": "Topp CW, Østergaard SD, Søndergaard S, Bech P (2015). The WHO-5 Well-Being Index: a systematic review of the literature. Psychother Psychosom, 84(3), 167-176.",
+    "year": 2015
+  },
+  "engine_spec": {
+    "item_range": [0, 5],
+    "scores": [
+      {
+        "key": "wellbeing",
+        "items": ["pr_who5_1", "pr_who5_2", "pr_who5_3", "pr_who5_4", "pr_who5_5"],
+        "transform": { "mul": 4 },
+        "bands": [
+          { "min": 0, "max": 28, "severity": "likely_depression", "label": "Likely depression — further assessment indicated" },
+          { "min": 29, "max": 50, "severity": "low", "label": "Reduced wellbeing" },
+          { "min": 51, "max": 100, "severity": "normal", "label": "Good wellbeing" }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "max-wellbeing",
+      "input": { "scored_responses": { "pr_who5_1": 5, "pr_who5_2": 5, "pr_who5_3": 5, "pr_who5_4": 5, "pr_who5_5": 5 } },
+      "expected": { "scores": { "wellbeing": { "value": 100, "severity": "normal", "band": { "min": 51, "max": 100, "label": "Good wellbeing" } } }, "missing_count": 0 }
+    },
+    {
+      "name": "likely-depression-floor",
+      "input": { "scored_responses": { "pr_who5_1": 0, "pr_who5_2": 0, "pr_who5_3": 0, "pr_who5_4": 0, "pr_who5_5": 0 } },
+      "expected": { "scores": { "wellbeing": { "value": 0, "severity": "likely_depression", "band": { "min": 0, "max": 28, "label": "Likely depression — further assessment indicated" } } }, "missing_count": 0 }
+    },
+    {
+      "name": "reduced-wellbeing-band",
+      "input": { "scored_responses": { "pr_who5_1": 3, "pr_who5_2": 2, "pr_who5_3": 2, "pr_who5_4": 2, "pr_who5_5": 1 } },
+      "expected": { "scores": { "wellbeing": { "value": 40, "severity": "low", "band": { "min": 29, "max": 50, "label": "Reduced wellbeing" } } }, "missing_count": 0 }
+    }
+  ]
+}

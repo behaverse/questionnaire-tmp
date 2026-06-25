@@ -1,0 +1,46 @@
+{
+  "id": "swls",
+  "scorer_id": "scr_swls",
+  "name": "SWLS Standard Scoring",
+  "status": "validated",
+  "description": "Satisfaction With Life Scale (Diener et al., 1985). Total = sum of the 5 items (each 1-7), range 5-35. Interpretation bands: 31-35 extremely satisfied, 26-30 satisfied, 21-25 slightly satisfied, 20 neutral, 15-19 slightly dissatisfied, 10-14 dissatisfied, 5-9 extremely dissatisfied.",
+  "publication": {
+    "citation": "Diener E, Emmons RA, Larsen RJ, Griffin S (1985). The Satisfaction with Life Scale. J Pers Assess, 49(1), 71-75.",
+    "year": 1985
+  },
+  "engine_spec": {
+    "item_range": [1, 7],
+    "scores": [
+      {
+        "key": "total",
+        "items": ["pr_swls_1", "pr_swls_2", "pr_swls_3", "pr_swls_4", "pr_swls_5"],
+        "bands": [
+          { "min": 5, "max": 9, "severity": "extremely_dissatisfied", "label": "Extremely dissatisfied" },
+          { "min": 10, "max": 14, "severity": "dissatisfied", "label": "Dissatisfied" },
+          { "min": 15, "max": 19, "severity": "slightly_dissatisfied", "label": "Slightly dissatisfied" },
+          { "min": 20, "max": 20, "severity": "neutral", "label": "Neutral" },
+          { "min": 21, "max": 25, "severity": "slightly_satisfied", "label": "Slightly satisfied" },
+          { "min": 26, "max": 30, "severity": "satisfied", "label": "Satisfied" },
+          { "min": 31, "max": 35, "severity": "extremely_satisfied", "label": "Extremely satisfied" }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "extremely-satisfied-ceiling",
+      "input": { "scored_responses": { "pr_swls_1": 7, "pr_swls_2": 7, "pr_swls_3": 7, "pr_swls_4": 7, "pr_swls_5": 7 } },
+      "expected": { "scores": { "total": { "value": 35, "severity": "extremely_satisfied", "band": { "min": 31, "max": 35, "label": "Extremely satisfied" } } }, "missing_count": 0 }
+    },
+    {
+      "name": "neutral-exact",
+      "input": { "scored_responses": { "pr_swls_1": 5, "pr_swls_2": 5, "pr_swls_3": 4, "pr_swls_4": 4, "pr_swls_5": 2 } },
+      "expected": { "scores": { "total": { "value": 20, "severity": "neutral", "band": { "min": 20, "max": 20, "label": "Neutral" } } }, "missing_count": 0 }
+    },
+    {
+      "name": "extremely-dissatisfied-floor",
+      "input": { "scored_responses": { "pr_swls_1": 1, "pr_swls_2": 1, "pr_swls_3": 1, "pr_swls_4": 1, "pr_swls_5": 1 } },
+      "expected": { "scores": { "total": { "value": 5, "severity": "extremely_dissatisfied", "band": { "min": 5, "max": 9, "label": "Extremely dissatisfied" } } }, "missing_count": 0 }
+    }
+  ]
+}

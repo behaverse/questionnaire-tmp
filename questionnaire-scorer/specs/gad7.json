@@ -1,0 +1,48 @@
+{
+  "id": "gad7",
+  "scorer_id": "scr_gad7",
+  "name": "GAD-7 Standard Scoring",
+  "status": "validated",
+  "description": "Standard GAD-7 scoring (Spitzer et al., 2006). Total = sum of the 7 items (each 0-3), range 0-21. Severity bands: 0-4 minimal, 5-9 mild, 10-14 moderate, 15-21 severe; a total of 10 or more is the usual cut-off for probable generalized anxiety disorder.",
+  "publication": {
+    "citation": "Spitzer RL, Kroenke K, Williams JBW, Löwe B (2006). A brief measure for assessing generalized anxiety disorder: the GAD-7. Arch Intern Med, 166(10), 1092-1097.",
+    "year": 2006
+  },
+  "engine_spec": {
+    "item_range": [0, 3],
+    "scores": [
+      {
+        "key": "total",
+        "items": ["pr_gad7_1", "pr_gad7_2", "pr_gad7_3", "pr_gad7_4", "pr_gad7_5", "pr_gad7_6", "pr_gad7_7"],
+        "bands": [
+          { "min": 0, "max": 4, "severity": "minimal", "label": "Minimal anxiety" },
+          { "min": 5, "max": 9, "severity": "mild", "label": "Mild anxiety" },
+          { "min": 10, "max": 14, "severity": "moderate", "label": "Moderate anxiety" },
+          { "min": 15, "max": 21, "severity": "severe", "label": "Severe anxiety" }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "moderate-no-missing",
+      "input": { "scored_responses": { "pr_gad7_1": 2, "pr_gad7_2": 2, "pr_gad7_3": 2, "pr_gad7_4": 2, "pr_gad7_5": 2, "pr_gad7_6": 1, "pr_gad7_7": 1 } },
+      "expected": { "scores": { "total": { "value": 12, "severity": "moderate", "band": { "min": 10, "max": 14, "label": "Moderate anxiety" } } }, "missing_count": 0 }
+    },
+    {
+      "name": "minimal-floor",
+      "input": { "scored_responses": { "pr_gad7_1": 0, "pr_gad7_2": 0, "pr_gad7_3": 0, "pr_gad7_4": 0, "pr_gad7_5": 0, "pr_gad7_6": 0, "pr_gad7_7": 0 } },
+      "expected": { "scores": { "total": { "value": 0, "severity": "minimal", "band": { "min": 0, "max": 4, "label": "Minimal anxiety" } } }, "missing_count": 0 }
+    },
+    {
+      "name": "severe-ceiling",
+      "input": { "scored_responses": { "pr_gad7_1": 3, "pr_gad7_2": 3, "pr_gad7_3": 3, "pr_gad7_4": 3, "pr_gad7_5": 3, "pr_gad7_6": 3, "pr_gad7_7": 3 } },
+      "expected": { "scores": { "total": { "value": 21, "severity": "severe", "band": { "min": 15, "max": 21, "label": "Severe anxiety" } } }, "missing_count": 0 }
+    },
+    {
+      "name": "partial-with-missing-ignores-unknown",
+      "input": { "scored_responses": { "pr_gad7_1": 3, "pr_gad7_2": 2, "bogus": 9 } },
+      "expected": { "scores": { "total": { "value": 5, "severity": "mild", "band": { "min": 5, "max": 9, "label": "Mild anxiety" } } }, "missing_count": 5 }
+    }
+  ]
+}

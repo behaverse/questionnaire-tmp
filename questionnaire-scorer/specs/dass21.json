@@ -1,0 +1,80 @@
+{
+  "id": "dass21",
+  "scorer_id": "scr_dass21",
+  "name": "DASS-21 Standard Scoring",
+  "status": "validated",
+  "description": "Depression Anxiety Stress Scales - 21 (Lovibond & Lovibond, 1995). Three 7-item subscales (Depression, Anxiety, Stress), each item 0-3; each subscale total is multiplied by 2 to align with DASS-42 norms (range 0-42). Severity bands follow the standard DASS manual cut-offs, which differ per subscale.",
+  "publication": {
+    "citation": "Lovibond SH, Lovibond PF (1995). Manual for the Depression Anxiety Stress Scales (2nd ed.). Sydney: Psychology Foundation.",
+    "year": 1995
+  },
+  "engine_spec": {
+    "item_range": [0, 3],
+    "scores": [
+      {
+        "key": "depression",
+        "items": ["pr_dass21_3", "pr_dass21_5", "pr_dass21_10", "pr_dass21_13", "pr_dass21_16", "pr_dass21_17", "pr_dass21_21"],
+        "transform": { "mul": 2 },
+        "bands": [
+          { "min": 0, "max": 9, "severity": "normal", "label": "Normal" },
+          { "min": 10, "max": 13, "severity": "mild", "label": "Mild" },
+          { "min": 14, "max": 20, "severity": "moderate", "label": "Moderate" },
+          { "min": 21, "max": 27, "severity": "severe", "label": "Severe" },
+          { "min": 28, "max": 42, "severity": "extremely_severe", "label": "Extremely severe" }
+        ]
+      },
+      {
+        "key": "anxiety",
+        "items": ["pr_dass21_2", "pr_dass21_4", "pr_dass21_7", "pr_dass21_9", "pr_dass21_15", "pr_dass21_19", "pr_dass21_20"],
+        "transform": { "mul": 2 },
+        "bands": [
+          { "min": 0, "max": 7, "severity": "normal", "label": "Normal" },
+          { "min": 8, "max": 9, "severity": "mild", "label": "Mild" },
+          { "min": 10, "max": 14, "severity": "moderate", "label": "Moderate" },
+          { "min": 15, "max": 19, "severity": "severe", "label": "Severe" },
+          { "min": 20, "max": 42, "severity": "extremely_severe", "label": "Extremely severe" }
+        ]
+      },
+      {
+        "key": "stress",
+        "items": ["pr_dass21_1", "pr_dass21_6", "pr_dass21_8", "pr_dass21_11", "pr_dass21_12", "pr_dass21_14", "pr_dass21_18"],
+        "transform": { "mul": 2 },
+        "bands": [
+          { "min": 0, "max": 14, "severity": "normal", "label": "Normal" },
+          { "min": 15, "max": 18, "severity": "mild", "label": "Mild" },
+          { "min": 19, "max": 25, "severity": "moderate", "label": "Moderate" },
+          { "min": 26, "max": 33, "severity": "severe", "label": "Severe" },
+          { "min": 34, "max": 42, "severity": "extremely_severe", "label": "Extremely severe" }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "all-normal-zero",
+      "input": { "scored_responses": {
+        "pr_dass21_1": 0, "pr_dass21_2": 0, "pr_dass21_3": 0, "pr_dass21_4": 0, "pr_dass21_5": 0, "pr_dass21_6": 0, "pr_dass21_7": 0,
+        "pr_dass21_8": 0, "pr_dass21_9": 0, "pr_dass21_10": 0, "pr_dass21_11": 0, "pr_dass21_12": 0, "pr_dass21_13": 0, "pr_dass21_14": 0,
+        "pr_dass21_15": 0, "pr_dass21_16": 0, "pr_dass21_17": 0, "pr_dass21_18": 0, "pr_dass21_19": 0, "pr_dass21_20": 0, "pr_dass21_21": 0
+      } },
+      "expected": { "scores": {
+        "depression": { "value": 0, "severity": "normal", "band": { "min": 0, "max": 9, "label": "Normal" } },
+        "anxiety": { "value": 0, "severity": "normal", "band": { "min": 0, "max": 7, "label": "Normal" } },
+        "stress": { "value": 0, "severity": "normal", "band": { "min": 0, "max": 14, "label": "Normal" } }
+      }, "missing_count": 0 }
+    },
+    {
+      "name": "mixed-subscale-severities",
+      "input": { "scored_responses": {
+        "pr_dass21_1": 3, "pr_dass21_2": 1, "pr_dass21_3": 2, "pr_dass21_4": 1, "pr_dass21_5": 2, "pr_dass21_6": 3, "pr_dass21_7": 1,
+        "pr_dass21_8": 3, "pr_dass21_9": 1, "pr_dass21_10": 2, "pr_dass21_11": 3, "pr_dass21_12": 3, "pr_dass21_13": 2, "pr_dass21_14": 3,
+        "pr_dass21_15": 1, "pr_dass21_16": 2, "pr_dass21_17": 2, "pr_dass21_18": 3, "pr_dass21_19": 1, "pr_dass21_20": 1, "pr_dass21_21": 2
+      } },
+      "expected": { "scores": {
+        "depression": { "value": 28, "severity": "extremely_severe", "band": { "min": 28, "max": 42, "label": "Extremely severe" } },
+        "anxiety": { "value": 14, "severity": "moderate", "band": { "min": 10, "max": 14, "label": "Moderate" } },
+        "stress": { "value": 42, "severity": "extremely_severe", "band": { "min": 34, "max": 42, "label": "Extremely severe" } }
+      }, "missing_count": 0 }
+    }
+  ]
+}
