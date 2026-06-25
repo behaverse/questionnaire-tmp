@@ -3,30 +3,12 @@ import re
 from pathlib import Path
 
 from library.importers.survey_db.writer import write_entity
+from library.classification_vocab import PREFERRED_DOMAIN, PREFERRED_POPULATION
 from harvester.naming import derive_short_title
 
-# Preferred (open) vocabularies — documented in schemas/instrument/README.md. The schema does
-# NOT enforce these (the lists are intentionally open), so `check_classifications` only WARNS on
-# off-vocab values. Keep the harvested corpus aligned to this clean vocabulary; the legacy
-# survey_db free-text domains are a separate (messier) namespace not normalised here.
-# schema-preferred (schemas/instrument/README.md) — the backbone vocabulary.
-SCHEMA_DOMAIN = {
-    "anxiety", "cognition", "depression", "executive_function", "implicit_cognition",
-    "memory", "mood", "personality", "quality_of_life", "screening",
-    "self_efficacy", "social_psychology", "stress", "trauma", "wellbeing",
-}
-# disciplined snake_case extension for the harvested corpus where no schema-preferred value fits
-# (each used by several instruments). Kept here so `check_classifications` does not flag them.
-EXTENDED_DOMAIN = {
-    "addiction", "adhd", "aggression", "autism", "eating_disorders", "empathy",
-    "impulsivity", "loneliness", "psychosis", "relationships", "resilience",
-    "self_esteem", "sleep",
-}
-PREFERRED_DOMAIN = SCHEMA_DOMAIN | EXTENDED_DOMAIN
-PREFERRED_POPULATION = {
-    "adults", "adolescents", "children", "older_adults", "clinical",
-    "primary_care", "community", "pregnant", "perinatal", "veterans",
-}
+# Domain/population vocabularies live in library.classification_vocab — the single source of
+# truth shared with the survey_db importer so the live filters stay tidy across all entries.
+# The schema lists are open, so `check_classifications` only WARNS on off-vocab values.
 
 _INSTRUMENT_ID_RE = re.compile(r"^inst_[a-z0-9_]+$")
 

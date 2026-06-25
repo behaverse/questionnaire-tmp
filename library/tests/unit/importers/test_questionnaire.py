@@ -18,7 +18,10 @@ def test_reconstruct_metadata_and_elements():
                     prompt_langs={"aiss_q_1": {"en", "pt"}})
     assert q["metadata"]["id"] == "qst_x_aiss" and q["metadata"]["version"] == "v26.0606"
     assert q["metadata"]["title"] == "AISS" and q["metadata"]["license"] == "unknown"
-    assert q["metadata"]["classification"]["domain"] == ["risk", "novelty"]
+    # topics are normalized onto the clean shared vocabulary (risk + novelty -> personality,
+    # de-duplicated); the raw topics are preserved as tags for provenance.
+    assert q["metadata"]["classification"]["domain"] == ["personality"]
+    assert q["metadata"]["classification"]["tags"] == ["a", "b", "risk", "novelty"]
     assert q["metadata"]["language"] == "en"
     assert q["metadata"]["available_languages"] == ["en", "pt"]
     assert q["metadata"]["x_validated_languages"] == ["en", "pt"]  # survey claim kept as provenance

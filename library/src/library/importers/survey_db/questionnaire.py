@@ -2,6 +2,7 @@ import re
 from .ids import canonical_id, LANGS_FULL
 from .mappers import _split, _sanitize_identifier
 from .provenance import build_provenance
+from ...classification_vocab import normalize_survey_db_domains
 
 def _ref(entity_type, legacy_id, version):
     return {"ref": canonical_id(entity_type, legacy_id) + "@" + version}
@@ -147,16 +148,21 @@ def reconstruct(qid: str, comp_rows: list[dict], survey_row: dict, release: str,
         return clean
 
     classification = {}
-    domains = _split_tags(s.get("topics"), "topics")
+    # normalize legacy free-text topics onto the clean shared domain vocabulary so the live
+    # Domain filter is tidy across every catalogue entry; the raw topics are preserved as tags.
+    raw_topics = _split_tags(s.get("topics"), "topics")
+    domains = normalize_survey_db_domains(raw_topics)
     if domains:
         classification["domain"] = domains
     population = _split_tags(s.get("target_population"), "target_population")
     if population:
         classification["population"] = population
-    # tags go in classification.tags (not top-level metadata)
+    # tags go in classification.tags (not top-level metadata); fold in the raw topics so the
+    # original fine-grained labels are not lost when domains are normalized (provenance).
     tags = _split_tags(s.get("tags"), "tags")
-    if tags:
-        classification["tags"] = tags
+    all_tags = list(dict.fromkeys(tags + raw_topics))
+    if all_tags:
+        classification["tags"] = all_tags
     if classification:
         meta["classification"] = classification
 
