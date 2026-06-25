@@ -24,3 +24,11 @@ archive/
 # python build artifacts + tool scratch
 */build/
 .playwright-mcp/
+
+# Local secrets — never commit (env files, anywhere in the tree)
+.env
+.env.local
+.env.*.local
+**/.env.local
+**/.env.*.local
+.secrets/
