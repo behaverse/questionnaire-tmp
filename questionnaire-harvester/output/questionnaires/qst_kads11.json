@@ -8,11 +8,17 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "depression"
+      ],
+      "population": [
+        "adolescents",
+        "clinical"
+      ]
     },
     "description": "The Kutcher Adolescent Depression Scale - 11-Item (KADS-11) is an 11-item questionnaire designed to assess the presence and severity of depressive symptoms in adolescents. It is used in school-based and clinical settings to support diagnosis and to monitor treatment outcomes in young people aged 12 to 17.",
     "id": "qst_kads11",
+    "instrument_id": "inst_kads11",
     "language": "en",
     "license": "unknown",
     "provenance": {

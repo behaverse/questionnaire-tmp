@@ -8,11 +8,17 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults",
+        "clinical"
+      ]
     },
     "description": "The Brief Histrionic Personality Scale (BHPS) is an 11-item self-report measure assessing traits associated with histrionic personality, including attention-seeking and emotional expressivity. It is used in research and screening contexts to quantify histrionic personality features in the general population.",
     "id": "qst_bhps",
+    "instrument_id": "inst_bhps",
     "language": "en",
     "license": "unknown",
     "provenance": {

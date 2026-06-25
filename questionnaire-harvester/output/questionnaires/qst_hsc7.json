@@ -8,11 +8,17 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "screening"
+      ],
+      "population": [
+        "adults",
+        "clinical"
+      ]
     },
     "description": "The Hypoglycemia Symptoms Checklist (HSC-7) is a 7-item questionnaire assessing the frequency of symptoms associated with hypoglycemic episodes in individuals with diabetes. It is used to monitor hypoglycemia awareness and the burden of low blood glucose events in clinical and research settings.",
     "id": "qst_hsc7",
+    "instrument_id": "inst_hsc7",
     "language": "en",
     "license": "unknown",
     "provenance": {

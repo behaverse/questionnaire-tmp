@@ -54,6 +54,7 @@ class RawQuestionnaire:
     license: LicenseFlag
     domain: list = field(default_factory=list)
     population: list = field(default_factory=list)
+    instrument_id: str | None = None
     context_text: str | None = None
     shared_prompt_text: str | None = None
     references: list = field(default_factory=list)

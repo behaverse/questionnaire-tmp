@@ -8,11 +8,17 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "depression"
+      ],
+      "population": [
+        "adults",
+        "clinical"
+      ]
     },
     "description": "The Zung Self-Rating Depression Scale (SDS) is a 20-item self-report measure assessing the presence and frequency of depressive symptoms including affective, physiological, and psychological indicators. It is used in clinical and research settings to screen for depression and monitor symptom change over time.",
     "id": "qst_sds",
+    "instrument_id": "inst_sds",
     "language": "en",
     "license": "unknown",
     "provenance": {

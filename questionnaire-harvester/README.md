@@ -118,6 +118,8 @@ All run as `PYTHONPATH=library/src:questionnaire-harvester/src python -m harvest
 | `check-descriptions` | Originality/shape guard: flags any authored description with ≥8-word verbatim overlap vs the captured source (copyright), or bad shape. Non-zero exit when any flagged. |
 | `apply-short-titles` | Bulk-apply curated acronyms from `short_titles.json` to canonical `metadata.short_title` (skips `TODO` entries). |
 | `check-short-titles` | Flags junk short_titles (qualifier fragments / version cruft / sentence-like). Non-zero exit when any flagged. |
+| `apply-classifications` | Bulk-apply curated `classifications.json` to canonical `metadata.classification.{domain,population}` + `metadata.instrument_id` (only non-empty override fields; `administration_mode` untouched). Powers the Library Domain / Population / Instrument filters. |
+| `check-classifications` | Flags coverage gaps (no `domain` / no `instrument_id`), off-vocab domain/population values, and malformed `instrument_id`. Non-zero exit when any flagged. |
 
 ### Curation / override stores (durable across re-harvest)
 
@@ -125,6 +127,7 @@ All run as `PYTHONPATH=library/src:questionnaire-harvester/src python -m harvest
 |---|---|
 | `descriptions/<id>.md` | authored two-sentence description per questionnaire |
 | `short_titles.json` | `{id: acronym}` short_title overrides (`TODO:`-prefixed = unfilled placeholder) |
+| `classifications.json` | `{id: {domain[], population[], instrument_id}}` curation store. Domains use the schema-preferred vocabulary plus a disciplined snake_case extension (`addiction`, `autism`, `adhd`, …); `instrument_id` is an `inst_<slug>` family id (variant forms share one). |
 | `source_metadata/<id>.json` | verbatim captured meta description / keywords / og / introduction (source-copyrighted, **internal — not redistributed**) |
 
 ### Generated review/scoring artifacts (tracked staging, regenerable)
@@ -152,9 +155,10 @@ All run as `PYTHONPATH=library/src:questionnaire-harvester/src python -m harvest
 | `source_meta.py` | `write_source_metadata()` — flagged source-metadata sidecar (outside `output/`) |
 | `descriptions.py` | authored-description override store: load / apply (harvest) / bulk-patch / originality guard |
 | `short_titles.py` | short_title override store: load / apply (harvest) / bulk-patch / junk guard |
+| `classifications.py` | classification override store: load / apply (harvest) / bulk-patch / coverage+vocab guard; `derive_instrument_id()` |
 | `scoring_doc.py` | `scoring/<id>.md` generator (faithful descriptor; `needs-research` cut-offs) |
 | `review_export.py` | `import_review/` generator (readable export + review checklist) |
-| `cli.py` | subcommands: `harvest`, `review-export`, `document-scoring`, `apply-/check-descriptions`, `apply-/check-short-titles` |
+| `cli.py` | subcommands: `harvest`, `review-export`, `document-scoring`, `apply-/check-descriptions`, `apply-/check-short-titles`, `apply-/check-classifications`, `normalize-versions` |
 
 ---
 

@@ -8,11 +8,17 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "anxiety"
+      ],
+      "population": [
+        "children",
+        "adolescents"
+      ]
     },
     "description": "The Spence Children's Anxiety Scale (SCAS) is a 45-item self-report instrument that quantifies anxiety symptom frequency across multiple disorder-relevant domains in children and adolescents. It is used to screen for anxiety disorders and to track symptom change in clinical and research contexts.",
     "id": "qst_scas",
+    "instrument_id": "inst_scas",
     "language": "en",
     "license": "unknown",
     "provenance": {

@@ -8,11 +8,19 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "depression",
+        "anxiety",
+        "stress"
+      ],
+      "population": [
+        "adults",
+        "clinical"
+      ]
     },
     "description": "The Depression Anxiety Stress Scales (DASS) is a 42-item self-report questionnaire measuring the severity of three negative emotional states: depression, anxiety, and stress. It is used in clinical and research settings to differentiate among these affective dimensions and monitor change over time.",
     "id": "qst_dass",
+    "instrument_id": "inst_dass",
     "language": "en",
     "license": "unknown",
     "provenance": {

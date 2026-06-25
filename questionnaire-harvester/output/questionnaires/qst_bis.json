@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "impulsivity"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Barratt Impulsiveness Scale (BIS) is a 30-item self-report measure assessing impulsivity across motor, attentional, and non-planning dimensions. It is widely used in clinical and research contexts to quantify impulsive tendencies and their relationship to various behavioral and psychiatric conditions.",
     "id": "qst_bis",
+    "instrument_id": "inst_bis",
     "language": "en",
     "license": "unknown",
     "provenance": {

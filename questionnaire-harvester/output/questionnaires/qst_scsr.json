@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Self-Consciousness Scale - Revised (SCS-R) is a 21-item self-report questionnaire measuring individual differences in the tendency to attend to oneself, covering public self-consciousness, private self-consciousness, and social anxiety. It is used in personality and social psychology research to examine how self-focused attention relates to behavior, affect, and interpersonal functioning.",
     "id": "qst_scsr",
+    "instrument_id": "inst_scsr",
     "language": "en",
     "license": "unknown",
     "provenance": {

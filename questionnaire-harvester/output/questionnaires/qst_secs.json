@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "social_psychology"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Single-Item Economic and Social Conservatism Scale (SECS) is a 12-item self-report questionnaire measuring political conservatism across economic and social domains. It is used in social psychology and political science research to quantify conservative orientation as a continuous individual-difference variable.",
     "id": "qst_secs",
+    "instrument_id": "inst_secs",
     "language": "en",
     "license": "unknown",
     "provenance": {

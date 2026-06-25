@@ -38,6 +38,7 @@ def main(argv=None) -> int:
     h.add_argument("--source-metadata", default="questionnaire-harvester/source_metadata")
     h.add_argument("--descriptions", default="questionnaire-harvester/descriptions")
     h.add_argument("--short-titles", default="questionnaire-harvester/short_titles.json")
+    h.add_argument("--classifications", default="questionnaire-harvester/classifications.json")
     h.add_argument("--schemas", default="schemas")
     h.add_argument("--version", default="v26.0618")
     ds = sub.add_parser("document-scoring")
@@ -63,6 +64,12 @@ def main(argv=None) -> int:
     nv = sub.add_parser("normalize-versions")
     nv.add_argument("--out", default="questionnaire-harvester/output")
     nv.add_argument("--release", default="v26.0618")
+    acl = sub.add_parser("apply-classifications")
+    acl.add_argument("--out", default="questionnaire-harvester/output")
+    acl.add_argument("--classifications", default="questionnaire-harvester/classifications.json")
+    ccl = sub.add_parser("check-classifications")
+    ccl.add_argument("--out", default="questionnaire-harvester/output")
+    ccl.add_argument("--classifications", default="questionnaire-harvester/classifications.json")
     a = ap.parse_args(argv)
     if a.cmd == "document-scoring":
         from harvester.scoring_doc import write_scoring_docs
@@ -103,6 +110,18 @@ def main(argv=None) -> int:
         ids = normalize_versions(Path(a.out), a.release)
         print(f"normalized {len(ids)} questionnaire(s)")
         return 0
+    if a.cmd == "apply-classifications":
+        from harvester.classifications import apply_classifications_to_output
+        ids = apply_classifications_to_output(Path(a.out), Path(a.classifications))
+        print(f"applied {len(ids)} classification override(s)")
+        return 0
+    if a.cmd == "check-classifications":
+        from harvester.classifications import check_classifications
+        flagged = check_classifications(Path(a.out), Path(a.classifications))
+        for f in flagged:
+            print(f"FLAG {f['id']}: {'; '.join(f['issues'])}")
+        print(f"{len(flagged)} flagged")
+        return 1 if flagged else 0
     if a.cmd != "harvest":
         return 2
 
@@ -127,6 +146,8 @@ def main(argv=None) -> int:
     apply_authored_description(rq, Path(a.descriptions))
     from harvester.short_titles import apply_short_title
     apply_short_title(rq, Path(a.short_titles))
+    from harvester.classifications import apply_classification
+    apply_classification(rq, Path(a.classifications))
     scales_index = load_scales_index(Path(a.scales_index))
     instr_index = build_instruction_index(Path(a.out))
     result = draft(rq, a.version, scales_index, instr_index)

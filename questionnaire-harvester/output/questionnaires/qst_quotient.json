@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "autism"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Short Autism Spectrum Quotient is a 10-item self-report screening questionnaire measuring autistic traits related to social skills, attention switching, attention to detail, communication, and imagination. It is used as a brief initial screen to identify adults who may warrant further assessment for autism spectrum conditions.",
     "id": "qst_quotient",
+    "instrument_id": "inst_aq10",
     "language": "en",
     "license": "unknown",
     "provenance": {

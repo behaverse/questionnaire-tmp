@@ -167,6 +167,7 @@ def draft(rq: RawQuestionnaire, version: str, scales_index: dict, instr_index: d
                              "administration_mode": ["self_report"]},
           "psychometrics": {"item_count": len(rq.items)},
           "provenance": dict(PROVENANCE),
+          **({"instrument_id": rq.instrument_id} if getattr(rq, "instrument_id", None) else {}),
           "x_source_site": rq.source_site, "x_harvest_date": "2026-06-17",
           **rq.license.x_metadata()}
     # publication is optional; emit it only when both citation and year are present

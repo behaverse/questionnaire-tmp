@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "relationships"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Nurturant Fathering Scale (NFS) is a 9-item self-report measure assessing the degree to which fathers engage in warm, supportive, and responsive caregiving behaviors toward their children. It is used in family and developmental research to examine paternal nurturance and its relationship to child outcomes.",
     "id": "qst_nfs",
+    "instrument_id": "inst_nfs",
     "language": "en",
     "license": "unknown",
     "provenance": {

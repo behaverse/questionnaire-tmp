@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "personality"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The General Procrastination Scale is a 20-item self-report questionnaire measuring the tendency to delay the start or completion of intended tasks in everyday situations. It is used in research and applied settings to assess dispositional procrastination as a stable behavioral trait.",
     "id": "qst_gp",
+    "instrument_id": "inst_gps",
     "language": "en",
     "license": "unknown",
     "provenance": {

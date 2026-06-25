@@ -8,11 +8,16 @@
       "administration_mode": [
         "self_report"
       ],
-      "domain": [],
-      "population": []
+      "domain": [
+        "relationships"
+      ],
+      "population": [
+        "adults"
+      ]
     },
     "description": "The Relationship Satisfaction questionnaire (PN-SMD) is a 14-item self-report measure assessing an individual's perceived quality and satisfaction within their romantic partnership. It is used in relationship research and couples-focused clinical work to evaluate the affective and functional dimensions of partnership satisfaction.",
     "id": "qst_pnsmd",
+    "instrument_id": "inst_pnsmd",
     "language": "en",
     "license": "unknown",
     "provenance": {
