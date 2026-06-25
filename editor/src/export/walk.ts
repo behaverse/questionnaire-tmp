@@ -1,5 +1,5 @@
 import {
-  deriveWidget, mergeOptions, isItem, isSection, isMessage,
+  deriveWidget, mergeOptions, isSection, isMessage, RenderError,
   type ItemElement, type SectionElement, type MessageElement,
   type RuntimeElement, type OptionEntity, type MergedChoice,
 } from '@behaverse/questionnaire-renderer'
@@ -28,7 +28,7 @@ export function itemView(item: ItemElement, locale: string, fallbackId: string):
   let choicesError: string | undefined
   if (widget && widget.startsWith('choice')) {
     try { choices = mergeOptions(option, locale) }
-    catch (e) { choicesError = (e as Error).message }
+    catch (e) { if (!(e instanceof RenderError)) throw e; choicesError = e.message }
   }
   return {
     id: item.id ?? fallbackId,
@@ -58,7 +58,7 @@ export function flattenElements(
     if (isSection(el)) {
       const sec = el as SectionElement
       out.push(...flattenElements(sec.elements, sec.shared_option ?? sharedOption, sec.title ?? sectionTitle))
-    } else if (isItem(el) || ('question' in el && el !== null && typeof el === 'object')) {
+    } else if (typeof el === 'object' && el !== null && 'question' in el) {
       const item = el as ItemElement
       const withOption = item.option ? item : ({ ...item, option: sharedOption } as ItemElement)
       out.push({ item: withOption, sectionTitle })
