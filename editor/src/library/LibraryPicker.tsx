@@ -3,6 +3,7 @@ import { listAllEntities as realList, fetchEntityBody as realFetchBody, type Ent
 import { mapLimit, withRetry } from '../persistence/concurrency'
 import { buildRef, bodySnippet, searchableText } from './picker'
 import type { EntityBody } from '../model/types'
+import { Modal } from '../ui/Modal'
 
 export interface PickerClient {
   listEntities: (etype: string) => Promise<EntitySearchResult[]>
@@ -83,9 +84,8 @@ export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-      <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-ed-panel shadow-xl">
-        <div className="flex items-center gap-2 border-b border-ed-border p-3">
+    <Modal label={onCreate ? `Add ${etype}` : `Pick ${etype} from Library`} onClose={onClose} panelClassName="max-h-[80vh] w-[640px] overflow-hidden">
+      <div className="flex items-center gap-2 border-b border-ed-border p-3">
           <strong className="text-sm">{onCreate ? `Add ${etype}` : `Pick ${etype} from Library`}</strong>
           <button onClick={onClose} className="ml-auto text-ed-muted hover:text-ed-text">✕</button>
         </div>
@@ -133,7 +133,6 @@ export function LibraryPicker({ etype, locale, onPick, onClose, onCreate, client
                   onClick={() => selected && onPick(buildRef(selected.id, selected.version))}
                   className="rounded bg-ed-accent px-3 py-1 text-sm text-white disabled:opacity-40">Insert</button>
         </div>
-      </div>
-    </div>
+    </Modal>
   )
 }

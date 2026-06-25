@@ -273,11 +273,11 @@ ED-C is **COMPLETE** (C1 Option · C2a pool + Prompt + new-item · C2b Context /
 Message · C3a pick + body-endpoint · C3b OD-06 upgrade · C4 OD-05 fork). The **next editor stage
 is ED-D** (logic / validation / scoring builders).
 
-## (oo) Modal a11y (forward-looking)
+## (oo) Modal a11y — ✅ DONE (M2, 2026-06-25)
 
-`ForkDialog` + `LibraryPicker` modals lack `Escape`-to-close, `role="dialog"`, and a focus-trap.
-This is **consistent across both** (not a regression introduced by ED-C4); it is worth a shared
-a11y pass over the editor's modals.
+`ForkDialog` + `LibraryPicker` + `LibraryQuestionnairePicker` now use a shared `ui/Modal`
+(`role="dialog"` + `aria-modal`, `aria-label`, Escape-to-close, Tab focus-trap, focus restore
+on close, backdrop-click close; respects a child's `autoFocus`). Covered by `ui/Modal.test.tsx`.
 
 # ED-D1 Follow-ups
 

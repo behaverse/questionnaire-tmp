@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useEditorStore } from '../state/store'
 import type { EntityBody } from '../model/types'
+import { Modal } from '../ui/Modal'
 
 export function ForkDialog({ refStr, onClose, fetchBody }: {
   refStr: string; onClose: () => void; fetchBody?: (ref: string) => Promise<EntityBody | null>
@@ -16,10 +17,9 @@ export function ForkDialog({ refStr, onClose, fetchBody }: {
     else setError('Could not fork — the Library entity could not be fetched.')
   }
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-      <div className="w-[480px] rounded-lg bg-ed-panel shadow-xl">
-        <div className="border-b border-ed-border p-3 text-sm font-semibold">Edit <span className="font-mono">{refStr}</span>?</div>
-        <div className="space-y-3 p-4 text-sm">
+    <Modal label={`Edit ${refStr}`} onClose={onClose} panelClassName="w-[480px]">
+      <div className="border-b border-ed-border p-3 text-sm font-semibold">Edit <span className="font-mono">{refStr}</span>?</div>
+      <div className="space-y-3 p-4 text-sm">
           <p className="text-ed-muted">This is a shared Library entity, so it's read-only. To edit it here, the editor makes a <strong>local copy</strong> in this questionnaire — the shared Library entry is left unchanged.</p>
           <div className="flex flex-col gap-2">
             <button onClick={derive} disabled={busy}
@@ -36,7 +36,6 @@ export function ForkDialog({ refStr, onClose, fetchBody }: {
           </div>
           {error && <div role="alert" className="text-sm text-red-600">{error}</div>}
         </div>
-      </div>
-    </div>
+    </Modal>
   )
 }

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { listAllQuestionnaires as realList, type QuestionnaireResult } from '../persistence/library'
+import { Modal } from '../ui/Modal'
 
 export function LibraryQuestionnairePicker({ onPick, onClose, list = realList }: {
   onPick: (id: string, version: string) => void
@@ -31,9 +32,8 @@ export function LibraryQuestionnairePicker({ onPick, onClose, list = realList }:
   }, [q, all])
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-      <div className="max-h-[80vh] w-[640px] overflow-hidden rounded-lg bg-ed-panel shadow-xl">
-        <div className="flex items-center gap-2 border-b border-ed-border p-3">
+    <Modal label="Open a questionnaire from the Library" onClose={onClose} panelClassName="max-h-[80vh] w-[640px] overflow-hidden">
+      <div className="flex items-center gap-2 border-b border-ed-border p-3">
           <strong className="text-sm">Open a questionnaire from the Library</strong>
           <button onClick={onClose} className="ml-auto text-ed-muted hover:text-ed-text">✕</button>
         </div>
@@ -61,7 +61,6 @@ export function LibraryQuestionnairePicker({ onPick, onClose, list = realList }:
             )}
           </ul>
         </div>
-      </div>
-    </div>
+    </Modal>
   )
 }
