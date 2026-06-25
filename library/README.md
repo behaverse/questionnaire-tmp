@@ -26,6 +26,7 @@ All catalogue read endpoints are unauthenticated. No token is required to browse
 | GET | `/v1/entities` | List reusable entities |
 | GET | `/v1/entities/{id}` | Entity detail |
 | GET | `/v1/search` | Full-text + filter search |
+| GET | `/v1/stats` | Headline catalogue counts: questionnaires, questions (prompts), options, languages |
 | GET | `/v1/resolve/{id}` | Resolve a versioned entity reference |
 | GET | `/healthz` | Health check |
 

@@ -154,9 +154,10 @@ graph TD
 - **Description.** Read-only catalogue of questionnaires and reusable entities (canonical
   Schema 2), exposed as a versioned REST API over Git-ingested JSON in Postgres.
 - **Features.** Catalogue list/detail/versions, definition fetch (resolved & unresolved),
-  reusable-entity bodies, dependency graph (`dependents`), full-text search + facets,
-  instrument-family grouping (OD-21); Identity-gated **community signals** (threaded
-  comments, 1–5 ratings, GDPR self-erasure). Reads are public/ungated.
+  reusable-entity bodies, dependency graph (`dependents`), full-text search (substring/acronym
+  aware) + facets, instrument-family grouping (OD-21), **`/v1/stats`** headline counts (homepage
+  bar); Identity-gated **community signals** (threaded comments, 1–5 ratings, GDPR self-erasure).
+  Reads are public/ungated.
 - **Relationships.** Read by **library-web**, **editor**, and **viewer-service**; imports
   **identity-service** to verify tokens on write endpoints.
 - **Tool stack.** Python 3.12, FastAPI, Uvicorn, Postgres (psycopg3), Pydantic,
@@ -164,11 +165,14 @@ graph TD
 - **Deployment.** Vercel serverless via `api/index.py`; backed by Supabase Postgres.
 - **Location.** [`library/`](../library/)
 - **Dev status.** 🟢 Complete. Phase-1 deliverable; ~38 test files.
-- **Deployment status.** 🟢 **Live** — https://questionnaire-library.vercel.app (212
-  questionnaires).
-- **Todos.** Contribution/review lifecycle (drafts/in_review, needs Identity ID-C2);
-  community signals in search ranking; per-questionnaire license badge; content search
-  index expansion.
+- **Deployment status.** 🟢 **Live** — https://questionnaire-library.vercel.app (222
+  questionnaires; homepage stats + Try-it preview live).
+- **Todos.** ⚠️ **Filters cover only the 64 classified (survey_db) questionnaires** — the 158
+  harvested ones lack `classification.{domain,population}`/instrument metadata, so Domain/
+  Population/Instrument filters can't see them. *This is a harvester content task* (populate
+  classification at ingest, or a one-off LLM tagging pass), **not** a Library code fix — the
+  facet code is correct. Also: contribution/review lifecycle (drafts/in_review, needs Identity
+  ID-C2); community signals in search ranking; per-questionnaire license badge.
 
 ### library-web — catalogue web UI
 
