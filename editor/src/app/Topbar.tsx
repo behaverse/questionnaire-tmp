@@ -1,9 +1,12 @@
-import { ArrowLeft, RefreshCw, Check, AlertTriangle, Eye, PanelRight, Languages, Download, Package, ExternalLink } from 'lucide-react'
+import { ArrowLeft, RefreshCw, Check, AlertTriangle, Eye, PanelRight, Languages, Download, Package, ExternalLink, FileText, FileCode } from 'lucide-react'
+import { useState } from 'react'
 import { useEditorStore } from '../state/store'
 import { exportToFile, exportBundle, bundleData } from '../persistence/file'
+import { exportMarkdown, exportSurveyJS } from '../export'
 import { EditingLocaleSwitcher } from './EditingLocaleSwitcher'
 import { Button, IconButton } from '../ui/Button'
 import { Menu } from '../ui/Menu'
+import { DroppedFeaturesDialog } from './DroppedFeaturesDialog'
 
 export function Topbar({ onValidate }: { onValidate: () => void }) {
   const { model, dirty, validation, previewOpen, togglePreview, inspectorOpen, toggleInspector, translateView } = useEditorStore()
@@ -12,13 +15,17 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
   const refreshStaleness = useEditorStore((s) => s.refreshStaleness)
   const setTranslateView = useEditorStore((s) => s.setTranslateView)
   const reset = useEditorStore((s) => s.reset)
+  const editingLocale = useEditorStore((s) => s.editingLocale)
+  const [dropped, setDropped] = useState<string[] | null>(null)
   if (!model) return null
+  const locale = editingLocale ?? model.metadata.language ?? 'en'
   const invalid = validation && !validation.valid
   const doExport = () => {
     if (invalid && !confirm('This questionnaire is not Schema-2-valid. Export anyway?')) return
     exportToFile(model)
   }
   return (
+    <>
     <header className="flex items-center gap-3 border-b border-ed-border bg-ed-panel px-4 py-2">
       <Button
         variant="ghost"
@@ -78,6 +85,8 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
         <Menu label="Export" icon={Download} variant="primary" items={[
           { label: 'Export JSON', icon: Download, title: 'Download the questionnaire JSON only (references not included)', onClick: doExport },
           { label: 'Export bundle', icon: Package, title: 'Download a self-contained bundle (opens offline in the standalone preview)', onClick: () => { if (model) exportBundle(model, pool) } },
+          { label: 'Export Markdown', icon: FileText, title: 'Download a human-readable Markdown document (current language)', onClick: () => exportMarkdown(model, pool, locale) },
+          { label: 'Export SurveyJS', icon: FileCode, title: 'Download a SurveyJS survey JSON (structure + simple logic; current language)', onClick: () => { const d = exportSurveyJS(model, pool, locale); if (d.length) setDropped(d) } },
           { label: 'Open preview', icon: ExternalLink, title: 'Open this draft full-screen in a separate tab (read-only preview)', onClick: () => {
             try { sessionStorage.setItem('qv-preview-bundle', JSON.stringify(bundleData(model, pool))) } catch { /* quota */ }
             window.open('/preview.html', '_blank')
@@ -85,5 +94,7 @@ export function Topbar({ onValidate }: { onValidate: () => void }) {
         ]} />
       </div>
     </header>
+    {dropped && <DroppedFeaturesDialog items={dropped} onClose={() => setDropped(null)} />}
+    </>
   )
 }
