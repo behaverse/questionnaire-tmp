@@ -1,0 +1,60 @@
+// editor/src/export/markdown.test.ts
+import { describe, it, expect } from 'vitest'
+import { toMarkdown } from './markdown'
+import type { Runtime } from '@behaverse/questionnaire-renderer'
+import type { Questionnaire } from '../model/types'
+
+const model = {
+  metadata: { id: 'qst_demo', title: 'Demo Scale', version: 'v26.0625', license: 'CC-BY-4.0', description: 'Rate each item.' },
+  pages: [],
+} as unknown as Questionnaire
+
+const runtime: Runtime = {
+  provenance: { preview: true },
+  metadata: { id: 'qst_demo', title: 'Demo Scale', description: 'Rate each item.', language: 'en' },
+  locale: 'en',
+  pages: [
+    {
+      id: 'p1', title: 'Section One',
+      elements: [
+        { content: { en: { text: 'Please answer honestly.' } } },
+        {
+          id: 'it_q1', required: true,
+          question: { prompt: { content: { en: { text: 'I plan tasks.' } } } },
+          option: {
+            input_data_type: 'choice', measurement_type: 'nominal', selection: 'single',
+            options: [{ index: 0, value: 1 }, { index: 1, value: 2 }],
+            content: { en: { options: [{ index: 0, text: 'No' }, { index: 1, text: 'Yes' }] } },
+          },
+        },
+        {
+          id: 'it_q2',
+          question: { prompt: { content: { en: { text: 'Your age?' } } } },
+          option: { input_data_type: 'number', measurement_type: 'ratio', min: 0, max: 120 },
+        },
+      ],
+    },
+  ],
+}
+
+describe('toMarkdown', () => {
+  const md = toMarkdown(runtime, model, 'en')
+
+  it('emits a title and a metadata header block', () => {
+    expect(md).toContain('# Demo Scale')
+    expect(md).toContain('id: qst_demo')
+    expect(md).toContain('version: v26.0625')
+    expect(md).toContain('license: CC-BY-4.0')
+    expect(md).toContain('Rate each item.')
+  })
+
+  it('renders a page heading, a message, and numbered questions with options', () => {
+    expect(md).toContain('## Section One')
+    expect(md).toContain('Please answer honestly.')
+    expect(md).toContain('**1.** I plan tasks.')
+    expect(md).toContain('- No')
+    expect(md).toContain('- Yes')
+    expect(md).toContain('**2.** Your age?')
+    expect(md).toContain('[ number 0–120 ]')
+  })
+})
