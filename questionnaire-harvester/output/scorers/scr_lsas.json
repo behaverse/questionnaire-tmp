@@ -1,0 +1,306 @@
+{
+  "content": {
+    "en": {
+      "description": "Liebowitz Social Anxiety Scale. Liebowitz Social Anxiety Scale. Total = sum of all 48 ratings (24 situations x fear + avoidance, each 0-3), range 0-144; 30+ suggests social anxiety disorder, with higher bands indicating greater severity.",
+      "name": "LSAS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_lsas",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "8dda58f1e5bf81194839eafe8b2d235b034f14347ef48d470daa2ca5ade8b8bf",
+      "url": "https://behaverse.org/scorers/lsas/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_lsas_1|pr_lsas_2|pr_lsas_3|pr_lsas_4|pr_lsas_5|pr_lsas_6|pr_lsas_7|pr_lsas_8|pr_lsas_9|pr_lsas_10|pr_lsas_11|pr_lsas_12|pr_lsas_13|pr_lsas_14|pr_lsas_15|pr_lsas_16|pr_lsas_17|pr_lsas_18|pr_lsas_19|pr_lsas_20|pr_lsas_21|pr_lsas_22|pr_lsas_23|pr_lsas_24|pr_lsas_25|pr_lsas_26|pr_lsas_27|pr_lsas_28|pr_lsas_29|pr_lsas_30|pr_lsas_31|pr_lsas_32|pr_lsas_33|pr_lsas_34|pr_lsas_35|pr_lsas_36|pr_lsas_37|pr_lsas_38|pr_lsas_39|pr_lsas_40|pr_lsas_41|pr_lsas_42|pr_lsas_43|pr_lsas_44|pr_lsas_45|pr_lsas_46|pr_lsas_47|pr_lsas_48)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "LSAS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "below",
+                  "moderate",
+                  "marked",
+                  "severe",
+                  "very_severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Below threshold",
+              "max": 29,
+              "min": 0
+            },
+            "severity": "below",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lsas_1": 0,
+          "pr_lsas_10": 0,
+          "pr_lsas_11": 0,
+          "pr_lsas_12": 0,
+          "pr_lsas_13": 0,
+          "pr_lsas_14": 0,
+          "pr_lsas_15": 0,
+          "pr_lsas_16": 0,
+          "pr_lsas_17": 0,
+          "pr_lsas_18": 0,
+          "pr_lsas_19": 0,
+          "pr_lsas_2": 0,
+          "pr_lsas_20": 0,
+          "pr_lsas_21": 0,
+          "pr_lsas_22": 0,
+          "pr_lsas_23": 0,
+          "pr_lsas_24": 0,
+          "pr_lsas_25": 0,
+          "pr_lsas_26": 0,
+          "pr_lsas_27": 0,
+          "pr_lsas_28": 0,
+          "pr_lsas_29": 0,
+          "pr_lsas_3": 0,
+          "pr_lsas_30": 0,
+          "pr_lsas_31": 0,
+          "pr_lsas_32": 0,
+          "pr_lsas_33": 0,
+          "pr_lsas_34": 0,
+          "pr_lsas_35": 0,
+          "pr_lsas_36": 0,
+          "pr_lsas_37": 0,
+          "pr_lsas_38": 0,
+          "pr_lsas_39": 0,
+          "pr_lsas_4": 0,
+          "pr_lsas_40": 0,
+          "pr_lsas_41": 0,
+          "pr_lsas_42": 0,
+          "pr_lsas_43": 0,
+          "pr_lsas_44": 0,
+          "pr_lsas_45": 0,
+          "pr_lsas_46": 0,
+          "pr_lsas_47": 0,
+          "pr_lsas_48": 0,
+          "pr_lsas_5": 0,
+          "pr_lsas_6": 0,
+          "pr_lsas_7": 0,
+          "pr_lsas_8": 0,
+          "pr_lsas_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Moderate social anxiety",
+              "max": 49,
+              "min": 30
+            },
+            "severity": "moderate",
+            "value": 48
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lsas_1": 1,
+          "pr_lsas_10": 1,
+          "pr_lsas_11": 1,
+          "pr_lsas_12": 1,
+          "pr_lsas_13": 1,
+          "pr_lsas_14": 1,
+          "pr_lsas_15": 1,
+          "pr_lsas_16": 1,
+          "pr_lsas_17": 1,
+          "pr_lsas_18": 1,
+          "pr_lsas_19": 1,
+          "pr_lsas_2": 1,
+          "pr_lsas_20": 1,
+          "pr_lsas_21": 1,
+          "pr_lsas_22": 1,
+          "pr_lsas_23": 1,
+          "pr_lsas_24": 1,
+          "pr_lsas_25": 1,
+          "pr_lsas_26": 1,
+          "pr_lsas_27": 1,
+          "pr_lsas_28": 1,
+          "pr_lsas_29": 1,
+          "pr_lsas_3": 1,
+          "pr_lsas_30": 1,
+          "pr_lsas_31": 1,
+          "pr_lsas_32": 1,
+          "pr_lsas_33": 1,
+          "pr_lsas_34": 1,
+          "pr_lsas_35": 1,
+          "pr_lsas_36": 1,
+          "pr_lsas_37": 1,
+          "pr_lsas_38": 1,
+          "pr_lsas_39": 1,
+          "pr_lsas_4": 1,
+          "pr_lsas_40": 1,
+          "pr_lsas_41": 1,
+          "pr_lsas_42": 1,
+          "pr_lsas_43": 1,
+          "pr_lsas_44": 1,
+          "pr_lsas_45": 1,
+          "pr_lsas_46": 1,
+          "pr_lsas_47": 1,
+          "pr_lsas_48": 1,
+          "pr_lsas_5": 1,
+          "pr_lsas_6": 1,
+          "pr_lsas_7": 1,
+          "pr_lsas_8": 1,
+          "pr_lsas_9": 1
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Very severe social anxiety",
+              "max": 144,
+              "min": 95
+            },
+            "severity": "very_severe",
+            "value": 144
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lsas_1": 3,
+          "pr_lsas_10": 3,
+          "pr_lsas_11": 3,
+          "pr_lsas_12": 3,
+          "pr_lsas_13": 3,
+          "pr_lsas_14": 3,
+          "pr_lsas_15": 3,
+          "pr_lsas_16": 3,
+          "pr_lsas_17": 3,
+          "pr_lsas_18": 3,
+          "pr_lsas_19": 3,
+          "pr_lsas_2": 3,
+          "pr_lsas_20": 3,
+          "pr_lsas_21": 3,
+          "pr_lsas_22": 3,
+          "pr_lsas_23": 3,
+          "pr_lsas_24": 3,
+          "pr_lsas_25": 3,
+          "pr_lsas_26": 3,
+          "pr_lsas_27": 3,
+          "pr_lsas_28": 3,
+          "pr_lsas_29": 3,
+          "pr_lsas_3": 3,
+          "pr_lsas_30": 3,
+          "pr_lsas_31": 3,
+          "pr_lsas_32": 3,
+          "pr_lsas_33": 3,
+          "pr_lsas_34": 3,
+          "pr_lsas_35": 3,
+          "pr_lsas_36": 3,
+          "pr_lsas_37": 3,
+          "pr_lsas_38": 3,
+          "pr_lsas_39": 3,
+          "pr_lsas_4": 3,
+          "pr_lsas_40": 3,
+          "pr_lsas_41": 3,
+          "pr_lsas_42": 3,
+          "pr_lsas_43": 3,
+          "pr_lsas_44": 3,
+          "pr_lsas_45": 3,
+          "pr_lsas_46": 3,
+          "pr_lsas_47": 3,
+          "pr_lsas_48": 3,
+          "pr_lsas_5": 3,
+          "pr_lsas_6": 3,
+          "pr_lsas_7": 3,
+          "pr_lsas_8": 3,
+          "pr_lsas_9": 3
+        }
+      },
+      "name": "ceiling"
+    }
+  ]
+}

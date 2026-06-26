@@ -1,0 +1,237 @@
+{
+  "id": "scr_eat26",
+  "name": "EAT-26 Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "EAT-26 Scoring",
+      "description": "Eating Attitudes Test - 26 Item (EAT-26). Eating Attitudes Test-26 (Garner et al., 1982). Total = sum of the 26 attitude items (each scored 0-3; the 6 behavioural items are not part of this score), range 0-78; a total of 20 or more is a positive screen."
+    }
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_eat26_1|pr_eat26_2|pr_eat26_3|pr_eat26_4|pr_eat26_5|pr_eat26_6|pr_eat26_7|pr_eat26_8|pr_eat26_9|pr_eat26_10|pr_eat26_11|pr_eat26_12|pr_eat26_13|pr_eat26_14|pr_eat26_15|pr_eat26_16|pr_eat26_17|pr_eat26_18|pr_eat26_19|pr_eat26_20|pr_eat26_21|pr_eat26_22|pr_eat26_23|pr_eat26_24|pr_eat26_25|pr_eat26_26)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "below",
+                  "at_or_above"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/eat26/scorer.wasm",
+      "sha256": "e829e380f8f422311a9f7bea86e4b1d267b27b956197a4fde2367f28aa5352d3"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_eat26_1": 0,
+          "pr_eat26_2": 0,
+          "pr_eat26_3": 0,
+          "pr_eat26_4": 0,
+          "pr_eat26_5": 0,
+          "pr_eat26_6": 0,
+          "pr_eat26_7": 0,
+          "pr_eat26_8": 0,
+          "pr_eat26_9": 0,
+          "pr_eat26_10": 0,
+          "pr_eat26_11": 0,
+          "pr_eat26_12": 0,
+          "pr_eat26_13": 0,
+          "pr_eat26_14": 0,
+          "pr_eat26_15": 0,
+          "pr_eat26_16": 0,
+          "pr_eat26_17": 0,
+          "pr_eat26_18": 0,
+          "pr_eat26_19": 0,
+          "pr_eat26_20": 0,
+          "pr_eat26_21": 0,
+          "pr_eat26_22": 0,
+          "pr_eat26_23": 0,
+          "pr_eat26_24": 0,
+          "pr_eat26_25": 0,
+          "pr_eat26_26": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "below",
+            "band": {
+              "min": 0,
+              "max": 19,
+              "label": "Below clinical cut-off"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_eat26_1": 1,
+          "pr_eat26_2": 1,
+          "pr_eat26_3": 1,
+          "pr_eat26_4": 1,
+          "pr_eat26_5": 1,
+          "pr_eat26_6": 1,
+          "pr_eat26_7": 1,
+          "pr_eat26_8": 1,
+          "pr_eat26_9": 1,
+          "pr_eat26_10": 1,
+          "pr_eat26_11": 1,
+          "pr_eat26_12": 1,
+          "pr_eat26_13": 1,
+          "pr_eat26_14": 1,
+          "pr_eat26_15": 1,
+          "pr_eat26_16": 1,
+          "pr_eat26_17": 1,
+          "pr_eat26_18": 1,
+          "pr_eat26_19": 1,
+          "pr_eat26_20": 1,
+          "pr_eat26_21": 1,
+          "pr_eat26_22": 1,
+          "pr_eat26_23": 1,
+          "pr_eat26_24": 1,
+          "pr_eat26_25": 1,
+          "pr_eat26_26": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 26,
+            "severity": "at_or_above",
+            "band": {
+              "min": 20,
+              "max": 78,
+              "label": "At or above cut-off — refer for eating-disorder assessment"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_eat26_1": 3,
+          "pr_eat26_2": 3,
+          "pr_eat26_3": 3,
+          "pr_eat26_4": 3,
+          "pr_eat26_5": 3,
+          "pr_eat26_6": 3,
+          "pr_eat26_7": 3,
+          "pr_eat26_8": 3,
+          "pr_eat26_9": 3,
+          "pr_eat26_10": 3,
+          "pr_eat26_11": 3,
+          "pr_eat26_12": 3,
+          "pr_eat26_13": 3,
+          "pr_eat26_14": 3,
+          "pr_eat26_15": 3,
+          "pr_eat26_16": 3,
+          "pr_eat26_17": 3,
+          "pr_eat26_18": 3,
+          "pr_eat26_19": 3,
+          "pr_eat26_20": 3,
+          "pr_eat26_21": 3,
+          "pr_eat26_22": 3,
+          "pr_eat26_23": 3,
+          "pr_eat26_24": 3,
+          "pr_eat26_25": 3,
+          "pr_eat26_26": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 78,
+            "severity": "at_or_above",
+            "band": {
+              "min": 20,
+              "max": 78,
+              "label": "At or above cut-off — refer for eating-disorder assessment"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

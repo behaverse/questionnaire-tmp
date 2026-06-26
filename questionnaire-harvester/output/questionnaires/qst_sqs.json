@@ -67,5 +67,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "quality",
+      "name": "SQS quality",
+      "path": "/scores/quality/value",
+      "scorer": "scr_sqs@v26.0618"
+    }
   ]
 }

@@ -218,5 +218,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "external",
+      "name": "LoC external",
+      "path": "/scores/external/value",
+      "scorer": "scr_rotter@v26.0618"
+    }
   ]
 }

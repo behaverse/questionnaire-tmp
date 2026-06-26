@@ -1,0 +1,176 @@
+{
+  "content": {
+    "en": {
+      "description": "The Edinburgh Handedness Inventory (short form). Edinburgh Handedness Inventory (short form). Laterality quotient = MEAN of the 4 items (each -100 left to +100 right), range -100 to +100; >+40 right-handed, <-40 left-handed, between = mixed.",
+      "name": "EHI Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_ehi",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "4a544a1c2073069f1bca0eb7e180ae49b77c78a06b42bfc1d585d24d01fb7ffe",
+      "url": "https://behaverse.org/scorers/ehi/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_ehi_1|pr_ehi_2|pr_ehi_3|pr_ehi_4)$": {
+            "maximum": 100,
+            "minimum": -100,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "EHI Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "laterality": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "left",
+                  "mixed",
+                  "right"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "laterality"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "laterality": {
+            "band": {
+              "label": "Left-handed",
+              "max": -41,
+              "min": -100
+            },
+            "severity": "left",
+            "value": -100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": -100,
+          "pr_ehi_2": -100,
+          "pr_ehi_3": -100,
+          "pr_ehi_4": -100
+        }
+      },
+      "name": "left"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "laterality": {
+            "band": {
+              "label": "Mixed / ambidextrous",
+              "max": 40,
+              "min": -40
+            },
+            "severity": "mixed",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": 0,
+          "pr_ehi_2": 0,
+          "pr_ehi_3": 0,
+          "pr_ehi_4": 0
+        }
+      },
+      "name": "mixed"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "laterality": {
+            "band": {
+              "label": "Right-handed",
+              "max": 100,
+              "min": 41
+            },
+            "severity": "right",
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": 100,
+          "pr_ehi_2": 100,
+          "pr_ehi_3": 100,
+          "pr_ehi_4": 100
+        }
+      },
+      "name": "right"
+    }
+  ],
+  "x_publication": {
+    "citation": "Oldfield, R.C. (1971). The assessment and analysis of handedness: The Edinburgh inventory. Neuropsychologia, 9 , 97-113.",
+    "year": 1971
+  }
+}

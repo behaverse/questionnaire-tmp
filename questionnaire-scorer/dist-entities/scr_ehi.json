@@ -1,0 +1,176 @@
+{
+  "id": "scr_ehi",
+  "name": "EHI Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "EHI Scoring",
+      "description": "The Edinburgh Handedness Inventory (short form). Edinburgh Handedness Inventory (short form). Laterality quotient = MEAN of the 4 items (each -100 left to +100 right), range -100 to +100; >+40 right-handed, <-40 left-handed, between = mixed."
+    }
+  },
+  "x_publication": {
+    "citation": "Oldfield, R.C. (1971). The assessment and analysis of handedness: The Edinburgh inventory. Neuropsychologia, 9 , 97-113.",
+    "year": 1971
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_ehi_1|pr_ehi_2|pr_ehi_3|pr_ehi_4)$": {
+            "type": "integer",
+            "minimum": -100,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "laterality": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "mixed",
+                  "right"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "laterality"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/ehi/scorer.wasm",
+      "sha256": "4a544a1c2073069f1bca0eb7e180ae49b77c78a06b42bfc1d585d24d01fb7ffe"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "left",
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": -100,
+          "pr_ehi_2": -100,
+          "pr_ehi_3": -100,
+          "pr_ehi_4": -100
+        }
+      },
+      "expected": {
+        "scores": {
+          "laterality": {
+            "value": -100,
+            "severity": "left",
+            "band": {
+              "min": -100,
+              "max": -41,
+              "label": "Left-handed"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mixed",
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": 0,
+          "pr_ehi_2": 0,
+          "pr_ehi_3": 0,
+          "pr_ehi_4": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "laterality": {
+            "value": 0,
+            "severity": "mixed",
+            "band": {
+              "min": -40,
+              "max": 40,
+              "label": "Mixed / ambidextrous"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "right",
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": 100,
+          "pr_ehi_2": 100,
+          "pr_ehi_3": 100,
+          "pr_ehi_4": 100
+        }
+      },
+      "expected": {
+        "scores": {
+          "laterality": {
+            "value": 100,
+            "severity": "right",
+            "band": {
+              "min": 41,
+              "max": 100,
+              "label": "Right-handed"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

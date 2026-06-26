@@ -515,5 +515,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "EAT-26 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_eat26@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "EAT-26 total level",
+      "path": "/scores/total/severity",
+      "scorer": "scr_eat26@v26.0618"
+    }
   ]
 }

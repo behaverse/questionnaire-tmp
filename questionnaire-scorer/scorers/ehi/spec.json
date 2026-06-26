@@ -1,0 +1,1 @@
+{"item_range":[-100,100],"scores":[{"key":"laterality","aggregate":"mean","items":["pr_ehi_1","pr_ehi_2","pr_ehi_3","pr_ehi_4"],"bands":[{"min":-100,"max":-41,"severity":"left","label":"Left-handed"},{"min":-40,"max":40,"severity":"mixed","label":"Mixed / ambidextrous"},{"min":41,"max":100,"severity":"right","label":"Right-handed"}]}]}

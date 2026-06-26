@@ -1,0 +1,75 @@
+{
+  "id": "sqs",
+  "scorer_id": "scr_sqs",
+  "name": "SQS Scoring",
+  "status": "validated",
+  "description": "Single-Item Sleep Quality Scale (SQS). Single-Item Sleep Quality Scale. Score = the single 0-10 (here 1-11) rating of overall sleep quality; higher = better sleep quality.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      11
+    ],
+    "scores": [
+      {
+        "key": "quality",
+        "items": [
+          "pr_sqs_1"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_sqs_1": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "quality": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_sqs_1": 6
+        }
+      },
+      "expected": {
+        "scores": {
+          "quality": {
+            "value": 6
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_sqs_1": 11
+        }
+      },
+      "expected": {
+        "scores": {
+          "quality": {
+            "value": 11
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Snyder, E., Cai, B., DeMuro, C., Morrison, M. F., & Ball, W. (2018). A new single-item sleep quality scale: results of psychometric evaluation in patients with chronic primary insomnia and depression. Journal of Clinical Sleep Medicine, 14(11), 1849-1857. Read full article for free here",
+    "year": 2018
+  }
+}

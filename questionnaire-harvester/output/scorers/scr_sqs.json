@@ -1,0 +1,122 @@
+{
+  "content": {
+    "en": {
+      "description": "Single-Item Sleep Quality Scale (SQS). Single-Item Sleep Quality Scale. Score = the single 0-10 (here 1-11) rating of overall sleep quality; higher = better sleep quality.",
+      "name": "SQS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_sqs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "7eaa9b9b700894a9c033838157b8e21741b96b824b9e9b2d0c16ae831ec0216a",
+      "url": "https://behaverse.org/scorers/sqs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_sqs_1)$": {
+            "maximum": 11,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SQS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "quality": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "quality"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "quality": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sqs_1": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "quality": {
+            "value": 6
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sqs_1": 6
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "quality": {
+            "value": 11
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sqs_1": 11
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Snyder, E., Cai, B., DeMuro, C., Morrison, M. F., & Ball, W. (2018). A new single-item sleep quality scale: results of psychometric evaluation in patients with chronic primary insomnia and depression. Journal of Clinical Sleep Medicine, 14(11), 1849-1857. Read full article for free here",
+    "year": 2018
+  }
+}

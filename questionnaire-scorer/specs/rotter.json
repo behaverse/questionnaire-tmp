@@ -1,0 +1,101 @@
+{
+  "id": "rotter",
+  "scorer_id": "scr_rotter",
+  "name": "LoC Scoring",
+  "status": "validated",
+  "description": "Locus of control (Rotter, 1966). Rotter Internal-External Locus of Control (short form). External score = number of external-control choices across the 15 forced-choice items, range 0-15; higher = a more external locus of control.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      1
+    ],
+    "scores": [
+      {
+        "key": "external",
+        "items": [
+          "pr_rotter_1",
+          "pr_rotter_2",
+          "pr_rotter_3",
+          "pr_rotter_4",
+          "pr_rotter_5",
+          "pr_rotter_6",
+          "pr_rotter_7",
+          "pr_rotter_8",
+          "pr_rotter_9",
+          "pr_rotter_10",
+          "pr_rotter_11",
+          "pr_rotter_12",
+          "pr_rotter_13",
+          "pr_rotter_14",
+          "pr_rotter_15"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "internal",
+      "input": {
+        "scored_responses": {
+          "pr_rotter_1": 0,
+          "pr_rotter_2": 0,
+          "pr_rotter_3": 0,
+          "pr_rotter_4": 0,
+          "pr_rotter_5": 0,
+          "pr_rotter_6": 0,
+          "pr_rotter_7": 0,
+          "pr_rotter_8": 0,
+          "pr_rotter_9": 0,
+          "pr_rotter_10": 0,
+          "pr_rotter_11": 0,
+          "pr_rotter_12": 0,
+          "pr_rotter_13": 0,
+          "pr_rotter_14": 0,
+          "pr_rotter_15": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "external": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "external",
+      "input": {
+        "scored_responses": {
+          "pr_rotter_1": 1,
+          "pr_rotter_2": 1,
+          "pr_rotter_3": 1,
+          "pr_rotter_4": 1,
+          "pr_rotter_5": 1,
+          "pr_rotter_6": 1,
+          "pr_rotter_7": 1,
+          "pr_rotter_8": 1,
+          "pr_rotter_9": 1,
+          "pr_rotter_10": 1,
+          "pr_rotter_11": 1,
+          "pr_rotter_12": 1,
+          "pr_rotter_13": 1,
+          "pr_rotter_14": 1,
+          "pr_rotter_15": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "external": {
+            "value": 15
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "J.B. Rotter. (1966). Generalized expectancies for internal versus external control of reinforcement. Psychological Monographs, 80 , (1, Whole No. 609).",
+    "year": 1966
+  }
+}

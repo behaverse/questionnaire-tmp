@@ -109,5 +109,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "laterality",
+      "name": "EHI laterality",
+      "path": "/scores/laterality/value",
+      "scorer": "scr_ehi@v26.0618"
+    },
+    {
+      "id": "laterality_severity",
+      "name": "EHI laterality level",
+      "path": "/scores/laterality/severity",
+      "scorer": "scr_ehi@v26.0618"
+    }
   ]
 }

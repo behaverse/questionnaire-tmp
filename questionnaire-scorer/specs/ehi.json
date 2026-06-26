@@ -1,0 +1,126 @@
+{
+  "id": "ehi",
+  "scorer_id": "scr_ehi",
+  "name": "EHI Scoring",
+  "status": "validated",
+  "description": "The Edinburgh Handedness Inventory (short form). Edinburgh Handedness Inventory (short form). Laterality quotient = MEAN of the 4 items (each -100 left to +100 right), range -100 to +100; >+40 right-handed, <-40 left-handed, between = mixed.",
+  "engine_spec": {
+    "item_range": [
+      -100,
+      100
+    ],
+    "scores": [
+      {
+        "key": "laterality",
+        "aggregate": "mean",
+        "items": [
+          "pr_ehi_1",
+          "pr_ehi_2",
+          "pr_ehi_3",
+          "pr_ehi_4"
+        ],
+        "bands": [
+          {
+            "min": -100,
+            "max": -41,
+            "severity": "left",
+            "label": "Left-handed"
+          },
+          {
+            "min": -40,
+            "max": 40,
+            "severity": "mixed",
+            "label": "Mixed / ambidextrous"
+          },
+          {
+            "min": 41,
+            "max": 100,
+            "severity": "right",
+            "label": "Right-handed"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "left",
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": -100,
+          "pr_ehi_2": -100,
+          "pr_ehi_3": -100,
+          "pr_ehi_4": -100
+        }
+      },
+      "expected": {
+        "scores": {
+          "laterality": {
+            "value": -100,
+            "severity": "left",
+            "band": {
+              "min": -100,
+              "max": -41,
+              "label": "Left-handed"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mixed",
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": 0,
+          "pr_ehi_2": 0,
+          "pr_ehi_3": 0,
+          "pr_ehi_4": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "laterality": {
+            "value": 0,
+            "severity": "mixed",
+            "band": {
+              "min": -40,
+              "max": 40,
+              "label": "Mixed / ambidextrous"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "right",
+      "input": {
+        "scored_responses": {
+          "pr_ehi_1": 100,
+          "pr_ehi_2": 100,
+          "pr_ehi_3": 100,
+          "pr_ehi_4": 100
+        }
+      },
+      "expected": {
+        "scores": {
+          "laterality": {
+            "value": 100,
+            "severity": "right",
+            "band": {
+              "min": 41,
+              "max": 100,
+              "label": "Right-handed"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Oldfield, R.C. (1971). The assessment and analysis of handedness: The Edinburgh inventory. Neuropsychologia, 9 , 97-113.",
+    "year": 1971
+  }
+}
