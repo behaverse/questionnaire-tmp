@@ -65,7 +65,7 @@ Each row links the component's own HANDOFF.md. Local dev ports in parens.
 | [schemas/](schemas/HANDOFF.md) | The 8 canonical JSON Schemas (data-model source of truth) | ✅ | `work/schemas` |
 | [tools/](tools/HANDOFF.md) | Schema validator (`validate_schemas.py`) | ✅ | `work/tools` |
 | [library/](library/HANDOFF.md) | **Library Core** — catalogue/ingest/read API + survey_db importer + community signals (FastAPI+PG, :8000) | ✅ live | `work/library` |
-| [library-web/](library-web/HANDOFF.md) | **Library web UI** — read-only catalogue + "Try it" demo (Vite/React, :5175) | ✅ live | `work/library-web` |
+| [library-web/](library-web/HANDOFF.md) | **Library web UI** — read-only catalogue + export (JSON / Markdown / SurveyJS) + "Try it" demo (Vite/React, :5175) | ✅ live | `work/library-web` |
 | [questionnaire-runtime-denormaliser/](questionnaire-runtime-denormaliser/HANDOFF.md) | Schema 2 → Schema 3 runtime denormaliser (Python lib) | ✅ | `work/denormaliser` |
 | [questionnaire-expression-evaluator/](questionnaire-expression-evaluator/HANDOFF.md) | Logic/expression evaluator (Rust→WASM, OD-11) | ✅ | `work/expression-evaluator` |
 | [questionnaire-scorer/](questionnaire-scorer/HANDOFF.md) | Scorer ABI + conformance runner + PHQ-9 (Rust→WASM, OD-16) | ✅ | `work/scorer` |

@@ -178,11 +178,12 @@ graph TD
 
 ### library-web — catalogue web UI
 
-- **Description.** Public read-only catalogue SPA: search → view → download, plus a
-  **"Try it"** demo link per questionnaire.
-- **Features.** Browse/search/facet, detail page (metadata, items, scores, versions),
-  JSON download, **"Try it"** (launches the player in render-only preview mode, no account,
-  nothing stored).
+- **Description.** Public read-only catalogue SPA: search → view → **export** (JSON / Markdown /
+  SurveyJS), plus a **"Try it"** demo link per questionnaire.
+- **Features.** Browse/search/facet, detail page (metadata, items, scores, versions), a
+  **Download ▾** menu exporting **JSON / Markdown / [SurveyJS](https://surveyjs.io/)** (one-way, in
+  the page's language; SurveyJS drops scoring/complex logic into an inline notice), and **"Try it"**
+  (launches the player in render-only preview mode, no account, nothing stored).
 - **Relationships.** Calls **library** API; **"Try it"** launches **web-viewer** with
   `?preview=<id@version>` which pulls a preview runtime from **viewer-service**.
 - **Tool stack.** React 19, Vite 6, TypeScript 5.7, react-router 7, TanStack Query,

@@ -33,7 +33,7 @@ The Library is the catalogue and repository of validated questionnaires, the reu
 - Full-text search across titles, descriptions, authors, citations, keywords.
 - Faceted browsing on classification fields (`domain[]`, `population[]`, `tags[]`).
 - Sort by relevance, citation count, recency, usage.
-- Per-entry view: metadata, full item list (paginated for long instruments), psychometric properties, citations, comments, deployment statistics, downloadable definition.
+- Per-entry view: metadata, full item list (paginated for long instruments), psychometric properties, citations, comments, deployment statistics, exportable definition (canonical JSON, Markdown review doc, or SurveyJS survey-JSON).
 
 ### 2. Reusable-component pool
 

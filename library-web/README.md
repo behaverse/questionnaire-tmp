@@ -1,13 +1,25 @@
 # library-web (the Library web UI)
 
-The public, **read-only catalogue** for the Library — search → view → download — plus a **"Try it"**
-demo link on each questionnaire. Vite + React + TS. Deployed at
+The public, **read-only catalogue** for the Library — search → view → **export** (JSON / Markdown /
+SurveyJS) — plus a **"Try it"** demo link on each questionnaire. Vite + React + TS. Deployed at
 **https://questionnaire-library.vercel.app** (SPA + the Library API, same origin, reading Supabase).
 
 ## What's here
 
 - **Catalogue** (`/`) — browse / search / facet the questionnaires in the Library.
-- **Detail** (`/q/:id/:version`) — metadata, items, scores, versions, **Download JSON**, and **Try it**.
+- **Detail** (`/q/:id/:version`) — metadata, items, scores, versions, a **Download ▾** menu
+  (JSON / Markdown / SurveyJS), and **Try it**.
+- **Export** (`src/export/`) — one-way downloads, rendered in the language currently selected on the
+  page (`DownloadMenu.tsx` is the accessible dropdown in the detail header):
+  - **JSON** — the canonical Schema-2 definition (cross-origin blob fetch via `src/lib/download.ts`).
+  - **Markdown** (`src/export/markdown.ts`) — a human-readable review doc: title, a metadata header
+    (id / version / license / authors / citation), then numbered questions with their answer options.
+  - **SurveyJS** (`src/export/surveyjs.ts`) — a [SurveyJS](https://surveyjs.io/) survey-JSON: widget
+    mapping (radiogroup / rating / checkbox / text), choices, `isRequired`, and a best-effort simple
+    `show_if` → `visibleIf`. Features it can't represent (scoring, complex conditions) are dropped and
+    listed in an inline notice on the page. Emits a plain object — **no `survey-core` dependency**.
+  - Both serializers consume the same per-language `RenderModel` (`src/definition/renderModel.ts`,
+    enriched to derive each item's `widget` and carry `showIf`), so reference resolution lives in one place.
 - **Try it** (roadmap #5) — launches the **player** (`web-viewer`) in render-only preview
   (`?preview=<id@version>`): runs the questionnaire with **no account and nothing stored**, and returns
   here on Done. Built from `src/lib/preview.ts::previewPlayerUrl` using the questionnaire's own default
