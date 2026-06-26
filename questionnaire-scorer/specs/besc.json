@@ -1,0 +1,135 @@
+{
+  "id": "besc",
+  "scorer_id": "scr_besc",
+  "name": "BES Total Scoring",
+  "status": "validated",
+  "description": "Belonging, engagement, and self-confidence in higher education (BES). Total = sum of the 16 items (each 1-5), range 16-80; higher = greater belonging, engagement and self-confidence in higher education (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_besc_1",
+          "pr_besc_2",
+          "pr_besc_3",
+          "pr_besc_4",
+          "pr_besc_5",
+          "pr_besc_6",
+          "pr_besc_7",
+          "pr_besc_8",
+          "pr_besc_9",
+          "pr_besc_10",
+          "pr_besc_11",
+          "pr_besc_12",
+          "pr_besc_13",
+          "pr_besc_14",
+          "pr_besc_15",
+          "pr_besc_16"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_besc_1": 1,
+          "pr_besc_2": 1,
+          "pr_besc_3": 1,
+          "pr_besc_4": 1,
+          "pr_besc_5": 1,
+          "pr_besc_6": 1,
+          "pr_besc_7": 1,
+          "pr_besc_8": 1,
+          "pr_besc_9": 1,
+          "pr_besc_10": 1,
+          "pr_besc_11": 1,
+          "pr_besc_12": 1,
+          "pr_besc_13": 1,
+          "pr_besc_14": 1,
+          "pr_besc_15": 1,
+          "pr_besc_16": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 16
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_besc_1": 3,
+          "pr_besc_2": 3,
+          "pr_besc_3": 3,
+          "pr_besc_4": 3,
+          "pr_besc_5": 3,
+          "pr_besc_6": 3,
+          "pr_besc_7": 3,
+          "pr_besc_8": 3,
+          "pr_besc_9": 3,
+          "pr_besc_10": 3,
+          "pr_besc_11": 3,
+          "pr_besc_12": 3,
+          "pr_besc_13": 3,
+          "pr_besc_14": 3,
+          "pr_besc_15": 3,
+          "pr_besc_16": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 48
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_besc_1": 5,
+          "pr_besc_2": 5,
+          "pr_besc_3": 5,
+          "pr_besc_4": 5,
+          "pr_besc_5": 5,
+          "pr_besc_6": 5,
+          "pr_besc_7": 5,
+          "pr_besc_8": 5,
+          "pr_besc_9": 5,
+          "pr_besc_10": 5,
+          "pr_besc_11": 5,
+          "pr_besc_12": 5,
+          "pr_besc_13": 5,
+          "pr_besc_14": 5,
+          "pr_besc_15": 5,
+          "pr_besc_16": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 80
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Yorke, M. (2016). The development and initial use of a survey of student \u2018belongingness\u2019, engagement and self-confidence in UK higher education. Assessment & Evaluation in Higher Education, 41(1) , 154-166, DOI: 10.1080/02602938.2014.990415. Open access link .",
+    "year": 2016
+  }
+}

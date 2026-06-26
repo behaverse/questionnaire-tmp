@@ -459,5 +459,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "BPAQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_bpaq@v26.0618"
+    }
   ]
 }

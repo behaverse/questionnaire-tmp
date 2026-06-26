@@ -1,0 +1,179 @@
+{
+  "content": {
+    "en": {
+      "description": "Nomophobia Questionnaire (NMP-Q). Total = sum of the 20 items (each 1-7), range 20-140; higher = greater nomophobia (anxiety about being without one's smartphone) (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "NMP-Q Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_nmpq",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "2d0abc587702467bfbf697941ffe9209610b523d486af84c80b36e3d1767ced0",
+      "url": "https://behaverse.org/scorers/nmpq/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_nmpq_1|pr_nmpq_2|pr_nmpq_3|pr_nmpq_4|pr_nmpq_5|pr_nmpq_6|pr_nmpq_7|pr_nmpq_8|pr_nmpq_9|pr_nmpq_10|pr_nmpq_11|pr_nmpq_12|pr_nmpq_13|pr_nmpq_14|pr_nmpq_15|pr_nmpq_16|pr_nmpq_17|pr_nmpq_18|pr_nmpq_19|pr_nmpq_20)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "NMP-Q Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_nmpq_1": 1,
+          "pr_nmpq_10": 1,
+          "pr_nmpq_11": 1,
+          "pr_nmpq_12": 1,
+          "pr_nmpq_13": 1,
+          "pr_nmpq_14": 1,
+          "pr_nmpq_15": 1,
+          "pr_nmpq_16": 1,
+          "pr_nmpq_17": 1,
+          "pr_nmpq_18": 1,
+          "pr_nmpq_19": 1,
+          "pr_nmpq_2": 1,
+          "pr_nmpq_20": 1,
+          "pr_nmpq_3": 1,
+          "pr_nmpq_4": 1,
+          "pr_nmpq_5": 1,
+          "pr_nmpq_6": 1,
+          "pr_nmpq_7": 1,
+          "pr_nmpq_8": 1,
+          "pr_nmpq_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 80
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_nmpq_1": 4,
+          "pr_nmpq_10": 4,
+          "pr_nmpq_11": 4,
+          "pr_nmpq_12": 4,
+          "pr_nmpq_13": 4,
+          "pr_nmpq_14": 4,
+          "pr_nmpq_15": 4,
+          "pr_nmpq_16": 4,
+          "pr_nmpq_17": 4,
+          "pr_nmpq_18": 4,
+          "pr_nmpq_19": 4,
+          "pr_nmpq_2": 4,
+          "pr_nmpq_20": 4,
+          "pr_nmpq_3": 4,
+          "pr_nmpq_4": 4,
+          "pr_nmpq_5": 4,
+          "pr_nmpq_6": 4,
+          "pr_nmpq_7": 4,
+          "pr_nmpq_8": 4,
+          "pr_nmpq_9": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 140
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_nmpq_1": 7,
+          "pr_nmpq_10": 7,
+          "pr_nmpq_11": 7,
+          "pr_nmpq_12": 7,
+          "pr_nmpq_13": 7,
+          "pr_nmpq_14": 7,
+          "pr_nmpq_15": 7,
+          "pr_nmpq_16": 7,
+          "pr_nmpq_17": 7,
+          "pr_nmpq_18": 7,
+          "pr_nmpq_19": 7,
+          "pr_nmpq_2": 7,
+          "pr_nmpq_20": 7,
+          "pr_nmpq_3": 7,
+          "pr_nmpq_4": 7,
+          "pr_nmpq_5": 7,
+          "pr_nmpq_6": 7,
+          "pr_nmpq_7": 7,
+          "pr_nmpq_8": 7,
+          "pr_nmpq_9": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Yildirim, C. & Correia, A. (2015). Exploring the dimensions of nomophobia: Development and validation\nof a self-reported questionnaire. Computers in Human Behavior, 49 , 130-137.",
+    "year": 2015
+  }
+}

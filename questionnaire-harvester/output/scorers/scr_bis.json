@@ -1,0 +1,205 @@
+{
+  "content": {
+    "en": {
+      "description": "Barratt’s Impulsiveness scale (BIS). Total = sum of the 30 items (each 1-4), range 30-120; higher = greater impulsiveness (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "BIS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_bis",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "8f1011981426e52c967b8102c88142d45d02153988ae3b558c9062277cdb7963",
+      "url": "https://behaverse.org/scorers/bis/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_bis_1|pr_bis_2|pr_bis_3|pr_bis_4|pr_bis_5|pr_bis_6|pr_bis_7|pr_bis_8|pr_bis_9|pr_bis_10|pr_bis_11|pr_bis_12|pr_bis_13|pr_bis_14|pr_bis_15|pr_bis_16|pr_bis_17|pr_bis_18|pr_bis_19|pr_bis_20|pr_bis_21|pr_bis_22|pr_bis_23|pr_bis_24|pr_bis_25|pr_bis_26|pr_bis_27|pr_bis_28|pr_bis_29|pr_bis_30)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "BIS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bis_1": 1,
+          "pr_bis_10": 1,
+          "pr_bis_11": 1,
+          "pr_bis_12": 1,
+          "pr_bis_13": 1,
+          "pr_bis_14": 1,
+          "pr_bis_15": 1,
+          "pr_bis_16": 1,
+          "pr_bis_17": 1,
+          "pr_bis_18": 1,
+          "pr_bis_19": 1,
+          "pr_bis_2": 1,
+          "pr_bis_20": 1,
+          "pr_bis_21": 1,
+          "pr_bis_22": 1,
+          "pr_bis_23": 1,
+          "pr_bis_24": 1,
+          "pr_bis_25": 1,
+          "pr_bis_26": 1,
+          "pr_bis_27": 1,
+          "pr_bis_28": 1,
+          "pr_bis_29": 1,
+          "pr_bis_3": 1,
+          "pr_bis_30": 1,
+          "pr_bis_4": 1,
+          "pr_bis_5": 1,
+          "pr_bis_6": 1,
+          "pr_bis_7": 1,
+          "pr_bis_8": 1,
+          "pr_bis_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bis_1": 2,
+          "pr_bis_10": 2,
+          "pr_bis_11": 2,
+          "pr_bis_12": 2,
+          "pr_bis_13": 2,
+          "pr_bis_14": 2,
+          "pr_bis_15": 2,
+          "pr_bis_16": 2,
+          "pr_bis_17": 2,
+          "pr_bis_18": 2,
+          "pr_bis_19": 2,
+          "pr_bis_2": 2,
+          "pr_bis_20": 2,
+          "pr_bis_21": 2,
+          "pr_bis_22": 2,
+          "pr_bis_23": 2,
+          "pr_bis_24": 2,
+          "pr_bis_25": 2,
+          "pr_bis_26": 2,
+          "pr_bis_27": 2,
+          "pr_bis_28": 2,
+          "pr_bis_29": 2,
+          "pr_bis_3": 2,
+          "pr_bis_30": 2,
+          "pr_bis_4": 2,
+          "pr_bis_5": 2,
+          "pr_bis_6": 2,
+          "pr_bis_7": 2,
+          "pr_bis_8": 2,
+          "pr_bis_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 120
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bis_1": 4,
+          "pr_bis_10": 4,
+          "pr_bis_11": 4,
+          "pr_bis_12": 4,
+          "pr_bis_13": 4,
+          "pr_bis_14": 4,
+          "pr_bis_15": 4,
+          "pr_bis_16": 4,
+          "pr_bis_17": 4,
+          "pr_bis_18": 4,
+          "pr_bis_19": 4,
+          "pr_bis_2": 4,
+          "pr_bis_20": 4,
+          "pr_bis_21": 4,
+          "pr_bis_22": 4,
+          "pr_bis_23": 4,
+          "pr_bis_24": 4,
+          "pr_bis_25": 4,
+          "pr_bis_26": 4,
+          "pr_bis_27": 4,
+          "pr_bis_28": 4,
+          "pr_bis_29": 4,
+          "pr_bis_3": 4,
+          "pr_bis_30": 4,
+          "pr_bis_4": 4,
+          "pr_bis_5": 4,
+          "pr_bis_6": 4,
+          "pr_bis_7": 4,
+          "pr_bis_8": 4,
+          "pr_bis_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ]
+}

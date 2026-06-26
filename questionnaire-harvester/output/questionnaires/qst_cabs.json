@@ -614,5 +614,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "CABS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_cabs@v26.0618"
+    }
   ]
 }

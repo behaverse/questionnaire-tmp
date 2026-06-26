@@ -1,0 +1,155 @@
+{
+  "id": "scsr",
+  "scorer_id": "scr_scsr",
+  "name": "SCS-R Total Scoring",
+  "status": "validated",
+  "description": "Self-consciousness scale (revised version). Total = sum of the 21 items (each 0-3), range 0-63; higher = greater dispositional self-consciousness (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      3
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_scsr_1",
+          "pr_scsr_2",
+          "pr_scsr_3",
+          "pr_scsr_4",
+          "pr_scsr_5",
+          "pr_scsr_6",
+          "pr_scsr_7",
+          "pr_scsr_8",
+          "pr_scsr_9",
+          "pr_scsr_10",
+          "pr_scsr_11",
+          "pr_scsr_12",
+          "pr_scsr_13",
+          "pr_scsr_14",
+          "pr_scsr_15",
+          "pr_scsr_16",
+          "pr_scsr_17",
+          "pr_scsr_18",
+          "pr_scsr_19",
+          "pr_scsr_20",
+          "pr_scsr_21"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_scsr_1": 0,
+          "pr_scsr_2": 0,
+          "pr_scsr_3": 0,
+          "pr_scsr_4": 0,
+          "pr_scsr_5": 0,
+          "pr_scsr_6": 0,
+          "pr_scsr_7": 0,
+          "pr_scsr_8": 0,
+          "pr_scsr_9": 0,
+          "pr_scsr_10": 0,
+          "pr_scsr_11": 0,
+          "pr_scsr_12": 0,
+          "pr_scsr_13": 0,
+          "pr_scsr_14": 0,
+          "pr_scsr_15": 0,
+          "pr_scsr_16": 0,
+          "pr_scsr_17": 0,
+          "pr_scsr_18": 0,
+          "pr_scsr_19": 0,
+          "pr_scsr_20": 0,
+          "pr_scsr_21": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_scsr_1": 1,
+          "pr_scsr_2": 1,
+          "pr_scsr_3": 1,
+          "pr_scsr_4": 1,
+          "pr_scsr_5": 1,
+          "pr_scsr_6": 1,
+          "pr_scsr_7": 1,
+          "pr_scsr_8": 1,
+          "pr_scsr_9": 1,
+          "pr_scsr_10": 1,
+          "pr_scsr_11": 1,
+          "pr_scsr_12": 1,
+          "pr_scsr_13": 1,
+          "pr_scsr_14": 1,
+          "pr_scsr_15": 1,
+          "pr_scsr_16": 1,
+          "pr_scsr_17": 1,
+          "pr_scsr_18": 1,
+          "pr_scsr_19": 1,
+          "pr_scsr_20": 1,
+          "pr_scsr_21": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 21
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_scsr_1": 3,
+          "pr_scsr_2": 3,
+          "pr_scsr_3": 3,
+          "pr_scsr_4": 3,
+          "pr_scsr_5": 3,
+          "pr_scsr_6": 3,
+          "pr_scsr_7": 3,
+          "pr_scsr_8": 3,
+          "pr_scsr_9": 3,
+          "pr_scsr_10": 3,
+          "pr_scsr_11": 3,
+          "pr_scsr_12": 3,
+          "pr_scsr_13": 3,
+          "pr_scsr_14": 3,
+          "pr_scsr_15": 3,
+          "pr_scsr_16": 3,
+          "pr_scsr_17": 3,
+          "pr_scsr_18": 3,
+          "pr_scsr_19": 3,
+          "pr_scsr_20": 3,
+          "pr_scsr_21": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 63
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Scheier, M. F. & Carver, C. S. (1985). The self-consciousnes scale -\na revised version for use with general populations. Journal of\nApplied Social Psychology, 15, 687-699.",
+    "year": 1985
+  }
+}

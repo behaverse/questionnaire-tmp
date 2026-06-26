@@ -1,0 +1,176 @@
+{
+  "id": "scr_pios",
+  "name": "PIOS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "PIOS Total Scoring",
+      "description": "The Penn Inventory of Scrupulosity (PIOS). Total = sum of the 19 items (each 0-4), range 0-76; higher = greater religious scrupulosity (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Abramowitz, J.S., Hupper, J.D., Cohen, A.B., Tolin, D.F. & Cahill,\nS.P. (2002). Religious obsessions and compulsions in a non-clinical\nsample: the Penn Inventory of Scrupulosity (PIOS). Behaviour Research\nand Therapy, 40 , 825-838.",
+    "year": 2002
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_pios_1|pr_pios_2|pr_pios_3|pr_pios_4|pr_pios_5|pr_pios_6|pr_pios_7|pr_pios_8|pr_pios_9|pr_pios_10|pr_pios_11|pr_pios_12|pr_pios_13|pr_pios_14|pr_pios_15|pr_pios_16|pr_pios_17|pr_pios_18|pr_pios_19)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/pios/scorer.wasm",
+      "sha256": "e796bc500e285ef67ab7a79c96cc66dea2a47926ee1dc5f3f390816da87581eb"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_pios_1": 0,
+          "pr_pios_2": 0,
+          "pr_pios_3": 0,
+          "pr_pios_4": 0,
+          "pr_pios_5": 0,
+          "pr_pios_6": 0,
+          "pr_pios_7": 0,
+          "pr_pios_8": 0,
+          "pr_pios_9": 0,
+          "pr_pios_10": 0,
+          "pr_pios_11": 0,
+          "pr_pios_12": 0,
+          "pr_pios_13": 0,
+          "pr_pios_14": 0,
+          "pr_pios_15": 0,
+          "pr_pios_16": 0,
+          "pr_pios_17": 0,
+          "pr_pios_18": 0,
+          "pr_pios_19": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_pios_1": 2,
+          "pr_pios_2": 2,
+          "pr_pios_3": 2,
+          "pr_pios_4": 2,
+          "pr_pios_5": 2,
+          "pr_pios_6": 2,
+          "pr_pios_7": 2,
+          "pr_pios_8": 2,
+          "pr_pios_9": 2,
+          "pr_pios_10": 2,
+          "pr_pios_11": 2,
+          "pr_pios_12": 2,
+          "pr_pios_13": 2,
+          "pr_pios_14": 2,
+          "pr_pios_15": 2,
+          "pr_pios_16": 2,
+          "pr_pios_17": 2,
+          "pr_pios_18": 2,
+          "pr_pios_19": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 38
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_pios_1": 4,
+          "pr_pios_2": 4,
+          "pr_pios_3": 4,
+          "pr_pios_4": 4,
+          "pr_pios_5": 4,
+          "pr_pios_6": 4,
+          "pr_pios_7": 4,
+          "pr_pios_8": 4,
+          "pr_pios_9": 4,
+          "pr_pios_10": 4,
+          "pr_pios_11": 4,
+          "pr_pios_12": 4,
+          "pr_pios_13": 4,
+          "pr_pios_14": 4,
+          "pr_pios_15": 4,
+          "pr_pios_16": 4,
+          "pr_pios_17": 4,
+          "pr_pios_18": 4,
+          "pr_pios_19": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 76
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

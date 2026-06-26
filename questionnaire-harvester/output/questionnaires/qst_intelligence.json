@@ -515,5 +515,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "EI total",
+      "path": "/scores/total/value",
+      "scorer": "scr_intelligence@v26.0618"
+    }
   ]
 }

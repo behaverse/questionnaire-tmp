@@ -273,5 +273,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "HVQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_shvq@v26.0618"
+    }
   ]
 }

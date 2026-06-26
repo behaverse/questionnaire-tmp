@@ -1,0 +1,193 @@
+{
+  "id": "scr_hvq",
+  "name": "HVQ Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "HVQ Total Scoring",
+      "description": "Hypermasculinity Values Questionnaire (HVQ). Total = sum of the 26 items (each 1-7), range 26-182; higher = greater endorsement of hypermasculine values (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_hvq_1|pr_hvq_2|pr_hvq_3|pr_hvq_4|pr_hvq_5|pr_hvq_6|pr_hvq_7|pr_hvq_8|pr_hvq_9|pr_hvq_10|pr_hvq_11|pr_hvq_12|pr_hvq_13|pr_hvq_14|pr_hvq_15|pr_hvq_16|pr_hvq_17|pr_hvq_18|pr_hvq_19|pr_hvq_20|pr_hvq_21|pr_hvq_22|pr_hvq_23|pr_hvq_24|pr_hvq_25|pr_hvq_26)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/hvq/scorer.wasm",
+      "sha256": "9dae82efd19b1513a0591121d0d95aafcd128899b2c0f090fcbe1efc84166ac9"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_hvq_1": 1,
+          "pr_hvq_2": 1,
+          "pr_hvq_3": 1,
+          "pr_hvq_4": 1,
+          "pr_hvq_5": 1,
+          "pr_hvq_6": 1,
+          "pr_hvq_7": 1,
+          "pr_hvq_8": 1,
+          "pr_hvq_9": 1,
+          "pr_hvq_10": 1,
+          "pr_hvq_11": 1,
+          "pr_hvq_12": 1,
+          "pr_hvq_13": 1,
+          "pr_hvq_14": 1,
+          "pr_hvq_15": 1,
+          "pr_hvq_16": 1,
+          "pr_hvq_17": 1,
+          "pr_hvq_18": 1,
+          "pr_hvq_19": 1,
+          "pr_hvq_20": 1,
+          "pr_hvq_21": 1,
+          "pr_hvq_22": 1,
+          "pr_hvq_23": 1,
+          "pr_hvq_24": 1,
+          "pr_hvq_25": 1,
+          "pr_hvq_26": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 26
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_hvq_1": 4,
+          "pr_hvq_2": 4,
+          "pr_hvq_3": 4,
+          "pr_hvq_4": 4,
+          "pr_hvq_5": 4,
+          "pr_hvq_6": 4,
+          "pr_hvq_7": 4,
+          "pr_hvq_8": 4,
+          "pr_hvq_9": 4,
+          "pr_hvq_10": 4,
+          "pr_hvq_11": 4,
+          "pr_hvq_12": 4,
+          "pr_hvq_13": 4,
+          "pr_hvq_14": 4,
+          "pr_hvq_15": 4,
+          "pr_hvq_16": 4,
+          "pr_hvq_17": 4,
+          "pr_hvq_18": 4,
+          "pr_hvq_19": 4,
+          "pr_hvq_20": 4,
+          "pr_hvq_21": 4,
+          "pr_hvq_22": 4,
+          "pr_hvq_23": 4,
+          "pr_hvq_24": 4,
+          "pr_hvq_25": 4,
+          "pr_hvq_26": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 104
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_hvq_1": 7,
+          "pr_hvq_2": 7,
+          "pr_hvq_3": 7,
+          "pr_hvq_4": 7,
+          "pr_hvq_5": 7,
+          "pr_hvq_6": 7,
+          "pr_hvq_7": 7,
+          "pr_hvq_8": 7,
+          "pr_hvq_9": 7,
+          "pr_hvq_10": 7,
+          "pr_hvq_11": 7,
+          "pr_hvq_12": 7,
+          "pr_hvq_13": 7,
+          "pr_hvq_14": 7,
+          "pr_hvq_15": 7,
+          "pr_hvq_16": 7,
+          "pr_hvq_17": 7,
+          "pr_hvq_18": 7,
+          "pr_hvq_19": 7,
+          "pr_hvq_20": 7,
+          "pr_hvq_21": 7,
+          "pr_hvq_22": 7,
+          "pr_hvq_23": 7,
+          "pr_hvq_24": 7,
+          "pr_hvq_25": 7,
+          "pr_hvq_26": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 182
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

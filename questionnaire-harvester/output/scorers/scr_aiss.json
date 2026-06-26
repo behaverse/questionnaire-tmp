@@ -1,0 +1,179 @@
+{
+  "content": {
+    "en": {
+      "description": "Sensation seeking (AISS). Total = sum of the 20 items (each 1-4), range 20-80; higher = greater sensation seeking (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "AISS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_aiss",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "2ca09307df83499bc2da3772ee8d0b8f5637e41d4e71749ab79df08e2c44959a",
+      "url": "https://behaverse.org/scorers/aiss/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_aiss_1|pr_aiss_2|pr_aiss_3|pr_aiss_4|pr_aiss_5|pr_aiss_6|pr_aiss_7|pr_aiss_8|pr_aiss_9|pr_aiss_10|pr_aiss_11|pr_aiss_12|pr_aiss_13|pr_aiss_14|pr_aiss_15|pr_aiss_16|pr_aiss_17|pr_aiss_18|pr_aiss_19|pr_aiss_20)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "AISS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_aiss_1": 1,
+          "pr_aiss_10": 1,
+          "pr_aiss_11": 1,
+          "pr_aiss_12": 1,
+          "pr_aiss_13": 1,
+          "pr_aiss_14": 1,
+          "pr_aiss_15": 1,
+          "pr_aiss_16": 1,
+          "pr_aiss_17": 1,
+          "pr_aiss_18": 1,
+          "pr_aiss_19": 1,
+          "pr_aiss_2": 1,
+          "pr_aiss_20": 1,
+          "pr_aiss_3": 1,
+          "pr_aiss_4": 1,
+          "pr_aiss_5": 1,
+          "pr_aiss_6": 1,
+          "pr_aiss_7": 1,
+          "pr_aiss_8": 1,
+          "pr_aiss_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 40
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_aiss_1": 2,
+          "pr_aiss_10": 2,
+          "pr_aiss_11": 2,
+          "pr_aiss_12": 2,
+          "pr_aiss_13": 2,
+          "pr_aiss_14": 2,
+          "pr_aiss_15": 2,
+          "pr_aiss_16": 2,
+          "pr_aiss_17": 2,
+          "pr_aiss_18": 2,
+          "pr_aiss_19": 2,
+          "pr_aiss_2": 2,
+          "pr_aiss_20": 2,
+          "pr_aiss_3": 2,
+          "pr_aiss_4": 2,
+          "pr_aiss_5": 2,
+          "pr_aiss_6": 2,
+          "pr_aiss_7": 2,
+          "pr_aiss_8": 2,
+          "pr_aiss_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 80
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_aiss_1": 4,
+          "pr_aiss_10": 4,
+          "pr_aiss_11": 4,
+          "pr_aiss_12": 4,
+          "pr_aiss_13": 4,
+          "pr_aiss_14": 4,
+          "pr_aiss_15": 4,
+          "pr_aiss_16": 4,
+          "pr_aiss_17": 4,
+          "pr_aiss_18": 4,
+          "pr_aiss_19": 4,
+          "pr_aiss_2": 4,
+          "pr_aiss_20": 4,
+          "pr_aiss_3": 4,
+          "pr_aiss_4": 4,
+          "pr_aiss_5": 4,
+          "pr_aiss_6": 4,
+          "pr_aiss_7": 4,
+          "pr_aiss_8": 4,
+          "pr_aiss_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Arnett, J. (1994). Sensation seeking: A new conceptualization and a new\nscale. Personality and Individual Differences, 16 , 289-296.",
+    "year": 1994
+  }
+}

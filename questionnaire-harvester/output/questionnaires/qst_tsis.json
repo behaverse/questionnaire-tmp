@@ -347,5 +347,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "TSIS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_tsis@v26.0618"
+    }
   ]
 }

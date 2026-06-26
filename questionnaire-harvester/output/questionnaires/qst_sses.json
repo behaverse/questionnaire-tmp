@@ -329,5 +329,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SSES total",
+      "path": "/scores/total/value",
+      "scorer": "scr_sses@v26.0618"
+    }
   ]
 }

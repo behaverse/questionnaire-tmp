@@ -1,0 +1,203 @@
+{
+  "id": "intelligence",
+  "scorer_id": "scr_intelligence",
+  "name": "EI Total Scoring",
+  "status": "validated",
+  "description": "Emotional Intelligence. Total = sum of the 33 items (each 1-5), range 33-165; higher = greater trait emotional intelligence (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_intelligence_1",
+          "pr_intelligence_2",
+          "pr_intelligence_3",
+          "pr_intelligence_4",
+          "pr_intelligence_5",
+          "pr_intelligence_6",
+          "pr_intelligence_7",
+          "pr_intelligence_8",
+          "pr_intelligence_9",
+          "pr_intelligence_10",
+          "pr_intelligence_11",
+          "pr_intelligence_12",
+          "pr_intelligence_13",
+          "pr_intelligence_14",
+          "pr_intelligence_15",
+          "pr_intelligence_16",
+          "pr_intelligence_17",
+          "pr_intelligence_18",
+          "pr_intelligence_19",
+          "pr_intelligence_20",
+          "pr_intelligence_21",
+          "pr_intelligence_22",
+          "pr_intelligence_23",
+          "pr_intelligence_24",
+          "pr_intelligence_25",
+          "pr_intelligence_26",
+          "pr_intelligence_27",
+          "pr_intelligence_28",
+          "pr_intelligence_29",
+          "pr_intelligence_30",
+          "pr_intelligence_31",
+          "pr_intelligence_32",
+          "pr_intelligence_33"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_intelligence_1": 1,
+          "pr_intelligence_2": 1,
+          "pr_intelligence_3": 1,
+          "pr_intelligence_4": 1,
+          "pr_intelligence_5": 1,
+          "pr_intelligence_6": 1,
+          "pr_intelligence_7": 1,
+          "pr_intelligence_8": 1,
+          "pr_intelligence_9": 1,
+          "pr_intelligence_10": 1,
+          "pr_intelligence_11": 1,
+          "pr_intelligence_12": 1,
+          "pr_intelligence_13": 1,
+          "pr_intelligence_14": 1,
+          "pr_intelligence_15": 1,
+          "pr_intelligence_16": 1,
+          "pr_intelligence_17": 1,
+          "pr_intelligence_18": 1,
+          "pr_intelligence_19": 1,
+          "pr_intelligence_20": 1,
+          "pr_intelligence_21": 1,
+          "pr_intelligence_22": 1,
+          "pr_intelligence_23": 1,
+          "pr_intelligence_24": 1,
+          "pr_intelligence_25": 1,
+          "pr_intelligence_26": 1,
+          "pr_intelligence_27": 1,
+          "pr_intelligence_28": 1,
+          "pr_intelligence_29": 1,
+          "pr_intelligence_30": 1,
+          "pr_intelligence_31": 1,
+          "pr_intelligence_32": 1,
+          "pr_intelligence_33": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 33
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_intelligence_1": 3,
+          "pr_intelligence_2": 3,
+          "pr_intelligence_3": 3,
+          "pr_intelligence_4": 3,
+          "pr_intelligence_5": 3,
+          "pr_intelligence_6": 3,
+          "pr_intelligence_7": 3,
+          "pr_intelligence_8": 3,
+          "pr_intelligence_9": 3,
+          "pr_intelligence_10": 3,
+          "pr_intelligence_11": 3,
+          "pr_intelligence_12": 3,
+          "pr_intelligence_13": 3,
+          "pr_intelligence_14": 3,
+          "pr_intelligence_15": 3,
+          "pr_intelligence_16": 3,
+          "pr_intelligence_17": 3,
+          "pr_intelligence_18": 3,
+          "pr_intelligence_19": 3,
+          "pr_intelligence_20": 3,
+          "pr_intelligence_21": 3,
+          "pr_intelligence_22": 3,
+          "pr_intelligence_23": 3,
+          "pr_intelligence_24": 3,
+          "pr_intelligence_25": 3,
+          "pr_intelligence_26": 3,
+          "pr_intelligence_27": 3,
+          "pr_intelligence_28": 3,
+          "pr_intelligence_29": 3,
+          "pr_intelligence_30": 3,
+          "pr_intelligence_31": 3,
+          "pr_intelligence_32": 3,
+          "pr_intelligence_33": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 99
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_intelligence_1": 5,
+          "pr_intelligence_2": 5,
+          "pr_intelligence_3": 5,
+          "pr_intelligence_4": 5,
+          "pr_intelligence_5": 5,
+          "pr_intelligence_6": 5,
+          "pr_intelligence_7": 5,
+          "pr_intelligence_8": 5,
+          "pr_intelligence_9": 5,
+          "pr_intelligence_10": 5,
+          "pr_intelligence_11": 5,
+          "pr_intelligence_12": 5,
+          "pr_intelligence_13": 5,
+          "pr_intelligence_14": 5,
+          "pr_intelligence_15": 5,
+          "pr_intelligence_16": 5,
+          "pr_intelligence_17": 5,
+          "pr_intelligence_18": 5,
+          "pr_intelligence_19": 5,
+          "pr_intelligence_20": 5,
+          "pr_intelligence_21": 5,
+          "pr_intelligence_22": 5,
+          "pr_intelligence_23": 5,
+          "pr_intelligence_24": 5,
+          "pr_intelligence_25": 5,
+          "pr_intelligence_26": 5,
+          "pr_intelligence_27": 5,
+          "pr_intelligence_28": 5,
+          "pr_intelligence_29": 5,
+          "pr_intelligence_30": 5,
+          "pr_intelligence_31": 5,
+          "pr_intelligence_32": 5,
+          "pr_intelligence_33": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 165
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Schutte, N. S., Malouff, J. M., Hall, L. E., Haggerty, D. J.,\nCooper, J. T., Golden, C. J., & Dornheim, L. (1998). Development and\nvalidation of a measure of emotional intelligence. Personality and\nIndividual Differences, 25 , 167\u2013177.",
+    "year": 1998
+  }
+}

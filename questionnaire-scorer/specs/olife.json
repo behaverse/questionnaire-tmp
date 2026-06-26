@@ -1,0 +1,243 @@
+{
+  "id": "olife",
+  "scorer_id": "scr_olife",
+  "name": "O-LIFE Total Scoring",
+  "status": "validated",
+  "description": "Short Oxford-Liverpool Inventory of Feelings and Experiences (O-LIFE).. Total = sum of the 43 items (each 0-1), range 0-43; higher = greater schizotypal traits (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      1
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_olife_1",
+          "pr_olife_2",
+          "pr_olife_3",
+          "pr_olife_4",
+          "pr_olife_5",
+          "pr_olife_6",
+          "pr_olife_7",
+          "pr_olife_8",
+          "pr_olife_9",
+          "pr_olife_10",
+          "pr_olife_11",
+          "pr_olife_12",
+          "pr_olife_13",
+          "pr_olife_14",
+          "pr_olife_15",
+          "pr_olife_16",
+          "pr_olife_17",
+          "pr_olife_18",
+          "pr_olife_19",
+          "pr_olife_20",
+          "pr_olife_21",
+          "pr_olife_22",
+          "pr_olife_23",
+          "pr_olife_24",
+          "pr_olife_25",
+          "pr_olife_26",
+          "pr_olife_27",
+          "pr_olife_28",
+          "pr_olife_29",
+          "pr_olife_30",
+          "pr_olife_31",
+          "pr_olife_32",
+          "pr_olife_33",
+          "pr_olife_34",
+          "pr_olife_35",
+          "pr_olife_36",
+          "pr_olife_37",
+          "pr_olife_38",
+          "pr_olife_39",
+          "pr_olife_40",
+          "pr_olife_41",
+          "pr_olife_42",
+          "pr_olife_43"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_olife_1": 0,
+          "pr_olife_2": 0,
+          "pr_olife_3": 0,
+          "pr_olife_4": 0,
+          "pr_olife_5": 0,
+          "pr_olife_6": 0,
+          "pr_olife_7": 0,
+          "pr_olife_8": 0,
+          "pr_olife_9": 0,
+          "pr_olife_10": 0,
+          "pr_olife_11": 0,
+          "pr_olife_12": 0,
+          "pr_olife_13": 0,
+          "pr_olife_14": 0,
+          "pr_olife_15": 0,
+          "pr_olife_16": 0,
+          "pr_olife_17": 0,
+          "pr_olife_18": 0,
+          "pr_olife_19": 0,
+          "pr_olife_20": 0,
+          "pr_olife_21": 0,
+          "pr_olife_22": 0,
+          "pr_olife_23": 0,
+          "pr_olife_24": 0,
+          "pr_olife_25": 0,
+          "pr_olife_26": 0,
+          "pr_olife_27": 0,
+          "pr_olife_28": 0,
+          "pr_olife_29": 0,
+          "pr_olife_30": 0,
+          "pr_olife_31": 0,
+          "pr_olife_32": 0,
+          "pr_olife_33": 0,
+          "pr_olife_34": 0,
+          "pr_olife_35": 0,
+          "pr_olife_36": 0,
+          "pr_olife_37": 0,
+          "pr_olife_38": 0,
+          "pr_olife_39": 0,
+          "pr_olife_40": 0,
+          "pr_olife_41": 0,
+          "pr_olife_42": 0,
+          "pr_olife_43": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_olife_1": 0,
+          "pr_olife_2": 0,
+          "pr_olife_3": 0,
+          "pr_olife_4": 0,
+          "pr_olife_5": 0,
+          "pr_olife_6": 0,
+          "pr_olife_7": 0,
+          "pr_olife_8": 0,
+          "pr_olife_9": 0,
+          "pr_olife_10": 0,
+          "pr_olife_11": 0,
+          "pr_olife_12": 0,
+          "pr_olife_13": 0,
+          "pr_olife_14": 0,
+          "pr_olife_15": 0,
+          "pr_olife_16": 0,
+          "pr_olife_17": 0,
+          "pr_olife_18": 0,
+          "pr_olife_19": 0,
+          "pr_olife_20": 0,
+          "pr_olife_21": 0,
+          "pr_olife_22": 0,
+          "pr_olife_23": 0,
+          "pr_olife_24": 0,
+          "pr_olife_25": 0,
+          "pr_olife_26": 0,
+          "pr_olife_27": 0,
+          "pr_olife_28": 0,
+          "pr_olife_29": 0,
+          "pr_olife_30": 0,
+          "pr_olife_31": 0,
+          "pr_olife_32": 0,
+          "pr_olife_33": 0,
+          "pr_olife_34": 0,
+          "pr_olife_35": 0,
+          "pr_olife_36": 0,
+          "pr_olife_37": 0,
+          "pr_olife_38": 0,
+          "pr_olife_39": 0,
+          "pr_olife_40": 0,
+          "pr_olife_41": 0,
+          "pr_olife_42": 0,
+          "pr_olife_43": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_olife_1": 1,
+          "pr_olife_2": 1,
+          "pr_olife_3": 1,
+          "pr_olife_4": 1,
+          "pr_olife_5": 1,
+          "pr_olife_6": 1,
+          "pr_olife_7": 1,
+          "pr_olife_8": 1,
+          "pr_olife_9": 1,
+          "pr_olife_10": 1,
+          "pr_olife_11": 1,
+          "pr_olife_12": 1,
+          "pr_olife_13": 1,
+          "pr_olife_14": 1,
+          "pr_olife_15": 1,
+          "pr_olife_16": 1,
+          "pr_olife_17": 1,
+          "pr_olife_18": 1,
+          "pr_olife_19": 1,
+          "pr_olife_20": 1,
+          "pr_olife_21": 1,
+          "pr_olife_22": 1,
+          "pr_olife_23": 1,
+          "pr_olife_24": 1,
+          "pr_olife_25": 1,
+          "pr_olife_26": 1,
+          "pr_olife_27": 1,
+          "pr_olife_28": 1,
+          "pr_olife_29": 1,
+          "pr_olife_30": 1,
+          "pr_olife_31": 1,
+          "pr_olife_32": 1,
+          "pr_olife_33": 1,
+          "pr_olife_34": 1,
+          "pr_olife_35": 1,
+          "pr_olife_36": 1,
+          "pr_olife_37": 1,
+          "pr_olife_38": 1,
+          "pr_olife_39": 1,
+          "pr_olife_40": 1,
+          "pr_olife_41": 1,
+          "pr_olife_42": 1,
+          "pr_olife_43": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 43
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Mason, O., Linney, Y., & Claridge, G. (2005). Short scales for\nmeasuring schizotypy. Schizophrenia Research, 78 , 293-296.",
+    "year": 2005
+  }
+}

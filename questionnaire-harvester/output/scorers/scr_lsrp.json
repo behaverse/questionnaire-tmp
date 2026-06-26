@@ -1,0 +1,197 @@
+{
+  "content": {
+    "en": {
+      "description": "Psychopathy (LSRP). Total = sum of the 26 items (each 1-4), range 26-104; higher = greater self-reported psychopathic traits (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "LSRP Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_lsrp",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "b9daa2e36a716f16fe9d1cef0aadd8bbae06b1cea14157cbc71b30f9aac8fa6b",
+      "url": "https://behaverse.org/scorers/lsrp/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_lsrp_1|pr_lsrp_2|pr_lsrp_3|pr_lsrp_4|pr_lsrp_5|pr_lsrp_6|pr_lsrp_7|pr_lsrp_8|pr_lsrp_9|pr_lsrp_10|pr_lsrp_11|pr_lsrp_12|pr_lsrp_13|pr_lsrp_14|pr_lsrp_15|pr_lsrp_16|pr_lsrp_17|pr_lsrp_18|pr_lsrp_19|pr_lsrp_20|pr_lsrp_21|pr_lsrp_22|pr_lsrp_23|pr_lsrp_24|pr_lsrp_25|pr_lsrp_26)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "LSRP Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 26
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lsrp_1": 1,
+          "pr_lsrp_10": 1,
+          "pr_lsrp_11": 1,
+          "pr_lsrp_12": 1,
+          "pr_lsrp_13": 1,
+          "pr_lsrp_14": 1,
+          "pr_lsrp_15": 1,
+          "pr_lsrp_16": 1,
+          "pr_lsrp_17": 1,
+          "pr_lsrp_18": 1,
+          "pr_lsrp_19": 1,
+          "pr_lsrp_2": 1,
+          "pr_lsrp_20": 1,
+          "pr_lsrp_21": 1,
+          "pr_lsrp_22": 1,
+          "pr_lsrp_23": 1,
+          "pr_lsrp_24": 1,
+          "pr_lsrp_25": 1,
+          "pr_lsrp_26": 1,
+          "pr_lsrp_3": 1,
+          "pr_lsrp_4": 1,
+          "pr_lsrp_5": 1,
+          "pr_lsrp_6": 1,
+          "pr_lsrp_7": 1,
+          "pr_lsrp_8": 1,
+          "pr_lsrp_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 52
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lsrp_1": 2,
+          "pr_lsrp_10": 2,
+          "pr_lsrp_11": 2,
+          "pr_lsrp_12": 2,
+          "pr_lsrp_13": 2,
+          "pr_lsrp_14": 2,
+          "pr_lsrp_15": 2,
+          "pr_lsrp_16": 2,
+          "pr_lsrp_17": 2,
+          "pr_lsrp_18": 2,
+          "pr_lsrp_19": 2,
+          "pr_lsrp_2": 2,
+          "pr_lsrp_20": 2,
+          "pr_lsrp_21": 2,
+          "pr_lsrp_22": 2,
+          "pr_lsrp_23": 2,
+          "pr_lsrp_24": 2,
+          "pr_lsrp_25": 2,
+          "pr_lsrp_26": 2,
+          "pr_lsrp_3": 2,
+          "pr_lsrp_4": 2,
+          "pr_lsrp_5": 2,
+          "pr_lsrp_6": 2,
+          "pr_lsrp_7": 2,
+          "pr_lsrp_8": 2,
+          "pr_lsrp_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 104
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lsrp_1": 4,
+          "pr_lsrp_10": 4,
+          "pr_lsrp_11": 4,
+          "pr_lsrp_12": 4,
+          "pr_lsrp_13": 4,
+          "pr_lsrp_14": 4,
+          "pr_lsrp_15": 4,
+          "pr_lsrp_16": 4,
+          "pr_lsrp_17": 4,
+          "pr_lsrp_18": 4,
+          "pr_lsrp_19": 4,
+          "pr_lsrp_2": 4,
+          "pr_lsrp_20": 4,
+          "pr_lsrp_21": 4,
+          "pr_lsrp_22": 4,
+          "pr_lsrp_23": 4,
+          "pr_lsrp_24": 4,
+          "pr_lsrp_25": 4,
+          "pr_lsrp_26": 4,
+          "pr_lsrp_3": 4,
+          "pr_lsrp_4": 4,
+          "pr_lsrp_5": 4,
+          "pr_lsrp_6": 4,
+          "pr_lsrp_7": 4,
+          "pr_lsrp_8": 4,
+          "pr_lsrp_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Levenson, M.R., Kiehl, K.A, Fitzpatrick, C.M. (1995). Assessing\npsychopathic attributes in a noninstitutionalized population. Journal\nof Personality and Social Psychology, 68 , 151-158.",
+    "year": 1995
+  }
+}

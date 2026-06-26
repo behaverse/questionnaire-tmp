@@ -1,0 +1,173 @@
+{
+  "content": {
+    "en": {
+      "description": "Problematic Internet Use Questionnaire (PIUQ). Total = sum of the 18 items (each 1-5), range 18-90; higher = greater problematic internet use (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "PIUQ Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_piuq",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "e48684ca430c62589cbae3667a5731e70044098ce835f0ae9f44306ccc9c3d5b",
+      "url": "https://behaverse.org/scorers/piuq/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_piuq_1|pr_piuq_2|pr_piuq_3|pr_piuq_4|pr_piuq_5|pr_piuq_6|pr_piuq_7|pr_piuq_8|pr_piuq_9|pr_piuq_10|pr_piuq_11|pr_piuq_12|pr_piuq_13|pr_piuq_14|pr_piuq_15|pr_piuq_16|pr_piuq_17|pr_piuq_18)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "PIUQ Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_piuq_1": 1,
+          "pr_piuq_10": 1,
+          "pr_piuq_11": 1,
+          "pr_piuq_12": 1,
+          "pr_piuq_13": 1,
+          "pr_piuq_14": 1,
+          "pr_piuq_15": 1,
+          "pr_piuq_16": 1,
+          "pr_piuq_17": 1,
+          "pr_piuq_18": 1,
+          "pr_piuq_2": 1,
+          "pr_piuq_3": 1,
+          "pr_piuq_4": 1,
+          "pr_piuq_5": 1,
+          "pr_piuq_6": 1,
+          "pr_piuq_7": 1,
+          "pr_piuq_8": 1,
+          "pr_piuq_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 54
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_piuq_1": 3,
+          "pr_piuq_10": 3,
+          "pr_piuq_11": 3,
+          "pr_piuq_12": 3,
+          "pr_piuq_13": 3,
+          "pr_piuq_14": 3,
+          "pr_piuq_15": 3,
+          "pr_piuq_16": 3,
+          "pr_piuq_17": 3,
+          "pr_piuq_18": 3,
+          "pr_piuq_2": 3,
+          "pr_piuq_3": 3,
+          "pr_piuq_4": 3,
+          "pr_piuq_5": 3,
+          "pr_piuq_6": 3,
+          "pr_piuq_7": 3,
+          "pr_piuq_8": 3,
+          "pr_piuq_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 90
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_piuq_1": 5,
+          "pr_piuq_10": 5,
+          "pr_piuq_11": 5,
+          "pr_piuq_12": 5,
+          "pr_piuq_13": 5,
+          "pr_piuq_14": 5,
+          "pr_piuq_15": 5,
+          "pr_piuq_16": 5,
+          "pr_piuq_17": 5,
+          "pr_piuq_18": 5,
+          "pr_piuq_2": 5,
+          "pr_piuq_3": 5,
+          "pr_piuq_4": 5,
+          "pr_piuq_5": 5,
+          "pr_piuq_6": 5,
+          "pr_piuq_7": 5,
+          "pr_piuq_8": 5,
+          "pr_piuq_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Demetrovics, Z., Szeredi, B., & Rózsa, S. (2008). The three-factor model of Internet addiction: The development of the Problematic Internet Use Questionnaire. Behavior Research Methods, 40 , 563-574.",
+    "year": 2008
+  }
+}

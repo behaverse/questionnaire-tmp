@@ -347,5 +347,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SCS-R total",
+      "path": "/scores/total/value",
+      "scorer": "scr_scsr@v26.0618"
+    }
   ]
 }

@@ -1,0 +1,215 @@
+{
+  "id": "scr_gpts",
+  "name": "GPTS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "GPTS Total Scoring",
+      "description": "Green et al. Paranoid Thought Scales (GPTS). Total = sum of the 32 items (each 1-5), range 32-160; higher = greater paranoid ideation (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Green, C. E. L., Freeman, D., Kuipers, E., Bebbington, P., Fowler, D., Dunn, G., & Garety, P. A. (2008). Measuring ideas of persecution and social reference: the Green et al. Paranoid Thought Scales (GPTS). Psychological medicine, 38 , 101-111.",
+    "year": 2008
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_gpts_1|pr_gpts_2|pr_gpts_3|pr_gpts_4|pr_gpts_5|pr_gpts_6|pr_gpts_7|pr_gpts_8|pr_gpts_9|pr_gpts_10|pr_gpts_11|pr_gpts_12|pr_gpts_13|pr_gpts_14|pr_gpts_15|pr_gpts_16|pr_gpts_17|pr_gpts_18|pr_gpts_19|pr_gpts_20|pr_gpts_21|pr_gpts_22|pr_gpts_23|pr_gpts_24|pr_gpts_25|pr_gpts_26|pr_gpts_27|pr_gpts_28|pr_gpts_29|pr_gpts_30|pr_gpts_31|pr_gpts_32)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/gpts/scorer.wasm",
+      "sha256": "69c89450c24c5a9f474156b434afbf16ba32be8f95891bf3ddccd794b7bd1539"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_gpts_1": 1,
+          "pr_gpts_2": 1,
+          "pr_gpts_3": 1,
+          "pr_gpts_4": 1,
+          "pr_gpts_5": 1,
+          "pr_gpts_6": 1,
+          "pr_gpts_7": 1,
+          "pr_gpts_8": 1,
+          "pr_gpts_9": 1,
+          "pr_gpts_10": 1,
+          "pr_gpts_11": 1,
+          "pr_gpts_12": 1,
+          "pr_gpts_13": 1,
+          "pr_gpts_14": 1,
+          "pr_gpts_15": 1,
+          "pr_gpts_16": 1,
+          "pr_gpts_17": 1,
+          "pr_gpts_18": 1,
+          "pr_gpts_19": 1,
+          "pr_gpts_20": 1,
+          "pr_gpts_21": 1,
+          "pr_gpts_22": 1,
+          "pr_gpts_23": 1,
+          "pr_gpts_24": 1,
+          "pr_gpts_25": 1,
+          "pr_gpts_26": 1,
+          "pr_gpts_27": 1,
+          "pr_gpts_28": 1,
+          "pr_gpts_29": 1,
+          "pr_gpts_30": 1,
+          "pr_gpts_31": 1,
+          "pr_gpts_32": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 32
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_gpts_1": 3,
+          "pr_gpts_2": 3,
+          "pr_gpts_3": 3,
+          "pr_gpts_4": 3,
+          "pr_gpts_5": 3,
+          "pr_gpts_6": 3,
+          "pr_gpts_7": 3,
+          "pr_gpts_8": 3,
+          "pr_gpts_9": 3,
+          "pr_gpts_10": 3,
+          "pr_gpts_11": 3,
+          "pr_gpts_12": 3,
+          "pr_gpts_13": 3,
+          "pr_gpts_14": 3,
+          "pr_gpts_15": 3,
+          "pr_gpts_16": 3,
+          "pr_gpts_17": 3,
+          "pr_gpts_18": 3,
+          "pr_gpts_19": 3,
+          "pr_gpts_20": 3,
+          "pr_gpts_21": 3,
+          "pr_gpts_22": 3,
+          "pr_gpts_23": 3,
+          "pr_gpts_24": 3,
+          "pr_gpts_25": 3,
+          "pr_gpts_26": 3,
+          "pr_gpts_27": 3,
+          "pr_gpts_28": 3,
+          "pr_gpts_29": 3,
+          "pr_gpts_30": 3,
+          "pr_gpts_31": 3,
+          "pr_gpts_32": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 96
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_gpts_1": 5,
+          "pr_gpts_2": 5,
+          "pr_gpts_3": 5,
+          "pr_gpts_4": 5,
+          "pr_gpts_5": 5,
+          "pr_gpts_6": 5,
+          "pr_gpts_7": 5,
+          "pr_gpts_8": 5,
+          "pr_gpts_9": 5,
+          "pr_gpts_10": 5,
+          "pr_gpts_11": 5,
+          "pr_gpts_12": 5,
+          "pr_gpts_13": 5,
+          "pr_gpts_14": 5,
+          "pr_gpts_15": 5,
+          "pr_gpts_16": 5,
+          "pr_gpts_17": 5,
+          "pr_gpts_18": 5,
+          "pr_gpts_19": 5,
+          "pr_gpts_20": 5,
+          "pr_gpts_21": 5,
+          "pr_gpts_22": 5,
+          "pr_gpts_23": 5,
+          "pr_gpts_24": 5,
+          "pr_gpts_25": 5,
+          "pr_gpts_26": 5,
+          "pr_gpts_27": 5,
+          "pr_gpts_28": 5,
+          "pr_gpts_29": 5,
+          "pr_gpts_30": 5,
+          "pr_gpts_31": 5,
+          "pr_gpts_32": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 160
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

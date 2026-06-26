@@ -1,0 +1,206 @@
+{
+  "content": {
+    "en": {
+      "description": "Buss-Perry Aggression Questionnaire (BPAQ). Total = sum of the 29 items (each 1-5), range 29-145; higher = greater trait aggression (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "BPAQ Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_bpaq",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "ff20cf34e73f59479730c3ec852a370b61206c41092b05e274ec08ceaa69c517",
+      "url": "https://behaverse.org/scorers/bpaq/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_bpaq_1|pr_bpaq_2|pr_bpaq_3|pr_bpaq_4|pr_bpaq_5|pr_bpaq_6|pr_bpaq_7|pr_bpaq_8|pr_bpaq_9|pr_bpaq_10|pr_bpaq_11|pr_bpaq_12|pr_bpaq_13|pr_bpaq_14|pr_bpaq_15|pr_bpaq_16|pr_bpaq_17|pr_bpaq_18|pr_bpaq_19|pr_bpaq_20|pr_bpaq_21|pr_bpaq_22|pr_bpaq_23|pr_bpaq_24|pr_bpaq_25|pr_bpaq_26|pr_bpaq_27|pr_bpaq_28|pr_bpaq_29)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "BPAQ Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 29
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bpaq_1": 1,
+          "pr_bpaq_10": 1,
+          "pr_bpaq_11": 1,
+          "pr_bpaq_12": 1,
+          "pr_bpaq_13": 1,
+          "pr_bpaq_14": 1,
+          "pr_bpaq_15": 1,
+          "pr_bpaq_16": 1,
+          "pr_bpaq_17": 1,
+          "pr_bpaq_18": 1,
+          "pr_bpaq_19": 1,
+          "pr_bpaq_2": 1,
+          "pr_bpaq_20": 1,
+          "pr_bpaq_21": 1,
+          "pr_bpaq_22": 1,
+          "pr_bpaq_23": 1,
+          "pr_bpaq_24": 1,
+          "pr_bpaq_25": 1,
+          "pr_bpaq_26": 1,
+          "pr_bpaq_27": 1,
+          "pr_bpaq_28": 1,
+          "pr_bpaq_29": 1,
+          "pr_bpaq_3": 1,
+          "pr_bpaq_4": 1,
+          "pr_bpaq_5": 1,
+          "pr_bpaq_6": 1,
+          "pr_bpaq_7": 1,
+          "pr_bpaq_8": 1,
+          "pr_bpaq_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 87
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bpaq_1": 3,
+          "pr_bpaq_10": 3,
+          "pr_bpaq_11": 3,
+          "pr_bpaq_12": 3,
+          "pr_bpaq_13": 3,
+          "pr_bpaq_14": 3,
+          "pr_bpaq_15": 3,
+          "pr_bpaq_16": 3,
+          "pr_bpaq_17": 3,
+          "pr_bpaq_18": 3,
+          "pr_bpaq_19": 3,
+          "pr_bpaq_2": 3,
+          "pr_bpaq_20": 3,
+          "pr_bpaq_21": 3,
+          "pr_bpaq_22": 3,
+          "pr_bpaq_23": 3,
+          "pr_bpaq_24": 3,
+          "pr_bpaq_25": 3,
+          "pr_bpaq_26": 3,
+          "pr_bpaq_27": 3,
+          "pr_bpaq_28": 3,
+          "pr_bpaq_29": 3,
+          "pr_bpaq_3": 3,
+          "pr_bpaq_4": 3,
+          "pr_bpaq_5": 3,
+          "pr_bpaq_6": 3,
+          "pr_bpaq_7": 3,
+          "pr_bpaq_8": 3,
+          "pr_bpaq_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 145
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bpaq_1": 5,
+          "pr_bpaq_10": 5,
+          "pr_bpaq_11": 5,
+          "pr_bpaq_12": 5,
+          "pr_bpaq_13": 5,
+          "pr_bpaq_14": 5,
+          "pr_bpaq_15": 5,
+          "pr_bpaq_16": 5,
+          "pr_bpaq_17": 5,
+          "pr_bpaq_18": 5,
+          "pr_bpaq_19": 5,
+          "pr_bpaq_2": 5,
+          "pr_bpaq_20": 5,
+          "pr_bpaq_21": 5,
+          "pr_bpaq_22": 5,
+          "pr_bpaq_23": 5,
+          "pr_bpaq_24": 5,
+          "pr_bpaq_25": 5,
+          "pr_bpaq_26": 5,
+          "pr_bpaq_27": 5,
+          "pr_bpaq_28": 5,
+          "pr_bpaq_29": 5,
+          "pr_bpaq_3": 5,
+          "pr_bpaq_4": 5,
+          "pr_bpaq_5": 5,
+          "pr_bpaq_6": 5,
+          "pr_bpaq_7": 5,
+          "pr_bpaq_8": 5,
+          "pr_bpaq_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Buss, A.H. and Perry, M.P. (1992). The Aggression\nQuestionnaire. Journal of Personality and Social Psychology, 63 ,\n452-459.",
+    "year": 1992
+  }
+}

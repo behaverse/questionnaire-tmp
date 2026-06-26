@@ -1,0 +1,231 @@
+{
+  "id": "cabs",
+  "scorer_id": "scr_cabs",
+  "name": "CABS Total Scoring",
+  "status": "validated",
+  "description": "Child Adolescent Bullying Scale (CABS). Total = sum of the 40 items (each 1-5), range 40-200; higher = greater involvement in bullying (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_cabs_1",
+          "pr_cabs_2",
+          "pr_cabs_3",
+          "pr_cabs_4",
+          "pr_cabs_5",
+          "pr_cabs_6",
+          "pr_cabs_7",
+          "pr_cabs_8",
+          "pr_cabs_9",
+          "pr_cabs_10",
+          "pr_cabs_11",
+          "pr_cabs_12",
+          "pr_cabs_13",
+          "pr_cabs_14",
+          "pr_cabs_15",
+          "pr_cabs_16",
+          "pr_cabs_17",
+          "pr_cabs_18",
+          "pr_cabs_19",
+          "pr_cabs_20",
+          "pr_cabs_21",
+          "pr_cabs_22",
+          "pr_cabs_23",
+          "pr_cabs_24",
+          "pr_cabs_25",
+          "pr_cabs_26",
+          "pr_cabs_27",
+          "pr_cabs_28",
+          "pr_cabs_29",
+          "pr_cabs_30",
+          "pr_cabs_31",
+          "pr_cabs_32",
+          "pr_cabs_33",
+          "pr_cabs_34",
+          "pr_cabs_35",
+          "pr_cabs_36",
+          "pr_cabs_37",
+          "pr_cabs_38",
+          "pr_cabs_39",
+          "pr_cabs_40"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_cabs_1": 1,
+          "pr_cabs_2": 1,
+          "pr_cabs_3": 1,
+          "pr_cabs_4": 1,
+          "pr_cabs_5": 1,
+          "pr_cabs_6": 1,
+          "pr_cabs_7": 1,
+          "pr_cabs_8": 1,
+          "pr_cabs_9": 1,
+          "pr_cabs_10": 1,
+          "pr_cabs_11": 1,
+          "pr_cabs_12": 1,
+          "pr_cabs_13": 1,
+          "pr_cabs_14": 1,
+          "pr_cabs_15": 1,
+          "pr_cabs_16": 1,
+          "pr_cabs_17": 1,
+          "pr_cabs_18": 1,
+          "pr_cabs_19": 1,
+          "pr_cabs_20": 1,
+          "pr_cabs_21": 1,
+          "pr_cabs_22": 1,
+          "pr_cabs_23": 1,
+          "pr_cabs_24": 1,
+          "pr_cabs_25": 1,
+          "pr_cabs_26": 1,
+          "pr_cabs_27": 1,
+          "pr_cabs_28": 1,
+          "pr_cabs_29": 1,
+          "pr_cabs_30": 1,
+          "pr_cabs_31": 1,
+          "pr_cabs_32": 1,
+          "pr_cabs_33": 1,
+          "pr_cabs_34": 1,
+          "pr_cabs_35": 1,
+          "pr_cabs_36": 1,
+          "pr_cabs_37": 1,
+          "pr_cabs_38": 1,
+          "pr_cabs_39": 1,
+          "pr_cabs_40": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 40
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_cabs_1": 3,
+          "pr_cabs_2": 3,
+          "pr_cabs_3": 3,
+          "pr_cabs_4": 3,
+          "pr_cabs_5": 3,
+          "pr_cabs_6": 3,
+          "pr_cabs_7": 3,
+          "pr_cabs_8": 3,
+          "pr_cabs_9": 3,
+          "pr_cabs_10": 3,
+          "pr_cabs_11": 3,
+          "pr_cabs_12": 3,
+          "pr_cabs_13": 3,
+          "pr_cabs_14": 3,
+          "pr_cabs_15": 3,
+          "pr_cabs_16": 3,
+          "pr_cabs_17": 3,
+          "pr_cabs_18": 3,
+          "pr_cabs_19": 3,
+          "pr_cabs_20": 3,
+          "pr_cabs_21": 3,
+          "pr_cabs_22": 3,
+          "pr_cabs_23": 3,
+          "pr_cabs_24": 3,
+          "pr_cabs_25": 3,
+          "pr_cabs_26": 3,
+          "pr_cabs_27": 3,
+          "pr_cabs_28": 3,
+          "pr_cabs_29": 3,
+          "pr_cabs_30": 3,
+          "pr_cabs_31": 3,
+          "pr_cabs_32": 3,
+          "pr_cabs_33": 3,
+          "pr_cabs_34": 3,
+          "pr_cabs_35": 3,
+          "pr_cabs_36": 3,
+          "pr_cabs_37": 3,
+          "pr_cabs_38": 3,
+          "pr_cabs_39": 3,
+          "pr_cabs_40": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 120
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_cabs_1": 5,
+          "pr_cabs_2": 5,
+          "pr_cabs_3": 5,
+          "pr_cabs_4": 5,
+          "pr_cabs_5": 5,
+          "pr_cabs_6": 5,
+          "pr_cabs_7": 5,
+          "pr_cabs_8": 5,
+          "pr_cabs_9": 5,
+          "pr_cabs_10": 5,
+          "pr_cabs_11": 5,
+          "pr_cabs_12": 5,
+          "pr_cabs_13": 5,
+          "pr_cabs_14": 5,
+          "pr_cabs_15": 5,
+          "pr_cabs_16": 5,
+          "pr_cabs_17": 5,
+          "pr_cabs_18": 5,
+          "pr_cabs_19": 5,
+          "pr_cabs_20": 5,
+          "pr_cabs_21": 5,
+          "pr_cabs_22": 5,
+          "pr_cabs_23": 5,
+          "pr_cabs_24": 5,
+          "pr_cabs_25": 5,
+          "pr_cabs_26": 5,
+          "pr_cabs_27": 5,
+          "pr_cabs_28": 5,
+          "pr_cabs_29": 5,
+          "pr_cabs_30": 5,
+          "pr_cabs_31": 5,
+          "pr_cabs_32": 5,
+          "pr_cabs_33": 5,
+          "pr_cabs_34": 5,
+          "pr_cabs_35": 5,
+          "pr_cabs_36": 5,
+          "pr_cabs_37": 5,
+          "pr_cabs_38": 5,
+          "pr_cabs_39": 5,
+          "pr_cabs_40": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 200
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Strout, T.D., Vessey, J.A., Difazio, R.L., Ludlow, L.H. (2018). The\nChild Adolescent Bullying Scale (CABS): Psychometric evaluation of a\nnew measure. Research in Nursing and Health, 41 , 1-13.",
+    "year": 2018
+  }
+}

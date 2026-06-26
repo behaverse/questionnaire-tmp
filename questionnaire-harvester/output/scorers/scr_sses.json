@@ -1,0 +1,175 @@
+{
+  "content": {
+    "en": {
+      "description": "The State Self Esteem Scale (SSES). Total = sum of the 20 items (each 1-5), range 20-100; higher = greater current (state) self-esteem (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "SSES Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_sses",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "cb3646e9fa05f9da9b8a9baeb781aaa7214c979cdf05ee7c43ad5d01cae01054",
+      "url": "https://behaverse.org/scorers/sses/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_sses_1|pr_sses_2|pr_sses_3|pr_sses_4|pr_sses_5|pr_sses_6|pr_sses_7|pr_sses_8|pr_sses_9|pr_sses_10|pr_sses_11|pr_sses_12|pr_sses_13|pr_sses_14|pr_sses_15|pr_sses_16|pr_sses_17|pr_sses_18|pr_sses_19|pr_sses_20)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SSES Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sses_1": 1,
+          "pr_sses_10": 1,
+          "pr_sses_11": 1,
+          "pr_sses_12": 1,
+          "pr_sses_13": 1,
+          "pr_sses_14": 1,
+          "pr_sses_15": 1,
+          "pr_sses_16": 1,
+          "pr_sses_17": 1,
+          "pr_sses_18": 1,
+          "pr_sses_19": 1,
+          "pr_sses_2": 1,
+          "pr_sses_20": 1,
+          "pr_sses_3": 1,
+          "pr_sses_4": 1,
+          "pr_sses_5": 1,
+          "pr_sses_6": 1,
+          "pr_sses_7": 1,
+          "pr_sses_8": 1,
+          "pr_sses_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sses_1": 3,
+          "pr_sses_10": 3,
+          "pr_sses_11": 3,
+          "pr_sses_12": 3,
+          "pr_sses_13": 3,
+          "pr_sses_14": 3,
+          "pr_sses_15": 3,
+          "pr_sses_16": 3,
+          "pr_sses_17": 3,
+          "pr_sses_18": 3,
+          "pr_sses_19": 3,
+          "pr_sses_2": 3,
+          "pr_sses_20": 3,
+          "pr_sses_3": 3,
+          "pr_sses_4": 3,
+          "pr_sses_5": 3,
+          "pr_sses_6": 3,
+          "pr_sses_7": 3,
+          "pr_sses_8": 3,
+          "pr_sses_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sses_1": 5,
+          "pr_sses_10": 5,
+          "pr_sses_11": 5,
+          "pr_sses_12": 5,
+          "pr_sses_13": 5,
+          "pr_sses_14": 5,
+          "pr_sses_15": 5,
+          "pr_sses_16": 5,
+          "pr_sses_17": 5,
+          "pr_sses_18": 5,
+          "pr_sses_19": 5,
+          "pr_sses_2": 5,
+          "pr_sses_20": 5,
+          "pr_sses_3": 5,
+          "pr_sses_4": 5,
+          "pr_sses_5": 5,
+          "pr_sses_6": 5,
+          "pr_sses_7": 5,
+          "pr_sses_8": 5,
+          "pr_sses_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ]
+}

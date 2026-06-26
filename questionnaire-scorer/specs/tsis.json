@@ -1,0 +1,155 @@
+{
+  "id": "tsis",
+  "scorer_id": "scr_tsis",
+  "name": "TSIS Total Scoring",
+  "status": "validated",
+  "description": "Social Intelligence (Troms\u00f8 Social Intelligence Scale, TSIS). Total = sum of the 21 items (each 1-7), range 21-147; higher = greater social intelligence (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      7
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_tsis_1",
+          "pr_tsis_2",
+          "pr_tsis_3",
+          "pr_tsis_4",
+          "pr_tsis_5",
+          "pr_tsis_6",
+          "pr_tsis_7",
+          "pr_tsis_8",
+          "pr_tsis_9",
+          "pr_tsis_10",
+          "pr_tsis_11",
+          "pr_tsis_12",
+          "pr_tsis_13",
+          "pr_tsis_14",
+          "pr_tsis_15",
+          "pr_tsis_16",
+          "pr_tsis_17",
+          "pr_tsis_18",
+          "pr_tsis_19",
+          "pr_tsis_20",
+          "pr_tsis_21"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_tsis_1": 1,
+          "pr_tsis_2": 1,
+          "pr_tsis_3": 1,
+          "pr_tsis_4": 1,
+          "pr_tsis_5": 1,
+          "pr_tsis_6": 1,
+          "pr_tsis_7": 1,
+          "pr_tsis_8": 1,
+          "pr_tsis_9": 1,
+          "pr_tsis_10": 1,
+          "pr_tsis_11": 1,
+          "pr_tsis_12": 1,
+          "pr_tsis_13": 1,
+          "pr_tsis_14": 1,
+          "pr_tsis_15": 1,
+          "pr_tsis_16": 1,
+          "pr_tsis_17": 1,
+          "pr_tsis_18": 1,
+          "pr_tsis_19": 1,
+          "pr_tsis_20": 1,
+          "pr_tsis_21": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 21
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_tsis_1": 4,
+          "pr_tsis_2": 4,
+          "pr_tsis_3": 4,
+          "pr_tsis_4": 4,
+          "pr_tsis_5": 4,
+          "pr_tsis_6": 4,
+          "pr_tsis_7": 4,
+          "pr_tsis_8": 4,
+          "pr_tsis_9": 4,
+          "pr_tsis_10": 4,
+          "pr_tsis_11": 4,
+          "pr_tsis_12": 4,
+          "pr_tsis_13": 4,
+          "pr_tsis_14": 4,
+          "pr_tsis_15": 4,
+          "pr_tsis_16": 4,
+          "pr_tsis_17": 4,
+          "pr_tsis_18": 4,
+          "pr_tsis_19": 4,
+          "pr_tsis_20": 4,
+          "pr_tsis_21": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 84
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_tsis_1": 7,
+          "pr_tsis_2": 7,
+          "pr_tsis_3": 7,
+          "pr_tsis_4": 7,
+          "pr_tsis_5": 7,
+          "pr_tsis_6": 7,
+          "pr_tsis_7": 7,
+          "pr_tsis_8": 7,
+          "pr_tsis_9": 7,
+          "pr_tsis_10": 7,
+          "pr_tsis_11": 7,
+          "pr_tsis_12": 7,
+          "pr_tsis_13": 7,
+          "pr_tsis_14": 7,
+          "pr_tsis_15": 7,
+          "pr_tsis_16": 7,
+          "pr_tsis_17": 7,
+          "pr_tsis_18": 7,
+          "pr_tsis_19": 7,
+          "pr_tsis_20": 7,
+          "pr_tsis_21": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 147
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "D.H. Silvera, M. Martinussen, & T. I. Dahl. (2001). The Troms\u00f8\nSocial Intelligence Scale, a self-report measure of social\nintelligence. Scandinavian Journal of Psychology, 42 , 313-319.",
+    "year": 2001
+  }
+}

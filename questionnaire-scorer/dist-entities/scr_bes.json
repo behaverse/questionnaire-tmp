@@ -1,0 +1,224 @@
+{
+  "id": "scr_bes",
+  "name": "BES Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "BES Total Scoring",
+      "description": "Body Esteem Scale (BES). Total = sum of the 35 items (each 1-5), range 35-175; higher = greater body esteem (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Franzoi, S.L. (1994). Further evidence of the reliability and validity of the body esteem scale. Journal of Clinical Psychology, 50 , 237-239.",
+    "year": 1994
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_bes_1|pr_bes_2|pr_bes_3|pr_bes_4|pr_bes_5|pr_bes_6|pr_bes_7|pr_bes_8|pr_bes_9|pr_bes_10|pr_bes_11|pr_bes_12|pr_bes_13|pr_bes_14|pr_bes_15|pr_bes_16|pr_bes_17|pr_bes_18|pr_bes_19|pr_bes_20|pr_bes_21|pr_bes_22|pr_bes_23|pr_bes_24|pr_bes_25|pr_bes_26|pr_bes_27|pr_bes_28|pr_bes_29|pr_bes_30|pr_bes_31|pr_bes_32|pr_bes_33|pr_bes_34|pr_bes_35)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/bes/scorer.wasm",
+      "sha256": "f2295b473bd725df82beb6db4e863d23cbc1ef21c08713030bf0f6d2e87e24b4"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_bes_1": 1,
+          "pr_bes_2": 1,
+          "pr_bes_3": 1,
+          "pr_bes_4": 1,
+          "pr_bes_5": 1,
+          "pr_bes_6": 1,
+          "pr_bes_7": 1,
+          "pr_bes_8": 1,
+          "pr_bes_9": 1,
+          "pr_bes_10": 1,
+          "pr_bes_11": 1,
+          "pr_bes_12": 1,
+          "pr_bes_13": 1,
+          "pr_bes_14": 1,
+          "pr_bes_15": 1,
+          "pr_bes_16": 1,
+          "pr_bes_17": 1,
+          "pr_bes_18": 1,
+          "pr_bes_19": 1,
+          "pr_bes_20": 1,
+          "pr_bes_21": 1,
+          "pr_bes_22": 1,
+          "pr_bes_23": 1,
+          "pr_bes_24": 1,
+          "pr_bes_25": 1,
+          "pr_bes_26": 1,
+          "pr_bes_27": 1,
+          "pr_bes_28": 1,
+          "pr_bes_29": 1,
+          "pr_bes_30": 1,
+          "pr_bes_31": 1,
+          "pr_bes_32": 1,
+          "pr_bes_33": 1,
+          "pr_bes_34": 1,
+          "pr_bes_35": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 35
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_bes_1": 3,
+          "pr_bes_2": 3,
+          "pr_bes_3": 3,
+          "pr_bes_4": 3,
+          "pr_bes_5": 3,
+          "pr_bes_6": 3,
+          "pr_bes_7": 3,
+          "pr_bes_8": 3,
+          "pr_bes_9": 3,
+          "pr_bes_10": 3,
+          "pr_bes_11": 3,
+          "pr_bes_12": 3,
+          "pr_bes_13": 3,
+          "pr_bes_14": 3,
+          "pr_bes_15": 3,
+          "pr_bes_16": 3,
+          "pr_bes_17": 3,
+          "pr_bes_18": 3,
+          "pr_bes_19": 3,
+          "pr_bes_20": 3,
+          "pr_bes_21": 3,
+          "pr_bes_22": 3,
+          "pr_bes_23": 3,
+          "pr_bes_24": 3,
+          "pr_bes_25": 3,
+          "pr_bes_26": 3,
+          "pr_bes_27": 3,
+          "pr_bes_28": 3,
+          "pr_bes_29": 3,
+          "pr_bes_30": 3,
+          "pr_bes_31": 3,
+          "pr_bes_32": 3,
+          "pr_bes_33": 3,
+          "pr_bes_34": 3,
+          "pr_bes_35": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 105
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_bes_1": 5,
+          "pr_bes_2": 5,
+          "pr_bes_3": 5,
+          "pr_bes_4": 5,
+          "pr_bes_5": 5,
+          "pr_bes_6": 5,
+          "pr_bes_7": 5,
+          "pr_bes_8": 5,
+          "pr_bes_9": 5,
+          "pr_bes_10": 5,
+          "pr_bes_11": 5,
+          "pr_bes_12": 5,
+          "pr_bes_13": 5,
+          "pr_bes_14": 5,
+          "pr_bes_15": 5,
+          "pr_bes_16": 5,
+          "pr_bes_17": 5,
+          "pr_bes_18": 5,
+          "pr_bes_19": 5,
+          "pr_bes_20": 5,
+          "pr_bes_21": 5,
+          "pr_bes_22": 5,
+          "pr_bes_23": 5,
+          "pr_bes_24": 5,
+          "pr_bes_25": 5,
+          "pr_bes_26": 5,
+          "pr_bes_27": 5,
+          "pr_bes_28": 5,
+          "pr_bes_29": 5,
+          "pr_bes_30": 5,
+          "pr_bes_31": 5,
+          "pr_bes_32": 5,
+          "pr_bes_33": 5,
+          "pr_bes_34": 5,
+          "pr_bes_35": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 175
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

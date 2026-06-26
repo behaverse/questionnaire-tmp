@@ -1,0 +1,163 @@
+{
+  "id": "scr_shvq",
+  "name": "HVQ Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "HVQ Total Scoring",
+      "description": "Short Hypermasculinity Values Questionnaire (HVQ). Total = sum of the 16 items (each 1-7), range 16-112; higher = greater endorsement of hypermasculine values (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_shvq_1|pr_shvq_2|pr_shvq_3|pr_shvq_4|pr_shvq_5|pr_shvq_6|pr_shvq_7|pr_shvq_8|pr_shvq_9|pr_shvq_10|pr_shvq_11|pr_shvq_12|pr_shvq_13|pr_shvq_14|pr_shvq_15|pr_shvq_16)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/shvq/scorer.wasm",
+      "sha256": "6b3c2602620f782130e12f69070bf0a4977673479294f131fc64638d9aa20c45"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_shvq_1": 1,
+          "pr_shvq_2": 1,
+          "pr_shvq_3": 1,
+          "pr_shvq_4": 1,
+          "pr_shvq_5": 1,
+          "pr_shvq_6": 1,
+          "pr_shvq_7": 1,
+          "pr_shvq_8": 1,
+          "pr_shvq_9": 1,
+          "pr_shvq_10": 1,
+          "pr_shvq_11": 1,
+          "pr_shvq_12": 1,
+          "pr_shvq_13": 1,
+          "pr_shvq_14": 1,
+          "pr_shvq_15": 1,
+          "pr_shvq_16": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 16
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_shvq_1": 4,
+          "pr_shvq_2": 4,
+          "pr_shvq_3": 4,
+          "pr_shvq_4": 4,
+          "pr_shvq_5": 4,
+          "pr_shvq_6": 4,
+          "pr_shvq_7": 4,
+          "pr_shvq_8": 4,
+          "pr_shvq_9": 4,
+          "pr_shvq_10": 4,
+          "pr_shvq_11": 4,
+          "pr_shvq_12": 4,
+          "pr_shvq_13": 4,
+          "pr_shvq_14": 4,
+          "pr_shvq_15": 4,
+          "pr_shvq_16": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 64
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_shvq_1": 7,
+          "pr_shvq_2": 7,
+          "pr_shvq_3": 7,
+          "pr_shvq_4": 7,
+          "pr_shvq_5": 7,
+          "pr_shvq_6": 7,
+          "pr_shvq_7": 7,
+          "pr_shvq_8": 7,
+          "pr_shvq_9": 7,
+          "pr_shvq_10": 7,
+          "pr_shvq_11": 7,
+          "pr_shvq_12": 7,
+          "pr_shvq_13": 7,
+          "pr_shvq_14": 7,
+          "pr_shvq_15": 7,
+          "pr_shvq_16": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 112
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}
