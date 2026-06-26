@@ -264,5 +264,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "RAADS-14 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_raads14@v26.0618"
+    }
   ]
 }

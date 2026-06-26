@@ -405,5 +405,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "TRSI-24 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_trsi24@v26.0618"
+    }
   ]
 }

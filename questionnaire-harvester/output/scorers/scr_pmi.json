@@ -1,0 +1,137 @@
+{
+  "content": {
+    "en": {
+      "description": "Positive Mindset Index (PMI). Total = sum of the 6 items (each 1-5, range 6-30); higher = greater positive mental well-being (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "PMI Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_pmi",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "2cad33e294e5c91d81320f1ec048f5385b4e6f659234a7468f01bbca93ff5b56",
+      "url": "https://behaverse.org/scorers/pmi/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_pmi_1|pr_pmi_2|pr_pmi_3|pr_pmi_4|pr_pmi_5|pr_pmi_6)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "PMI Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pmi_1": 1,
+          "pr_pmi_2": 1,
+          "pr_pmi_3": 1,
+          "pr_pmi_4": 1,
+          "pr_pmi_5": 1,
+          "pr_pmi_6": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pmi_1": 3,
+          "pr_pmi_2": 3,
+          "pr_pmi_3": 3,
+          "pr_pmi_4": 3,
+          "pr_pmi_5": 3,
+          "pr_pmi_6": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pmi_1": 5,
+          "pr_pmi_2": 5,
+          "pr_pmi_3": 5,
+          "pr_pmi_4": 5,
+          "pr_pmi_5": 5,
+          "pr_pmi_6": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Barry, J. A., Folkard, A., & Ayliffe, W. (2014). Validation of a brief questionnaire measuring positive mindset in patients with uveitis. Psychology, Community & Health, 3(1) , 1-10. Open Access PDF",
+    "year": 2014
+  }
+}

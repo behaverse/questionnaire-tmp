@@ -1,0 +1,189 @@
+{
+  "content": {
+    "en": {
+      "description": "Trauma-Related Shame Inventory (TRSI-24). Total = sum of the 24 items (items carry per-item weights); higher = greater trauma-related shame (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "TRSI-24 Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_trsi24",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "737df7819b95ae9ef4537358c19def7aa5c58b80a7973113ded3de8018c317fd",
+      "url": "https://behaverse.org/scorers/trsi24/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_trsi24_1|pr_trsi24_2|pr_trsi24_3|pr_trsi24_4|pr_trsi24_5|pr_trsi24_6|pr_trsi24_7|pr_trsi24_8|pr_trsi24_9|pr_trsi24_10|pr_trsi24_11|pr_trsi24_12|pr_trsi24_13|pr_trsi24_14|pr_trsi24_15|pr_trsi24_16|pr_trsi24_17|pr_trsi24_18|pr_trsi24_19|pr_trsi24_20|pr_trsi24_21|pr_trsi24_22|pr_trsi24_23|pr_trsi24_24)$": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "TRSI-24 Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_trsi24_1": 0,
+          "pr_trsi24_10": 0,
+          "pr_trsi24_11": 0,
+          "pr_trsi24_12": 0,
+          "pr_trsi24_13": 0,
+          "pr_trsi24_14": 0,
+          "pr_trsi24_15": 0,
+          "pr_trsi24_16": 0,
+          "pr_trsi24_17": 0,
+          "pr_trsi24_18": 0,
+          "pr_trsi24_19": 0,
+          "pr_trsi24_2": 0,
+          "pr_trsi24_20": 0,
+          "pr_trsi24_21": 0,
+          "pr_trsi24_22": 0,
+          "pr_trsi24_23": 0,
+          "pr_trsi24_24": 0,
+          "pr_trsi24_3": 0,
+          "pr_trsi24_4": 0,
+          "pr_trsi24_5": 0,
+          "pr_trsi24_6": 0,
+          "pr_trsi24_7": 0,
+          "pr_trsi24_8": 0,
+          "pr_trsi24_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 24
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_trsi24_1": 1,
+          "pr_trsi24_10": 1,
+          "pr_trsi24_11": 1,
+          "pr_trsi24_12": 1,
+          "pr_trsi24_13": 1,
+          "pr_trsi24_14": 1,
+          "pr_trsi24_15": 1,
+          "pr_trsi24_16": 1,
+          "pr_trsi24_17": 1,
+          "pr_trsi24_18": 1,
+          "pr_trsi24_19": 1,
+          "pr_trsi24_2": 1,
+          "pr_trsi24_20": 1,
+          "pr_trsi24_21": 1,
+          "pr_trsi24_22": 1,
+          "pr_trsi24_23": 1,
+          "pr_trsi24_24": 1,
+          "pr_trsi24_3": 1,
+          "pr_trsi24_4": 1,
+          "pr_trsi24_5": 1,
+          "pr_trsi24_6": 1,
+          "pr_trsi24_7": 1,
+          "pr_trsi24_8": 1,
+          "pr_trsi24_9": 1
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 48
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_trsi24_1": 2,
+          "pr_trsi24_10": 2,
+          "pr_trsi24_11": 2,
+          "pr_trsi24_12": 2,
+          "pr_trsi24_13": 2,
+          "pr_trsi24_14": 2,
+          "pr_trsi24_15": 2,
+          "pr_trsi24_16": 2,
+          "pr_trsi24_17": 2,
+          "pr_trsi24_18": 2,
+          "pr_trsi24_19": 2,
+          "pr_trsi24_2": 2,
+          "pr_trsi24_20": 2,
+          "pr_trsi24_21": 2,
+          "pr_trsi24_22": 2,
+          "pr_trsi24_23": 2,
+          "pr_trsi24_24": 2,
+          "pr_trsi24_3": 2,
+          "pr_trsi24_4": 2,
+          "pr_trsi24_5": 2,
+          "pr_trsi24_6": 2,
+          "pr_trsi24_7": 2,
+          "pr_trsi24_8": 2,
+          "pr_trsi24_9": 2
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "T Øktedalen, KA Hagtvet, A Hoffart, TF Langkaas, M Smucker. The Trauma Related Shame Inventory: Measuring Trauma-Related Shame Among Patients with PTSD. J Psychopathol Behav Assess ( 36 ): 4, 600-615. ( 2014 )",
+    "year": 2014
+  }
+}

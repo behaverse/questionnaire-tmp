@@ -1,0 +1,143 @@
+{
+  "id": "hai18",
+  "scorer_id": "scr_hai18",
+  "name": "HAI-18 Total Scoring",
+  "status": "validated",
+  "description": "Short Health Anxiety Inventory (HAI-18). Total = sum of the 18 items (each 0-3, range 0-54); higher = greater health anxiety (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_hai18_1",
+          "pr_hai18_2",
+          "pr_hai18_3",
+          "pr_hai18_4",
+          "pr_hai18_5",
+          "pr_hai18_6",
+          "pr_hai18_7",
+          "pr_hai18_8",
+          "pr_hai18_9",
+          "pr_hai18_10",
+          "pr_hai18_11",
+          "pr_hai18_12",
+          "pr_hai18_13",
+          "pr_hai18_14",
+          "pr_hai18_15",
+          "pr_hai18_16",
+          "pr_hai18_17",
+          "pr_hai18_18"
+        ]
+      }
+    ],
+    "item_range": [
+      0,
+      3
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_hai18_1": 0,
+          "pr_hai18_2": 0,
+          "pr_hai18_3": 0,
+          "pr_hai18_4": 0,
+          "pr_hai18_5": 0,
+          "pr_hai18_6": 0,
+          "pr_hai18_7": 0,
+          "pr_hai18_8": 0,
+          "pr_hai18_9": 0,
+          "pr_hai18_10": 0,
+          "pr_hai18_11": 0,
+          "pr_hai18_12": 0,
+          "pr_hai18_13": 0,
+          "pr_hai18_14": 0,
+          "pr_hai18_15": 0,
+          "pr_hai18_16": 0,
+          "pr_hai18_17": 0,
+          "pr_hai18_18": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_hai18_1": 1,
+          "pr_hai18_2": 1,
+          "pr_hai18_3": 1,
+          "pr_hai18_4": 1,
+          "pr_hai18_5": 1,
+          "pr_hai18_6": 1,
+          "pr_hai18_7": 1,
+          "pr_hai18_8": 1,
+          "pr_hai18_9": 1,
+          "pr_hai18_10": 1,
+          "pr_hai18_11": 1,
+          "pr_hai18_12": 1,
+          "pr_hai18_13": 1,
+          "pr_hai18_14": 1,
+          "pr_hai18_15": 1,
+          "pr_hai18_16": 1,
+          "pr_hai18_17": 1,
+          "pr_hai18_18": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_hai18_1": 3,
+          "pr_hai18_2": 3,
+          "pr_hai18_3": 3,
+          "pr_hai18_4": 3,
+          "pr_hai18_5": 3,
+          "pr_hai18_6": 3,
+          "pr_hai18_7": 3,
+          "pr_hai18_8": 3,
+          "pr_hai18_9": 3,
+          "pr_hai18_10": 3,
+          "pr_hai18_11": 3,
+          "pr_hai18_12": 3,
+          "pr_hai18_13": 3,
+          "pr_hai18_14": 3,
+          "pr_hai18_15": 3,
+          "pr_hai18_16": 3,
+          "pr_hai18_17": 3,
+          "pr_hai18_18": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 54
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "P M Salkovskis, K A Rimes, H MC Warwick, D M Clark. The Health Anxiety Inventory: development and validation of scales for the measurement of health anxiety and hypochondriasis. Psychol Med. 2006; 32 ( 5 ): 843\u2013853.",
+    "year": 2006
+  }
+}

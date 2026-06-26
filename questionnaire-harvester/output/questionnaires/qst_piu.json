@@ -235,5 +235,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PIU total",
+      "path": "/scores/total/value",
+      "scorer": "scr_piu@v26.0618"
+    }
   ]
 }

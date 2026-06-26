@@ -1,0 +1,99 @@
+{
+  "id": "gas",
+  "scorer_id": "scr_gas",
+  "name": "GAS Total Scoring",
+  "status": "validated",
+  "description": "Gaming Addiction Scale. Total = sum of the 7 items (each 0-1, range 0-7); higher = greater addictive gaming behaviour (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_gas_1",
+          "pr_gas_2",
+          "pr_gas_3",
+          "pr_gas_4",
+          "pr_gas_5",
+          "pr_gas_6",
+          "pr_gas_7"
+        ]
+      }
+    ],
+    "item_range": [
+      0,
+      1
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 0,
+          "pr_gas_2": 0,
+          "pr_gas_3": 0,
+          "pr_gas_4": 0,
+          "pr_gas_5": 0,
+          "pr_gas_6": 0,
+          "pr_gas_7": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 0,
+          "pr_gas_2": 0,
+          "pr_gas_3": 0,
+          "pr_gas_4": 0,
+          "pr_gas_5": 0,
+          "pr_gas_6": 0,
+          "pr_gas_7": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 1,
+          "pr_gas_2": 1,
+          "pr_gas_3": 1,
+          "pr_gas_4": 1,
+          "pr_gas_5": 1,
+          "pr_gas_6": 1,
+          "pr_gas_7": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Lemmens, J.S., Valkenburg, P.M. & Peter, J. (2009). Development and validation of a game addiction scale for adolescents. Media Psychology, 12(1) , 77-95.",
+    "year": 2009
+  }
+}

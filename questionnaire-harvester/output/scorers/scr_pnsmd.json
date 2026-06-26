@@ -1,0 +1,161 @@
+{
+  "content": {
+    "en": {
+      "description": "Relationship satisfaction (PN-SMD). Total = sum of the 14 items (each 0-7, range 0-98); higher = greater relationship satisfaction (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "PN-SMD Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_pnsmd",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "dd7e11a9c6e150133d101927fe8d137b757c53c64f51466bcd8249e4b75b29a8",
+      "url": "https://behaverse.org/scorers/pnsmd/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_pnsmd_1|pr_pnsmd_2|pr_pnsmd_3|pr_pnsmd_4|pr_pnsmd_5|pr_pnsmd_6|pr_pnsmd_7|pr_pnsmd_8|pr_pnsmd_9|pr_pnsmd_10|pr_pnsmd_11|pr_pnsmd_12|pr_pnsmd_13|pr_pnsmd_14)$": {
+            "maximum": 7,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "PN-SMD Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pnsmd_1": 0,
+          "pr_pnsmd_10": 0,
+          "pr_pnsmd_11": 0,
+          "pr_pnsmd_12": 0,
+          "pr_pnsmd_13": 0,
+          "pr_pnsmd_14": 0,
+          "pr_pnsmd_2": 0,
+          "pr_pnsmd_3": 0,
+          "pr_pnsmd_4": 0,
+          "pr_pnsmd_5": 0,
+          "pr_pnsmd_6": 0,
+          "pr_pnsmd_7": 0,
+          "pr_pnsmd_8": 0,
+          "pr_pnsmd_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 42
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pnsmd_1": 3,
+          "pr_pnsmd_10": 3,
+          "pr_pnsmd_11": 3,
+          "pr_pnsmd_12": 3,
+          "pr_pnsmd_13": 3,
+          "pr_pnsmd_14": 3,
+          "pr_pnsmd_2": 3,
+          "pr_pnsmd_3": 3,
+          "pr_pnsmd_4": 3,
+          "pr_pnsmd_5": 3,
+          "pr_pnsmd_6": 3,
+          "pr_pnsmd_7": 3,
+          "pr_pnsmd_8": 3,
+          "pr_pnsmd_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 98
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pnsmd_1": 7,
+          "pr_pnsmd_10": 7,
+          "pr_pnsmd_11": 7,
+          "pr_pnsmd_12": 7,
+          "pr_pnsmd_13": 7,
+          "pr_pnsmd_14": 7,
+          "pr_pnsmd_2": 7,
+          "pr_pnsmd_3": 7,
+          "pr_pnsmd_4": 7,
+          "pr_pnsmd_5": 7,
+          "pr_pnsmd_6": 7,
+          "pr_pnsmd_7": 7,
+          "pr_pnsmd_8": 7,
+          "pr_pnsmd_9": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Mattson, R. E., Rogge, R. D., Johnson, M. D., Davidson, E. K. B., & Fincham, F. D. (2013). The positive and negative semantic dimensions of relationship satisfaction. Personal Relationships, 20 , 328-355.",
+    "year": 2013
+  }
+}

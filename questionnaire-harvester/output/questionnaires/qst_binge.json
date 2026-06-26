@@ -245,5 +245,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "BES total",
+      "path": "/scores/total/value",
+      "scorer": "scr_binge@v26.0618"
+    }
   ]
 }

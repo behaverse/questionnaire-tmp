@@ -249,5 +249,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "MHC-SF total",
+      "path": "/scores/total/value",
+      "scorer": "scr_mhcsf@v26.0618"
+    }
   ]
 }

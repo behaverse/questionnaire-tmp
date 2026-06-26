@@ -119,5 +119,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PMI total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pmi@v26.0618"
+    }
   ]
 }

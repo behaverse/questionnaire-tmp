@@ -1,0 +1,152 @@
+{
+  "id": "scr_adolescents",
+  "name": "ABS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "ABS Total Scoring",
+      "description": "Aggressive behavior scale (for adolescents). Total = sum of the 11 items (each 0-6, range 0-66); higher = greater aggressive behaviour (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Orpinas, P., and Frankowski, R. (2001). The Aggression Scale: A\nSelf-Report Measure of Aggressive Behavior for Young\nAdolescents. Journal of Early Adolescence, 21 , 50-67.",
+    "year": 2001
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_adolescents_1|pr_adolescents_2|pr_adolescents_3|pr_adolescents_4|pr_adolescents_5|pr_adolescents_6|pr_adolescents_7|pr_adolescents_8|pr_adolescents_9|pr_adolescents_10|pr_adolescents_11)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/adolescents/scorer.wasm",
+      "sha256": "dc65a8459deb0010c2e3a086b3f32d92ac1b733e01e313401cbad3a9f247f7d1"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_adolescents_1": 0,
+          "pr_adolescents_2": 0,
+          "pr_adolescents_3": 0,
+          "pr_adolescents_4": 0,
+          "pr_adolescents_5": 0,
+          "pr_adolescents_6": 0,
+          "pr_adolescents_7": 0,
+          "pr_adolescents_8": 0,
+          "pr_adolescents_9": 0,
+          "pr_adolescents_10": 0,
+          "pr_adolescents_11": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_adolescents_1": 3,
+          "pr_adolescents_2": 3,
+          "pr_adolescents_3": 3,
+          "pr_adolescents_4": 3,
+          "pr_adolescents_5": 3,
+          "pr_adolescents_6": 3,
+          "pr_adolescents_7": 3,
+          "pr_adolescents_8": 3,
+          "pr_adolescents_9": 3,
+          "pr_adolescents_10": 3,
+          "pr_adolescents_11": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 33
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_adolescents_1": 6,
+          "pr_adolescents_2": 6,
+          "pr_adolescents_3": 6,
+          "pr_adolescents_4": 6,
+          "pr_adolescents_5": 6,
+          "pr_adolescents_6": 6,
+          "pr_adolescents_7": 6,
+          "pr_adolescents_8": 6,
+          "pr_adolescents_9": 6,
+          "pr_adolescents_10": 6,
+          "pr_adolescents_11": 6
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 66
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

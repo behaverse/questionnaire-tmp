@@ -1,0 +1,140 @@
+{
+  "content": {
+    "en": {
+      "description": "Gaming Addiction Scale. Total = sum of the 7 items (each 0-1, range 0-7); higher = greater addictive gaming behaviour (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "GAS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_gas",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "04736d5b8df6018c986fea105976891ab258ed67e3216a948308083b77ef96ad",
+      "url": "https://behaverse.org/scorers/gas/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_gas_1|pr_gas_2|pr_gas_3|pr_gas_4|pr_gas_5|pr_gas_6|pr_gas_7)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "GAS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 0,
+          "pr_gas_2": 0,
+          "pr_gas_3": 0,
+          "pr_gas_4": 0,
+          "pr_gas_5": 0,
+          "pr_gas_6": 0,
+          "pr_gas_7": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 0,
+          "pr_gas_2": 0,
+          "pr_gas_3": 0,
+          "pr_gas_4": 0,
+          "pr_gas_5": 0,
+          "pr_gas_6": 0,
+          "pr_gas_7": 0
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 1,
+          "pr_gas_2": 1,
+          "pr_gas_3": 1,
+          "pr_gas_4": 1,
+          "pr_gas_5": 1,
+          "pr_gas_6": 1,
+          "pr_gas_7": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Lemmens, J.S., Valkenburg, P.M. & Peter, J. (2009). Development and validation of a game addiction scale for adolescents. Media Psychology, 12(1) , 77-95.",
+    "year": 2009
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "id": "scr_gas",
+  "name": "GAS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "GAS Total Scoring",
+      "description": "Gaming Addiction Scale. Total = sum of the 7 items (each 0-1, range 0-7); higher = greater addictive gaming behaviour (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Lemmens, J.S., Valkenburg, P.M. & Peter, J. (2009). Development and validation of a game addiction scale for adolescents. Media Psychology, 12(1) , 77-95.",
+    "year": 2009
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_gas_1|pr_gas_2|pr_gas_3|pr_gas_4|pr_gas_5|pr_gas_6|pr_gas_7)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/gas/scorer.wasm",
+      "sha256": "04736d5b8df6018c986fea105976891ab258ed67e3216a948308083b77ef96ad"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 0,
+          "pr_gas_2": 0,
+          "pr_gas_3": 0,
+          "pr_gas_4": 0,
+          "pr_gas_5": 0,
+          "pr_gas_6": 0,
+          "pr_gas_7": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 0,
+          "pr_gas_2": 0,
+          "pr_gas_3": 0,
+          "pr_gas_4": 0,
+          "pr_gas_5": 0,
+          "pr_gas_6": 0,
+          "pr_gas_7": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_gas_1": 1,
+          "pr_gas_2": 1,
+          "pr_gas_3": 1,
+          "pr_gas_4": 1,
+          "pr_gas_5": 1,
+          "pr_gas_6": 1,
+          "pr_gas_7": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

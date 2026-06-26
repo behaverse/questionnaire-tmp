@@ -152,5 +152,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "NFS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_nfs@v26.0618"
+    }
   ]
 }

@@ -1,0 +1,95 @@
+{
+  "id": "pmi",
+  "scorer_id": "scr_pmi",
+  "name": "PMI Total Scoring",
+  "status": "validated",
+  "description": "Positive Mindset Index (PMI). Total = sum of the 6 items (each 1-5, range 6-30); higher = greater positive mental well-being (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_pmi_1",
+          "pr_pmi_2",
+          "pr_pmi_3",
+          "pr_pmi_4",
+          "pr_pmi_5",
+          "pr_pmi_6"
+        ]
+      }
+    ],
+    "item_range": [
+      1,
+      5
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_pmi_1": 1,
+          "pr_pmi_2": 1,
+          "pr_pmi_3": 1,
+          "pr_pmi_4": 1,
+          "pr_pmi_5": 1,
+          "pr_pmi_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_pmi_1": 3,
+          "pr_pmi_2": 3,
+          "pr_pmi_3": 3,
+          "pr_pmi_4": 3,
+          "pr_pmi_5": 3,
+          "pr_pmi_6": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_pmi_1": 5,
+          "pr_pmi_2": 5,
+          "pr_pmi_3": 5,
+          "pr_pmi_4": 5,
+          "pr_pmi_5": 5,
+          "pr_pmi_6": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Barry, J. A., Folkard, A., & Ayliffe, W. (2014). Validation of a brief questionnaire measuring positive mindset in patients with uveitis. Psychology, Community & Health, 3(1) , 1-10. Open Access PDF",
+    "year": 2014
+  }
+}

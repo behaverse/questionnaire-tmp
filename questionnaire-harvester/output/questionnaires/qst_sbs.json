@@ -193,5 +193,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SBS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_sbs@v26.0618"
+    }
   ]
 }

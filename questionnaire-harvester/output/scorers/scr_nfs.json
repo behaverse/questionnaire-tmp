@@ -1,0 +1,146 @@
+{
+  "content": {
+    "en": {
+      "description": "Nurturant Fathering Scale (NFS). Total = sum of the 9 items (each 1-5, range 9-45); higher = greater nurturant fathering (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "NFS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_nfs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "b694bfaf5100aebfad0e34f9058cf57313927547374fd479e4ce6d6720fcbc5a",
+      "url": "https://behaverse.org/scorers/nfs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_nfs_1|pr_nfs_2|pr_nfs_3|pr_nfs_4|pr_nfs_5|pr_nfs_6|pr_nfs_7|pr_nfs_8|pr_nfs_9)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "NFS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 9
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_nfs_1": 1,
+          "pr_nfs_2": 1,
+          "pr_nfs_3": 1,
+          "pr_nfs_4": 1,
+          "pr_nfs_5": 1,
+          "pr_nfs_6": 1,
+          "pr_nfs_7": 1,
+          "pr_nfs_8": 1,
+          "pr_nfs_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 27
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_nfs_1": 3,
+          "pr_nfs_2": 3,
+          "pr_nfs_3": 3,
+          "pr_nfs_4": 3,
+          "pr_nfs_5": 3,
+          "pr_nfs_6": 3,
+          "pr_nfs_7": 3,
+          "pr_nfs_8": 3,
+          "pr_nfs_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 45
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_nfs_1": 5,
+          "pr_nfs_2": 5,
+          "pr_nfs_3": 5,
+          "pr_nfs_4": 5,
+          "pr_nfs_5": 5,
+          "pr_nfs_6": 5,
+          "pr_nfs_7": 5,
+          "pr_nfs_8": 5,
+          "pr_nfs_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Finley, G.E. & Schwartz, S.J. (2004). The father involvement and nurturant fathering scales: retrospective measures for adolescent and adult children. Educational and Psychological Measurement, 64(1) , 143-164. DOI: 10.1177/0013164403258453.",
+    "year": 2004
+  }
+}

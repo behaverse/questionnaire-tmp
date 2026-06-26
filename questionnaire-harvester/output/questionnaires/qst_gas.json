@@ -151,5 +151,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "GAS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_gas@v26.0618"
+    }
   ]
 }

@@ -179,5 +179,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SMD total",
+      "path": "/scores/total/value",
+      "scorer": "scr_smd@v26.0618"
+    }
   ]
 }

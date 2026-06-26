@@ -1,0 +1,182 @@
+{
+  "content": {
+    "en": {
+      "description": "Clinical Anger Scale (CAS). Total = sum of the 21 items (each 0-3, range 0-63); higher = greater clinical anger (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "CAS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_cas",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "0b57f25b8c3698094a48fbbdd2d59ab154d378308b037430ef44bf31e220950d",
+      "url": "https://behaverse.org/scorers/cas/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_cas_1|pr_cas_2|pr_cas_3|pr_cas_4|pr_cas_5|pr_cas_6|pr_cas_7|pr_cas_8|pr_cas_9|pr_cas_10|pr_cas_11|pr_cas_12|pr_cas_13|pr_cas_14|pr_cas_15|pr_cas_16|pr_cas_17|pr_cas_18|pr_cas_19|pr_cas_20|pr_cas_21)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CAS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cas_1": 0,
+          "pr_cas_10": 0,
+          "pr_cas_11": 0,
+          "pr_cas_12": 0,
+          "pr_cas_13": 0,
+          "pr_cas_14": 0,
+          "pr_cas_15": 0,
+          "pr_cas_16": 0,
+          "pr_cas_17": 0,
+          "pr_cas_18": 0,
+          "pr_cas_19": 0,
+          "pr_cas_2": 0,
+          "pr_cas_20": 0,
+          "pr_cas_21": 0,
+          "pr_cas_3": 0,
+          "pr_cas_4": 0,
+          "pr_cas_5": 0,
+          "pr_cas_6": 0,
+          "pr_cas_7": 0,
+          "pr_cas_8": 0,
+          "pr_cas_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 21
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cas_1": 1,
+          "pr_cas_10": 1,
+          "pr_cas_11": 1,
+          "pr_cas_12": 1,
+          "pr_cas_13": 1,
+          "pr_cas_14": 1,
+          "pr_cas_15": 1,
+          "pr_cas_16": 1,
+          "pr_cas_17": 1,
+          "pr_cas_18": 1,
+          "pr_cas_19": 1,
+          "pr_cas_2": 1,
+          "pr_cas_20": 1,
+          "pr_cas_21": 1,
+          "pr_cas_3": 1,
+          "pr_cas_4": 1,
+          "pr_cas_5": 1,
+          "pr_cas_6": 1,
+          "pr_cas_7": 1,
+          "pr_cas_8": 1,
+          "pr_cas_9": 1
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 63
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cas_1": 3,
+          "pr_cas_10": 3,
+          "pr_cas_11": 3,
+          "pr_cas_12": 3,
+          "pr_cas_13": 3,
+          "pr_cas_14": 3,
+          "pr_cas_15": 3,
+          "pr_cas_16": 3,
+          "pr_cas_17": 3,
+          "pr_cas_18": 3,
+          "pr_cas_19": 3,
+          "pr_cas_2": 3,
+          "pr_cas_20": 3,
+          "pr_cas_21": 3,
+          "pr_cas_3": 3,
+          "pr_cas_4": 3,
+          "pr_cas_5": 3,
+          "pr_cas_6": 3,
+          "pr_cas_7": 3,
+          "pr_cas_8": 3,
+          "pr_cas_9": 3
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Snell, W. E., Jr., Gum, S., Shuck, R. L., Mosley, J. A., & Kite, T. L. (1995). The clinical anger scale: Preliminary reliability and\nvalidity. Journal of Clinical Psychology, 51(2) , 215-226.",
+    "year": 1995
+  }
+}

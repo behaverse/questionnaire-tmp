@@ -249,5 +249,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PN-SMD total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pnsmd@v26.0618"
+    }
   ]
 }

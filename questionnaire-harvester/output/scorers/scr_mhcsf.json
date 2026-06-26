@@ -1,0 +1,161 @@
+{
+  "content": {
+    "en": {
+      "description": "Mental Health Continuum Short Form (MHC-SF). Total = sum of the 14 items (each 0-5, range 0-70); higher = greater positive mental health (emotional, social and psychological well-being) (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "MHC-SF Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_mhcsf",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "64ab3264e8c4a69f04b69b76b561f5f9bc04908ee2ef46978bf486cefe3e162c",
+      "url": "https://behaverse.org/scorers/mhcsf/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_mhcsf_1|pr_mhcsf_2|pr_mhcsf_3|pr_mhcsf_4|pr_mhcsf_5|pr_mhcsf_6|pr_mhcsf_7|pr_mhcsf_8|pr_mhcsf_9|pr_mhcsf_10|pr_mhcsf_11|pr_mhcsf_12|pr_mhcsf_13|pr_mhcsf_14)$": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "MHC-SF Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mhcsf_1": 0,
+          "pr_mhcsf_10": 0,
+          "pr_mhcsf_11": 0,
+          "pr_mhcsf_12": 0,
+          "pr_mhcsf_13": 0,
+          "pr_mhcsf_14": 0,
+          "pr_mhcsf_2": 0,
+          "pr_mhcsf_3": 0,
+          "pr_mhcsf_4": 0,
+          "pr_mhcsf_5": 0,
+          "pr_mhcsf_6": 0,
+          "pr_mhcsf_7": 0,
+          "pr_mhcsf_8": 0,
+          "pr_mhcsf_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 28
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mhcsf_1": 2,
+          "pr_mhcsf_10": 2,
+          "pr_mhcsf_11": 2,
+          "pr_mhcsf_12": 2,
+          "pr_mhcsf_13": 2,
+          "pr_mhcsf_14": 2,
+          "pr_mhcsf_2": 2,
+          "pr_mhcsf_3": 2,
+          "pr_mhcsf_4": 2,
+          "pr_mhcsf_5": 2,
+          "pr_mhcsf_6": 2,
+          "pr_mhcsf_7": 2,
+          "pr_mhcsf_8": 2,
+          "pr_mhcsf_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 70
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mhcsf_1": 5,
+          "pr_mhcsf_10": 5,
+          "pr_mhcsf_11": 5,
+          "pr_mhcsf_12": 5,
+          "pr_mhcsf_13": 5,
+          "pr_mhcsf_14": 5,
+          "pr_mhcsf_2": 5,
+          "pr_mhcsf_3": 5,
+          "pr_mhcsf_4": 5,
+          "pr_mhcsf_5": 5,
+          "pr_mhcsf_6": 5,
+          "pr_mhcsf_7": 5,
+          "pr_mhcsf_8": 5,
+          "pr_mhcsf_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Keyes, C.L.M. (2006). Mental health in adolescence: Is America’s youth flourishing? American Journal of Orthopsychiatry, 76 , 395–402.",
+    "year": 2006
+  }
+}

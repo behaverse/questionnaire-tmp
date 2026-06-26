@@ -1,0 +1,111 @@
+{
+  "id": "sbs",
+  "scorer_id": "scr_sbs",
+  "name": "SBS Total Scoring",
+  "status": "validated",
+  "description": "Supernatural Belief Scale. Total = sum of the 10 items (each -4-4, range -40-40); higher = greater belief in the supernatural (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_sbs_1",
+          "pr_sbs_2",
+          "pr_sbs_3",
+          "pr_sbs_4",
+          "pr_sbs_5",
+          "pr_sbs_6",
+          "pr_sbs_7",
+          "pr_sbs_8",
+          "pr_sbs_9",
+          "pr_sbs_10"
+        ]
+      }
+    ],
+    "item_range": [
+      -4,
+      4
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_sbs_1": -4,
+          "pr_sbs_2": -4,
+          "pr_sbs_3": -4,
+          "pr_sbs_4": -4,
+          "pr_sbs_5": -4,
+          "pr_sbs_6": -4,
+          "pr_sbs_7": -4,
+          "pr_sbs_8": -4,
+          "pr_sbs_9": -4,
+          "pr_sbs_10": -4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": -40
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_sbs_1": -4,
+          "pr_sbs_2": -4,
+          "pr_sbs_3": -4,
+          "pr_sbs_4": -4,
+          "pr_sbs_5": -4,
+          "pr_sbs_6": -4,
+          "pr_sbs_7": -4,
+          "pr_sbs_8": -4,
+          "pr_sbs_9": -4,
+          "pr_sbs_10": -4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": -40
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_sbs_1": 4,
+          "pr_sbs_2": 4,
+          "pr_sbs_3": 4,
+          "pr_sbs_4": 4,
+          "pr_sbs_5": 4,
+          "pr_sbs_6": 4,
+          "pr_sbs_7": 4,
+          "pr_sbs_8": 4,
+          "pr_sbs_9": 4,
+          "pr_sbs_10": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 40
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Jong, J., Bluemke, M., & Halberstadt, J. (2013). Fear of death and supernatural beliefs: Developing a new supernatural belief scale to test the relationship. European Journal of Personality, 27 , 495-506.",
+    "year": 2013
+  }
+}

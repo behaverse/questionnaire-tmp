@@ -1,0 +1,146 @@
+{
+  "content": {
+    "en": {
+      "description": "Social Media Disorder Scale (SMD). Total = sum of the 9 items (each 0-1, range 0-9); higher = greater disordered social-media use (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "SMD Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_smd",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "89a8484ef5dff2c3b5fa9c1f1a58061f9e854e4a99ed6a23eb7ec284e8b27fae",
+      "url": "https://behaverse.org/scorers/smd/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_smd_1|pr_smd_2|pr_smd_3|pr_smd_4|pr_smd_5|pr_smd_6|pr_smd_7|pr_smd_8|pr_smd_9)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SMD Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_smd_1": 0,
+          "pr_smd_2": 0,
+          "pr_smd_3": 0,
+          "pr_smd_4": 0,
+          "pr_smd_5": 0,
+          "pr_smd_6": 0,
+          "pr_smd_7": 0,
+          "pr_smd_8": 0,
+          "pr_smd_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_smd_1": 0,
+          "pr_smd_2": 0,
+          "pr_smd_3": 0,
+          "pr_smd_4": 0,
+          "pr_smd_5": 0,
+          "pr_smd_6": 0,
+          "pr_smd_7": 0,
+          "pr_smd_8": 0,
+          "pr_smd_9": 0
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 9
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_smd_1": 1,
+          "pr_smd_2": 1,
+          "pr_smd_3": 1,
+          "pr_smd_4": 1,
+          "pr_smd_5": 1,
+          "pr_smd_6": 1,
+          "pr_smd_7": 1,
+          "pr_smd_8": 1,
+          "pr_smd_9": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "van der Eijnden, R.J.J.M, Lemmens, J.S., & Valkenburg, P.M. (2016). The Social Media Disorder Scale. Computers in Human Behavior, 61, 478-487.",
+    "year": 2016
+  }
+}

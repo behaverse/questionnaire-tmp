@@ -265,5 +265,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "HAI-18 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_hai18@v26.0618"
+    }
   ]
 }

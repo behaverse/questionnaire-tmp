@@ -1,0 +1,131 @@
+{
+  "id": "binge",
+  "scorer_id": "scr_binge",
+  "name": "BES Total Scoring",
+  "status": "validated",
+  "description": "Binge Eating Scale (BES). Total = sum of the 16 items (items carry per-item weights); higher = greater binge-eating severity (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_binge_1",
+          "pr_binge_2",
+          "pr_binge_3",
+          "pr_binge_4",
+          "pr_binge_5",
+          "pr_binge_6",
+          "pr_binge_7",
+          "pr_binge_8",
+          "pr_binge_9",
+          "pr_binge_10",
+          "pr_binge_11",
+          "pr_binge_12",
+          "pr_binge_13",
+          "pr_binge_14",
+          "pr_binge_15",
+          "pr_binge_16"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_binge_1": 0,
+          "pr_binge_2": 0,
+          "pr_binge_3": 0,
+          "pr_binge_4": 0,
+          "pr_binge_5": 0,
+          "pr_binge_6": 0,
+          "pr_binge_7": 0,
+          "pr_binge_8": 0,
+          "pr_binge_9": 0,
+          "pr_binge_10": 0,
+          "pr_binge_11": 0,
+          "pr_binge_12": 0,
+          "pr_binge_13": 0,
+          "pr_binge_14": 0,
+          "pr_binge_15": 0,
+          "pr_binge_16": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_binge_1": 1,
+          "pr_binge_2": 1,
+          "pr_binge_3": 1,
+          "pr_binge_4": 1,
+          "pr_binge_5": 1,
+          "pr_binge_6": 1,
+          "pr_binge_7": 1,
+          "pr_binge_8": 1,
+          "pr_binge_9": 1,
+          "pr_binge_10": 1,
+          "pr_binge_11": 1,
+          "pr_binge_12": 1,
+          "pr_binge_13": 1,
+          "pr_binge_14": 1,
+          "pr_binge_15": 1,
+          "pr_binge_16": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 16
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_binge_1": 2,
+          "pr_binge_2": 2,
+          "pr_binge_3": 2,
+          "pr_binge_4": 2,
+          "pr_binge_5": 2,
+          "pr_binge_6": 2,
+          "pr_binge_7": 2,
+          "pr_binge_8": 2,
+          "pr_binge_9": 2,
+          "pr_binge_10": 2,
+          "pr_binge_11": 2,
+          "pr_binge_12": 2,
+          "pr_binge_13": 2,
+          "pr_binge_14": 2,
+          "pr_binge_15": 2,
+          "pr_binge_16": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 32
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "J Gormally, S Black, S Daston, D Rardin. The assessment of binge eating severity among obese persons. 7 ( 1 ): Addict Behav 47-55 ( 1982 ).",
+    "year": 1982
+  }
+}

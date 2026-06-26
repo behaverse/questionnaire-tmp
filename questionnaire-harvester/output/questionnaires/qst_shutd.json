@@ -250,5 +250,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SHUT-D total",
+      "path": "/scores/total/value",
+      "scorer": "scr_shutd@v26.0618"
+    }
   ]
 }

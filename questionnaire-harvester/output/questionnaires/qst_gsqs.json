@@ -263,5 +263,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "GSQS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_gsqs@v26.0618"
+    }
   ]
 }

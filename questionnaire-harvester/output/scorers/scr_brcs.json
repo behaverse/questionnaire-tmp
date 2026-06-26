@@ -1,0 +1,131 @@
+{
+  "content": {
+    "en": {
+      "description": "Resilience (BRCS). Total = sum of the 4 items (each 1-5, range 4-20); higher = greater adaptive (resilient) coping (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "BRCS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_brcs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "1c16ccd09c376fa56eb31a5d864bdc2aaa36cfe7b358bcecb78ec3a0ff231616",
+      "url": "https://behaverse.org/scorers/brcs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_brcs_1|pr_brcs_2|pr_brcs_3|pr_brcs_4)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "BRCS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_brcs_1": 1,
+          "pr_brcs_2": 1,
+          "pr_brcs_3": 1,
+          "pr_brcs_4": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_brcs_1": 3,
+          "pr_brcs_2": 3,
+          "pr_brcs_3": 3,
+          "pr_brcs_4": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_brcs_1": 5,
+          "pr_brcs_2": 5,
+          "pr_brcs_3": 5,
+          "pr_brcs_4": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Sinclair, V. G., & Wallston, K.A. (2004). The development and psychometric evaluation of the\nBrief Resilient Coping Scale. Assessment, 11 (1) , 94-101.",
+    "year": 2004
+  }
+}

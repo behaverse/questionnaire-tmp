@@ -1,0 +1,164 @@
+{
+  "content": {
+    "en": {
+      "description": "Groningen Sleep Quality Questionnaire. Total = sum of the 15 items (each 0-1, range 0-15); higher = greater poor sleep quality (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+      "name": "GSQS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_gsqs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "8a686085f0788963633b1c88da7e80ebc82a37312be8521b040ae1247337a7d0",
+      "url": "https://behaverse.org/scorers/gsqs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_gsqs_1|pr_gsqs_2|pr_gsqs_3|pr_gsqs_4|pr_gsqs_5|pr_gsqs_6|pr_gsqs_7|pr_gsqs_8|pr_gsqs_9|pr_gsqs_10|pr_gsqs_11|pr_gsqs_12|pr_gsqs_13|pr_gsqs_14|pr_gsqs_15)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "GSQS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gsqs_1": 0,
+          "pr_gsqs_10": 0,
+          "pr_gsqs_11": 0,
+          "pr_gsqs_12": 0,
+          "pr_gsqs_13": 0,
+          "pr_gsqs_14": 0,
+          "pr_gsqs_15": 0,
+          "pr_gsqs_2": 0,
+          "pr_gsqs_3": 0,
+          "pr_gsqs_4": 0,
+          "pr_gsqs_5": 0,
+          "pr_gsqs_6": 0,
+          "pr_gsqs_7": 0,
+          "pr_gsqs_8": 0,
+          "pr_gsqs_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gsqs_1": 0,
+          "pr_gsqs_10": 0,
+          "pr_gsqs_11": 0,
+          "pr_gsqs_12": 0,
+          "pr_gsqs_13": 0,
+          "pr_gsqs_14": 0,
+          "pr_gsqs_15": 0,
+          "pr_gsqs_2": 0,
+          "pr_gsqs_3": 0,
+          "pr_gsqs_4": 0,
+          "pr_gsqs_5": 0,
+          "pr_gsqs_6": 0,
+          "pr_gsqs_7": 0,
+          "pr_gsqs_8": 0,
+          "pr_gsqs_9": 0
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 15
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gsqs_1": 1,
+          "pr_gsqs_10": 1,
+          "pr_gsqs_11": 1,
+          "pr_gsqs_12": 1,
+          "pr_gsqs_13": 1,
+          "pr_gsqs_14": 1,
+          "pr_gsqs_15": 1,
+          "pr_gsqs_2": 1,
+          "pr_gsqs_3": 1,
+          "pr_gsqs_4": 1,
+          "pr_gsqs_5": 1,
+          "pr_gsqs_6": 1,
+          "pr_gsqs_7": 1,
+          "pr_gsqs_8": 1,
+          "pr_gsqs_9": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Meijman, T. F., de Vries-Griever, A. H., de Vries, G. (1988): The\nevaluation of the Groningen Sleep Quality Scale. Groningen: Heymans\nBulletin (HB 88—13—EX).",
+    "year": 1988
+  }
+}

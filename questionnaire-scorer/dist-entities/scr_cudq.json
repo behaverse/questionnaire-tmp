@@ -1,0 +1,149 @@
+{
+  "id": "scr_cudq",
+  "name": "CUDQ Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "CUDQ Total Scoring",
+      "description": "Caffeine Use Disorder Questionnaire (CUDQ). Total = sum of the 10 items (each 0-1, range 0-10); higher = greater caffeine use disorder symptoms (reverse-keyed items reversed by the runtime). No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Addicott M. A. (2014). Caffeine Use Disorder: A Review of the\nEvidence and Future Implications. Current addiction reports, 1(3) ,\n186-192. https://doi.org/10.1007/s40429-014-0024-9",
+    "year": 2014
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_cudq_1|pr_cudq_2|pr_cudq_3|pr_cudq_4|pr_cudq_5|pr_cudq_6|pr_cudq_7|pr_cudq_8|pr_cudq_9|pr_cudq_10)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/cudq/scorer.wasm",
+      "sha256": "bc2e8c1ad1ca59d7a9e64eecef016b72c78ff8d2de813fb471f60b9fb9a568c8"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_cudq_1": 0,
+          "pr_cudq_2": 0,
+          "pr_cudq_3": 0,
+          "pr_cudq_4": 0,
+          "pr_cudq_5": 0,
+          "pr_cudq_6": 0,
+          "pr_cudq_7": 0,
+          "pr_cudq_8": 0,
+          "pr_cudq_9": 0,
+          "pr_cudq_10": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_cudq_1": 0,
+          "pr_cudq_2": 0,
+          "pr_cudq_3": 0,
+          "pr_cudq_4": 0,
+          "pr_cudq_5": 0,
+          "pr_cudq_6": 0,
+          "pr_cudq_7": 0,
+          "pr_cudq_8": 0,
+          "pr_cudq_9": 0,
+          "pr_cudq_10": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_cudq_1": 1,
+          "pr_cudq_2": 1,
+          "pr_cudq_3": 1,
+          "pr_cudq_4": 1,
+          "pr_cudq_5": 1,
+          "pr_cudq_6": 1,
+          "pr_cudq_7": 1,
+          "pr_cudq_8": 1,
+          "pr_cudq_9": 1,
+          "pr_cudq_10": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 10
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

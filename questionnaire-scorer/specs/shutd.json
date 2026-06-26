@@ -1,0 +1,123 @@
+{
+  "id": "shutd",
+  "scorer_id": "scr_shutd",
+  "name": "SHUT-D Total Scoring",
+  "status": "validated",
+  "description": "Shutdown Dissociation Scale (SHUT-D). Total = sum of the 13 items (each 0-3, range 0-39); higher = greater shutdown dissociation (reverse-keyed items reversed by the runtime). No standard cut-offs.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_shutd_1",
+          "pr_shutd_2",
+          "pr_shutd_3",
+          "pr_shutd_4",
+          "pr_shutd_5",
+          "pr_shutd_6",
+          "pr_shutd_7",
+          "pr_shutd_8",
+          "pr_shutd_9",
+          "pr_shutd_10",
+          "pr_shutd_11",
+          "pr_shutd_12",
+          "pr_shutd_13"
+        ]
+      }
+    ],
+    "item_range": [
+      0,
+      3
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_shutd_1": 0,
+          "pr_shutd_2": 0,
+          "pr_shutd_3": 0,
+          "pr_shutd_4": 0,
+          "pr_shutd_5": 0,
+          "pr_shutd_6": 0,
+          "pr_shutd_7": 0,
+          "pr_shutd_8": 0,
+          "pr_shutd_9": 0,
+          "pr_shutd_10": 0,
+          "pr_shutd_11": 0,
+          "pr_shutd_12": 0,
+          "pr_shutd_13": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_shutd_1": 1,
+          "pr_shutd_2": 1,
+          "pr_shutd_3": 1,
+          "pr_shutd_4": 1,
+          "pr_shutd_5": 1,
+          "pr_shutd_6": 1,
+          "pr_shutd_7": 1,
+          "pr_shutd_8": 1,
+          "pr_shutd_9": 1,
+          "pr_shutd_10": 1,
+          "pr_shutd_11": 1,
+          "pr_shutd_12": 1,
+          "pr_shutd_13": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 13
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_shutd_1": 3,
+          "pr_shutd_2": 3,
+          "pr_shutd_3": 3,
+          "pr_shutd_4": 3,
+          "pr_shutd_5": 3,
+          "pr_shutd_6": 3,
+          "pr_shutd_7": 3,
+          "pr_shutd_8": 3,
+          "pr_shutd_9": 3,
+          "pr_shutd_10": 3,
+          "pr_shutd_11": 3,
+          "pr_shutd_12": 3,
+          "pr_shutd_13": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 39
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "I Schalinski, M Schauer, T Elbert. The Shutdown Dissociation Scale (SHUT-D). Euro. J. of Psychotraumatology, 6(0) ( 2015 ).",
+    "year": 2015
+  }
+}
