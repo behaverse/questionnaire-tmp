@@ -1,0 +1,163 @@
+{
+  "id": "itc",
+  "scorer_id": "scr_itc",
+  "name": "ITC Scoring",
+  "status": "validated",
+  "description": "Infant-Toddler Checklist (ITC). Infant-Toddler Checklist (ITC). Total Concern = sum of the 24 items (per-item scales 0-2 to 0-4), higher = greater concern about early social-communication development; interpret against age norms.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_itc_1",
+          "pr_itc_2",
+          "pr_itc_3",
+          "pr_itc_4",
+          "pr_itc_5",
+          "pr_itc_6",
+          "pr_itc_7",
+          "pr_itc_8",
+          "pr_itc_9",
+          "pr_itc_10",
+          "pr_itc_11",
+          "pr_itc_12",
+          "pr_itc_13",
+          "pr_itc_14",
+          "pr_itc_15",
+          "pr_itc_16",
+          "pr_itc_17",
+          "pr_itc_18",
+          "pr_itc_19",
+          "pr_itc_20",
+          "pr_itc_21",
+          "pr_itc_22",
+          "pr_itc_23",
+          "pr_itc_24"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_itc_1": 0,
+          "pr_itc_2": 0,
+          "pr_itc_3": 0,
+          "pr_itc_4": 0,
+          "pr_itc_5": 0,
+          "pr_itc_6": 0,
+          "pr_itc_7": 0,
+          "pr_itc_8": 0,
+          "pr_itc_9": 0,
+          "pr_itc_10": 0,
+          "pr_itc_11": 0,
+          "pr_itc_12": 0,
+          "pr_itc_13": 0,
+          "pr_itc_14": 0,
+          "pr_itc_15": 0,
+          "pr_itc_16": 0,
+          "pr_itc_17": 0,
+          "pr_itc_18": 0,
+          "pr_itc_19": 0,
+          "pr_itc_20": 0,
+          "pr_itc_21": 0,
+          "pr_itc_22": 0,
+          "pr_itc_23": 0,
+          "pr_itc_24": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_itc_1": 1,
+          "pr_itc_2": 1,
+          "pr_itc_3": 1,
+          "pr_itc_4": 1,
+          "pr_itc_5": 1,
+          "pr_itc_6": 1,
+          "pr_itc_7": 1,
+          "pr_itc_8": 1,
+          "pr_itc_9": 1,
+          "pr_itc_10": 1,
+          "pr_itc_11": 1,
+          "pr_itc_12": 1,
+          "pr_itc_13": 1,
+          "pr_itc_14": 1,
+          "pr_itc_15": 1,
+          "pr_itc_16": 1,
+          "pr_itc_17": 1,
+          "pr_itc_18": 1,
+          "pr_itc_19": 1,
+          "pr_itc_20": 1,
+          "pr_itc_21": 1,
+          "pr_itc_22": 1,
+          "pr_itc_23": 1,
+          "pr_itc_24": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 24
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_itc_1": 2,
+          "pr_itc_2": 2,
+          "pr_itc_3": 2,
+          "pr_itc_4": 2,
+          "pr_itc_5": 2,
+          "pr_itc_6": 2,
+          "pr_itc_7": 2,
+          "pr_itc_8": 2,
+          "pr_itc_9": 2,
+          "pr_itc_10": 2,
+          "pr_itc_11": 2,
+          "pr_itc_12": 2,
+          "pr_itc_13": 2,
+          "pr_itc_14": 2,
+          "pr_itc_15": 2,
+          "pr_itc_16": 2,
+          "pr_itc_17": 2,
+          "pr_itc_18": 2,
+          "pr_itc_19": 2,
+          "pr_itc_20": 2,
+          "pr_itc_21": 2,
+          "pr_itc_22": 2,
+          "pr_itc_23": 2,
+          "pr_itc_24": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 48
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "A M Wetherby, S Brosnan-Maddox, V Peace, L Newton. ( 2008 ). Validation of the Infant-Toddler Checklist as a broadband screener for autism spectrum disorders from 9 to 24 months of age. Autism, 12 ( 5 ), 487-511.",
+    "year": 2008
+  }
+}

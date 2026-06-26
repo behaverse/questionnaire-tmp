@@ -25,6 +25,7 @@
   "scr_cabs@v26.0618": "cabs.wasm",
   "scr_cage@v26.0618": "cage.wasm",
   "scr_cas@v26.0618": "cas.wasm",
+  "scr_cast@v26.0618": "cast.wasm",
   "scr_cc@v26.0618": "cc.wasm",
   "scr_ccms@v26.0618": "ccms.wasm",
   "scr_cfs@v26.0618": "cfs.wasm",
@@ -68,6 +69,7 @@
   "scr_icg@v26.0618": "icg.wasm",
   "scr_intelligence@v26.0618": "intelligence.wasm",
   "scr_isc@v26.0618": "isc.wasm",
+  "scr_itc@v26.0618": "itc.wasm",
   "scr_kads11@v26.0618": "kads11.wasm",
   "scr_lotr@v26.0618": "lotr.wasm",
   "scr_lsas@v26.0618": "lsas.wasm",
@@ -97,6 +99,7 @@
   "scr_pss@v26.0618": "pss.wasm",
   "scr_pswq@v26.0618": "pswq.wasm",
   "scr_pts@v26.0618": "pts.wasm",
+  "scr_qchat@v26.0618": "qchat.wasm",
   "scr_quotient@v26.0618": "quotient.wasm",
   "scr_raads14@v26.0618": "raads14.wasm",
   "scr_rei@v26.0618": "rei.wasm",
@@ -143,5 +146,6 @@
   "scr_who5@v26.0618": "who5.wasm",
   "scr_ymrs@v26.0618": "ymrs.wasm",
   "scr_phq9@v26.0618": "phq9.wasm",
-  "scr_mdi@v26.0618": "mdi.wasm"
+  "scr_mdi@v26.0618": "mdi.wasm",
+  "scr_asrs@v26.0618": "asrs.wasm"
 }

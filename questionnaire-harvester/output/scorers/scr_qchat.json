@@ -1,0 +1,194 @@
+{
+  "content": {
+    "en": {
+      "description": "Quantitative Checklist for Autism in Toddlers (Q-CHAT). Quantitative Checklist for Autism in Toddlers (Q-CHAT-25). Total = sum of the 25 items (each pre-scored 0-4; reverse-keyed responses encoded in the options), range 0-100; higher = more autism-spectrum traits.",
+      "name": "Q-CHAT Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_qchat",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "85aadb1d04026652da769d69bd701ec323378009af91a4330f5e64028e6aedf1",
+      "url": "https://behaverse.org/scorers/qchat/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_qchat_1|pr_qchat_2|pr_qchat_3|pr_qchat_4|pr_qchat_5|pr_qchat_6|pr_qchat_7|pr_qchat_8|pr_qchat_9|pr_qchat_10|pr_qchat_11|pr_qchat_12|pr_qchat_13|pr_qchat_14|pr_qchat_15|pr_qchat_16|pr_qchat_17|pr_qchat_18|pr_qchat_19|pr_qchat_20|pr_qchat_21|pr_qchat_22|pr_qchat_23|pr_qchat_24|pr_qchat_25)$": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "Q-CHAT Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_qchat_1": 0,
+          "pr_qchat_10": 0,
+          "pr_qchat_11": 0,
+          "pr_qchat_12": 0,
+          "pr_qchat_13": 0,
+          "pr_qchat_14": 0,
+          "pr_qchat_15": 0,
+          "pr_qchat_16": 0,
+          "pr_qchat_17": 0,
+          "pr_qchat_18": 0,
+          "pr_qchat_19": 0,
+          "pr_qchat_2": 0,
+          "pr_qchat_20": 0,
+          "pr_qchat_21": 0,
+          "pr_qchat_22": 0,
+          "pr_qchat_23": 0,
+          "pr_qchat_24": 0,
+          "pr_qchat_25": 0,
+          "pr_qchat_3": 0,
+          "pr_qchat_4": 0,
+          "pr_qchat_5": 0,
+          "pr_qchat_6": 0,
+          "pr_qchat_7": 0,
+          "pr_qchat_8": 0,
+          "pr_qchat_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 50
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_qchat_1": 2,
+          "pr_qchat_10": 2,
+          "pr_qchat_11": 2,
+          "pr_qchat_12": 2,
+          "pr_qchat_13": 2,
+          "pr_qchat_14": 2,
+          "pr_qchat_15": 2,
+          "pr_qchat_16": 2,
+          "pr_qchat_17": 2,
+          "pr_qchat_18": 2,
+          "pr_qchat_19": 2,
+          "pr_qchat_2": 2,
+          "pr_qchat_20": 2,
+          "pr_qchat_21": 2,
+          "pr_qchat_22": 2,
+          "pr_qchat_23": 2,
+          "pr_qchat_24": 2,
+          "pr_qchat_25": 2,
+          "pr_qchat_3": 2,
+          "pr_qchat_4": 2,
+          "pr_qchat_5": 2,
+          "pr_qchat_6": 2,
+          "pr_qchat_7": 2,
+          "pr_qchat_8": 2,
+          "pr_qchat_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_qchat_1": 4,
+          "pr_qchat_10": 4,
+          "pr_qchat_11": 4,
+          "pr_qchat_12": 4,
+          "pr_qchat_13": 4,
+          "pr_qchat_14": 4,
+          "pr_qchat_15": 4,
+          "pr_qchat_16": 4,
+          "pr_qchat_17": 4,
+          "pr_qchat_18": 4,
+          "pr_qchat_19": 4,
+          "pr_qchat_2": 4,
+          "pr_qchat_20": 4,
+          "pr_qchat_21": 4,
+          "pr_qchat_22": 4,
+          "pr_qchat_23": 4,
+          "pr_qchat_24": 4,
+          "pr_qchat_25": 4,
+          "pr_qchat_3": 4,
+          "pr_qchat_4": 4,
+          "pr_qchat_5": 4,
+          "pr_qchat_6": 4,
+          "pr_qchat_7": 4,
+          "pr_qchat_8": 4,
+          "pr_qchat_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "C Allison, S Baron-Cohen, S Wheelwright, T Charman, J Richler, G Pasco, and C Brayne. The Q-CHAT (Quantitative CHecklist for Autism in Toddlers): A Normally Distributed Quantitative Measure of Autistic Traits at 18-24 Months of Age: Preliminary Report. J Autism Dev Disord 38 ( 8 ): 1414-1425 ( 2008 ).",
+    "year": 2008
+  }
+}

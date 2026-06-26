@@ -305,5 +305,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "part_a",
+      "name": "ASRS Part-A count",
+      "path": "/part_a",
+      "scorer": "scr_asrs@v26.0618"
+    },
+    {
+      "id": "severity",
+      "name": "ASRS screen",
+      "path": "/severity",
+      "scorer": "scr_asrs@v26.0618"
+    }
   ]
 }

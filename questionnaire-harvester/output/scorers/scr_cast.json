@@ -1,0 +1,220 @@
+{
+  "content": {
+    "en": {
+      "description": "Childhood Autism Spectrum Test (CAST). Childhood Autism Spectrum Test (CAST). Total = number of autism-consistent answers across the key items (each scored 0/1, with scoring direction encoded per item; non-key control items score 0), range 0-31; a score of 15 or more warrants referral.",
+      "name": "CAST Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_cast",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "d398fd35d255389d5b9d03cd7b8053b95be82e97aefd11d3f703948381c1d39a",
+      "url": "https://behaverse.org/scorers/cast/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_cast_1|pr_cast_2|pr_cast_3|pr_cast_4|pr_cast_5|pr_cast_6|pr_cast_7|pr_cast_8|pr_cast_9|pr_cast_10|pr_cast_11|pr_cast_12|pr_cast_13|pr_cast_14|pr_cast_15|pr_cast_16|pr_cast_17|pr_cast_18|pr_cast_19|pr_cast_20|pr_cast_21|pr_cast_22|pr_cast_23|pr_cast_24|pr_cast_25|pr_cast_26|pr_cast_27|pr_cast_28|pr_cast_29|pr_cast_30|pr_cast_31|pr_cast_32|pr_cast_33|pr_cast_34|pr_cast_35|pr_cast_36|pr_cast_37|pr_cast_38|pr_cast_39)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CAST Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "below",
+                  "at_or_above"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Below cut-off",
+              "max": 14,
+              "min": 0
+            },
+            "severity": "below",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cast_1": 0,
+          "pr_cast_10": 0,
+          "pr_cast_11": 0,
+          "pr_cast_12": 0,
+          "pr_cast_13": 0,
+          "pr_cast_14": 0,
+          "pr_cast_15": 0,
+          "pr_cast_16": 0,
+          "pr_cast_17": 0,
+          "pr_cast_18": 0,
+          "pr_cast_19": 0,
+          "pr_cast_2": 0,
+          "pr_cast_20": 0,
+          "pr_cast_21": 0,
+          "pr_cast_22": 0,
+          "pr_cast_23": 0,
+          "pr_cast_24": 0,
+          "pr_cast_25": 0,
+          "pr_cast_26": 0,
+          "pr_cast_27": 0,
+          "pr_cast_28": 0,
+          "pr_cast_29": 0,
+          "pr_cast_3": 0,
+          "pr_cast_30": 0,
+          "pr_cast_31": 0,
+          "pr_cast_32": 0,
+          "pr_cast_33": 0,
+          "pr_cast_34": 0,
+          "pr_cast_35": 0,
+          "pr_cast_36": 0,
+          "pr_cast_37": 0,
+          "pr_cast_38": 0,
+          "pr_cast_39": 0,
+          "pr_cast_4": 0,
+          "pr_cast_5": 0,
+          "pr_cast_6": 0,
+          "pr_cast_7": 0,
+          "pr_cast_8": 0,
+          "pr_cast_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "At or above cut-off — refer for autism assessment",
+              "max": 39,
+              "min": 15
+            },
+            "severity": "at_or_above",
+            "value": 39
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cast_1": 1,
+          "pr_cast_10": 1,
+          "pr_cast_11": 1,
+          "pr_cast_12": 1,
+          "pr_cast_13": 1,
+          "pr_cast_14": 1,
+          "pr_cast_15": 1,
+          "pr_cast_16": 1,
+          "pr_cast_17": 1,
+          "pr_cast_18": 1,
+          "pr_cast_19": 1,
+          "pr_cast_2": 1,
+          "pr_cast_20": 1,
+          "pr_cast_21": 1,
+          "pr_cast_22": 1,
+          "pr_cast_23": 1,
+          "pr_cast_24": 1,
+          "pr_cast_25": 1,
+          "pr_cast_26": 1,
+          "pr_cast_27": 1,
+          "pr_cast_28": 1,
+          "pr_cast_29": 1,
+          "pr_cast_3": 1,
+          "pr_cast_30": 1,
+          "pr_cast_31": 1,
+          "pr_cast_32": 1,
+          "pr_cast_33": 1,
+          "pr_cast_34": 1,
+          "pr_cast_35": 1,
+          "pr_cast_36": 1,
+          "pr_cast_37": 1,
+          "pr_cast_38": 1,
+          "pr_cast_39": 1,
+          "pr_cast_4": 1,
+          "pr_cast_5": 1,
+          "pr_cast_6": 1,
+          "pr_cast_7": 1,
+          "pr_cast_8": 1,
+          "pr_cast_9": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "J G Williams, C Allison, F J Scott, P F Bolton, S Baron-Cohen, F E Matthews, C Brayne. The Childhood Autism Spectrum Test (CAST): Sex Differences. 38(9): J Autism Dev Disord 1731-9. 2008.",
+    "year": 2008
+  }
+}
