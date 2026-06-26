@@ -1,0 +1,46 @@
+import { describe, it, expect } from 'vitest'
+import { toMarkdown } from './markdown'
+import type { RenderModel } from '../definition/renderModel'
+import type { DefMetadata } from '../api/types'
+
+const meta = {
+  id: 'qst_demo', title: 'Demo Scale', version: 'v26.0625', license: 'CC-BY-4.0',
+  description: 'Rate each item.', authors: [{ name: 'Ada L.' }],
+  publication: { citation: 'Lovelace 1843' },
+} as unknown as DefMetadata
+
+const model: RenderModel = {
+  pages: [{
+    id: 'p1', title: 'Section One',
+    blocks: [
+      { kind: 'message', text: 'Please answer honestly.', unresolved: false },
+      { kind: 'item', number: 1, stem: 'I plan tasks.', required: true, unresolved: false,
+        widget: 'choice.nominal.single',
+        options: [{ index: 0, text: 'No', value: 1 }, { index: 1, text: 'Yes', value: 2 }] },
+      { kind: 'item', number: 2, stem: 'Your age?', required: false, unresolved: false,
+        widget: 'number.ratio', options: [] },
+    ],
+  }],
+}
+
+describe('toMarkdown', () => {
+  const md = toMarkdown(model, meta)
+  it('emits title + metadata header', () => {
+    expect(md).toContain('# Demo Scale')
+    expect(md).toContain('id: qst_demo')
+    expect(md).toContain('version: v26.0625')
+    expect(md).toContain('license: CC-BY-4.0')
+    expect(md).toContain('authors: Ada L.')
+    expect(md).toContain('citation: Lovelace 1843')
+    expect(md).toContain('Rate each item.')
+  })
+  it('renders page heading, message, numbered questions + options', () => {
+    expect(md).toContain('## Section One')
+    expect(md).toContain('> Please answer honestly.')
+    expect(md).toContain('**1.** I plan tasks.')
+    expect(md).toContain('- No')
+    expect(md).toContain('- Yes')
+    expect(md).toContain('**2.** Your age?')
+    expect(md).toContain('[ number ]')
+  })
+})
