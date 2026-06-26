@@ -1,7 +1,7 @@
 import type { RenderModel, ItemBlock, MessageBlock, SectionBlock } from '../definition/renderModel'
 import type { DefMetadata } from '../api/types'
 
-const HEADER: { key: keyof DefMetadata; label: string; fmt?: (v: never) => string }[] = [
+const HEADER: { key: keyof DefMetadata; label: string }[] = [
   { key: 'id', label: 'id' },
   { key: 'version', label: 'version' },
   { key: 'license', label: 'license' },

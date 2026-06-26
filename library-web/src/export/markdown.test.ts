@@ -43,4 +43,65 @@ describe('toMarkdown', () => {
     expect(md).toContain('**2.** Your age?')
     expect(md).toContain('[ number ]')
   })
+
+  it('renders section block with section heading', () => {
+    const sectionModel: RenderModel = {
+      pages: [{
+        id: 'p_sec', title: 'Section Page',
+        blocks: [
+          { kind: 'section', id: 'partA', items: [
+            { kind: 'item', number: 1, stem: 'Section question', required: true, unresolved: false,
+              widget: 'choice.nominal.single',
+              options: [{ index: 0, text: 'X', value: 1 }] },
+          ], unresolved: false },
+        ],
+      }],
+    }
+    const sectionMeta = { id: 'qst_sec', title: 'Section Test' } as unknown as DefMetadata
+    const sectionMd = toMarkdown(sectionModel, sectionMeta)
+    expect(sectionMd).toContain('### partA')
+    expect(sectionMd).toContain('**1.** Section question')
+    expect(sectionMd).toContain('- X')
+  })
+
+  it('handles null widget with unsupported input message', () => {
+    const nullWidgetModel: RenderModel = {
+      pages: [{
+        id: 'p_null', title: 'Null Widget Page',
+        blocks: [
+          { kind: 'item', number: 1, stem: 'Null widget question', required: false, unresolved: false,
+            widget: null,
+            options: [] },
+        ],
+      }],
+    }
+    const nullMeta = { id: 'qst_null', title: 'Null Widget Test' } as unknown as DefMetadata
+    const nullMd = toMarkdown(nullWidgetModel, nullMeta)
+    expect(nullMd).toContain('_(unsupported input)_')
+  })
+
+  it('handles empty choices with unavailable message', () => {
+    const emptyChoicesModel: RenderModel = {
+      pages: [{
+        id: 'p_empty', title: 'Empty Choices Page',
+        blocks: [
+          { kind: 'item', number: 1, stem: 'No choices available', required: true, unresolved: false,
+            widget: 'choice.nominal.single',
+            options: [] },
+        ],
+      }],
+    }
+    const emptyMeta = { id: 'qst_empty', title: 'Empty Choices Test' } as unknown as DefMetadata
+    const emptyMd = toMarkdown(emptyChoicesModel, emptyMeta)
+    expect(emptyMd).toContain('_(choices unavailable in this language)_')
+  })
+
+  it('omits authors and citation when metadata absent', () => {
+    const minimalMeta = {
+      id: 'qst_min', title: 'Minimal Metadata',
+    } as unknown as DefMetadata
+    const minimalMd = toMarkdown(model, minimalMeta)
+    expect(minimalMd).not.toContain('authors:')
+    expect(minimalMd).not.toContain('citation:')
+  })
 })
