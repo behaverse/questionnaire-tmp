@@ -1,0 +1,1 @@
+{"item_range":[0,1],"scores":[{"key":"total","items":["pr_pcptsd5_2","pr_pcptsd5_3","pr_pcptsd5_4","pr_pcptsd5_5","pr_pcptsd5_6"],"bands":[{"min":0,"max":2,"severity":"negative","label":"Negative screen"},{"min":3,"max":5,"severity":"positive","label":"Positive screen — probable PTSD"}]}]}

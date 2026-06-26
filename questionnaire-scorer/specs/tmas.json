@@ -1,0 +1,223 @@
+{
+  "id": "tmas",
+  "scorer_id": "scr_tmas",
+  "name": "TMAS Scoring",
+  "status": "validated",
+  "description": "Taylor Manifest Anxiety Scale. Total = sum of the 38 true/false items (reverse-keyed items handled), range 0-38; higher = more manifest anxiety. No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      1
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_tmas_1",
+          "pr_tmas_2",
+          "pr_tmas_3",
+          "pr_tmas_4",
+          "pr_tmas_5",
+          "pr_tmas_6",
+          "pr_tmas_7",
+          "pr_tmas_8",
+          "pr_tmas_9",
+          "pr_tmas_10",
+          "pr_tmas_11",
+          "pr_tmas_12",
+          "pr_tmas_13",
+          "pr_tmas_14",
+          "pr_tmas_15",
+          "pr_tmas_16",
+          "pr_tmas_17",
+          "pr_tmas_18",
+          "pr_tmas_19",
+          "pr_tmas_20",
+          "pr_tmas_21",
+          "pr_tmas_22",
+          "pr_tmas_23",
+          "pr_tmas_24",
+          "pr_tmas_25",
+          "pr_tmas_26",
+          "pr_tmas_27",
+          "pr_tmas_28",
+          "pr_tmas_29",
+          "pr_tmas_30",
+          "pr_tmas_31",
+          "pr_tmas_32",
+          "pr_tmas_33",
+          "pr_tmas_34",
+          "pr_tmas_35",
+          "pr_tmas_36",
+          "pr_tmas_37",
+          "pr_tmas_38"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_tmas_1": 0,
+          "pr_tmas_2": 0,
+          "pr_tmas_3": 0,
+          "pr_tmas_4": 0,
+          "pr_tmas_5": 0,
+          "pr_tmas_6": 0,
+          "pr_tmas_7": 0,
+          "pr_tmas_8": 0,
+          "pr_tmas_9": 0,
+          "pr_tmas_10": 0,
+          "pr_tmas_11": 0,
+          "pr_tmas_12": 0,
+          "pr_tmas_13": 0,
+          "pr_tmas_14": 0,
+          "pr_tmas_15": 0,
+          "pr_tmas_16": 0,
+          "pr_tmas_17": 0,
+          "pr_tmas_18": 0,
+          "pr_tmas_19": 0,
+          "pr_tmas_20": 0,
+          "pr_tmas_21": 0,
+          "pr_tmas_22": 0,
+          "pr_tmas_23": 0,
+          "pr_tmas_24": 0,
+          "pr_tmas_25": 0,
+          "pr_tmas_26": 0,
+          "pr_tmas_27": 0,
+          "pr_tmas_28": 0,
+          "pr_tmas_29": 0,
+          "pr_tmas_30": 0,
+          "pr_tmas_31": 0,
+          "pr_tmas_32": 0,
+          "pr_tmas_33": 0,
+          "pr_tmas_34": 0,
+          "pr_tmas_35": 0,
+          "pr_tmas_36": 0,
+          "pr_tmas_37": 0,
+          "pr_tmas_38": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_tmas_1": 1,
+          "pr_tmas_2": 1,
+          "pr_tmas_3": 1,
+          "pr_tmas_4": 1,
+          "pr_tmas_5": 1,
+          "pr_tmas_6": 1,
+          "pr_tmas_7": 1,
+          "pr_tmas_8": 1,
+          "pr_tmas_9": 1,
+          "pr_tmas_10": 1,
+          "pr_tmas_11": 1,
+          "pr_tmas_12": 1,
+          "pr_tmas_13": 1,
+          "pr_tmas_14": 1,
+          "pr_tmas_15": 1,
+          "pr_tmas_16": 1,
+          "pr_tmas_17": 1,
+          "pr_tmas_18": 1,
+          "pr_tmas_19": 1,
+          "pr_tmas_20": 1,
+          "pr_tmas_21": 1,
+          "pr_tmas_22": 1,
+          "pr_tmas_23": 1,
+          "pr_tmas_24": 1,
+          "pr_tmas_25": 1,
+          "pr_tmas_26": 1,
+          "pr_tmas_27": 1,
+          "pr_tmas_28": 1,
+          "pr_tmas_29": 1,
+          "pr_tmas_30": 1,
+          "pr_tmas_31": 1,
+          "pr_tmas_32": 1,
+          "pr_tmas_33": 1,
+          "pr_tmas_34": 1,
+          "pr_tmas_35": 1,
+          "pr_tmas_36": 1,
+          "pr_tmas_37": 1,
+          "pr_tmas_38": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 38
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_tmas_1": 1,
+          "pr_tmas_2": 1,
+          "pr_tmas_3": 1,
+          "pr_tmas_4": 1,
+          "pr_tmas_5": 1,
+          "pr_tmas_6": 1,
+          "pr_tmas_7": 1,
+          "pr_tmas_8": 1,
+          "pr_tmas_9": 1,
+          "pr_tmas_10": 1,
+          "pr_tmas_11": 1,
+          "pr_tmas_12": 1,
+          "pr_tmas_13": 1,
+          "pr_tmas_14": 1,
+          "pr_tmas_15": 1,
+          "pr_tmas_16": 1,
+          "pr_tmas_17": 1,
+          "pr_tmas_18": 1,
+          "pr_tmas_19": 1,
+          "pr_tmas_20": 1,
+          "pr_tmas_21": 1,
+          "pr_tmas_22": 1,
+          "pr_tmas_23": 1,
+          "pr_tmas_24": 1,
+          "pr_tmas_25": 1,
+          "pr_tmas_26": 1,
+          "pr_tmas_27": 1,
+          "pr_tmas_28": 1,
+          "pr_tmas_29": 1,
+          "pr_tmas_30": 1,
+          "pr_tmas_31": 1,
+          "pr_tmas_32": 1,
+          "pr_tmas_33": 1,
+          "pr_tmas_34": 1,
+          "pr_tmas_35": 1,
+          "pr_tmas_36": 1,
+          "pr_tmas_37": 1,
+          "pr_tmas_38": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 38
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Janet A. Taylor. A Personality Scale of Manifest Anxiety. 48 ( 2 ) J. Abnormal and Social Psych. 285-290. 1953.",
+    "year": 1953
+  }
+}

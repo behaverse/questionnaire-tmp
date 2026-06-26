@@ -1,0 +1,152 @@
+{
+  "id": "scr_pcptsd5",
+  "name": "PC-PTSD-5 Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "PC-PTSD-5 Scoring",
+      "description": "Primary Care PTSD Screen for DSM-5 (PC-PTSD-5). Score = number of 'yes' answers across the 5 symptom items (item 1 is the trauma-exposure gate and is not scored), range 0-5; a score of 3 or more is a positive screen."
+    }
+  },
+  "x_publication": {
+    "citation": "A Prins, MJ Bovin, R Kimerling, DG Kaloupek, BP Marx, A Pless-Kaiser, PP Schnurr. The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5): Development and Evaluation Within a Veteran Primary Care Sample. J Gen Intern Med 31 ( 10 ): 1206-1211 ( 2016 ).",
+    "year": 2016
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_pcptsd5_2|pr_pcptsd5_3|pr_pcptsd5_4|pr_pcptsd5_5|pr_pcptsd5_6)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "negative",
+                  "positive"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/pcptsd5/scorer.wasm",
+      "sha256": "66e719151ea58a3b2597f571232b2a901ae33103deab119bdad2d68f5cd3d8ed"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_pcptsd5_2": 0,
+          "pr_pcptsd5_3": 0,
+          "pr_pcptsd5_4": 0,
+          "pr_pcptsd5_5": 0,
+          "pr_pcptsd5_6": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "negative",
+            "band": {
+              "min": 0,
+              "max": 2,
+              "label": "Negative screen"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_pcptsd5_2": 1,
+          "pr_pcptsd5_3": 1,
+          "pr_pcptsd5_4": 1,
+          "pr_pcptsd5_5": 1,
+          "pr_pcptsd5_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 5,
+            "severity": "positive",
+            "band": {
+              "min": 3,
+              "max": 5,
+              "label": "Positive screen — probable PTSD"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

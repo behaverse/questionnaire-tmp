@@ -1,0 +1,97 @@
+{
+  "id": "pcptsd5",
+  "scorer_id": "scr_pcptsd5",
+  "name": "PC-PTSD-5 Scoring",
+  "status": "validated",
+  "description": "Primary Care PTSD Screen for DSM-5 (PC-PTSD-5). Score = number of 'yes' answers across the 5 symptom items (item 1 is the trauma-exposure gate and is not scored), range 0-5; a score of 3 or more is a positive screen.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      1
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_pcptsd5_2",
+          "pr_pcptsd5_3",
+          "pr_pcptsd5_4",
+          "pr_pcptsd5_5",
+          "pr_pcptsd5_6"
+        ],
+        "bands": [
+          {
+            "min": 0,
+            "max": 2,
+            "severity": "negative",
+            "label": "Negative screen"
+          },
+          {
+            "min": 3,
+            "max": 5,
+            "severity": "positive",
+            "label": "Positive screen \u2014 probable PTSD"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_pcptsd5_2": 0,
+          "pr_pcptsd5_3": 0,
+          "pr_pcptsd5_4": 0,
+          "pr_pcptsd5_5": 0,
+          "pr_pcptsd5_6": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "negative",
+            "band": {
+              "min": 0,
+              "max": 2,
+              "label": "Negative screen"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_pcptsd5_2": 1,
+          "pr_pcptsd5_3": 1,
+          "pr_pcptsd5_4": 1,
+          "pr_pcptsd5_5": 1,
+          "pr_pcptsd5_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 5,
+            "severity": "positive",
+            "band": {
+              "min": 3,
+              "max": 5,
+              "label": "Positive screen \u2014 probable PTSD"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "A Prins, MJ Bovin, R Kimerling, DG Kaloupek, BP Marx, A Pless-Kaiser, PP Schnurr. The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5): Development and Evaluation Within a Veteran Primary Care Sample. J Gen Intern Med 31 ( 10 ): 1206-1211 ( 2016 ).",
+    "year": 2016
+  }
+}

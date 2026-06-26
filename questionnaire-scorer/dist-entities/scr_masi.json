@@ -1,0 +1,209 @@
+{
+  "id": "scr_masi",
+  "name": "MASI Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "MASI Scoring",
+      "description": "Measure of Anxiety in Selection Interviews. Total = sum of the 30 items (each 1-5; reverse handled), range 30-150; higher = greater interview anxiety. No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "McCarthy, J. and Goffin, R. (2004), Measuring Job Interview Anxiety: Beyond Weak Knees and Sweaty Palms. Personnel Psychology, 57, 607-637. LINK",
+    "year": 2004
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_masi_1|pr_masi_2|pr_masi_3|pr_masi_4|pr_masi_5|pr_masi_6|pr_masi_7|pr_masi_8|pr_masi_9|pr_masi_10|pr_masi_11|pr_masi_12|pr_masi_13|pr_masi_14|pr_masi_15|pr_masi_16|pr_masi_17|pr_masi_18|pr_masi_19|pr_masi_20|pr_masi_21|pr_masi_22|pr_masi_23|pr_masi_24|pr_masi_25|pr_masi_26|pr_masi_27|pr_masi_28|pr_masi_29|pr_masi_30)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/masi/scorer.wasm",
+      "sha256": "9b751b679ffac5f31b465cc198df5244c72d1afb28c57f74b57dd47befefcef9"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_masi_1": 1,
+          "pr_masi_2": 1,
+          "pr_masi_3": 1,
+          "pr_masi_4": 1,
+          "pr_masi_5": 1,
+          "pr_masi_6": 1,
+          "pr_masi_7": 1,
+          "pr_masi_8": 1,
+          "pr_masi_9": 1,
+          "pr_masi_10": 1,
+          "pr_masi_11": 1,
+          "pr_masi_12": 1,
+          "pr_masi_13": 1,
+          "pr_masi_14": 1,
+          "pr_masi_15": 1,
+          "pr_masi_16": 1,
+          "pr_masi_17": 1,
+          "pr_masi_18": 1,
+          "pr_masi_19": 1,
+          "pr_masi_20": 1,
+          "pr_masi_21": 1,
+          "pr_masi_22": 1,
+          "pr_masi_23": 1,
+          "pr_masi_24": 1,
+          "pr_masi_25": 1,
+          "pr_masi_26": 1,
+          "pr_masi_27": 1,
+          "pr_masi_28": 1,
+          "pr_masi_29": 1,
+          "pr_masi_30": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_masi_1": 3,
+          "pr_masi_2": 3,
+          "pr_masi_3": 3,
+          "pr_masi_4": 3,
+          "pr_masi_5": 3,
+          "pr_masi_6": 3,
+          "pr_masi_7": 3,
+          "pr_masi_8": 3,
+          "pr_masi_9": 3,
+          "pr_masi_10": 3,
+          "pr_masi_11": 3,
+          "pr_masi_12": 3,
+          "pr_masi_13": 3,
+          "pr_masi_14": 3,
+          "pr_masi_15": 3,
+          "pr_masi_16": 3,
+          "pr_masi_17": 3,
+          "pr_masi_18": 3,
+          "pr_masi_19": 3,
+          "pr_masi_20": 3,
+          "pr_masi_21": 3,
+          "pr_masi_22": 3,
+          "pr_masi_23": 3,
+          "pr_masi_24": 3,
+          "pr_masi_25": 3,
+          "pr_masi_26": 3,
+          "pr_masi_27": 3,
+          "pr_masi_28": 3,
+          "pr_masi_29": 3,
+          "pr_masi_30": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 90
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_masi_1": 5,
+          "pr_masi_2": 5,
+          "pr_masi_3": 5,
+          "pr_masi_4": 5,
+          "pr_masi_5": 5,
+          "pr_masi_6": 5,
+          "pr_masi_7": 5,
+          "pr_masi_8": 5,
+          "pr_masi_9": 5,
+          "pr_masi_10": 5,
+          "pr_masi_11": 5,
+          "pr_masi_12": 5,
+          "pr_masi_13": 5,
+          "pr_masi_14": 5,
+          "pr_masi_15": 5,
+          "pr_masi_16": 5,
+          "pr_masi_17": 5,
+          "pr_masi_18": 5,
+          "pr_masi_19": 5,
+          "pr_masi_20": 5,
+          "pr_masi_21": 5,
+          "pr_masi_22": 5,
+          "pr_masi_23": 5,
+          "pr_masi_24": 5,
+          "pr_masi_25": 5,
+          "pr_masi_26": 5,
+          "pr_masi_27": 5,
+          "pr_masi_28": 5,
+          "pr_masi_29": 5,
+          "pr_masi_30": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 150
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

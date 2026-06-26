@@ -473,5 +473,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "MASI total",
+      "path": "/scores/total/value",
+      "scorer": "scr_masi@v26.0618"
+    }
   ]
 }

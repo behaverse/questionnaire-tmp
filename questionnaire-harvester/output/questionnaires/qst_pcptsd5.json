@@ -152,5 +152,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PC-PTSD-5 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pcptsd5@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "PC-PTSD-5 severity",
+      "path": "/scores/total/severity",
+      "scorer": "scr_pcptsd5@v26.0618"
+    }
   ]
 }

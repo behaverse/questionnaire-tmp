@@ -347,5 +347,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "index",
+      "name": "SAS index",
+      "path": "/scores/index/value",
+      "scorer": "scr_sas@v26.0618"
+    },
+    {
+      "id": "index_severity",
+      "name": "SAS severity",
+      "path": "/scores/index/severity",
+      "scorer": "scr_sas@v26.0618"
+    }
   ]
 }

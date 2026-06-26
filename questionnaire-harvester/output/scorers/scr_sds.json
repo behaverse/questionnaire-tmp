@@ -1,0 +1,225 @@
+{
+  "content": {
+    "en": {
+      "description": "Zung Self-Rating Depression Scale. Raw = sum of the 20 items (each 1-4; reverse items pre-scored), range 20-80; the SDS index = raw x 1.25 (range 25-100). Bands: <50 normal, 50-59 mild, 60-69 moderate, 70+ severe.",
+      "name": "SDS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_sds",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "2f59400d097341a7354237b36c21bbe1c342e9f02292875ed02949040064d20f",
+      "url": "https://behaverse.org/scorers/sds/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_sds_1|pr_sds_2|pr_sds_3|pr_sds_4|pr_sds_5|pr_sds_6|pr_sds_7|pr_sds_8|pr_sds_9|pr_sds_10|pr_sds_11|pr_sds_12|pr_sds_13|pr_sds_14|pr_sds_15|pr_sds_16|pr_sds_17|pr_sds_18|pr_sds_19|pr_sds_20)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SDS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "index": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "normal",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "index": {
+            "band": {
+              "label": "Normal range",
+              "max": 49,
+              "min": 25
+            },
+            "severity": "normal",
+            "value": 25
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sds_1": 1,
+          "pr_sds_10": 1,
+          "pr_sds_11": 1,
+          "pr_sds_12": 1,
+          "pr_sds_13": 1,
+          "pr_sds_14": 1,
+          "pr_sds_15": 1,
+          "pr_sds_16": 1,
+          "pr_sds_17": 1,
+          "pr_sds_18": 1,
+          "pr_sds_19": 1,
+          "pr_sds_2": 1,
+          "pr_sds_20": 1,
+          "pr_sds_3": 1,
+          "pr_sds_4": 1,
+          "pr_sds_5": 1,
+          "pr_sds_6": 1,
+          "pr_sds_7": 1,
+          "pr_sds_8": 1,
+          "pr_sds_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "index": {
+            "band": {
+              "label": "Mild depression",
+              "max": 59,
+              "min": 50
+            },
+            "severity": "mild",
+            "value": 50
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sds_1": 2,
+          "pr_sds_10": 2,
+          "pr_sds_11": 2,
+          "pr_sds_12": 2,
+          "pr_sds_13": 2,
+          "pr_sds_14": 2,
+          "pr_sds_15": 2,
+          "pr_sds_16": 2,
+          "pr_sds_17": 2,
+          "pr_sds_18": 2,
+          "pr_sds_19": 2,
+          "pr_sds_2": 2,
+          "pr_sds_20": 2,
+          "pr_sds_3": 2,
+          "pr_sds_4": 2,
+          "pr_sds_5": 2,
+          "pr_sds_6": 2,
+          "pr_sds_7": 2,
+          "pr_sds_8": 2,
+          "pr_sds_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "index": {
+            "band": {
+              "label": "Severe to extreme depression",
+              "max": 100,
+              "min": 70
+            },
+            "severity": "severe",
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sds_1": 4,
+          "pr_sds_10": 4,
+          "pr_sds_11": 4,
+          "pr_sds_12": 4,
+          "pr_sds_13": 4,
+          "pr_sds_14": 4,
+          "pr_sds_15": 4,
+          "pr_sds_16": 4,
+          "pr_sds_17": 4,
+          "pr_sds_18": 4,
+          "pr_sds_19": 4,
+          "pr_sds_2": 4,
+          "pr_sds_20": 4,
+          "pr_sds_3": 4,
+          "pr_sds_4": 4,
+          "pr_sds_5": 4,
+          "pr_sds_6": 4,
+          "pr_sds_7": 4,
+          "pr_sds_8": 4,
+          "pr_sds_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "William W K Zung. A Self-Rating Depression Scale. 12: Arch Gen Psychiatry 63-70. 1965.",
+    "year": 1965
+  }
+}

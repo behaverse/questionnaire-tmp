@@ -601,5 +601,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "TMAS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_tmas@v26.0618"
+    }
   ]
 }

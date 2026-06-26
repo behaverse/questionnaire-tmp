@@ -1,0 +1,135 @@
+{
+  "id": "teq",
+  "scorer_id": "scr_teq",
+  "name": "TEQ Scoring",
+  "status": "validated",
+  "description": "Toronto Empathy Questionnaire. Total = sum of the 16 items (each 0-4; reverse handled), range 0-64; higher = greater empathy. No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      4
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_teq_1",
+          "pr_teq_2",
+          "pr_teq_3",
+          "pr_teq_4",
+          "pr_teq_5",
+          "pr_teq_6",
+          "pr_teq_7",
+          "pr_teq_8",
+          "pr_teq_9",
+          "pr_teq_10",
+          "pr_teq_11",
+          "pr_teq_12",
+          "pr_teq_13",
+          "pr_teq_14",
+          "pr_teq_15",
+          "pr_teq_16"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_teq_1": 0,
+          "pr_teq_2": 0,
+          "pr_teq_3": 0,
+          "pr_teq_4": 0,
+          "pr_teq_5": 0,
+          "pr_teq_6": 0,
+          "pr_teq_7": 0,
+          "pr_teq_8": 0,
+          "pr_teq_9": 0,
+          "pr_teq_10": 0,
+          "pr_teq_11": 0,
+          "pr_teq_12": 0,
+          "pr_teq_13": 0,
+          "pr_teq_14": 0,
+          "pr_teq_15": 0,
+          "pr_teq_16": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_teq_1": 2,
+          "pr_teq_2": 2,
+          "pr_teq_3": 2,
+          "pr_teq_4": 2,
+          "pr_teq_5": 2,
+          "pr_teq_6": 2,
+          "pr_teq_7": 2,
+          "pr_teq_8": 2,
+          "pr_teq_9": 2,
+          "pr_teq_10": 2,
+          "pr_teq_11": 2,
+          "pr_teq_12": 2,
+          "pr_teq_13": 2,
+          "pr_teq_14": 2,
+          "pr_teq_15": 2,
+          "pr_teq_16": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 32
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_teq_1": 4,
+          "pr_teq_2": 4,
+          "pr_teq_3": 4,
+          "pr_teq_4": 4,
+          "pr_teq_5": 4,
+          "pr_teq_6": 4,
+          "pr_teq_7": 4,
+          "pr_teq_8": 4,
+          "pr_teq_9": 4,
+          "pr_teq_10": 4,
+          "pr_teq_11": 4,
+          "pr_teq_12": 4,
+          "pr_teq_13": 4,
+          "pr_teq_14": 4,
+          "pr_teq_15": 4,
+          "pr_teq_16": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 64
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Spreng RN, McKinnon MC, Mar RA, Levine B. The Toronto Empathy Questionnaire: Scale development and initial validation of a factor-analytic solution to multiple empathy measures. Journal of Personality Assessment. 2009.; 91 ( 1 ): 62-71.",
+    "year": 2009
+  }
+}

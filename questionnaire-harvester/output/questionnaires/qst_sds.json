@@ -347,5 +347,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "index",
+      "name": "SDS index",
+      "path": "/scores/index/value",
+      "scorer": "scr_sds@v26.0618"
+    },
+    {
+      "id": "index_severity",
+      "name": "SDS severity",
+      "path": "/scores/index/severity",
+      "scorer": "scr_sds@v26.0618"
+    }
   ]
 }

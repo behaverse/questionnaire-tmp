@@ -1,0 +1,225 @@
+{
+  "content": {
+    "en": {
+      "description": "Zung Self-Rating Anxiety Scale. Raw = sum of the 20 items (each 1-4; reverse items pre-scored), range 20-80; the SAS index = raw x 1.25 (range 25-100). Bands: <45 normal, 45-59 mild-moderate, 60-74 marked-severe, 75+ extreme.",
+      "name": "SAS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_sas",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "a7f38d7b7a95e1f3bec1dad92f10a4898bf8b1421daef47d605c455d59d93621",
+      "url": "https://behaverse.org/scorers/sas/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_sas_1|pr_sas_2|pr_sas_3|pr_sas_4|pr_sas_5|pr_sas_6|pr_sas_7|pr_sas_8|pr_sas_9|pr_sas_10|pr_sas_11|pr_sas_12|pr_sas_13|pr_sas_14|pr_sas_15|pr_sas_16|pr_sas_17|pr_sas_18|pr_sas_19|pr_sas_20)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SAS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "index": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "normal",
+                  "mild_moderate",
+                  "marked_severe",
+                  "extreme"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "index": {
+            "band": {
+              "label": "Normal range",
+              "max": 44,
+              "min": 25
+            },
+            "severity": "normal",
+            "value": 25
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sas_1": 1,
+          "pr_sas_10": 1,
+          "pr_sas_11": 1,
+          "pr_sas_12": 1,
+          "pr_sas_13": 1,
+          "pr_sas_14": 1,
+          "pr_sas_15": 1,
+          "pr_sas_16": 1,
+          "pr_sas_17": 1,
+          "pr_sas_18": 1,
+          "pr_sas_19": 1,
+          "pr_sas_2": 1,
+          "pr_sas_20": 1,
+          "pr_sas_3": 1,
+          "pr_sas_4": 1,
+          "pr_sas_5": 1,
+          "pr_sas_6": 1,
+          "pr_sas_7": 1,
+          "pr_sas_8": 1,
+          "pr_sas_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "index": {
+            "band": {
+              "label": "Mild to moderate anxiety",
+              "max": 59,
+              "min": 45
+            },
+            "severity": "mild_moderate",
+            "value": 50
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sas_1": 2,
+          "pr_sas_10": 2,
+          "pr_sas_11": 2,
+          "pr_sas_12": 2,
+          "pr_sas_13": 2,
+          "pr_sas_14": 2,
+          "pr_sas_15": 2,
+          "pr_sas_16": 2,
+          "pr_sas_17": 2,
+          "pr_sas_18": 2,
+          "pr_sas_19": 2,
+          "pr_sas_2": 2,
+          "pr_sas_20": 2,
+          "pr_sas_3": 2,
+          "pr_sas_4": 2,
+          "pr_sas_5": 2,
+          "pr_sas_6": 2,
+          "pr_sas_7": 2,
+          "pr_sas_8": 2,
+          "pr_sas_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "index": {
+            "band": {
+              "label": "Extreme anxiety",
+              "max": 100,
+              "min": 75
+            },
+            "severity": "extreme",
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sas_1": 4,
+          "pr_sas_10": 4,
+          "pr_sas_11": 4,
+          "pr_sas_12": 4,
+          "pr_sas_13": 4,
+          "pr_sas_14": 4,
+          "pr_sas_15": 4,
+          "pr_sas_16": 4,
+          "pr_sas_17": 4,
+          "pr_sas_18": 4,
+          "pr_sas_19": 4,
+          "pr_sas_2": 4,
+          "pr_sas_20": 4,
+          "pr_sas_3": 4,
+          "pr_sas_4": 4,
+          "pr_sas_5": 4,
+          "pr_sas_6": 4,
+          "pr_sas_7": 4,
+          "pr_sas_8": 4,
+          "pr_sas_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "William W K Zung. A Rating Instrument for Anxiety Disorders. 12 ( 6 ): Psychosomatics 371-379. 1971.",
+    "year": 1971
+  }
+}

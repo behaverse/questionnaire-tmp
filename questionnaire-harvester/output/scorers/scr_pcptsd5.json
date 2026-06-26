@@ -1,0 +1,152 @@
+{
+  "content": {
+    "en": {
+      "description": "Primary Care PTSD Screen for DSM-5 (PC-PTSD-5). Score = number of 'yes' answers across the 5 symptom items (item 1 is the trauma-exposure gate and is not scored), range 0-5; a score of 3 or more is a positive screen.",
+      "name": "PC-PTSD-5 Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_pcptsd5",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "66e719151ea58a3b2597f571232b2a901ae33103deab119bdad2d68f5cd3d8ed",
+      "url": "https://behaverse.org/scorers/pcptsd5/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_pcptsd5_2|pr_pcptsd5_3|pr_pcptsd5_4|pr_pcptsd5_5|pr_pcptsd5_6)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "PC-PTSD-5 Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "negative",
+                  "positive"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Negative screen",
+              "max": 2,
+              "min": 0
+            },
+            "severity": "negative",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pcptsd5_2": 0,
+          "pr_pcptsd5_3": 0,
+          "pr_pcptsd5_4": 0,
+          "pr_pcptsd5_5": 0,
+          "pr_pcptsd5_6": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Positive screen — probable PTSD",
+              "max": 5,
+              "min": 3
+            },
+            "severity": "positive",
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pcptsd5_2": 1,
+          "pr_pcptsd5_3": 1,
+          "pr_pcptsd5_4": 1,
+          "pr_pcptsd5_5": 1,
+          "pr_pcptsd5_6": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "A Prins, MJ Bovin, R Kimerling, DG Kaloupek, BP Marx, A Pless-Kaiser, PP Schnurr. The Primary Care PTSD Screen for DSM-5 (PC-PTSD-5): Development and Evaluation Within a Veteran Primary Care Sample. J Gen Intern Med 31 ( 10 ): 1206-1211 ( 2016 ).",
+    "year": 2016
+  }
+}

@@ -289,5 +289,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "TEQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_teq@v26.0618"
+    }
   ]
 }
