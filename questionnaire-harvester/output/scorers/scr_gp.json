@@ -1,0 +1,179 @@
+{
+  "content": {
+    "en": {
+      "description": "General Procrastination Scale. Total = sum of the 20 items (each 1-5), range 20-100. Higher scores indicate greater trait procrastination (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "GPS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_gp",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "9249d08836c1e98b075c8317d2101ec00d3eb001b2abd17f6cfff4d484412ed7",
+      "url": "https://behaverse.org/scorers/gp/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_gp_1|pr_gp_2|pr_gp_3|pr_gp_4|pr_gp_5|pr_gp_6|pr_gp_7|pr_gp_8|pr_gp_9|pr_gp_10|pr_gp_11|pr_gp_12|pr_gp_13|pr_gp_14|pr_gp_15|pr_gp_16|pr_gp_17|pr_gp_18|pr_gp_19|pr_gp_20)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "GPS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gp_1": 1,
+          "pr_gp_10": 1,
+          "pr_gp_11": 1,
+          "pr_gp_12": 1,
+          "pr_gp_13": 1,
+          "pr_gp_14": 1,
+          "pr_gp_15": 1,
+          "pr_gp_16": 1,
+          "pr_gp_17": 1,
+          "pr_gp_18": 1,
+          "pr_gp_19": 1,
+          "pr_gp_2": 1,
+          "pr_gp_20": 1,
+          "pr_gp_3": 1,
+          "pr_gp_4": 1,
+          "pr_gp_5": 1,
+          "pr_gp_6": 1,
+          "pr_gp_7": 1,
+          "pr_gp_8": 1,
+          "pr_gp_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gp_1": 3,
+          "pr_gp_10": 3,
+          "pr_gp_11": 3,
+          "pr_gp_12": 3,
+          "pr_gp_13": 3,
+          "pr_gp_14": 3,
+          "pr_gp_15": 3,
+          "pr_gp_16": 3,
+          "pr_gp_17": 3,
+          "pr_gp_18": 3,
+          "pr_gp_19": 3,
+          "pr_gp_2": 3,
+          "pr_gp_20": 3,
+          "pr_gp_3": 3,
+          "pr_gp_4": 3,
+          "pr_gp_5": 3,
+          "pr_gp_6": 3,
+          "pr_gp_7": 3,
+          "pr_gp_8": 3,
+          "pr_gp_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gp_1": 5,
+          "pr_gp_10": 5,
+          "pr_gp_11": 5,
+          "pr_gp_12": 5,
+          "pr_gp_13": 5,
+          "pr_gp_14": 5,
+          "pr_gp_15": 5,
+          "pr_gp_16": 5,
+          "pr_gp_17": 5,
+          "pr_gp_18": 5,
+          "pr_gp_19": 5,
+          "pr_gp_2": 5,
+          "pr_gp_20": 5,
+          "pr_gp_3": 5,
+          "pr_gp_4": 5,
+          "pr_gp_5": 5,
+          "pr_gp_6": 5,
+          "pr_gp_7": 5,
+          "pr_gp_8": 5,
+          "pr_gp_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Lay, C.H. (1986). At Last, My Research Article on\nProcrastination. Journal of Research in Personality, 20 , 474-495.",
+    "year": 1986
+  }
+}

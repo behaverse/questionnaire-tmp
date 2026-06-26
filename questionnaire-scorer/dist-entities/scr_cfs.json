@@ -1,0 +1,155 @@
+{
+  "id": "scr_cfs",
+  "name": "CFS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "CFS Total Scoring",
+      "description": "Cognitive Flexibility Scale (CFS). Total = sum of the 12 items (each 1-6), range 12-72. Higher scores indicate greater cognitive flexibility (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Martin, M. M. & Rubin, R.B. (1995). A new measure of cognitive flexibility. Psychological Reports, 76 , 623-626. (Download here) .",
+    "year": 1995
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_cfs_1|pr_cfs_2|pr_cfs_3|pr_cfs_4|pr_cfs_5|pr_cfs_6|pr_cfs_7|pr_cfs_8|pr_cfs_9|pr_cfs_10|pr_cfs_11|pr_cfs_12)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/cfs/scorer.wasm",
+      "sha256": "806a49d6aafe09e1678c4095b64d6d6352c7561bd40f0c57041f5a346eb7c9d1"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_cfs_1": 1,
+          "pr_cfs_2": 1,
+          "pr_cfs_3": 1,
+          "pr_cfs_4": 1,
+          "pr_cfs_5": 1,
+          "pr_cfs_6": 1,
+          "pr_cfs_7": 1,
+          "pr_cfs_8": 1,
+          "pr_cfs_9": 1,
+          "pr_cfs_10": 1,
+          "pr_cfs_11": 1,
+          "pr_cfs_12": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_cfs_1": 3,
+          "pr_cfs_2": 3,
+          "pr_cfs_3": 3,
+          "pr_cfs_4": 3,
+          "pr_cfs_5": 3,
+          "pr_cfs_6": 3,
+          "pr_cfs_7": 3,
+          "pr_cfs_8": 3,
+          "pr_cfs_9": 3,
+          "pr_cfs_10": 3,
+          "pr_cfs_11": 3,
+          "pr_cfs_12": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 36
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_cfs_1": 6,
+          "pr_cfs_2": 6,
+          "pr_cfs_3": 6,
+          "pr_cfs_4": 6,
+          "pr_cfs_5": 6,
+          "pr_cfs_6": 6,
+          "pr_cfs_7": 6,
+          "pr_cfs_8": 6,
+          "pr_cfs_9": 6,
+          "pr_cfs_10": 6,
+          "pr_cfs_11": 6,
+          "pr_cfs_12": 6
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 72
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

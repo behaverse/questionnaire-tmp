@@ -1,0 +1,155 @@
+{
+  "id": "scr_sos",
+  "name": "SOS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "SOS Total Scoring",
+      "description": "Service to Others in Sobriety (SOS) questionnaire. Total = sum of the 12 items (each 1-5), range 12-60. Higher scores indicate greater service to others in sobriety (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Pagano, M.E., Krentzman, A.R., Onder, C.C., Baryak, J.L., Murphy, J.L., Zywiak, W.H.,  & Stout, R. L. (2010). Service to Others in Sobriety (SOS). Alcohol Treatment Quarterly, 28 , 111-127. Read this paper online for free .",
+    "year": 2010
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_sos_1|pr_sos_2|pr_sos_3|pr_sos_4|pr_sos_5|pr_sos_6|pr_sos_7|pr_sos_8|pr_sos_9|pr_sos_10|pr_sos_11|pr_sos_12)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/sos/scorer.wasm",
+      "sha256": "27f83ba9de98bb7a2482e781ce849b6947019ffbbd1a93c8fbdc45a47364ce0f"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_sos_1": 1,
+          "pr_sos_2": 1,
+          "pr_sos_3": 1,
+          "pr_sos_4": 1,
+          "pr_sos_5": 1,
+          "pr_sos_6": 1,
+          "pr_sos_7": 1,
+          "pr_sos_8": 1,
+          "pr_sos_9": 1,
+          "pr_sos_10": 1,
+          "pr_sos_11": 1,
+          "pr_sos_12": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_sos_1": 3,
+          "pr_sos_2": 3,
+          "pr_sos_3": 3,
+          "pr_sos_4": 3,
+          "pr_sos_5": 3,
+          "pr_sos_6": 3,
+          "pr_sos_7": 3,
+          "pr_sos_8": 3,
+          "pr_sos_9": 3,
+          "pr_sos_10": 3,
+          "pr_sos_11": 3,
+          "pr_sos_12": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 36
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_sos_1": 5,
+          "pr_sos_2": 5,
+          "pr_sos_3": 5,
+          "pr_sos_4": 5,
+          "pr_sos_5": 5,
+          "pr_sos_6": 5,
+          "pr_sos_7": 5,
+          "pr_sos_8": 5,
+          "pr_sos_9": 5,
+          "pr_sos_10": 5,
+          "pr_sos_11": 5,
+          "pr_sos_12": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

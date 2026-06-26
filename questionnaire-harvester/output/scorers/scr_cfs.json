@@ -1,0 +1,155 @@
+{
+  "content": {
+    "en": {
+      "description": "Cognitive Flexibility Scale (CFS). Total = sum of the 12 items (each 1-6), range 12-72. Higher scores indicate greater cognitive flexibility (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "CFS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_cfs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "806a49d6aafe09e1678c4095b64d6d6352c7561bd40f0c57041f5a346eb7c9d1",
+      "url": "https://behaverse.org/scorers/cfs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_cfs_1|pr_cfs_2|pr_cfs_3|pr_cfs_4|pr_cfs_5|pr_cfs_6|pr_cfs_7|pr_cfs_8|pr_cfs_9|pr_cfs_10|pr_cfs_11|pr_cfs_12)$": {
+            "maximum": 6,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CFS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cfs_1": 1,
+          "pr_cfs_10": 1,
+          "pr_cfs_11": 1,
+          "pr_cfs_12": 1,
+          "pr_cfs_2": 1,
+          "pr_cfs_3": 1,
+          "pr_cfs_4": 1,
+          "pr_cfs_5": 1,
+          "pr_cfs_6": 1,
+          "pr_cfs_7": 1,
+          "pr_cfs_8": 1,
+          "pr_cfs_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 36
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cfs_1": 3,
+          "pr_cfs_10": 3,
+          "pr_cfs_11": 3,
+          "pr_cfs_12": 3,
+          "pr_cfs_2": 3,
+          "pr_cfs_3": 3,
+          "pr_cfs_4": 3,
+          "pr_cfs_5": 3,
+          "pr_cfs_6": 3,
+          "pr_cfs_7": 3,
+          "pr_cfs_8": 3,
+          "pr_cfs_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 72
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cfs_1": 6,
+          "pr_cfs_10": 6,
+          "pr_cfs_11": 6,
+          "pr_cfs_12": 6,
+          "pr_cfs_2": 6,
+          "pr_cfs_3": 6,
+          "pr_cfs_4": 6,
+          "pr_cfs_5": 6,
+          "pr_cfs_6": 6,
+          "pr_cfs_7": 6,
+          "pr_cfs_8": 6,
+          "pr_cfs_9": 6
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Martin, M. M. & Rubin, R.B. (1995). A new measure of cognitive flexibility. Psychological Reports, 76 , 623-626. (Download here) .",
+    "year": 1995
+  }
+}

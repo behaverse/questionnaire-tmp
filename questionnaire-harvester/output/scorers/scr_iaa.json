@@ -1,0 +1,173 @@
+{
+  "content": {
+    "en": {
+      "description": "Internet Addiction Assessment (IAA). Total = sum of the 18 items (each 0-4), range 0-72. Higher scores indicate greater problematic internet use (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "IAA Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_iaa",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "72e8955ba3a6d329b6b1ca3e5a99ea9cc6593762dcad4130fe481b3c62631467",
+      "url": "https://behaverse.org/scorers/iaa/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_iaa_1|pr_iaa_2|pr_iaa_3|pr_iaa_4|pr_iaa_5|pr_iaa_6|pr_iaa_7|pr_iaa_8|pr_iaa_9|pr_iaa_10|pr_iaa_11|pr_iaa_12|pr_iaa_13|pr_iaa_14|pr_iaa_15|pr_iaa_16|pr_iaa_17|pr_iaa_18)$": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "IAA Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_iaa_1": 0,
+          "pr_iaa_10": 0,
+          "pr_iaa_11": 0,
+          "pr_iaa_12": 0,
+          "pr_iaa_13": 0,
+          "pr_iaa_14": 0,
+          "pr_iaa_15": 0,
+          "pr_iaa_16": 0,
+          "pr_iaa_17": 0,
+          "pr_iaa_18": 0,
+          "pr_iaa_2": 0,
+          "pr_iaa_3": 0,
+          "pr_iaa_4": 0,
+          "pr_iaa_5": 0,
+          "pr_iaa_6": 0,
+          "pr_iaa_7": 0,
+          "pr_iaa_8": 0,
+          "pr_iaa_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 36
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_iaa_1": 2,
+          "pr_iaa_10": 2,
+          "pr_iaa_11": 2,
+          "pr_iaa_12": 2,
+          "pr_iaa_13": 2,
+          "pr_iaa_14": 2,
+          "pr_iaa_15": 2,
+          "pr_iaa_16": 2,
+          "pr_iaa_17": 2,
+          "pr_iaa_18": 2,
+          "pr_iaa_2": 2,
+          "pr_iaa_3": 2,
+          "pr_iaa_4": 2,
+          "pr_iaa_5": 2,
+          "pr_iaa_6": 2,
+          "pr_iaa_7": 2,
+          "pr_iaa_8": 2,
+          "pr_iaa_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 72
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_iaa_1": 4,
+          "pr_iaa_10": 4,
+          "pr_iaa_11": 4,
+          "pr_iaa_12": 4,
+          "pr_iaa_13": 4,
+          "pr_iaa_14": 4,
+          "pr_iaa_15": 4,
+          "pr_iaa_16": 4,
+          "pr_iaa_17": 4,
+          "pr_iaa_18": 4,
+          "pr_iaa_2": 4,
+          "pr_iaa_3": 4,
+          "pr_iaa_4": 4,
+          "pr_iaa_5": 4,
+          "pr_iaa_6": 4,
+          "pr_iaa_7": 4,
+          "pr_iaa_8": 4,
+          "pr_iaa_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "H Cash, C D Rae, A H Steel, A Winkler. Internet Addiction: A Brief Summary of Research and Practice. 8 ( 4 ): Curr Psychiatry Rev. 292-298. 2012.",
+    "year": 2012
+  }
+}

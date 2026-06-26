@@ -1,0 +1,161 @@
+{
+  "content": {
+    "en": {
+      "description": "Shyness Scale (McCroskey). Total = sum of the 14 items (each 1-5), range 14-70. Higher scores indicate greater shyness (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "McCroskey Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_mcss",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "f05ac8fd5e0e7d50379445aede56aba4eadc90cf15c659158dbb3ef0b63b5fc5",
+      "url": "https://behaverse.org/scorers/mcss/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_mcss_1|pr_mcss_2|pr_mcss_3|pr_mcss_4|pr_mcss_5|pr_mcss_6|pr_mcss_7|pr_mcss_8|pr_mcss_9|pr_mcss_10|pr_mcss_11|pr_mcss_12|pr_mcss_13|pr_mcss_14)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "McCroskey Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 14
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mcss_1": 1,
+          "pr_mcss_10": 1,
+          "pr_mcss_11": 1,
+          "pr_mcss_12": 1,
+          "pr_mcss_13": 1,
+          "pr_mcss_14": 1,
+          "pr_mcss_2": 1,
+          "pr_mcss_3": 1,
+          "pr_mcss_4": 1,
+          "pr_mcss_5": 1,
+          "pr_mcss_6": 1,
+          "pr_mcss_7": 1,
+          "pr_mcss_8": 1,
+          "pr_mcss_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 42
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mcss_1": 3,
+          "pr_mcss_10": 3,
+          "pr_mcss_11": 3,
+          "pr_mcss_12": 3,
+          "pr_mcss_13": 3,
+          "pr_mcss_14": 3,
+          "pr_mcss_2": 3,
+          "pr_mcss_3": 3,
+          "pr_mcss_4": 3,
+          "pr_mcss_5": 3,
+          "pr_mcss_6": 3,
+          "pr_mcss_7": 3,
+          "pr_mcss_8": 3,
+          "pr_mcss_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 70
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mcss_1": 5,
+          "pr_mcss_10": 5,
+          "pr_mcss_11": 5,
+          "pr_mcss_12": 5,
+          "pr_mcss_13": 5,
+          "pr_mcss_14": 5,
+          "pr_mcss_2": 5,
+          "pr_mcss_3": 5,
+          "pr_mcss_4": 5,
+          "pr_mcss_5": 5,
+          "pr_mcss_6": 5,
+          "pr_mcss_7": 5,
+          "pr_mcss_8": 5,
+          "pr_mcss_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "McCroskey, J. C., & Richmond, V. P. (1982). Communication apprehension\nand shyness: Conceptual and operational distinctions. Central States\nSpeech Journal, 33 , 458-468.",
+    "year": 1982
+  }
+}

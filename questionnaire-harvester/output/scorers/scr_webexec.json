@@ -1,0 +1,137 @@
+{
+  "content": {
+    "en": {
+      "description": "Problems with executive control (webexec). Total = sum of the 6 items (each 1-4), range 6-24. Higher scores indicate greater everyday executive-control problems (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "webexec Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_webexec",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "b35d7d3b8dc460a20a319611a3854af6f249c2e6bb130dd499282a07fa7dee13",
+      "url": "https://behaverse.org/scorers/webexec/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_webexec_1|pr_webexec_2|pr_webexec_3|pr_webexec_4|pr_webexec_5|pr_webexec_6)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "webexec Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_webexec_1": 1,
+          "pr_webexec_2": 1,
+          "pr_webexec_3": 1,
+          "pr_webexec_4": 1,
+          "pr_webexec_5": 1,
+          "pr_webexec_6": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_webexec_1": 2,
+          "pr_webexec_2": 2,
+          "pr_webexec_3": 2,
+          "pr_webexec_4": 2,
+          "pr_webexec_5": 2,
+          "pr_webexec_6": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 24
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_webexec_1": 4,
+          "pr_webexec_2": 4,
+          "pr_webexec_3": 4,
+          "pr_webexec_4": 4,
+          "pr_webexec_5": 4,
+          "pr_webexec_6": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Buchanan, T., Heffernan, T. M., Parrott, A. C., Ling, J., Rodgers, J., & Scholey, A. B. (2010). A short self-report measure of problems with executive function suitable for administration via the Internet. Behavior Research Methods, 42 , 709-714.",
+    "year": 2010
+  }
+}

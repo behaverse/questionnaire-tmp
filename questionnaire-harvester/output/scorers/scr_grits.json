@@ -1,0 +1,143 @@
+{
+  "content": {
+    "en": {
+      "description": "Short Grit Scale (Grit-S). Score = MEAN of the 8 items (each 1-5), range 1-5. Higher scores indicate greater grit (perseverance and consistency of interest) (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "Grit-S Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_grits",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "b24f5ee564e9c94a5435ad0cc47e45502577c249546923d92a3afd4d8749eec8",
+      "url": "https://behaverse.org/scorers/grits/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_grits_1|pr_grits_2|pr_grits_3|pr_grits_4|pr_grits_5|pr_grits_6|pr_grits_7|pr_grits_8)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "Grit-S Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_grits_1": 1,
+          "pr_grits_2": 1,
+          "pr_grits_3": 1,
+          "pr_grits_4": 1,
+          "pr_grits_5": 1,
+          "pr_grits_6": 1,
+          "pr_grits_7": 1,
+          "pr_grits_8": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 3
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_grits_1": 3,
+          "pr_grits_2": 3,
+          "pr_grits_3": 3,
+          "pr_grits_4": 3,
+          "pr_grits_5": 3,
+          "pr_grits_6": 3,
+          "pr_grits_7": 3,
+          "pr_grits_8": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_grits_1": 5,
+          "pr_grits_2": 5,
+          "pr_grits_3": 5,
+          "pr_grits_4": 5,
+          "pr_grits_5": 5,
+          "pr_grits_6": 5,
+          "pr_grits_7": 5,
+          "pr_grits_8": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Duckworth, A.L., Peterson, C., Matthews, M.D., & Kelly, D.R. (2007). Grit: Perseverance and\npassion for long-term goals. Journal of Personality and Social Psychology, 9 , 1087-1101. Free download via Research Gate",
+    "year": 2007
+  }
+}

@@ -459,5 +459,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "OHQ mean",
+      "path": "/scores/total/value",
+      "scorer": "scr_ohq@v26.0618"
+    }
   ]
 }

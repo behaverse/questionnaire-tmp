@@ -1,0 +1,179 @@
+{
+  "id": "scr_mate",
+  "name": "MATE Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "MATE Total Scoring",
+      "description": "Measure of Acceptance of the Theory of Evolution (MATE). Total = sum of the 20 items (each 1-5), range 20-100. Higher scores indicate greater acceptance of the theory of evolution (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Rutledge, M .L . & Warden, M .A . (1999). The development and validation of the Measure of Acceptance of the Theory of Evolution Instrument. School Science and Mathematics, 99(1) , 13-18.",
+    "year": 1999
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_mate_1|pr_mate_2|pr_mate_3|pr_mate_4|pr_mate_5|pr_mate_6|pr_mate_7|pr_mate_8|pr_mate_9|pr_mate_10|pr_mate_11|pr_mate_12|pr_mate_13|pr_mate_14|pr_mate_15|pr_mate_16|pr_mate_17|pr_mate_18|pr_mate_19|pr_mate_20)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/mate/scorer.wasm",
+      "sha256": "2db16cd926e8184d1a20df20790cbd0cbbddfaf0443a08f2c418a15624627b7d"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_mate_1": 1,
+          "pr_mate_2": 1,
+          "pr_mate_3": 1,
+          "pr_mate_4": 1,
+          "pr_mate_5": 1,
+          "pr_mate_6": 1,
+          "pr_mate_7": 1,
+          "pr_mate_8": 1,
+          "pr_mate_9": 1,
+          "pr_mate_10": 1,
+          "pr_mate_11": 1,
+          "pr_mate_12": 1,
+          "pr_mate_13": 1,
+          "pr_mate_14": 1,
+          "pr_mate_15": 1,
+          "pr_mate_16": 1,
+          "pr_mate_17": 1,
+          "pr_mate_18": 1,
+          "pr_mate_19": 1,
+          "pr_mate_20": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_mate_1": 3,
+          "pr_mate_2": 3,
+          "pr_mate_3": 3,
+          "pr_mate_4": 3,
+          "pr_mate_5": 3,
+          "pr_mate_6": 3,
+          "pr_mate_7": 3,
+          "pr_mate_8": 3,
+          "pr_mate_9": 3,
+          "pr_mate_10": 3,
+          "pr_mate_11": 3,
+          "pr_mate_12": 3,
+          "pr_mate_13": 3,
+          "pr_mate_14": 3,
+          "pr_mate_15": 3,
+          "pr_mate_16": 3,
+          "pr_mate_17": 3,
+          "pr_mate_18": 3,
+          "pr_mate_19": 3,
+          "pr_mate_20": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_mate_1": 5,
+          "pr_mate_2": 5,
+          "pr_mate_3": 5,
+          "pr_mate_4": 5,
+          "pr_mate_5": 5,
+          "pr_mate_6": 5,
+          "pr_mate_7": 5,
+          "pr_mate_8": 5,
+          "pr_mate_9": 5,
+          "pr_mate_10": 5,
+          "pr_mate_11": 5,
+          "pr_mate_12": 5,
+          "pr_mate_13": 5,
+          "pr_mate_14": 5,
+          "pr_mate_15": 5,
+          "pr_mate_16": 5,
+          "pr_mate_17": 5,
+          "pr_mate_18": 5,
+          "pr_mate_19": 5,
+          "pr_mate_20": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -235,5 +235,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "GAENE total",
+      "path": "/scores/total/value",
+      "scorer": "scr_gaene@v26.0618"
+    }
   ]
 }

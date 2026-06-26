@@ -1,0 +1,96 @@
+{
+  "id": "ncs6",
+  "scorer_id": "scr_ncs6",
+  "name": "NCS-6 Total Scoring",
+  "status": "validated",
+  "description": "Need for Cognition (NCS-6). Total = sum of the 6 items (each 1-5), range 6-30. Higher scores indicate greater need for cognition (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_ncs6_1",
+          "pr_ncs6_2",
+          "pr_ncs6_3",
+          "pr_ncs6_4",
+          "pr_ncs6_5",
+          "pr_ncs6_6"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 1,
+          "pr_ncs6_2": 1,
+          "pr_ncs6_3": 1,
+          "pr_ncs6_4": 1,
+          "pr_ncs6_5": 1,
+          "pr_ncs6_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 3,
+          "pr_ncs6_2": 3,
+          "pr_ncs6_3": 3,
+          "pr_ncs6_4": 3,
+          "pr_ncs6_5": 3,
+          "pr_ncs6_6": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 5,
+          "pr_ncs6_2": 5,
+          "pr_ncs6_3": 5,
+          "pr_ncs6_4": 5,
+          "pr_ncs6_5": 5,
+          "pr_ncs6_6": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Coelho, G.L.D.H., Hanel, P.H.P, & Wolf, L.J. (2018). The\nVery Efficient Assessment of Need for Cognition: Developing a Six-Item\nVersion. Assessment, online first , 1-16. Download here .",
+    "year": 2018
+  }
+}

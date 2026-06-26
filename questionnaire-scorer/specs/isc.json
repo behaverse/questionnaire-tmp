@@ -1,0 +1,104 @@
+{
+  "id": "isc",
+  "scorer_id": "scr_isc",
+  "name": "ISC Total Scoring",
+  "status": "validated",
+  "description": "Impulsivity Scale for Children (ISC). Total = sum of the 8 items (each 1-5), range 8-40. Higher scores indicate greater impulsivity (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_isc_1",
+          "pr_isc_2",
+          "pr_isc_3",
+          "pr_isc_4",
+          "pr_isc_5",
+          "pr_isc_6",
+          "pr_isc_7",
+          "pr_isc_8"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_isc_1": 1,
+          "pr_isc_2": 1,
+          "pr_isc_3": 1,
+          "pr_isc_4": 1,
+          "pr_isc_5": 1,
+          "pr_isc_6": 1,
+          "pr_isc_7": 1,
+          "pr_isc_8": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 8
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_isc_1": 3,
+          "pr_isc_2": 3,
+          "pr_isc_3": 3,
+          "pr_isc_4": 3,
+          "pr_isc_5": 3,
+          "pr_isc_6": 3,
+          "pr_isc_7": 3,
+          "pr_isc_8": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 24
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_isc_1": 5,
+          "pr_isc_2": 5,
+          "pr_isc_3": 5,
+          "pr_isc_4": 5,
+          "pr_isc_5": 5,
+          "pr_isc_6": 5,
+          "pr_isc_7": 5,
+          "pr_isc_8": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 40
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Tsukayama, E., Duckworth, A.L. & Kim, B. (2013). Domain-specific impulsivity in school-age children. Developmental Science, 16 , 879-893.",
+    "year": 2013
+  }
+}

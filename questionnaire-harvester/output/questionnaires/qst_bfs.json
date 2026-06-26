@@ -221,5 +221,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "BFS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_bfs@v26.0618"
+    }
   ]
 }

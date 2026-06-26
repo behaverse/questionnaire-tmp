@@ -221,5 +221,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SOS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_sos@v26.0618"
+    }
   ]
 }

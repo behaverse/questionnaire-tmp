@@ -249,5 +249,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "McCroskey total",
+      "path": "/scores/total/value",
+      "scorer": "scr_mcss@v26.0618"
+    }
   ]
 }

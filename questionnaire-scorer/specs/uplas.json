@@ -1,0 +1,172 @@
+{
+  "id": "uplas",
+  "scorer_id": "scr_uplas",
+  "name": "UPLAS Total Scoring",
+  "status": "validated",
+  "description": "Loneliness (UPLAS). Total = sum of the 25 items (each 1-4), range 25-100. Higher scores indicate greater loneliness (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      4
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_uplas_1",
+          "pr_uplas_2",
+          "pr_uplas_3",
+          "pr_uplas_4",
+          "pr_uplas_5",
+          "pr_uplas_6",
+          "pr_uplas_7",
+          "pr_uplas_8",
+          "pr_uplas_9",
+          "pr_uplas_10",
+          "pr_uplas_11",
+          "pr_uplas_12",
+          "pr_uplas_13",
+          "pr_uplas_14",
+          "pr_uplas_15",
+          "pr_uplas_16",
+          "pr_uplas_17",
+          "pr_uplas_18",
+          "pr_uplas_19",
+          "pr_uplas_20",
+          "pr_uplas_21",
+          "pr_uplas_22",
+          "pr_uplas_23",
+          "pr_uplas_24",
+          "pr_uplas_25"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_uplas_1": 1,
+          "pr_uplas_2": 1,
+          "pr_uplas_3": 1,
+          "pr_uplas_4": 1,
+          "pr_uplas_5": 1,
+          "pr_uplas_6": 1,
+          "pr_uplas_7": 1,
+          "pr_uplas_8": 1,
+          "pr_uplas_9": 1,
+          "pr_uplas_10": 1,
+          "pr_uplas_11": 1,
+          "pr_uplas_12": 1,
+          "pr_uplas_13": 1,
+          "pr_uplas_14": 1,
+          "pr_uplas_15": 1,
+          "pr_uplas_16": 1,
+          "pr_uplas_17": 1,
+          "pr_uplas_18": 1,
+          "pr_uplas_19": 1,
+          "pr_uplas_20": 1,
+          "pr_uplas_21": 1,
+          "pr_uplas_22": 1,
+          "pr_uplas_23": 1,
+          "pr_uplas_24": 1,
+          "pr_uplas_25": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 25
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_uplas_1": 2,
+          "pr_uplas_2": 2,
+          "pr_uplas_3": 2,
+          "pr_uplas_4": 2,
+          "pr_uplas_5": 2,
+          "pr_uplas_6": 2,
+          "pr_uplas_7": 2,
+          "pr_uplas_8": 2,
+          "pr_uplas_9": 2,
+          "pr_uplas_10": 2,
+          "pr_uplas_11": 2,
+          "pr_uplas_12": 2,
+          "pr_uplas_13": 2,
+          "pr_uplas_14": 2,
+          "pr_uplas_15": 2,
+          "pr_uplas_16": 2,
+          "pr_uplas_17": 2,
+          "pr_uplas_18": 2,
+          "pr_uplas_19": 2,
+          "pr_uplas_20": 2,
+          "pr_uplas_21": 2,
+          "pr_uplas_22": 2,
+          "pr_uplas_23": 2,
+          "pr_uplas_24": 2,
+          "pr_uplas_25": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 50
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_uplas_1": 4,
+          "pr_uplas_2": 4,
+          "pr_uplas_3": 4,
+          "pr_uplas_4": 4,
+          "pr_uplas_5": 4,
+          "pr_uplas_6": 4,
+          "pr_uplas_7": 4,
+          "pr_uplas_8": 4,
+          "pr_uplas_9": 4,
+          "pr_uplas_10": 4,
+          "pr_uplas_11": 4,
+          "pr_uplas_12": 4,
+          "pr_uplas_13": 4,
+          "pr_uplas_14": 4,
+          "pr_uplas_15": 4,
+          "pr_uplas_16": 4,
+          "pr_uplas_17": 4,
+          "pr_uplas_18": 4,
+          "pr_uplas_19": 4,
+          "pr_uplas_20": 4,
+          "pr_uplas_21": 4,
+          "pr_uplas_22": 4,
+          "pr_uplas_23": 4,
+          "pr_uplas_24": 4,
+          "pr_uplas_25": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Tharayil, D.P. (2012). Developing the University of the Philippines\nLoneliness Assessment Scale: A Cross-Cultural Measurement. Social\nIndicators Research, 106 (2) , 307-321.",
+    "year": 2012
+  }
+}

@@ -137,5 +137,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "webexec total",
+      "path": "/scores/total/value",
+      "scorer": "scr_webexec@v26.0618"
+    }
   ]
 }

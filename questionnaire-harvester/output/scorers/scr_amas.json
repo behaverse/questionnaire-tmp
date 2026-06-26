@@ -1,0 +1,146 @@
+{
+  "content": {
+    "en": {
+      "description": "Abbreviated Math Anxiety Scale (AMAS). Total = sum of the 9 items (each 1-5), range 9-45. Higher scores indicate greater math anxiety (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "AMAS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_amas",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "53301de1dc186afbfdca65a700299a86e34e99be41457c4a9af828368532f03c",
+      "url": "https://behaverse.org/scorers/amas/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_amas_1|pr_amas_2|pr_amas_3|pr_amas_4|pr_amas_5|pr_amas_6|pr_amas_7|pr_amas_8|pr_amas_9)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "AMAS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 9
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_amas_1": 1,
+          "pr_amas_2": 1,
+          "pr_amas_3": 1,
+          "pr_amas_4": 1,
+          "pr_amas_5": 1,
+          "pr_amas_6": 1,
+          "pr_amas_7": 1,
+          "pr_amas_8": 1,
+          "pr_amas_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 27
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_amas_1": 3,
+          "pr_amas_2": 3,
+          "pr_amas_3": 3,
+          "pr_amas_4": 3,
+          "pr_amas_5": 3,
+          "pr_amas_6": 3,
+          "pr_amas_7": 3,
+          "pr_amas_8": 3,
+          "pr_amas_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 45
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_amas_1": 5,
+          "pr_amas_2": 5,
+          "pr_amas_3": 5,
+          "pr_amas_4": 5,
+          "pr_amas_5": 5,
+          "pr_amas_6": 5,
+          "pr_amas_7": 5,
+          "pr_amas_8": 5,
+          "pr_amas_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "D.R. Hopko, R. Mahadevan, R.L. Bare, & Melassa K. Hunt. (2003). The\nAbbreviated Math Anxiety Scale (AMAS): Construction, Validity, and\nReliability. Assessment, 10 , 178-182.",
+    "year": 2003
+  }
+}

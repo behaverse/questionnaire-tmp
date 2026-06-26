@@ -208,5 +208,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "BHPS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_bhps@v26.0618"
+    }
   ]
 }

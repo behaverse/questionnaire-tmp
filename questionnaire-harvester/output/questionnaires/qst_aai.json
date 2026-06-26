@@ -194,5 +194,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "AAI total",
+      "path": "/scores/total/value",
+      "scorer": "scr_aai@v26.0618"
+    }
   ]
 }

@@ -1,0 +1,179 @@
+{
+  "content": {
+    "en": {
+      "description": "Measure of Acceptance of the Theory of Evolution (MATE). Total = sum of the 20 items (each 1-5), range 20-100. Higher scores indicate greater acceptance of the theory of evolution (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "MATE Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_mate",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "2db16cd926e8184d1a20df20790cbd0cbbddfaf0443a08f2c418a15624627b7d",
+      "url": "https://behaverse.org/scorers/mate/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_mate_1|pr_mate_2|pr_mate_3|pr_mate_4|pr_mate_5|pr_mate_6|pr_mate_7|pr_mate_8|pr_mate_9|pr_mate_10|pr_mate_11|pr_mate_12|pr_mate_13|pr_mate_14|pr_mate_15|pr_mate_16|pr_mate_17|pr_mate_18|pr_mate_19|pr_mate_20)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "MATE Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mate_1": 1,
+          "pr_mate_10": 1,
+          "pr_mate_11": 1,
+          "pr_mate_12": 1,
+          "pr_mate_13": 1,
+          "pr_mate_14": 1,
+          "pr_mate_15": 1,
+          "pr_mate_16": 1,
+          "pr_mate_17": 1,
+          "pr_mate_18": 1,
+          "pr_mate_19": 1,
+          "pr_mate_2": 1,
+          "pr_mate_20": 1,
+          "pr_mate_3": 1,
+          "pr_mate_4": 1,
+          "pr_mate_5": 1,
+          "pr_mate_6": 1,
+          "pr_mate_7": 1,
+          "pr_mate_8": 1,
+          "pr_mate_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mate_1": 3,
+          "pr_mate_10": 3,
+          "pr_mate_11": 3,
+          "pr_mate_12": 3,
+          "pr_mate_13": 3,
+          "pr_mate_14": 3,
+          "pr_mate_15": 3,
+          "pr_mate_16": 3,
+          "pr_mate_17": 3,
+          "pr_mate_18": 3,
+          "pr_mate_19": 3,
+          "pr_mate_2": 3,
+          "pr_mate_20": 3,
+          "pr_mate_3": 3,
+          "pr_mate_4": 3,
+          "pr_mate_5": 3,
+          "pr_mate_6": 3,
+          "pr_mate_7": 3,
+          "pr_mate_8": 3,
+          "pr_mate_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mate_1": 5,
+          "pr_mate_10": 5,
+          "pr_mate_11": 5,
+          "pr_mate_12": 5,
+          "pr_mate_13": 5,
+          "pr_mate_14": 5,
+          "pr_mate_15": 5,
+          "pr_mate_16": 5,
+          "pr_mate_17": 5,
+          "pr_mate_18": 5,
+          "pr_mate_19": 5,
+          "pr_mate_2": 5,
+          "pr_mate_20": 5,
+          "pr_mate_3": 5,
+          "pr_mate_4": 5,
+          "pr_mate_5": 5,
+          "pr_mate_6": 5,
+          "pr_mate_7": 5,
+          "pr_mate_8": 5,
+          "pr_mate_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Rutledge, M .L . & Warden, M .A . (1999). The development and validation of the Measure of Acceptance of the Theory of Evolution Instrument. School Science and Mathematics, 99(1) , 13-18.",
+    "year": 1999
+  }
+}

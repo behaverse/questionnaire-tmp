@@ -165,5 +165,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "ISC total",
+      "path": "/scores/total/value",
+      "scorer": "scr_isc@v26.0618"
+    }
   ]
 }

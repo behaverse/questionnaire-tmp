@@ -1,0 +1,146 @@
+{
+  "id": "scr_amas",
+  "name": "AMAS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "AMAS Total Scoring",
+      "description": "Abbreviated Math Anxiety Scale (AMAS). Total = sum of the 9 items (each 1-5), range 9-45. Higher scores indicate greater math anxiety (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "D.R. Hopko, R. Mahadevan, R.L. Bare, & Melassa K. Hunt. (2003). The\nAbbreviated Math Anxiety Scale (AMAS): Construction, Validity, and\nReliability. Assessment, 10 , 178-182.",
+    "year": 2003
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_amas_1|pr_amas_2|pr_amas_3|pr_amas_4|pr_amas_5|pr_amas_6|pr_amas_7|pr_amas_8|pr_amas_9)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/amas/scorer.wasm",
+      "sha256": "53301de1dc186afbfdca65a700299a86e34e99be41457c4a9af828368532f03c"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_amas_1": 1,
+          "pr_amas_2": 1,
+          "pr_amas_3": 1,
+          "pr_amas_4": 1,
+          "pr_amas_5": 1,
+          "pr_amas_6": 1,
+          "pr_amas_7": 1,
+          "pr_amas_8": 1,
+          "pr_amas_9": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 9
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_amas_1": 3,
+          "pr_amas_2": 3,
+          "pr_amas_3": 3,
+          "pr_amas_4": 3,
+          "pr_amas_5": 3,
+          "pr_amas_6": 3,
+          "pr_amas_7": 3,
+          "pr_amas_8": 3,
+          "pr_amas_9": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 27
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_amas_1": 5,
+          "pr_amas_2": 5,
+          "pr_amas_3": 5,
+          "pr_amas_4": 5,
+          "pr_amas_5": 5,
+          "pr_amas_6": 5,
+          "pr_amas_7": 5,
+          "pr_amas_8": 5,
+          "pr_amas_9": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 45
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -151,5 +151,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "CSJAS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_csjas@v26.0618"
+    }
   ]
 }

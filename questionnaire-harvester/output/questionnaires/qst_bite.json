@@ -123,5 +123,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "BITe total",
+      "path": "/scores/total/value",
+      "scorer": "scr_bite@v26.0618"
+    }
   ]
 }

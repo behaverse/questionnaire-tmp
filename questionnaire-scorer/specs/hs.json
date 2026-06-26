@@ -1,0 +1,112 @@
+{
+  "id": "hs",
+  "scorer_id": "scr_hs",
+  "name": "HS Total Scoring",
+  "status": "validated",
+  "description": "Healthy Selfishness (HS). Total = sum of the 10 items (each 1-5), range 10-50. Higher scores indicate greater healthy (adaptive) selfishness (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_hs_1",
+          "pr_hs_2",
+          "pr_hs_3",
+          "pr_hs_4",
+          "pr_hs_5",
+          "pr_hs_6",
+          "pr_hs_7",
+          "pr_hs_8",
+          "pr_hs_9",
+          "pr_hs_10"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_hs_1": 1,
+          "pr_hs_2": 1,
+          "pr_hs_3": 1,
+          "pr_hs_4": 1,
+          "pr_hs_5": 1,
+          "pr_hs_6": 1,
+          "pr_hs_7": 1,
+          "pr_hs_8": 1,
+          "pr_hs_9": 1,
+          "pr_hs_10": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 10
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_hs_1": 3,
+          "pr_hs_2": 3,
+          "pr_hs_3": 3,
+          "pr_hs_4": 3,
+          "pr_hs_5": 3,
+          "pr_hs_6": 3,
+          "pr_hs_7": 3,
+          "pr_hs_8": 3,
+          "pr_hs_9": 3,
+          "pr_hs_10": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_hs_1": 5,
+          "pr_hs_2": 5,
+          "pr_hs_3": 5,
+          "pr_hs_4": 5,
+          "pr_hs_5": 5,
+          "pr_hs_6": 5,
+          "pr_hs_7": 5,
+          "pr_hs_8": 5,
+          "pr_hs_9": 5,
+          "pr_hs_10": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 50
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Kaufman, S.B. & Jauk, E. (2020). Healthy Selfishness and Pathological Altruism: Measuring Two Paradoxical Forms of Selfishness. Frontiers in Psychology, 11. Open Access",
+    "year": 2020
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "id": "gp",
+  "scorer_id": "scr_gp",
+  "name": "GPS Total Scoring",
+  "status": "validated",
+  "description": "General Procrastination Scale. Total = sum of the 20 items (each 1-5), range 20-100. Higher scores indicate greater trait procrastination (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_gp_1",
+          "pr_gp_2",
+          "pr_gp_3",
+          "pr_gp_4",
+          "pr_gp_5",
+          "pr_gp_6",
+          "pr_gp_7",
+          "pr_gp_8",
+          "pr_gp_9",
+          "pr_gp_10",
+          "pr_gp_11",
+          "pr_gp_12",
+          "pr_gp_13",
+          "pr_gp_14",
+          "pr_gp_15",
+          "pr_gp_16",
+          "pr_gp_17",
+          "pr_gp_18",
+          "pr_gp_19",
+          "pr_gp_20"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_gp_1": 1,
+          "pr_gp_2": 1,
+          "pr_gp_3": 1,
+          "pr_gp_4": 1,
+          "pr_gp_5": 1,
+          "pr_gp_6": 1,
+          "pr_gp_7": 1,
+          "pr_gp_8": 1,
+          "pr_gp_9": 1,
+          "pr_gp_10": 1,
+          "pr_gp_11": 1,
+          "pr_gp_12": 1,
+          "pr_gp_13": 1,
+          "pr_gp_14": 1,
+          "pr_gp_15": 1,
+          "pr_gp_16": 1,
+          "pr_gp_17": 1,
+          "pr_gp_18": 1,
+          "pr_gp_19": 1,
+          "pr_gp_20": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_gp_1": 3,
+          "pr_gp_2": 3,
+          "pr_gp_3": 3,
+          "pr_gp_4": 3,
+          "pr_gp_5": 3,
+          "pr_gp_6": 3,
+          "pr_gp_7": 3,
+          "pr_gp_8": 3,
+          "pr_gp_9": 3,
+          "pr_gp_10": 3,
+          "pr_gp_11": 3,
+          "pr_gp_12": 3,
+          "pr_gp_13": 3,
+          "pr_gp_14": 3,
+          "pr_gp_15": 3,
+          "pr_gp_16": 3,
+          "pr_gp_17": 3,
+          "pr_gp_18": 3,
+          "pr_gp_19": 3,
+          "pr_gp_20": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_gp_1": 5,
+          "pr_gp_2": 5,
+          "pr_gp_3": 5,
+          "pr_gp_4": 5,
+          "pr_gp_5": 5,
+          "pr_gp_6": 5,
+          "pr_gp_7": 5,
+          "pr_gp_8": 5,
+          "pr_gp_9": 5,
+          "pr_gp_10": 5,
+          "pr_gp_11": 5,
+          "pr_gp_12": 5,
+          "pr_gp_13": 5,
+          "pr_gp_14": 5,
+          "pr_gp_15": 5,
+          "pr_gp_16": 5,
+          "pr_gp_17": 5,
+          "pr_gp_18": 5,
+          "pr_gp_19": 5,
+          "pr_gp_20": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Lay, C.H. (1986). At Last, My Research Article on\nProcrastination. Journal of Research in Personality, 20 , 474-495.",
+    "year": 1986
+  }
+}

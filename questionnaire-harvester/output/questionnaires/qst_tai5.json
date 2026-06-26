@@ -123,5 +123,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "TAI-5 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_tai5@v26.0618"
+    }
   ]
 }

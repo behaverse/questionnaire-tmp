@@ -165,5 +165,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "Grit-S mean",
+      "path": "/scores/total/value",
+      "scorer": "scr_grits@v26.0618"
+    }
   ]
 }

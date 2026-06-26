@@ -1,0 +1,134 @@
+{
+  "content": {
+    "en": {
+      "description": "Satisfaction with love life scale (SWLLS). Total = sum of the 5 items (each 1-7), range 5-35. Higher scores indicate greater satisfaction with one's love life (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "SWLLS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_swlls",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "29ed9cfc2ee110176d0addbee487bc8f4c288b6f72f85c1d8b1ae6bdc514b7ea",
+      "url": "https://behaverse.org/scorers/swlls/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_swlls_1|pr_swlls_2|pr_swlls_3|pr_swlls_4|pr_swlls_5)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SWLLS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_swlls_1": 1,
+          "pr_swlls_2": 1,
+          "pr_swlls_3": 1,
+          "pr_swlls_4": 1,
+          "pr_swlls_5": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_swlls_1": 4,
+          "pr_swlls_2": 4,
+          "pr_swlls_3": 4,
+          "pr_swlls_4": 4,
+          "pr_swlls_5": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 35
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_swlls_1": 7,
+          "pr_swlls_2": 7,
+          "pr_swlls_3": 7,
+          "pr_swlls_4": 7,
+          "pr_swlls_5": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Neto, F. (2005). The Satisfaction With Love Life Scale. Measurement and evaluation in counseling and development, 38 , 2-13.",
+    "year": 2005
+  }
+}

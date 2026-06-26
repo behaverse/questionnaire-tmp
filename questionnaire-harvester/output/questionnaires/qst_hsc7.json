@@ -152,5 +152,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "HSC-7 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_hsc7@v26.0618"
+    }
   ]
 }

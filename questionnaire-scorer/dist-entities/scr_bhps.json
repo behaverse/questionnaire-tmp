@@ -1,0 +1,152 @@
+{
+  "id": "scr_bhps",
+  "name": "BHPS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "BHPS Total Scoring",
+      "description": "Brief Histrionic Personality Scale (BHPS). Total = sum of the 11 items (each 1-4), range 11-44. Higher scores indicate greater histrionic personality traits (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Ferguson & Negy (2014). Development of a brief screening questionnaire for histrionic personality symptoms. Personality & Individual Differences, 66 , 124-127.",
+    "year": 2014
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_bhps_1|pr_bhps_2|pr_bhps_3|pr_bhps_4|pr_bhps_5|pr_bhps_6|pr_bhps_7|pr_bhps_8|pr_bhps_9|pr_bhps_10|pr_bhps_11)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/bhps/scorer.wasm",
+      "sha256": "4b32c2a959389421b929b0753af4ad2cf68ea33b97f5163c357996cd6d00a4b8"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_bhps_1": 1,
+          "pr_bhps_2": 1,
+          "pr_bhps_3": 1,
+          "pr_bhps_4": 1,
+          "pr_bhps_5": 1,
+          "pr_bhps_6": 1,
+          "pr_bhps_7": 1,
+          "pr_bhps_8": 1,
+          "pr_bhps_9": 1,
+          "pr_bhps_10": 1,
+          "pr_bhps_11": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 11
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_bhps_1": 2,
+          "pr_bhps_2": 2,
+          "pr_bhps_3": 2,
+          "pr_bhps_4": 2,
+          "pr_bhps_5": 2,
+          "pr_bhps_6": 2,
+          "pr_bhps_7": 2,
+          "pr_bhps_8": 2,
+          "pr_bhps_9": 2,
+          "pr_bhps_10": 2,
+          "pr_bhps_11": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 22
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_bhps_1": 4,
+          "pr_bhps_2": 4,
+          "pr_bhps_3": 4,
+          "pr_bhps_4": 4,
+          "pr_bhps_5": 4,
+          "pr_bhps_6": 4,
+          "pr_bhps_7": 4,
+          "pr_bhps_8": 4,
+          "pr_bhps_9": 4,
+          "pr_bhps_10": 4,
+          "pr_bhps_11": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 44
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

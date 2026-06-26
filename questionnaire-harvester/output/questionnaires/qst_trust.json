@@ -291,5 +291,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "TICR total",
+      "path": "/scores/total/value",
+      "scorer": "scr_trust@v26.0618"
+    }
   ]
 }

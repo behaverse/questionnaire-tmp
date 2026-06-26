@@ -1,0 +1,100 @@
+{
+  "id": "csjas",
+  "scorer_id": "scr_csjas",
+  "name": "CSJAS Total Scoring",
+  "status": "validated",
+  "description": "Critical Social Justice Scale (CSJAS). Total = sum of the 7 items (each 0-3), range 0-21. Higher scores indicate greater endorsement of critical social justice attitudes (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      3
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_csjas_1",
+          "pr_csjas_2",
+          "pr_csjas_3",
+          "pr_csjas_4",
+          "pr_csjas_5",
+          "pr_csjas_6",
+          "pr_csjas_7"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_csjas_1": 0,
+          "pr_csjas_2": 0,
+          "pr_csjas_3": 0,
+          "pr_csjas_4": 0,
+          "pr_csjas_5": 0,
+          "pr_csjas_6": 0,
+          "pr_csjas_7": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_csjas_1": 1,
+          "pr_csjas_2": 1,
+          "pr_csjas_3": 1,
+          "pr_csjas_4": 1,
+          "pr_csjas_5": 1,
+          "pr_csjas_6": 1,
+          "pr_csjas_7": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_csjas_1": 3,
+          "pr_csjas_2": 3,
+          "pr_csjas_3": 3,
+          "pr_csjas_4": 3,
+          "pr_csjas_5": 3,
+          "pr_csjas_6": 3,
+          "pr_csjas_7": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 21
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Lahtinen, O. (2024). Construction and validation of a scale for assessing critical social justice\nattitudes. Scandinavian Journal of Psychology, 2024, 65, 693\u2013705. https://doi.org/10.1111/sjop.13018 . Link to study",
+    "year": 2024
+  }
+}

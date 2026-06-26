@@ -193,5 +193,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "HSNS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_hsns@v26.0618"
+    }
   ]
 }

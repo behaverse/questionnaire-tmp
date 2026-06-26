@@ -179,5 +179,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "AMAS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_amas@v26.0618"
+    }
   ]
 }

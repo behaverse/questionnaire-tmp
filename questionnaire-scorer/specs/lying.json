@@ -1,0 +1,128 @@
+{
+  "id": "lying",
+  "scorer_id": "scr_lying",
+  "name": "LiES Total Scoring",
+  "status": "validated",
+  "description": "Lying in Everyday Situations Scale (LiES). Total = sum of the 14 items (each 1-7), range 14-98. Higher scores indicate greater frequency of everyday lying (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      7
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_lying_1",
+          "pr_lying_2",
+          "pr_lying_3",
+          "pr_lying_4",
+          "pr_lying_5",
+          "pr_lying_6",
+          "pr_lying_7",
+          "pr_lying_8",
+          "pr_lying_9",
+          "pr_lying_10",
+          "pr_lying_11",
+          "pr_lying_12",
+          "pr_lying_13",
+          "pr_lying_14"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_lying_1": 1,
+          "pr_lying_2": 1,
+          "pr_lying_3": 1,
+          "pr_lying_4": 1,
+          "pr_lying_5": 1,
+          "pr_lying_6": 1,
+          "pr_lying_7": 1,
+          "pr_lying_8": 1,
+          "pr_lying_9": 1,
+          "pr_lying_10": 1,
+          "pr_lying_11": 1,
+          "pr_lying_12": 1,
+          "pr_lying_13": 1,
+          "pr_lying_14": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 14
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_lying_1": 4,
+          "pr_lying_2": 4,
+          "pr_lying_3": 4,
+          "pr_lying_4": 4,
+          "pr_lying_5": 4,
+          "pr_lying_6": 4,
+          "pr_lying_7": 4,
+          "pr_lying_8": 4,
+          "pr_lying_9": 4,
+          "pr_lying_10": 4,
+          "pr_lying_11": 4,
+          "pr_lying_12": 4,
+          "pr_lying_13": 4,
+          "pr_lying_14": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 56
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_lying_1": 7,
+          "pr_lying_2": 7,
+          "pr_lying_3": 7,
+          "pr_lying_4": 7,
+          "pr_lying_5": 7,
+          "pr_lying_6": 7,
+          "pr_lying_7": 7,
+          "pr_lying_8": 7,
+          "pr_lying_9": 7,
+          "pr_lying_10": 7,
+          "pr_lying_11": 7,
+          "pr_lying_12": 7,
+          "pr_lying_13": 7,
+          "pr_lying_14": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 98
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Christian L. Hart, Jelisa M. Jones, John A. Terrizzi, Drew A. Curtis. (2019). Development of the Lying in Everyday Situations Scale. The American Journal of Psychology, 132 (3) , 343-352. doi: https://doi.org/10.5406/amerjpsyc.132.3.0343 . Download for free",
+    "year": 2019
+  }
+}

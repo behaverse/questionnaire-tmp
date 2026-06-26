@@ -1,0 +1,116 @@
+{
+  "id": "bhps",
+  "scorer_id": "scr_bhps",
+  "name": "BHPS Total Scoring",
+  "status": "validated",
+  "description": "Brief Histrionic Personality Scale (BHPS). Total = sum of the 11 items (each 1-4), range 11-44. Higher scores indicate greater histrionic personality traits (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      4
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_bhps_1",
+          "pr_bhps_2",
+          "pr_bhps_3",
+          "pr_bhps_4",
+          "pr_bhps_5",
+          "pr_bhps_6",
+          "pr_bhps_7",
+          "pr_bhps_8",
+          "pr_bhps_9",
+          "pr_bhps_10",
+          "pr_bhps_11"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_bhps_1": 1,
+          "pr_bhps_2": 1,
+          "pr_bhps_3": 1,
+          "pr_bhps_4": 1,
+          "pr_bhps_5": 1,
+          "pr_bhps_6": 1,
+          "pr_bhps_7": 1,
+          "pr_bhps_8": 1,
+          "pr_bhps_9": 1,
+          "pr_bhps_10": 1,
+          "pr_bhps_11": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 11
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_bhps_1": 2,
+          "pr_bhps_2": 2,
+          "pr_bhps_3": 2,
+          "pr_bhps_4": 2,
+          "pr_bhps_5": 2,
+          "pr_bhps_6": 2,
+          "pr_bhps_7": 2,
+          "pr_bhps_8": 2,
+          "pr_bhps_9": 2,
+          "pr_bhps_10": 2,
+          "pr_bhps_11": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 22
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_bhps_1": 4,
+          "pr_bhps_2": 4,
+          "pr_bhps_3": 4,
+          "pr_bhps_4": 4,
+          "pr_bhps_5": 4,
+          "pr_bhps_6": 4,
+          "pr_bhps_7": 4,
+          "pr_bhps_8": 4,
+          "pr_bhps_9": 4,
+          "pr_bhps_10": 4,
+          "pr_bhps_11": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 44
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Ferguson & Negy (2014). Development of a brief screening questionnaire for histrionic personality symptoms. Personality & Individual Differences, 66 , 124-127.",
+    "year": 2014
+  }
+}

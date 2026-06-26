@@ -1,0 +1,152 @@
+{
+  "id": "burnout",
+  "scorer_id": "scr_burnout",
+  "name": "Teacher Burnout Total Scoring",
+  "status": "validated",
+  "description": "Teacher burnout. Total = sum of the 20 items (each 1-5), range 20-100. Higher scores indicate greater teacher burnout (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_burnout_1",
+          "pr_burnout_2",
+          "pr_burnout_3",
+          "pr_burnout_4",
+          "pr_burnout_5",
+          "pr_burnout_6",
+          "pr_burnout_7",
+          "pr_burnout_8",
+          "pr_burnout_9",
+          "pr_burnout_10",
+          "pr_burnout_11",
+          "pr_burnout_12",
+          "pr_burnout_13",
+          "pr_burnout_14",
+          "pr_burnout_15",
+          "pr_burnout_16",
+          "pr_burnout_17",
+          "pr_burnout_18",
+          "pr_burnout_19",
+          "pr_burnout_20"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_burnout_1": 1,
+          "pr_burnout_2": 1,
+          "pr_burnout_3": 1,
+          "pr_burnout_4": 1,
+          "pr_burnout_5": 1,
+          "pr_burnout_6": 1,
+          "pr_burnout_7": 1,
+          "pr_burnout_8": 1,
+          "pr_burnout_9": 1,
+          "pr_burnout_10": 1,
+          "pr_burnout_11": 1,
+          "pr_burnout_12": 1,
+          "pr_burnout_13": 1,
+          "pr_burnout_14": 1,
+          "pr_burnout_15": 1,
+          "pr_burnout_16": 1,
+          "pr_burnout_17": 1,
+          "pr_burnout_18": 1,
+          "pr_burnout_19": 1,
+          "pr_burnout_20": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_burnout_1": 3,
+          "pr_burnout_2": 3,
+          "pr_burnout_3": 3,
+          "pr_burnout_4": 3,
+          "pr_burnout_5": 3,
+          "pr_burnout_6": 3,
+          "pr_burnout_7": 3,
+          "pr_burnout_8": 3,
+          "pr_burnout_9": 3,
+          "pr_burnout_10": 3,
+          "pr_burnout_11": 3,
+          "pr_burnout_12": 3,
+          "pr_burnout_13": 3,
+          "pr_burnout_14": 3,
+          "pr_burnout_15": 3,
+          "pr_burnout_16": 3,
+          "pr_burnout_17": 3,
+          "pr_burnout_18": 3,
+          "pr_burnout_19": 3,
+          "pr_burnout_20": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_burnout_1": 5,
+          "pr_burnout_2": 5,
+          "pr_burnout_3": 5,
+          "pr_burnout_4": 5,
+          "pr_burnout_5": 5,
+          "pr_burnout_6": 5,
+          "pr_burnout_7": 5,
+          "pr_burnout_8": 5,
+          "pr_burnout_9": 5,
+          "pr_burnout_10": 5,
+          "pr_burnout_11": 5,
+          "pr_burnout_12": 5,
+          "pr_burnout_13": 5,
+          "pr_burnout_14": 5,
+          "pr_burnout_15": 5,
+          "pr_burnout_16": 5,
+          "pr_burnout_17": 5,
+          "pr_burnout_18": 5,
+          "pr_burnout_19": 5,
+          "pr_burnout_20": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Campbell, L.P. (1983). Teacher burnout: Description and\nprescription. The Clearing House, 57 , pp. 111-113",
+    "year": 1983
+  }
+}

@@ -320,5 +320,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "IAA total",
+      "path": "/scores/total/value",
+      "scorer": "scr_iaa@v26.0618"
+    }
   ]
 }

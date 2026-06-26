@@ -1,0 +1,140 @@
+{
+  "id": "scr_hsc7",
+  "name": "HSC-7 Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "HSC-7 Total Scoring",
+      "description": "Hypoglycemia Symptoms Checklist (HSC-7). Total = sum of the 7 items (each 1-4), range 7-28. Higher scores indicate greater frequency of hypoglycemia symptoms (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Barry, J.A., Bouloux, P. & Hardiman, P.J. (2011). The impact of\neating behavior on psychological symptoms typical of reactive\nhypoglycemia. A pilot study comparing women with polycystic ovary\nsyndrome to controls. Appetite, 57, 73-76.",
+    "year": 2011
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_hsc7_1|pr_hsc7_2|pr_hsc7_3|pr_hsc7_4|pr_hsc7_5|pr_hsc7_6|pr_hsc7_7)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/hsc7/scorer.wasm",
+      "sha256": "1f7acae5e57a4e9fcf8067bed06ffe815c6738bfac8197369af7dc973408a5c8"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_hsc7_1": 1,
+          "pr_hsc7_2": 1,
+          "pr_hsc7_3": 1,
+          "pr_hsc7_4": 1,
+          "pr_hsc7_5": 1,
+          "pr_hsc7_6": 1,
+          "pr_hsc7_7": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_hsc7_1": 2,
+          "pr_hsc7_2": 2,
+          "pr_hsc7_3": 2,
+          "pr_hsc7_4": 2,
+          "pr_hsc7_5": 2,
+          "pr_hsc7_6": 2,
+          "pr_hsc7_7": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 14
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_hsc7_1": 4,
+          "pr_hsc7_2": 4,
+          "pr_hsc7_3": 4,
+          "pr_hsc7_4": 4,
+          "pr_hsc7_5": 4,
+          "pr_hsc7_6": 4,
+          "pr_hsc7_7": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 28
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "content": {
+    "en": {
+      "description": "Generalized Acceptance of EvolutioN Evaluation (GAENE). Total = sum of the 13 items (each 1-5), range 13-65. Higher scores indicate greater acceptance of evolution (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "GAENE Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_gaene",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "29be2ac066c2c7767184b4c044c2f0c9e88412849394b8f911f58716e1a30438",
+      "url": "https://behaverse.org/scorers/gaene/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_gaene_1|pr_gaene_2|pr_gaene_3|pr_gaene_4|pr_gaene_5|pr_gaene_6|pr_gaene_7|pr_gaene_8|pr_gaene_9|pr_gaene_10|pr_gaene_11|pr_gaene_12|pr_gaene_13)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "GAENE Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 13
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gaene_1": 1,
+          "pr_gaene_10": 1,
+          "pr_gaene_11": 1,
+          "pr_gaene_12": 1,
+          "pr_gaene_13": 1,
+          "pr_gaene_2": 1,
+          "pr_gaene_3": 1,
+          "pr_gaene_4": 1,
+          "pr_gaene_5": 1,
+          "pr_gaene_6": 1,
+          "pr_gaene_7": 1,
+          "pr_gaene_8": 1,
+          "pr_gaene_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 39
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gaene_1": 3,
+          "pr_gaene_10": 3,
+          "pr_gaene_11": 3,
+          "pr_gaene_12": 3,
+          "pr_gaene_13": 3,
+          "pr_gaene_2": 3,
+          "pr_gaene_3": 3,
+          "pr_gaene_4": 3,
+          "pr_gaene_5": 3,
+          "pr_gaene_6": 3,
+          "pr_gaene_7": 3,
+          "pr_gaene_8": 3,
+          "pr_gaene_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 65
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gaene_1": 5,
+          "pr_gaene_10": 5,
+          "pr_gaene_11": 5,
+          "pr_gaene_12": 5,
+          "pr_gaene_13": 5,
+          "pr_gaene_2": 5,
+          "pr_gaene_3": 5,
+          "pr_gaene_4": 5,
+          "pr_gaene_5": 5,
+          "pr_gaene_6": 5,
+          "pr_gaene_7": 5,
+          "pr_gaene_8": 5,
+          "pr_gaene_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Smith, M.U., Snyder, S.W., and Devereaux, R.S. (2016). The\nGAENE—Generalized Acceptance of EvolutioN Evaluation: Development of a\nNew Measure of Evolution Acceptance. Journal of Research in Science\nTeaching, 53(9) , 1289-1315.",
+    "year": 2016
+  }
+}

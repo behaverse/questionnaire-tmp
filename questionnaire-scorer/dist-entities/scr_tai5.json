@@ -1,0 +1,134 @@
+{
+  "id": "scr_tai5",
+  "name": "TAI-5 Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "TAI-5 Total Scoring",
+      "description": "Test Anxiety Inventory (TAI-5). Total = sum of the 5 items (each 1-4), range 5-20. Higher scores indicate greater test anxiety (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Joanne Taylor & Frank P. Deane (2002) Development of a Short Form of the Test Anxiety Inventory (TAI), The Journal of General Psychology, 129:2, 127-136, DOI: 10.1080/00221300209603133",
+    "year": 2002
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_tai5_1|pr_tai5_2|pr_tai5_3|pr_tai5_4|pr_tai5_5)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/tai5/scorer.wasm",
+      "sha256": "6cc221fe5fa5d62d9df21989eb247a0664da7e6d1fbbb08dbec819bf4002f7ac"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_tai5_1": 1,
+          "pr_tai5_2": 1,
+          "pr_tai5_3": 1,
+          "pr_tai5_4": 1,
+          "pr_tai5_5": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_tai5_1": 2,
+          "pr_tai5_2": 2,
+          "pr_tai5_3": 2,
+          "pr_tai5_4": 2,
+          "pr_tai5_5": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 10
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_tai5_1": 4,
+          "pr_tai5_2": 4,
+          "pr_tai5_3": 4,
+          "pr_tai5_4": 4,
+          "pr_tai5_5": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

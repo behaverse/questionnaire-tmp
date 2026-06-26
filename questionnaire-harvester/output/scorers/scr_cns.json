@@ -1,0 +1,161 @@
+{
+  "content": {
+    "en": {
+      "description": "Connectedness to Nature Scale (CNS). Score = MEAN of the 14 items (each 1-5), range 1-5. Higher scores indicate greater felt connectedness to nature (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "CNS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_cns",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "ea349cdc45e63b361943193e0c6ebd552337f2453c914f1948df0b4ffdd4d039",
+      "url": "https://behaverse.org/scorers/cns/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_cns_1|pr_cns_2|pr_cns_3|pr_cns_4|pr_cns_5|pr_cns_6|pr_cns_7|pr_cns_8|pr_cns_9|pr_cns_10|pr_cns_11|pr_cns_12|pr_cns_13|pr_cns_14)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CNS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cns_1": 1,
+          "pr_cns_10": 1,
+          "pr_cns_11": 1,
+          "pr_cns_12": 1,
+          "pr_cns_13": 1,
+          "pr_cns_14": 1,
+          "pr_cns_2": 1,
+          "pr_cns_3": 1,
+          "pr_cns_4": 1,
+          "pr_cns_5": 1,
+          "pr_cns_6": 1,
+          "pr_cns_7": 1,
+          "pr_cns_8": 1,
+          "pr_cns_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 3
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cns_1": 3,
+          "pr_cns_10": 3,
+          "pr_cns_11": 3,
+          "pr_cns_12": 3,
+          "pr_cns_13": 3,
+          "pr_cns_14": 3,
+          "pr_cns_2": 3,
+          "pr_cns_3": 3,
+          "pr_cns_4": 3,
+          "pr_cns_5": 3,
+          "pr_cns_6": 3,
+          "pr_cns_7": 3,
+          "pr_cns_8": 3,
+          "pr_cns_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cns_1": 5,
+          "pr_cns_10": 5,
+          "pr_cns_11": 5,
+          "pr_cns_12": 5,
+          "pr_cns_13": 5,
+          "pr_cns_14": 5,
+          "pr_cns_2": 5,
+          "pr_cns_3": 5,
+          "pr_cns_4": 5,
+          "pr_cns_5": 5,
+          "pr_cns_6": 5,
+          "pr_cns_7": 5,
+          "pr_cns_8": 5,
+          "pr_cns_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Mayer, F.S. & McPherson Frantz, C. (2004). The connectedness to nature scale: A measure of individuals’ feeling in community with nature. Journal of Environmental Psychology, 24 , 503-515.",
+    "year": 2004
+  }
+}

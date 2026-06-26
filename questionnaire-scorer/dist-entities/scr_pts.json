@@ -1,0 +1,185 @@
+{
+  "id": "scr_pts",
+  "name": "PTS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "PTS Total Scoring",
+      "description": "Positive Thinking Scale. Total = sum of the 22 items (each 0-1), range 0-22. Higher scores indicate greater positive thinking (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Diener, E., Wirtz, D., Tov, W., Kim-Prieto, C., Choi. D., Oishi, S.,\n& Biswas-Diener, R. (2009). New measures of well-being: Flourishing\nand positive and negative feelings. Social Indicators Research,\n39 ,\n247-266. Online\navailable here .",
+    "year": 2009
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_pts_1|pr_pts_2|pr_pts_3|pr_pts_4|pr_pts_5|pr_pts_6|pr_pts_7|pr_pts_8|pr_pts_9|pr_pts_10|pr_pts_11|pr_pts_12|pr_pts_13|pr_pts_14|pr_pts_15|pr_pts_16|pr_pts_17|pr_pts_18|pr_pts_19|pr_pts_20|pr_pts_21|pr_pts_22)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/pts/scorer.wasm",
+      "sha256": "353a2b17ae882fd5155b2d27d6b45791a04a97e499ae982834e31de269c5f4a4"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_pts_1": 0,
+          "pr_pts_2": 0,
+          "pr_pts_3": 0,
+          "pr_pts_4": 0,
+          "pr_pts_5": 0,
+          "pr_pts_6": 0,
+          "pr_pts_7": 0,
+          "pr_pts_8": 0,
+          "pr_pts_9": 0,
+          "pr_pts_10": 0,
+          "pr_pts_11": 0,
+          "pr_pts_12": 0,
+          "pr_pts_13": 0,
+          "pr_pts_14": 0,
+          "pr_pts_15": 0,
+          "pr_pts_16": 0,
+          "pr_pts_17": 0,
+          "pr_pts_18": 0,
+          "pr_pts_19": 0,
+          "pr_pts_20": 0,
+          "pr_pts_21": 0,
+          "pr_pts_22": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_pts_1": 0,
+          "pr_pts_2": 0,
+          "pr_pts_3": 0,
+          "pr_pts_4": 0,
+          "pr_pts_5": 0,
+          "pr_pts_6": 0,
+          "pr_pts_7": 0,
+          "pr_pts_8": 0,
+          "pr_pts_9": 0,
+          "pr_pts_10": 0,
+          "pr_pts_11": 0,
+          "pr_pts_12": 0,
+          "pr_pts_13": 0,
+          "pr_pts_14": 0,
+          "pr_pts_15": 0,
+          "pr_pts_16": 0,
+          "pr_pts_17": 0,
+          "pr_pts_18": 0,
+          "pr_pts_19": 0,
+          "pr_pts_20": 0,
+          "pr_pts_21": 0,
+          "pr_pts_22": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_pts_1": 1,
+          "pr_pts_2": 1,
+          "pr_pts_3": 1,
+          "pr_pts_4": 1,
+          "pr_pts_5": 1,
+          "pr_pts_6": 1,
+          "pr_pts_7": 1,
+          "pr_pts_8": 1,
+          "pr_pts_9": 1,
+          "pr_pts_10": 1,
+          "pr_pts_11": 1,
+          "pr_pts_12": 1,
+          "pr_pts_13": 1,
+          "pr_pts_14": 1,
+          "pr_pts_15": 1,
+          "pr_pts_16": 1,
+          "pr_pts_17": 1,
+          "pr_pts_18": 1,
+          "pr_pts_19": 1,
+          "pr_pts_20": 1,
+          "pr_pts_21": 1,
+          "pr_pts_22": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 22
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

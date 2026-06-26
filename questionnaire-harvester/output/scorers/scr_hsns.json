@@ -1,0 +1,149 @@
+{
+  "content": {
+    "en": {
+      "description": "Hypersensitive Narcissism Scale (HSNS). Total = sum of the 10 items (each 1-5), range 10-50. Higher scores indicate greater hypersensitive (vulnerable) narcissism (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "HSNS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_hsns",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "14e97693d6b05cb3d9c38235cb074978c7c3b1389f8404bc640505c39c9bfb52",
+      "url": "https://behaverse.org/scorers/hsns/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_hsns_1|pr_hsns_2|pr_hsns_3|pr_hsns_4|pr_hsns_5|pr_hsns_6|pr_hsns_7|pr_hsns_8|pr_hsns_9|pr_hsns_10)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "HSNS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 10
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_hsns_1": 1,
+          "pr_hsns_10": 1,
+          "pr_hsns_2": 1,
+          "pr_hsns_3": 1,
+          "pr_hsns_4": 1,
+          "pr_hsns_5": 1,
+          "pr_hsns_6": 1,
+          "pr_hsns_7": 1,
+          "pr_hsns_8": 1,
+          "pr_hsns_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_hsns_1": 3,
+          "pr_hsns_10": 3,
+          "pr_hsns_2": 3,
+          "pr_hsns_3": 3,
+          "pr_hsns_4": 3,
+          "pr_hsns_5": 3,
+          "pr_hsns_6": 3,
+          "pr_hsns_7": 3,
+          "pr_hsns_8": 3,
+          "pr_hsns_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 50
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_hsns_1": 5,
+          "pr_hsns_10": 5,
+          "pr_hsns_2": 5,
+          "pr_hsns_3": 5,
+          "pr_hsns_4": 5,
+          "pr_hsns_5": 5,
+          "pr_hsns_6": 5,
+          "pr_hsns_7": 5,
+          "pr_hsns_8": 5,
+          "pr_hsns_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Hendin, H.M., & Cheek, J.M. (1997). Assessing Hypersensitive Narcissism: A Re-examination of Murray’s Narcissism Scale. Journal of Research in Personality, 31 , 588-599.",
+    "year": 1997
+  }
+}

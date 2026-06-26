@@ -1,0 +1,155 @@
+{
+  "content": {
+    "en": {
+      "description": "Bullshitting Frequency Scale (BFS). Total = sum of the 12 items (each 1-5), range 12-60. Higher scores indicate greater frequency of bullshitting (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "BFS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_bfs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "73d2af881e82660be0f7a2cb5058e29cd12c18ea2d9fb7e3bf05e8fc3c55da08",
+      "url": "https://behaverse.org/scorers/bfs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_bfs_1|pr_bfs_2|pr_bfs_3|pr_bfs_4|pr_bfs_5|pr_bfs_6|pr_bfs_7|pr_bfs_8|pr_bfs_9|pr_bfs_10|pr_bfs_11|pr_bfs_12)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "BFS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfs_1": 1,
+          "pr_bfs_10": 1,
+          "pr_bfs_11": 1,
+          "pr_bfs_12": 1,
+          "pr_bfs_2": 1,
+          "pr_bfs_3": 1,
+          "pr_bfs_4": 1,
+          "pr_bfs_5": 1,
+          "pr_bfs_6": 1,
+          "pr_bfs_7": 1,
+          "pr_bfs_8": 1,
+          "pr_bfs_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 36
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfs_1": 3,
+          "pr_bfs_10": 3,
+          "pr_bfs_11": 3,
+          "pr_bfs_12": 3,
+          "pr_bfs_2": 3,
+          "pr_bfs_3": 3,
+          "pr_bfs_4": 3,
+          "pr_bfs_5": 3,
+          "pr_bfs_6": 3,
+          "pr_bfs_7": 3,
+          "pr_bfs_8": 3,
+          "pr_bfs_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfs_1": 5,
+          "pr_bfs_10": 5,
+          "pr_bfs_11": 5,
+          "pr_bfs_12": 5,
+          "pr_bfs_2": 5,
+          "pr_bfs_3": 5,
+          "pr_bfs_4": 5,
+          "pr_bfs_5": 5,
+          "pr_bfs_6": 5,
+          "pr_bfs_7": 5,
+          "pr_bfs_8": 5,
+          "pr_bfs_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Littrell, S., Risko, E.F. and Fugelsang, J.A. (2021), The\nBullshitting Frequency Scale: Development and psychometric\nproperties. Br. J. Soc. Psychol., 60: 248-270\ne12379. https://doi.org/10.1111/bjso.12379",
+    "year": 2021
+  }
+}

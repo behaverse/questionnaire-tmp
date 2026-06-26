@@ -1,0 +1,92 @@
+{
+  "id": "swlls",
+  "scorer_id": "scr_swlls",
+  "name": "SWLLS Total Scoring",
+  "status": "validated",
+  "description": "Satisfaction with love life scale (SWLLS). Total = sum of the 5 items (each 1-7), range 5-35. Higher scores indicate greater satisfaction with one's love life (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      7
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_swlls_1",
+          "pr_swlls_2",
+          "pr_swlls_3",
+          "pr_swlls_4",
+          "pr_swlls_5"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_swlls_1": 1,
+          "pr_swlls_2": 1,
+          "pr_swlls_3": 1,
+          "pr_swlls_4": 1,
+          "pr_swlls_5": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_swlls_1": 4,
+          "pr_swlls_2": 4,
+          "pr_swlls_3": 4,
+          "pr_swlls_4": 4,
+          "pr_swlls_5": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_swlls_1": 7,
+          "pr_swlls_2": 7,
+          "pr_swlls_3": 7,
+          "pr_swlls_4": 7,
+          "pr_swlls_5": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 35
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Neto, F. (2005). The Satisfaction With Love Life Scale. Measurement and evaluation in counseling and development, 38 , 2-13.",
+    "year": 2005
+  }
+}

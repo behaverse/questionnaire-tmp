@@ -1,0 +1,100 @@
+{
+  "id": "hsc7",
+  "scorer_id": "scr_hsc7",
+  "name": "HSC-7 Total Scoring",
+  "status": "validated",
+  "description": "Hypoglycemia Symptoms Checklist (HSC-7). Total = sum of the 7 items (each 1-4), range 7-28. Higher scores indicate greater frequency of hypoglycemia symptoms (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      4
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_hsc7_1",
+          "pr_hsc7_2",
+          "pr_hsc7_3",
+          "pr_hsc7_4",
+          "pr_hsc7_5",
+          "pr_hsc7_6",
+          "pr_hsc7_7"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_hsc7_1": 1,
+          "pr_hsc7_2": 1,
+          "pr_hsc7_3": 1,
+          "pr_hsc7_4": 1,
+          "pr_hsc7_5": 1,
+          "pr_hsc7_6": 1,
+          "pr_hsc7_7": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_hsc7_1": 2,
+          "pr_hsc7_2": 2,
+          "pr_hsc7_3": 2,
+          "pr_hsc7_4": 2,
+          "pr_hsc7_5": 2,
+          "pr_hsc7_6": 2,
+          "pr_hsc7_7": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 14
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_hsc7_1": 4,
+          "pr_hsc7_2": 4,
+          "pr_hsc7_3": 4,
+          "pr_hsc7_4": 4,
+          "pr_hsc7_5": 4,
+          "pr_hsc7_6": 4,
+          "pr_hsc7_7": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 28
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Barry, J.A., Bouloux, P. & Hardiman, P.J. (2011). The impact of\neating behavior on psychological symptoms typical of reactive\nhypoglycemia. A pilot study comparing women with polycystic ovary\nsyndrome to controls. Appetite, 57, 73-76.",
+    "year": 2011
+  }
+}

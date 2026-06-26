@@ -1,0 +1,155 @@
+{
+  "id": "scr_bfs",
+  "name": "BFS Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "BFS Total Scoring",
+      "description": "Bullshitting Frequency Scale (BFS). Total = sum of the 12 items (each 1-5), range 12-60. Higher scores indicate greater frequency of bullshitting (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Littrell, S., Risko, E.F. and Fugelsang, J.A. (2021), The\nBullshitting Frequency Scale: Development and psychometric\nproperties. Br. J. Soc. Psychol., 60: 248-270\ne12379. https://doi.org/10.1111/bjso.12379",
+    "year": 2021
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_bfs_1|pr_bfs_2|pr_bfs_3|pr_bfs_4|pr_bfs_5|pr_bfs_6|pr_bfs_7|pr_bfs_8|pr_bfs_9|pr_bfs_10|pr_bfs_11|pr_bfs_12)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/bfs/scorer.wasm",
+      "sha256": "73d2af881e82660be0f7a2cb5058e29cd12c18ea2d9fb7e3bf05e8fc3c55da08"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_bfs_1": 1,
+          "pr_bfs_2": 1,
+          "pr_bfs_3": 1,
+          "pr_bfs_4": 1,
+          "pr_bfs_5": 1,
+          "pr_bfs_6": 1,
+          "pr_bfs_7": 1,
+          "pr_bfs_8": 1,
+          "pr_bfs_9": 1,
+          "pr_bfs_10": 1,
+          "pr_bfs_11": 1,
+          "pr_bfs_12": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_bfs_1": 3,
+          "pr_bfs_2": 3,
+          "pr_bfs_3": 3,
+          "pr_bfs_4": 3,
+          "pr_bfs_5": 3,
+          "pr_bfs_6": 3,
+          "pr_bfs_7": 3,
+          "pr_bfs_8": 3,
+          "pr_bfs_9": 3,
+          "pr_bfs_10": 3,
+          "pr_bfs_11": 3,
+          "pr_bfs_12": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 36
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_bfs_1": 5,
+          "pr_bfs_2": 5,
+          "pr_bfs_3": 5,
+          "pr_bfs_4": 5,
+          "pr_bfs_5": 5,
+          "pr_bfs_6": 5,
+          "pr_bfs_7": 5,
+          "pr_bfs_8": 5,
+          "pr_bfs_9": 5,
+          "pr_bfs_10": 5,
+          "pr_bfs_11": 5,
+          "pr_bfs_12": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

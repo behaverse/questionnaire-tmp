@@ -1,0 +1,124 @@
+{
+  "id": "gaene",
+  "scorer_id": "scr_gaene",
+  "name": "GAENE Total Scoring",
+  "status": "validated",
+  "description": "Generalized Acceptance of EvolutioN Evaluation (GAENE). Total = sum of the 13 items (each 1-5), range 13-65. Higher scores indicate greater acceptance of evolution (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_gaene_1",
+          "pr_gaene_2",
+          "pr_gaene_3",
+          "pr_gaene_4",
+          "pr_gaene_5",
+          "pr_gaene_6",
+          "pr_gaene_7",
+          "pr_gaene_8",
+          "pr_gaene_9",
+          "pr_gaene_10",
+          "pr_gaene_11",
+          "pr_gaene_12",
+          "pr_gaene_13"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_gaene_1": 1,
+          "pr_gaene_2": 1,
+          "pr_gaene_3": 1,
+          "pr_gaene_4": 1,
+          "pr_gaene_5": 1,
+          "pr_gaene_6": 1,
+          "pr_gaene_7": 1,
+          "pr_gaene_8": 1,
+          "pr_gaene_9": 1,
+          "pr_gaene_10": 1,
+          "pr_gaene_11": 1,
+          "pr_gaene_12": 1,
+          "pr_gaene_13": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 13
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_gaene_1": 3,
+          "pr_gaene_2": 3,
+          "pr_gaene_3": 3,
+          "pr_gaene_4": 3,
+          "pr_gaene_5": 3,
+          "pr_gaene_6": 3,
+          "pr_gaene_7": 3,
+          "pr_gaene_8": 3,
+          "pr_gaene_9": 3,
+          "pr_gaene_10": 3,
+          "pr_gaene_11": 3,
+          "pr_gaene_12": 3,
+          "pr_gaene_13": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 39
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_gaene_1": 5,
+          "pr_gaene_2": 5,
+          "pr_gaene_3": 5,
+          "pr_gaene_4": 5,
+          "pr_gaene_5": 5,
+          "pr_gaene_6": 5,
+          "pr_gaene_7": 5,
+          "pr_gaene_8": 5,
+          "pr_gaene_9": 5,
+          "pr_gaene_10": 5,
+          "pr_gaene_11": 5,
+          "pr_gaene_12": 5,
+          "pr_gaene_13": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 65
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Smith, M.U., Snyder, S.W., and Devereaux, R.S. (2016). The\nGAENE\u2014Generalized Acceptance of EvolutioN Evaluation: Development of a\nNew Measure of Evolution Acceptance. Journal of Research in Science\nTeaching, 53(9) , 1289-1315.",
+    "year": 2016
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "id": "sos",
+  "scorer_id": "scr_sos",
+  "name": "SOS Total Scoring",
+  "status": "validated",
+  "description": "Service to Others in Sobriety (SOS) questionnaire. Total = sum of the 12 items (each 1-5), range 12-60. Higher scores indicate greater service to others in sobriety (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_sos_1",
+          "pr_sos_2",
+          "pr_sos_3",
+          "pr_sos_4",
+          "pr_sos_5",
+          "pr_sos_6",
+          "pr_sos_7",
+          "pr_sos_8",
+          "pr_sos_9",
+          "pr_sos_10",
+          "pr_sos_11",
+          "pr_sos_12"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_sos_1": 1,
+          "pr_sos_2": 1,
+          "pr_sos_3": 1,
+          "pr_sos_4": 1,
+          "pr_sos_5": 1,
+          "pr_sos_6": 1,
+          "pr_sos_7": 1,
+          "pr_sos_8": 1,
+          "pr_sos_9": 1,
+          "pr_sos_10": 1,
+          "pr_sos_11": 1,
+          "pr_sos_12": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_sos_1": 3,
+          "pr_sos_2": 3,
+          "pr_sos_3": 3,
+          "pr_sos_4": 3,
+          "pr_sos_5": 3,
+          "pr_sos_6": 3,
+          "pr_sos_7": 3,
+          "pr_sos_8": 3,
+          "pr_sos_9": 3,
+          "pr_sos_10": 3,
+          "pr_sos_11": 3,
+          "pr_sos_12": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 36
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_sos_1": 5,
+          "pr_sos_2": 5,
+          "pr_sos_3": 5,
+          "pr_sos_4": 5,
+          "pr_sos_5": 5,
+          "pr_sos_6": 5,
+          "pr_sos_7": 5,
+          "pr_sos_8": 5,
+          "pr_sos_9": 5,
+          "pr_sos_10": 5,
+          "pr_sos_11": 5,
+          "pr_sos_12": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Pagano, M.E., Krentzman, A.R., Onder, C.C., Baryak, J.L., Murphy, J.L., Zywiak, W.H.,  & Stout, R. L. (2010). Service to Others in Sobriety (SOS). Alcohol Treatment Quarterly, 28 , 111-127. Read this paper online for free .",
+    "year": 2010
+  }
+}

@@ -361,5 +361,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PTS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pts@v26.0618"
+    }
   ]
 }

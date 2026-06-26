@@ -1,0 +1,146 @@
+{
+  "content": {
+    "en": {
+      "description": "Skepticism towards advertisements (SKEP). Total = sum of the 9 items (each 1-5), range 9-45. Higher scores indicate greater skepticism toward advertising (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "SKEP Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_skep",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "2031f23cbb39f8a3957bf7b969e28da5639db1e1709761065485c055a4ffc783",
+      "url": "https://behaverse.org/scorers/skep/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_skep_1|pr_skep_2|pr_skep_3|pr_skep_4|pr_skep_5|pr_skep_6|pr_skep_7|pr_skep_8|pr_skep_9)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SKEP Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 9
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_skep_1": 1,
+          "pr_skep_2": 1,
+          "pr_skep_3": 1,
+          "pr_skep_4": 1,
+          "pr_skep_5": 1,
+          "pr_skep_6": 1,
+          "pr_skep_7": 1,
+          "pr_skep_8": 1,
+          "pr_skep_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 27
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_skep_1": 3,
+          "pr_skep_2": 3,
+          "pr_skep_3": 3,
+          "pr_skep_4": 3,
+          "pr_skep_5": 3,
+          "pr_skep_6": 3,
+          "pr_skep_7": 3,
+          "pr_skep_8": 3,
+          "pr_skep_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 45
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_skep_1": 5,
+          "pr_skep_2": 5,
+          "pr_skep_3": 5,
+          "pr_skep_4": 5,
+          "pr_skep_5": 5,
+          "pr_skep_6": 5,
+          "pr_skep_7": 5,
+          "pr_skep_8": 5,
+          "pr_skep_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Obermiller, C. & Spangenberg, E.R. (1998). Development of a scale to\nmeasure consumer skepticism toward advertising. Journal of Consumer\nPsychology, 7 , 159-186.",
+    "year": 1998
+  }
+}

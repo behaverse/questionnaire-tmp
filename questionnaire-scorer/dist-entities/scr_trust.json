@@ -1,0 +1,170 @@
+{
+  "id": "scr_trust",
+  "name": "TICR Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "TICR Total Scoring",
+      "description": "Trust in close relationships. Total = sum of the 17 items (each 1-7), range 17-119. Higher scores indicate greater trust in a close relationship (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Rempel, J.K., Holmes, J.G. & Zanna, M.P. (1985). Trust in close relationships. Journal of\nPersonality and Social Psychology, 49 , 95-112.",
+    "year": 1985
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_trust_1|pr_trust_2|pr_trust_3|pr_trust_4|pr_trust_5|pr_trust_6|pr_trust_7|pr_trust_8|pr_trust_9|pr_trust_10|pr_trust_11|pr_trust_12|pr_trust_13|pr_trust_14|pr_trust_15|pr_trust_16|pr_trust_17)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/trust/scorer.wasm",
+      "sha256": "75ef677eda37e1ab390cade5e6bb804f30cd921ae51efbe77c1a1604c50a93a8"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_trust_1": 1,
+          "pr_trust_2": 1,
+          "pr_trust_3": 1,
+          "pr_trust_4": 1,
+          "pr_trust_5": 1,
+          "pr_trust_6": 1,
+          "pr_trust_7": 1,
+          "pr_trust_8": 1,
+          "pr_trust_9": 1,
+          "pr_trust_10": 1,
+          "pr_trust_11": 1,
+          "pr_trust_12": 1,
+          "pr_trust_13": 1,
+          "pr_trust_14": 1,
+          "pr_trust_15": 1,
+          "pr_trust_16": 1,
+          "pr_trust_17": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 17
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_trust_1": 4,
+          "pr_trust_2": 4,
+          "pr_trust_3": 4,
+          "pr_trust_4": 4,
+          "pr_trust_5": 4,
+          "pr_trust_6": 4,
+          "pr_trust_7": 4,
+          "pr_trust_8": 4,
+          "pr_trust_9": 4,
+          "pr_trust_10": 4,
+          "pr_trust_11": 4,
+          "pr_trust_12": 4,
+          "pr_trust_13": 4,
+          "pr_trust_14": 4,
+          "pr_trust_15": 4,
+          "pr_trust_16": 4,
+          "pr_trust_17": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 68
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_trust_1": 7,
+          "pr_trust_2": 7,
+          "pr_trust_3": 7,
+          "pr_trust_4": 7,
+          "pr_trust_5": 7,
+          "pr_trust_6": 7,
+          "pr_trust_7": 7,
+          "pr_trust_8": 7,
+          "pr_trust_9": 7,
+          "pr_trust_10": 7,
+          "pr_trust_11": 7,
+          "pr_trust_12": 7,
+          "pr_trust_13": 7,
+          "pr_trust_14": 7,
+          "pr_trust_15": 7,
+          "pr_trust_16": 7,
+          "pr_trust_17": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 119
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -249,5 +249,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "CNS mean",
+      "path": "/scores/total/value",
+      "scorer": "scr_cns@v26.0618"
+    }
   ]
 }

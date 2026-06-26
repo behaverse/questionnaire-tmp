@@ -249,5 +249,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "LiES total",
+      "path": "/scores/total/value",
+      "scorer": "scr_lying@v26.0618"
+    }
   ]
 }

@@ -1,0 +1,179 @@
+{
+  "content": {
+    "en": {
+      "description": "Teacher burnout. Total = sum of the 20 items (each 1-5), range 20-100. Higher scores indicate greater teacher burnout (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "Teacher Burnout Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_burnout",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "a2eeb07ef85555b9903915d44786e4b8fd78ead93ce8ebba89e85669b6972d8b",
+      "url": "https://behaverse.org/scorers/burnout/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_burnout_1|pr_burnout_2|pr_burnout_3|pr_burnout_4|pr_burnout_5|pr_burnout_6|pr_burnout_7|pr_burnout_8|pr_burnout_9|pr_burnout_10|pr_burnout_11|pr_burnout_12|pr_burnout_13|pr_burnout_14|pr_burnout_15|pr_burnout_16|pr_burnout_17|pr_burnout_18|pr_burnout_19|pr_burnout_20)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "Teacher Burnout Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_burnout_1": 1,
+          "pr_burnout_10": 1,
+          "pr_burnout_11": 1,
+          "pr_burnout_12": 1,
+          "pr_burnout_13": 1,
+          "pr_burnout_14": 1,
+          "pr_burnout_15": 1,
+          "pr_burnout_16": 1,
+          "pr_burnout_17": 1,
+          "pr_burnout_18": 1,
+          "pr_burnout_19": 1,
+          "pr_burnout_2": 1,
+          "pr_burnout_20": 1,
+          "pr_burnout_3": 1,
+          "pr_burnout_4": 1,
+          "pr_burnout_5": 1,
+          "pr_burnout_6": 1,
+          "pr_burnout_7": 1,
+          "pr_burnout_8": 1,
+          "pr_burnout_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_burnout_1": 3,
+          "pr_burnout_10": 3,
+          "pr_burnout_11": 3,
+          "pr_burnout_12": 3,
+          "pr_burnout_13": 3,
+          "pr_burnout_14": 3,
+          "pr_burnout_15": 3,
+          "pr_burnout_16": 3,
+          "pr_burnout_17": 3,
+          "pr_burnout_18": 3,
+          "pr_burnout_19": 3,
+          "pr_burnout_2": 3,
+          "pr_burnout_20": 3,
+          "pr_burnout_3": 3,
+          "pr_burnout_4": 3,
+          "pr_burnout_5": 3,
+          "pr_burnout_6": 3,
+          "pr_burnout_7": 3,
+          "pr_burnout_8": 3,
+          "pr_burnout_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_burnout_1": 5,
+          "pr_burnout_10": 5,
+          "pr_burnout_11": 5,
+          "pr_burnout_12": 5,
+          "pr_burnout_13": 5,
+          "pr_burnout_14": 5,
+          "pr_burnout_15": 5,
+          "pr_burnout_16": 5,
+          "pr_burnout_17": 5,
+          "pr_burnout_18": 5,
+          "pr_burnout_19": 5,
+          "pr_burnout_2": 5,
+          "pr_burnout_20": 5,
+          "pr_burnout_3": 5,
+          "pr_burnout_4": 5,
+          "pr_burnout_5": 5,
+          "pr_burnout_6": 5,
+          "pr_burnout_7": 5,
+          "pr_burnout_8": 5,
+          "pr_burnout_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Campbell, L.P. (1983). Teacher burnout: Description and\nprescription. The Clearing House, 57 , pp. 111-113",
+    "year": 1983
+  }
+}

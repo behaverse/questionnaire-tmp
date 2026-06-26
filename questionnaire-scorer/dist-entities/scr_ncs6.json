@@ -1,0 +1,137 @@
+{
+  "id": "scr_ncs6",
+  "name": "NCS-6 Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "NCS-6 Total Scoring",
+      "description": "Need for Cognition (NCS-6). Total = sum of the 6 items (each 1-5), range 6-30. Higher scores indicate greater need for cognition (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Coelho, G.L.D.H., Hanel, P.H.P, & Wolf, L.J. (2018). The\nVery Efficient Assessment of Need for Cognition: Developing a Six-Item\nVersion. Assessment, online first , 1-16. Download here .",
+    "year": 2018
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_ncs6_1|pr_ncs6_2|pr_ncs6_3|pr_ncs6_4|pr_ncs6_5|pr_ncs6_6)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/ncs6/scorer.wasm",
+      "sha256": "69274988dafe6770d37434fb4a4fc2b883924bf2b952ead1b9f9e406937e31f2"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 1,
+          "pr_ncs6_2": 1,
+          "pr_ncs6_3": 1,
+          "pr_ncs6_4": 1,
+          "pr_ncs6_5": 1,
+          "pr_ncs6_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 3,
+          "pr_ncs6_2": 3,
+          "pr_ncs6_3": 3,
+          "pr_ncs6_4": 3,
+          "pr_ncs6_5": 3,
+          "pr_ncs6_6": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 5,
+          "pr_ncs6_2": 5,
+          "pr_ncs6_3": 5,
+          "pr_ncs6_4": 5,
+          "pr_ncs6_5": 5,
+          "pr_ncs6_6": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

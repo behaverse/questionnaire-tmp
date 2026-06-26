@@ -1,0 +1,179 @@
+{
+  "id": "scr_egst",
+  "name": "EGST Total Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "EGST Total Scoring",
+      "description": "Excessive Gaming Screening Tool (EGST). Total = sum of the 20 items (each 0-5), range 0-100. Higher scores indicate greater excessive / problematic gaming (reverse-keyed items are reversed by the runtime). No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "R IF Brown ( 1991 ). Gaming, gambling and other addictive play. See JH Kerr & MJ Apter. Adult place: A reversal theory approach (pp. 101-118).",
+    "year": 1991
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_egst_1|pr_egst_2|pr_egst_3|pr_egst_4|pr_egst_5|pr_egst_6|pr_egst_7|pr_egst_8|pr_egst_9|pr_egst_10|pr_egst_11|pr_egst_12|pr_egst_13|pr_egst_14|pr_egst_15|pr_egst_16|pr_egst_17|pr_egst_18|pr_egst_19|pr_egst_20)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/egst/scorer.wasm",
+      "sha256": "c7b5355c5318169bc7dea62dae1bc5291cb9c4a204566c8bbefe39ed66b2d3a3"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_egst_1": 0,
+          "pr_egst_2": 0,
+          "pr_egst_3": 0,
+          "pr_egst_4": 0,
+          "pr_egst_5": 0,
+          "pr_egst_6": 0,
+          "pr_egst_7": 0,
+          "pr_egst_8": 0,
+          "pr_egst_9": 0,
+          "pr_egst_10": 0,
+          "pr_egst_11": 0,
+          "pr_egst_12": 0,
+          "pr_egst_13": 0,
+          "pr_egst_14": 0,
+          "pr_egst_15": 0,
+          "pr_egst_16": 0,
+          "pr_egst_17": 0,
+          "pr_egst_18": 0,
+          "pr_egst_19": 0,
+          "pr_egst_20": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_egst_1": 2,
+          "pr_egst_2": 2,
+          "pr_egst_3": 2,
+          "pr_egst_4": 2,
+          "pr_egst_5": 2,
+          "pr_egst_6": 2,
+          "pr_egst_7": 2,
+          "pr_egst_8": 2,
+          "pr_egst_9": 2,
+          "pr_egst_10": 2,
+          "pr_egst_11": 2,
+          "pr_egst_12": 2,
+          "pr_egst_13": 2,
+          "pr_egst_14": 2,
+          "pr_egst_15": 2,
+          "pr_egst_16": 2,
+          "pr_egst_17": 2,
+          "pr_egst_18": 2,
+          "pr_egst_19": 2,
+          "pr_egst_20": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 40
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_egst_1": 5,
+          "pr_egst_2": 5,
+          "pr_egst_3": 5,
+          "pr_egst_4": 5,
+          "pr_egst_5": 5,
+          "pr_egst_6": 5,
+          "pr_egst_7": 5,
+          "pr_egst_8": 5,
+          "pr_egst_9": 5,
+          "pr_egst_10": 5,
+          "pr_egst_11": 5,
+          "pr_egst_12": 5,
+          "pr_egst_13": 5,
+          "pr_egst_14": 5,
+          "pr_egst_15": 5,
+          "pr_egst_16": 5,
+          "pr_egst_17": 5,
+          "pr_egst_18": 5,
+          "pr_egst_19": 5,
+          "pr_egst_20": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

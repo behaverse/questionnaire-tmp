@@ -123,5 +123,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SWLLS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_swlls@v26.0618"
+    }
   ]
 }

@@ -1,0 +1,137 @@
+{
+  "content": {
+    "en": {
+      "description": "Need for Cognition (NCS-6). Total = sum of the 6 items (each 1-5), range 6-30. Higher scores indicate greater need for cognition (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "NCS-6 Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_ncs6",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "69274988dafe6770d37434fb4a4fc2b883924bf2b952ead1b9f9e406937e31f2",
+      "url": "https://behaverse.org/scorers/ncs6/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_ncs6_1|pr_ncs6_2|pr_ncs6_3|pr_ncs6_4|pr_ncs6_5|pr_ncs6_6)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "NCS-6 Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 1,
+          "pr_ncs6_2": 1,
+          "pr_ncs6_3": 1,
+          "pr_ncs6_4": 1,
+          "pr_ncs6_5": 1,
+          "pr_ncs6_6": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 3,
+          "pr_ncs6_2": 3,
+          "pr_ncs6_3": 3,
+          "pr_ncs6_4": 3,
+          "pr_ncs6_5": 3,
+          "pr_ncs6_6": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ncs6_1": 5,
+          "pr_ncs6_2": 5,
+          "pr_ncs6_3": 5,
+          "pr_ncs6_4": 5,
+          "pr_ncs6_5": 5,
+          "pr_ncs6_6": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Coelho, G.L.D.H., Hanel, P.H.P, & Wolf, L.J. (2018). The\nVery Efficient Assessment of Need for Cognition: Developing a Six-Item\nVersion. Assessment, online first , 1-16. Download here .",
+    "year": 2018
+  }
+}

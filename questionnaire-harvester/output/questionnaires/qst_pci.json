@@ -305,5 +305,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PCI total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pci@v26.0618"
+    }
   ]
 }

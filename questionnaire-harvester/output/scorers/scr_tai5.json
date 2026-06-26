@@ -1,0 +1,134 @@
+{
+  "content": {
+    "en": {
+      "description": "Test Anxiety Inventory (TAI-5). Total = sum of the 5 items (each 1-4), range 5-20. Higher scores indicate greater test anxiety (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "TAI-5 Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_tai5",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "6cc221fe5fa5d62d9df21989eb247a0664da7e6d1fbbb08dbec819bf4002f7ac",
+      "url": "https://behaverse.org/scorers/tai5/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_tai5_1|pr_tai5_2|pr_tai5_3|pr_tai5_4|pr_tai5_5)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "TAI-5 Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tai5_1": 1,
+          "pr_tai5_2": 1,
+          "pr_tai5_3": 1,
+          "pr_tai5_4": 1,
+          "pr_tai5_5": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 10
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tai5_1": 2,
+          "pr_tai5_2": 2,
+          "pr_tai5_3": 2,
+          "pr_tai5_4": 2,
+          "pr_tai5_5": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tai5_1": 4,
+          "pr_tai5_2": 4,
+          "pr_tai5_3": 4,
+          "pr_tai5_4": 4,
+          "pr_tai5_5": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Joanne Taylor & Frank P. Deane (2002) Development of a Short Form of the Test Anxiety Inventory (TAI), The Journal of General Psychology, 129:2, 127-136, DOI: 10.1080/00221300209603133",
+    "year": 2002
+  }
+}

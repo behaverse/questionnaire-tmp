@@ -137,5 +137,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "NCS-6 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_ncs6@v26.0618"
+    }
   ]
 }

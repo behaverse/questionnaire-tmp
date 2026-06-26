@@ -1,0 +1,206 @@
+{
+  "content": {
+    "en": {
+      "description": "Oxford Happiness Scale. Score = MEAN of the 29 items (each 1-6), range 1-6. Higher scores indicate greater subjective happiness (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "OHQ Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_ohq",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "70d1b2c763d0174a49621845cf568235afc1cd4c8218039fed7f690c8a0b1632",
+      "url": "https://behaverse.org/scorers/ohq/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_ohq_1|pr_ohq_2|pr_ohq_3|pr_ohq_4|pr_ohq_5|pr_ohq_6|pr_ohq_7|pr_ohq_8|pr_ohq_9|pr_ohq_10|pr_ohq_11|pr_ohq_12|pr_ohq_13|pr_ohq_14|pr_ohq_15|pr_ohq_16|pr_ohq_17|pr_ohq_18|pr_ohq_19|pr_ohq_20|pr_ohq_21|pr_ohq_22|pr_ohq_23|pr_ohq_24|pr_ohq_25|pr_ohq_26|pr_ohq_27|pr_ohq_28|pr_ohq_29)$": {
+            "maximum": 6,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "OHQ Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ohq_1": 1,
+          "pr_ohq_10": 1,
+          "pr_ohq_11": 1,
+          "pr_ohq_12": 1,
+          "pr_ohq_13": 1,
+          "pr_ohq_14": 1,
+          "pr_ohq_15": 1,
+          "pr_ohq_16": 1,
+          "pr_ohq_17": 1,
+          "pr_ohq_18": 1,
+          "pr_ohq_19": 1,
+          "pr_ohq_2": 1,
+          "pr_ohq_20": 1,
+          "pr_ohq_21": 1,
+          "pr_ohq_22": 1,
+          "pr_ohq_23": 1,
+          "pr_ohq_24": 1,
+          "pr_ohq_25": 1,
+          "pr_ohq_26": 1,
+          "pr_ohq_27": 1,
+          "pr_ohq_28": 1,
+          "pr_ohq_29": 1,
+          "pr_ohq_3": 1,
+          "pr_ohq_4": 1,
+          "pr_ohq_5": 1,
+          "pr_ohq_6": 1,
+          "pr_ohq_7": 1,
+          "pr_ohq_8": 1,
+          "pr_ohq_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 3
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ohq_1": 3,
+          "pr_ohq_10": 3,
+          "pr_ohq_11": 3,
+          "pr_ohq_12": 3,
+          "pr_ohq_13": 3,
+          "pr_ohq_14": 3,
+          "pr_ohq_15": 3,
+          "pr_ohq_16": 3,
+          "pr_ohq_17": 3,
+          "pr_ohq_18": 3,
+          "pr_ohq_19": 3,
+          "pr_ohq_2": 3,
+          "pr_ohq_20": 3,
+          "pr_ohq_21": 3,
+          "pr_ohq_22": 3,
+          "pr_ohq_23": 3,
+          "pr_ohq_24": 3,
+          "pr_ohq_25": 3,
+          "pr_ohq_26": 3,
+          "pr_ohq_27": 3,
+          "pr_ohq_28": 3,
+          "pr_ohq_29": 3,
+          "pr_ohq_3": 3,
+          "pr_ohq_4": 3,
+          "pr_ohq_5": 3,
+          "pr_ohq_6": 3,
+          "pr_ohq_7": 3,
+          "pr_ohq_8": 3,
+          "pr_ohq_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ohq_1": 6,
+          "pr_ohq_10": 6,
+          "pr_ohq_11": 6,
+          "pr_ohq_12": 6,
+          "pr_ohq_13": 6,
+          "pr_ohq_14": 6,
+          "pr_ohq_15": 6,
+          "pr_ohq_16": 6,
+          "pr_ohq_17": 6,
+          "pr_ohq_18": 6,
+          "pr_ohq_19": 6,
+          "pr_ohq_2": 6,
+          "pr_ohq_20": 6,
+          "pr_ohq_21": 6,
+          "pr_ohq_22": 6,
+          "pr_ohq_23": 6,
+          "pr_ohq_24": 6,
+          "pr_ohq_25": 6,
+          "pr_ohq_26": 6,
+          "pr_ohq_27": 6,
+          "pr_ohq_28": 6,
+          "pr_ohq_29": 6,
+          "pr_ohq_3": 6,
+          "pr_ohq_4": 6,
+          "pr_ohq_5": 6,
+          "pr_ohq_6": 6,
+          "pr_ohq_7": 6,
+          "pr_ohq_8": 6,
+          "pr_ohq_9": 6
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Hills, P. & Argyle, M. (2002). The Oxford Happiness Questionnaire: a compact scale for the measurement of psychological well-being. Personality and Individual Differences, 33 , 1073-1082.",
+    "year": 2002
+  }
+}

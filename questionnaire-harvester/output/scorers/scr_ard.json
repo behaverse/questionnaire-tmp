@@ -1,0 +1,215 @@
+{
+  "content": {
+    "en": {
+      "description": "Dominance Scale (for relationship research). Total = sum of the 32 items (each 1-4), range 32-128. Higher scores indicate greater interpersonal dominance (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+      "name": "Dominance Scale Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_ard",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "b0fd3c034a606199fa11d6d358587b3f3964bc7828198c7843c213781f8c8eab",
+      "url": "https://behaverse.org/scorers/ard/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_ard_1|pr_ard_2|pr_ard_3|pr_ard_4|pr_ard_5|pr_ard_6|pr_ard_7|pr_ard_8|pr_ard_9|pr_ard_10|pr_ard_11|pr_ard_12|pr_ard_13|pr_ard_14|pr_ard_15|pr_ard_16|pr_ard_17|pr_ard_18|pr_ard_19|pr_ard_20|pr_ard_21|pr_ard_22|pr_ard_23|pr_ard_24|pr_ard_25|pr_ard_26|pr_ard_27|pr_ard_28|pr_ard_29|pr_ard_30|pr_ard_31|pr_ard_32)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "Dominance Scale Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 32
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ard_1": 1,
+          "pr_ard_10": 1,
+          "pr_ard_11": 1,
+          "pr_ard_12": 1,
+          "pr_ard_13": 1,
+          "pr_ard_14": 1,
+          "pr_ard_15": 1,
+          "pr_ard_16": 1,
+          "pr_ard_17": 1,
+          "pr_ard_18": 1,
+          "pr_ard_19": 1,
+          "pr_ard_2": 1,
+          "pr_ard_20": 1,
+          "pr_ard_21": 1,
+          "pr_ard_22": 1,
+          "pr_ard_23": 1,
+          "pr_ard_24": 1,
+          "pr_ard_25": 1,
+          "pr_ard_26": 1,
+          "pr_ard_27": 1,
+          "pr_ard_28": 1,
+          "pr_ard_29": 1,
+          "pr_ard_3": 1,
+          "pr_ard_30": 1,
+          "pr_ard_31": 1,
+          "pr_ard_32": 1,
+          "pr_ard_4": 1,
+          "pr_ard_5": 1,
+          "pr_ard_6": 1,
+          "pr_ard_7": 1,
+          "pr_ard_8": 1,
+          "pr_ard_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 64
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ard_1": 2,
+          "pr_ard_10": 2,
+          "pr_ard_11": 2,
+          "pr_ard_12": 2,
+          "pr_ard_13": 2,
+          "pr_ard_14": 2,
+          "pr_ard_15": 2,
+          "pr_ard_16": 2,
+          "pr_ard_17": 2,
+          "pr_ard_18": 2,
+          "pr_ard_19": 2,
+          "pr_ard_2": 2,
+          "pr_ard_20": 2,
+          "pr_ard_21": 2,
+          "pr_ard_22": 2,
+          "pr_ard_23": 2,
+          "pr_ard_24": 2,
+          "pr_ard_25": 2,
+          "pr_ard_26": 2,
+          "pr_ard_27": 2,
+          "pr_ard_28": 2,
+          "pr_ard_29": 2,
+          "pr_ard_3": 2,
+          "pr_ard_30": 2,
+          "pr_ard_31": 2,
+          "pr_ard_32": 2,
+          "pr_ard_4": 2,
+          "pr_ard_5": 2,
+          "pr_ard_6": 2,
+          "pr_ard_7": 2,
+          "pr_ard_8": 2,
+          "pr_ard_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 128
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ard_1": 4,
+          "pr_ard_10": 4,
+          "pr_ard_11": 4,
+          "pr_ard_12": 4,
+          "pr_ard_13": 4,
+          "pr_ard_14": 4,
+          "pr_ard_15": 4,
+          "pr_ard_16": 4,
+          "pr_ard_17": 4,
+          "pr_ard_18": 4,
+          "pr_ard_19": 4,
+          "pr_ard_2": 4,
+          "pr_ard_20": 4,
+          "pr_ard_21": 4,
+          "pr_ard_22": 4,
+          "pr_ard_23": 4,
+          "pr_ard_24": 4,
+          "pr_ard_25": 4,
+          "pr_ard_26": 4,
+          "pr_ard_27": 4,
+          "pr_ard_28": 4,
+          "pr_ard_29": 4,
+          "pr_ard_3": 4,
+          "pr_ard_30": 4,
+          "pr_ard_31": 4,
+          "pr_ard_32": 4,
+          "pr_ard_4": 4,
+          "pr_ard_5": 4,
+          "pr_ard_6": 4,
+          "pr_ard_7": 4,
+          "pr_ard_8": 4,
+          "pr_ard_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Hamby, S. L., (1996). The dominance scale: Preliminary Psychometric Properties. Violence and Victims, 11 , 199-212. Link to paper online .",
+    "year": 1996
+  }
+}

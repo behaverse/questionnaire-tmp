@@ -1,0 +1,96 @@
+{
+  "id": "webexec",
+  "scorer_id": "scr_webexec",
+  "name": "webexec Total Scoring",
+  "status": "validated",
+  "description": "Problems with executive control (webexec). Total = sum of the 6 items (each 1-4), range 6-24. Higher scores indicate greater everyday executive-control problems (reverse-keyed items are reversed by the runtime). No standard severity cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      4
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_webexec_1",
+          "pr_webexec_2",
+          "pr_webexec_3",
+          "pr_webexec_4",
+          "pr_webexec_5",
+          "pr_webexec_6"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_webexec_1": 1,
+          "pr_webexec_2": 1,
+          "pr_webexec_3": 1,
+          "pr_webexec_4": 1,
+          "pr_webexec_5": 1,
+          "pr_webexec_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_webexec_1": 2,
+          "pr_webexec_2": 2,
+          "pr_webexec_3": 2,
+          "pr_webexec_4": 2,
+          "pr_webexec_5": 2,
+          "pr_webexec_6": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 12
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_webexec_1": 4,
+          "pr_webexec_2": 4,
+          "pr_webexec_3": 4,
+          "pr_webexec_4": 4,
+          "pr_webexec_5": 4,
+          "pr_webexec_6": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 24
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Buchanan, T., Heffernan, T. M., Parrott, A. C., Ling, J., Rodgers, J., & Scholey, A. B. (2010). A short self-report measure of problems with executive function suitable for administration via the Internet. Behavior Research Methods, 42 , 709-714.",
+    "year": 2010
+  }
+}
