@@ -88,20 +88,20 @@ pub fn score(spec_json: &str, input: &Value) -> Result<Value, String> {
 
     let mut scores = Map::new();
     for sd in &spec.scores {
-        let mut sum = 0i64;
+        let mut sum = 0f64;
         let mut present = 0i64;
         for item in &sd.items {
             match sr.get(item) {
                 None | Some(Value::Null) => {}
                 Some(v) => {
-                    // accept integers and integral floats (option values are stored as 5.0 etc.)
+                    // accept any finite number (option values are stored as 5.0; a few scales such
+                    // as the calibrated happiness item carry genuinely fractional values).
                     let n = v
                         .as_f64()
-                        .filter(|f| f.fract() == 0.0 && f.is_finite())
-                        .map(|f| f as i64)
-                        .ok_or_else(|| format!("{item}: not an integer"))?;
+                        .filter(|f| f.is_finite())
+                        .ok_or_else(|| format!("{item}: not a number"))?;
                     if let Some([lo, hi]) = spec.item_range {
-                        if n < lo || n > hi {
+                        if n < lo as f64 || n > hi as f64 {
                             return Err(format!("{item}: out of range {lo}..{hi}"));
                         }
                     }
@@ -111,12 +111,12 @@ pub fn score(spec_json: &str, input: &Value) -> Result<Value, String> {
             }
         }
         let raw = match sd.aggregate {
-            Aggregate::Sum => sum as f64,
+            Aggregate::Sum => sum,
             Aggregate::Mean => {
                 if present == 0 {
                     0.0
                 } else {
-                    sum as f64 / present as f64
+                    sum / present as f64
                 }
             }
         };
@@ -234,6 +234,22 @@ mod tests {
         let spec = r#"{ "scores":[{ "key":"avg","aggregate":"mean","items":["a","b","c","d"] }] }"#;
         let out = score(spec, &input(&[("a", 2), ("b", 4), ("c", 4), ("d", 2)])).unwrap();
         assert_eq!(out["scores"]["avg"]["value"], json!(3));
+    }
+
+    #[test]
+    fn accepts_fractional_values() {
+        // calibrated single-item scales (e.g. happiness) carry genuinely fractional values.
+        let spec = r#"{ "scores":[{ "key":"total","items":["h"] }] }"#;
+        let out = score(spec, &input_f(&[("h", 3.17)])).unwrap();
+        assert_eq!(out["scores"]["total"]["value"], json!(3.17));
+    }
+
+    fn input_f(pairs: &[(&str, f64)]) -> Value {
+        let mut o = Map::new();
+        for (k, v) in pairs {
+            o.insert((*k).into(), json!(v));
+        }
+        json!({ "scored_responses": o })
     }
 
     #[test]

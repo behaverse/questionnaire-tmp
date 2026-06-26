@@ -1,0 +1,104 @@
+{
+  "id": "scr_happiness",
+  "name": "CHS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "CHS Scoring",
+      "description": "The Children’s Happiness Scale. Score = the single calibrated happiness rating (range ~1.7-4.3); higher = greater subjective happiness."
+    }
+  },
+  "x_publication": {
+    "citation": "Morgan, R. (2014). The children’s happiness scale. Children’s\nRights. Documentation,\nincluding questions and scoring retrieved from this link .",
+    "year": 2014
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_happiness_1)$": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "happiness": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "happiness"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/happiness/scorer.wasm",
+      "sha256": "2f41551b9db4d3f8d2c7040d60a3534f31944b6ada3d900931931550f394d6f8"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "low",
+      "input": {
+        "scored_responses": {
+          "pr_happiness_1": 1.68
+        }
+      },
+      "expected": {
+        "scores": {
+          "happiness": {
+            "value": 1.68
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high",
+      "input": {
+        "scored_responses": {
+          "pr_happiness_1": 4.25
+        }
+      },
+      "expected": {
+        "scores": {
+          "happiness": {
+            "value": 4.25
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "happiness",
+  "scorer_id": "scr_happiness",
+  "name": "CHS Scoring",
+  "status": "validated",
+  "description": "The Children\u2019s Happiness Scale. Score = the single calibrated happiness rating (range ~1.7-4.3); higher = greater subjective happiness.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "happiness",
+        "items": [
+          "pr_happiness_1"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "low",
+      "input": {
+        "scored_responses": {
+          "pr_happiness_1": 1.68
+        }
+      },
+      "expected": {
+        "scores": {
+          "happiness": {
+            "value": 1.68
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high",
+      "input": {
+        "scored_responses": {
+          "pr_happiness_1": 4.25
+        }
+      },
+      "expected": {
+        "scores": {
+          "happiness": {
+            "value": 4.25
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Morgan, R. (2014). The children\u2019s happiness scale. Children\u2019s\nRights. Documentation,\nincluding questions and scoring retrieved from this link .",
+    "year": 2014
+  }
+}

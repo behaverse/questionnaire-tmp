@@ -1,0 +1,104 @@
+{
+  "content": {
+    "en": {
+      "description": "The Children’s Happiness Scale. Score = the single calibrated happiness rating (range ~1.7-4.3); higher = greater subjective happiness.",
+      "name": "CHS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_happiness",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "2f41551b9db4d3f8d2c7040d60a3534f31944b6ada3d900931931550f394d6f8",
+      "url": "https://behaverse.org/scorers/happiness/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_happiness_1)$": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CHS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "happiness": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "happiness"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "happiness": {
+            "value": 1.68
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_happiness_1": 1.68
+        }
+      },
+      "name": "low"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "happiness": {
+            "value": 4.25
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_happiness_1": 4.25
+        }
+      },
+      "name": "high"
+    }
+  ],
+  "x_publication": {
+    "citation": "Morgan, R. (2014). The children’s happiness scale. Children’s\nRights. Documentation,\nincluding questions and scoring retrieved from this link .",
+    "year": 2014
+  }
+}

@@ -64,5 +64,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "happiness",
+      "name": "Happiness rating",
+      "path": "/scores/happiness/value",
+      "scorer": "scr_happiness@v26.0618"
+    }
   ]
 }
