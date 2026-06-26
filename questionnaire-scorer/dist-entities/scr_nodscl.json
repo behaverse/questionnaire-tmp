@@ -1,0 +1,159 @@
+{
+  "id": "scr_nodscl",
+  "name": "NODS Gambling Screen Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "NODS Gambling Screen Scoring",
+      "description": "NORC DSM-IV Screen for Gambling Problems (NODS). Counts the 10 DSM-IV pathological-gambling criteria met (a criterion counts if any of its items is endorsed; the two '3+ times' follow-ups are qualifiers), range 0-10: 1-2 at-risk, 3-4 problem gambling, 5+ pathological gambling."
+    }
+  },
+  "x_publication": {
+    "citation": "Gerstein D, Volberg RA, Toce M, et al. (1999). Gambling Impact and Behavior Study. National Opinion Research Center.",
+    "year": 1999
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^pr_nodscl_[0-9]+$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "criteria_met": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 10
+      },
+      "severity": {
+        "type": "string",
+        "enum": [
+          "none",
+          "at_risk",
+          "problem",
+          "pathological"
+        ]
+      },
+      "band": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "integer"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "min",
+          "max",
+          "label"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 10
+      }
+    },
+    "required": [
+      "criteria_met",
+      "severity",
+      "band",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/nodscl/scorer.wasm",
+      "sha256": "f5acadffb523451f9f9d93cbcda7ea917d01b9e05d280fa63bc795b17e4a3265"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "pathological",
+      "input": {
+        "scored_responses": {
+          "pr_nodscl_1": 1,
+          "pr_nodscl_2": 1,
+          "pr_nodscl_3": 1,
+          "pr_nodscl_4": 1,
+          "pr_nodscl_5": 1,
+          "pr_nodscl_6": 1,
+          "pr_nodscl_7": 1,
+          "pr_nodscl_8": 1,
+          "pr_nodscl_9": 1,
+          "pr_nodscl_10": 1,
+          "pr_nodscl_11": 1,
+          "pr_nodscl_12": 1,
+          "pr_nodscl_13": 1,
+          "pr_nodscl_14": 1,
+          "pr_nodscl_15": 1,
+          "pr_nodscl_16": 1,
+          "pr_nodscl_17": 1
+        }
+      },
+      "expected": {
+        "criteria_met": 10,
+        "severity": "pathological",
+        "band": {
+          "min": 5,
+          "max": 10,
+          "label": "Pathological gambling"
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "at-risk-collapse",
+      "input": {
+        "scored_responses": {
+          "pr_nodscl_1": 0,
+          "pr_nodscl_2": 0,
+          "pr_nodscl_3": 0,
+          "pr_nodscl_4": 0,
+          "pr_nodscl_5": 0,
+          "pr_nodscl_6": 0,
+          "pr_nodscl_7": 0,
+          "pr_nodscl_8": 0,
+          "pr_nodscl_9": 0,
+          "pr_nodscl_10": 0,
+          "pr_nodscl_11": 0,
+          "pr_nodscl_12": 0,
+          "pr_nodscl_13": 0,
+          "pr_nodscl_14": 1,
+          "pr_nodscl_15": 1,
+          "pr_nodscl_16": 1,
+          "pr_nodscl_17": 0
+        }
+      },
+      "expected": {
+        "criteria_met": 1,
+        "severity": "at_risk",
+        "band": {
+          "min": 1,
+          "max": 2,
+          "label": "At-risk gambling"
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

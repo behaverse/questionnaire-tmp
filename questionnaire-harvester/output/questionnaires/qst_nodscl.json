@@ -306,5 +306,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "criteria_met",
+      "name": "NODS criteria met",
+      "path": "/criteria_met",
+      "scorer": "scr_nodscl@v26.0618"
+    },
+    {
+      "id": "severity",
+      "name": "NODS classification",
+      "path": "/severity",
+      "scorer": "scr_nodscl@v26.0618"
+    }
   ]
 }
