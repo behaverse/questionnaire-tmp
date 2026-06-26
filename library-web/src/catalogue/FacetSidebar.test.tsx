@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { FacetSidebar } from './FacetSidebar'
+import { FacetSidebar, MobileFilters } from './FacetSidebar'
 import type { FacetGroup } from './FacetSidebar'
 import type { FacetKey } from './useCatalogueParams'
 
@@ -87,5 +87,18 @@ describe('FacetSidebar', () => {
     expect(domainHeader).toHaveAttribute('aria-expanded', 'false')
     await userEvent.click(domainHeader)
     expect(domainHeader).toHaveAttribute('aria-expanded', 'true')
+  })
+})
+
+describe('MobileFilters', () => {
+  it('hides the facets behind a Filters disclosure until it is opened', async () => {
+    render(<MobileFilters groups={groups} selected={noSelection} onToggle={() => {}} onClear={() => {}} />)
+    const trigger = screen.getByRole('button', { name: /filters/i })
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    // the facet group headers are not rendered until the disclosure opens
+    expect(screen.queryByRole('button', { name: /Domain/ })).toBeNull()
+    await userEvent.click(trigger)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: /Domain/ })).toBeInTheDocument()
   })
 })

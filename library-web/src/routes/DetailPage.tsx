@@ -54,6 +54,10 @@ export function DetailPage() {
     [defQ.data, effectiveLang],
   )
 
+  useEffect(() => {
+    if (meta?.title) document.title = `${meta.title} · Questionnaire Library`
+  }, [meta?.title])
+
   const scores = defQ.data?.scores
   const present = {
     description: !!meta?.description && meta.description !== meta.title,
@@ -70,7 +74,7 @@ export function DetailPage() {
   if (notFound(versionsQ.error) || notFound(defQ.error)) return <NotFoundPage />
   if (defQ.error instanceof ApiError && defQ.error.status === 410) {
     return (
-      <main className="mx-auto max-w-2xl px-6 py-24 text-center">
+      <main id="main-content" tabIndex={-1} className="mx-auto max-w-2xl px-6 py-24 text-center focus:outline-none">
         <span aria-hidden className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-amber-800 ring-1 ring-inset ring-amber-200">
           Removed entry
         </span>
@@ -84,7 +88,7 @@ export function DetailPage() {
     (defQ.isError && !(defQ.error instanceof ApiError))
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
+    <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 py-10 focus:outline-none">
       {(versionsQ.isLoading || defQ.isLoading) && (
         <div className="space-y-4"><Skeleton className="h-12 w-1/2" /><Skeleton className="h-44 w-full" /></div>
       )}

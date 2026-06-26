@@ -1,7 +1,8 @@
+import { useEffect } from 'react'
 import { useCatalogueParams, type FacetKey } from '../catalogue/useCatalogueParams'
 import { useQuestionnaires, useFacets, useStats } from '../api/queries'
 import { CatalogueGroup } from '../catalogue/CatalogueGroup'
-import { FacetSidebar, type FacetGroup } from '../catalogue/FacetSidebar'
+import { FacetSidebar, MobileFilters, type FacetGroup } from '../catalogue/FacetSidebar'
 import { SearchBar } from '../catalogue/SearchBar'
 import { SortSelect } from '../catalogue/SortSelect'
 import { Pagination } from '../catalogue/Pagination'
@@ -44,8 +45,22 @@ export function CataloguePage() {
     .map((d) => ({ key: d.key, title: d.title, values: facetData[d.key] }))
     .filter((g) => g.values.length > 0)
 
+  const facetSelection = { domain: params.domain, population: params.population, instrument: params.instrument, language: params.language, license: params.license }
+
+  // A short, screen-reader-announced summary of the result state (search/filter feedback).
+  const statusText = list.isLoading
+    ? 'Loading questionnaires…'
+    : list.isError
+      ? (list.error instanceof ApiError && list.error.status === 422 ? 'Invalid search or filter.' : 'Could not load questionnaires.')
+      : list.isSuccess
+        ? (list.data.total === 0 ? 'No questionnaires match these filters.' : `${list.data.total} result${list.data.total === 1 ? '' : 's'}.`)
+        : ''
+
+  useEffect(() => { document.title = 'Browse the catalogue · Questionnaire Library' }, [])
+
   return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
+    <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 py-10 focus:outline-none">
+      <p role="status" aria-live="polite" className="sr-only">{statusText}</p>
       <div className="mb-8 max-w-2xl">
         <h1 className="font-serif text-[28px] font-semibold leading-tight tracking-tightish text-ink sm:text-[34px]">
           Browse the catalogue
@@ -74,10 +89,15 @@ export function CataloguePage() {
         <div className="flex-1"><SearchBar value={params.q ?? ''} onChange={(v) => setParam('q', v || undefined)} /></div>
         <SortSelect value={params.sort} onChange={(v) => setParam('sort', v)} />
       </div>
+      {groups.length > 0 && (
+        <div className="mb-6">
+          <MobileFilters groups={groups} selected={facetSelection} onToggle={toggleFacet} onClear={clearAll} />
+        </div>
+      )}
       <div className="flex gap-10">
         <FacetSidebar
           groups={groups}
-          selected={{ domain: params.domain, population: params.population, instrument: params.instrument, language: params.language, license: params.license }}
+          selected={facetSelection}
           onToggle={toggleFacet}
           onClear={clearAll}
         />

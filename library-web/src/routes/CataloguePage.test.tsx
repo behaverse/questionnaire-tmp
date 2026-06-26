@@ -46,10 +46,19 @@ describe('CataloguePage', () => {
     expect(screen.getAllByText('depression').length).toBeGreaterThan(0)
   })
 
+  it('announces the result count in a live status region', async () => {
+    vi.mocked(api.listQuestionnaires).mockResolvedValue({ items: [group], total: 1, limit: 20, offset: 0 })
+    setup()
+    await waitFor(() => expect(screen.getByText('PHQ-9')).toBeInTheDocument())
+    expect(screen.getByRole('status')).toHaveTextContent('1 result')
+  })
+
   it('shows the empty state when there are no results', async () => {
     vi.mocked(api.listQuestionnaires).mockResolvedValue({ items: [], total: 0, limit: 20, offset: 0 })
     setup()
-    await waitFor(() => expect(screen.getByText(/No questionnaires match/i)).toBeInTheDocument())
+    // appears twice: the visible EmptyState message + the sr-only live status region
+    await waitFor(() => expect(screen.getAllByText(/No questionnaires match/i).length).toBeGreaterThan(0))
+    expect(screen.getByRole('button', { name: /clear filters/i })).toBeInTheDocument()
   })
 
   it('shows an error state when the list query fails', async () => {
@@ -62,6 +71,7 @@ describe('CataloguePage', () => {
     const { ApiError } = await import('../api/client')
     vi.mocked(api.listQuestionnaires).mockRejectedValue(new ApiError(422, 'unprocessable', 'bad'))
     setup()
-    await waitFor(() => expect(screen.getByText(/invalid search or filter/i)).toBeInTheDocument())
+    // appears in both the visible ErrorState and the sr-only live status region
+    await waitFor(() => expect(screen.getAllByText(/invalid search or filter/i).length).toBeGreaterThan(0))
   })
 })
