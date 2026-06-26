@@ -773,5 +773,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "AQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_aq@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "AQ total level",
+      "path": "/scores/total/severity",
+      "scorer": "scr_aq@v26.0618"
+    }
   ]
 }

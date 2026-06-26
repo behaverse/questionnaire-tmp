@@ -874,5 +874,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_arc@v26.0618"
+    }
   ]
 }

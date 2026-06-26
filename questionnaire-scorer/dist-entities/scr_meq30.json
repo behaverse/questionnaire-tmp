@@ -1,0 +1,209 @@
+{
+  "id": "scr_meq30",
+  "name": "MEQ-30 Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "MEQ-30 Scoring",
+      "description": "Revised Mystical Experience Questionnaire (MEQ-30). Revised Mystical Experience Questionnaire (MEQ-30; Barrett et al., 2015). Total = sum of the 30 items (each 0-5), range 0-150; higher = more complete mystical experience. No severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Maclean K A. Factor Analysis of the Mystical Experience Questionnaire: A Study of Experiences Occasioned by the Hallucinogen Psilocybin. J Sci Study Relig ( 4 ): 721-737 ( 2012 ).",
+    "year": 2012
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_meq30_1|pr_meq30_2|pr_meq30_3|pr_meq30_4|pr_meq30_5|pr_meq30_6|pr_meq30_7|pr_meq30_8|pr_meq30_9|pr_meq30_10|pr_meq30_11|pr_meq30_12|pr_meq30_13|pr_meq30_14|pr_meq30_15|pr_meq30_16|pr_meq30_17|pr_meq30_18|pr_meq30_19|pr_meq30_20|pr_meq30_21|pr_meq30_22|pr_meq30_23|pr_meq30_24|pr_meq30_25|pr_meq30_26|pr_meq30_27|pr_meq30_28|pr_meq30_29|pr_meq30_30)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/meq30/scorer.wasm",
+      "sha256": "b7bd4140c73d7fe0ae7853fbae7921d18c3c668258fc974bd10c8988e3b076e1"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_meq30_1": 0,
+          "pr_meq30_2": 0,
+          "pr_meq30_3": 0,
+          "pr_meq30_4": 0,
+          "pr_meq30_5": 0,
+          "pr_meq30_6": 0,
+          "pr_meq30_7": 0,
+          "pr_meq30_8": 0,
+          "pr_meq30_9": 0,
+          "pr_meq30_10": 0,
+          "pr_meq30_11": 0,
+          "pr_meq30_12": 0,
+          "pr_meq30_13": 0,
+          "pr_meq30_14": 0,
+          "pr_meq30_15": 0,
+          "pr_meq30_16": 0,
+          "pr_meq30_17": 0,
+          "pr_meq30_18": 0,
+          "pr_meq30_19": 0,
+          "pr_meq30_20": 0,
+          "pr_meq30_21": 0,
+          "pr_meq30_22": 0,
+          "pr_meq30_23": 0,
+          "pr_meq30_24": 0,
+          "pr_meq30_25": 0,
+          "pr_meq30_26": 0,
+          "pr_meq30_27": 0,
+          "pr_meq30_28": 0,
+          "pr_meq30_29": 0,
+          "pr_meq30_30": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_meq30_1": 2,
+          "pr_meq30_2": 2,
+          "pr_meq30_3": 2,
+          "pr_meq30_4": 2,
+          "pr_meq30_5": 2,
+          "pr_meq30_6": 2,
+          "pr_meq30_7": 2,
+          "pr_meq30_8": 2,
+          "pr_meq30_9": 2,
+          "pr_meq30_10": 2,
+          "pr_meq30_11": 2,
+          "pr_meq30_12": 2,
+          "pr_meq30_13": 2,
+          "pr_meq30_14": 2,
+          "pr_meq30_15": 2,
+          "pr_meq30_16": 2,
+          "pr_meq30_17": 2,
+          "pr_meq30_18": 2,
+          "pr_meq30_19": 2,
+          "pr_meq30_20": 2,
+          "pr_meq30_21": 2,
+          "pr_meq30_22": 2,
+          "pr_meq30_23": 2,
+          "pr_meq30_24": 2,
+          "pr_meq30_25": 2,
+          "pr_meq30_26": 2,
+          "pr_meq30_27": 2,
+          "pr_meq30_28": 2,
+          "pr_meq30_29": 2,
+          "pr_meq30_30": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_meq30_1": 5,
+          "pr_meq30_2": 5,
+          "pr_meq30_3": 5,
+          "pr_meq30_4": 5,
+          "pr_meq30_5": 5,
+          "pr_meq30_6": 5,
+          "pr_meq30_7": 5,
+          "pr_meq30_8": 5,
+          "pr_meq30_9": 5,
+          "pr_meq30_10": 5,
+          "pr_meq30_11": 5,
+          "pr_meq30_12": 5,
+          "pr_meq30_13": 5,
+          "pr_meq30_14": 5,
+          "pr_meq30_15": 5,
+          "pr_meq30_16": 5,
+          "pr_meq30_17": 5,
+          "pr_meq30_18": 5,
+          "pr_meq30_19": 5,
+          "pr_meq30_20": 5,
+          "pr_meq30_21": 5,
+          "pr_meq30_22": 5,
+          "pr_meq30_23": 5,
+          "pr_meq30_24": 5,
+          "pr_meq30_25": 5,
+          "pr_meq30_26": 5,
+          "pr_meq30_27": 5,
+          "pr_meq30_28": 5,
+          "pr_meq30_29": 5,
+          "pr_meq30_30": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 150
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

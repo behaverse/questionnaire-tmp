@@ -1,0 +1,137 @@
+{
+  "content": {
+    "en": {
+      "description": "Optimism (LOT-R). Life Orientation Test-Revised (Scheier et al., 1994). Optimism = sum of the 6 scored items (1,3,4,7,9,10; items 4 fillers 2,5,6,8 excluded; reverse handled), range 0-24; higher = more dispositional optimism.",
+      "name": "LOT-R Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_lotr",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "05fe5b342ad255bbc2de87483f05a9bd1b4c9ccffea12b8c31ac8dcd3952e830",
+      "url": "https://behaverse.org/scorers/lotr/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_lotr_1|pr_lotr_3|pr_lotr_4|pr_lotr_7|pr_lotr_9|pr_lotr_10)$": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "LOT-R Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "optimism": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "optimism"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "optimism": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lotr_1": 0,
+          "pr_lotr_10": 0,
+          "pr_lotr_3": 0,
+          "pr_lotr_4": 0,
+          "pr_lotr_7": 0,
+          "pr_lotr_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "optimism": {
+            "value": 12
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lotr_1": 2,
+          "pr_lotr_10": 2,
+          "pr_lotr_3": 2,
+          "pr_lotr_4": 2,
+          "pr_lotr_7": 2,
+          "pr_lotr_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "optimism": {
+            "value": 24
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_lotr_1": 4,
+          "pr_lotr_10": 4,
+          "pr_lotr_3": 4,
+          "pr_lotr_4": 4,
+          "pr_lotr_7": 4,
+          "pr_lotr_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Scheier, M. F., & Carver, C. S. (1992). Effects of optimism on psychological and physical well-being:\nTheoretical overview and empirical update. Cognitive Therapy and Research, 16 , 201-228.",
+    "year": 1992
+  }
+}

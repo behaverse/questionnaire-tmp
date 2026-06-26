@@ -1,0 +1,1 @@
+{"item_range":[0,1],"scores":[{"key":"total","items":["pr_quotient_1","pr_quotient_2","pr_quotient_3","pr_quotient_4","pr_quotient_5","pr_quotient_6","pr_quotient_7","pr_quotient_8","pr_quotient_9","pr_quotient_10"],"bands":[{"min":0,"max":5,"severity":"below","label":"Below referral threshold"},{"min":6,"max":10,"severity":"refer","label":"Consider referral for assessment"}]}]}

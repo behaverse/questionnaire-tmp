@@ -193,5 +193,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "optimism",
+      "name": "LOT-R optimism",
+      "path": "/scores/optimism/value",
+      "scorer": "scr_lotr@v26.0618"
+    }
   ]
 }

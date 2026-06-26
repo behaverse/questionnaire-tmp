@@ -1,0 +1,162 @@
+{
+  "content": {
+    "en": {
+      "description": "Short Autism Spectrum Quotient. Autism-Spectrum Quotient - 10 items (AQ-10; Allison et al., 2012). Total = number of autism-consistent answers (scored 0/1), range 0-10; a score of 6 or more warrants referral for full assessment.",
+      "name": "AQ-10 Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_quotient",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "94054009e01a7435a5a264ad3b55128e09d923915ae519f45fa1eef31122bf99",
+      "url": "https://behaverse.org/scorers/quotient/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_quotient_1|pr_quotient_2|pr_quotient_3|pr_quotient_4|pr_quotient_5|pr_quotient_6|pr_quotient_7|pr_quotient_8|pr_quotient_9|pr_quotient_10)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "AQ-10 Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "below",
+                  "refer"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Below referral threshold",
+              "max": 5,
+              "min": 0
+            },
+            "severity": "below",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_quotient_1": 0,
+          "pr_quotient_10": 0,
+          "pr_quotient_2": 0,
+          "pr_quotient_3": 0,
+          "pr_quotient_4": 0,
+          "pr_quotient_5": 0,
+          "pr_quotient_6": 0,
+          "pr_quotient_7": 0,
+          "pr_quotient_8": 0,
+          "pr_quotient_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Consider referral for assessment",
+              "max": 10,
+              "min": 6
+            },
+            "severity": "refer",
+            "value": 10
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_quotient_1": 1,
+          "pr_quotient_10": 1,
+          "pr_quotient_2": 1,
+          "pr_quotient_3": 1,
+          "pr_quotient_4": 1,
+          "pr_quotient_5": 1,
+          "pr_quotient_6": 1,
+          "pr_quotient_7": 1,
+          "pr_quotient_8": 1,
+          "pr_quotient_9": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Allison, C., Auyeung, B., & Baron-Cohen, S. (2012). Toward Brief\n\"Red Flags\" for Autism Screening: The Short Autism Spectrum Quotient\nand the Short Quantitative Checklist in 1,000 Cases and 3,000 Controls. Journal of the American Acad of Child & Adolescent Psychiatry, 51(2) , 202-212.",
+    "year": 2012
+  }
+}
