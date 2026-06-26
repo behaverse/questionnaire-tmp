@@ -222,5 +222,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "YMRS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_ymrs@v26.0618"
+    }
   ]
 }

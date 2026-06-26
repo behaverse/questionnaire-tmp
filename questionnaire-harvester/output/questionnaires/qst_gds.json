@@ -496,5 +496,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "GDS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_gds@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "GDS severity",
+      "path": "/scores/total/severity",
+      "scorer": "scr_gds@v26.0618"
+    }
   ]
 }

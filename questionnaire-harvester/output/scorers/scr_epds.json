@@ -1,0 +1,194 @@
+{
+  "content": {
+    "en": {
+      "description": "Edinburgh Postnatal Depression Scale (EPDS). Total = sum of the 10 items (each 0-3), range 0-30; 10-12 possible and 13+ probable depression.",
+      "name": "EPDS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_epds",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "89bdb643d76b0311e1a949b4c261e74fd39bbc1b5948f2f168f8a2d9f62592b2",
+      "url": "https://behaverse.org/scorers/epds/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_epds_1|pr_epds_2|pr_epds_3|pr_epds_4|pr_epds_5|pr_epds_6|pr_epds_7|pr_epds_8|pr_epds_9|pr_epds_10)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "EPDS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "low",
+                  "possible",
+                  "probable"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Low likelihood of depression",
+              "max": 9,
+              "min": 0
+            },
+            "severity": "low",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_epds_1": 0,
+          "pr_epds_10": 0,
+          "pr_epds_2": 0,
+          "pr_epds_3": 0,
+          "pr_epds_4": 0,
+          "pr_epds_5": 0,
+          "pr_epds_6": 0,
+          "pr_epds_7": 0,
+          "pr_epds_8": 0,
+          "pr_epds_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Possible depression",
+              "max": 12,
+              "min": 10
+            },
+            "severity": "possible",
+            "value": 10
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_epds_1": 1,
+          "pr_epds_10": 1,
+          "pr_epds_2": 1,
+          "pr_epds_3": 1,
+          "pr_epds_4": 1,
+          "pr_epds_5": 1,
+          "pr_epds_6": 1,
+          "pr_epds_7": 1,
+          "pr_epds_8": 1,
+          "pr_epds_9": 1
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Probable depression",
+              "max": 30,
+              "min": 13
+            },
+            "severity": "probable",
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_epds_1": 3,
+          "pr_epds_10": 3,
+          "pr_epds_2": 3,
+          "pr_epds_3": 3,
+          "pr_epds_4": 3,
+          "pr_epds_5": 3,
+          "pr_epds_6": 3,
+          "pr_epds_7": 3,
+          "pr_epds_8": 3,
+          "pr_epds_9": 3
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Cox, J.L., Holden, J.M., and Sagovsky, R. (1987). Detection of\npostnatal depression: Development of the 10-item Edinburgh Postnatal\nDepression Scale. British Journal of Psychiatry , 150, 782-786.",
+    "year": 1987
+  }
+}

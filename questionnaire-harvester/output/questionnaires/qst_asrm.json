@@ -145,5 +145,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "ASRM total",
+      "path": "/scores/total/value",
+      "scorer": "scr_asrm@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "ASRM severity",
+      "path": "/scores/total/severity",
+      "scorer": "scr_asrm@v26.0618"
+    }
   ]
 }

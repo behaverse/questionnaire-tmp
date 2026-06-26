@@ -378,5 +378,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PCL-22 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pcl22@v26.0618"
+    }
   ]
 }

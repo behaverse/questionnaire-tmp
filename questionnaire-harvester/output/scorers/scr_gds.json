@@ -1,0 +1,254 @@
+{
+  "content": {
+    "en": {
+      "description": "Geriatric Depression Scale (GDS). Total = number of depression-consistent answers across the 30 items, range 0-30; 10+ suggests depression.",
+      "name": "GDS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_gds",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "dd15438ebcb411a94c67f2aa3ffcac8e49593f2fb34b17c7d8031789bbe5b212",
+      "url": "https://behaverse.org/scorers/gds/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_gds_1|pr_gds_2|pr_gds_3|pr_gds_4|pr_gds_5|pr_gds_6|pr_gds_7|pr_gds_8|pr_gds_9|pr_gds_10|pr_gds_11|pr_gds_12|pr_gds_13|pr_gds_14|pr_gds_15|pr_gds_16|pr_gds_17|pr_gds_18|pr_gds_19|pr_gds_20|pr_gds_21|pr_gds_22|pr_gds_23|pr_gds_24|pr_gds_25|pr_gds_26|pr_gds_27|pr_gds_28|pr_gds_29|pr_gds_30)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "GDS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "normal",
+                  "mild",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Normal",
+              "max": 9,
+              "min": 0
+            },
+            "severity": "normal",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gds_1": 0,
+          "pr_gds_10": 0,
+          "pr_gds_11": 0,
+          "pr_gds_12": 0,
+          "pr_gds_13": 0,
+          "pr_gds_14": 0,
+          "pr_gds_15": 0,
+          "pr_gds_16": 0,
+          "pr_gds_17": 0,
+          "pr_gds_18": 0,
+          "pr_gds_19": 0,
+          "pr_gds_2": 0,
+          "pr_gds_20": 0,
+          "pr_gds_21": 0,
+          "pr_gds_22": 0,
+          "pr_gds_23": 0,
+          "pr_gds_24": 0,
+          "pr_gds_25": 0,
+          "pr_gds_26": 0,
+          "pr_gds_27": 0,
+          "pr_gds_28": 0,
+          "pr_gds_29": 0,
+          "pr_gds_3": 0,
+          "pr_gds_30": 0,
+          "pr_gds_4": 0,
+          "pr_gds_5": 0,
+          "pr_gds_6": 0,
+          "pr_gds_7": 0,
+          "pr_gds_8": 0,
+          "pr_gds_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Normal",
+              "max": 9,
+              "min": 0
+            },
+            "severity": "normal",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gds_1": 0,
+          "pr_gds_10": 0,
+          "pr_gds_11": 0,
+          "pr_gds_12": 0,
+          "pr_gds_13": 0,
+          "pr_gds_14": 0,
+          "pr_gds_15": 0,
+          "pr_gds_16": 0,
+          "pr_gds_17": 0,
+          "pr_gds_18": 0,
+          "pr_gds_19": 0,
+          "pr_gds_2": 0,
+          "pr_gds_20": 0,
+          "pr_gds_21": 0,
+          "pr_gds_22": 0,
+          "pr_gds_23": 0,
+          "pr_gds_24": 0,
+          "pr_gds_25": 0,
+          "pr_gds_26": 0,
+          "pr_gds_27": 0,
+          "pr_gds_28": 0,
+          "pr_gds_29": 0,
+          "pr_gds_3": 0,
+          "pr_gds_30": 0,
+          "pr_gds_4": 0,
+          "pr_gds_5": 0,
+          "pr_gds_6": 0,
+          "pr_gds_7": 0,
+          "pr_gds_8": 0,
+          "pr_gds_9": 0
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Severe depression",
+              "max": 30,
+              "min": 20
+            },
+            "severity": "severe",
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gds_1": 1,
+          "pr_gds_10": 1,
+          "pr_gds_11": 1,
+          "pr_gds_12": 1,
+          "pr_gds_13": 1,
+          "pr_gds_14": 1,
+          "pr_gds_15": 1,
+          "pr_gds_16": 1,
+          "pr_gds_17": 1,
+          "pr_gds_18": 1,
+          "pr_gds_19": 1,
+          "pr_gds_2": 1,
+          "pr_gds_20": 1,
+          "pr_gds_21": 1,
+          "pr_gds_22": 1,
+          "pr_gds_23": 1,
+          "pr_gds_24": 1,
+          "pr_gds_25": 1,
+          "pr_gds_26": 1,
+          "pr_gds_27": 1,
+          "pr_gds_28": 1,
+          "pr_gds_29": 1,
+          "pr_gds_3": 1,
+          "pr_gds_30": 1,
+          "pr_gds_4": 1,
+          "pr_gds_5": 1,
+          "pr_gds_6": 1,
+          "pr_gds_7": 1,
+          "pr_gds_8": 1,
+          "pr_gds_9": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "JA Yesavage, TL Brink, et al. Development and Validation of a Geriatric Depression Screening Scale: a Preliminary Report. 17(1): J Psychiatr Res. 37-49. 1983.",
+    "year": 1983
+  }
+}

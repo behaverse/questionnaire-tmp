@@ -1,0 +1,211 @@
+{
+  "content": {
+    "en": {
+      "description": "Clinical Impairment Assessment Questionnaire (CIA 3.0). Total = sum of the 16 items (each 0-3), range 0-48; a total of 16 or more indicates clinically significant impairment.",
+      "name": "CIA Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_cia",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "7a145ac3a3ca4f68344717b9626a6896d022e84c098a489d8997a6b0fe2aa5fa",
+      "url": "https://behaverse.org/scorers/cia/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_cia_1|pr_cia_2|pr_cia_3|pr_cia_4|pr_cia_5|pr_cia_6|pr_cia_7|pr_cia_8|pr_cia_9|pr_cia_10|pr_cia_11|pr_cia_12|pr_cia_13|pr_cia_14|pr_cia_15|pr_cia_16)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CIA Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "below",
+                  "clinical"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Below clinical threshold",
+              "max": 15,
+              "min": 0
+            },
+            "severity": "below",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cia_1": 0,
+          "pr_cia_10": 0,
+          "pr_cia_11": 0,
+          "pr_cia_12": 0,
+          "pr_cia_13": 0,
+          "pr_cia_14": 0,
+          "pr_cia_15": 0,
+          "pr_cia_16": 0,
+          "pr_cia_2": 0,
+          "pr_cia_3": 0,
+          "pr_cia_4": 0,
+          "pr_cia_5": 0,
+          "pr_cia_6": 0,
+          "pr_cia_7": 0,
+          "pr_cia_8": 0,
+          "pr_cia_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Clinically significant impairment",
+              "max": 48,
+              "min": 16
+            },
+            "severity": "clinical",
+            "value": 16
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cia_1": 1,
+          "pr_cia_10": 1,
+          "pr_cia_11": 1,
+          "pr_cia_12": 1,
+          "pr_cia_13": 1,
+          "pr_cia_14": 1,
+          "pr_cia_15": 1,
+          "pr_cia_16": 1,
+          "pr_cia_2": 1,
+          "pr_cia_3": 1,
+          "pr_cia_4": 1,
+          "pr_cia_5": 1,
+          "pr_cia_6": 1,
+          "pr_cia_7": 1,
+          "pr_cia_8": 1,
+          "pr_cia_9": 1
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Clinically significant impairment",
+              "max": 48,
+              "min": 16
+            },
+            "severity": "clinical",
+            "value": 48
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cia_1": 3,
+          "pr_cia_10": 3,
+          "pr_cia_11": 3,
+          "pr_cia_12": 3,
+          "pr_cia_13": 3,
+          "pr_cia_14": 3,
+          "pr_cia_15": 3,
+          "pr_cia_16": 3,
+          "pr_cia_2": 3,
+          "pr_cia_3": 3,
+          "pr_cia_4": 3,
+          "pr_cia_5": 3,
+          "pr_cia_6": 3,
+          "pr_cia_7": 3,
+          "pr_cia_8": 3,
+          "pr_cia_9": 3
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Bohn, K., Doll, H. A., Cooper, Z., O’Connor, M., Palmer, R. L., & Fairburn, C. G. (2008). The measurement of impairment due to eating disorder psychopathology. Behaviour research and therapy, 46 , 1105-1110. This is an open-access paper, click here to download .",
+    "year": 2008
+  }
+}

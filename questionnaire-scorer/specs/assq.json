@@ -1,0 +1,179 @@
+{
+  "id": "assq",
+  "scorer_id": "scr_assq",
+  "name": "ASSQ Scoring",
+  "status": "validated",
+  "description": "Autism Spectrum Screening Questionnaire (ASSQ). Total = sum of the 27 items (each 0-2), range 0-54; higher = more autism-spectrum traits.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_assq_1",
+          "pr_assq_2",
+          "pr_assq_3",
+          "pr_assq_4",
+          "pr_assq_5",
+          "pr_assq_6",
+          "pr_assq_7",
+          "pr_assq_8",
+          "pr_assq_9",
+          "pr_assq_10",
+          "pr_assq_11",
+          "pr_assq_12",
+          "pr_assq_13",
+          "pr_assq_14",
+          "pr_assq_15",
+          "pr_assq_16",
+          "pr_assq_17",
+          "pr_assq_18",
+          "pr_assq_19",
+          "pr_assq_20",
+          "pr_assq_21",
+          "pr_assq_22",
+          "pr_assq_23",
+          "pr_assq_24",
+          "pr_assq_25",
+          "pr_assq_26",
+          "pr_assq_27"
+        ]
+      }
+    ],
+    "item_range": [
+      0,
+      2
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_assq_1": 0,
+          "pr_assq_2": 0,
+          "pr_assq_3": 0,
+          "pr_assq_4": 0,
+          "pr_assq_5": 0,
+          "pr_assq_6": 0,
+          "pr_assq_7": 0,
+          "pr_assq_8": 0,
+          "pr_assq_9": 0,
+          "pr_assq_10": 0,
+          "pr_assq_11": 0,
+          "pr_assq_12": 0,
+          "pr_assq_13": 0,
+          "pr_assq_14": 0,
+          "pr_assq_15": 0,
+          "pr_assq_16": 0,
+          "pr_assq_17": 0,
+          "pr_assq_18": 0,
+          "pr_assq_19": 0,
+          "pr_assq_20": 0,
+          "pr_assq_21": 0,
+          "pr_assq_22": 0,
+          "pr_assq_23": 0,
+          "pr_assq_24": 0,
+          "pr_assq_25": 0,
+          "pr_assq_26": 0,
+          "pr_assq_27": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_assq_1": 1,
+          "pr_assq_2": 1,
+          "pr_assq_3": 1,
+          "pr_assq_4": 1,
+          "pr_assq_5": 1,
+          "pr_assq_6": 1,
+          "pr_assq_7": 1,
+          "pr_assq_8": 1,
+          "pr_assq_9": 1,
+          "pr_assq_10": 1,
+          "pr_assq_11": 1,
+          "pr_assq_12": 1,
+          "pr_assq_13": 1,
+          "pr_assq_14": 1,
+          "pr_assq_15": 1,
+          "pr_assq_16": 1,
+          "pr_assq_17": 1,
+          "pr_assq_18": 1,
+          "pr_assq_19": 1,
+          "pr_assq_20": 1,
+          "pr_assq_21": 1,
+          "pr_assq_22": 1,
+          "pr_assq_23": 1,
+          "pr_assq_24": 1,
+          "pr_assq_25": 1,
+          "pr_assq_26": 1,
+          "pr_assq_27": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 27
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_assq_1": 2,
+          "pr_assq_2": 2,
+          "pr_assq_3": 2,
+          "pr_assq_4": 2,
+          "pr_assq_5": 2,
+          "pr_assq_6": 2,
+          "pr_assq_7": 2,
+          "pr_assq_8": 2,
+          "pr_assq_9": 2,
+          "pr_assq_10": 2,
+          "pr_assq_11": 2,
+          "pr_assq_12": 2,
+          "pr_assq_13": 2,
+          "pr_assq_14": 2,
+          "pr_assq_15": 2,
+          "pr_assq_16": 2,
+          "pr_assq_17": 2,
+          "pr_assq_18": 2,
+          "pr_assq_19": 2,
+          "pr_assq_20": 2,
+          "pr_assq_21": 2,
+          "pr_assq_22": 2,
+          "pr_assq_23": 2,
+          "pr_assq_24": 2,
+          "pr_assq_25": 2,
+          "pr_assq_26": 2,
+          "pr_assq_27": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 54
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "S Ehlers, C Gillberg, L Wing. A screening questionnaire for Asperger syndrome and other high-functioning autism spectrum disorders in school age children. J Autism Dev Disord. 1999; 29 ( 2 ): 129 \u2013 141.",
+    "year": 1999
+  }
+}

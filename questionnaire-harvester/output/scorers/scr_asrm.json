@@ -1,0 +1,178 @@
+{
+  "content": {
+    "en": {
+      "description": "Altman Self-Rating Mania Scale (ASRM). Total = sum of the 5 items (each 0-4), range 0-20; a total of 6 or more suggests hypomania/mania.",
+      "name": "ASRM Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_asrm",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "3ce5905773c06807d3ac3145f6669d1d489a26a7bb66684cc0c08605d8042b18",
+      "url": "https://behaverse.org/scorers/asrm/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_asrm_1|pr_asrm_2|pr_asrm_3|pr_asrm_4|pr_asrm_5)$": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "ASRM Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "low",
+                  "elevated"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Not indicative of mania",
+              "max": 5,
+              "min": 0
+            },
+            "severity": "low",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_asrm_1": 0,
+          "pr_asrm_2": 0,
+          "pr_asrm_3": 0,
+          "pr_asrm_4": 0,
+          "pr_asrm_5": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Possible hypomania or mania",
+              "max": 20,
+              "min": 6
+            },
+            "severity": "elevated",
+            "value": 10
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_asrm_1": 2,
+          "pr_asrm_2": 2,
+          "pr_asrm_3": 2,
+          "pr_asrm_4": 2,
+          "pr_asrm_5": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Possible hypomania or mania",
+              "max": 20,
+              "min": 6
+            },
+            "severity": "elevated",
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_asrm_1": 4,
+          "pr_asrm_2": 4,
+          "pr_asrm_3": 4,
+          "pr_asrm_4": 4,
+          "pr_asrm_5": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "E G Altman, D Hedeker, J L Peterson, J M Davis. The Altman Self-Rating Mania Scale. 42 ( 10 ): Biol Psychiatry 948-55 ( 1997 ).",
+    "year": 1997
+  }
+}

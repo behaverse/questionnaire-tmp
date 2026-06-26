@@ -1,0 +1,191 @@
+{
+  "content": {
+    "en": {
+      "description": "Montgomery-Asberg Depression Rating Scale (MADRS). Total = sum of the 10 clinician-rated items (each 0-6), range 0-60.",
+      "name": "MADRS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_madrs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "4d43b94bdcbea31b259c5c8e9d4e158a4170c1b2d465dd615388f7110a59afe3",
+      "url": "https://behaverse.org/scorers/madrs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_madrs_1|pr_madrs_2|pr_madrs_3|pr_madrs_4|pr_madrs_5|pr_madrs_6|pr_madrs_7|pr_madrs_8|pr_madrs_9|pr_madrs_10)$": {
+            "maximum": 6,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "MADRS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "normal",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Symptom absent / normal",
+              "max": 6,
+              "min": 0
+            },
+            "severity": "normal",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_madrs_1": 0,
+          "pr_madrs_10": 0,
+          "pr_madrs_2": 0,
+          "pr_madrs_3": 0,
+          "pr_madrs_4": 0,
+          "pr_madrs_5": 0,
+          "pr_madrs_6": 0,
+          "pr_madrs_7": 0,
+          "pr_madrs_8": 0,
+          "pr_madrs_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Moderate depression",
+              "max": 34,
+              "min": 20
+            },
+            "severity": "moderate",
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_madrs_1": 3,
+          "pr_madrs_10": 3,
+          "pr_madrs_2": 3,
+          "pr_madrs_3": 3,
+          "pr_madrs_4": 3,
+          "pr_madrs_5": 3,
+          "pr_madrs_6": 3,
+          "pr_madrs_7": 3,
+          "pr_madrs_8": 3,
+          "pr_madrs_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Severe depression",
+              "max": 60,
+              "min": 35
+            },
+            "severity": "severe",
+            "value": 60
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_madrs_1": 6,
+          "pr_madrs_10": 6,
+          "pr_madrs_2": 6,
+          "pr_madrs_3": 6,
+          "pr_madrs_4": 6,
+          "pr_madrs_5": 6,
+          "pr_madrs_6": 6,
+          "pr_madrs_7": 6,
+          "pr_madrs_8": 6,
+          "pr_madrs_9": 6
+        }
+      },
+      "name": "ceiling"
+    }
+  ]
+}

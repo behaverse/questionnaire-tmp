@@ -1,0 +1,196 @@
+{
+  "content": {
+    "en": {
+      "description": "Kutcher Adolescent Depression Scale - 11-Item (KADS-11). Total = sum of the 11 items (each 0-3), range 0-33; a total of 6 or more is a positive screen.",
+      "name": "KADS-11 Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_kads11",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "6b43642dcce8a67cd33a57ee5adc46f54932bb309601fdfdb812f1fe2c18a747",
+      "url": "https://behaverse.org/scorers/kads11/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_kads11_1|pr_kads11_2|pr_kads11_3|pr_kads11_4|pr_kads11_5|pr_kads11_6|pr_kads11_7|pr_kads11_8|pr_kads11_9|pr_kads11_10|pr_kads11_11)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "KADS-11 Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "unlikely",
+                  "possible"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Depression unlikely",
+              "max": 5,
+              "min": 0
+            },
+            "severity": "unlikely",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_kads11_1": 0,
+          "pr_kads11_10": 0,
+          "pr_kads11_11": 0,
+          "pr_kads11_2": 0,
+          "pr_kads11_3": 0,
+          "pr_kads11_4": 0,
+          "pr_kads11_5": 0,
+          "pr_kads11_6": 0,
+          "pr_kads11_7": 0,
+          "pr_kads11_8": 0,
+          "pr_kads11_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Possible depression — further assessment indicated",
+              "max": 33,
+              "min": 6
+            },
+            "severity": "possible",
+            "value": 11
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_kads11_1": 1,
+          "pr_kads11_10": 1,
+          "pr_kads11_11": 1,
+          "pr_kads11_2": 1,
+          "pr_kads11_3": 1,
+          "pr_kads11_4": 1,
+          "pr_kads11_5": 1,
+          "pr_kads11_6": 1,
+          "pr_kads11_7": 1,
+          "pr_kads11_8": 1,
+          "pr_kads11_9": 1
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Possible depression — further assessment indicated",
+              "max": 33,
+              "min": 6
+            },
+            "severity": "possible",
+            "value": 33
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_kads11_1": 3,
+          "pr_kads11_10": 3,
+          "pr_kads11_11": 3,
+          "pr_kads11_2": 3,
+          "pr_kads11_3": 3,
+          "pr_kads11_4": 3,
+          "pr_kads11_5": 3,
+          "pr_kads11_6": 3,
+          "pr_kads11_7": 3,
+          "pr_kads11_8": 3,
+          "pr_kads11_9": 3
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Sarah J Brooks, Stanley P Krulewicz, Stan Kutcher. The Kutcher Adolescent Depression Scale: ssessment of its evaluative properties over the course of an 8-week pediatric pharmacotherapy trial. 13 ( 3 ): J Child Adolesc Psychopharmacol 337-49 ( 2003 ).",
+    "year": 2003
+  }
+}

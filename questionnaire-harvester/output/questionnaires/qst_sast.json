@@ -691,5 +691,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SAST total",
+      "path": "/scores/total/value",
+      "scorer": "scr_sast@v26.0618"
+    }
   ]
 }

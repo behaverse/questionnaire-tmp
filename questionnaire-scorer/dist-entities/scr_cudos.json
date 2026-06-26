@@ -1,0 +1,163 @@
+{
+  "id": "scr_cudos",
+  "name": "CUDOS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "CUDOS Scoring",
+      "description": "A clinically useful depression outcome scale (CUDOS). Total = sum of the 16 items (each 0-4), range 0-64; higher = more severe depressive symptoms."
+    }
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_cudos_1|pr_cudos_2|pr_cudos_3|pr_cudos_4|pr_cudos_5|pr_cudos_6|pr_cudos_7|pr_cudos_8|pr_cudos_9|pr_cudos_10|pr_cudos_11|pr_cudos_12|pr_cudos_13|pr_cudos_14|pr_cudos_15|pr_cudos_16)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/cudos/scorer.wasm",
+      "sha256": "c89121d8cec189d3fd2323d356d7824d6bde36170515b49c6bb3fe0bd0cfd56f"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_cudos_1": 0,
+          "pr_cudos_2": 0,
+          "pr_cudos_3": 0,
+          "pr_cudos_4": 0,
+          "pr_cudos_5": 0,
+          "pr_cudos_6": 0,
+          "pr_cudos_7": 0,
+          "pr_cudos_8": 0,
+          "pr_cudos_9": 0,
+          "pr_cudos_10": 0,
+          "pr_cudos_11": 0,
+          "pr_cudos_12": 0,
+          "pr_cudos_13": 0,
+          "pr_cudos_14": 0,
+          "pr_cudos_15": 0,
+          "pr_cudos_16": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_cudos_1": 2,
+          "pr_cudos_2": 2,
+          "pr_cudos_3": 2,
+          "pr_cudos_4": 2,
+          "pr_cudos_5": 2,
+          "pr_cudos_6": 2,
+          "pr_cudos_7": 2,
+          "pr_cudos_8": 2,
+          "pr_cudos_9": 2,
+          "pr_cudos_10": 2,
+          "pr_cudos_11": 2,
+          "pr_cudos_12": 2,
+          "pr_cudos_13": 2,
+          "pr_cudos_14": 2,
+          "pr_cudos_15": 2,
+          "pr_cudos_16": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 32
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_cudos_1": 4,
+          "pr_cudos_2": 4,
+          "pr_cudos_3": 4,
+          "pr_cudos_4": 4,
+          "pr_cudos_5": 4,
+          "pr_cudos_6": 4,
+          "pr_cudos_7": 4,
+          "pr_cudos_8": 4,
+          "pr_cudos_9": 4,
+          "pr_cudos_10": 4,
+          "pr_cudos_11": 4,
+          "pr_cudos_12": 4,
+          "pr_cudos_13": 4,
+          "pr_cudos_14": 4,
+          "pr_cudos_15": 4,
+          "pr_cudos_16": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 64
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

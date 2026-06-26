@@ -1,0 +1,185 @@
+{
+  "content": {
+    "en": {
+      "description": "Hare Psychopathy Checklist (Original) (PCL-22). Total = sum of the 22 clinician-rated items (each 0-2), range 0-44; higher = more psychopathic traits.",
+      "name": "PCL-22 Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_pcl22",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "98f12af0d3ea195bec5d1d9467e5424058ad3c6e8b821c7fba5fd8c2a72f1344",
+      "url": "https://behaverse.org/scorers/pcl22/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_pcl22_1|pr_pcl22_2|pr_pcl22_3|pr_pcl22_4|pr_pcl22_5|pr_pcl22_6|pr_pcl22_7|pr_pcl22_8|pr_pcl22_9|pr_pcl22_10|pr_pcl22_11|pr_pcl22_12|pr_pcl22_13|pr_pcl22_14|pr_pcl22_15|pr_pcl22_16|pr_pcl22_17|pr_pcl22_18|pr_pcl22_19|pr_pcl22_20|pr_pcl22_21|pr_pcl22_22)$": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "PCL-22 Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pcl22_1": 0,
+          "pr_pcl22_10": 0,
+          "pr_pcl22_11": 0,
+          "pr_pcl22_12": 0,
+          "pr_pcl22_13": 0,
+          "pr_pcl22_14": 0,
+          "pr_pcl22_15": 0,
+          "pr_pcl22_16": 0,
+          "pr_pcl22_17": 0,
+          "pr_pcl22_18": 0,
+          "pr_pcl22_19": 0,
+          "pr_pcl22_2": 0,
+          "pr_pcl22_20": 0,
+          "pr_pcl22_21": 0,
+          "pr_pcl22_22": 0,
+          "pr_pcl22_3": 0,
+          "pr_pcl22_4": 0,
+          "pr_pcl22_5": 0,
+          "pr_pcl22_6": 0,
+          "pr_pcl22_7": 0,
+          "pr_pcl22_8": 0,
+          "pr_pcl22_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 22
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pcl22_1": 1,
+          "pr_pcl22_10": 1,
+          "pr_pcl22_11": 1,
+          "pr_pcl22_12": 1,
+          "pr_pcl22_13": 1,
+          "pr_pcl22_14": 1,
+          "pr_pcl22_15": 1,
+          "pr_pcl22_16": 1,
+          "pr_pcl22_17": 1,
+          "pr_pcl22_18": 1,
+          "pr_pcl22_19": 1,
+          "pr_pcl22_2": 1,
+          "pr_pcl22_20": 1,
+          "pr_pcl22_21": 1,
+          "pr_pcl22_22": 1,
+          "pr_pcl22_3": 1,
+          "pr_pcl22_4": 1,
+          "pr_pcl22_5": 1,
+          "pr_pcl22_6": 1,
+          "pr_pcl22_7": 1,
+          "pr_pcl22_8": 1,
+          "pr_pcl22_9": 1
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 44
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pcl22_1": 2,
+          "pr_pcl22_10": 2,
+          "pr_pcl22_11": 2,
+          "pr_pcl22_12": 2,
+          "pr_pcl22_13": 2,
+          "pr_pcl22_14": 2,
+          "pr_pcl22_15": 2,
+          "pr_pcl22_16": 2,
+          "pr_pcl22_17": 2,
+          "pr_pcl22_18": 2,
+          "pr_pcl22_19": 2,
+          "pr_pcl22_2": 2,
+          "pr_pcl22_20": 2,
+          "pr_pcl22_21": 2,
+          "pr_pcl22_22": 2,
+          "pr_pcl22_3": 2,
+          "pr_pcl22_4": 2,
+          "pr_pcl22_5": 2,
+          "pr_pcl22_6": 2,
+          "pr_pcl22_7": 2,
+          "pr_pcl22_8": 2,
+          "pr_pcl22_9": 2
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Hare R D A research scale for the assessment of psychopathy in criminal populations. 1 Pers Indiv Diff 111-119 ( 1980 ).",
+    "year": 1980
+  }
+}

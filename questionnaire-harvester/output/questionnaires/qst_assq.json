@@ -447,5 +447,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "ASSQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_assq@v26.0618"
+    }
   ]
 }

@@ -274,5 +274,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "CUDOS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_cudos@v26.0618"
+    }
   ]
 }

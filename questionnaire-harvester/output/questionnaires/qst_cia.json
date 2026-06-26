@@ -278,5 +278,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "CIA total",
+      "path": "/scores/total/value",
+      "scorer": "scr_cia@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "CIA severity",
+      "path": "/scores/total/severity",
+      "scorer": "scr_cia@v26.0618"
+    }
   ]
 }

@@ -1,0 +1,151 @@
+{
+  "id": "madrs",
+  "scorer_id": "scr_madrs",
+  "name": "MADRS Scoring",
+  "status": "validated",
+  "description": "Montgomery-Asberg Depression Rating Scale (MADRS). Total = sum of the 10 clinician-rated items (each 0-6), range 0-60.",
+  "engine_spec": {
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_madrs_1",
+          "pr_madrs_2",
+          "pr_madrs_3",
+          "pr_madrs_4",
+          "pr_madrs_5",
+          "pr_madrs_6",
+          "pr_madrs_7",
+          "pr_madrs_8",
+          "pr_madrs_9",
+          "pr_madrs_10"
+        ],
+        "bands": [
+          {
+            "min": 0,
+            "max": 6,
+            "severity": "normal",
+            "label": "Symptom absent / normal"
+          },
+          {
+            "min": 7,
+            "max": 19,
+            "severity": "mild",
+            "label": "Mild depression"
+          },
+          {
+            "min": 20,
+            "max": 34,
+            "severity": "moderate",
+            "label": "Moderate depression"
+          },
+          {
+            "min": 35,
+            "max": 60,
+            "severity": "severe",
+            "label": "Severe depression"
+          }
+        ]
+      }
+    ],
+    "item_range": [
+      0,
+      6
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_madrs_1": 0,
+          "pr_madrs_2": 0,
+          "pr_madrs_3": 0,
+          "pr_madrs_4": 0,
+          "pr_madrs_5": 0,
+          "pr_madrs_6": 0,
+          "pr_madrs_7": 0,
+          "pr_madrs_8": 0,
+          "pr_madrs_9": 0,
+          "pr_madrs_10": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "normal",
+            "band": {
+              "min": 0,
+              "max": 6,
+              "label": "Symptom absent / normal"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_madrs_1": 3,
+          "pr_madrs_2": 3,
+          "pr_madrs_3": 3,
+          "pr_madrs_4": 3,
+          "pr_madrs_5": 3,
+          "pr_madrs_6": 3,
+          "pr_madrs_7": 3,
+          "pr_madrs_8": 3,
+          "pr_madrs_9": 3,
+          "pr_madrs_10": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30,
+            "severity": "moderate",
+            "band": {
+              "min": 20,
+              "max": 34,
+              "label": "Moderate depression"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_madrs_1": 6,
+          "pr_madrs_2": 6,
+          "pr_madrs_3": 6,
+          "pr_madrs_4": 6,
+          "pr_madrs_5": 6,
+          "pr_madrs_6": 6,
+          "pr_madrs_7": 6,
+          "pr_madrs_8": 6,
+          "pr_madrs_9": 6,
+          "pr_madrs_10": 6
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 60,
+            "severity": "severe",
+            "band": {
+              "min": 35,
+              "max": 60,
+              "label": "Severe depression"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

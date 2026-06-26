@@ -1,0 +1,194 @@
+{
+  "id": "scr_epds",
+  "name": "EPDS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "EPDS Scoring",
+      "description": "Edinburgh Postnatal Depression Scale (EPDS). Total = sum of the 10 items (each 0-3), range 0-30; 10-12 possible and 13+ probable depression."
+    }
+  },
+  "x_publication": {
+    "citation": "Cox, J.L., Holden, J.M., and Sagovsky, R. (1987). Detection of\npostnatal depression: Development of the 10-item Edinburgh Postnatal\nDepression Scale. British Journal of Psychiatry , 150, 782-786.",
+    "year": 1987
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_epds_1|pr_epds_2|pr_epds_3|pr_epds_4|pr_epds_5|pr_epds_6|pr_epds_7|pr_epds_8|pr_epds_9|pr_epds_10)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "possible",
+                  "probable"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/epds/scorer.wasm",
+      "sha256": "89bdb643d76b0311e1a949b4c261e74fd39bbc1b5948f2f168f8a2d9f62592b2"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_epds_1": 0,
+          "pr_epds_2": 0,
+          "pr_epds_3": 0,
+          "pr_epds_4": 0,
+          "pr_epds_5": 0,
+          "pr_epds_6": 0,
+          "pr_epds_7": 0,
+          "pr_epds_8": 0,
+          "pr_epds_9": 0,
+          "pr_epds_10": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "low",
+            "band": {
+              "min": 0,
+              "max": 9,
+              "label": "Low likelihood of depression"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_epds_1": 1,
+          "pr_epds_2": 1,
+          "pr_epds_3": 1,
+          "pr_epds_4": 1,
+          "pr_epds_5": 1,
+          "pr_epds_6": 1,
+          "pr_epds_7": 1,
+          "pr_epds_8": 1,
+          "pr_epds_9": 1,
+          "pr_epds_10": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 10,
+            "severity": "possible",
+            "band": {
+              "min": 10,
+              "max": 12,
+              "label": "Possible depression"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_epds_1": 3,
+          "pr_epds_2": 3,
+          "pr_epds_3": 3,
+          "pr_epds_4": 3,
+          "pr_epds_5": 3,
+          "pr_epds_6": 3,
+          "pr_epds_7": 3,
+          "pr_epds_8": 3,
+          "pr_epds_9": 3,
+          "pr_epds_10": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30,
+            "severity": "probable",
+            "band": {
+              "min": 13,
+              "max": 30,
+              "label": "Probable depression"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

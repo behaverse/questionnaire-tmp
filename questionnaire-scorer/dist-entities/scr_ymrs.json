@@ -1,0 +1,150 @@
+{
+  "id": "scr_ymrs",
+  "name": "YMRS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "YMRS Scoring",
+      "description": "Young Mania Rating Scale (YMRS). Total = sum of the 11 clinician-rated items (4 items weighted 0-8, the rest 0-4), range 0-60; higher = more severe manic symptoms."
+    }
+  },
+  "x_publication": {
+    "citation": "R Young, et al. A Rating Scale for Mania: Reliability, Validity and Sensitivity. 133: Br J Psychiatry 429-435. 1978.",
+    "year": 1978
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_ymrs_1|pr_ymrs_2|pr_ymrs_3|pr_ymrs_4|pr_ymrs_5|pr_ymrs_6|pr_ymrs_7|pr_ymrs_8|pr_ymrs_9|pr_ymrs_10|pr_ymrs_11)$": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/ymrs/scorer.wasm",
+      "sha256": "e47a66eccc4a53b05c8fd89b6e003ab6963f01bc7f0dd3ef6c6348ed65e3fa4c"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_ymrs_1": 0,
+          "pr_ymrs_2": 0,
+          "pr_ymrs_3": 0,
+          "pr_ymrs_4": 0,
+          "pr_ymrs_5": 0,
+          "pr_ymrs_6": 0,
+          "pr_ymrs_7": 0,
+          "pr_ymrs_8": 0,
+          "pr_ymrs_9": 0,
+          "pr_ymrs_10": 0,
+          "pr_ymrs_11": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_ymrs_1": 2,
+          "pr_ymrs_2": 2,
+          "pr_ymrs_3": 2,
+          "pr_ymrs_4": 2,
+          "pr_ymrs_5": 2,
+          "pr_ymrs_6": 2,
+          "pr_ymrs_7": 2,
+          "pr_ymrs_8": 2,
+          "pr_ymrs_9": 2,
+          "pr_ymrs_10": 2,
+          "pr_ymrs_11": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 22
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_ymrs_1": 4,
+          "pr_ymrs_2": 4,
+          "pr_ymrs_3": 4,
+          "pr_ymrs_4": 4,
+          "pr_ymrs_5": 4,
+          "pr_ymrs_6": 4,
+          "pr_ymrs_7": 4,
+          "pr_ymrs_8": 4,
+          "pr_ymrs_9": 4,
+          "pr_ymrs_10": 4,
+          "pr_ymrs_11": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 44
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "id": "scr_cia",
+  "name": "CIA Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "CIA Scoring",
+      "description": "Clinical Impairment Assessment Questionnaire (CIA 3.0). Total = sum of the 16 items (each 0-3), range 0-48; a total of 16 or more indicates clinically significant impairment."
+    }
+  },
+  "x_publication": {
+    "citation": "Bohn, K., Doll, H. A., Cooper, Z., O’Connor, M., Palmer, R. L., & Fairburn, C. G. (2008). The measurement of impairment due to eating disorder psychopathology. Behaviour research and therapy, 46 , 1105-1110. This is an open-access paper, click here to download .",
+    "year": 2008
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_cia_1|pr_cia_2|pr_cia_3|pr_cia_4|pr_cia_5|pr_cia_6|pr_cia_7|pr_cia_8|pr_cia_9|pr_cia_10|pr_cia_11|pr_cia_12|pr_cia_13|pr_cia_14|pr_cia_15|pr_cia_16)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "below",
+                  "clinical"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/cia/scorer.wasm",
+      "sha256": "7a145ac3a3ca4f68344717b9626a6896d022e84c098a489d8997a6b0fe2aa5fa"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_cia_1": 0,
+          "pr_cia_2": 0,
+          "pr_cia_3": 0,
+          "pr_cia_4": 0,
+          "pr_cia_5": 0,
+          "pr_cia_6": 0,
+          "pr_cia_7": 0,
+          "pr_cia_8": 0,
+          "pr_cia_9": 0,
+          "pr_cia_10": 0,
+          "pr_cia_11": 0,
+          "pr_cia_12": 0,
+          "pr_cia_13": 0,
+          "pr_cia_14": 0,
+          "pr_cia_15": 0,
+          "pr_cia_16": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "below",
+            "band": {
+              "min": 0,
+              "max": 15,
+              "label": "Below clinical threshold"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_cia_1": 1,
+          "pr_cia_2": 1,
+          "pr_cia_3": 1,
+          "pr_cia_4": 1,
+          "pr_cia_5": 1,
+          "pr_cia_6": 1,
+          "pr_cia_7": 1,
+          "pr_cia_8": 1,
+          "pr_cia_9": 1,
+          "pr_cia_10": 1,
+          "pr_cia_11": 1,
+          "pr_cia_12": 1,
+          "pr_cia_13": 1,
+          "pr_cia_14": 1,
+          "pr_cia_15": 1,
+          "pr_cia_16": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 16,
+            "severity": "clinical",
+            "band": {
+              "min": 16,
+              "max": 48,
+              "label": "Clinically significant impairment"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_cia_1": 3,
+          "pr_cia_2": 3,
+          "pr_cia_3": 3,
+          "pr_cia_4": 3,
+          "pr_cia_5": 3,
+          "pr_cia_6": 3,
+          "pr_cia_7": 3,
+          "pr_cia_8": 3,
+          "pr_cia_9": 3,
+          "pr_cia_10": 3,
+          "pr_cia_11": 3,
+          "pr_cia_12": 3,
+          "pr_cia_13": 3,
+          "pr_cia_14": 3,
+          "pr_cia_15": 3,
+          "pr_cia_16": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 48,
+            "severity": "clinical",
+            "band": {
+              "min": 16,
+              "max": 48,
+              "label": "Clinically significant impairment"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

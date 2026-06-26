@@ -1,0 +1,250 @@
+{
+  "id": "scr_sast",
+  "name": "SAST Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "SAST Scoring",
+      "description": "Sexual Addiction Screening Test (SAST). Total = number of 'yes' answers across the 45 items, range 0-45; higher = more indicators of sexual addiction."
+    }
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_sast_1|pr_sast_2|pr_sast_3|pr_sast_4|pr_sast_5|pr_sast_6|pr_sast_7|pr_sast_8|pr_sast_9|pr_sast_10|pr_sast_11|pr_sast_12|pr_sast_13|pr_sast_14|pr_sast_15|pr_sast_16|pr_sast_17|pr_sast_18|pr_sast_19|pr_sast_20|pr_sast_21|pr_sast_22|pr_sast_23|pr_sast_24|pr_sast_25|pr_sast_26|pr_sast_27|pr_sast_28|pr_sast_29|pr_sast_30|pr_sast_31|pr_sast_32|pr_sast_33|pr_sast_34|pr_sast_35|pr_sast_36|pr_sast_37|pr_sast_38|pr_sast_39|pr_sast_40|pr_sast_41|pr_sast_42|pr_sast_43|pr_sast_44|pr_sast_45)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/sast/scorer.wasm",
+      "sha256": "7c5890ee0433b6eea1c6a79d9a0cdb6f0ecee583a1bbdb268f2a18be65c1de1c"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_sast_1": 0,
+          "pr_sast_2": 0,
+          "pr_sast_3": 0,
+          "pr_sast_4": 0,
+          "pr_sast_5": 0,
+          "pr_sast_6": 0,
+          "pr_sast_7": 0,
+          "pr_sast_8": 0,
+          "pr_sast_9": 0,
+          "pr_sast_10": 0,
+          "pr_sast_11": 0,
+          "pr_sast_12": 0,
+          "pr_sast_13": 0,
+          "pr_sast_14": 0,
+          "pr_sast_15": 0,
+          "pr_sast_16": 0,
+          "pr_sast_17": 0,
+          "pr_sast_18": 0,
+          "pr_sast_19": 0,
+          "pr_sast_20": 0,
+          "pr_sast_21": 0,
+          "pr_sast_22": 0,
+          "pr_sast_23": 0,
+          "pr_sast_24": 0,
+          "pr_sast_25": 0,
+          "pr_sast_26": 0,
+          "pr_sast_27": 0,
+          "pr_sast_28": 0,
+          "pr_sast_29": 0,
+          "pr_sast_30": 0,
+          "pr_sast_31": 0,
+          "pr_sast_32": 0,
+          "pr_sast_33": 0,
+          "pr_sast_34": 0,
+          "pr_sast_35": 0,
+          "pr_sast_36": 0,
+          "pr_sast_37": 0,
+          "pr_sast_38": 0,
+          "pr_sast_39": 0,
+          "pr_sast_40": 0,
+          "pr_sast_41": 0,
+          "pr_sast_42": 0,
+          "pr_sast_43": 0,
+          "pr_sast_44": 0,
+          "pr_sast_45": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_sast_1": 0,
+          "pr_sast_2": 0,
+          "pr_sast_3": 0,
+          "pr_sast_4": 0,
+          "pr_sast_5": 0,
+          "pr_sast_6": 0,
+          "pr_sast_7": 0,
+          "pr_sast_8": 0,
+          "pr_sast_9": 0,
+          "pr_sast_10": 0,
+          "pr_sast_11": 0,
+          "pr_sast_12": 0,
+          "pr_sast_13": 0,
+          "pr_sast_14": 0,
+          "pr_sast_15": 0,
+          "pr_sast_16": 0,
+          "pr_sast_17": 0,
+          "pr_sast_18": 0,
+          "pr_sast_19": 0,
+          "pr_sast_20": 0,
+          "pr_sast_21": 0,
+          "pr_sast_22": 0,
+          "pr_sast_23": 0,
+          "pr_sast_24": 0,
+          "pr_sast_25": 0,
+          "pr_sast_26": 0,
+          "pr_sast_27": 0,
+          "pr_sast_28": 0,
+          "pr_sast_29": 0,
+          "pr_sast_30": 0,
+          "pr_sast_31": 0,
+          "pr_sast_32": 0,
+          "pr_sast_33": 0,
+          "pr_sast_34": 0,
+          "pr_sast_35": 0,
+          "pr_sast_36": 0,
+          "pr_sast_37": 0,
+          "pr_sast_38": 0,
+          "pr_sast_39": 0,
+          "pr_sast_40": 0,
+          "pr_sast_41": 0,
+          "pr_sast_42": 0,
+          "pr_sast_43": 0,
+          "pr_sast_44": 0,
+          "pr_sast_45": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_sast_1": 1,
+          "pr_sast_2": 1,
+          "pr_sast_3": 1,
+          "pr_sast_4": 1,
+          "pr_sast_5": 1,
+          "pr_sast_6": 1,
+          "pr_sast_7": 1,
+          "pr_sast_8": 1,
+          "pr_sast_9": 1,
+          "pr_sast_10": 1,
+          "pr_sast_11": 1,
+          "pr_sast_12": 1,
+          "pr_sast_13": 1,
+          "pr_sast_14": 1,
+          "pr_sast_15": 1,
+          "pr_sast_16": 1,
+          "pr_sast_17": 1,
+          "pr_sast_18": 1,
+          "pr_sast_19": 1,
+          "pr_sast_20": 1,
+          "pr_sast_21": 1,
+          "pr_sast_22": 1,
+          "pr_sast_23": 1,
+          "pr_sast_24": 1,
+          "pr_sast_25": 1,
+          "pr_sast_26": 1,
+          "pr_sast_27": 1,
+          "pr_sast_28": 1,
+          "pr_sast_29": 1,
+          "pr_sast_30": 1,
+          "pr_sast_31": 1,
+          "pr_sast_32": 1,
+          "pr_sast_33": 1,
+          "pr_sast_34": 1,
+          "pr_sast_35": 1,
+          "pr_sast_36": 1,
+          "pr_sast_37": 1,
+          "pr_sast_38": 1,
+          "pr_sast_39": 1,
+          "pr_sast_40": 1,
+          "pr_sast_41": 1,
+          "pr_sast_42": 1,
+          "pr_sast_43": 1,
+          "pr_sast_44": 1,
+          "pr_sast_45": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 45
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

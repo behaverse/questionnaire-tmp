@@ -164,5 +164,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "EPDS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_epds@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "EPDS severity",
+      "path": "/scores/total/severity",
+      "scorer": "scr_epds@v26.0618"
+    }
   ]
 }
