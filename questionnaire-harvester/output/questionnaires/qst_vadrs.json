@@ -834,5 +834,37 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "inattention_symptoms",
+      "name": "VADRS inattention symptoms",
+      "path": "/inattention_symptoms",
+      "scorer": "scr_vadrs@v26.0618"
+    },
+    {
+      "id": "hyperactivity_symptoms",
+      "name": "VADRS hyperactivity symptoms",
+      "path": "/hyperactivity_symptoms",
+      "scorer": "scr_vadrs@v26.0618"
+    },
+    {
+      "id": "total_adhd_score",
+      "name": "VADRS total adhd score",
+      "path": "/total_adhd_score",
+      "scorer": "scr_vadrs@v26.0618"
+    },
+    {
+      "id": "performance_impairment",
+      "name": "VADRS performance impairment",
+      "path": "/performance_impairment",
+      "scorer": "scr_vadrs@v26.0618"
+    },
+    {
+      "id": "screen",
+      "name": "VADRS screen",
+      "path": "/screen",
+      "scorer": "scr_vadrs@v26.0618"
+    }
   ]
 }

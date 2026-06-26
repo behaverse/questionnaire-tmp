@@ -1,0 +1,80 @@
+{
+  "id": "npi16",
+  "scorer_id": "scr_npi16",
+  "name": "NPI Narcissism Scoring",
+  "status": "validated",
+  "description": "Narcissism (16-item version). Score = number of narcissistic statements chosen across the 8 forced-choice items (narcissistic option scored 1), range 0-8; higher = more narcissistic. (This harvested version presents 8 of the NPI forced-choice pairs.)",
+  "engine_spec": {
+    "item_range": [
+      0,
+      1
+    ],
+    "scores": [
+      {
+        "key": "narcissism",
+        "items": [
+          "pr_npi16_1",
+          "pr_npi16_2",
+          "pr_npi16_3",
+          "pr_npi16_4",
+          "pr_npi16_5",
+          "pr_npi16_6",
+          "pr_npi16_7",
+          "pr_npi16_8"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "low",
+      "input": {
+        "scored_responses": {
+          "pr_npi16_1": 0,
+          "pr_npi16_2": 0,
+          "pr_npi16_3": 0,
+          "pr_npi16_4": 0,
+          "pr_npi16_5": 0,
+          "pr_npi16_6": 0,
+          "pr_npi16_7": 0,
+          "pr_npi16_8": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "narcissism": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high",
+      "input": {
+        "scored_responses": {
+          "pr_npi16_1": 1,
+          "pr_npi16_2": 1,
+          "pr_npi16_3": 1,
+          "pr_npi16_4": 1,
+          "pr_npi16_5": 1,
+          "pr_npi16_6": 1,
+          "pr_npi16_7": 1,
+          "pr_npi16_8": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "narcissism": {
+            "value": 8
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Ames, D.R., Rose, P., Anderson, C.P. (2006).The NPI-16 as a short\nmeasure of narcissism. Journal of Research in Personality, 40 ,\n440-450.",
+    "year": 2006
+  }
+}

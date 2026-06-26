@@ -1,0 +1,129 @@
+{
+  "id": "scr_vadrs",
+  "name": "Vanderbilt ADHD (Parent) Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "Vanderbilt ADHD (Parent) Scoring",
+      "description": "Vanderbilt ADHD Diagnostic Parent Rating Scale. Counts Inattention (items 1-9) and Hyperactivity/Impulsivity (10-18) symptoms rated 2 or 3; a domain needs >=6 symptoms plus performance impairment (any performance item =5, or >=2 items >=4) for a positive ADHD screen. Also reports the total ADHD symptom score (sum of items 1-18, 0-54)."
+    }
+  },
+  "x_publication": {
+    "citation": "Wolraich ML, Lambert W, Doffing MA, et al. (2003). Psychometric properties of the Vanderbilt ADHD Diagnostic Parent Rating Scale in a referred population. J Pediatr Psychol, 28(8), 559-567.",
+    "year": 2003
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^pr_vadrs_[0-9]+$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "inattention_symptoms": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9
+      },
+      "hyperactivity_symptoms": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9
+      },
+      "total_adhd_score": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 54
+      },
+      "performance_impairment": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no"
+        ]
+      },
+      "screen": {
+        "type": "string",
+        "enum": [
+          "negative",
+          "positive"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "inattention_symptoms",
+      "hyperactivity_symptoms",
+      "total_adhd_score",
+      "performance_impairment",
+      "screen",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/vadrs/scorer.wasm",
+      "sha256": "679fafc9bd32d656c95470310b211a968d28fee6817d70af318837ae969cbf43"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "positive",
+      "input": {
+        "scored_responses": {
+          "pr_vadrs_1": 3,
+          "pr_vadrs_2": 3,
+          "pr_vadrs_3": 3,
+          "pr_vadrs_4": 3,
+          "pr_vadrs_5": 3,
+          "pr_vadrs_6": 3,
+          "pr_vadrs_7": 3,
+          "pr_vadrs_8": 3,
+          "pr_vadrs_9": 3,
+          "pr_vadrs_10": 3,
+          "pr_vadrs_11": 3,
+          "pr_vadrs_12": 3,
+          "pr_vadrs_13": 3,
+          "pr_vadrs_14": 3,
+          "pr_vadrs_15": 3,
+          "pr_vadrs_16": 3,
+          "pr_vadrs_17": 3,
+          "pr_vadrs_18": 3,
+          "pr_vadrs_48": 5,
+          "pr_vadrs_49": 5,
+          "pr_vadrs_50": 5,
+          "pr_vadrs_51": 5,
+          "pr_vadrs_52": 5,
+          "pr_vadrs_53": 5,
+          "pr_vadrs_54": 5,
+          "pr_vadrs_55": 5
+        }
+      },
+      "expected": {
+        "inattention_symptoms": 9,
+        "hyperactivity_symptoms": 9,
+        "total_adhd_score": 54,
+        "performance_impairment": "yes",
+        "screen": "positive",
+        "missing_count": 0
+      }
+    }
+  ]
+}

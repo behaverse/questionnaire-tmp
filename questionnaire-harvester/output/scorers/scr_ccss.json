@@ -1,0 +1,124 @@
+{
+  "content": {
+    "en": {
+      "description": "Cooperative/Competitive Strategy Scale. Cooperation = mean of items 1-8 (items 4 and 6 reverse-scored), Competition = mean of items 9-19; each on a 1-7 scale. Higher = stronger motivation to use that strategy for success.",
+      "name": "CCSS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_ccss",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "03fa82927e434c58ad7f8f9257ae778be6d47012e6a4cc7358dcf92313489565",
+      "url": "https://behaverse.org/scorers/ccss/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^pr_ccss_(1[0-9]|[1-9])$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CCSS Scoring",
+  "output_schema": {
+    "properties": {
+      "competition": {
+        "type": "number"
+      },
+      "cooperation": {
+        "type": "number"
+      },
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "cooperation",
+      "competition",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "competition": 7,
+        "cooperation": 5.5,
+        "missing_count": 0
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ccss_1": 7,
+          "pr_ccss_10": 7,
+          "pr_ccss_11": 7,
+          "pr_ccss_12": 7,
+          "pr_ccss_13": 7,
+          "pr_ccss_14": 7,
+          "pr_ccss_15": 7,
+          "pr_ccss_16": 7,
+          "pr_ccss_17": 7,
+          "pr_ccss_18": 7,
+          "pr_ccss_19": 7,
+          "pr_ccss_2": 7,
+          "pr_ccss_3": 7,
+          "pr_ccss_4": 7,
+          "pr_ccss_5": 7,
+          "pr_ccss_6": 7,
+          "pr_ccss_7": 7,
+          "pr_ccss_8": 7,
+          "pr_ccss_9": 7
+        }
+      },
+      "name": "all-7"
+    },
+    {
+      "expected": {
+        "competition": 4,
+        "cooperation": 4,
+        "missing_count": 0
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ccss_1": 4,
+          "pr_ccss_10": 4,
+          "pr_ccss_11": 4,
+          "pr_ccss_12": 4,
+          "pr_ccss_13": 4,
+          "pr_ccss_14": 4,
+          "pr_ccss_15": 4,
+          "pr_ccss_16": 4,
+          "pr_ccss_17": 4,
+          "pr_ccss_18": 4,
+          "pr_ccss_19": 4,
+          "pr_ccss_2": 4,
+          "pr_ccss_3": 4,
+          "pr_ccss_4": 4,
+          "pr_ccss_5": 4,
+          "pr_ccss_6": 4,
+          "pr_ccss_7": 4,
+          "pr_ccss_8": 4,
+          "pr_ccss_9": 4
+        }
+      },
+      "name": "mid"
+    }
+  ],
+  "x_publication": {
+    "citation": "Simmons CH, Wehner EA, Tucker SS, King CS (1988). The Cooperative/Competitive Strategy Scale. J Soc Psychol, 128(2), 199-205.",
+    "year": 1988
+  }
+}

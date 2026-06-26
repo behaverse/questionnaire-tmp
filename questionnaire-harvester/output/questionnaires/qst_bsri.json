@@ -893,5 +893,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "femininity",
+      "name": "BSRI femininity",
+      "path": "/scores/femininity/value",
+      "scorer": "scr_bsri@v26.0618"
+    },
+    {
+      "id": "masculinity",
+      "name": "BSRI masculinity",
+      "path": "/scores/masculinity/value",
+      "scorer": "scr_bsri@v26.0618"
+    }
   ]
 }

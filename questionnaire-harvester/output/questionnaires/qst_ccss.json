@@ -319,5 +319,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "cooperation",
+      "name": "CCSS cooperation",
+      "path": "/cooperation",
+      "scorer": "scr_ccss@v26.0618"
+    },
+    {
+      "id": "competition",
+      "name": "CCSS competition",
+      "path": "/competition",
+      "scorer": "scr_ccss@v26.0618"
+    }
   ]
 }

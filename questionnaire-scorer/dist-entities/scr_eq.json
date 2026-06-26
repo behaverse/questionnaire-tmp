@@ -1,0 +1,163 @@
+{
+  "id": "scr_eq",
+  "name": "EQ Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "EQ Standard Scoring",
+      "description": "Empathy Quotient (Baron-Cohen & Wheelwright, 2004). Each of the 40 items scores 2/1/0 by direction (strong/slight empathic response = 2/1, else 0); total range 0-80, higher = more empathy. A total of 30 or below is typical of lower empathy."
+    }
+  },
+  "x_publication": {
+    "citation": "Baron-Cohen S, Wheelwright S (2004). The Empathy Quotient: an investigation of adults with Asperger syndrome or high functioning autism, and normal sex differences. J Autism Dev Disord, 34(2), 163-175.",
+    "year": 2004
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^pr_eq_(40|[1-3]?[0-9])$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "total": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 80
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 40
+      }
+    },
+    "required": [
+      "total",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/eq/scorer.wasm",
+      "sha256": "dcb6174e868296aa843963c86d94dc1da117712a2ce37467d720971a949be6bd"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "slight-all",
+      "input": {
+        "scored_responses": {
+          "pr_eq_1": 2,
+          "pr_eq_3": 2,
+          "pr_eq_11": 2,
+          "pr_eq_13": 2,
+          "pr_eq_14": 2,
+          "pr_eq_15": 2,
+          "pr_eq_21": 2,
+          "pr_eq_22": 2,
+          "pr_eq_23": 2,
+          "pr_eq_24": 2,
+          "pr_eq_26": 2,
+          "pr_eq_27": 2,
+          "pr_eq_28": 2,
+          "pr_eq_29": 2,
+          "pr_eq_34": 2,
+          "pr_eq_35": 2,
+          "pr_eq_36": 2,
+          "pr_eq_37": 2,
+          "pr_eq_38": 2,
+          "pr_eq_39": 2,
+          "pr_eq_40": 2,
+          "pr_eq_2": 3,
+          "pr_eq_4": 3,
+          "pr_eq_5": 3,
+          "pr_eq_6": 3,
+          "pr_eq_7": 3,
+          "pr_eq_8": 3,
+          "pr_eq_9": 3,
+          "pr_eq_10": 3,
+          "pr_eq_12": 3,
+          "pr_eq_16": 3,
+          "pr_eq_17": 3,
+          "pr_eq_18": 3,
+          "pr_eq_19": 3,
+          "pr_eq_20": 3,
+          "pr_eq_25": 3,
+          "pr_eq_30": 3,
+          "pr_eq_31": 3,
+          "pr_eq_32": 3,
+          "pr_eq_33": 3
+        }
+      },
+      "expected": {
+        "total": 40,
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "anti",
+      "input": {
+        "scored_responses": {
+          "pr_eq_1": 4,
+          "pr_eq_3": 4,
+          "pr_eq_11": 4,
+          "pr_eq_13": 4,
+          "pr_eq_14": 4,
+          "pr_eq_15": 4,
+          "pr_eq_21": 4,
+          "pr_eq_22": 4,
+          "pr_eq_23": 4,
+          "pr_eq_24": 4,
+          "pr_eq_26": 4,
+          "pr_eq_27": 4,
+          "pr_eq_28": 4,
+          "pr_eq_29": 4,
+          "pr_eq_34": 4,
+          "pr_eq_35": 4,
+          "pr_eq_36": 4,
+          "pr_eq_37": 4,
+          "pr_eq_38": 4,
+          "pr_eq_39": 4,
+          "pr_eq_40": 4,
+          "pr_eq_2": 1,
+          "pr_eq_4": 1,
+          "pr_eq_5": 1,
+          "pr_eq_6": 1,
+          "pr_eq_7": 1,
+          "pr_eq_8": 1,
+          "pr_eq_9": 1,
+          "pr_eq_10": 1,
+          "pr_eq_12": 1,
+          "pr_eq_16": 1,
+          "pr_eq_17": 1,
+          "pr_eq_18": 1,
+          "pr_eq_19": 1,
+          "pr_eq_20": 1,
+          "pr_eq_25": 1,
+          "pr_eq_30": 1,
+          "pr_eq_31": 1,
+          "pr_eq_32": 1,
+          "pr_eq_33": 1
+        }
+      },
+      "expected": {
+        "total": 0,
+        "missing_count": 0
+      }
+    }
+  ]
+}

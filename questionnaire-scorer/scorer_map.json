@@ -21,6 +21,7 @@
   "scr_brcs@v26.0618": "brcs.wasm",
   "scr_brs@v26.0618": "brs.wasm",
   "scr_bsas@v26.0618": "bsas.wasm",
+  "scr_bsri@v26.0618": "bsri.wasm",
   "scr_burnout@v26.0618": "burnout.wasm",
   "scr_cabs@v26.0618": "cabs.wasm",
   "scr_cage@v26.0618": "cage.wasm",
@@ -84,6 +85,7 @@
   "scr_ncs6@v26.0618": "ncs6.wasm",
   "scr_nfs@v26.0618": "nfs.wasm",
   "scr_nmpq@v26.0618": "nmpq.wasm",
+  "scr_npi16@v26.0618": "npi16.wasm",
   "scr_ocir@v26.0618": "ocir.wasm",
   "scr_ohq@v26.0618": "ohq.wasm",
   "scr_olife@v26.0618": "olife.wasm",
@@ -148,5 +150,9 @@
   "scr_ymrs@v26.0618": "ymrs.wasm",
   "scr_phq9@v26.0618": "phq9.wasm",
   "scr_mdi@v26.0618": "mdi.wasm",
-  "scr_asrs@v26.0618": "asrs.wasm"
+  "scr_asrs@v26.0618": "asrs.wasm",
+  "scr_cirens@v26.0618": "cirens.wasm",
+  "scr_eq@v26.0618": "eq.wasm",
+  "scr_vadrs@v26.0618": "vadrs.wasm",
+  "scr_ccss@v26.0618": "ccss.wasm"
 }

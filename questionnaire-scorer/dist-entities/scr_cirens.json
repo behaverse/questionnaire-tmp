@@ -1,0 +1,96 @@
+{
+  "id": "scr_cirens",
+  "name": "CIRENS Chronotype",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "CIRENS Chronotype",
+      "description": "Circadian Energy Scale (Ottoni et al., 2011). Chronotype = evening energy minus morning energy (each 1-5), range -4 to +4: <= -2 morning type, -1 to 1 neither, >= 2 evening type."
+    }
+  },
+  "x_publication": {
+    "citation": "Ottoni GL, Antoniolli E, Lara DR (2011). The Circadian Energy Scale (CIRENS): two simple questions for a reliable chronotype measurement based on energy. Chronobiol Int, 28(3), 229-237.",
+    "year": 2011
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^pr_cirens_[12]$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "chronotype": {
+        "type": "integer",
+        "minimum": -4,
+        "maximum": 4
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "morning",
+          "neither",
+          "evening"
+        ]
+      },
+      "label": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "chronotype",
+      "type",
+      "label"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/cirens/scorer.wasm",
+      "sha256": "5ee0605358a7807d13ace67d7a48c0379984b6fa41b868b22594b801cabbde6c"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "morning",
+      "input": {
+        "scored_responses": {
+          "pr_cirens_1": 5,
+          "pr_cirens_2": 1
+        }
+      },
+      "expected": {
+        "chronotype": -4,
+        "type": "morning",
+        "label": "Morning type"
+      }
+    },
+    {
+      "name": "evening",
+      "input": {
+        "scored_responses": {
+          "pr_cirens_1": 1,
+          "pr_cirens_2": 5
+        }
+      },
+      "expected": {
+        "chronotype": 4,
+        "type": "evening",
+        "label": "Evening type"
+      }
+    }
+  ]
+}

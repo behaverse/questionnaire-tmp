@@ -1,0 +1,129 @@
+{
+  "content": {
+    "en": {
+      "description": "Vanderbilt ADHD Diagnostic Parent Rating Scale. Counts Inattention (items 1-9) and Hyperactivity/Impulsivity (10-18) symptoms rated 2 or 3; a domain needs >=6 symptoms plus performance impairment (any performance item =5, or >=2 items >=4) for a positive ADHD screen. Also reports the total ADHD symptom score (sum of items 1-18, 0-54).",
+      "name": "Vanderbilt ADHD (Parent) Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_vadrs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "679fafc9bd32d656c95470310b211a968d28fee6817d70af318837ae969cbf43",
+      "url": "https://behaverse.org/scorers/vadrs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^pr_vadrs_[0-9]+$": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "Vanderbilt ADHD (Parent) Scoring",
+  "output_schema": {
+    "properties": {
+      "hyperactivity_symptoms": {
+        "maximum": 9,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "inattention_symptoms": {
+        "maximum": 9,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "performance_impairment": {
+        "enum": [
+          "yes",
+          "no"
+        ],
+        "type": "string"
+      },
+      "screen": {
+        "enum": [
+          "negative",
+          "positive"
+        ],
+        "type": "string"
+      },
+      "total_adhd_score": {
+        "maximum": 54,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "inattention_symptoms",
+      "hyperactivity_symptoms",
+      "total_adhd_score",
+      "performance_impairment",
+      "screen",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "hyperactivity_symptoms": 9,
+        "inattention_symptoms": 9,
+        "missing_count": 0,
+        "performance_impairment": "yes",
+        "screen": "positive",
+        "total_adhd_score": 54
+      },
+      "input": {
+        "scored_responses": {
+          "pr_vadrs_1": 3,
+          "pr_vadrs_10": 3,
+          "pr_vadrs_11": 3,
+          "pr_vadrs_12": 3,
+          "pr_vadrs_13": 3,
+          "pr_vadrs_14": 3,
+          "pr_vadrs_15": 3,
+          "pr_vadrs_16": 3,
+          "pr_vadrs_17": 3,
+          "pr_vadrs_18": 3,
+          "pr_vadrs_2": 3,
+          "pr_vadrs_3": 3,
+          "pr_vadrs_4": 3,
+          "pr_vadrs_48": 5,
+          "pr_vadrs_49": 5,
+          "pr_vadrs_5": 3,
+          "pr_vadrs_50": 5,
+          "pr_vadrs_51": 5,
+          "pr_vadrs_52": 5,
+          "pr_vadrs_53": 5,
+          "pr_vadrs_54": 5,
+          "pr_vadrs_55": 5,
+          "pr_vadrs_6": 3,
+          "pr_vadrs_7": 3,
+          "pr_vadrs_8": 3,
+          "pr_vadrs_9": 3
+        }
+      },
+      "name": "positive"
+    }
+  ],
+  "x_publication": {
+    "citation": "Wolraich ML, Lambert W, Doffing MA, et al. (2003). Psychometric properties of the Vanderbilt ADHD Diagnostic Parent Rating Scale in a referred population. J Pediatr Psychol, 28(8), 559-567.",
+    "year": 2003
+  }
+}

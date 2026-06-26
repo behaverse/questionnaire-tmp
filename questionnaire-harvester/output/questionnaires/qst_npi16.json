@@ -141,5 +141,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "narcissism",
+      "name": "NPI-16 narcissism",
+      "path": "/scores/narcissism/value",
+      "scorer": "scr_npi16@v26.0618"
+    }
   ]
 }

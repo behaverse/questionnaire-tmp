@@ -1,0 +1,260 @@
+{
+  "content": {
+    "en": {
+      "description": "Bem sex role inventory (BSRI). Two MEAN scores (each 1-7): Femininity = mean of the 20 feminine items (1-20), Masculinity = mean of the 20 masculine items (21-40). The 20 neutral filler items (41-60) are not scored.",
+      "name": "BSRI Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_bsri",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "8aee806b9b29a3e9f2d0b0408a2a2645931d31a28658e76dfe1ce9e199d4e84a",
+      "url": "https://behaverse.org/scorers/bsri/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_bsri_1|pr_bsri_2|pr_bsri_3|pr_bsri_4|pr_bsri_5|pr_bsri_6|pr_bsri_7|pr_bsri_8|pr_bsri_9|pr_bsri_10|pr_bsri_11|pr_bsri_12|pr_bsri_13|pr_bsri_14|pr_bsri_15|pr_bsri_16|pr_bsri_17|pr_bsri_18|pr_bsri_19|pr_bsri_20|pr_bsri_21|pr_bsri_22|pr_bsri_23|pr_bsri_24|pr_bsri_25|pr_bsri_26|pr_bsri_27|pr_bsri_28|pr_bsri_29|pr_bsri_30|pr_bsri_31|pr_bsri_32|pr_bsri_33|pr_bsri_34|pr_bsri_35|pr_bsri_36|pr_bsri_37|pr_bsri_38|pr_bsri_39|pr_bsri_40)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "BSRI Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "femininity": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "masculinity": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "femininity",
+          "masculinity"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "femininity": {
+            "value": 1
+          },
+          "masculinity": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bsri_1": 1,
+          "pr_bsri_10": 1,
+          "pr_bsri_11": 1,
+          "pr_bsri_12": 1,
+          "pr_bsri_13": 1,
+          "pr_bsri_14": 1,
+          "pr_bsri_15": 1,
+          "pr_bsri_16": 1,
+          "pr_bsri_17": 1,
+          "pr_bsri_18": 1,
+          "pr_bsri_19": 1,
+          "pr_bsri_2": 1,
+          "pr_bsri_20": 1,
+          "pr_bsri_21": 1,
+          "pr_bsri_22": 1,
+          "pr_bsri_23": 1,
+          "pr_bsri_24": 1,
+          "pr_bsri_25": 1,
+          "pr_bsri_26": 1,
+          "pr_bsri_27": 1,
+          "pr_bsri_28": 1,
+          "pr_bsri_29": 1,
+          "pr_bsri_3": 1,
+          "pr_bsri_30": 1,
+          "pr_bsri_31": 1,
+          "pr_bsri_32": 1,
+          "pr_bsri_33": 1,
+          "pr_bsri_34": 1,
+          "pr_bsri_35": 1,
+          "pr_bsri_36": 1,
+          "pr_bsri_37": 1,
+          "pr_bsri_38": 1,
+          "pr_bsri_39": 1,
+          "pr_bsri_4": 1,
+          "pr_bsri_40": 1,
+          "pr_bsri_5": 1,
+          "pr_bsri_6": 1,
+          "pr_bsri_7": 1,
+          "pr_bsri_8": 1,
+          "pr_bsri_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "femininity": {
+            "value": 4
+          },
+          "masculinity": {
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bsri_1": 4,
+          "pr_bsri_10": 4,
+          "pr_bsri_11": 4,
+          "pr_bsri_12": 4,
+          "pr_bsri_13": 4,
+          "pr_bsri_14": 4,
+          "pr_bsri_15": 4,
+          "pr_bsri_16": 4,
+          "pr_bsri_17": 4,
+          "pr_bsri_18": 4,
+          "pr_bsri_19": 4,
+          "pr_bsri_2": 4,
+          "pr_bsri_20": 4,
+          "pr_bsri_21": 4,
+          "pr_bsri_22": 4,
+          "pr_bsri_23": 4,
+          "pr_bsri_24": 4,
+          "pr_bsri_25": 4,
+          "pr_bsri_26": 4,
+          "pr_bsri_27": 4,
+          "pr_bsri_28": 4,
+          "pr_bsri_29": 4,
+          "pr_bsri_3": 4,
+          "pr_bsri_30": 4,
+          "pr_bsri_31": 4,
+          "pr_bsri_32": 4,
+          "pr_bsri_33": 4,
+          "pr_bsri_34": 4,
+          "pr_bsri_35": 4,
+          "pr_bsri_36": 4,
+          "pr_bsri_37": 4,
+          "pr_bsri_38": 4,
+          "pr_bsri_39": 4,
+          "pr_bsri_4": 4,
+          "pr_bsri_40": 4,
+          "pr_bsri_5": 4,
+          "pr_bsri_6": 4,
+          "pr_bsri_7": 4,
+          "pr_bsri_8": 4,
+          "pr_bsri_9": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "femininity": {
+            "value": 7
+          },
+          "masculinity": {
+            "value": 7
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bsri_1": 7,
+          "pr_bsri_10": 7,
+          "pr_bsri_11": 7,
+          "pr_bsri_12": 7,
+          "pr_bsri_13": 7,
+          "pr_bsri_14": 7,
+          "pr_bsri_15": 7,
+          "pr_bsri_16": 7,
+          "pr_bsri_17": 7,
+          "pr_bsri_18": 7,
+          "pr_bsri_19": 7,
+          "pr_bsri_2": 7,
+          "pr_bsri_20": 7,
+          "pr_bsri_21": 7,
+          "pr_bsri_22": 7,
+          "pr_bsri_23": 7,
+          "pr_bsri_24": 7,
+          "pr_bsri_25": 7,
+          "pr_bsri_26": 7,
+          "pr_bsri_27": 7,
+          "pr_bsri_28": 7,
+          "pr_bsri_29": 7,
+          "pr_bsri_3": 7,
+          "pr_bsri_30": 7,
+          "pr_bsri_31": 7,
+          "pr_bsri_32": 7,
+          "pr_bsri_33": 7,
+          "pr_bsri_34": 7,
+          "pr_bsri_35": 7,
+          "pr_bsri_36": 7,
+          "pr_bsri_37": 7,
+          "pr_bsri_38": 7,
+          "pr_bsri_39": 7,
+          "pr_bsri_4": 7,
+          "pr_bsri_40": 7,
+          "pr_bsri_5": 7,
+          "pr_bsri_6": 7,
+          "pr_bsri_7": 7,
+          "pr_bsri_8": 7,
+          "pr_bsri_9": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Bem, S. L. (1974) The measurement of psychological\nandrogyny. Journal of Consulting and Clinical Psychology, 42 ,\n155-162.",
+    "year": 1974
+  }
+}

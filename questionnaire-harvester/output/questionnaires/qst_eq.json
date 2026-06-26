@@ -609,5 +609,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "EQ total",
+      "path": "/total",
+      "scorer": "scr_eq@v26.0618"
+    }
   ]
 }

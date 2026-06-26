@@ -81,5 +81,25 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "chronotype",
+      "name": "CIRENS chronotype",
+      "path": "/chronotype",
+      "scorer": "scr_cirens@v26.0618"
+    },
+    {
+      "id": "type",
+      "name": "CIRENS type",
+      "path": "/type",
+      "scorer": "scr_cirens@v26.0618"
+    },
+    {
+      "id": "label",
+      "name": "CIRENS label",
+      "path": "/label",
+      "scorer": "scr_cirens@v26.0618"
+    }
   ]
 }
