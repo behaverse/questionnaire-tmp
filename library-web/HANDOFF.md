@@ -25,7 +25,7 @@ VITE_API_BASE_URL=http://localhost:8000 npm run dev -- --port 5175   # Library A
 ```
 - **Use port 5175** (per README + root docs). Vite's config pins no port, so plain `npm run dev` lands on 5173 — but the Library API's `LIBRARY_CORS_ORIGINS` defaults to only `http://localhost:5173`; run the API with `LIBRARY_CORS_ORIGINS=http://localhost:5175` (or whatever port you use) or the catalogue silently shows *"Could not load questionnaires."* See [docs/operational-gotchas.md](../docs/operational-gotchas.md).
 - **Try it locally** also needs the player (`web-viewer`, default `:5173`) and Viewer Service (`:8001`) up; override via `VITE_PLAYER_BASE_URL` / `VITE_VS_BASE_URL`.
-- Tests: `npm test` (vitest + RTL; broad coverage across `api/`, `catalogue/`, `detail/`, `lib/`, `definition/`, `export/` — 84 tests). Build: `npm run build` (`tsc -b` + **`tsc -p tsconfig.test.json`** + `vite build`). ⚠ Only the build's `tsc -p tsconfig.test.json` typechecks **test** files — `npm test` and `tsc -b` do not, so always run `npm run build` to catch test-fixture type errors before merging.
+- Tests: `npm test` (vitest + RTL; broad coverage across `api/`, `catalogue/`, `detail/`, `lib/`, `definition/`, `export/` — 86 tests). Build: `npm run build` (`tsc -b` + **`tsc -p tsconfig.test.json`** + `vite build`). ⚠ Only the build's `tsc -p tsconfig.test.json` typechecks **test** files — `npm test` and `tsc -b` do not, so always run `npm run build` to catch test-fixture type errors before merging.
 - `npm run e2e` is a Playwright smoke (`tests/e2e/`, builds + previews on :4173) — **needs Chrome installed**, not present in this env.
 
 ## What's left to do
@@ -34,10 +34,17 @@ This component is **largely complete**. Open items are small or cross-cutting.
 **Done (recent)**
 - ✅ **Public Try-it live (2026-06-25)** — Vercel build sets `VITE_PLAYER_BASE_URL=https://player-sooty-six.vercel.app` + `VITE_VS_BASE_URL=https://viewer-service.vercel.app`; VS CORS allows this origin; browser-verified. ⚠ The player is **`player-sooty-six.vercel.app`**, *not* `web-viewer.vercel.app` (a squatted unrelated alias).
 - ✅ **Markdown + SurveyJS export (2026-06-26, merged a8024de9)** — detail-page exports; see **Export** above. Browser-verified on prod.
-- ✅ **Download ▾ dropdown (2026-06-26, merged f92edf11)** — the three download buttons collapsed into one accessible `DownloadMenu`; also nudges the a11y work below forward.
+- ✅ **Download ▾ dropdown (2026-06-26, merged f92edf11)** — the three download buttons collapsed into one accessible `DownloadMenu`.
+- ✅ **Catalogue a11y pass (2026-06-26, merged d0a7e955)** — browser-verified on prod:
+  - **Mobile filtering** — `FacetSidebar` content extracted to `FacetContent`; new `MobileFilters` disclosure makes facets reachable below the `sm` breakpoint (the sidebar was previously `hidden sm:block` with no fallback — you couldn't filter on a phone).
+  - **Screen-reader feedback** — an sr-only `role="status"` / `aria-live="polite"` region in `CataloguePage` announces loading / result-count / empty / error as search & filters change.
+  - **Route focus** — `App.tsx` focuses the new page's `#main-content` (`tabIndex=-1`) on client-side nav (skips initial render); per-route `document.title`.
+  - **Skip-to-content link** in the shell; `#main-content` on every route's `<main>`.
+  - Note: the expand/collapse controls (facet groups, instrument rows) already used `<button aria-expanded aria-controls>` — the earlier "no a11y audit" note overstated the gap.
 
-**Next**
-- **Visual / UX & accessibility polish** — still genuinely open: facet sidebar, grouped rows, and stats bar have no a11y audit (keyboard nav, ARIA on expand/collapse, focus management). The new `DownloadMenu` is already accessible; use it as the pattern. Curate against the live site before investing.
+**Next (accessibility — remaining)**
+- **Contrast audit** — the design leans on `text-ink-faint` for counts / labels / metadata; several pairings likely fail WCAG AA (4.5:1). Needs a real pass against the token values (subjective; touches the visual design tokens).
+- **Smaller nits** — `aria-current` on the active pagination page / selected version; honor `prefers-reduced-motion` for the transitions + chevron rotations.
 
 **Deferred / blocked**
 - **Domain / Population / Instrument facets only cover classified content** 🔒 — those facet values come from the `survey_db` classification; **harvested** questionnaires are invisible to those filters until classification is populated. This is **not a library-web bug** — fix belongs in [`questionnaire-harvester/`](../questionnaire-harvester/) (classification task). library-web will surface the values automatically once the API returns them.
