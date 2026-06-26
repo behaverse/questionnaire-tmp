@@ -113,6 +113,22 @@ export async function submitScorerOutputs(vsBaseUrl: string, sessionId: string, 
   }
 }
 
+export type CommentBody = { page_id?: string | null; item_id?: string | null; locale?: string | null; comment?: string | null; stars?: number | null }
+
+/** Post a per-question QA comment. Best-effort; resolves false on any non-OK / network error. */
+export async function submitComment(vsBaseUrl: string, sessionId: string, token: string, body: CommentBody): Promise<boolean> {
+  try {
+    const r = await fetch(`${vsBaseUrl}/v1/sessions/${sessionId}/comments`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body: JSON.stringify(body),
+    })
+    return r.ok
+  } catch {
+    return false
+  }
+}
+
 export type SessionState =
   | { kind: 'ok'; status: string; lastActiveLocale: string; agentId: string; sessionIndex: number }
   | { kind: 'ephemeral' } | { kind: 'invalid' } | { kind: 'network' }

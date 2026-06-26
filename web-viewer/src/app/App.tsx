@@ -13,7 +13,7 @@ import { pipedText } from '../logic/piping'
 import { validateStep } from '../logic/validation'
 import { visibleEntries } from '../logic/visibility'
 import type { Bindings, LogicEvaluator, ScoreResolver } from '../logic/types'
-import { completeSession, fetchPreviewRuntime, getRuntime, getSession, mintSession, parseParams, submitScorerOutputs, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
+import { completeSession, fetchPreviewRuntime, getRuntime, getSession, mintSession, parseParams, submitComment, submitScorerOutputs, switchLocale, VIEWER_ID, VIEWER_VERSION } from './bootstrap'
 import { isFramed, observeHeight, postToHost } from './embed'
 import { getResumeStore } from '../resume/store'
 import { firstUnansweredStep, resolveResume } from '../resume/resolve'
@@ -23,6 +23,7 @@ import { LoginView } from './chrome/LoginView'
 import { useSession } from '@behaverse/participant-session'
 import { LocaleSwitcher } from './chrome/LocaleSwitcher'
 import { NavButtons } from './chrome/NavButtons'
+import { CommentWidget } from './chrome/CommentWidget'
 import { ProgressBar } from './chrome/ProgressBar'
 import { ScoreSummary } from './chrome/ScoreSummary'
 import { StepTransition } from './chrome/StepTransition'
@@ -33,7 +34,7 @@ import { agentActor, engineActor, ev, EventBatcher } from './events'
 import { buildItemRow, buildMessageRow, buildRuntimeIndex, stimulusFor } from './responses'
 import type { ElementIndex, SessionIdentity } from './responses'
 import { initialState, reducer } from './session'
-import { backNavEnabled, flattenSteps, isSingleChoiceItem, keySelectEnabled, presentationMode, requiredUnanswered, stepEntries } from './steps'
+import { backNavEnabled, commentsEnabled, flattenSteps, isSingleChoiceItem, keySelectEnabled, presentationMode, requiredUnanswered, stepEntries } from './steps'
 import { applyTheme, bundleToThemeId } from './theme'
 import type { Theme } from './theme'
 import { getTheme, resolveThemeId, DEFAULT_THEME_ID } from '../theme/registry'
@@ -612,6 +613,22 @@ export function App() {
   return (
     <main className="min-h-screen font-theme">
       <LocaleSwitcher locale={locale} available={state.runtime?.available_locales ?? []} onSwitch={handleLocale} />
+      {commentsEnabled(state.runtime) && state.session && (
+        <CommentWidget
+          locale={locale}
+          onSubmit={(draft) => {
+            const s = state.session!
+            const firstItem = renderEntries.find((e) => isItem(e.element))
+            return submitComment(params.vsBaseUrl, s.id, s.token, {
+              page_id: step.pageId,
+              item_id: firstItem?.key ?? null,
+              locale,
+              comment: draft.comment || null,
+              stars: draft.stars,
+            })
+          }}
+        />
+      )}
       {demoCleared && (
         <div role="status" className="fixed inset-x-0 top-0 z-10 bg-amber-100 px-4 py-2 text-center text-sm text-amber-900">
           {t(locale, 'demo_cleared')}

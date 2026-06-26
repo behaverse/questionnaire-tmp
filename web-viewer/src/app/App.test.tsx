@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { App } from './App'
 import { SessionProvider } from '@behaverse/participant-session'
@@ -185,6 +185,43 @@ test('x_back_nav:false hides the Back button on later steps', async () => {
   await userEvent.click(await screen.findByRole('button', { name: /next/i }))
   await screen.findByRole('heading', { name: /Little interest/ })   // now on step 2 (Back normally shown)
   expect(screen.queryByRole('button', { name: /back/i })).toBeNull()
+})
+
+// Owner request #5/#6 — per-question QA comment widget
+test('comment widget is hidden unless style.x_comments is set', async () => {
+  setUrl('?deployment=dpl_1')
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(mintOk), { status: 200 })))
+  renderApp()
+  await screen.findByRole('button', { name: /next/i })
+  expect(screen.queryByRole('button', { name: /comment on this question/i })).toBeNull()
+})
+
+test('x_comments:true shows the widget; submitting POSTs the comment body', async () => {
+  const withComments = { ...mini, style: { x_comments: true } }
+  setUrl('?deployment=dpl_1')
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify({ ...mintOk, runtime: withComments }), { status: 200 })
+    return new Response('{"stored":true}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  // open the modal
+  await userEvent.click(await screen.findByRole('button', { name: /comment on this question/i }))
+  const dialog = await screen.findByRole('dialog', { name: /comment on this question/i })
+  // submit is disabled until something is entered
+  const submit = within(dialog).getByRole('button', { name: /send comment/i })
+  expect(submit).toBeDisabled()
+  await userEvent.type(within(dialog).getByRole('textbox'), 'Item 2 is ambiguous')
+  await userEvent.click(within(dialog).getAllByRole('radio')[2])   // 3 stars
+  expect(submit).not.toBeDisabled()
+  await userEvent.click(submit)
+  // thank-you shown
+  expect(await within(dialog).findByText(/thanks for your comment/i)).toBeInTheDocument()
+  // the POST carried the expected body
+  const posts = fetchMock.mock.calls.filter(([u]) => String(u).endsWith('/comments'))
+  expect(posts).toHaveLength(1)
+  const body = JSON.parse((posts[0][1] as RequestInit).body as string)
+  expect(body).toMatchObject({ comment: 'Item 2 is ambiguous', stars: 3, page_id: expect.any(String) })
 })
 
 // WV-B — submission pipeline

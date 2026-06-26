@@ -154,8 +154,12 @@ The portal routes (catalogue / my-data / account / reset-password / verify-email
   letter badges, forcing a click on the option (text inputs still accept keyboard typing).
 - `style.x_back_nav: false` hides the **Back** button so the participant cannot return to a
   prior question.
+- `style.x_comments: true` (opt-in) shows a per-question **comment** widget for QA: a small icon
+  that opens a modal capturing a free-text comment + an optional 1–5 star rating, POSTed to the VS
+  (`POST /v1/sessions/{id}/comments`). Non-blocking and stored out-of-band from responses.
+  Researchers read them via `GET /v1/deployments/{id}/comments`. ("Comment", not "feedback".)
 
-> The player honours `x_key_select` / `x_back_nav` today; authoring them from the
+> The player honours `x_key_select` / `x_back_nav` / `x_comments` today; authoring them from the
 > deployment/questionnaire (VS denormaliser + Editor) is a follow-up — see `FOLLOWUPS.md`.
 
 ## Data emitted (WV-B)

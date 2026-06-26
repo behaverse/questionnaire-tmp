@@ -20,14 +20,21 @@ participant-app) and are cross-linked.
   `x_key_select` / `x_back_nav`, have the denormaliser emit them into `style` (same `^x_` extension
   channel as `x_presentation` / `x_show_score`), and expose toggles in the Editor. Tracked in
   viewer-service + editor FOLLOWUPS.
-- **#5/#6 Per-page QA feedback widget.** A `runtime.style.x_feedback` flag (default `false`) that
-  renders a small floating "give feedback on this question" icon on each step. Clicking it opens a
-  modal capturing: (a) a free-text comment, and (b) one or more rating scales (e.g. angry→happy,
-  confusing→clear). The submission is tied to the current page/item id + session and POSTs to a new
-  VS feedback endpoint (Schema TBD), stored separately from responses. This is the lightweight,
-  in-session slice; the deeper **QA-research** programme (domain-expert review workflows,
-  "ask questions *about* a question", reviewer assignment, aggregation/dashboards) is a much larger
-  separate effort — design it on its own. VS storage side tracked in viewer-service FOLLOWUPS.
+- ~~**#5/#6 Per-page QA comment widget (lightweight slice).**~~ **DONE (2026-06-26)** —
+  `runtime.style.x_comments` (default `false`, opt-in) renders a small fixed comment icon on each
+  runner step; clicking opens a modal capturing a free-text **comment** + an optional **1–5 star**
+  rating (`CommentWidget`). Submitting POSTs `{ page_id, item_id, locale, comment, stars }` to the VS
+  `POST /v1/sessions/{id}/comments` via `submitComment` (best-effort; non-blocking). Note the owner
+  terminology: this is a **comment**, not "feedback" (feedback = info given to users about their
+  performance). **Remaining / deferred:**
+  - The extra rating scales (clarity confusing→clear, sentiment angry→happy) were intentionally
+    dropped from this slice — fold them into the larger QA-research effort if wanted.
+  - Authoring `style.x_comments` from the deployment/questionnaire (VS denormaliser + Editor toggle)
+    is the same plumbing follow-up as `x_key_select` / `x_back_nav`.
+  - The deeper **QA-research** programme (domain-expert review workflows, "ask questions *about* a
+    question", reviewer assignment, aggregation/dashboards) is a much larger separate effort.
+  - Researcher-facing **UI** to browse/export comments — the read *endpoint*
+    (`GET /v1/deployments/{id}/comments`) ships now (viewer-service); the UI does not.
 - **#7 Replay.** Given a session's `bdm:` event stream (+ Schema-5 responses), reconstruct and play
   back how a participant moved through the questionnaire (step-by-step navigation, answers entered,
   revisions, timings). Player+VS effort: needs a VS event-export read endpoint and a player "replay"

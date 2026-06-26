@@ -1,4 +1,4 @@
-import { flattenSteps, requiredUnanswered, isSingleChoiceItem, stepEntries, keySelectEnabled, backNavEnabled } from './steps'
+import { flattenSteps, requiredUnanswered, isSingleChoiceItem, stepEntries, keySelectEnabled, backNavEnabled, commentsEnabled } from './steps'
 import type { Runtime, SectionElement } from '../renderer/types'
 
 test('keySelectEnabled / backNavEnabled default ON and honour style flags', () => {
@@ -13,6 +13,15 @@ test('keySelectEnabled / backNavEnabled default ON and honour style flags', () =
   expect(keySelectEnabled(rt({ x_key_select: false }))).toBe(false)
   expect(backNavEnabled(rt({ x_back_nav: false }))).toBe(false)
   expect(keySelectEnabled(rt({ x_key_select: true }))).toBe(true)
+})
+
+test('commentsEnabled is OFF by default and opt-in via x_comments:true', () => {
+  const rt = (style?: Record<string, unknown>) => ({ pages: [], style } as unknown as Runtime)
+  expect(commentsEnabled(rt())).toBe(false)
+  expect(commentsEnabled(rt({}))).toBe(false)
+  expect(commentsEnabled(null)).toBe(false)
+  expect(commentsEnabled(rt({ x_comments: false }))).toBe(false)
+  expect(commentsEnabled(rt({ x_comments: true }))).toBe(true)
 })
 
 const opt = {

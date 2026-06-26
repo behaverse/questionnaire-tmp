@@ -21,6 +21,11 @@ export function backNavEnabled(runtime: Runtime | null | undefined): boolean {
   return runtime?.style?.x_back_nav !== false
 }
 
+/** Per-question QA comment widget. Default OFF; opt-in via `style.x_comments: true`. */
+export function commentsEnabled(runtime: Runtime | null | undefined): boolean {
+  return runtime?.style?.x_comments === true
+}
+
 export function flattenSteps(runtime: Runtime): Step[] {
   const mode = presentationMode(runtime)
   if (mode === 'classic') {
