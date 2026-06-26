@@ -1,0 +1,140 @@
+{
+  "id": "scr_rps",
+  "name": "RPS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "RPS Scoring",
+      "description": "Risk Propensity Scale (RPS). Mean of the 7 items (each 1-9; reverse-keyed items reversed by the runtime); higher = greater risk-taking propensity. No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Meertens, R. M. & Lion, R. (2008). Measuring an Individual’s\nTendency to Take Risks: The Risk Propensity Scale. Journal of Applied\nSocial Psychology, 38 (6) , 1506-1520.",
+    "year": 2008
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_rps_1|pr_rps_2|pr_rps_3|pr_rps_4|pr_rps_5|pr_rps_6|pr_rps_7)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/rps/scorer.wasm",
+      "sha256": "1133d22e95e96859b9ad20b246b3005850c0edd7a2449926ec4fb96ad82de79b"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_rps_1": 1,
+          "pr_rps_2": 1,
+          "pr_rps_3": 1,
+          "pr_rps_4": 1,
+          "pr_rps_5": 1,
+          "pr_rps_6": 1,
+          "pr_rps_7": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_rps_1": 5,
+          "pr_rps_2": 5,
+          "pr_rps_3": 5,
+          "pr_rps_4": 5,
+          "pr_rps_5": 5,
+          "pr_rps_6": 5,
+          "pr_rps_7": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_rps_1": 9,
+          "pr_rps_2": 9,
+          "pr_rps_3": 9,
+          "pr_rps_4": 9,
+          "pr_rps_5": 9,
+          "pr_rps_6": 9,
+          "pr_rps_7": 9
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 9
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

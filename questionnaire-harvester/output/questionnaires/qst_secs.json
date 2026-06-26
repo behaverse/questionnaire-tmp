@@ -221,5 +221,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SECS mean",
+      "path": "/scores/total/value",
+      "scorer": "scr_secs@v26.0618"
+    }
   ]
 }

@@ -151,5 +151,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "RPS mean",
+      "path": "/scores/total/value",
+      "scorer": "scr_rps@v26.0618"
+    }
   ]
 }

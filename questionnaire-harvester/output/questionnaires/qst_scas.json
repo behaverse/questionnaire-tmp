@@ -705,5 +705,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SCAS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_scas@v26.0618"
+    }
   ]
 }

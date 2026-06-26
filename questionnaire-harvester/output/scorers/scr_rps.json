@@ -1,0 +1,140 @@
+{
+  "content": {
+    "en": {
+      "description": "Risk Propensity Scale (RPS). Mean of the 7 items (each 1-9; reverse-keyed items reversed by the runtime); higher = greater risk-taking propensity. No standard cut-offs.",
+      "name": "RPS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_rps",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "1133d22e95e96859b9ad20b246b3005850c0edd7a2449926ec4fb96ad82de79b",
+      "url": "https://behaverse.org/scorers/rps/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_rps_1|pr_rps_2|pr_rps_3|pr_rps_4|pr_rps_5|pr_rps_6|pr_rps_7)$": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "RPS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rps_1": 1,
+          "pr_rps_2": 1,
+          "pr_rps_3": 1,
+          "pr_rps_4": 1,
+          "pr_rps_5": 1,
+          "pr_rps_6": 1,
+          "pr_rps_7": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rps_1": 5,
+          "pr_rps_2": 5,
+          "pr_rps_3": 5,
+          "pr_rps_4": 5,
+          "pr_rps_5": 5,
+          "pr_rps_6": 5,
+          "pr_rps_7": 5
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 9
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rps_1": 9,
+          "pr_rps_2": 9,
+          "pr_rps_3": 9,
+          "pr_rps_4": 9,
+          "pr_rps_5": 9,
+          "pr_rps_6": 9,
+          "pr_rps_7": 9
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Meertens, R. M. & Lion, R. (2008). Measuring an Individual’s\nTendency to Take Risks: The Risk Propensity Scale. Journal of Applied\nSocial Psychology, 38 (6) , 1506-1520.",
+    "year": 2008
+  }
+}

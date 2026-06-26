@@ -109,5 +109,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SHS mean",
+      "path": "/scores/total/value",
+      "scorer": "scr_shs@v26.0618"
+    }
   ]
 }

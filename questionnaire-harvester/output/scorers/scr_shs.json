@@ -1,0 +1,131 @@
+{
+  "content": {
+    "en": {
+      "description": "Subjective Happiness Scale (SHS). Mean of the 4 items (each 1-7; reverse-keyed items reversed by the runtime); higher = greater subjective happiness. No standard cut-offs.",
+      "name": "SHS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_shs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "bb3e5c4a1525e9d714c71615501d27ea96a176db2d13d25cc9e02decf7d5c229",
+      "url": "https://behaverse.org/scorers/shs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_shs_1|pr_shs_2|pr_shs_3|pr_shs_4)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SHS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_shs_1": 1,
+          "pr_shs_2": 1,
+          "pr_shs_3": 1,
+          "pr_shs_4": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_shs_1": 4,
+          "pr_shs_2": 4,
+          "pr_shs_3": 4,
+          "pr_shs_4": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_shs_1": 7,
+          "pr_shs_2": 7,
+          "pr_shs_3": 7,
+          "pr_shs_4": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Lyubomirsky, S. & Lepper, H. S. (1999). A measure of subjective happines: Preliminary reliability and construct validation. Social indicators research, 46 , 137-155.",
+    "year": 1999
+  }
+}

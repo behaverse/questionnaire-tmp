@@ -1,0 +1,144 @@
+{
+  "id": "fsq",
+  "scorer_id": "scr_fsq",
+  "name": "FSQ Scoring",
+  "status": "validated",
+  "description": "Fear of Spiders Questionnaire (FSQ). Total of the 18 items (each 1-7; reverse-keyed items reversed by the runtime); higher = greater fear of spiders. No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      1,
+      7
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "sum",
+        "items": [
+          "pr_fsq_1",
+          "pr_fsq_2",
+          "pr_fsq_3",
+          "pr_fsq_4",
+          "pr_fsq_5",
+          "pr_fsq_6",
+          "pr_fsq_7",
+          "pr_fsq_8",
+          "pr_fsq_9",
+          "pr_fsq_10",
+          "pr_fsq_11",
+          "pr_fsq_12",
+          "pr_fsq_13",
+          "pr_fsq_14",
+          "pr_fsq_15",
+          "pr_fsq_16",
+          "pr_fsq_17",
+          "pr_fsq_18"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_fsq_1": 1,
+          "pr_fsq_2": 1,
+          "pr_fsq_3": 1,
+          "pr_fsq_4": 1,
+          "pr_fsq_5": 1,
+          "pr_fsq_6": 1,
+          "pr_fsq_7": 1,
+          "pr_fsq_8": 1,
+          "pr_fsq_9": 1,
+          "pr_fsq_10": 1,
+          "pr_fsq_11": 1,
+          "pr_fsq_12": 1,
+          "pr_fsq_13": 1,
+          "pr_fsq_14": 1,
+          "pr_fsq_15": 1,
+          "pr_fsq_16": 1,
+          "pr_fsq_17": 1,
+          "pr_fsq_18": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_fsq_1": 4,
+          "pr_fsq_2": 4,
+          "pr_fsq_3": 4,
+          "pr_fsq_4": 4,
+          "pr_fsq_5": 4,
+          "pr_fsq_6": 4,
+          "pr_fsq_7": 4,
+          "pr_fsq_8": 4,
+          "pr_fsq_9": 4,
+          "pr_fsq_10": 4,
+          "pr_fsq_11": 4,
+          "pr_fsq_12": 4,
+          "pr_fsq_13": 4,
+          "pr_fsq_14": 4,
+          "pr_fsq_15": 4,
+          "pr_fsq_16": 4,
+          "pr_fsq_17": 4,
+          "pr_fsq_18": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 72
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_fsq_1": 7,
+          "pr_fsq_2": 7,
+          "pr_fsq_3": 7,
+          "pr_fsq_4": 7,
+          "pr_fsq_5": 7,
+          "pr_fsq_6": 7,
+          "pr_fsq_7": 7,
+          "pr_fsq_8": 7,
+          "pr_fsq_9": 7,
+          "pr_fsq_10": 7,
+          "pr_fsq_11": 7,
+          "pr_fsq_12": 7,
+          "pr_fsq_13": 7,
+          "pr_fsq_14": 7,
+          "pr_fsq_15": 7,
+          "pr_fsq_16": 7,
+          "pr_fsq_17": 7,
+          "pr_fsq_18": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 126
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Szymanksi, J. and O\u2019Donohue, W. (1995). Fear of spiders\nQuestionnaire. Journal of Therapy and Experimental Psychiatry,\n26(1) , 31-34.",
+    "year": 1995
+  }
+}

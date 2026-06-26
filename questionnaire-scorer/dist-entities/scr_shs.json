@@ -1,0 +1,131 @@
+{
+  "id": "scr_shs",
+  "name": "SHS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "SHS Scoring",
+      "description": "Subjective Happiness Scale (SHS). Mean of the 4 items (each 1-7; reverse-keyed items reversed by the runtime); higher = greater subjective happiness. No standard cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Lyubomirsky, S. & Lepper, H. S. (1999). A measure of subjective happines: Preliminary reliability and construct validation. Social indicators research, 46 , 137-155.",
+    "year": 1999
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_shs_1|pr_shs_2|pr_shs_3|pr_shs_4)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/shs/scorer.wasm",
+      "sha256": "bb3e5c4a1525e9d714c71615501d27ea96a176db2d13d25cc9e02decf7d5c229"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_shs_1": 1,
+          "pr_shs_2": 1,
+          "pr_shs_3": 1,
+          "pr_shs_4": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_shs_1": 4,
+          "pr_shs_2": 4,
+          "pr_shs_3": 4,
+          "pr_shs_4": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 4
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_shs_1": 7,
+          "pr_shs_2": 7,
+          "pr_shs_3": 7,
+          "pr_shs_4": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

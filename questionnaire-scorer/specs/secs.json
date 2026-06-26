@@ -1,0 +1,120 @@
+{
+  "id": "secs",
+  "scorer_id": "scr_secs",
+  "name": "SECS Scoring",
+  "status": "validated",
+  "description": "Political conservatism scale (SECS). Mean of the 12 items (each 0-100; reverse-keyed items reversed by the runtime); higher = greater political conservatism (0-100 thermometer ratings). No standard cut-offs.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      100
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "aggregate": "mean",
+        "items": [
+          "pr_secs_1",
+          "pr_secs_2",
+          "pr_secs_3",
+          "pr_secs_4",
+          "pr_secs_5",
+          "pr_secs_6",
+          "pr_secs_7",
+          "pr_secs_8",
+          "pr_secs_9",
+          "pr_secs_10",
+          "pr_secs_11",
+          "pr_secs_12"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_secs_1": 0,
+          "pr_secs_2": 0,
+          "pr_secs_3": 0,
+          "pr_secs_4": 0,
+          "pr_secs_5": 0,
+          "pr_secs_6": 0,
+          "pr_secs_7": 0,
+          "pr_secs_8": 0,
+          "pr_secs_9": 0,
+          "pr_secs_10": 0,
+          "pr_secs_11": 0,
+          "pr_secs_12": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_secs_1": 50,
+          "pr_secs_2": 50,
+          "pr_secs_3": 50,
+          "pr_secs_4": 50,
+          "pr_secs_5": 50,
+          "pr_secs_6": 50,
+          "pr_secs_7": 50,
+          "pr_secs_8": 50,
+          "pr_secs_9": 50,
+          "pr_secs_10": 50,
+          "pr_secs_11": 50,
+          "pr_secs_12": 50
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 50
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_secs_1": 100,
+          "pr_secs_2": 100,
+          "pr_secs_3": 100,
+          "pr_secs_4": 100,
+          "pr_secs_5": 100,
+          "pr_secs_6": 100,
+          "pr_secs_7": 100,
+          "pr_secs_8": 100,
+          "pr_secs_9": 100,
+          "pr_secs_10": 100,
+          "pr_secs_11": 100,
+          "pr_secs_12": 100
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 100
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Everett, J.E. (2013). The 12 Item Social and Economic Conservatism\nScale\n(SECS). Open\naccess link here",
+    "year": 2013
+  }
+}

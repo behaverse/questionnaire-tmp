@@ -306,5 +306,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "FSQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_fsq@v26.0618"
+    }
   ]
 }

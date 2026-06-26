@@ -1,0 +1,173 @@
+{
+  "content": {
+    "en": {
+      "description": "Fear of Spiders Questionnaire (FSQ). Total of the 18 items (each 1-7; reverse-keyed items reversed by the runtime); higher = greater fear of spiders. No standard cut-offs.",
+      "name": "FSQ Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_fsq",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "fe00fd9a4e4929c5e9102c592acd3fa8e6d4b5ede4c3d72ccf3d45f958ce0a2a",
+      "url": "https://behaverse.org/scorers/fsq/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_fsq_1|pr_fsq_2|pr_fsq_3|pr_fsq_4|pr_fsq_5|pr_fsq_6|pr_fsq_7|pr_fsq_8|pr_fsq_9|pr_fsq_10|pr_fsq_11|pr_fsq_12|pr_fsq_13|pr_fsq_14|pr_fsq_15|pr_fsq_16|pr_fsq_17|pr_fsq_18)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "FSQ Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 18
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_fsq_1": 1,
+          "pr_fsq_10": 1,
+          "pr_fsq_11": 1,
+          "pr_fsq_12": 1,
+          "pr_fsq_13": 1,
+          "pr_fsq_14": 1,
+          "pr_fsq_15": 1,
+          "pr_fsq_16": 1,
+          "pr_fsq_17": 1,
+          "pr_fsq_18": 1,
+          "pr_fsq_2": 1,
+          "pr_fsq_3": 1,
+          "pr_fsq_4": 1,
+          "pr_fsq_5": 1,
+          "pr_fsq_6": 1,
+          "pr_fsq_7": 1,
+          "pr_fsq_8": 1,
+          "pr_fsq_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 72
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_fsq_1": 4,
+          "pr_fsq_10": 4,
+          "pr_fsq_11": 4,
+          "pr_fsq_12": 4,
+          "pr_fsq_13": 4,
+          "pr_fsq_14": 4,
+          "pr_fsq_15": 4,
+          "pr_fsq_16": 4,
+          "pr_fsq_17": 4,
+          "pr_fsq_18": 4,
+          "pr_fsq_2": 4,
+          "pr_fsq_3": 4,
+          "pr_fsq_4": 4,
+          "pr_fsq_5": 4,
+          "pr_fsq_6": 4,
+          "pr_fsq_7": 4,
+          "pr_fsq_8": 4,
+          "pr_fsq_9": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 126
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_fsq_1": 7,
+          "pr_fsq_10": 7,
+          "pr_fsq_11": 7,
+          "pr_fsq_12": 7,
+          "pr_fsq_13": 7,
+          "pr_fsq_14": 7,
+          "pr_fsq_15": 7,
+          "pr_fsq_16": 7,
+          "pr_fsq_17": 7,
+          "pr_fsq_18": 7,
+          "pr_fsq_2": 7,
+          "pr_fsq_3": 7,
+          "pr_fsq_4": 7,
+          "pr_fsq_5": 7,
+          "pr_fsq_6": 7,
+          "pr_fsq_7": 7,
+          "pr_fsq_8": 7,
+          "pr_fsq_9": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Szymanksi, J. and O’Donohue, W. (1995). Fear of spiders\nQuestionnaire. Journal of Therapy and Experimental Psychiatry,\n26(1) , 31-34.",
+    "year": 1995
+  }
+}
