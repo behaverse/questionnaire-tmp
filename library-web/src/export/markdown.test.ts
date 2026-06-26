@@ -53,7 +53,7 @@ describe('toMarkdown', () => {
             { kind: 'item', number: 1, stem: 'Section question', required: true, unresolved: false,
               widget: 'choice.nominal.single',
               options: [{ index: 0, text: 'X', value: 1 }] },
-          ], unresolved: false },
+          ], sharedOptions: [] },
         ],
       }],
     }

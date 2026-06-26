@@ -19,7 +19,7 @@ export interface ItemBlock {
   reversed?: boolean
   subscales?: string[]
   unresolved: boolean
-  widget: string | null
+  widget?: string | null
   showIf?: string
 }
 export interface MessageBlock { kind: 'message'; text: string; unresolved: boolean; fallbackLang?: string }
