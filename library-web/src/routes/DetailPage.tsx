@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { exportMarkdown, exportSurveyJS } from '../export'
 import { useParams } from 'react-router-dom'
 import { useResolvedDefinition, useVersions } from '../api/queries'
 import { ApiError, resolvedDefinitionUrl } from '../api/client'
@@ -42,6 +43,7 @@ export function DetailPage() {
   const latest = version ?? versionsQ.data?.find((v) => v.status === 'published')?.version ?? versionsQ.data?.[0]?.version
   const defQ = useResolvedDefinition(id, latest, true)
   const [lang, setLang] = useState<string | null>(null)
+  const [dropped, setDropped] = useState<string[] | null>(null)
 
   useEffect(() => { setLang(null) }, [id])
 
@@ -100,7 +102,20 @@ export function DetailPage() {
               onLang={setLang}
               previewHref={previewPlayerUrl(`${id}@${latest}`, effectiveLang)}
               onDownload={() => { void downloadJson(resolvedDefinitionUrl(id, latest), definitionFilename(id, latest)).catch((e) => console.error(e)) }}
+              onExportMarkdown={() => exportMarkdown(defQ.data, effectiveLang)}
+              onExportSurveyJS={() => { const d = exportSurveyJS(defQ.data, effectiveLang); setDropped(d.length ? d : null) }}
             />
+            {dropped && (
+              <div role="status" className="my-3 rounded border border-amber-300 bg-amber-50 p-3 text-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <strong>SurveyJS exported with some features dropped:</strong>
+                    <ul className="mt-1 list-disc pl-5">{dropped.map((d, i) => <li key={i}>{d}</li>)}</ul>
+                  </div>
+                  <button type="button" className="shrink-0 underline" onClick={() => setDropped(null)}>Dismiss</button>
+                </div>
+              </div>
+            )}
             {present.description && <Section id="description" title="Description"><p className="max-w-2xl text-[15px] leading-7 text-ink-soft">{meta.description}</p></Section>}
             {present.classification && <Section id="classification" title="Classification"><ClassificationBlock meta={meta} /></Section>}
             {present.psychometrics && <Section id="psychometrics" title="Psychometrics"><PsychometricsBlock meta={meta} /></Section>}

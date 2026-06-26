@@ -10,12 +10,14 @@ export interface MetadataHeaderProps {
   onLang: (l: string) => void
   onDownload: () => void
   previewHref: string
+  onExportMarkdown: () => void
+  onExportSurveyJS: () => void
 }
 
 const selectCls =
   'cursor-pointer rounded-md border border-rule bg-paper-raised px-2.5 py-1 text-sm text-ink shadow-card transition-colors hover:border-ink-faint/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
 
-export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDownload, previewHref }: MetadataHeaderProps) {
+export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDownload, previewHref, onExportMarkdown, onExportSurveyJS }: MetadataHeaderProps) {
   const navigate = useNavigate()
   const langs = meta.available_languages ?? (meta.language ? [meta.language] : [])
   return (
@@ -97,6 +99,12 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
             <path d="M8 2v8m0 0L5 7m3 3 3-3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Download JSON
+        </button>
+        <button type="button" className="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent" onClick={onExportMarkdown}>
+          Markdown
+        </button>
+        <button type="button" className="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent" onClick={onExportSurveyJS}>
+          SurveyJS
         </button>
       </div>
     </header>

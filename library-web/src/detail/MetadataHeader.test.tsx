@@ -14,7 +14,7 @@ describe('MetadataHeader', () => {
   it('shows the title, a download button, and a language switcher when multilingual', () => {
     render(
       <MemoryRouter>
-        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} />
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} onExportMarkdown={() => {}} onExportSurveyJS={() => {}} />
       </MemoryRouter>,
     )
     expect(screen.getByRole('heading', { name: /PHQ-9/ })).toBeInTheDocument()
@@ -29,7 +29,7 @@ describe('MetadataHeader', () => {
     const onLang = vi.fn()
     render(
       <MemoryRouter>
-        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={onLang} onDownload={() => {}} />
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={onLang} onDownload={() => {}} onExportMarkdown={() => {}} onExportSurveyJS={() => {}} />
       </MemoryRouter>,
     )
     await userEvent.selectOptions(screen.getByLabelText(/language/i), 'pt')
@@ -40,7 +40,7 @@ describe('MetadataHeader', () => {
     const onDownload = vi.fn()
     render(
       <MemoryRouter>
-        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={onDownload} />
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={onDownload} onExportMarkdown={() => {}} onExportSurveyJS={() => {}} />
       </MemoryRouter>,
     )
     await userEvent.click(screen.getByRole('button', { name: /download json/i }))
@@ -50,7 +50,7 @@ describe('MetadataHeader', () => {
   it('renders a Try it link pointing at the player preview', () => {
     render(
       <MemoryRouter>
-        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602&locale=en" onLang={() => {}} onDownload={() => {}} />
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602&locale=en" onLang={() => {}} onDownload={() => {}} onExportMarkdown={() => {}} onExportSurveyJS={() => {}} />
       </MemoryRouter>,
     )
     const tryLink = screen.getByRole('link', { name: /try it/i })
@@ -60,9 +60,21 @@ describe('MetadataHeader', () => {
   it('shows the variant tag when the form has a non-base variant', () => {
     render(
       <MemoryRouter>
-        <MetadataHeader meta={{ ...meta, variant: 'Part A screener' }} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} />
+        <MetadataHeader meta={{ ...meta, variant: 'Part A screener' }} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} onExportMarkdown={() => {}} onExportSurveyJS={() => {}} />
       </MemoryRouter>,
     )
     expect(screen.getByText('Part A screener')).toBeInTheDocument()
+  })
+
+  it('renders Markdown + SurveyJS export buttons and fires their callbacks', async () => {
+    const onMd = vi.fn(); const onSjs = vi.fn()
+    render(
+      <MemoryRouter>
+        <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} onExportMarkdown={onMd} onExportSurveyJS={onSjs} />
+      </MemoryRouter>,
+    )
+    await userEvent.click(screen.getByRole('button', { name: 'Markdown' }))
+    await userEvent.click(screen.getByRole('button', { name: 'SurveyJS' }))
+    expect(onMd).toHaveBeenCalled(); expect(onSjs).toHaveBeenCalled()
   })
 })
