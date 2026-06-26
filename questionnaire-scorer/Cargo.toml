@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["abi", "engine", "scorers/phq9", "scorers/gad7", "scorers/swls", "scorers/who5", "scorers/dass21"]
+members = ["abi", "engine", "scorers/phq9", "scorers/gad7", "scorers/swls", "scorers/who5", "scorers/dass21", "scorers/spin", "scorers/ocir", "scorers/panas", "scorers/fs", "scorers/rrs"]
 
 [profile.release]
 panic = "abort"

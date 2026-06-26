@@ -1,0 +1,189 @@
+{
+  "id": "spin",
+  "scorer_id": "scr_spin",
+  "name": "SPIN Standard Scoring",
+  "status": "validated",
+  "description": "Social Phobia Inventory (Connor et al., 2000). Total = sum of the 17 items (each 0-4), range 0-68. Severity: 0-20 none/minimal, 21-30 mild, 31-40 moderate, 41-50 severe, 51-68 very severe (a total of 19 or more suggests social anxiety disorder).",
+  "publication": {
+    "citation": "Connor KM, Davidson JRT, Churchill LE, Sherwood A, Foa E, Weisler RH (2000). Psychometric properties of the Social Phobia Inventory (SPIN). Br J Psychiatry, 176, 379-386.",
+    "year": 2000
+  },
+  "engine_spec": {
+    "item_range": [
+      0,
+      4
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_spin_1",
+          "pr_spin_2",
+          "pr_spin_3",
+          "pr_spin_4",
+          "pr_spin_5",
+          "pr_spin_6",
+          "pr_spin_7",
+          "pr_spin_8",
+          "pr_spin_9",
+          "pr_spin_10",
+          "pr_spin_11",
+          "pr_spin_12",
+          "pr_spin_13",
+          "pr_spin_14",
+          "pr_spin_15",
+          "pr_spin_16",
+          "pr_spin_17"
+        ],
+        "bands": [
+          {
+            "min": 0,
+            "max": 20,
+            "severity": "none_minimal",
+            "label": "None to minimal"
+          },
+          {
+            "min": 21,
+            "max": 30,
+            "severity": "mild",
+            "label": "Mild"
+          },
+          {
+            "min": 31,
+            "max": 40,
+            "severity": "moderate",
+            "label": "Moderate"
+          },
+          {
+            "min": 41,
+            "max": 50,
+            "severity": "severe",
+            "label": "Severe"
+          },
+          {
+            "min": 51,
+            "max": 68,
+            "severity": "very_severe",
+            "label": "Very severe"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "none-minimal-floor",
+      "input": {
+        "scored_responses": {
+          "pr_spin_1": 0,
+          "pr_spin_2": 0,
+          "pr_spin_3": 0,
+          "pr_spin_4": 0,
+          "pr_spin_5": 0,
+          "pr_spin_6": 0,
+          "pr_spin_7": 0,
+          "pr_spin_8": 0,
+          "pr_spin_9": 0,
+          "pr_spin_10": 0,
+          "pr_spin_11": 0,
+          "pr_spin_12": 0,
+          "pr_spin_13": 0,
+          "pr_spin_14": 0,
+          "pr_spin_15": 0,
+          "pr_spin_16": 0,
+          "pr_spin_17": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "none_minimal",
+            "band": {
+              "min": 0,
+              "max": 20,
+              "label": "None to minimal"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "moderate-mid",
+      "input": {
+        "scored_responses": {
+          "pr_spin_1": 2,
+          "pr_spin_2": 2,
+          "pr_spin_3": 2,
+          "pr_spin_4": 2,
+          "pr_spin_5": 2,
+          "pr_spin_6": 2,
+          "pr_spin_7": 2,
+          "pr_spin_8": 2,
+          "pr_spin_9": 2,
+          "pr_spin_10": 2,
+          "pr_spin_11": 2,
+          "pr_spin_12": 2,
+          "pr_spin_13": 2,
+          "pr_spin_14": 2,
+          "pr_spin_15": 2,
+          "pr_spin_16": 2,
+          "pr_spin_17": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 34,
+            "severity": "moderate",
+            "band": {
+              "min": 31,
+              "max": 40,
+              "label": "Moderate"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "very-severe-ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_spin_1": 4,
+          "pr_spin_2": 4,
+          "pr_spin_3": 4,
+          "pr_spin_4": 4,
+          "pr_spin_5": 4,
+          "pr_spin_6": 4,
+          "pr_spin_7": 4,
+          "pr_spin_8": 4,
+          "pr_spin_9": 4,
+          "pr_spin_10": 4,
+          "pr_spin_11": 4,
+          "pr_spin_12": 4,
+          "pr_spin_13": 4,
+          "pr_spin_14": 4,
+          "pr_spin_15": 4,
+          "pr_spin_16": 4,
+          "pr_spin_17": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 68,
+            "severity": "very_severe",
+            "band": {
+              "min": 51,
+              "max": 68,
+              "label": "Very severe"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -362,5 +362,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "Rumination total",
+      "path": "/scores/total/value",
+      "scorer": "scr_rrs@v26.0618"
+    }
   ]
 }

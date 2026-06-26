@@ -1,0 +1,217 @@
+{
+  "content": {
+    "en": {
+      "description": "Obsessive-Compulsive Inventory-Revised (Foa et al., 2002). Total = sum of the 18 items (each 0-4), range 0-72. A total of 21 or more is the recommended clinical cut-off indicating probable obsessive-compulsive disorder.",
+      "name": "OCI-R Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_ocir",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "7ae6f270cd842711e3dc4caa7ddbe9ed389ea44e1ab36dc0bd8919f102949a1f",
+      "url": "https://behaverse.org/scorers/ocir/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_ocir_1|pr_ocir_2|pr_ocir_3|pr_ocir_4|pr_ocir_5|pr_ocir_6|pr_ocir_7|pr_ocir_8|pr_ocir_9|pr_ocir_10|pr_ocir_11|pr_ocir_12|pr_ocir_13|pr_ocir_14|pr_ocir_15|pr_ocir_16|pr_ocir_17|pr_ocir_18)$": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "OCI-R Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "below_cutoff",
+                  "at_or_above_cutoff"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Below clinical cut-off",
+              "max": 20,
+              "min": 0
+            },
+            "severity": "below_cutoff",
+            "value": 18
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ocir_1": 1,
+          "pr_ocir_10": 1,
+          "pr_ocir_11": 1,
+          "pr_ocir_12": 1,
+          "pr_ocir_13": 1,
+          "pr_ocir_14": 1,
+          "pr_ocir_15": 1,
+          "pr_ocir_16": 1,
+          "pr_ocir_17": 1,
+          "pr_ocir_18": 1,
+          "pr_ocir_2": 1,
+          "pr_ocir_3": 1,
+          "pr_ocir_4": 1,
+          "pr_ocir_5": 1,
+          "pr_ocir_6": 1,
+          "pr_ocir_7": 1,
+          "pr_ocir_8": 1,
+          "pr_ocir_9": 1
+        }
+      },
+      "name": "below-cutoff"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "At or above clinical cut-off (probable OCD)",
+              "max": 72,
+              "min": 21
+            },
+            "severity": "at_or_above_cutoff",
+            "value": 36
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ocir_1": 2,
+          "pr_ocir_10": 2,
+          "pr_ocir_11": 2,
+          "pr_ocir_12": 2,
+          "pr_ocir_13": 2,
+          "pr_ocir_14": 2,
+          "pr_ocir_15": 2,
+          "pr_ocir_16": 2,
+          "pr_ocir_17": 2,
+          "pr_ocir_18": 2,
+          "pr_ocir_2": 2,
+          "pr_ocir_3": 2,
+          "pr_ocir_4": 2,
+          "pr_ocir_5": 2,
+          "pr_ocir_6": 2,
+          "pr_ocir_7": 2,
+          "pr_ocir_8": 2,
+          "pr_ocir_9": 2
+        }
+      },
+      "name": "at-or-above-cutoff"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "At or above clinical cut-off (probable OCD)",
+              "max": 72,
+              "min": 21
+            },
+            "severity": "at_or_above_cutoff",
+            "value": 72
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ocir_1": 4,
+          "pr_ocir_10": 4,
+          "pr_ocir_11": 4,
+          "pr_ocir_12": 4,
+          "pr_ocir_13": 4,
+          "pr_ocir_14": 4,
+          "pr_ocir_15": 4,
+          "pr_ocir_16": 4,
+          "pr_ocir_17": 4,
+          "pr_ocir_18": 4,
+          "pr_ocir_2": 4,
+          "pr_ocir_3": 4,
+          "pr_ocir_4": 4,
+          "pr_ocir_5": 4,
+          "pr_ocir_6": 4,
+          "pr_ocir_7": 4,
+          "pr_ocir_8": 4,
+          "pr_ocir_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Foa EB, Huppert JD, Leiberg S, Langner R, Kichic R, Hajcak G, Salkovskis PM (2002). The Obsessive-Compulsive Inventory: development and validation of a short version. Psychol Assess, 14(4), 485-496.",
+    "year": 2002
+  }
+}

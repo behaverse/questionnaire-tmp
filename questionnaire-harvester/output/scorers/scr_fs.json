@@ -1,0 +1,143 @@
+{
+  "content": {
+    "en": {
+      "description": "Flourishing Scale (Diener et al., 2010). Total = sum of the 8 items (each 1-7), range 8-56; higher scores indicate greater psychological flourishing. The scale yields a single continuous score with no standard severity cut-offs.",
+      "name": "Flourishing Scale Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_fs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "956d479979da28fef98107eda31179a41473d922c3c759dedc5e8230b105df1d",
+      "url": "https://behaverse.org/scorers/fs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_fs_1|pr_fs_2|pr_fs_3|pr_fs_4|pr_fs_5|pr_fs_6|pr_fs_7|pr_fs_8)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "Flourishing Scale Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 8
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_fs_1": 1,
+          "pr_fs_2": 1,
+          "pr_fs_3": 1,
+          "pr_fs_4": 1,
+          "pr_fs_5": 1,
+          "pr_fs_6": 1,
+          "pr_fs_7": 1,
+          "pr_fs_8": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 32
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_fs_1": 4,
+          "pr_fs_2": 4,
+          "pr_fs_3": 4,
+          "pr_fs_4": 4,
+          "pr_fs_5": 4,
+          "pr_fs_6": 4,
+          "pr_fs_7": 4,
+          "pr_fs_8": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 56
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_fs_1": 7,
+          "pr_fs_2": 7,
+          "pr_fs_3": 7,
+          "pr_fs_4": 7,
+          "pr_fs_5": 7,
+          "pr_fs_6": 7,
+          "pr_fs_7": 7,
+          "pr_fs_8": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Diener E, Wirtz D, Tov W, Kim-Prieto C, Choi D, Oishi S, Biswas-Diener R (2010). New well-being measures: short scales to assess flourishing and positive and negative feelings. Soc Indic Res, 97, 143-156.",
+    "year": 2010
+  }
+}

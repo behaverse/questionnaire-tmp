@@ -320,5 +320,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "OCI-R total",
+      "path": "/scores/total/value",
+      "scorer": "scr_ocir@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "OCI-R interpretation",
+      "path": "/scores/total/severity",
+      "scorer": "scr_ocir@v26.0618"
+    }
   ]
 }

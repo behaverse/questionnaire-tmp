@@ -1,0 +1,185 @@
+{
+  "content": {
+    "en": {
+      "description": "Ruminative Response Scale (Nolen-Hoeksema & Morrow, 1991). Total = sum of the 22 items (each 1-4), range 22-88; higher scores indicate a greater tendency to ruminate. This scorer reports the overall total (no standard severity cut-offs).",
+      "name": "RRS Total Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_rrs",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "9f801e803caa5dbe60f83a54a74ea7a39afcea6726e657aba8a227a6eaac1aa6",
+      "url": "https://behaverse.org/scorers/rrs/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_rrs_1|pr_rrs_2|pr_rrs_3|pr_rrs_4|pr_rrs_5|pr_rrs_6|pr_rrs_7|pr_rrs_8|pr_rrs_9|pr_rrs_10|pr_rrs_11|pr_rrs_12|pr_rrs_13|pr_rrs_14|pr_rrs_15|pr_rrs_16|pr_rrs_17|pr_rrs_18|pr_rrs_19|pr_rrs_20|pr_rrs_21|pr_rrs_22)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "RRS Total Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 22
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rrs_1": 1,
+          "pr_rrs_10": 1,
+          "pr_rrs_11": 1,
+          "pr_rrs_12": 1,
+          "pr_rrs_13": 1,
+          "pr_rrs_14": 1,
+          "pr_rrs_15": 1,
+          "pr_rrs_16": 1,
+          "pr_rrs_17": 1,
+          "pr_rrs_18": 1,
+          "pr_rrs_19": 1,
+          "pr_rrs_2": 1,
+          "pr_rrs_20": 1,
+          "pr_rrs_21": 1,
+          "pr_rrs_22": 1,
+          "pr_rrs_3": 1,
+          "pr_rrs_4": 1,
+          "pr_rrs_5": 1,
+          "pr_rrs_6": 1,
+          "pr_rrs_7": 1,
+          "pr_rrs_8": 1,
+          "pr_rrs_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 44
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rrs_1": 2,
+          "pr_rrs_10": 2,
+          "pr_rrs_11": 2,
+          "pr_rrs_12": 2,
+          "pr_rrs_13": 2,
+          "pr_rrs_14": 2,
+          "pr_rrs_15": 2,
+          "pr_rrs_16": 2,
+          "pr_rrs_17": 2,
+          "pr_rrs_18": 2,
+          "pr_rrs_19": 2,
+          "pr_rrs_2": 2,
+          "pr_rrs_20": 2,
+          "pr_rrs_21": 2,
+          "pr_rrs_22": 2,
+          "pr_rrs_3": 2,
+          "pr_rrs_4": 2,
+          "pr_rrs_5": 2,
+          "pr_rrs_6": 2,
+          "pr_rrs_7": 2,
+          "pr_rrs_8": 2,
+          "pr_rrs_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 88
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rrs_1": 4,
+          "pr_rrs_10": 4,
+          "pr_rrs_11": 4,
+          "pr_rrs_12": 4,
+          "pr_rrs_13": 4,
+          "pr_rrs_14": 4,
+          "pr_rrs_15": 4,
+          "pr_rrs_16": 4,
+          "pr_rrs_17": 4,
+          "pr_rrs_18": 4,
+          "pr_rrs_19": 4,
+          "pr_rrs_2": 4,
+          "pr_rrs_20": 4,
+          "pr_rrs_21": 4,
+          "pr_rrs_22": 4,
+          "pr_rrs_3": 4,
+          "pr_rrs_4": 4,
+          "pr_rrs_5": 4,
+          "pr_rrs_6": 4,
+          "pr_rrs_7": 4,
+          "pr_rrs_8": 4,
+          "pr_rrs_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Nolen-Hoeksema S, Morrow J (1991). A prospective study of depression and posttraumatic stress symptoms after a natural disaster. J Pers Soc Psychol, 61(1), 115-121.",
+    "year": 1991
+  }
+}

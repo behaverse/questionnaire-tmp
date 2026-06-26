@@ -165,5 +165,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "Flourishing total",
+      "path": "/scores/total/value",
+      "scorer": "scr_fs@v26.0618"
+    }
   ]
 }

@@ -1,0 +1,200 @@
+{
+  "id": "scr_panas",
+  "name": "PANAS Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "PANAS Standard Scoring",
+      "description": "Positive and Negative Affect Schedule (Watson et al., 1988). Two 10-item subscales (each item 1-5, subscale range 10-50): Positive Affect (items 1,3,5,9,10,12,14,16,17,19) and Negative Affect (items 2,4,6,7,8,11,13,15,18,20). Higher = stronger affect; the scale has no standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Watson D, Clark LA, Tellegen A (1988). Development and validation of brief measures of positive and negative affect: the PANAS scales. J Pers Soc Psychol, 54(6), 1063-1070.",
+    "year": 1988
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_panas_1|pr_panas_3|pr_panas_5|pr_panas_9|pr_panas_10|pr_panas_12|pr_panas_14|pr_panas_16|pr_panas_17|pr_panas_19|pr_panas_2|pr_panas_4|pr_panas_6|pr_panas_7|pr_panas_8|pr_panas_11|pr_panas_13|pr_panas_15|pr_panas_18|pr_panas_20)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "positive_affect": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "negative_affect": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "positive_affect",
+          "negative_affect"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/panas/scorer.wasm",
+      "sha256": "82a027315bc6b85a4e16d62e49b0fae6831b51bbb9f17c0b1456a4027503d882"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "all-low",
+      "input": {
+        "scored_responses": {
+          "pr_panas_1": 1,
+          "pr_panas_3": 1,
+          "pr_panas_5": 1,
+          "pr_panas_9": 1,
+          "pr_panas_10": 1,
+          "pr_panas_12": 1,
+          "pr_panas_14": 1,
+          "pr_panas_16": 1,
+          "pr_panas_17": 1,
+          "pr_panas_19": 1,
+          "pr_panas_2": 1,
+          "pr_panas_4": 1,
+          "pr_panas_6": 1,
+          "pr_panas_7": 1,
+          "pr_panas_8": 1,
+          "pr_panas_11": 1,
+          "pr_panas_13": 1,
+          "pr_panas_15": 1,
+          "pr_panas_18": 1,
+          "pr_panas_20": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "positive_affect": {
+            "value": 10
+          },
+          "negative_affect": {
+            "value": 10
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "all-mid",
+      "input": {
+        "scored_responses": {
+          "pr_panas_1": 3,
+          "pr_panas_3": 3,
+          "pr_panas_5": 3,
+          "pr_panas_9": 3,
+          "pr_panas_10": 3,
+          "pr_panas_12": 3,
+          "pr_panas_14": 3,
+          "pr_panas_16": 3,
+          "pr_panas_17": 3,
+          "pr_panas_19": 3,
+          "pr_panas_2": 3,
+          "pr_panas_4": 3,
+          "pr_panas_6": 3,
+          "pr_panas_7": 3,
+          "pr_panas_8": 3,
+          "pr_panas_11": 3,
+          "pr_panas_13": 3,
+          "pr_panas_15": 3,
+          "pr_panas_18": 3,
+          "pr_panas_20": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "positive_affect": {
+            "value": 30
+          },
+          "negative_affect": {
+            "value": 30
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "all-high",
+      "input": {
+        "scored_responses": {
+          "pr_panas_1": 5,
+          "pr_panas_3": 5,
+          "pr_panas_5": 5,
+          "pr_panas_9": 5,
+          "pr_panas_10": 5,
+          "pr_panas_12": 5,
+          "pr_panas_14": 5,
+          "pr_panas_16": 5,
+          "pr_panas_17": 5,
+          "pr_panas_19": 5,
+          "pr_panas_2": 5,
+          "pr_panas_4": 5,
+          "pr_panas_6": 5,
+          "pr_panas_7": 5,
+          "pr_panas_8": 5,
+          "pr_panas_11": 5,
+          "pr_panas_13": 5,
+          "pr_panas_15": 5,
+          "pr_panas_18": 5,
+          "pr_panas_20": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "positive_affect": {
+            "value": 50
+          },
+          "negative_affect": {
+            "value": 50
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -329,5 +329,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "positive_affect",
+      "name": "Positive Affect",
+      "path": "/scores/positive_affect/value",
+      "scorer": "scr_panas@v26.0618"
+    },
+    {
+      "id": "negative_affect",
+      "name": "Negative Affect",
+      "path": "/scores/negative_affect/value",
+      "scorer": "scr_panas@v26.0618"
+    }
   ]
 }

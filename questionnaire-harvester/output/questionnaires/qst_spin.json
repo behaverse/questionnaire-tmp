@@ -306,5 +306,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "SPIN total",
+      "path": "/scores/total/value",
+      "scorer": "scr_spin@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "SPIN severity",
+      "path": "/scores/total/severity",
+      "scorer": "scr_spin@v26.0618"
+    }
   ]
 }

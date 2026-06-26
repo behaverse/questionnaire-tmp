@@ -17,6 +17,11 @@ const RESP = {
   qst_swls: Object.fromEntries([6, 6, 6, 6, 6].map((v, i) => [`pr_swls_${i + 1}`, v])),
   qst_who5: Object.fromEntries([4, 4, 3, 3, 2].map((v, i) => [`pr_who5_${i + 1}`, v])),
   qst_dass21: Object.fromEntries(Array.from({ length: 21 }, (_, i) => [`pr_dass21_${i + 1}`, (i % 3) + 1])),
+  qst_spin: Object.fromEntries(Array.from({ length: 17 }, (_, i) => [`pr_spin_${i + 1}`, 2])),
+  qst_ocir: Object.fromEntries(Array.from({ length: 18 }, (_, i) => [`pr_ocir_${i + 1}`, 2])),
+  qst_panas: Object.fromEntries(Array.from({ length: 20 }, (_, i) => [`pr_panas_${i + 1}`, (i % 2) ? 2 : 4])),
+  qst_fs: Object.fromEntries(Array.from({ length: 8 }, (_, i) => [`pr_fs_${i + 1}`, 6])),
+  qst_rrs: Object.fromEntries(Array.from({ length: 22 }, (_, i) => [`pr_rrs_${i + 1}`, 2])),
 }
 
 let failed = 0
