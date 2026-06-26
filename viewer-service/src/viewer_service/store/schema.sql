@@ -105,3 +105,22 @@ CREATE TABLE IF NOT EXISTS theme (
   custom_css  text,
   created_at  timestamptz NOT NULL DEFAULT now()
 );
+
+-- Per-question participant comments (QA) — owner request #5/#6, 2026-06-26.
+-- Append-only; opt-in per deployment via runtime.style.x_comments. Stored out-of-band
+-- from Schema-5 responses (these are commentary ABOUT a question, not response data).
+CREATE TABLE IF NOT EXISTS question_comment (
+  id                 bigserial PRIMARY KEY,
+  session_id         text NOT NULL REFERENCES session (session_id),
+  deployment_id      text NOT NULL,
+  instrument_id      text NOT NULL,
+  instrument_version text NOT NULL,
+  page_id            text,
+  item_id            text,
+  locale             text,
+  comment            text,
+  stars              int,
+  participant_sub    text,
+  created_at         timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS question_comment_dep_idx ON question_comment (deployment_id, created_at);
