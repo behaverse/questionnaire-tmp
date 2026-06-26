@@ -1040,5 +1040,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "type",
+      "name": "Personality type",
+      "path": "/type",
+      "scorer": "scr_pti@v26.0618"
+    }
   ]
 }

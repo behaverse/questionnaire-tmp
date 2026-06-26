@@ -1,0 +1,218 @@
+{
+  "id": "scr_pti",
+  "name": "Personality Type Indicator (MBTI-style)",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "Personality Type Indicator (MBTI-style)",
+      "description": "70-item Myers-Briggs-style type sorter. Items map to four dichotomies by the 7-per-row grid (E/I, S/N x2, T/F x2, J/P x2); the first option favours E/S/T/J, the second I/N/F/P. The 4-letter type is the majority preference on each dichotomy."
+    }
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^pr_pti_[0-9]+$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "pattern": "^[EI][SN][TF][JP]$"
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 70
+      }
+    },
+    "required": [
+      "type",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/pti/scorer.wasm",
+      "sha256": "de71ca5186ba95df920276abad3d3d4cccbe2d624a31c4bbdc035639e7789d6e"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "estj",
+      "input": {
+        "scored_responses": {
+          "pr_pti_1": 0,
+          "pr_pti_2": 0,
+          "pr_pti_3": 0,
+          "pr_pti_4": 0,
+          "pr_pti_5": 0,
+          "pr_pti_6": 0,
+          "pr_pti_7": 0,
+          "pr_pti_8": 0,
+          "pr_pti_9": 0,
+          "pr_pti_10": 0,
+          "pr_pti_11": 0,
+          "pr_pti_12": 0,
+          "pr_pti_13": 0,
+          "pr_pti_14": 0,
+          "pr_pti_15": 0,
+          "pr_pti_16": 0,
+          "pr_pti_17": 0,
+          "pr_pti_18": 0,
+          "pr_pti_19": 0,
+          "pr_pti_20": 0,
+          "pr_pti_21": 0,
+          "pr_pti_22": 0,
+          "pr_pti_23": 0,
+          "pr_pti_24": 0,
+          "pr_pti_25": 0,
+          "pr_pti_26": 0,
+          "pr_pti_27": 0,
+          "pr_pti_28": 0,
+          "pr_pti_29": 0,
+          "pr_pti_30": 0,
+          "pr_pti_31": 0,
+          "pr_pti_32": 0,
+          "pr_pti_33": 0,
+          "pr_pti_34": 0,
+          "pr_pti_35": 0,
+          "pr_pti_36": 0,
+          "pr_pti_37": 0,
+          "pr_pti_38": 0,
+          "pr_pti_39": 0,
+          "pr_pti_40": 0,
+          "pr_pti_41": 0,
+          "pr_pti_42": 0,
+          "pr_pti_43": 0,
+          "pr_pti_44": 0,
+          "pr_pti_45": 0,
+          "pr_pti_46": 0,
+          "pr_pti_47": 0,
+          "pr_pti_48": 0,
+          "pr_pti_49": 0,
+          "pr_pti_50": 0,
+          "pr_pti_51": 0,
+          "pr_pti_52": 0,
+          "pr_pti_53": 0,
+          "pr_pti_54": 0,
+          "pr_pti_55": 0,
+          "pr_pti_56": 0,
+          "pr_pti_57": 0,
+          "pr_pti_58": 0,
+          "pr_pti_59": 0,
+          "pr_pti_60": 0,
+          "pr_pti_61": 0,
+          "pr_pti_62": 0,
+          "pr_pti_63": 0,
+          "pr_pti_64": 0,
+          "pr_pti_65": 0,
+          "pr_pti_66": 0,
+          "pr_pti_67": 0,
+          "pr_pti_68": 0,
+          "pr_pti_69": 0,
+          "pr_pti_70": 0
+        }
+      },
+      "expected": {
+        "type": "ESTJ",
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "infp",
+      "input": {
+        "scored_responses": {
+          "pr_pti_1": 1,
+          "pr_pti_2": 1,
+          "pr_pti_3": 1,
+          "pr_pti_4": 1,
+          "pr_pti_5": 1,
+          "pr_pti_6": 1,
+          "pr_pti_7": 1,
+          "pr_pti_8": 1,
+          "pr_pti_9": 1,
+          "pr_pti_10": 1,
+          "pr_pti_11": 1,
+          "pr_pti_12": 1,
+          "pr_pti_13": 1,
+          "pr_pti_14": 1,
+          "pr_pti_15": 1,
+          "pr_pti_16": 1,
+          "pr_pti_17": 1,
+          "pr_pti_18": 1,
+          "pr_pti_19": 1,
+          "pr_pti_20": 1,
+          "pr_pti_21": 1,
+          "pr_pti_22": 1,
+          "pr_pti_23": 1,
+          "pr_pti_24": 1,
+          "pr_pti_25": 1,
+          "pr_pti_26": 1,
+          "pr_pti_27": 1,
+          "pr_pti_28": 1,
+          "pr_pti_29": 1,
+          "pr_pti_30": 1,
+          "pr_pti_31": 1,
+          "pr_pti_32": 1,
+          "pr_pti_33": 1,
+          "pr_pti_34": 1,
+          "pr_pti_35": 1,
+          "pr_pti_36": 1,
+          "pr_pti_37": 1,
+          "pr_pti_38": 1,
+          "pr_pti_39": 1,
+          "pr_pti_40": 1,
+          "pr_pti_41": 1,
+          "pr_pti_42": 1,
+          "pr_pti_43": 1,
+          "pr_pti_44": 1,
+          "pr_pti_45": 1,
+          "pr_pti_46": 1,
+          "pr_pti_47": 1,
+          "pr_pti_48": 1,
+          "pr_pti_49": 1,
+          "pr_pti_50": 1,
+          "pr_pti_51": 1,
+          "pr_pti_52": 1,
+          "pr_pti_53": 1,
+          "pr_pti_54": 1,
+          "pr_pti_55": 1,
+          "pr_pti_56": 1,
+          "pr_pti_57": 1,
+          "pr_pti_58": 1,
+          "pr_pti_59": 1,
+          "pr_pti_60": 1,
+          "pr_pti_61": 1,
+          "pr_pti_62": 1,
+          "pr_pti_63": 1,
+          "pr_pti_64": 1,
+          "pr_pti_65": 1,
+          "pr_pti_66": 1,
+          "pr_pti_67": 1,
+          "pr_pti_68": 1,
+          "pr_pti_69": 1,
+          "pr_pti_70": 1
+        }
+      },
+      "expected": {
+        "type": "INFP",
+        "missing_count": 0
+      }
+    }
+  ]
+}
