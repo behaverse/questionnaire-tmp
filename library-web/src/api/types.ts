@@ -92,6 +92,7 @@ export interface DefElement {
   question?: ResolvedQuestion
   option?: ResolvedOption
   required?: boolean
+  show_if?: string
   id?: string
   shared_option?: ResolvedOption
   elements?: DefElement[]

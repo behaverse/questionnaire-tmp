@@ -29,3 +29,14 @@ export async function downloadJson(url: string, filename: string): Promise<void>
     URL.revokeObjectURL(objectUrl)
   }
 }
+
+/** Trigger a download of `text` under `filename` with the given MIME type. */
+export function downloadText(text: string, filename: string, mime: string): void {
+  const blob = new Blob([text], { type: mime })
+  const url = URL.createObjectURL(blob)
+  try {
+    downloadUrl(url, filename)
+  } finally {
+    URL.revokeObjectURL(url)
+  }
+}

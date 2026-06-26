@@ -110,4 +110,25 @@ describe('buildRenderModel', () => {
     expect((m.pages[0].blocks[0] as any).number).toBe(1)
     expect((m.pages[1].blocks[0] as any).number).toBe(2)
   })
+
+  it('derives an item widget from the option triple and carries show_if', () => {
+    const d = {
+      metadata: { id: 'q', title: 'T', version: 'v1', language: 'en' },
+      pages: [{ elements: [
+        {
+          id: 'it_a', required: true, show_if: 'it_b == 2',
+          question: { prompt: { content: { en: { text: 'Q?' } } } },
+          option: {
+            input_data_type: 'choice', measurement_type: 'nominal', selection: 'single',
+            options: [{ index: 0, value: 1 }],
+            content: { en: { options: [{ index: 0, text: 'Yes' }] } },
+          },
+        },
+      ] }],
+    }
+    const m = buildRenderModel(d as never, 'en')
+    const item = m.pages[0].blocks[0] as { widget: string | null; showIf?: string }
+    expect(item.widget).toBe('choice.nominal.single')
+    expect(item.showIf).toBe('it_b == 2')
+  })
 })

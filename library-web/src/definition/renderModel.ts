@@ -19,6 +19,8 @@ export interface ItemBlock {
   reversed?: boolean
   subscales?: string[]
   unresolved: boolean
+  widget: string | null
+  showIf?: string
 }
 export interface MessageBlock { kind: 'message'; text: string; unresolved: boolean; fallbackLang?: string }
 export interface SectionBlock {
@@ -63,6 +65,23 @@ function optionsOf(
   return [choices, used]
 }
 
+const CHOICE_M = new Set(['nominal', 'ordinal', 'interval', 'ratio'])
+const NUMBER_M = new Set(['ratio', 'interval'])
+const TEXT_M = new Set(['nominal', 'interval', 'ratio'])
+
+/** design/05a §13 widget table, mirrored locally for export. Null for undefined combos. */
+function deriveWidget(option: ResolvedOption | undefined): string | null {
+  if (!option) return null
+  const i = option.input_data_type
+  const m = option.measurement_type ?? ''
+  const s = option.selection
+  if (i === 'choice' && CHOICE_M.has(m) && s === 'single') return `choice.${m}.single`
+  if (i === 'choice' && m === 'nominal' && s === 'multiple') return 'choice.nominal.multiple'
+  if (i === 'number' && NUMBER_M.has(m)) return `number.${m}`
+  if (i === 'text' && TEXT_M.has(m)) return `text.${m}`
+  return null
+}
+
 export function buildRenderModel(def: ResolvedDefinition, lang: string): RenderModel {
   const primary = def.metadata.language ?? 'en'
   let counter = 0
@@ -91,6 +110,8 @@ export function buildRenderModel(def: ResolvedDefinition, lang: string): RenderM
       reversed: prompt?.reversed,
       subscales: prompt?.subscales,
       unresolved: prompt?._unresolved === true,
+      widget: deriveWidget(option),
+      showIf: el.show_if,
     }
   }
 
