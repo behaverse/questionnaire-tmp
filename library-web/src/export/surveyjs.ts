@@ -22,13 +22,13 @@ function questionFor(item: ItemBlock, dropped: string[]): Record<string, unknown
   const w = item.widget
 
   if (w === 'choice.nominal.single') {
-    if (choices.length === 0) { dropped.push(`Question ${item.number} ("${name}"): no choices in this language`); return null }
+    if (choices.length === 0) { dropped.push(`Question ${item.number} ("${name}"): no choices available`); return null }
     base.type = 'radiogroup'; base.choices = choices
   } else if (w && /^choice\.(ordinal|interval|ratio)\.single$/.test(w)) {
-    if (choices.length === 0) { dropped.push(`Question ${item.number} ("${name}"): no choices in this language`); return null }
+    if (choices.length === 0) { dropped.push(`Question ${item.number} ("${name}"): no choices available`); return null }
     base.type = 'rating'; base.rateValues = choices
   } else if (w === 'choice.nominal.multiple') {
-    if (choices.length === 0) { dropped.push(`Question ${item.number} ("${name}"): no choices in this language`); return null }
+    if (choices.length === 0) { dropped.push(`Question ${item.number} ("${name}"): no choices available`); return null }
     base.type = 'checkbox'; base.choices = choices
   } else if (w && w.startsWith('number')) {
     base.type = 'text'; base.inputType = 'number'
