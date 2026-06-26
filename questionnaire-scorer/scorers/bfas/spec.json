@@ -1,0 +1,1 @@
+{"item_range":[0,1],"scores":[{"key":"total","items":["pr_bfas_1","pr_bfas_2","pr_bfas_3","pr_bfas_4","pr_bfas_5","pr_bfas_6"],"bands":[{"min":0,"max":3,"severity":"below","label":"Below at-risk threshold"},{"min":4,"max":6,"severity":"at_risk","label":"At risk of Facebook addiction"}]}]}

@@ -10,6 +10,7 @@
   "scr_assq@v26.0618": "assq.wasm",
   "scr_bes@v26.0618": "bes.wasm",
   "scr_besc@v26.0618": "besc.wasm",
+  "scr_bfas@v26.0618": "bfas.wasm",
   "scr_bfis@v26.0618": "bfis.wasm",
   "scr_bfs@v26.0618": "bfs.wasm",
   "scr_bhps@v26.0618": "bhps.wasm",

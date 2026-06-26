@@ -137,5 +137,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "BFAS total",
+      "path": "/scores/total/value",
+      "scorer": "scr_bfas@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "BFAS risk",
+      "path": "/scores/total/severity",
+      "scorer": "scr_bfas@v26.0618"
+    }
   ]
 }

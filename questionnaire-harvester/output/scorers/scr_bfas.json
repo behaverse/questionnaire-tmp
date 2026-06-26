@@ -1,0 +1,154 @@
+{
+  "content": {
+    "en": {
+      "description": "Facebook Addition Scale (BFAS). Total = number of items endorsed 'sometimes' or more often (polythetic 0/1 scoring) across the 6 items, range 0-6; endorsing 4 or more is the recommended at-risk threshold.",
+      "name": "BFAS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_bfas",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "1adcc1616d994e2c906a0e0c67f84afaa66636f076d50392990ff9244e75fef8",
+      "url": "https://behaverse.org/scorers/bfas/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_bfas_1|pr_bfas_2|pr_bfas_3|pr_bfas_4|pr_bfas_5|pr_bfas_6)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "BFAS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "below",
+                  "at_risk"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Below at-risk threshold",
+              "max": 3,
+              "min": 0
+            },
+            "severity": "below",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfas_1": 0,
+          "pr_bfas_2": 0,
+          "pr_bfas_3": 0,
+          "pr_bfas_4": 0,
+          "pr_bfas_5": 0,
+          "pr_bfas_6": 0
+        }
+      },
+      "name": "below"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "At risk of Facebook addiction",
+              "max": 6,
+              "min": 4
+            },
+            "severity": "at_risk",
+            "value": 6
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfas_1": 1,
+          "pr_bfas_2": 1,
+          "pr_bfas_3": 1,
+          "pr_bfas_4": 1,
+          "pr_bfas_5": 1,
+          "pr_bfas_6": 1
+        }
+      },
+      "name": "at-risk"
+    }
+  ],
+  "x_publication": {
+    "citation": "Andreassen, C.S., Torsheim, T., Brunborg, G.S., & Pallesen, S. (2010). Development of a Facebook addiction scale. Psychological Reports, 110 , 2, 501-517.",
+    "year": 2010
+  }
+}

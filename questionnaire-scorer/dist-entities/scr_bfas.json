@@ -1,0 +1,154 @@
+{
+  "id": "scr_bfas",
+  "name": "BFAS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "BFAS Scoring",
+      "description": "Facebook Addition Scale (BFAS). Total = number of items endorsed 'sometimes' or more often (polythetic 0/1 scoring) across the 6 items, range 0-6; endorsing 4 or more is the recommended at-risk threshold."
+    }
+  },
+  "x_publication": {
+    "citation": "Andreassen, C.S., Torsheim, T., Brunborg, G.S., & Pallesen, S. (2010). Development of a Facebook addiction scale. Psychological Reports, 110 , 2, 501-517.",
+    "year": 2010
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_bfas_1|pr_bfas_2|pr_bfas_3|pr_bfas_4|pr_bfas_5|pr_bfas_6)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "below",
+                  "at_risk"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/bfas/scorer.wasm",
+      "sha256": "1adcc1616d994e2c906a0e0c67f84afaa66636f076d50392990ff9244e75fef8"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "below",
+      "input": {
+        "scored_responses": {
+          "pr_bfas_1": 0,
+          "pr_bfas_2": 0,
+          "pr_bfas_3": 0,
+          "pr_bfas_4": 0,
+          "pr_bfas_5": 0,
+          "pr_bfas_6": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "below",
+            "band": {
+              "min": 0,
+              "max": 3,
+              "label": "Below at-risk threshold"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "at-risk",
+      "input": {
+        "scored_responses": {
+          "pr_bfas_1": 1,
+          "pr_bfas_2": 1,
+          "pr_bfas_3": 1,
+          "pr_bfas_4": 1,
+          "pr_bfas_5": 1,
+          "pr_bfas_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6,
+            "severity": "at_risk",
+            "band": {
+              "min": 4,
+              "max": 6,
+              "label": "At risk of Facebook addiction"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}
