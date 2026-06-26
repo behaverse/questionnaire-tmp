@@ -1,5 +1,19 @@
-import { flattenSteps, requiredUnanswered, isSingleChoiceItem, stepEntries } from './steps'
+import { flattenSteps, requiredUnanswered, isSingleChoiceItem, stepEntries, keySelectEnabled, backNavEnabled } from './steps'
 import type { Runtime, SectionElement } from '../renderer/types'
+
+test('keySelectEnabled / backNavEnabled default ON and honour style flags', () => {
+  const rt = (style?: Record<string, unknown>) => ({ pages: [], style } as unknown as Runtime)
+  // default (no style / no flag) → enabled
+  expect(keySelectEnabled(rt())).toBe(true)
+  expect(keySelectEnabled(rt({}))).toBe(true)
+  expect(backNavEnabled(rt())).toBe(true)
+  expect(keySelectEnabled(null)).toBe(true)
+  expect(backNavEnabled(undefined)).toBe(true)
+  // explicit false → disabled; any other value stays enabled
+  expect(keySelectEnabled(rt({ x_key_select: false }))).toBe(false)
+  expect(backNavEnabled(rt({ x_back_nav: false }))).toBe(false)
+  expect(keySelectEnabled(rt({ x_key_select: true }))).toBe(true)
+})
 
 const opt = {
   input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',

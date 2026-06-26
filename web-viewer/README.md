@@ -150,6 +150,13 @@ The portal routes (catalogue / my-data / account / reset-password / verify-email
 - **classic**: all questions of a page at once — set `style.x_presentation: "classic"`
   on the questionnaire or via deployment style.
 - `style.x_auto_advance: false` disables single-choice auto-advance in focus mode.
+- `style.x_key_select: false` disables letter-key selection of choices **and** hides the
+  letter badges, forcing a click on the option (text inputs still accept keyboard typing).
+- `style.x_back_nav: false` hides the **Back** button so the participant cannot return to a
+  prior question.
+
+> The player honours `x_key_select` / `x_back_nav` today; authoring them from the
+> deployment/questionnaire (VS denormaliser + Editor) is a follow-up — see `FOLLOWUPS.md`.
 
 ## Data emitted (WV-B)
 

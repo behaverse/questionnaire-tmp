@@ -1,5 +1,44 @@
 # web-viewer — deferred work / follow-ups
 
+## Owner feature requests (2026-06-26)
+
+Captured from `my_comments.md`. Items #1/#2 are implemented in the same pass (see
+"Presentation-control flags" below); the rest are documented here for future agents.
+Cross-component items live in the relevant sibling's FOLLOWUPS (viewer-service,
+participant-app) and are cross-linked.
+
+- ~~**#1 Disable key-press option selection.**~~ **DONE (2026-06-26)** — `runtime.style.x_key_select`
+  (default `true`). When `false`, letter-key selection of choices is disabled **and** the letter
+  badges are hidden, forcing the participant to click the option. Text inputs are unaffected and
+  still accept keyboard typing. Player honors the flag; populating it from deployment/authoring
+  (VS denormaliser + Editor) is the follow-up below.
+- ~~**#2 Disable back navigation.**~~ **DONE (2026-06-26)** — `runtime.style.x_back_nav` (default
+  `true`). When `false`, the **Back** button is hidden so the participant cannot return to a prior
+  question. Same player-honors / VS-plumbing-deferred split as #1.
+- **VS/Editor plumbing for #1 + #2 (follow-up).** The two flags are read from `runtime.style` but
+  nothing populates them yet. Add deployment-level (or questionnaire-level) authoring for
+  `x_key_select` / `x_back_nav`, have the denormaliser emit them into `style` (same `^x_` extension
+  channel as `x_presentation` / `x_show_score`), and expose toggles in the Editor. Tracked in
+  viewer-service + editor FOLLOWUPS.
+- **#5/#6 Per-page QA feedback widget.** A `runtime.style.x_feedback` flag (default `false`) that
+  renders a small floating "give feedback on this question" icon on each step. Clicking it opens a
+  modal capturing: (a) a free-text comment, and (b) one or more rating scales (e.g. angry→happy,
+  confusing→clear). The submission is tied to the current page/item id + session and POSTs to a new
+  VS feedback endpoint (Schema TBD), stored separately from responses. This is the lightweight,
+  in-session slice; the deeper **QA-research** programme (domain-expert review workflows,
+  "ask questions *about* a question", reviewer assignment, aggregation/dashboards) is a much larger
+  separate effort — design it on its own. VS storage side tracked in viewer-service FOLLOWUPS.
+- **#7 Replay.** Given a session's `bdm:` event stream (+ Schema-5 responses), reconstruct and play
+  back how a participant moved through the questionnaire (step-by-step navigation, answers entered,
+  revisions, timings). Player+VS effort: needs a VS event-export read endpoint and a player "replay"
+  mode that drives the renderer from events instead of live input. Larger; design separately.
+- **#8 Respondent-bot.** An automated agent that answers the web-viewer questionnaire end-to-end,
+  configurable with character traits / response constraints (e.g. acquiescence bias, fixed profile,
+  random, straight-lining), and optionally simulating real pointer movement + clicks (vs. direct
+  state) for realistic event traces. Useful for load/E2E testing, event-pipeline validation, and
+  generating replay fixtures (#7). Larger; design separately (likely a Playwright-driven harness +
+  a trait model).
+
 ## PA-4 follow-ups — consent gate + completion polish (2026-06-24)
 
 - **Resumed sessions use the default finished screen.** The `confirmation_message` and

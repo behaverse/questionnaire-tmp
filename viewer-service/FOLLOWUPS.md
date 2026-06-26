@@ -1,5 +1,28 @@
 # Follow-ups — questionnaire-viewer-service (VS-A)
 
+## Owner feature requests (2026-06-26) — VS side
+
+Captured from root `my_comments.md`; player-side counterparts live in `web-viewer/FOLLOWUPS.md`.
+
+- **Presentation-control flags for #1/#2 (key-select + back-nav).** The player reads
+  `runtime.style.x_key_select` / `x_back_nav` (default `true`) to disable letter-key option
+  selection and the Back button. Nothing populates them yet. Add deployment-level (or
+  questionnaire-level) authoring + have the denormaliser emit them into `style` via the same
+  `^x_` extension channel as `x_presentation` / `x_show_score`. Editor exposes the toggles.
+- **#5/#6 Per-question QA-feedback storage.** New endpoint to accept per-page feedback from the
+  player (free-text comment + rating scales, tied to session + page/item id), stored separately
+  from Schema-5 responses. Define the schema (likely a new `feedback` table or a `bdm:`-adjacent
+  record) and a researcher-facing read/export path. The deeper QA-research programme (expert
+  review, "ask about this question", aggregation) is a separate larger effort.
+- **#3 xAPI storage + surfacing.** Persist xAPI statements (already emittable from `bdm:` events?)
+  and expose them so the participant platform can read them back (participant-app surfaces them).
+  Needs a storage decision (own table vs. forward to an LRS) + a read endpoint.
+- **#4 Score-progression-over-time dashboard (data side).** Provide an endpoint returning a
+  participant's (or a deployment's) scorer_outputs over time so participant-app can chart score
+  progression for a given questionnaire across sessions. UI lives in participant-app.
+- **#7 Replay (event export).** A read endpoint streaming a session's ordered `bdm:` events +
+  responses so the player can reconstruct/replay a participant's run. Pairs with web-viewer #7.
+
 - **Auth (Identity) — RESOLVED (ID-B, 2026-06-21).** All control-plane endpoints are now
   gated by `require_researcher` (researcher/reviewer/administrator) or `require_admin`
   (administrator only for `DELETE /runtime_cache`). Participant `/sessions/*` and

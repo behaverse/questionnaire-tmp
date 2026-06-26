@@ -11,6 +11,16 @@ export function presentationMode(runtime: Runtime): PresentationMode {
   return runtime.style?.x_presentation === 'classic' ? 'classic' : 'focus'
 }
 
+/** Letter-key option selection (+ letter badges). Default ON; disabled by `style.x_key_select: false`. */
+export function keySelectEnabled(runtime: Runtime | null | undefined): boolean {
+  return runtime?.style?.x_key_select !== false
+}
+
+/** Back navigation. Default ON; disabled by `style.x_back_nav: false`. */
+export function backNavEnabled(runtime: Runtime | null | undefined): boolean {
+  return runtime?.style?.x_back_nav !== false
+}
+
 export function flattenSteps(runtime: Runtime): Step[] {
   const mode = presentationMode(runtime)
   if (mode === 'classic') {

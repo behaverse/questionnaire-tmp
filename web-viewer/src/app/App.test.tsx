@@ -163,6 +163,30 @@ test('classic mode renders the whole page as one step', async () => {
   expect(screen.getByRole('heading', { name: /Little interest/ })).toBeInTheDocument()   // same step
 })
 
+// Owner request #1 — disable key-press option selection (force clicking)
+test('x_key_select:false hides letter badges and ignores letter-key selection', async () => {
+  const noKey = { ...mini, style: { x_key_select: false } }
+  setUrl('?deployment=dpl_1')
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ ...mintOk, runtime: noKey }), { status: 200 })))
+  const { container } = renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Little interest/ })   // single-choice item step
+  expect(container.querySelector('.qv-option-badge')).toBeNull()     // no letter badges
+  await userEvent.keyboard('a')                                      // letter key must not select
+  expect(screen.getByRole('radio', { name: /Not at all/ })).not.toBeChecked()
+})
+
+// Owner request #2 — disable back navigation
+test('x_back_nav:false hides the Back button on later steps', async () => {
+  const noBack = { ...mini, style: { x_back_nav: false } }
+  setUrl('?deployment=dpl_1')
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ ...mintOk, runtime: noBack }), { status: 200 })))
+  renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Little interest/ })   // now on step 2 (Back normally shown)
+  expect(screen.queryByRole('button', { name: /back/i })).toBeNull()
+})
+
 // WV-B — submission pipeline
 function postCalls(fetchMock: ReturnType<typeof vi.fn>, suffix: string) {
   return fetchMock.mock.calls.filter(([u]) => String(u).endsWith(suffix)).map(([, i]) => JSON.parse((i as RequestInit).body as string))

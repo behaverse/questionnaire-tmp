@@ -33,7 +33,7 @@ import { agentActor, engineActor, ev, EventBatcher } from './events'
 import { buildItemRow, buildMessageRow, buildRuntimeIndex, stimulusFor } from './responses'
 import type { ElementIndex, SessionIdentity } from './responses'
 import { initialState, reducer } from './session'
-import { flattenSteps, isSingleChoiceItem, presentationMode, requiredUnanswered, stepEntries } from './steps'
+import { backNavEnabled, flattenSteps, isSingleChoiceItem, keySelectEnabled, presentationMode, requiredUnanswered, stepEntries } from './steps'
 import { applyTheme, bundleToThemeId } from './theme'
 import type { Theme } from './theme'
 import { getTheme, resolveThemeId, DEFAULT_THEME_ID } from '../theme/registry'
@@ -584,7 +584,7 @@ export function App() {
 
   const step = state.steps[state.stepIndex]
   if (!step) return null
-  const keyHints = isSingleChoiceItem(step)
+  const keyHints = isSingleChoiceItem(step) && keySelectEnabled(state.runtime)
 
   // Compute the visible (logic-gated) entries and apply prompt piping for top-level items.
   const p = pipeline.current
@@ -641,7 +641,7 @@ export function App() {
             />
             <NavButtons
               locale={locale}
-              canBack={state.stepIndex > 0}
+              canBack={state.stepIndex > 0 && backNavEnabled(state.runtime)}
               onBack={() => {
                 clearAuto()
                 const p = pipeline.current
