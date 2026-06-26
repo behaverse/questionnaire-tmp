@@ -1,0 +1,149 @@
+{
+  "content": {
+    "en": {
+      "description": "Major Depression Inventory (Bech et al., 2001). Total = sum of 8 items plus the higher of items 8/9 (restlessness vs subdued) and the higher of items 11/12 (reduced vs increased appetite), range 0-50; 21-25 mild, 26-30 moderate, 31+ severe depression.",
+      "name": "MDI Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_mdi",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "f0e128283eb54cc7aed527da0b00c3fcc85ff57b716771deb1d4fda8f98b5362",
+      "url": "https://behaverse.org/scorers/mdi/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^pr_mdi_(1[0-2]|[1-9])$": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "MDI Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "band": {
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "min": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "min",
+          "max",
+          "label"
+        ],
+        "type": "object"
+      },
+      "missing_count": {
+        "maximum": 10,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "severity": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "total": {
+        "maximum": 50,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "total",
+      "severity",
+      "band",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "band": {
+          "label": "Mild depression",
+          "max": 25,
+          "min": 21
+        },
+        "missing_count": 0,
+        "severity": "mild",
+        "total": 25
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mdi_1": 2,
+          "pr_mdi_10": 2,
+          "pr_mdi_11": 0,
+          "pr_mdi_12": 4,
+          "pr_mdi_2": 2,
+          "pr_mdi_3": 2,
+          "pr_mdi_4": 2,
+          "pr_mdi_5": 2,
+          "pr_mdi_6": 2,
+          "pr_mdi_7": 2,
+          "pr_mdi_8": 5,
+          "pr_mdi_9": 1
+        }
+      },
+      "name": "max-of-pairs"
+    },
+    {
+      "expected": {
+        "band": {
+          "label": "Severe depression",
+          "max": 50,
+          "min": 31
+        },
+        "missing_count": 0,
+        "severity": "severe",
+        "total": 50
+      },
+      "input": {
+        "scored_responses": {
+          "pr_mdi_1": 5,
+          "pr_mdi_10": 5,
+          "pr_mdi_11": 5,
+          "pr_mdi_12": 5,
+          "pr_mdi_2": 5,
+          "pr_mdi_3": 5,
+          "pr_mdi_4": 5,
+          "pr_mdi_5": 5,
+          "pr_mdi_6": 5,
+          "pr_mdi_7": 5,
+          "pr_mdi_8": 5,
+          "pr_mdi_9": 5
+        }
+      },
+      "name": "severe"
+    }
+  ],
+  "x_publication": {
+    "citation": "Bech P, Rasmussen NA, Olsen LR, Noerholm V, Abildgaard W (2001). The sensitivity and specificity of the Major Depression Inventory. J Affect Disord, 66(2-3), 159-164.",
+    "year": 2001
+  }
+}

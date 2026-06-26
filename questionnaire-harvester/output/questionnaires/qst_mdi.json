@@ -234,5 +234,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "MDI total",
+      "path": "/total",
+      "scorer": "scr_mdi@v26.0618"
+    },
+    {
+      "id": "severity",
+      "name": "MDI severity",
+      "path": "/severity",
+      "scorer": "scr_mdi@v26.0618"
+    }
   ]
 }

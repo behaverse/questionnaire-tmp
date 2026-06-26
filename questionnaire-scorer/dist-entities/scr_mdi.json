@@ -1,0 +1,149 @@
+{
+  "id": "scr_mdi",
+  "name": "MDI Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "MDI Standard Scoring",
+      "description": "Major Depression Inventory (Bech et al., 2001). Total = sum of 8 items plus the higher of items 8/9 (restlessness vs subdued) and the higher of items 11/12 (reduced vs increased appetite), range 0-50; 21-25 mild, 26-30 moderate, 31+ severe depression."
+    }
+  },
+  "x_publication": {
+    "citation": "Bech P, Rasmussen NA, Olsen LR, Noerholm V, Abildgaard W (2001). The sensitivity and specificity of the Major Depression Inventory. J Affect Disord, 66(2-3), 159-164.",
+    "year": 2001
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^pr_mdi_(1[0-2]|[1-9])$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "total": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 50
+      },
+      "severity": {
+        "type": "string",
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ]
+      },
+      "band": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "integer"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "min",
+          "max",
+          "label"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 10
+      }
+    },
+    "required": [
+      "total",
+      "severity",
+      "band",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/mdi/scorer.wasm",
+      "sha256": "f0e128283eb54cc7aed527da0b00c3fcc85ff57b716771deb1d4fda8f98b5362"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "max-of-pairs",
+      "input": {
+        "scored_responses": {
+          "pr_mdi_1": 2,
+          "pr_mdi_2": 2,
+          "pr_mdi_3": 2,
+          "pr_mdi_4": 2,
+          "pr_mdi_5": 2,
+          "pr_mdi_6": 2,
+          "pr_mdi_7": 2,
+          "pr_mdi_8": 5,
+          "pr_mdi_9": 1,
+          "pr_mdi_10": 2,
+          "pr_mdi_11": 0,
+          "pr_mdi_12": 4
+        }
+      },
+      "expected": {
+        "total": 25,
+        "severity": "mild",
+        "band": {
+          "min": 21,
+          "max": 25,
+          "label": "Mild depression"
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "severe",
+      "input": {
+        "scored_responses": {
+          "pr_mdi_1": 5,
+          "pr_mdi_2": 5,
+          "pr_mdi_3": 5,
+          "pr_mdi_4": 5,
+          "pr_mdi_5": 5,
+          "pr_mdi_6": 5,
+          "pr_mdi_7": 5,
+          "pr_mdi_8": 5,
+          "pr_mdi_9": 5,
+          "pr_mdi_10": 5,
+          "pr_mdi_11": 5,
+          "pr_mdi_12": 5
+        }
+      },
+      "expected": {
+        "total": 50,
+        "severity": "severe",
+        "band": {
+          "min": 31,
+          "max": 50,
+          "label": "Severe depression"
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}
