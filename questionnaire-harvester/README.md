@@ -25,8 +25,18 @@ partially imported — see "adapter coverage" below.
 
 Each harvested questionnaire also carries: an **authored** copyright-safe `description`
 (`descriptions/`), captured source metadata (`source_metadata/`, flagged, not redistributed),
-a cleaned `short_title` acronym (`short_titles.json`), a faithful scoring descriptor
+a cleaned `short_title` acronym (`short_titles.json`), a **classification** block
+(`metadata.classification.{domain,population,administration_mode}` + `instrument_id`, from
+`classifications.json` — powers the Library facet filters), a faithful scoring descriptor
 (`scoring/`), and a human-readable review export (`import_review/`). See **Commands** below.
+
+**Executable scoring (2026-06-26): all 158 questionnaires are scored.** Each `qst_*.json` carries
+a `scores[]` block (OD-16 — `{id, scorer, path}`, JSON-Pointer into the scorer output) referencing a
+`scr_*` Scorer entity in `output/scorers/`. The scorers themselves live in the sibling
+**`questionnaire-scorer/`** package (a data-driven Rust→wasm engine + per-instrument specs, plus 9
+hand-written bespoke crates for non-sum scoring — EQ/MBTI/Vanderbilt/NODS/…); see
+`questionnaire-scorer/SCORERS.md`. The harvested tree just holds the wiring (`scores[]`) and the
+ingestable `scr_*` entities; promotion is the same `library ingest` step.
 
 ---
 
@@ -84,6 +94,11 @@ DraftResult               {entities, reused, minted}
   ├─▶ write_questions()   → questions/<qst_id>.md   (open questions for owner)
   └─▶ upsert_register_row() → register.md           (one-row harvest log)
 ```
+
+The `output/` tree also contains `output/scorers/*.json` — the `scr_*` Scorer entities wired in
+post-harvest (their `scores[]` references live on the questionnaires). These are authored in the
+sibling `questionnaire-scorer/` package and copied in for Library ingest; the harvester pipeline
+itself does not generate them.
 
 All paths are relative to the repo root. Override with CLI flags:
 
@@ -242,9 +257,11 @@ Expected: 30 tests, all passing.
 
 These are tracked but deliberately deferred:
 
-- **PsyToolkit adapter domain/population hardcoding** — currently hardcodes
-  `domain=["anxiety"]` and `population=["adults"]` (correct only for GAD-7); real per-instrument
-  classification extraction from page metadata is a follow-up.
+- ~~**PsyToolkit adapter domain/population hardcoding**~~ **DONE (2026-06-25)** — per-instrument
+  `classification` (domain[]/population[]/instrument_id) is now curated in `classifications.json`
+  and applied via `apply-classifications` (all 158 tagged with the schema-preferred vocab; the
+  Library Domain/Population/Instrument filters cover the whole harvested corpus). The adapter's
+  default `administration_mode=["self_report"]` is kept; domain/population come from the override store.
 - **Embedded newlines in harvested descriptions** — source `<p>` tags may produce
   multi-line `description` fields in canonical entities; normalization is a follow-up.
 - **Fuzzy near-match tier** — a `review/dedup.md` list for fingerprint near-misses (e.g.

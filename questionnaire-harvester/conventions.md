@@ -46,8 +46,17 @@ Harvested entities MUST follow these so the Library Core ingests them identicall
 - **Question (refs-only):** `{ id, prompt:{ref}, instruction?:{ref}, context?:{ref} }`
 - **Item (refs-only):** `{ id, question:{ref}, option:{ref} }`
 - **Questionnaire:** `{ @context, metadata:{ id, version, title, description, language,
-  available_languages, classification, publication, license, provenance }, pages:[
-  { id, elements:[ {ref} | { question:{ref}, option:{ref}, required } ] } ] }`
+  available_languages, classification, instrument_id?, publication, license, provenance }, pages:[
+  { id, elements:[ {ref} | { question:{ref}, option:{ref}, required } ] } ],
+  scores?:[ { id, scorer:"scr_<id>@vYY.MMDD", path:"/<json-pointer>", name? } ] }`
+  - `classification`: `{ domain:[…], population:[…], administration_mode:[…] }` (curated via
+    `classifications.json` → `apply-classifications`). `instrument_id` is an `inst_<slug>` family id.
+  - `scores[]` (OD-16): each entry references a `scr_*` Scorer entity (in `output/scorers/`) and a
+    JSON-Pointer `path` into that scorer's output. Scorers are authored in the sibling
+    `questionnaire-scorer/` package; the harvester tree just holds the wiring + ingestable entities.
+- **Scorer (`scr_*`, in `output/scorers/`):** `{ id, name, content:{en:{status,name,description}},
+  inputs, output_schema, implementations:[{kind:"wasm", url, sha256}], test_cases:[…] }` — version
+  comes from the ingest `--release` (no `version` field in the JSON, like other reusable entities).
 
 ## Provenance + custom fields (validator-confirmed placement)
 `provenance` is **closed** to exactly `{source, imported_at, importer_version}` — extra keys
@@ -66,7 +75,9 @@ corpus already does this, e.g. `x_source_reference`):
 
 ## Output location
 - **`questionnaire-harvester/output/{type}/<id>.json`** — TRACKED, hand-curated harvested
-  entities (not regenerable). This is the curated library contribution.
+  entities (not regenerable). This is the curated library contribution. `{type}` ∈
+  `{questionnaires, prompts, options, instructions, contexts, scorers}` (`scorers/` holds the
+  `scr_*` Scorer entities copied in from `questionnaire-scorer/` for ingest).
 - **`questionnaire-harvester/_corpus/`** — gitignored, regenerable survey_db dedup baseline.
 - Validate with the library before review: `PYTHONPATH=library/src python3` → `build_registry`
   + `validate_artifact` over `load_tree(<dir>, release)`; refs must resolve within the batch.
