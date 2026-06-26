@@ -1,0 +1,233 @@
+{
+  "id": "scr_tipi",
+  "name": "TIPI Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "TIPI Scoring",
+      "description": "BIG5 Ten Item Personality Inventory (TIPI). Ten-Item Personality Inventory (Gosling et al., 2003). Five Big-Five domain scores, each the MEAN of 2 items (1-7; the reverse-keyed item of each pair reversed by the runtime): Extraversion (1,6), Agreeableness (2,7), Conscientiousness (3,8), Emotional Stability (4,9), Openness (5,10). No severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "S. D. Gosling, P. J. Rentfrow, and W. B. Swann Jr. (2003). A very\nbrief measure of the Big-Five personality domains. Journal of Research\nin Personality, 37 , 504-528.",
+    "year": 2003
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_tipi_1|pr_tipi_6|pr_tipi_2|pr_tipi_7|pr_tipi_3|pr_tipi_8|pr_tipi_4|pr_tipi_9|pr_tipi_5|pr_tipi_10)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "extraversion": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "agreeableness": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "conscientiousness": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "emotional_stability": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "openness": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "extraversion",
+          "agreeableness",
+          "conscientiousness",
+          "emotional_stability",
+          "openness"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/tipi/scorer.wasm",
+      "sha256": "fc925af6a9a4b5b520baf157275c923b5c2b3eb45587cb37155bc963fee68759"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_tipi_1": 1,
+          "pr_tipi_6": 1,
+          "pr_tipi_2": 1,
+          "pr_tipi_7": 1,
+          "pr_tipi_3": 1,
+          "pr_tipi_8": 1,
+          "pr_tipi_4": 1,
+          "pr_tipi_9": 1,
+          "pr_tipi_5": 1,
+          "pr_tipi_10": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "extraversion": {
+            "value": 1
+          },
+          "agreeableness": {
+            "value": 1
+          },
+          "conscientiousness": {
+            "value": 1
+          },
+          "emotional_stability": {
+            "value": 1
+          },
+          "openness": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_tipi_1": 4,
+          "pr_tipi_6": 4,
+          "pr_tipi_2": 4,
+          "pr_tipi_7": 4,
+          "pr_tipi_3": 4,
+          "pr_tipi_8": 4,
+          "pr_tipi_4": 4,
+          "pr_tipi_9": 4,
+          "pr_tipi_5": 4,
+          "pr_tipi_10": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "extraversion": {
+            "value": 4
+          },
+          "agreeableness": {
+            "value": 4
+          },
+          "conscientiousness": {
+            "value": 4
+          },
+          "emotional_stability": {
+            "value": 4
+          },
+          "openness": {
+            "value": 4
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_tipi_1": 7,
+          "pr_tipi_6": 7,
+          "pr_tipi_2": 7,
+          "pr_tipi_7": 7,
+          "pr_tipi_3": 7,
+          "pr_tipi_8": 7,
+          "pr_tipi_4": 7,
+          "pr_tipi_9": 7,
+          "pr_tipi_5": 7,
+          "pr_tipi_10": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "extraversion": {
+            "value": 7
+          },
+          "agreeableness": {
+            "value": 7
+          },
+          "conscientiousness": {
+            "value": 7
+          },
+          "emotional_stability": {
+            "value": 7
+          },
+          "openness": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

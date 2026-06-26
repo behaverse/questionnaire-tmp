@@ -1,0 +1,242 @@
+{
+  "content": {
+    "en": {
+      "description": "A brief measure of dark personality traits (SD3). Short Dark Triad (Jones & Paulhus, 2014). Three subscale MEAN scores (each 9 items, 1-5; reverse-keyed items reversed by the runtime): Machiavellianism (items 1-9), Narcissism (10-18), Psychopathy (19-27). Higher = stronger trait; no severity cut-offs.",
+      "name": "SD3 Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_sd3",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "760c0b842b939dcdcb5f25a9d3801188295e704d2e5f408be46c4e5916a101bc",
+      "url": "https://behaverse.org/scorers/sd3/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_sd3_1|pr_sd3_2|pr_sd3_3|pr_sd3_4|pr_sd3_5|pr_sd3_6|pr_sd3_7|pr_sd3_8|pr_sd3_9|pr_sd3_10|pr_sd3_11|pr_sd3_12|pr_sd3_13|pr_sd3_14|pr_sd3_15|pr_sd3_16|pr_sd3_17|pr_sd3_18|pr_sd3_19|pr_sd3_20|pr_sd3_21|pr_sd3_22|pr_sd3_23|pr_sd3_24|pr_sd3_25|pr_sd3_26|pr_sd3_27)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SD3 Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "machiavellianism": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "narcissism": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "psychopathy": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "machiavellianism",
+          "narcissism",
+          "psychopathy"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "machiavellianism": {
+            "value": 1
+          },
+          "narcissism": {
+            "value": 1
+          },
+          "psychopathy": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sd3_1": 1,
+          "pr_sd3_10": 1,
+          "pr_sd3_11": 1,
+          "pr_sd3_12": 1,
+          "pr_sd3_13": 1,
+          "pr_sd3_14": 1,
+          "pr_sd3_15": 1,
+          "pr_sd3_16": 1,
+          "pr_sd3_17": 1,
+          "pr_sd3_18": 1,
+          "pr_sd3_19": 1,
+          "pr_sd3_2": 1,
+          "pr_sd3_20": 1,
+          "pr_sd3_21": 1,
+          "pr_sd3_22": 1,
+          "pr_sd3_23": 1,
+          "pr_sd3_24": 1,
+          "pr_sd3_25": 1,
+          "pr_sd3_26": 1,
+          "pr_sd3_27": 1,
+          "pr_sd3_3": 1,
+          "pr_sd3_4": 1,
+          "pr_sd3_5": 1,
+          "pr_sd3_6": 1,
+          "pr_sd3_7": 1,
+          "pr_sd3_8": 1,
+          "pr_sd3_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "machiavellianism": {
+            "value": 3
+          },
+          "narcissism": {
+            "value": 3
+          },
+          "psychopathy": {
+            "value": 3
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sd3_1": 3,
+          "pr_sd3_10": 3,
+          "pr_sd3_11": 3,
+          "pr_sd3_12": 3,
+          "pr_sd3_13": 3,
+          "pr_sd3_14": 3,
+          "pr_sd3_15": 3,
+          "pr_sd3_16": 3,
+          "pr_sd3_17": 3,
+          "pr_sd3_18": 3,
+          "pr_sd3_19": 3,
+          "pr_sd3_2": 3,
+          "pr_sd3_20": 3,
+          "pr_sd3_21": 3,
+          "pr_sd3_22": 3,
+          "pr_sd3_23": 3,
+          "pr_sd3_24": 3,
+          "pr_sd3_25": 3,
+          "pr_sd3_26": 3,
+          "pr_sd3_27": 3,
+          "pr_sd3_3": 3,
+          "pr_sd3_4": 3,
+          "pr_sd3_5": 3,
+          "pr_sd3_6": 3,
+          "pr_sd3_7": 3,
+          "pr_sd3_8": 3,
+          "pr_sd3_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "machiavellianism": {
+            "value": 5
+          },
+          "narcissism": {
+            "value": 5
+          },
+          "psychopathy": {
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_sd3_1": 5,
+          "pr_sd3_10": 5,
+          "pr_sd3_11": 5,
+          "pr_sd3_12": 5,
+          "pr_sd3_13": 5,
+          "pr_sd3_14": 5,
+          "pr_sd3_15": 5,
+          "pr_sd3_16": 5,
+          "pr_sd3_17": 5,
+          "pr_sd3_18": 5,
+          "pr_sd3_19": 5,
+          "pr_sd3_2": 5,
+          "pr_sd3_20": 5,
+          "pr_sd3_21": 5,
+          "pr_sd3_22": 5,
+          "pr_sd3_23": 5,
+          "pr_sd3_24": 5,
+          "pr_sd3_25": 5,
+          "pr_sd3_26": 5,
+          "pr_sd3_27": 5,
+          "pr_sd3_3": 5,
+          "pr_sd3_4": 5,
+          "pr_sd3_5": 5,
+          "pr_sd3_6": 5,
+          "pr_sd3_7": 5,
+          "pr_sd3_8": 5,
+          "pr_sd3_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Jones, D. N., & Paulhus, D. L. (2014).  Introducing the Short Dark Triad (SD3): A brief measure of dark personality traits.  Assessment, 21,  28-41.",
+    "year": 2014
+  }
+}

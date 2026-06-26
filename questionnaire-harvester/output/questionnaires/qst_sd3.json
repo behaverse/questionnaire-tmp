@@ -431,5 +431,25 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "machiavellianism",
+      "name": "Machiavellianism",
+      "path": "/scores/machiavellianism/value",
+      "scorer": "scr_sd3@v26.0618"
+    },
+    {
+      "id": "narcissism",
+      "name": "Narcissism",
+      "path": "/scores/narcissism/value",
+      "scorer": "scr_sd3@v26.0618"
+    },
+    {
+      "id": "psychopathy",
+      "name": "Psychopathy",
+      "path": "/scores/psychopathy/value",
+      "scorer": "scr_sd3@v26.0618"
+    }
   ]
 }

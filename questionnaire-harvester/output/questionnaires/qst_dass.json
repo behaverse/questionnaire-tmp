@@ -644,5 +644,43 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "depression",
+      "name": "Depression",
+      "path": "/scores/depression/value",
+      "scorer": "scr_dass@v26.0618"
+    },
+    {
+      "id": "depression_severity",
+      "name": "Depression severity",
+      "path": "/scores/depression/severity",
+      "scorer": "scr_dass@v26.0618"
+    },
+    {
+      "id": "anxiety",
+      "name": "Anxiety",
+      "path": "/scores/anxiety/value",
+      "scorer": "scr_dass@v26.0618"
+    },
+    {
+      "id": "anxiety_severity",
+      "name": "Anxiety severity",
+      "path": "/scores/anxiety/severity",
+      "scorer": "scr_dass@v26.0618"
+    },
+    {
+      "id": "stress",
+      "name": "Stress",
+      "path": "/scores/stress/value",
+      "scorer": "scr_dass@v26.0618"
+    },
+    {
+      "id": "stress_severity",
+      "name": "Stress severity",
+      "path": "/scores/stress/severity",
+      "scorer": "scr_dass@v26.0618"
+    }
   ]
 }

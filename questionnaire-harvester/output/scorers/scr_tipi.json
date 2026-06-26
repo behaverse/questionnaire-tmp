@@ -1,0 +1,233 @@
+{
+  "content": {
+    "en": {
+      "description": "BIG5 Ten Item Personality Inventory (TIPI). Ten-Item Personality Inventory (Gosling et al., 2003). Five Big-Five domain scores, each the MEAN of 2 items (1-7; the reverse-keyed item of each pair reversed by the runtime): Extraversion (1,6), Agreeableness (2,7), Conscientiousness (3,8), Emotional Stability (4,9), Openness (5,10). No severity cut-offs.",
+      "name": "TIPI Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_tipi",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "fc925af6a9a4b5b520baf157275c923b5c2b3eb45587cb37155bc963fee68759",
+      "url": "https://behaverse.org/scorers/tipi/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_tipi_1|pr_tipi_6|pr_tipi_2|pr_tipi_7|pr_tipi_3|pr_tipi_8|pr_tipi_4|pr_tipi_9|pr_tipi_5|pr_tipi_10)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "TIPI Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "agreeableness": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "conscientiousness": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "emotional_stability": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "extraversion": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "openness": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "extraversion",
+          "agreeableness",
+          "conscientiousness",
+          "emotional_stability",
+          "openness"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "agreeableness": {
+            "value": 1
+          },
+          "conscientiousness": {
+            "value": 1
+          },
+          "emotional_stability": {
+            "value": 1
+          },
+          "extraversion": {
+            "value": 1
+          },
+          "openness": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tipi_1": 1,
+          "pr_tipi_10": 1,
+          "pr_tipi_2": 1,
+          "pr_tipi_3": 1,
+          "pr_tipi_4": 1,
+          "pr_tipi_5": 1,
+          "pr_tipi_6": 1,
+          "pr_tipi_7": 1,
+          "pr_tipi_8": 1,
+          "pr_tipi_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "agreeableness": {
+            "value": 4
+          },
+          "conscientiousness": {
+            "value": 4
+          },
+          "emotional_stability": {
+            "value": 4
+          },
+          "extraversion": {
+            "value": 4
+          },
+          "openness": {
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tipi_1": 4,
+          "pr_tipi_10": 4,
+          "pr_tipi_2": 4,
+          "pr_tipi_3": 4,
+          "pr_tipi_4": 4,
+          "pr_tipi_5": 4,
+          "pr_tipi_6": 4,
+          "pr_tipi_7": 4,
+          "pr_tipi_8": 4,
+          "pr_tipi_9": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "agreeableness": {
+            "value": 7
+          },
+          "conscientiousness": {
+            "value": 7
+          },
+          "emotional_stability": {
+            "value": 7
+          },
+          "extraversion": {
+            "value": 7
+          },
+          "openness": {
+            "value": 7
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tipi_1": 7,
+          "pr_tipi_10": 7,
+          "pr_tipi_2": 7,
+          "pr_tipi_3": 7,
+          "pr_tipi_4": 7,
+          "pr_tipi_5": 7,
+          "pr_tipi_6": 7,
+          "pr_tipi_7": 7,
+          "pr_tipi_8": 7,
+          "pr_tipi_9": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "S. D. Gosling, P. J. Rentfrow, and W. B. Swann Jr. (2003). A very\nbrief measure of the Big-Five personality domains. Journal of Research\nin Personality, 37 , 504-528.",
+    "year": 2003
+  }
+}
