@@ -1,0 +1,276 @@
+{
+  "content": {
+    "en": {
+      "description": "Zuckerman–Kuhlman Personality Questionnaire (Shortened, ZKPQ-50-CC). Zuckerman-Kuhlman Personality Questionnaire (50-item cross-cultural). Five 10-item factor sums (each item 0/1; reverse handled), range 0-10: Activity (1-10), Aggression-Hostility (11-20), Impulsive Sensation Seeking (21-30), Neuroticism-Anxiety (31-40), Sociability (41-50).",
+      "name": "ZKPQ-50-CC Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_cc",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "67e5d6e117faa9304392cdaf5069b6237179fd1d7069da05e8ef528d83897f63",
+      "url": "https://behaverse.org/scorers/cc/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_cc_1|pr_cc_2|pr_cc_3|pr_cc_4|pr_cc_5|pr_cc_6|pr_cc_7|pr_cc_8|pr_cc_9|pr_cc_10|pr_cc_11|pr_cc_12|pr_cc_13|pr_cc_14|pr_cc_15|pr_cc_16|pr_cc_17|pr_cc_18|pr_cc_19|pr_cc_20|pr_cc_21|pr_cc_22|pr_cc_23|pr_cc_24|pr_cc_25|pr_cc_26|pr_cc_27|pr_cc_28|pr_cc_29|pr_cc_30|pr_cc_31|pr_cc_32|pr_cc_33|pr_cc_34|pr_cc_35|pr_cc_36|pr_cc_37|pr_cc_38|pr_cc_39|pr_cc_40|pr_cc_41|pr_cc_42|pr_cc_43|pr_cc_44|pr_cc_45|pr_cc_46|pr_cc_47|pr_cc_48|pr_cc_49|pr_cc_50)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "ZKPQ-50-CC Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "activity": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "aggression_hostility": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "impulsive_sensation_seeking": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "neuroticism_anxiety": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "sociability": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "activity",
+          "aggression_hostility",
+          "impulsive_sensation_seeking",
+          "neuroticism_anxiety",
+          "sociability"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "activity": {
+            "value": 0
+          },
+          "aggression_hostility": {
+            "value": 0
+          },
+          "impulsive_sensation_seeking": {
+            "value": 0
+          },
+          "neuroticism_anxiety": {
+            "value": 0
+          },
+          "sociability": {
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cc_1": 0,
+          "pr_cc_10": 0,
+          "pr_cc_11": 0,
+          "pr_cc_12": 0,
+          "pr_cc_13": 0,
+          "pr_cc_14": 0,
+          "pr_cc_15": 0,
+          "pr_cc_16": 0,
+          "pr_cc_17": 0,
+          "pr_cc_18": 0,
+          "pr_cc_19": 0,
+          "pr_cc_2": 0,
+          "pr_cc_20": 0,
+          "pr_cc_21": 0,
+          "pr_cc_22": 0,
+          "pr_cc_23": 0,
+          "pr_cc_24": 0,
+          "pr_cc_25": 0,
+          "pr_cc_26": 0,
+          "pr_cc_27": 0,
+          "pr_cc_28": 0,
+          "pr_cc_29": 0,
+          "pr_cc_3": 0,
+          "pr_cc_30": 0,
+          "pr_cc_31": 0,
+          "pr_cc_32": 0,
+          "pr_cc_33": 0,
+          "pr_cc_34": 0,
+          "pr_cc_35": 0,
+          "pr_cc_36": 0,
+          "pr_cc_37": 0,
+          "pr_cc_38": 0,
+          "pr_cc_39": 0,
+          "pr_cc_4": 0,
+          "pr_cc_40": 0,
+          "pr_cc_41": 0,
+          "pr_cc_42": 0,
+          "pr_cc_43": 0,
+          "pr_cc_44": 0,
+          "pr_cc_45": 0,
+          "pr_cc_46": 0,
+          "pr_cc_47": 0,
+          "pr_cc_48": 0,
+          "pr_cc_49": 0,
+          "pr_cc_5": 0,
+          "pr_cc_50": 0,
+          "pr_cc_6": 0,
+          "pr_cc_7": 0,
+          "pr_cc_8": 0,
+          "pr_cc_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "activity": {
+            "value": 10
+          },
+          "aggression_hostility": {
+            "value": 10
+          },
+          "impulsive_sensation_seeking": {
+            "value": 10
+          },
+          "neuroticism_anxiety": {
+            "value": 10
+          },
+          "sociability": {
+            "value": 10
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cc_1": 1,
+          "pr_cc_10": 1,
+          "pr_cc_11": 1,
+          "pr_cc_12": 1,
+          "pr_cc_13": 1,
+          "pr_cc_14": 1,
+          "pr_cc_15": 1,
+          "pr_cc_16": 1,
+          "pr_cc_17": 1,
+          "pr_cc_18": 1,
+          "pr_cc_19": 1,
+          "pr_cc_2": 1,
+          "pr_cc_20": 1,
+          "pr_cc_21": 1,
+          "pr_cc_22": 1,
+          "pr_cc_23": 1,
+          "pr_cc_24": 1,
+          "pr_cc_25": 1,
+          "pr_cc_26": 1,
+          "pr_cc_27": 1,
+          "pr_cc_28": 1,
+          "pr_cc_29": 1,
+          "pr_cc_3": 1,
+          "pr_cc_30": 1,
+          "pr_cc_31": 1,
+          "pr_cc_32": 1,
+          "pr_cc_33": 1,
+          "pr_cc_34": 1,
+          "pr_cc_35": 1,
+          "pr_cc_36": 1,
+          "pr_cc_37": 1,
+          "pr_cc_38": 1,
+          "pr_cc_39": 1,
+          "pr_cc_4": 1,
+          "pr_cc_40": 1,
+          "pr_cc_41": 1,
+          "pr_cc_42": 1,
+          "pr_cc_43": 1,
+          "pr_cc_44": 1,
+          "pr_cc_45": 1,
+          "pr_cc_46": 1,
+          "pr_cc_47": 1,
+          "pr_cc_48": 1,
+          "pr_cc_49": 1,
+          "pr_cc_5": 1,
+          "pr_cc_50": 1,
+          "pr_cc_6": 1,
+          "pr_cc_7": 1,
+          "pr_cc_8": 1,
+          "pr_cc_9": 1
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Aluja, A., Rossier, J., García, L. F., Angleitner, A., Kuhlman, M., & Zuckerman, M. (2006). A cros-cultural shortened form of the ZKPQ (ZKPQ-50-c) adapted to English, French, German, and Spanish languages. Personality and Individual Differences, 41 , 619-628.",
+    "year": 2006
+  }
+}

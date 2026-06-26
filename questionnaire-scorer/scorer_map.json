@@ -24,6 +24,7 @@
   "scr_cabs@v26.0618": "cabs.wasm",
   "scr_cage@v26.0618": "cage.wasm",
   "scr_cas@v26.0618": "cas.wasm",
+  "scr_cc@v26.0618": "cc.wasm",
   "scr_ccms@v26.0618": "ccms.wasm",
   "scr_cfs@v26.0618": "cfs.wasm",
   "scr_cia@v26.0618": "cia.wasm",

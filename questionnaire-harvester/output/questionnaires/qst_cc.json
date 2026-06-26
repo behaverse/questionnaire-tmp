@@ -753,5 +753,37 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "activity",
+      "name": "ZKPQ-50-CC activity",
+      "path": "/scores/activity/value",
+      "scorer": "scr_cc@v26.0618"
+    },
+    {
+      "id": "aggression_hostility",
+      "name": "ZKPQ-50-CC aggression hostility",
+      "path": "/scores/aggression_hostility/value",
+      "scorer": "scr_cc@v26.0618"
+    },
+    {
+      "id": "impulsive_sensation_seeking",
+      "name": "ZKPQ-50-CC impulsive sensation seeking",
+      "path": "/scores/impulsive_sensation_seeking/value",
+      "scorer": "scr_cc@v26.0618"
+    },
+    {
+      "id": "neuroticism_anxiety",
+      "name": "ZKPQ-50-CC neuroticism anxiety",
+      "path": "/scores/neuroticism_anxiety/value",
+      "scorer": "scr_cc@v26.0618"
+    },
+    {
+      "id": "sociability",
+      "name": "ZKPQ-50-CC sociability",
+      "path": "/scores/sociability/value",
+      "scorer": "scr_cc@v26.0618"
+    }
   ]
 }
