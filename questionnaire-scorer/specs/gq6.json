@@ -1,0 +1,95 @@
+{
+  "id": "gq6",
+  "scorer_id": "scr_gq6",
+  "name": "GQ-6 Standard Scoring",
+  "status": "validated",
+  "description": "Gratitude Questionnaire-6 (McCullough et al., 2002). Total = sum of the 6 items (each 1-7; items 3 and 6 reverse-scored by the runtime), range 6-42; higher = greater dispositional gratitude. No standard severity cut-offs.",
+  "publication": {
+    "citation": "McCullough ME, Emmons RA, Tsang JA (2002). The grateful disposition: a conceptual and empirical topography. J Pers Soc Psychol, 82(1), 112-127.",
+    "year": 2002
+  },
+  "engine_spec": {
+    "item_range": [
+      1,
+      7
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_gq6_1",
+          "pr_gq6_2",
+          "pr_gq6_3",
+          "pr_gq6_4",
+          "pr_gq6_5",
+          "pr_gq6_6"
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_gq6_1": 1,
+          "pr_gq6_2": 1,
+          "pr_gq6_3": 1,
+          "pr_gq6_4": 1,
+          "pr_gq6_5": 1,
+          "pr_gq6_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_gq6_1": 4,
+          "pr_gq6_2": 4,
+          "pr_gq6_3": 4,
+          "pr_gq6_4": 4,
+          "pr_gq6_5": 4,
+          "pr_gq6_6": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 24
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_gq6_1": 7,
+          "pr_gq6_2": 7,
+          "pr_gq6_3": 7,
+          "pr_gq6_4": 7,
+          "pr_gq6_5": 7,
+          "pr_gq6_6": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 42
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

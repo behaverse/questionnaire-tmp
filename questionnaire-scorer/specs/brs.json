@@ -1,0 +1,134 @@
+{
+  "id": "brs",
+  "scorer_id": "scr_brs",
+  "name": "BRS Standard Scoring",
+  "status": "validated",
+  "description": "Brief Resilience Scale (Smith et al., 2008). Score = MEAN of the 6 items (each 1-5; items 2,4,6 reverse-scored by the runtime), range 1.00-5.00. Interpretation: 1.00-2.99 low resilience, 3.00-4.30 normal resilience, 4.31-5.00 high resilience.",
+  "publication": {
+    "citation": "Smith BW, Dalen J, Wiggins K, Tooley E, Christopher P, Bernard J (2008). The brief resilience scale: assessing the ability to bounce back. Int J Behav Med, 15(3), 194-200.",
+    "year": 2008
+  },
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "resilience",
+        "aggregate": "mean",
+        "items": [
+          "pr_brs_1",
+          "pr_brs_2",
+          "pr_brs_3",
+          "pr_brs_4",
+          "pr_brs_5",
+          "pr_brs_6"
+        ],
+        "bands": [
+          {
+            "min": 1.0,
+            "max": 2.99,
+            "severity": "low",
+            "label": "Low resilience"
+          },
+          {
+            "min": 3.0,
+            "max": 4.3,
+            "severity": "normal",
+            "label": "Normal resilience"
+          },
+          {
+            "min": 4.31,
+            "max": 5.0,
+            "severity": "high",
+            "label": "High resilience"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "low",
+      "input": {
+        "scored_responses": {
+          "pr_brs_1": 2,
+          "pr_brs_2": 2,
+          "pr_brs_3": 2,
+          "pr_brs_4": 2,
+          "pr_brs_5": 2,
+          "pr_brs_6": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "resilience": {
+            "value": 2,
+            "severity": "low",
+            "band": {
+              "min": 1.0,
+              "max": 2.99,
+              "label": "Low resilience"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "normal",
+      "input": {
+        "scored_responses": {
+          "pr_brs_1": 3,
+          "pr_brs_2": 3,
+          "pr_brs_3": 3,
+          "pr_brs_4": 3,
+          "pr_brs_5": 3,
+          "pr_brs_6": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "resilience": {
+            "value": 3,
+            "severity": "normal",
+            "band": {
+              "min": 3.0,
+              "max": 4.3,
+              "label": "Normal resilience"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high",
+      "input": {
+        "scored_responses": {
+          "pr_brs_1": 5,
+          "pr_brs_2": 5,
+          "pr_brs_3": 5,
+          "pr_brs_4": 5,
+          "pr_brs_5": 5,
+          "pr_brs_6": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "resilience": {
+            "value": 5,
+            "severity": "high",
+            "band": {
+              "min": 4.31,
+              "max": 5.0,
+              "label": "High resilience"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

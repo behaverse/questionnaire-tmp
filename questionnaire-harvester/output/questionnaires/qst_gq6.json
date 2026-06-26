@@ -137,5 +137,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "GQ-6 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_gq6@v26.0618"
+    }
   ]
 }

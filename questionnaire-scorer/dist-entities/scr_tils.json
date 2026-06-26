@@ -1,0 +1,172 @@
+{
+  "id": "scr_tils",
+  "name": "Three-Item Loneliness Scale Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "Three-Item Loneliness Scale Scoring",
+      "description": "Three-Item Loneliness Scale (Hughes et al., 2004). Total = sum of the 3 items (each 1-3), range 3-9; higher = lonelier. Common split: 3-5 not lonely, 6-9 lonely."
+    }
+  },
+  "x_publication": {
+    "citation": "Hughes ME, Waite LJ, Hawkley LC, Cacioppo JT (2004). A short scale for measuring loneliness in large surveys. Res Aging, 26(6), 655-672.",
+    "year": 2004
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_tils_1|pr_tils_2|pr_tils_3)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "not_lonely",
+                  "lonely"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/tils/scorer.wasm",
+      "sha256": "a1b1f740e035624f5a147915b4f32338208c30d76ce79d108159ccff55c37bc8"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "not-lonely-floor",
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 1,
+          "pr_tils_2": 1,
+          "pr_tils_3": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 3,
+            "severity": "not_lonely",
+            "band": {
+              "min": 3,
+              "max": 5,
+              "label": "Not lonely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "lonely-mid",
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 2,
+          "pr_tils_2": 2,
+          "pr_tils_3": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6,
+            "severity": "lonely",
+            "band": {
+              "min": 6,
+              "max": 9,
+              "label": "Lonely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "lonely-ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 3,
+          "pr_tils_2": 3,
+          "pr_tils_3": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 9,
+            "severity": "lonely",
+            "band": {
+              "min": 6,
+              "max": 9,
+              "label": "Lonely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

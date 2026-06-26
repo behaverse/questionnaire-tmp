@@ -95,5 +95,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "Loneliness total",
+      "path": "/scores/total/value",
+      "scorer": "scr_tils@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "Loneliness category",
+      "path": "/scores/total/severity",
+      "scorer": "scr_tils@v26.0618"
+    }
   ]
 }

@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["abi", "engine", "scorers/phq9", "scorers/gad7", "scorers/swls", "scorers/who5", "scorers/dass21", "scorers/spin", "scorers/ocir", "scorers/panas", "scorers/fs", "scorers/rrs"]
+members = ["abi", "engine", "scorers/phq9", "scorers/gad7", "scorers/swls", "scorers/who5", "scorers/dass21", "scorers/spin", "scorers/ocir", "scorers/panas", "scorers/fs", "scorers/rrs", "scorers/rses", "scorers/brs", "scorers/gq6", "scorers/tils", "scorers/pss"]
 
 [profile.release]
 panic = "abort"

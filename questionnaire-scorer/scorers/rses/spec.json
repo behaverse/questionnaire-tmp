@@ -1,0 +1,1 @@
+{"item_range":[0,3],"scores":[{"key":"total","items":["pr_rses_1","pr_rses_2","pr_rses_3","pr_rses_4","pr_rses_5","pr_rses_6","pr_rses_7","pr_rses_8","pr_rses_9","pr_rses_10"],"bands":[{"min":0,"max":14,"severity":"low","label":"Low self-esteem"},{"min":15,"max":25,"severity":"normal","label":"Normal range"},{"min":26,"max":30,"severity":"high","label":"High self-esteem"}]}]}

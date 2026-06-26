@@ -1,0 +1,137 @@
+{
+  "id": "scr_gq6",
+  "name": "GQ-6 Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "GQ-6 Standard Scoring",
+      "description": "Gratitude Questionnaire-6 (McCullough et al., 2002). Total = sum of the 6 items (each 1-7; items 3 and 6 reverse-scored by the runtime), range 6-42; higher = greater dispositional gratitude. No standard severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "McCullough ME, Emmons RA, Tsang JA (2002). The grateful disposition: a conceptual and empirical topography. J Pers Soc Psychol, 82(1), 112-127.",
+    "year": 2002
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_gq6_1|pr_gq6_2|pr_gq6_3|pr_gq6_4|pr_gq6_5|pr_gq6_6)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/gq6/scorer.wasm",
+      "sha256": "09447485757bb22c7f7df3e717557b9cf2989855932131b8f80ef838c4625e7b"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_gq6_1": 1,
+          "pr_gq6_2": 1,
+          "pr_gq6_3": 1,
+          "pr_gq6_4": 1,
+          "pr_gq6_5": 1,
+          "pr_gq6_6": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_gq6_1": 4,
+          "pr_gq6_2": 4,
+          "pr_gq6_3": 4,
+          "pr_gq6_4": 4,
+          "pr_gq6_5": 4,
+          "pr_gq6_6": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 24
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_gq6_1": 7,
+          "pr_gq6_2": 7,
+          "pr_gq6_3": 7,
+          "pr_gq6_4": 7,
+          "pr_gq6_5": 7,
+          "pr_gq6_6": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 42
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

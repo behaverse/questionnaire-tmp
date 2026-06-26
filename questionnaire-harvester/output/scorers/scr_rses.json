@@ -1,0 +1,194 @@
+{
+  "content": {
+    "en": {
+      "description": "Rosenberg Self-Esteem Scale (Rosenberg, 1965). Total = sum of the 10 items (each 0-3, negatively-worded items reverse-scored by the runtime), range 0-30; higher = higher self-esteem. Common interpretation: 0-14 low self-esteem, 15-25 normal range, 26-30 high self-esteem.",
+      "name": "RSES Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_rses",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "0f061fa44d6d251f726b3c06ee94f883cc3906dfc713247d5a9edc893a1b4679",
+      "url": "https://behaverse.org/scorers/rses/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_rses_1|pr_rses_2|pr_rses_3|pr_rses_4|pr_rses_5|pr_rses_6|pr_rses_7|pr_rses_8|pr_rses_9|pr_rses_10)$": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "RSES Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "low",
+                  "normal",
+                  "high"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Low self-esteem",
+              "max": 14,
+              "min": 0
+            },
+            "severity": "low",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 0,
+          "pr_rses_10": 0,
+          "pr_rses_2": 0,
+          "pr_rses_3": 0,
+          "pr_rses_4": 0,
+          "pr_rses_5": 0,
+          "pr_rses_6": 0,
+          "pr_rses_7": 0,
+          "pr_rses_8": 0,
+          "pr_rses_9": 0
+        }
+      },
+      "name": "low-floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Normal range",
+              "max": 25,
+              "min": 15
+            },
+            "severity": "normal",
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 2,
+          "pr_rses_10": 2,
+          "pr_rses_2": 2,
+          "pr_rses_3": 2,
+          "pr_rses_4": 2,
+          "pr_rses_5": 2,
+          "pr_rses_6": 2,
+          "pr_rses_7": 2,
+          "pr_rses_8": 2,
+          "pr_rses_9": 2
+        }
+      },
+      "name": "normal-mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "High self-esteem",
+              "max": 30,
+              "min": 26
+            },
+            "severity": "high",
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 3,
+          "pr_rses_10": 3,
+          "pr_rses_2": 3,
+          "pr_rses_3": 3,
+          "pr_rses_4": 3,
+          "pr_rses_5": 3,
+          "pr_rses_6": 3,
+          "pr_rses_7": 3,
+          "pr_rses_8": 3,
+          "pr_rses_9": 3
+        }
+      },
+      "name": "high-ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Rosenberg M (1965). Society and the Adolescent Self-Image. Princeton University Press.",
+    "year": 1965
+  }
+}

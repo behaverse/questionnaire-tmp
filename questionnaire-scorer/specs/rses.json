@@ -1,0 +1,149 @@
+{
+  "id": "rses",
+  "scorer_id": "scr_rses",
+  "name": "RSES Standard Scoring",
+  "status": "validated",
+  "description": "Rosenberg Self-Esteem Scale (Rosenberg, 1965). Total = sum of the 10 items (each 0-3, negatively-worded items reverse-scored by the runtime), range 0-30; higher = higher self-esteem. Common interpretation: 0-14 low self-esteem, 15-25 normal range, 26-30 high self-esteem.",
+  "publication": {
+    "citation": "Rosenberg M (1965). Society and the Adolescent Self-Image. Princeton University Press.",
+    "year": 1965
+  },
+  "engine_spec": {
+    "item_range": [
+      0,
+      3
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_rses_1",
+          "pr_rses_2",
+          "pr_rses_3",
+          "pr_rses_4",
+          "pr_rses_5",
+          "pr_rses_6",
+          "pr_rses_7",
+          "pr_rses_8",
+          "pr_rses_9",
+          "pr_rses_10"
+        ],
+        "bands": [
+          {
+            "min": 0,
+            "max": 14,
+            "severity": "low",
+            "label": "Low self-esteem"
+          },
+          {
+            "min": 15,
+            "max": 25,
+            "severity": "normal",
+            "label": "Normal range"
+          },
+          {
+            "min": 26,
+            "max": 30,
+            "severity": "high",
+            "label": "High self-esteem"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "low-floor",
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 0,
+          "pr_rses_2": 0,
+          "pr_rses_3": 0,
+          "pr_rses_4": 0,
+          "pr_rses_5": 0,
+          "pr_rses_6": 0,
+          "pr_rses_7": 0,
+          "pr_rses_8": 0,
+          "pr_rses_9": 0,
+          "pr_rses_10": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "low",
+            "band": {
+              "min": 0,
+              "max": 14,
+              "label": "Low self-esteem"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "normal-mid",
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 2,
+          "pr_rses_2": 2,
+          "pr_rses_3": 2,
+          "pr_rses_4": 2,
+          "pr_rses_5": 2,
+          "pr_rses_6": 2,
+          "pr_rses_7": 2,
+          "pr_rses_8": 2,
+          "pr_rses_9": 2,
+          "pr_rses_10": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 20,
+            "severity": "normal",
+            "band": {
+              "min": 15,
+              "max": 25,
+              "label": "Normal range"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high-ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 3,
+          "pr_rses_2": 3,
+          "pr_rses_3": 3,
+          "pr_rses_4": 3,
+          "pr_rses_5": 3,
+          "pr_rses_6": 3,
+          "pr_rses_7": 3,
+          "pr_rses_8": 3,
+          "pr_rses_9": 3,
+          "pr_rses_10": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30,
+            "severity": "high",
+            "band": {
+              "min": 26,
+              "max": 30,
+              "label": "High self-esteem"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

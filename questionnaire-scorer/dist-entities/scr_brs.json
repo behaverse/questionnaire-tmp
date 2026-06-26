@@ -1,0 +1,182 @@
+{
+  "id": "scr_brs",
+  "name": "BRS Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "BRS Standard Scoring",
+      "description": "Brief Resilience Scale (Smith et al., 2008). Score = MEAN of the 6 items (each 1-5; items 2,4,6 reverse-scored by the runtime), range 1.00-5.00. Interpretation: 1.00-2.99 low resilience, 3.00-4.30 normal resilience, 4.31-5.00 high resilience."
+    }
+  },
+  "x_publication": {
+    "citation": "Smith BW, Dalen J, Wiggins K, Tooley E, Christopher P, Bernard J (2008). The brief resilience scale: assessing the ability to bounce back. Int J Behav Med, 15(3), 194-200.",
+    "year": 2008
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_brs_1|pr_brs_2|pr_brs_3|pr_brs_4|pr_brs_5|pr_brs_6)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "resilience": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "normal",
+                  "high"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "resilience"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/brs/scorer.wasm",
+      "sha256": "e4c9e26ac3431fba17e9037df607b6ba334c3d76ff71ad4ae4dcb1c0d4d1ef48"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "low",
+      "input": {
+        "scored_responses": {
+          "pr_brs_1": 2,
+          "pr_brs_2": 2,
+          "pr_brs_3": 2,
+          "pr_brs_4": 2,
+          "pr_brs_5": 2,
+          "pr_brs_6": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "resilience": {
+            "value": 2,
+            "severity": "low",
+            "band": {
+              "min": 1,
+              "max": 2.99,
+              "label": "Low resilience"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "normal",
+      "input": {
+        "scored_responses": {
+          "pr_brs_1": 3,
+          "pr_brs_2": 3,
+          "pr_brs_3": 3,
+          "pr_brs_4": 3,
+          "pr_brs_5": 3,
+          "pr_brs_6": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "resilience": {
+            "value": 3,
+            "severity": "normal",
+            "band": {
+              "min": 3,
+              "max": 4.3,
+              "label": "Normal resilience"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high",
+      "input": {
+        "scored_responses": {
+          "pr_brs_1": 5,
+          "pr_brs_2": 5,
+          "pr_brs_3": 5,
+          "pr_brs_4": 5,
+          "pr_brs_5": 5,
+          "pr_brs_6": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "resilience": {
+            "value": 5,
+            "severity": "high",
+            "band": {
+              "min": 4.31,
+              "max": 5,
+              "label": "High resilience"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

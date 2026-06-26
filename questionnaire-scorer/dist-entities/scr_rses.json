@@ -1,0 +1,194 @@
+{
+  "id": "scr_rses",
+  "name": "RSES Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "RSES Standard Scoring",
+      "description": "Rosenberg Self-Esteem Scale (Rosenberg, 1965). Total = sum of the 10 items (each 0-3, negatively-worded items reverse-scored by the runtime), range 0-30; higher = higher self-esteem. Common interpretation: 0-14 low self-esteem, 15-25 normal range, 26-30 high self-esteem."
+    }
+  },
+  "x_publication": {
+    "citation": "Rosenberg M (1965). Society and the Adolescent Self-Image. Princeton University Press.",
+    "year": 1965
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_rses_1|pr_rses_2|pr_rses_3|pr_rses_4|pr_rses_5|pr_rses_6|pr_rses_7|pr_rses_8|pr_rses_9|pr_rses_10)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "normal",
+                  "high"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/rses/scorer.wasm",
+      "sha256": "0f061fa44d6d251f726b3c06ee94f883cc3906dfc713247d5a9edc893a1b4679"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "low-floor",
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 0,
+          "pr_rses_2": 0,
+          "pr_rses_3": 0,
+          "pr_rses_4": 0,
+          "pr_rses_5": 0,
+          "pr_rses_6": 0,
+          "pr_rses_7": 0,
+          "pr_rses_8": 0,
+          "pr_rses_9": 0,
+          "pr_rses_10": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "low",
+            "band": {
+              "min": 0,
+              "max": 14,
+              "label": "Low self-esteem"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "normal-mid",
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 2,
+          "pr_rses_2": 2,
+          "pr_rses_3": 2,
+          "pr_rses_4": 2,
+          "pr_rses_5": 2,
+          "pr_rses_6": 2,
+          "pr_rses_7": 2,
+          "pr_rses_8": 2,
+          "pr_rses_9": 2,
+          "pr_rses_10": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 20,
+            "severity": "normal",
+            "band": {
+              "min": 15,
+              "max": 25,
+              "label": "Normal range"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high-ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_rses_1": 3,
+          "pr_rses_2": 3,
+          "pr_rses_3": 3,
+          "pr_rses_4": 3,
+          "pr_rses_5": 3,
+          "pr_rses_6": 3,
+          "pr_rses_7": 3,
+          "pr_rses_8": 3,
+          "pr_rses_9": 3,
+          "pr_rses_10": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 30,
+            "severity": "high",
+            "band": {
+              "min": 26,
+              "max": 30,
+              "label": "High self-esteem"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "tils",
+  "scorer_id": "scr_tils",
+  "name": "Three-Item Loneliness Scale Scoring",
+  "status": "validated",
+  "description": "Three-Item Loneliness Scale (Hughes et al., 2004). Total = sum of the 3 items (each 1-3), range 3-9; higher = lonelier. Common split: 3-5 not lonely, 6-9 lonely.",
+  "publication": {
+    "citation": "Hughes ME, Waite LJ, Hawkley LC, Cacioppo JT (2004). A short scale for measuring loneliness in large surveys. Res Aging, 26(6), 655-672.",
+    "year": 2004
+  },
+  "engine_spec": {
+    "item_range": [
+      1,
+      3
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_tils_1",
+          "pr_tils_2",
+          "pr_tils_3"
+        ],
+        "bands": [
+          {
+            "min": 3,
+            "max": 5,
+            "severity": "not_lonely",
+            "label": "Not lonely"
+          },
+          {
+            "min": 6,
+            "max": 9,
+            "severity": "lonely",
+            "label": "Lonely"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "not-lonely-floor",
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 1,
+          "pr_tils_2": 1,
+          "pr_tils_3": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 3,
+            "severity": "not_lonely",
+            "band": {
+              "min": 3,
+              "max": 5,
+              "label": "Not lonely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "lonely-mid",
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 2,
+          "pr_tils_2": 2,
+          "pr_tils_3": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 6,
+            "severity": "lonely",
+            "band": {
+              "min": 6,
+              "max": 9,
+              "label": "Lonely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "lonely-ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 3,
+          "pr_tils_2": 3,
+          "pr_tils_3": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 9,
+            "severity": "lonely",
+            "band": {
+              "min": 6,
+              "max": 9,
+              "label": "Lonely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

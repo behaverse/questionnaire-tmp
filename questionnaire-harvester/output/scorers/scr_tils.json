@@ -1,0 +1,172 @@
+{
+  "content": {
+    "en": {
+      "description": "Three-Item Loneliness Scale (Hughes et al., 2004). Total = sum of the 3 items (each 1-3), range 3-9; higher = lonelier. Common split: 3-5 not lonely, 6-9 lonely.",
+      "name": "Three-Item Loneliness Scale Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_tils",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "a1b1f740e035624f5a147915b4f32338208c30d76ce79d108159ccff55c37bc8",
+      "url": "https://behaverse.org/scorers/tils/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_tils_1|pr_tils_2|pr_tils_3)$": {
+            "maximum": 3,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "Three-Item Loneliness Scale Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "not_lonely",
+                  "lonely"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Not lonely",
+              "max": 5,
+              "min": 3
+            },
+            "severity": "not_lonely",
+            "value": 3
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 1,
+          "pr_tils_2": 1,
+          "pr_tils_3": 1
+        }
+      },
+      "name": "not-lonely-floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Lonely",
+              "max": 9,
+              "min": 6
+            },
+            "severity": "lonely",
+            "value": 6
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 2,
+          "pr_tils_2": 2,
+          "pr_tils_3": 2
+        }
+      },
+      "name": "lonely-mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Lonely",
+              "max": 9,
+              "min": 6
+            },
+            "severity": "lonely",
+            "value": 9
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_tils_1": 3,
+          "pr_tils_2": 3,
+          "pr_tils_3": 3
+        }
+      },
+      "name": "lonely-ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Hughes ME, Waite LJ, Hawkley LC, Cacioppo JT (2004). A short scale for measuring loneliness in large surveys. Res Aging, 26(6), 655-672.",
+    "year": 2004
+  }
+}

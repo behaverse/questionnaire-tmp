@@ -249,5 +249,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PSS-14 total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pss@v26.0618"
+    }
   ]
 }

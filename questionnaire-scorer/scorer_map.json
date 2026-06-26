@@ -1,11 +1,16 @@
 {
-  "scr_gad7@v26.0618": "gad7.wasm",
-  "scr_swls@v26.0618": "swls.wasm",
-  "scr_who5@v26.0618": "who5.wasm",
+  "scr_brs@v26.0618": "brs.wasm",
   "scr_dass21@v26.0618": "dass21.wasm",
-  "scr_spin@v26.0618": "spin.wasm",
+  "scr_fs@v26.0618": "fs.wasm",
+  "scr_gad7@v26.0618": "gad7.wasm",
+  "scr_gq6@v26.0618": "gq6.wasm",
   "scr_ocir@v26.0618": "ocir.wasm",
   "scr_panas@v26.0618": "panas.wasm",
-  "scr_fs@v26.0618": "fs.wasm",
-  "scr_rrs@v26.0618": "rrs.wasm"
+  "scr_pss@v26.0618": "pss.wasm",
+  "scr_rrs@v26.0618": "rrs.wasm",
+  "scr_rses@v26.0618": "rses.wasm",
+  "scr_spin@v26.0618": "spin.wasm",
+  "scr_swls@v26.0618": "swls.wasm",
+  "scr_tils@v26.0618": "tils.wasm",
+  "scr_who5@v26.0618": "who5.wasm"
 }

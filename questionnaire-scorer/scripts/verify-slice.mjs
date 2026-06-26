@@ -22,6 +22,11 @@ const RESP = {
   qst_panas: Object.fromEntries(Array.from({ length: 20 }, (_, i) => [`pr_panas_${i + 1}`, (i % 2) ? 2 : 4])),
   qst_fs: Object.fromEntries(Array.from({ length: 8 }, (_, i) => [`pr_fs_${i + 1}`, 6])),
   qst_rrs: Object.fromEntries(Array.from({ length: 22 }, (_, i) => [`pr_rrs_${i + 1}`, 2])),
+  qst_rses: Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`pr_rses_${i + 1}`, 2])),
+  qst_brs: Object.fromEntries(Array.from({ length: 6 }, (_, i) => [`pr_brs_${i + 1}`, 4])),
+  qst_gq6: Object.fromEntries(Array.from({ length: 6 }, (_, i) => [`pr_gq6_${i + 1}`, 6])),
+  qst_tils: Object.fromEntries(Array.from({ length: 3 }, (_, i) => [`pr_tils_${i + 1}`, 3])),
+  qst_pss: Object.fromEntries(Array.from({ length: 14 }, (_, i) => [`pr_pss_${i + 1}`, 2])),
 }
 
 let failed = 0

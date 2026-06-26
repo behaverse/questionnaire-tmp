@@ -1,0 +1,1 @@
+{"item_range":[1,5],"scores":[{"key":"resilience","aggregate":"mean","items":["pr_brs_1","pr_brs_2","pr_brs_3","pr_brs_4","pr_brs_5","pr_brs_6"],"bands":[{"min":1,"max":2.99,"severity":"low","label":"Low resilience"},{"min":3,"max":4.3,"severity":"normal","label":"Normal resilience"},{"min":4.31,"max":5,"severity":"high","label":"High resilience"}]}]}

@@ -137,5 +137,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "resilience",
+      "name": "BRS resilience (mean)",
+      "path": "/scores/resilience/value",
+      "scorer": "scr_brs@v26.0618"
+    },
+    {
+      "id": "resilience_severity",
+      "name": "BRS interpretation",
+      "path": "/scores/resilience/severity",
+      "scorer": "scr_brs@v26.0618"
+    }
   ]
 }
