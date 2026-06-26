@@ -431,5 +431,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "sadism",
+      "name": "VAST sadism total",
+      "path": "/scores/sadism/value",
+      "scorer": "scr_vast@v26.0618"
+    }
   ]
 }

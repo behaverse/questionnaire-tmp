@@ -1,0 +1,167 @@
+{
+  "id": "scr_vast",
+  "name": "VAST Sadism Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "VAST Sadism Scoring",
+      "description": "Varieties of Sadistic Tendencies (VAST). Sadism total = sum of the 16 sadism items (1-16; direct + vicarious, each 1-5; reverse-keyed items 4,6,9,15 reversed by the runtime), range 16-80; higher = greater sadistic tendencies. (Items 17-27 are a separate prosocial block and are not part of this score.)"
+    }
+  },
+  "x_publication": {
+    "citation": "D. L. Paulhus & D. N. Jones (2015).  Measuring dark personalities via questionnaire.  In G. J. Boyle, D. H. Saklofske & G. Matthews (Eds.), Measures of personality and social psychological constructs (pp.562-594).  San Diego, CA: Academic Press.",
+    "year": 2015
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_vast_1|pr_vast_2|pr_vast_3|pr_vast_4|pr_vast_5|pr_vast_6|pr_vast_7|pr_vast_8|pr_vast_9|pr_vast_10|pr_vast_11|pr_vast_12|pr_vast_13|pr_vast_14|pr_vast_15|pr_vast_16)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "sadism": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "sadism"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/vast/scorer.wasm",
+      "sha256": "2b5cfc1c9e17d8e29603941f303fdc829e24736ab1505fd013efd6af11cac811"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_vast_1": 1,
+          "pr_vast_2": 1,
+          "pr_vast_3": 1,
+          "pr_vast_4": 1,
+          "pr_vast_5": 1,
+          "pr_vast_6": 1,
+          "pr_vast_7": 1,
+          "pr_vast_8": 1,
+          "pr_vast_9": 1,
+          "pr_vast_10": 1,
+          "pr_vast_11": 1,
+          "pr_vast_12": 1,
+          "pr_vast_13": 1,
+          "pr_vast_14": 1,
+          "pr_vast_15": 1,
+          "pr_vast_16": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "sadism": {
+            "value": 16
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_vast_1": 3,
+          "pr_vast_2": 3,
+          "pr_vast_3": 3,
+          "pr_vast_4": 3,
+          "pr_vast_5": 3,
+          "pr_vast_6": 3,
+          "pr_vast_7": 3,
+          "pr_vast_8": 3,
+          "pr_vast_9": 3,
+          "pr_vast_10": 3,
+          "pr_vast_11": 3,
+          "pr_vast_12": 3,
+          "pr_vast_13": 3,
+          "pr_vast_14": 3,
+          "pr_vast_15": 3,
+          "pr_vast_16": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "sadism": {
+            "value": 48
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_vast_1": 5,
+          "pr_vast_2": 5,
+          "pr_vast_3": 5,
+          "pr_vast_4": 5,
+          "pr_vast_5": 5,
+          "pr_vast_6": 5,
+          "pr_vast_7": 5,
+          "pr_vast_8": 5,
+          "pr_vast_9": 5,
+          "pr_vast_10": 5,
+          "pr_vast_11": 5,
+          "pr_vast_12": 5,
+          "pr_vast_13": 5,
+          "pr_vast_14": 5,
+          "pr_vast_15": 5,
+          "pr_vast_16": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "sadism": {
+            "value": 80
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

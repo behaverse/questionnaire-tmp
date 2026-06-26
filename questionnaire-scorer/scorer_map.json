@@ -142,6 +142,7 @@
   "scr_trust@v26.0618": "trust.wasm",
   "scr_tsis@v26.0618": "tsis.wasm",
   "scr_uplas@v26.0618": "uplas.wasm",
+  "scr_vast@v26.0618": "vast.wasm",
   "scr_webexec@v26.0618": "webexec.wasm",
   "scr_who5@v26.0618": "who5.wasm",
   "scr_ymrs@v26.0618": "ymrs.wasm",
