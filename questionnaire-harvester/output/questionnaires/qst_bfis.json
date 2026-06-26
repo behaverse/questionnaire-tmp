@@ -263,5 +263,37 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "neuroticism",
+      "name": "BFI-S neuroticism",
+      "path": "/scores/neuroticism/value",
+      "scorer": "scr_bfis@v26.0618"
+    },
+    {
+      "id": "extraversion",
+      "name": "BFI-S extraversion",
+      "path": "/scores/extraversion/value",
+      "scorer": "scr_bfis@v26.0618"
+    },
+    {
+      "id": "openness",
+      "name": "BFI-S openness",
+      "path": "/scores/openness/value",
+      "scorer": "scr_bfis@v26.0618"
+    },
+    {
+      "id": "agreeableness",
+      "name": "BFI-S agreeableness",
+      "path": "/scores/agreeableness/value",
+      "scorer": "scr_bfis@v26.0618"
+    },
+    {
+      "id": "conscientiousness",
+      "name": "BFI-S conscientiousness",
+      "path": "/scores/conscientiousness/value",
+      "scorer": "scr_bfis@v26.0618"
+    }
   ]
 }

@@ -212,5 +212,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PHQ-9 total",
+      "path": "/total",
+      "scorer": "scr_phq9@v26.0618"
+    },
+    {
+      "id": "severity",
+      "name": "PHQ-9 severity",
+      "path": "/severity",
+      "scorer": "scr_phq9@v26.0618"
+    }
   ]
 }

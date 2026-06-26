@@ -458,5 +458,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "dissociation",
+      "name": "DES-II dissociation",
+      "path": "/scores/dissociation/value",
+      "scorer": "scr_desii@v26.0618"
+    },
+    {
+      "id": "dissociation_severity",
+      "name": "DES-II dissociation level",
+      "path": "/scores/dissociation/severity",
+      "scorer": "scr_desii@v26.0618"
+    }
   ]
 }

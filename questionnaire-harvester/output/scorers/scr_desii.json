@@ -1,0 +1,247 @@
+{
+  "content": {
+    "en": {
+      "description": "Dissociative Experiences Scale (DES-II). Dissociative Experiences Scale-II (Carlson & Putnam, 1993). Score = MEAN of the 28 items (each 0-10, i.e. 0-100% in 10s) x10, range 0-100; a mean of 30 or more warrants screening for a dissociative disorder.",
+      "name": "DES-II Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_desii",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "f798212145bd15d1014cca7a12fe904216dbd8768ad9a0b74d4ce9174b1acc7a",
+      "url": "https://behaverse.org/scorers/desii/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_desii_1|pr_desii_2|pr_desii_3|pr_desii_4|pr_desii_5|pr_desii_6|pr_desii_7|pr_desii_8|pr_desii_9|pr_desii_10|pr_desii_11|pr_desii_12|pr_desii_13|pr_desii_14|pr_desii_15|pr_desii_16|pr_desii_17|pr_desii_18|pr_desii_19|pr_desii_20|pr_desii_21|pr_desii_22|pr_desii_23|pr_desii_24|pr_desii_25|pr_desii_26|pr_desii_27|pr_desii_28)$": {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "DES-II Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "dissociation": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "below_taxon",
+                  "elevated"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "dissociation"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "dissociation": {
+            "band": {
+              "label": "Below the dissociative-taxon cut-off",
+              "max": 29,
+              "min": 0
+            },
+            "severity": "below_taxon",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_desii_1": 0,
+          "pr_desii_10": 0,
+          "pr_desii_11": 0,
+          "pr_desii_12": 0,
+          "pr_desii_13": 0,
+          "pr_desii_14": 0,
+          "pr_desii_15": 0,
+          "pr_desii_16": 0,
+          "pr_desii_17": 0,
+          "pr_desii_18": 0,
+          "pr_desii_19": 0,
+          "pr_desii_2": 0,
+          "pr_desii_20": 0,
+          "pr_desii_21": 0,
+          "pr_desii_22": 0,
+          "pr_desii_23": 0,
+          "pr_desii_24": 0,
+          "pr_desii_25": 0,
+          "pr_desii_26": 0,
+          "pr_desii_27": 0,
+          "pr_desii_28": 0,
+          "pr_desii_3": 0,
+          "pr_desii_4": 0,
+          "pr_desii_5": 0,
+          "pr_desii_6": 0,
+          "pr_desii_7": 0,
+          "pr_desii_8": 0,
+          "pr_desii_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "dissociation": {
+            "band": {
+              "label": "Elevated — screen for a dissociative disorder",
+              "max": 100,
+              "min": 30
+            },
+            "severity": "elevated",
+            "value": 30
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_desii_1": 3,
+          "pr_desii_10": 3,
+          "pr_desii_11": 3,
+          "pr_desii_12": 3,
+          "pr_desii_13": 3,
+          "pr_desii_14": 3,
+          "pr_desii_15": 3,
+          "pr_desii_16": 3,
+          "pr_desii_17": 3,
+          "pr_desii_18": 3,
+          "pr_desii_19": 3,
+          "pr_desii_2": 3,
+          "pr_desii_20": 3,
+          "pr_desii_21": 3,
+          "pr_desii_22": 3,
+          "pr_desii_23": 3,
+          "pr_desii_24": 3,
+          "pr_desii_25": 3,
+          "pr_desii_26": 3,
+          "pr_desii_27": 3,
+          "pr_desii_28": 3,
+          "pr_desii_3": 3,
+          "pr_desii_4": 3,
+          "pr_desii_5": 3,
+          "pr_desii_6": 3,
+          "pr_desii_7": 3,
+          "pr_desii_8": 3,
+          "pr_desii_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "dissociation": {
+            "band": {
+              "label": "Elevated — screen for a dissociative disorder",
+              "max": 100,
+              "min": 30
+            },
+            "severity": "elevated",
+            "value": 100
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_desii_1": 10,
+          "pr_desii_10": 10,
+          "pr_desii_11": 10,
+          "pr_desii_12": 10,
+          "pr_desii_13": 10,
+          "pr_desii_14": 10,
+          "pr_desii_15": 10,
+          "pr_desii_16": 10,
+          "pr_desii_17": 10,
+          "pr_desii_18": 10,
+          "pr_desii_19": 10,
+          "pr_desii_2": 10,
+          "pr_desii_20": 10,
+          "pr_desii_21": 10,
+          "pr_desii_22": 10,
+          "pr_desii_23": 10,
+          "pr_desii_24": 10,
+          "pr_desii_25": 10,
+          "pr_desii_26": 10,
+          "pr_desii_27": 10,
+          "pr_desii_28": 10,
+          "pr_desii_3": 10,
+          "pr_desii_4": 10,
+          "pr_desii_5": 10,
+          "pr_desii_6": 10,
+          "pr_desii_7": 10,
+          "pr_desii_8": 10,
+          "pr_desii_9": 10
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Carlson E B, Putnam F W. An update on the Dissociative Experience Scale. Dissociation 6 ( 1 ): 16-27 ( 1993 ).",
+    "year": 1993
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "id": "scr_pswq",
+  "name": "PSWQ Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "PSWQ Scoring",
+      "description": "Penn State Worry Questionnaire (PSWQ). Penn State Worry Questionnaire (Meyer et al., 1990). Total = sum of the 16 items (each 1-5; reverse items pre-scored), range 16-80; higher = more pathological worry (60+ is typical of GAD)."
+    }
+  },
+  "x_publication": {
+    "citation": "T J Meyer, M L Miller, R L Metzger, and T D Borkovec. Development and Validation of the Penn State Worry Questionnaire. 28 Behav Res Ther 487-495. 1990.",
+    "year": 1990
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_pswq_1|pr_pswq_2|pr_pswq_3|pr_pswq_4|pr_pswq_5|pr_pswq_6|pr_pswq_7|pr_pswq_8|pr_pswq_9|pr_pswq_10|pr_pswq_11|pr_pswq_12|pr_pswq_13|pr_pswq_14|pr_pswq_15|pr_pswq_16)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "moderate",
+                  "high"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/pswq/scorer.wasm",
+      "sha256": "06aebf6f216325422755ed42b1aae8ae29bbe472d5ccd95f048e460fc5e5404a"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_pswq_1": 1,
+          "pr_pswq_2": 1,
+          "pr_pswq_3": 1,
+          "pr_pswq_4": 1,
+          "pr_pswq_5": 1,
+          "pr_pswq_6": 1,
+          "pr_pswq_7": 1,
+          "pr_pswq_8": 1,
+          "pr_pswq_9": 1,
+          "pr_pswq_10": 1,
+          "pr_pswq_11": 1,
+          "pr_pswq_12": 1,
+          "pr_pswq_13": 1,
+          "pr_pswq_14": 1,
+          "pr_pswq_15": 1,
+          "pr_pswq_16": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 16,
+            "severity": "low",
+            "band": {
+              "min": 16,
+              "max": 39,
+              "label": "Low worry"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_pswq_1": 3,
+          "pr_pswq_2": 3,
+          "pr_pswq_3": 3,
+          "pr_pswq_4": 3,
+          "pr_pswq_5": 3,
+          "pr_pswq_6": 3,
+          "pr_pswq_7": 3,
+          "pr_pswq_8": 3,
+          "pr_pswq_9": 3,
+          "pr_pswq_10": 3,
+          "pr_pswq_11": 3,
+          "pr_pswq_12": 3,
+          "pr_pswq_13": 3,
+          "pr_pswq_14": 3,
+          "pr_pswq_15": 3,
+          "pr_pswq_16": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 48,
+            "severity": "moderate",
+            "band": {
+              "min": 40,
+              "max": 59,
+              "label": "Moderate worry"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_pswq_1": 5,
+          "pr_pswq_2": 5,
+          "pr_pswq_3": 5,
+          "pr_pswq_4": 5,
+          "pr_pswq_5": 5,
+          "pr_pswq_6": 5,
+          "pr_pswq_7": 5,
+          "pr_pswq_8": 5,
+          "pr_pswq_9": 5,
+          "pr_pswq_10": 5,
+          "pr_pswq_11": 5,
+          "pr_pswq_12": 5,
+          "pr_pswq_13": 5,
+          "pr_pswq_14": 5,
+          "pr_pswq_15": 5,
+          "pr_pswq_16": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 80,
+            "severity": "high",
+            "band": {
+              "min": 60,
+              "max": 80,
+              "label": "High worry"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

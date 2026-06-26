@@ -1,0 +1,248 @@
+{
+  "content": {
+    "en": {
+      "description": "Short 15-item Big Five Inventory (BFI-S). Big Five Inventory-Short (BFI-S, 15 items). Five domain MEAN scores (each 3 items, 1-7; reverse handled): Neuroticism (1-3), Extraversion (4-6), Openness (7-9), Agreeableness (10-12), Conscientiousness (13-15).",
+      "name": "BFI-S Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_bfis",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "a32d0c1b1cdcf87106cf091e62a8d548d7bd9040609f89226da88c6d2f4a7f7b",
+      "url": "https://behaverse.org/scorers/bfis/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_bfis_1|pr_bfis_2|pr_bfis_3|pr_bfis_4|pr_bfis_5|pr_bfis_6|pr_bfis_7|pr_bfis_8|pr_bfis_9|pr_bfis_10|pr_bfis_11|pr_bfis_12|pr_bfis_13|pr_bfis_14|pr_bfis_15)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "BFI-S Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "agreeableness": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "conscientiousness": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "extraversion": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "neuroticism": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "openness": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "neuroticism",
+          "extraversion",
+          "openness",
+          "agreeableness",
+          "conscientiousness"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "agreeableness": {
+            "value": 1
+          },
+          "conscientiousness": {
+            "value": 1
+          },
+          "extraversion": {
+            "value": 1
+          },
+          "neuroticism": {
+            "value": 1
+          },
+          "openness": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfis_1": 1,
+          "pr_bfis_10": 1,
+          "pr_bfis_11": 1,
+          "pr_bfis_12": 1,
+          "pr_bfis_13": 1,
+          "pr_bfis_14": 1,
+          "pr_bfis_15": 1,
+          "pr_bfis_2": 1,
+          "pr_bfis_3": 1,
+          "pr_bfis_4": 1,
+          "pr_bfis_5": 1,
+          "pr_bfis_6": 1,
+          "pr_bfis_7": 1,
+          "pr_bfis_8": 1,
+          "pr_bfis_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "agreeableness": {
+            "value": 4
+          },
+          "conscientiousness": {
+            "value": 4
+          },
+          "extraversion": {
+            "value": 4
+          },
+          "neuroticism": {
+            "value": 4
+          },
+          "openness": {
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfis_1": 4,
+          "pr_bfis_10": 4,
+          "pr_bfis_11": 4,
+          "pr_bfis_12": 4,
+          "pr_bfis_13": 4,
+          "pr_bfis_14": 4,
+          "pr_bfis_15": 4,
+          "pr_bfis_2": 4,
+          "pr_bfis_3": 4,
+          "pr_bfis_4": 4,
+          "pr_bfis_5": 4,
+          "pr_bfis_6": 4,
+          "pr_bfis_7": 4,
+          "pr_bfis_8": 4,
+          "pr_bfis_9": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "agreeableness": {
+            "value": 7
+          },
+          "conscientiousness": {
+            "value": 7
+          },
+          "extraversion": {
+            "value": 7
+          },
+          "neuroticism": {
+            "value": 7
+          },
+          "openness": {
+            "value": 7
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_bfis_1": 7,
+          "pr_bfis_10": 7,
+          "pr_bfis_11": 7,
+          "pr_bfis_12": 7,
+          "pr_bfis_13": 7,
+          "pr_bfis_14": 7,
+          "pr_bfis_15": 7,
+          "pr_bfis_2": 7,
+          "pr_bfis_3": 7,
+          "pr_bfis_4": 7,
+          "pr_bfis_5": 7,
+          "pr_bfis_6": 7,
+          "pr_bfis_7": 7,
+          "pr_bfis_8": 7,
+          "pr_bfis_9": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Lang, F. R., John, D., Ludtke, O., Schupp, J., & Wagner, G. G. (2011). Short assessment of the Big Five: robust accros survey methods except telephone interviewing. Behavior Research Methods, 43 , 548-567.",
+    "year": 2011
+  }
+}

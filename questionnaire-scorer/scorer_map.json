@@ -10,6 +10,7 @@
   "scr_assq@v26.0618": "assq.wasm",
   "scr_bes@v26.0618": "bes.wasm",
   "scr_besc@v26.0618": "besc.wasm",
+  "scr_bfis@v26.0618": "bfis.wasm",
   "scr_bfs@v26.0618": "bfs.wasm",
   "scr_bhps@v26.0618": "bhps.wasm",
   "scr_binge@v26.0618": "binge.wasm",
@@ -31,6 +32,7 @@
   "scr_cudq@v26.0618": "cudq.wasm",
   "scr_dass@v26.0618": "dass.wasm",
   "scr_dass21@v26.0618": "dass21.wasm",
+  "scr_desii@v26.0618": "desii.wasm",
   "scr_ds14@v26.0618": "ds14.wasm",
   "scr_egst@v26.0618": "egst.wasm",
   "scr_epds@v26.0618": "epds.wasm",
@@ -84,6 +86,7 @@
   "scr_pmi@v26.0618": "pmi.wasm",
   "scr_pnsmd@v26.0618": "pnsmd.wasm",
   "scr_pss@v26.0618": "pss.wasm",
+  "scr_pswq@v26.0618": "pswq.wasm",
   "scr_pts@v26.0618": "pts.wasm",
   "scr_quotient@v26.0618": "quotient.wasm",
   "scr_raads14@v26.0618": "raads14.wasm",
@@ -120,5 +123,6 @@
   "scr_uplas@v26.0618": "uplas.wasm",
   "scr_webexec@v26.0618": "webexec.wasm",
   "scr_who5@v26.0618": "who5.wasm",
-  "scr_ymrs@v26.0618": "ymrs.wasm"
+  "scr_ymrs@v26.0618": "ymrs.wasm",
+  "scr_phq9@v26.0618": "phq9.wasm"
 }

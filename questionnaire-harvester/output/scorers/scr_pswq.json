@@ -1,0 +1,212 @@
+{
+  "content": {
+    "en": {
+      "description": "Penn State Worry Questionnaire (PSWQ). Penn State Worry Questionnaire (Meyer et al., 1990). Total = sum of the 16 items (each 1-5; reverse items pre-scored), range 16-80; higher = more pathological worry (60+ is typical of GAD).",
+      "name": "PSWQ Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_pswq",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "06aebf6f216325422755ed42b1aae8ae29bbe472d5ccd95f048e460fc5e5404a",
+      "url": "https://behaverse.org/scorers/pswq/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_pswq_1|pr_pswq_2|pr_pswq_3|pr_pswq_4|pr_pswq_5|pr_pswq_6|pr_pswq_7|pr_pswq_8|pr_pswq_9|pr_pswq_10|pr_pswq_11|pr_pswq_12|pr_pswq_13|pr_pswq_14|pr_pswq_15|pr_pswq_16)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "PSWQ Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "low",
+                  "moderate",
+                  "high"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Low worry",
+              "max": 39,
+              "min": 16
+            },
+            "severity": "low",
+            "value": 16
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pswq_1": 1,
+          "pr_pswq_10": 1,
+          "pr_pswq_11": 1,
+          "pr_pswq_12": 1,
+          "pr_pswq_13": 1,
+          "pr_pswq_14": 1,
+          "pr_pswq_15": 1,
+          "pr_pswq_16": 1,
+          "pr_pswq_2": 1,
+          "pr_pswq_3": 1,
+          "pr_pswq_4": 1,
+          "pr_pswq_5": 1,
+          "pr_pswq_6": 1,
+          "pr_pswq_7": 1,
+          "pr_pswq_8": 1,
+          "pr_pswq_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Moderate worry",
+              "max": 59,
+              "min": 40
+            },
+            "severity": "moderate",
+            "value": 48
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pswq_1": 3,
+          "pr_pswq_10": 3,
+          "pr_pswq_11": 3,
+          "pr_pswq_12": 3,
+          "pr_pswq_13": 3,
+          "pr_pswq_14": 3,
+          "pr_pswq_15": 3,
+          "pr_pswq_16": 3,
+          "pr_pswq_2": 3,
+          "pr_pswq_3": 3,
+          "pr_pswq_4": 3,
+          "pr_pswq_5": 3,
+          "pr_pswq_6": 3,
+          "pr_pswq_7": 3,
+          "pr_pswq_8": 3,
+          "pr_pswq_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "High worry",
+              "max": 80,
+              "min": 60
+            },
+            "severity": "high",
+            "value": 80
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_pswq_1": 5,
+          "pr_pswq_10": 5,
+          "pr_pswq_11": 5,
+          "pr_pswq_12": 5,
+          "pr_pswq_13": 5,
+          "pr_pswq_14": 5,
+          "pr_pswq_15": 5,
+          "pr_pswq_16": 5,
+          "pr_pswq_2": 5,
+          "pr_pswq_3": 5,
+          "pr_pswq_4": 5,
+          "pr_pswq_5": 5,
+          "pr_pswq_6": 5,
+          "pr_pswq_7": 5,
+          "pr_pswq_8": 5,
+          "pr_pswq_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "T J Meyer, M L Miller, R L Metzger, and T D Borkovec. Development and Validation of the Penn State Worry Questionnaire. 28 Behav Res Ther 487-495. 1990.",
+    "year": 1990
+  }
+}

@@ -244,5 +244,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "PSWQ total",
+      "path": "/scores/total/value",
+      "scorer": "scr_pswq@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "PSWQ total level",
+      "path": "/scores/total/severity",
+      "scorer": "scr_pswq@v26.0618"
+    }
   ]
 }

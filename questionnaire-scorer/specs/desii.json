@@ -1,0 +1,219 @@
+{
+  "id": "desii",
+  "scorer_id": "scr_desii",
+  "name": "DES-II Scoring",
+  "status": "validated",
+  "description": "Dissociative Experiences Scale (DES-II). Dissociative Experiences Scale-II (Carlson & Putnam, 1993). Score = MEAN of the 28 items (each 0-10, i.e. 0-100% in 10s) x10, range 0-100; a mean of 30 or more warrants screening for a dissociative disorder.",
+  "engine_spec": {
+    "item_range": [
+      0,
+      10
+    ],
+    "scores": [
+      {
+        "key": "dissociation",
+        "aggregate": "mean",
+        "items": [
+          "pr_desii_1",
+          "pr_desii_2",
+          "pr_desii_3",
+          "pr_desii_4",
+          "pr_desii_5",
+          "pr_desii_6",
+          "pr_desii_7",
+          "pr_desii_8",
+          "pr_desii_9",
+          "pr_desii_10",
+          "pr_desii_11",
+          "pr_desii_12",
+          "pr_desii_13",
+          "pr_desii_14",
+          "pr_desii_15",
+          "pr_desii_16",
+          "pr_desii_17",
+          "pr_desii_18",
+          "pr_desii_19",
+          "pr_desii_20",
+          "pr_desii_21",
+          "pr_desii_22",
+          "pr_desii_23",
+          "pr_desii_24",
+          "pr_desii_25",
+          "pr_desii_26",
+          "pr_desii_27",
+          "pr_desii_28"
+        ],
+        "transform": {
+          "mul": 10
+        },
+        "bands": [
+          {
+            "min": 0,
+            "max": 29,
+            "severity": "below_taxon",
+            "label": "Below the dissociative-taxon cut-off"
+          },
+          {
+            "min": 30,
+            "max": 100,
+            "severity": "elevated",
+            "label": "Elevated \u2014 screen for a dissociative disorder"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_desii_1": 0,
+          "pr_desii_2": 0,
+          "pr_desii_3": 0,
+          "pr_desii_4": 0,
+          "pr_desii_5": 0,
+          "pr_desii_6": 0,
+          "pr_desii_7": 0,
+          "pr_desii_8": 0,
+          "pr_desii_9": 0,
+          "pr_desii_10": 0,
+          "pr_desii_11": 0,
+          "pr_desii_12": 0,
+          "pr_desii_13": 0,
+          "pr_desii_14": 0,
+          "pr_desii_15": 0,
+          "pr_desii_16": 0,
+          "pr_desii_17": 0,
+          "pr_desii_18": 0,
+          "pr_desii_19": 0,
+          "pr_desii_20": 0,
+          "pr_desii_21": 0,
+          "pr_desii_22": 0,
+          "pr_desii_23": 0,
+          "pr_desii_24": 0,
+          "pr_desii_25": 0,
+          "pr_desii_26": 0,
+          "pr_desii_27": 0,
+          "pr_desii_28": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "dissociation": {
+            "value": 0,
+            "severity": "below_taxon",
+            "band": {
+              "min": 0,
+              "max": 29,
+              "label": "Below the dissociative-taxon cut-off"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_desii_1": 3,
+          "pr_desii_2": 3,
+          "pr_desii_3": 3,
+          "pr_desii_4": 3,
+          "pr_desii_5": 3,
+          "pr_desii_6": 3,
+          "pr_desii_7": 3,
+          "pr_desii_8": 3,
+          "pr_desii_9": 3,
+          "pr_desii_10": 3,
+          "pr_desii_11": 3,
+          "pr_desii_12": 3,
+          "pr_desii_13": 3,
+          "pr_desii_14": 3,
+          "pr_desii_15": 3,
+          "pr_desii_16": 3,
+          "pr_desii_17": 3,
+          "pr_desii_18": 3,
+          "pr_desii_19": 3,
+          "pr_desii_20": 3,
+          "pr_desii_21": 3,
+          "pr_desii_22": 3,
+          "pr_desii_23": 3,
+          "pr_desii_24": 3,
+          "pr_desii_25": 3,
+          "pr_desii_26": 3,
+          "pr_desii_27": 3,
+          "pr_desii_28": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "dissociation": {
+            "value": 30,
+            "severity": "elevated",
+            "band": {
+              "min": 30,
+              "max": 100,
+              "label": "Elevated \u2014 screen for a dissociative disorder"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_desii_1": 10,
+          "pr_desii_2": 10,
+          "pr_desii_3": 10,
+          "pr_desii_4": 10,
+          "pr_desii_5": 10,
+          "pr_desii_6": 10,
+          "pr_desii_7": 10,
+          "pr_desii_8": 10,
+          "pr_desii_9": 10,
+          "pr_desii_10": 10,
+          "pr_desii_11": 10,
+          "pr_desii_12": 10,
+          "pr_desii_13": 10,
+          "pr_desii_14": 10,
+          "pr_desii_15": 10,
+          "pr_desii_16": 10,
+          "pr_desii_17": 10,
+          "pr_desii_18": 10,
+          "pr_desii_19": 10,
+          "pr_desii_20": 10,
+          "pr_desii_21": 10,
+          "pr_desii_22": 10,
+          "pr_desii_23": 10,
+          "pr_desii_24": 10,
+          "pr_desii_25": 10,
+          "pr_desii_26": 10,
+          "pr_desii_27": 10,
+          "pr_desii_28": 10
+        }
+      },
+      "expected": {
+        "scores": {
+          "dissociation": {
+            "value": 100,
+            "severity": "elevated",
+            "band": {
+              "min": 30,
+              "max": 100,
+              "label": "Elevated \u2014 screen for a dissociative disorder"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Carlson E B, Putnam F W. An update on the Dissociative Experience Scale. Dissociation 6 ( 1 ): 16-27 ( 1993 ).",
+    "year": 1993
+  }
+}
