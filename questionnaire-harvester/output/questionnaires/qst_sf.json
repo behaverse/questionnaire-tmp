@@ -389,5 +389,43 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "eros",
+      "name": "LAS-SF eros",
+      "path": "/scores/eros/value",
+      "scorer": "scr_sf@v26.0618"
+    },
+    {
+      "id": "ludus",
+      "name": "LAS-SF ludus",
+      "path": "/scores/ludus/value",
+      "scorer": "scr_sf@v26.0618"
+    },
+    {
+      "id": "storge",
+      "name": "LAS-SF storge",
+      "path": "/scores/storge/value",
+      "scorer": "scr_sf@v26.0618"
+    },
+    {
+      "id": "pragma",
+      "name": "LAS-SF pragma",
+      "path": "/scores/pragma/value",
+      "scorer": "scr_sf@v26.0618"
+    },
+    {
+      "id": "mania",
+      "name": "LAS-SF mania",
+      "path": "/scores/mania/value",
+      "scorer": "scr_sf@v26.0618"
+    },
+    {
+      "id": "agape",
+      "name": "LAS-SF agape",
+      "path": "/scores/agape/value",
+      "scorer": "scr_sf@v26.0618"
+    }
   ]
 }

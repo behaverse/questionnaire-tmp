@@ -347,5 +347,25 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "security",
+      "name": "SAAM security",
+      "path": "/scores/security/value",
+      "scorer": "scr_saam@v26.0618"
+    },
+    {
+      "id": "avoidance",
+      "name": "SAAM avoidance",
+      "path": "/scores/avoidance/value",
+      "scorer": "scr_saam@v26.0618"
+    },
+    {
+      "id": "anxiety",
+      "name": "SAAM anxiety",
+      "path": "/scores/anxiety/value",
+      "scorer": "scr_saam@v26.0618"
+    }
   ]
 }

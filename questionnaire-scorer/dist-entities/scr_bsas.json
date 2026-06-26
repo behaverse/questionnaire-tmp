@@ -1,0 +1,251 @@
+{
+  "id": "scr_bsas",
+  "name": "BSAS Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "BSAS Scoring",
+      "description": "The brief sexual attitudes scale (BSAS). Brief Sexual Attitudes Scale (Hendrick et al., 2006). Four subscale MEAN scores (1-5): Permissiveness (items 1-10), Birth Control (11-13), Communion (14-18), Instrumentality (19-23). Higher = stronger endorsement; no cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Hendrick, C., Hendrick, S. S., & Reich, D. A. (2006). The Journal of Sex Research, 43 , 76-86.",
+    "year": 2006
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_bsas_1|pr_bsas_2|pr_bsas_3|pr_bsas_4|pr_bsas_5|pr_bsas_6|pr_bsas_7|pr_bsas_8|pr_bsas_9|pr_bsas_10|pr_bsas_11|pr_bsas_12|pr_bsas_13|pr_bsas_14|pr_bsas_15|pr_bsas_16|pr_bsas_17|pr_bsas_18|pr_bsas_19|pr_bsas_20|pr_bsas_21|pr_bsas_22|pr_bsas_23)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "permissiveness": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "birth_control": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "communion": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "instrumentality": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "permissiveness",
+          "birth_control",
+          "communion",
+          "instrumentality"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/bsas/scorer.wasm",
+      "sha256": "b0606658c9efcc250823f1ab44b194034ac70fdddeec726d1516d7be009f931c"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_bsas_1": 1,
+          "pr_bsas_2": 1,
+          "pr_bsas_3": 1,
+          "pr_bsas_4": 1,
+          "pr_bsas_5": 1,
+          "pr_bsas_6": 1,
+          "pr_bsas_7": 1,
+          "pr_bsas_8": 1,
+          "pr_bsas_9": 1,
+          "pr_bsas_10": 1,
+          "pr_bsas_11": 1,
+          "pr_bsas_12": 1,
+          "pr_bsas_13": 1,
+          "pr_bsas_14": 1,
+          "pr_bsas_15": 1,
+          "pr_bsas_16": 1,
+          "pr_bsas_17": 1,
+          "pr_bsas_18": 1,
+          "pr_bsas_19": 1,
+          "pr_bsas_20": 1,
+          "pr_bsas_21": 1,
+          "pr_bsas_22": 1,
+          "pr_bsas_23": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "permissiveness": {
+            "value": 1
+          },
+          "birth_control": {
+            "value": 1
+          },
+          "communion": {
+            "value": 1
+          },
+          "instrumentality": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_bsas_1": 3,
+          "pr_bsas_2": 3,
+          "pr_bsas_3": 3,
+          "pr_bsas_4": 3,
+          "pr_bsas_5": 3,
+          "pr_bsas_6": 3,
+          "pr_bsas_7": 3,
+          "pr_bsas_8": 3,
+          "pr_bsas_9": 3,
+          "pr_bsas_10": 3,
+          "pr_bsas_11": 3,
+          "pr_bsas_12": 3,
+          "pr_bsas_13": 3,
+          "pr_bsas_14": 3,
+          "pr_bsas_15": 3,
+          "pr_bsas_16": 3,
+          "pr_bsas_17": 3,
+          "pr_bsas_18": 3,
+          "pr_bsas_19": 3,
+          "pr_bsas_20": 3,
+          "pr_bsas_21": 3,
+          "pr_bsas_22": 3,
+          "pr_bsas_23": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "permissiveness": {
+            "value": 3
+          },
+          "birth_control": {
+            "value": 3
+          },
+          "communion": {
+            "value": 3
+          },
+          "instrumentality": {
+            "value": 3
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_bsas_1": 5,
+          "pr_bsas_2": 5,
+          "pr_bsas_3": 5,
+          "pr_bsas_4": 5,
+          "pr_bsas_5": 5,
+          "pr_bsas_6": 5,
+          "pr_bsas_7": 5,
+          "pr_bsas_8": 5,
+          "pr_bsas_9": 5,
+          "pr_bsas_10": 5,
+          "pr_bsas_11": 5,
+          "pr_bsas_12": 5,
+          "pr_bsas_13": 5,
+          "pr_bsas_14": 5,
+          "pr_bsas_15": 5,
+          "pr_bsas_16": 5,
+          "pr_bsas_17": 5,
+          "pr_bsas_18": 5,
+          "pr_bsas_19": 5,
+          "pr_bsas_20": 5,
+          "pr_bsas_21": 5,
+          "pr_bsas_22": 5,
+          "pr_bsas_23": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "permissiveness": {
+            "value": 5
+          },
+          "birth_control": {
+            "value": 5
+          },
+          "communion": {
+            "value": 5
+          },
+          "instrumentality": {
+            "value": 5
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

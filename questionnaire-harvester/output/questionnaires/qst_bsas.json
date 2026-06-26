@@ -375,5 +375,31 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "permissiveness",
+      "name": "BSAS permissiveness",
+      "path": "/scores/permissiveness/value",
+      "scorer": "scr_bsas@v26.0618"
+    },
+    {
+      "id": "birth_control",
+      "name": "BSAS birth control",
+      "path": "/scores/birth_control/value",
+      "scorer": "scr_bsas@v26.0618"
+    },
+    {
+      "id": "communion",
+      "name": "BSAS communion",
+      "path": "/scores/communion/value",
+      "scorer": "scr_bsas@v26.0618"
+    },
+    {
+      "id": "instrumentality",
+      "name": "BSAS instrumentality",
+      "path": "/scores/instrumentality/value",
+      "scorer": "scr_bsas@v26.0618"
+    }
   ]
 }

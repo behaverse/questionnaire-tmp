@@ -1,0 +1,224 @@
+{
+  "id": "scr_saam",
+  "name": "SAAM Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "SAAM Scoring",
+      "description": "State Adult Attachment Measure (SAAM). State Adult Attachment Measure (Gillath et al., 2009). Three 7-item subscale MEAN scores (each 1-7): Security (4,6,7,11,13,18,20), Avoidance (2,3,9,10,15,16,21), Anxiety (1,5,8,12,14,17,19). State measure; no cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Gillath, O., Hart, J., Noftle, E. E., & Stockdale, G. D. (2009). Development and validation of a state adult attachment measure (SAAM). Journal of Research in Personality, 43 , 362-373. See also this link to Gillath’s web page .",
+    "year": 2009
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_saam_4|pr_saam_6|pr_saam_7|pr_saam_11|pr_saam_13|pr_saam_18|pr_saam_20|pr_saam_2|pr_saam_3|pr_saam_9|pr_saam_10|pr_saam_15|pr_saam_16|pr_saam_21|pr_saam_1|pr_saam_5|pr_saam_8|pr_saam_12|pr_saam_14|pr_saam_17|pr_saam_19)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "security": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "avoidance": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "anxiety": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "security",
+          "avoidance",
+          "anxiety"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/saam/scorer.wasm",
+      "sha256": "4b2d264b0894bb61b6277a7cdc745087acfde30de3261de3fe96f27d79e66b74"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_saam_4": 1,
+          "pr_saam_6": 1,
+          "pr_saam_7": 1,
+          "pr_saam_11": 1,
+          "pr_saam_13": 1,
+          "pr_saam_18": 1,
+          "pr_saam_20": 1,
+          "pr_saam_2": 1,
+          "pr_saam_3": 1,
+          "pr_saam_9": 1,
+          "pr_saam_10": 1,
+          "pr_saam_15": 1,
+          "pr_saam_16": 1,
+          "pr_saam_21": 1,
+          "pr_saam_1": 1,
+          "pr_saam_5": 1,
+          "pr_saam_8": 1,
+          "pr_saam_12": 1,
+          "pr_saam_14": 1,
+          "pr_saam_17": 1,
+          "pr_saam_19": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "security": {
+            "value": 1
+          },
+          "avoidance": {
+            "value": 1
+          },
+          "anxiety": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_saam_4": 4,
+          "pr_saam_6": 4,
+          "pr_saam_7": 4,
+          "pr_saam_11": 4,
+          "pr_saam_13": 4,
+          "pr_saam_18": 4,
+          "pr_saam_20": 4,
+          "pr_saam_2": 4,
+          "pr_saam_3": 4,
+          "pr_saam_9": 4,
+          "pr_saam_10": 4,
+          "pr_saam_15": 4,
+          "pr_saam_16": 4,
+          "pr_saam_21": 4,
+          "pr_saam_1": 4,
+          "pr_saam_5": 4,
+          "pr_saam_8": 4,
+          "pr_saam_12": 4,
+          "pr_saam_14": 4,
+          "pr_saam_17": 4,
+          "pr_saam_19": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "security": {
+            "value": 4
+          },
+          "avoidance": {
+            "value": 4
+          },
+          "anxiety": {
+            "value": 4
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_saam_4": 7,
+          "pr_saam_6": 7,
+          "pr_saam_7": 7,
+          "pr_saam_11": 7,
+          "pr_saam_13": 7,
+          "pr_saam_18": 7,
+          "pr_saam_20": 7,
+          "pr_saam_2": 7,
+          "pr_saam_3": 7,
+          "pr_saam_9": 7,
+          "pr_saam_10": 7,
+          "pr_saam_15": 7,
+          "pr_saam_16": 7,
+          "pr_saam_21": 7,
+          "pr_saam_1": 7,
+          "pr_saam_5": 7,
+          "pr_saam_8": 7,
+          "pr_saam_12": 7,
+          "pr_saam_14": 7,
+          "pr_saam_17": 7,
+          "pr_saam_19": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "security": {
+            "value": 7
+          },
+          "avoidance": {
+            "value": 7
+          },
+          "anxiety": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

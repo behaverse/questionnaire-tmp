@@ -1,0 +1,243 @@
+{
+  "id": "sf",
+  "scorer_id": "scr_sf",
+  "name": "LAS-SF Scoring",
+  "status": "validated",
+  "description": "Love Attitudes Scale (Short Form). Love Attitudes Scale-Short Form (Hendrick et al., 1998). Six 4-item love-style MEAN scores (1-5): Eros (1,2,3,19), Ludus (4,5,6,20), Storge (7,8,9,21), Pragma (10,11,12,22), Mania (13,14,15,23), Agape (16,17,18,24).",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "eros",
+        "items": [
+          "pr_sf_1",
+          "pr_sf_2",
+          "pr_sf_3",
+          "pr_sf_19"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "ludus",
+        "items": [
+          "pr_sf_4",
+          "pr_sf_5",
+          "pr_sf_6",
+          "pr_sf_20"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "storge",
+        "items": [
+          "pr_sf_7",
+          "pr_sf_8",
+          "pr_sf_9",
+          "pr_sf_21"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "pragma",
+        "items": [
+          "pr_sf_10",
+          "pr_sf_11",
+          "pr_sf_12",
+          "pr_sf_22"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "mania",
+        "items": [
+          "pr_sf_13",
+          "pr_sf_14",
+          "pr_sf_15",
+          "pr_sf_23"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "agape",
+        "items": [
+          "pr_sf_16",
+          "pr_sf_17",
+          "pr_sf_18",
+          "pr_sf_24"
+        ],
+        "aggregate": "mean"
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_sf_1": 1,
+          "pr_sf_2": 1,
+          "pr_sf_3": 1,
+          "pr_sf_19": 1,
+          "pr_sf_4": 1,
+          "pr_sf_5": 1,
+          "pr_sf_6": 1,
+          "pr_sf_20": 1,
+          "pr_sf_7": 1,
+          "pr_sf_8": 1,
+          "pr_sf_9": 1,
+          "pr_sf_21": 1,
+          "pr_sf_10": 1,
+          "pr_sf_11": 1,
+          "pr_sf_12": 1,
+          "pr_sf_22": 1,
+          "pr_sf_13": 1,
+          "pr_sf_14": 1,
+          "pr_sf_15": 1,
+          "pr_sf_23": 1,
+          "pr_sf_16": 1,
+          "pr_sf_17": 1,
+          "pr_sf_18": 1,
+          "pr_sf_24": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "eros": {
+            "value": 1
+          },
+          "ludus": {
+            "value": 1
+          },
+          "storge": {
+            "value": 1
+          },
+          "pragma": {
+            "value": 1
+          },
+          "mania": {
+            "value": 1
+          },
+          "agape": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_sf_1": 3,
+          "pr_sf_2": 3,
+          "pr_sf_3": 3,
+          "pr_sf_19": 3,
+          "pr_sf_4": 3,
+          "pr_sf_5": 3,
+          "pr_sf_6": 3,
+          "pr_sf_20": 3,
+          "pr_sf_7": 3,
+          "pr_sf_8": 3,
+          "pr_sf_9": 3,
+          "pr_sf_21": 3,
+          "pr_sf_10": 3,
+          "pr_sf_11": 3,
+          "pr_sf_12": 3,
+          "pr_sf_22": 3,
+          "pr_sf_13": 3,
+          "pr_sf_14": 3,
+          "pr_sf_15": 3,
+          "pr_sf_23": 3,
+          "pr_sf_16": 3,
+          "pr_sf_17": 3,
+          "pr_sf_18": 3,
+          "pr_sf_24": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "eros": {
+            "value": 3
+          },
+          "ludus": {
+            "value": 3
+          },
+          "storge": {
+            "value": 3
+          },
+          "pragma": {
+            "value": 3
+          },
+          "mania": {
+            "value": 3
+          },
+          "agape": {
+            "value": 3
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_sf_1": 5,
+          "pr_sf_2": 5,
+          "pr_sf_3": 5,
+          "pr_sf_19": 5,
+          "pr_sf_4": 5,
+          "pr_sf_5": 5,
+          "pr_sf_6": 5,
+          "pr_sf_20": 5,
+          "pr_sf_7": 5,
+          "pr_sf_8": 5,
+          "pr_sf_9": 5,
+          "pr_sf_21": 5,
+          "pr_sf_10": 5,
+          "pr_sf_11": 5,
+          "pr_sf_12": 5,
+          "pr_sf_22": 5,
+          "pr_sf_13": 5,
+          "pr_sf_14": 5,
+          "pr_sf_15": 5,
+          "pr_sf_23": 5,
+          "pr_sf_16": 5,
+          "pr_sf_17": 5,
+          "pr_sf_18": 5,
+          "pr_sf_24": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "eros": {
+            "value": 5
+          },
+          "ludus": {
+            "value": 5
+          },
+          "storge": {
+            "value": 5
+          },
+          "pragma": {
+            "value": 5
+          },
+          "mania": {
+            "value": 5
+          },
+          "agape": {
+            "value": 5
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "Hendrick, C. & Hendrick, S. (1986). A theory and method of\nlove. Journal of Personality and Social Psychology, 50 , 392-402.",
+    "year": 1986
+  }
+}

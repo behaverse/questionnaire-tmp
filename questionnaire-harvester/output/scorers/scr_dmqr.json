@@ -1,0 +1,242 @@
+{
+  "content": {
+    "en": {
+      "description": "Drinking Motives Questionnaire, Revised (DMQ-R). Drinking Motives Questionnaire-Revised (Cooper, 1994). Four 5-item subscale MEAN scores (1-5): Social (items 3,5,11,14,16), Coping (1,4,6,15,17), Enhancement (7,9,10,13,18), Conformity (2,8,12,19,20).",
+      "name": "DMQ-R Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_dmqr",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "b6f12899a1d977d83a2a20823e577ba93999a4bd7951b0af9a2b65c5fafc1128",
+      "url": "https://behaverse.org/scorers/dmqr/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_dmqr_3|pr_dmqr_5|pr_dmqr_11|pr_dmqr_14|pr_dmqr_16|pr_dmqr_1|pr_dmqr_4|pr_dmqr_6|pr_dmqr_15|pr_dmqr_17|pr_dmqr_7|pr_dmqr_9|pr_dmqr_10|pr_dmqr_13|pr_dmqr_18|pr_dmqr_2|pr_dmqr_8|pr_dmqr_12|pr_dmqr_19|pr_dmqr_20)$": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "DMQ-R Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "conformity": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "coping": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "enhancement": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "social": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "social",
+          "coping",
+          "enhancement",
+          "conformity"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "conformity": {
+            "value": 1
+          },
+          "coping": {
+            "value": 1
+          },
+          "enhancement": {
+            "value": 1
+          },
+          "social": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_dmqr_1": 1,
+          "pr_dmqr_10": 1,
+          "pr_dmqr_11": 1,
+          "pr_dmqr_12": 1,
+          "pr_dmqr_13": 1,
+          "pr_dmqr_14": 1,
+          "pr_dmqr_15": 1,
+          "pr_dmqr_16": 1,
+          "pr_dmqr_17": 1,
+          "pr_dmqr_18": 1,
+          "pr_dmqr_19": 1,
+          "pr_dmqr_2": 1,
+          "pr_dmqr_20": 1,
+          "pr_dmqr_3": 1,
+          "pr_dmqr_4": 1,
+          "pr_dmqr_5": 1,
+          "pr_dmqr_6": 1,
+          "pr_dmqr_7": 1,
+          "pr_dmqr_8": 1,
+          "pr_dmqr_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "conformity": {
+            "value": 3
+          },
+          "coping": {
+            "value": 3
+          },
+          "enhancement": {
+            "value": 3
+          },
+          "social": {
+            "value": 3
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_dmqr_1": 3,
+          "pr_dmqr_10": 3,
+          "pr_dmqr_11": 3,
+          "pr_dmqr_12": 3,
+          "pr_dmqr_13": 3,
+          "pr_dmqr_14": 3,
+          "pr_dmqr_15": 3,
+          "pr_dmqr_16": 3,
+          "pr_dmqr_17": 3,
+          "pr_dmqr_18": 3,
+          "pr_dmqr_19": 3,
+          "pr_dmqr_2": 3,
+          "pr_dmqr_20": 3,
+          "pr_dmqr_3": 3,
+          "pr_dmqr_4": 3,
+          "pr_dmqr_5": 3,
+          "pr_dmqr_6": 3,
+          "pr_dmqr_7": 3,
+          "pr_dmqr_8": 3,
+          "pr_dmqr_9": 3
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "conformity": {
+            "value": 5
+          },
+          "coping": {
+            "value": 5
+          },
+          "enhancement": {
+            "value": 5
+          },
+          "social": {
+            "value": 5
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_dmqr_1": 5,
+          "pr_dmqr_10": 5,
+          "pr_dmqr_11": 5,
+          "pr_dmqr_12": 5,
+          "pr_dmqr_13": 5,
+          "pr_dmqr_14": 5,
+          "pr_dmqr_15": 5,
+          "pr_dmqr_16": 5,
+          "pr_dmqr_17": 5,
+          "pr_dmqr_18": 5,
+          "pr_dmqr_19": 5,
+          "pr_dmqr_2": 5,
+          "pr_dmqr_20": 5,
+          "pr_dmqr_3": 5,
+          "pr_dmqr_4": 5,
+          "pr_dmqr_5": 5,
+          "pr_dmqr_6": 5,
+          "pr_dmqr_7": 5,
+          "pr_dmqr_8": 5,
+          "pr_dmqr_9": 5
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Cooper, M. L. (1994). Motivations for Alcohol Use Among Adolescents: Development and Validation of a Four-Factor Model. Psychological Assessment, 6(2) , 117-128.",
+    "year": 1994
+  }
+}

@@ -613,5 +613,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "rationality",
+      "name": "REI rationality",
+      "path": "/scores/rationality/value",
+      "scorer": "scr_rei@v26.0618"
+    },
+    {
+      "id": "experientiality",
+      "name": "REI experientiality",
+      "path": "/scores/experientiality/value",
+      "scorer": "scr_rei@v26.0618"
+    }
   ]
 }

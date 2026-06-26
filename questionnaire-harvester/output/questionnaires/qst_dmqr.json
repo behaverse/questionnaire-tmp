@@ -333,5 +333,31 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "social",
+      "name": "DMQ-R social",
+      "path": "/scores/social/value",
+      "scorer": "scr_dmqr@v26.0618"
+    },
+    {
+      "id": "coping",
+      "name": "DMQ-R coping",
+      "path": "/scores/coping/value",
+      "scorer": "scr_dmqr@v26.0618"
+    },
+    {
+      "id": "enhancement",
+      "name": "DMQ-R enhancement",
+      "path": "/scores/enhancement/value",
+      "scorer": "scr_dmqr@v26.0618"
+    },
+    {
+      "id": "conformity",
+      "name": "DMQ-R conformity",
+      "path": "/scores/conformity/value",
+      "scorer": "scr_dmqr@v26.0618"
+    }
   ]
 }
