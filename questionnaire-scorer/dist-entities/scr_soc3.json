@@ -1,0 +1,251 @@
+{
+  "id": "scr_soc3",
+  "name": "SOC-3 Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "SOC-3 Scoring",
+      "description": "Spheres of Control Scale (SOC-3). Spheres of Control Scale (SOC-3; Paulhus, 1983). Three 10-item subscale MEAN scores (each 1-7; reverse handled): Personal control (items 1-10), Interpersonal control (11-20), Sociopolitical control (21-30)."
+    }
+  },
+  "x_publication": {
+    "citation": "Paulhus, D.L., & Van Selst, M. (1990). The Spheres of Control scale: Ten years of research. Personality and Individual Differences, 11, 1029-1036.",
+    "year": 1990
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_soc3_1|pr_soc3_2|pr_soc3_3|pr_soc3_4|pr_soc3_5|pr_soc3_6|pr_soc3_7|pr_soc3_8|pr_soc3_9|pr_soc3_10|pr_soc3_11|pr_soc3_12|pr_soc3_13|pr_soc3_14|pr_soc3_15|pr_soc3_16|pr_soc3_17|pr_soc3_18|pr_soc3_19|pr_soc3_20|pr_soc3_21|pr_soc3_22|pr_soc3_23|pr_soc3_24|pr_soc3_25|pr_soc3_26|pr_soc3_27|pr_soc3_28|pr_soc3_29|pr_soc3_30)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "personal": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "interpersonal": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "sociopolitical": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "personal",
+          "interpersonal",
+          "sociopolitical"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/soc3/scorer.wasm",
+      "sha256": "af457a704bd8c7e7fa143d951035424a4181de420398a7ee298f161dbbd3cbce"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_soc3_1": 1,
+          "pr_soc3_2": 1,
+          "pr_soc3_3": 1,
+          "pr_soc3_4": 1,
+          "pr_soc3_5": 1,
+          "pr_soc3_6": 1,
+          "pr_soc3_7": 1,
+          "pr_soc3_8": 1,
+          "pr_soc3_9": 1,
+          "pr_soc3_10": 1,
+          "pr_soc3_11": 1,
+          "pr_soc3_12": 1,
+          "pr_soc3_13": 1,
+          "pr_soc3_14": 1,
+          "pr_soc3_15": 1,
+          "pr_soc3_16": 1,
+          "pr_soc3_17": 1,
+          "pr_soc3_18": 1,
+          "pr_soc3_19": 1,
+          "pr_soc3_20": 1,
+          "pr_soc3_21": 1,
+          "pr_soc3_22": 1,
+          "pr_soc3_23": 1,
+          "pr_soc3_24": 1,
+          "pr_soc3_25": 1,
+          "pr_soc3_26": 1,
+          "pr_soc3_27": 1,
+          "pr_soc3_28": 1,
+          "pr_soc3_29": 1,
+          "pr_soc3_30": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "personal": {
+            "value": 1
+          },
+          "interpersonal": {
+            "value": 1
+          },
+          "sociopolitical": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_soc3_1": 4,
+          "pr_soc3_2": 4,
+          "pr_soc3_3": 4,
+          "pr_soc3_4": 4,
+          "pr_soc3_5": 4,
+          "pr_soc3_6": 4,
+          "pr_soc3_7": 4,
+          "pr_soc3_8": 4,
+          "pr_soc3_9": 4,
+          "pr_soc3_10": 4,
+          "pr_soc3_11": 4,
+          "pr_soc3_12": 4,
+          "pr_soc3_13": 4,
+          "pr_soc3_14": 4,
+          "pr_soc3_15": 4,
+          "pr_soc3_16": 4,
+          "pr_soc3_17": 4,
+          "pr_soc3_18": 4,
+          "pr_soc3_19": 4,
+          "pr_soc3_20": 4,
+          "pr_soc3_21": 4,
+          "pr_soc3_22": 4,
+          "pr_soc3_23": 4,
+          "pr_soc3_24": 4,
+          "pr_soc3_25": 4,
+          "pr_soc3_26": 4,
+          "pr_soc3_27": 4,
+          "pr_soc3_28": 4,
+          "pr_soc3_29": 4,
+          "pr_soc3_30": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "personal": {
+            "value": 4
+          },
+          "interpersonal": {
+            "value": 4
+          },
+          "sociopolitical": {
+            "value": 4
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_soc3_1": 7,
+          "pr_soc3_2": 7,
+          "pr_soc3_3": 7,
+          "pr_soc3_4": 7,
+          "pr_soc3_5": 7,
+          "pr_soc3_6": 7,
+          "pr_soc3_7": 7,
+          "pr_soc3_8": 7,
+          "pr_soc3_9": 7,
+          "pr_soc3_10": 7,
+          "pr_soc3_11": 7,
+          "pr_soc3_12": 7,
+          "pr_soc3_13": 7,
+          "pr_soc3_14": 7,
+          "pr_soc3_15": 7,
+          "pr_soc3_16": 7,
+          "pr_soc3_17": 7,
+          "pr_soc3_18": 7,
+          "pr_soc3_19": 7,
+          "pr_soc3_20": 7,
+          "pr_soc3_21": 7,
+          "pr_soc3_22": 7,
+          "pr_soc3_23": 7,
+          "pr_soc3_24": 7,
+          "pr_soc3_25": 7,
+          "pr_soc3_26": 7,
+          "pr_soc3_27": 7,
+          "pr_soc3_28": 7,
+          "pr_soc3_29": 7,
+          "pr_soc3_30": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "personal": {
+            "value": 7
+          },
+          "interpersonal": {
+            "value": 7
+          },
+          "sociopolitical": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

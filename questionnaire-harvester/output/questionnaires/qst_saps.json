@@ -165,5 +165,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "standards",
+      "name": "Standards",
+      "path": "/scores/standards/value",
+      "scorer": "scr_saps@v26.0618"
+    },
+    {
+      "id": "discrepancy",
+      "name": "Discrepancy",
+      "path": "/scores/discrepancy/value",
+      "scorer": "scr_saps@v26.0618"
+    }
   ]
 }

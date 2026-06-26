@@ -1,0 +1,278 @@
+{
+  "id": "scr_hsq",
+  "name": "HSQ Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "HSQ Scoring",
+      "description": "Humor Styles Questionnaire (HSQ). Humor Styles Questionnaire (Martin et al., 2003). Four 8-item subscale sums (each item 1-7, range 8-56; reverse handled): Affiliative, Self-enhancing, Aggressive, Self-defeating."
+    }
+  },
+  "x_publication": {
+    "citation": "Martin, R.A., Puhlik-Doris, P., Larsen, G., Gray, J., and Weir, K. (2003). Individual differences in uses of humor and their relation to psychological well-being: Development of the Humor Styles Questionnaire. Journal of Research in Personality, 37 , 48-75.",
+    "year": 2003
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_hsq_1|pr_hsq_5|pr_hsq_9|pr_hsq_13|pr_hsq_17|pr_hsq_21|pr_hsq_25|pr_hsq_29|pr_hsq_2|pr_hsq_6|pr_hsq_10|pr_hsq_14|pr_hsq_18|pr_hsq_22|pr_hsq_26|pr_hsq_30|pr_hsq_3|pr_hsq_7|pr_hsq_11|pr_hsq_15|pr_hsq_19|pr_hsq_23|pr_hsq_27|pr_hsq_31|pr_hsq_4|pr_hsq_8|pr_hsq_12|pr_hsq_16|pr_hsq_20|pr_hsq_24|pr_hsq_28|pr_hsq_32)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "affiliative": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "self_enhancing": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "aggressive": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "self_defeating": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "affiliative",
+          "self_enhancing",
+          "aggressive",
+          "self_defeating"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/hsq/scorer.wasm",
+      "sha256": "752df04a3e2f288603f1245ca4b45dba8599255aad2e6637b2b4f348905c66db"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_hsq_1": 1,
+          "pr_hsq_5": 1,
+          "pr_hsq_9": 1,
+          "pr_hsq_13": 1,
+          "pr_hsq_17": 1,
+          "pr_hsq_21": 1,
+          "pr_hsq_25": 1,
+          "pr_hsq_29": 1,
+          "pr_hsq_2": 1,
+          "pr_hsq_6": 1,
+          "pr_hsq_10": 1,
+          "pr_hsq_14": 1,
+          "pr_hsq_18": 1,
+          "pr_hsq_22": 1,
+          "pr_hsq_26": 1,
+          "pr_hsq_30": 1,
+          "pr_hsq_3": 1,
+          "pr_hsq_7": 1,
+          "pr_hsq_11": 1,
+          "pr_hsq_15": 1,
+          "pr_hsq_19": 1,
+          "pr_hsq_23": 1,
+          "pr_hsq_27": 1,
+          "pr_hsq_31": 1,
+          "pr_hsq_4": 1,
+          "pr_hsq_8": 1,
+          "pr_hsq_12": 1,
+          "pr_hsq_16": 1,
+          "pr_hsq_20": 1,
+          "pr_hsq_24": 1,
+          "pr_hsq_28": 1,
+          "pr_hsq_32": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "affiliative": {
+            "value": 8
+          },
+          "self_enhancing": {
+            "value": 8
+          },
+          "aggressive": {
+            "value": 8
+          },
+          "self_defeating": {
+            "value": 8
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_hsq_1": 4,
+          "pr_hsq_5": 4,
+          "pr_hsq_9": 4,
+          "pr_hsq_13": 4,
+          "pr_hsq_17": 4,
+          "pr_hsq_21": 4,
+          "pr_hsq_25": 4,
+          "pr_hsq_29": 4,
+          "pr_hsq_2": 4,
+          "pr_hsq_6": 4,
+          "pr_hsq_10": 4,
+          "pr_hsq_14": 4,
+          "pr_hsq_18": 4,
+          "pr_hsq_22": 4,
+          "pr_hsq_26": 4,
+          "pr_hsq_30": 4,
+          "pr_hsq_3": 4,
+          "pr_hsq_7": 4,
+          "pr_hsq_11": 4,
+          "pr_hsq_15": 4,
+          "pr_hsq_19": 4,
+          "pr_hsq_23": 4,
+          "pr_hsq_27": 4,
+          "pr_hsq_31": 4,
+          "pr_hsq_4": 4,
+          "pr_hsq_8": 4,
+          "pr_hsq_12": 4,
+          "pr_hsq_16": 4,
+          "pr_hsq_20": 4,
+          "pr_hsq_24": 4,
+          "pr_hsq_28": 4,
+          "pr_hsq_32": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "affiliative": {
+            "value": 32
+          },
+          "self_enhancing": {
+            "value": 32
+          },
+          "aggressive": {
+            "value": 32
+          },
+          "self_defeating": {
+            "value": 32
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_hsq_1": 7,
+          "pr_hsq_5": 7,
+          "pr_hsq_9": 7,
+          "pr_hsq_13": 7,
+          "pr_hsq_17": 7,
+          "pr_hsq_21": 7,
+          "pr_hsq_25": 7,
+          "pr_hsq_29": 7,
+          "pr_hsq_2": 7,
+          "pr_hsq_6": 7,
+          "pr_hsq_10": 7,
+          "pr_hsq_14": 7,
+          "pr_hsq_18": 7,
+          "pr_hsq_22": 7,
+          "pr_hsq_26": 7,
+          "pr_hsq_30": 7,
+          "pr_hsq_3": 7,
+          "pr_hsq_7": 7,
+          "pr_hsq_11": 7,
+          "pr_hsq_15": 7,
+          "pr_hsq_19": 7,
+          "pr_hsq_23": 7,
+          "pr_hsq_27": 7,
+          "pr_hsq_31": 7,
+          "pr_hsq_4": 7,
+          "pr_hsq_8": 7,
+          "pr_hsq_12": 7,
+          "pr_hsq_16": 7,
+          "pr_hsq_20": 7,
+          "pr_hsq_24": 7,
+          "pr_hsq_28": 7,
+          "pr_hsq_32": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "affiliative": {
+            "value": 56
+          },
+          "self_enhancing": {
+            "value": 56
+          },
+          "aggressive": {
+            "value": 56
+          },
+          "self_defeating": {
+            "value": 56
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

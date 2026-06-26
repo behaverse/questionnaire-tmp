@@ -1,0 +1,332 @@
+{
+  "id": "ffm",
+  "scorer_id": "scr_ffm",
+  "name": "FFM Scoring",
+  "status": "validated",
+  "description": "Big 5 Personality Test (FFM). Big-Five Personality (IPIP-50). Five domain MEAN scores (each 10 items, 1-5; reverse handled): Extraversion, Agreeableness, Conscientiousness, Neuroticism, Openness (every fifth item).",
+  "engine_spec": {
+    "item_range": [
+      1,
+      5
+    ],
+    "scores": [
+      {
+        "key": "extraversion",
+        "items": [
+          "pr_ffm_1",
+          "pr_ffm_6",
+          "pr_ffm_11",
+          "pr_ffm_16",
+          "pr_ffm_21",
+          "pr_ffm_26",
+          "pr_ffm_31",
+          "pr_ffm_36",
+          "pr_ffm_41",
+          "pr_ffm_46"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "agreeableness",
+        "items": [
+          "pr_ffm_2",
+          "pr_ffm_7",
+          "pr_ffm_12",
+          "pr_ffm_17",
+          "pr_ffm_22",
+          "pr_ffm_27",
+          "pr_ffm_32",
+          "pr_ffm_37",
+          "pr_ffm_42",
+          "pr_ffm_47"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "conscientiousness",
+        "items": [
+          "pr_ffm_3",
+          "pr_ffm_8",
+          "pr_ffm_13",
+          "pr_ffm_18",
+          "pr_ffm_23",
+          "pr_ffm_28",
+          "pr_ffm_33",
+          "pr_ffm_38",
+          "pr_ffm_43",
+          "pr_ffm_48"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "neuroticism",
+        "items": [
+          "pr_ffm_4",
+          "pr_ffm_9",
+          "pr_ffm_14",
+          "pr_ffm_19",
+          "pr_ffm_24",
+          "pr_ffm_29",
+          "pr_ffm_34",
+          "pr_ffm_39",
+          "pr_ffm_44",
+          "pr_ffm_49"
+        ],
+        "aggregate": "mean"
+      },
+      {
+        "key": "openness",
+        "items": [
+          "pr_ffm_5",
+          "pr_ffm_10",
+          "pr_ffm_15",
+          "pr_ffm_20",
+          "pr_ffm_25",
+          "pr_ffm_30",
+          "pr_ffm_35",
+          "pr_ffm_40",
+          "pr_ffm_45",
+          "pr_ffm_50"
+        ],
+        "aggregate": "mean"
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_ffm_1": 1,
+          "pr_ffm_6": 1,
+          "pr_ffm_11": 1,
+          "pr_ffm_16": 1,
+          "pr_ffm_21": 1,
+          "pr_ffm_26": 1,
+          "pr_ffm_31": 1,
+          "pr_ffm_36": 1,
+          "pr_ffm_41": 1,
+          "pr_ffm_46": 1,
+          "pr_ffm_2": 1,
+          "pr_ffm_7": 1,
+          "pr_ffm_12": 1,
+          "pr_ffm_17": 1,
+          "pr_ffm_22": 1,
+          "pr_ffm_27": 1,
+          "pr_ffm_32": 1,
+          "pr_ffm_37": 1,
+          "pr_ffm_42": 1,
+          "pr_ffm_47": 1,
+          "pr_ffm_3": 1,
+          "pr_ffm_8": 1,
+          "pr_ffm_13": 1,
+          "pr_ffm_18": 1,
+          "pr_ffm_23": 1,
+          "pr_ffm_28": 1,
+          "pr_ffm_33": 1,
+          "pr_ffm_38": 1,
+          "pr_ffm_43": 1,
+          "pr_ffm_48": 1,
+          "pr_ffm_4": 1,
+          "pr_ffm_9": 1,
+          "pr_ffm_14": 1,
+          "pr_ffm_19": 1,
+          "pr_ffm_24": 1,
+          "pr_ffm_29": 1,
+          "pr_ffm_34": 1,
+          "pr_ffm_39": 1,
+          "pr_ffm_44": 1,
+          "pr_ffm_49": 1,
+          "pr_ffm_5": 1,
+          "pr_ffm_10": 1,
+          "pr_ffm_15": 1,
+          "pr_ffm_20": 1,
+          "pr_ffm_25": 1,
+          "pr_ffm_30": 1,
+          "pr_ffm_35": 1,
+          "pr_ffm_40": 1,
+          "pr_ffm_45": 1,
+          "pr_ffm_50": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "extraversion": {
+            "value": 1
+          },
+          "agreeableness": {
+            "value": 1
+          },
+          "conscientiousness": {
+            "value": 1
+          },
+          "neuroticism": {
+            "value": 1
+          },
+          "openness": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_ffm_1": 3,
+          "pr_ffm_6": 3,
+          "pr_ffm_11": 3,
+          "pr_ffm_16": 3,
+          "pr_ffm_21": 3,
+          "pr_ffm_26": 3,
+          "pr_ffm_31": 3,
+          "pr_ffm_36": 3,
+          "pr_ffm_41": 3,
+          "pr_ffm_46": 3,
+          "pr_ffm_2": 3,
+          "pr_ffm_7": 3,
+          "pr_ffm_12": 3,
+          "pr_ffm_17": 3,
+          "pr_ffm_22": 3,
+          "pr_ffm_27": 3,
+          "pr_ffm_32": 3,
+          "pr_ffm_37": 3,
+          "pr_ffm_42": 3,
+          "pr_ffm_47": 3,
+          "pr_ffm_3": 3,
+          "pr_ffm_8": 3,
+          "pr_ffm_13": 3,
+          "pr_ffm_18": 3,
+          "pr_ffm_23": 3,
+          "pr_ffm_28": 3,
+          "pr_ffm_33": 3,
+          "pr_ffm_38": 3,
+          "pr_ffm_43": 3,
+          "pr_ffm_48": 3,
+          "pr_ffm_4": 3,
+          "pr_ffm_9": 3,
+          "pr_ffm_14": 3,
+          "pr_ffm_19": 3,
+          "pr_ffm_24": 3,
+          "pr_ffm_29": 3,
+          "pr_ffm_34": 3,
+          "pr_ffm_39": 3,
+          "pr_ffm_44": 3,
+          "pr_ffm_49": 3,
+          "pr_ffm_5": 3,
+          "pr_ffm_10": 3,
+          "pr_ffm_15": 3,
+          "pr_ffm_20": 3,
+          "pr_ffm_25": 3,
+          "pr_ffm_30": 3,
+          "pr_ffm_35": 3,
+          "pr_ffm_40": 3,
+          "pr_ffm_45": 3,
+          "pr_ffm_50": 3
+        }
+      },
+      "expected": {
+        "scores": {
+          "extraversion": {
+            "value": 3
+          },
+          "agreeableness": {
+            "value": 3
+          },
+          "conscientiousness": {
+            "value": 3
+          },
+          "neuroticism": {
+            "value": 3
+          },
+          "openness": {
+            "value": 3
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_ffm_1": 5,
+          "pr_ffm_6": 5,
+          "pr_ffm_11": 5,
+          "pr_ffm_16": 5,
+          "pr_ffm_21": 5,
+          "pr_ffm_26": 5,
+          "pr_ffm_31": 5,
+          "pr_ffm_36": 5,
+          "pr_ffm_41": 5,
+          "pr_ffm_46": 5,
+          "pr_ffm_2": 5,
+          "pr_ffm_7": 5,
+          "pr_ffm_12": 5,
+          "pr_ffm_17": 5,
+          "pr_ffm_22": 5,
+          "pr_ffm_27": 5,
+          "pr_ffm_32": 5,
+          "pr_ffm_37": 5,
+          "pr_ffm_42": 5,
+          "pr_ffm_47": 5,
+          "pr_ffm_3": 5,
+          "pr_ffm_8": 5,
+          "pr_ffm_13": 5,
+          "pr_ffm_18": 5,
+          "pr_ffm_23": 5,
+          "pr_ffm_28": 5,
+          "pr_ffm_33": 5,
+          "pr_ffm_38": 5,
+          "pr_ffm_43": 5,
+          "pr_ffm_48": 5,
+          "pr_ffm_4": 5,
+          "pr_ffm_9": 5,
+          "pr_ffm_14": 5,
+          "pr_ffm_19": 5,
+          "pr_ffm_24": 5,
+          "pr_ffm_29": 5,
+          "pr_ffm_34": 5,
+          "pr_ffm_39": 5,
+          "pr_ffm_44": 5,
+          "pr_ffm_49": 5,
+          "pr_ffm_5": 5,
+          "pr_ffm_10": 5,
+          "pr_ffm_15": 5,
+          "pr_ffm_20": 5,
+          "pr_ffm_25": 5,
+          "pr_ffm_30": 5,
+          "pr_ffm_35": 5,
+          "pr_ffm_40": 5,
+          "pr_ffm_45": 5,
+          "pr_ffm_50": 5
+        }
+      },
+      "expected": {
+        "scores": {
+          "extraversion": {
+            "value": 5
+          },
+          "agreeableness": {
+            "value": 5
+          },
+          "conscientiousness": {
+            "value": 5
+          },
+          "neuroticism": {
+            "value": 5
+          },
+          "openness": {
+            "value": 5
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ],
+  "publication": {
+    "citation": "C G DeYoung, L C Quilty, and J B Peterson. Between facets and domains: 10 aspects of the Big Five. 63 J Pers Soc Psychol 880-896. 2008.",
+    "year": 2008
+  }
+}

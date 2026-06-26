@@ -1,0 +1,270 @@
+{
+  "id": "scr_ds14",
+  "name": "DS14 Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "DS14 Scoring",
+      "description": "Type D Personality (DS14). Type D Personality Scale (DS14; Denollet, 2005). Two 7-item subscale sums (each 0-4, range 0-28): Negative Affectivity (items 2,4,5,7,9,12,13) and Social Inhibition (1,3,6,8,10,11,14; items 1,3 reversed). A score of 10 or more on BOTH subscales indicates a Type D personality."
+    }
+  },
+  "x_publication": {
+    "citation": "Denollet, J., Sys, S.U., Stroobant, N., Rombouts, H., Gillebert,\nT.C., & Brutsaert, D.L. (1996). Personality as independent predictor\nof long-term mortality in patients with coronary heart disease. The\nLancet, 347, 417-421. Free link to full text",
+    "year": 1996
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_ds14_2|pr_ds14_4|pr_ds14_5|pr_ds14_7|pr_ds14_9|pr_ds14_12|pr_ds14_13|pr_ds14_1|pr_ds14_3|pr_ds14_6|pr_ds14_8|pr_ds14_10|pr_ds14_11|pr_ds14_14)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "negative_affectivity": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "high"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "social_inhibition": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "high"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "negative_affectivity",
+          "social_inhibition"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/ds14/scorer.wasm",
+      "sha256": "7fd1259226b0d731fdf7da277b8035e304dccaafe1c188ce7c9783bc3420d35b"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "floor",
+      "input": {
+        "scored_responses": {
+          "pr_ds14_2": 0,
+          "pr_ds14_4": 0,
+          "pr_ds14_5": 0,
+          "pr_ds14_7": 0,
+          "pr_ds14_9": 0,
+          "pr_ds14_12": 0,
+          "pr_ds14_13": 0,
+          "pr_ds14_1": 0,
+          "pr_ds14_3": 0,
+          "pr_ds14_6": 0,
+          "pr_ds14_8": 0,
+          "pr_ds14_10": 0,
+          "pr_ds14_11": 0,
+          "pr_ds14_14": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "negative_affectivity": {
+            "value": 0,
+            "severity": "low",
+            "band": {
+              "min": 0,
+              "max": 9,
+              "label": "Below threshold"
+            }
+          },
+          "social_inhibition": {
+            "value": 0,
+            "severity": "low",
+            "band": {
+              "min": 0,
+              "max": 9,
+              "label": "Below threshold"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_ds14_2": 2,
+          "pr_ds14_4": 2,
+          "pr_ds14_5": 2,
+          "pr_ds14_7": 2,
+          "pr_ds14_9": 2,
+          "pr_ds14_12": 2,
+          "pr_ds14_13": 2,
+          "pr_ds14_1": 2,
+          "pr_ds14_3": 2,
+          "pr_ds14_6": 2,
+          "pr_ds14_8": 2,
+          "pr_ds14_10": 2,
+          "pr_ds14_11": 2,
+          "pr_ds14_14": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "negative_affectivity": {
+            "value": 14,
+            "severity": "high",
+            "band": {
+              "min": 10,
+              "max": 28,
+              "label": "Elevated (>=10)"
+            }
+          },
+          "social_inhibition": {
+            "value": 14,
+            "severity": "high",
+            "band": {
+              "min": 10,
+              "max": 28,
+              "label": "Elevated (>=10)"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_ds14_2": 4,
+          "pr_ds14_4": 4,
+          "pr_ds14_5": 4,
+          "pr_ds14_7": 4,
+          "pr_ds14_9": 4,
+          "pr_ds14_12": 4,
+          "pr_ds14_13": 4,
+          "pr_ds14_1": 4,
+          "pr_ds14_3": 4,
+          "pr_ds14_6": 4,
+          "pr_ds14_8": 4,
+          "pr_ds14_10": 4,
+          "pr_ds14_11": 4,
+          "pr_ds14_14": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "negative_affectivity": {
+            "value": 28,
+            "severity": "high",
+            "band": {
+              "min": 10,
+              "max": 28,
+              "label": "Elevated (>=10)"
+            }
+          },
+          "social_inhibition": {
+            "value": 28,
+            "severity": "high",
+            "band": {
+              "min": 10,
+              "max": 28,
+              "label": "Elevated (>=10)"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

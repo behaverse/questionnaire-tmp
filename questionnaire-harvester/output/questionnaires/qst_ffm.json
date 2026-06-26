@@ -767,5 +767,37 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "extraversion",
+      "name": "Extraversion",
+      "path": "/scores/extraversion/value",
+      "scorer": "scr_ffm@v26.0618"
+    },
+    {
+      "id": "agreeableness",
+      "name": "Agreeableness",
+      "path": "/scores/agreeableness/value",
+      "scorer": "scr_ffm@v26.0618"
+    },
+    {
+      "id": "conscientiousness",
+      "name": "Conscientiousness",
+      "path": "/scores/conscientiousness/value",
+      "scorer": "scr_ffm@v26.0618"
+    },
+    {
+      "id": "neuroticism",
+      "name": "Neuroticism",
+      "path": "/scores/neuroticism/value",
+      "scorer": "scr_ffm@v26.0618"
+    },
+    {
+      "id": "openness",
+      "name": "Openness",
+      "path": "/scores/openness/value",
+      "scorer": "scr_ffm@v26.0618"
+    }
   ]
 }

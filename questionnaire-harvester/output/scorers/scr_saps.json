@@ -1,0 +1,164 @@
+{
+  "content": {
+    "en": {
+      "description": "Short revised almost perfect scale (SAPS). Short Almost Perfect Scale (Rice et al., 2014). Two 4-item subscale sums (each item 1-7, range 4-28): Standards (items 1,3,5,7) and Discrepancy (items 2,4,6,8; higher = more maladaptive perfectionism).",
+      "name": "SAPS Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_saps",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "6fd0cc3a0b175f5cdcb7fabd8495d588f1b6566cf2fc1441acaf75c7bd9383c9",
+      "url": "https://behaverse.org/scorers/saps/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_saps_1|pr_saps_3|pr_saps_5|pr_saps_7|pr_saps_2|pr_saps_4|pr_saps_6|pr_saps_8)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "SAPS Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "discrepancy": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "standards": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "standards",
+          "discrepancy"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "discrepancy": {
+            "value": 4
+          },
+          "standards": {
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_saps_1": 1,
+          "pr_saps_2": 1,
+          "pr_saps_3": 1,
+          "pr_saps_4": 1,
+          "pr_saps_5": 1,
+          "pr_saps_6": 1,
+          "pr_saps_7": 1,
+          "pr_saps_8": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "discrepancy": {
+            "value": 16
+          },
+          "standards": {
+            "value": 16
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_saps_1": 4,
+          "pr_saps_2": 4,
+          "pr_saps_3": 4,
+          "pr_saps_4": 4,
+          "pr_saps_5": 4,
+          "pr_saps_6": 4,
+          "pr_saps_7": 4,
+          "pr_saps_8": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "discrepancy": {
+            "value": 28
+          },
+          "standards": {
+            "value": 28
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_saps_1": 7,
+          "pr_saps_2": 7,
+          "pr_saps_3": 7,
+          "pr_saps_4": 7,
+          "pr_saps_5": 7,
+          "pr_saps_6": 7,
+          "pr_saps_7": 7,
+          "pr_saps_8": 7
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "K. G. Rice, C. M. E. Richardson, & S. Tueller. (2014). The Short Form of the Revised\nAlmost Perfect Scale. Journal of Personality Assessment, 96(3) , 368-379.",
+    "year": 2014
+  }
+}

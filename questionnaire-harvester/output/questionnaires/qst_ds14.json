@@ -249,5 +249,31 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "negative_affectivity",
+      "name": "Negative Affectivity",
+      "path": "/scores/negative_affectivity/value",
+      "scorer": "scr_ds14@v26.0618"
+    },
+    {
+      "id": "negative_affectivity_severity",
+      "name": "Negative Affectivity level",
+      "path": "/scores/negative_affectivity/severity",
+      "scorer": "scr_ds14@v26.0618"
+    },
+    {
+      "id": "social_inhibition",
+      "name": "Social Inhibition",
+      "path": "/scores/social_inhibition/value",
+      "scorer": "scr_ds14@v26.0618"
+    },
+    {
+      "id": "social_inhibition_severity",
+      "name": "Social Inhibition level",
+      "path": "/scores/social_inhibition/severity",
+      "scorer": "scr_ds14@v26.0618"
+    }
   ]
 }

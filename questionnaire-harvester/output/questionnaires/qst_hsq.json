@@ -501,5 +501,31 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "affiliative",
+      "name": "Affiliative",
+      "path": "/scores/affiliative/value",
+      "scorer": "scr_hsq@v26.0618"
+    },
+    {
+      "id": "self_enhancing",
+      "name": "Self Enhancing",
+      "path": "/scores/self_enhancing/value",
+      "scorer": "scr_hsq@v26.0618"
+    },
+    {
+      "id": "aggressive",
+      "name": "Aggressive",
+      "path": "/scores/aggressive/value",
+      "scorer": "scr_hsq@v26.0618"
+    },
+    {
+      "id": "self_defeating",
+      "name": "Self Defeating",
+      "path": "/scores/self_defeating/value",
+      "scorer": "scr_hsq@v26.0618"
+    }
   ]
 }

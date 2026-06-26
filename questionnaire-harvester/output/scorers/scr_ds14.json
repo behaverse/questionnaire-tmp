@@ -1,0 +1,270 @@
+{
+  "content": {
+    "en": {
+      "description": "Type D Personality (DS14). Type D Personality Scale (DS14; Denollet, 2005). Two 7-item subscale sums (each 0-4, range 0-28): Negative Affectivity (items 2,4,5,7,9,12,13) and Social Inhibition (1,3,6,8,10,11,14; items 1,3 reversed). A score of 10 or more on BOTH subscales indicates a Type D personality.",
+      "name": "DS14 Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_ds14",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "7fd1259226b0d731fdf7da277b8035e304dccaafe1c188ce7c9783bc3420d35b",
+      "url": "https://behaverse.org/scorers/ds14/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_ds14_2|pr_ds14_4|pr_ds14_5|pr_ds14_7|pr_ds14_9|pr_ds14_12|pr_ds14_13|pr_ds14_1|pr_ds14_3|pr_ds14_6|pr_ds14_8|pr_ds14_10|pr_ds14_11|pr_ds14_14)$": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "DS14 Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "negative_affectivity": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "low",
+                  "high"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "social_inhibition": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "low",
+                  "high"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "negative_affectivity",
+          "social_inhibition"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "negative_affectivity": {
+            "band": {
+              "label": "Below threshold",
+              "max": 9,
+              "min": 0
+            },
+            "severity": "low",
+            "value": 0
+          },
+          "social_inhibition": {
+            "band": {
+              "label": "Below threshold",
+              "max": 9,
+              "min": 0
+            },
+            "severity": "low",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ds14_1": 0,
+          "pr_ds14_10": 0,
+          "pr_ds14_11": 0,
+          "pr_ds14_12": 0,
+          "pr_ds14_13": 0,
+          "pr_ds14_14": 0,
+          "pr_ds14_2": 0,
+          "pr_ds14_3": 0,
+          "pr_ds14_4": 0,
+          "pr_ds14_5": 0,
+          "pr_ds14_6": 0,
+          "pr_ds14_7": 0,
+          "pr_ds14_8": 0,
+          "pr_ds14_9": 0
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "negative_affectivity": {
+            "band": {
+              "label": "Elevated (>=10)",
+              "max": 28,
+              "min": 10
+            },
+            "severity": "high",
+            "value": 14
+          },
+          "social_inhibition": {
+            "band": {
+              "label": "Elevated (>=10)",
+              "max": 28,
+              "min": 10
+            },
+            "severity": "high",
+            "value": 14
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ds14_1": 2,
+          "pr_ds14_10": 2,
+          "pr_ds14_11": 2,
+          "pr_ds14_12": 2,
+          "pr_ds14_13": 2,
+          "pr_ds14_14": 2,
+          "pr_ds14_2": 2,
+          "pr_ds14_3": 2,
+          "pr_ds14_4": 2,
+          "pr_ds14_5": 2,
+          "pr_ds14_6": 2,
+          "pr_ds14_7": 2,
+          "pr_ds14_8": 2,
+          "pr_ds14_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "negative_affectivity": {
+            "band": {
+              "label": "Elevated (>=10)",
+              "max": 28,
+              "min": 10
+            },
+            "severity": "high",
+            "value": 28
+          },
+          "social_inhibition": {
+            "band": {
+              "label": "Elevated (>=10)",
+              "max": 28,
+              "min": 10
+            },
+            "severity": "high",
+            "value": 28
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_ds14_1": 4,
+          "pr_ds14_10": 4,
+          "pr_ds14_11": 4,
+          "pr_ds14_12": 4,
+          "pr_ds14_13": 4,
+          "pr_ds14_14": 4,
+          "pr_ds14_2": 4,
+          "pr_ds14_3": 4,
+          "pr_ds14_4": 4,
+          "pr_ds14_5": 4,
+          "pr_ds14_6": 4,
+          "pr_ds14_7": 4,
+          "pr_ds14_8": 4,
+          "pr_ds14_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Denollet, J., Sys, S.U., Stroobant, N., Rombouts, H., Gillebert,\nT.C., & Brutsaert, D.L. (1996). Personality as independent predictor\nof long-term mortality in patients with coronary heart disease. The\nLancet, 347, 417-421. Free link to full text",
+    "year": 1996
+  }
+}

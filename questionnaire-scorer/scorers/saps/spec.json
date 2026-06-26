@@ -1,0 +1,1 @@
+{"item_range":[1,7],"scores":[{"key":"standards","items":["pr_saps_1","pr_saps_3","pr_saps_5","pr_saps_7"],"aggregate":"sum"},{"key":"discrepancy","items":["pr_saps_2","pr_saps_4","pr_saps_6","pr_saps_8"],"aggregate":"sum"}]}

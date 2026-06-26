@@ -473,5 +473,25 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "personal",
+      "name": "Personal",
+      "path": "/scores/personal/value",
+      "scorer": "scr_soc3@v26.0618"
+    },
+    {
+      "id": "interpersonal",
+      "name": "Interpersonal",
+      "path": "/scores/interpersonal/value",
+      "scorer": "scr_soc3@v26.0618"
+    },
+    {
+      "id": "sociopolitical",
+      "name": "Sociopolitical",
+      "path": "/scores/sociopolitical/value",
+      "scorer": "scr_soc3@v26.0618"
+    }
   ]
 }
