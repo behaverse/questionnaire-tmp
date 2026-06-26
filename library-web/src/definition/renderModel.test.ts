@@ -131,4 +131,32 @@ describe('buildRenderModel', () => {
     expect(item.widget).toBe('choice.nominal.single')
     expect(item.showIf).toBe('it_b == 2')
   })
+
+  it('derives a section child item widget from the shared_option, and null for unmapped', () => {
+    const d = {
+      metadata: { id: 'q', title: 'T', version: 'v1', language: 'en' },
+      pages: [{ elements: [
+        {
+          id: 'sec', shared_option: {
+            input_data_type: 'choice', measurement_type: 'ordinal', selection: 'single',
+            options: [{ index: 0, value: 1 }],
+            content: { en: { options: [{ index: 0, text: 'Low' }] } },
+          },
+          elements: [
+            { id: 'it_a', question: { prompt: { content: { en: { text: 'A?' } } } } },
+          ],
+        },
+        {
+          id: 'it_x', question: { prompt: { content: { en: { text: 'X?' } } } },
+          option: { input_data_type: 'choice', measurement_type: 'nominal', selection: 'multiple_BAD' },
+        },
+      ] }],
+    }
+    const m = buildRenderModel(d as never, 'en')
+    const section = m.pages[0].blocks[0] as { kind: string; items: { widget: string | null }[] }
+    expect(section.kind).toBe('section')
+    expect(section.items[0].widget).toBe('choice.ordinal.single')
+    const lone = m.pages[0].blocks[1] as { widget: string | null }
+    expect(lone.widget).toBeNull()
+  })
 })
