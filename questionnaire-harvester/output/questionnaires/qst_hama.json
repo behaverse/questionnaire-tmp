@@ -265,5 +265,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "HAM-A total",
+      "path": "/scores/total/value",
+      "scorer": "scr_hama@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "HAM-A severity",
+      "path": "/scores/total/severity",
+      "scorer": "scr_hama@v26.0618"
+    }
   ]
 }

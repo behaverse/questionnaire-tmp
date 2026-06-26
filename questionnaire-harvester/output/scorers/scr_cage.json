@@ -1,0 +1,150 @@
+{
+  "content": {
+    "en": {
+      "description": "CAGE alcohol screening questionnaire (Ewing, 1984). Total = number of 'yes' answers across the 4 items (range 0-4); a total of 2 or more is a positive screen suggesting the need for further assessment of alcohol problems.",
+      "name": "CAGE Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_cage",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "87568f836b9bbc40e59c9152ad649310d59846ff2531f863a8c4b3d3cd5528b4",
+      "url": "https://behaverse.org/scorers/cage/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_cage_1|pr_cage_2|pr_cage_3|pr_cage_4)$": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "CAGE Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "negative",
+                  "positive"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Negative screen",
+              "max": 1,
+              "min": 0
+            },
+            "severity": "negative",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cage_1": 0,
+          "pr_cage_2": 0,
+          "pr_cage_3": 0,
+          "pr_cage_4": 0
+        }
+      },
+      "name": "negative"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Positive screen — assess for alcohol problem",
+              "max": 4,
+              "min": 2
+            },
+            "severity": "positive",
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_cage_1": 1,
+          "pr_cage_2": 1,
+          "pr_cage_3": 1,
+          "pr_cage_4": 1
+        }
+      },
+      "name": "positive"
+    }
+  ],
+  "x_publication": {
+    "citation": "Ewing JA (1984). Detecting alcoholism: the CAGE questionnaire. JAMA, 252(14), 1905-1907.",
+    "year": 1984
+  }
+}

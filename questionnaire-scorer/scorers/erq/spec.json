@@ -1,0 +1,1 @@
+{"item_range":[1,7],"scores":[{"key":"reappraisal","aggregate":"mean","items":["pr_erq_1","pr_erq_3","pr_erq_5","pr_erq_7","pr_erq_8","pr_erq_10"]},{"key":"suppression","aggregate":"mean","items":["pr_erq_2","pr_erq_4","pr_erq_6","pr_erq_9"]}]}

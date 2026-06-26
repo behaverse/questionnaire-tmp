@@ -221,5 +221,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "positive",
+      "name": "SPANE-P (positive)",
+      "path": "/scores/positive/value",
+      "scorer": "scr_spane@v26.0618"
+    },
+    {
+      "id": "negative",
+      "name": "SPANE-N (negative)",
+      "path": "/scores/negative/value",
+      "scorer": "scr_spane@v26.0618"
+    }
   ]
 }

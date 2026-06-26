@@ -1,0 +1,207 @@
+{
+  "content": {
+    "en": {
+      "description": "Hamilton Anxiety Rating Scale (Hamilton, 1959). Total = sum of the 14 clinician-rated items (each 0-4), range 0-56. Common severity bands: <18 mild, 18-24 mild-to-moderate, 25-30 moderate-to-severe, 31+ severe anxiety.",
+      "name": "HAM-A Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_hama",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "6a8a695174961b20788522d56f7a9903a6b563a353ad2da872d281650d516e16",
+      "url": "https://behaverse.org/scorers/hama/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_hama_1|pr_hama_2|pr_hama_3|pr_hama_4|pr_hama_5|pr_hama_6|pr_hama_7|pr_hama_8|pr_hama_9|pr_hama_10|pr_hama_11|pr_hama_12|pr_hama_13|pr_hama_14)$": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "HAM-A Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "band": {
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ],
+                "type": "object"
+              },
+              "severity": {
+                "enum": [
+                  "mild",
+                  "mild_moderate",
+                  "moderate_severe",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Mild anxiety",
+              "max": 17,
+              "min": 0
+            },
+            "severity": "mild",
+            "value": 0
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_hama_1": 0,
+          "pr_hama_10": 0,
+          "pr_hama_11": 0,
+          "pr_hama_12": 0,
+          "pr_hama_13": 0,
+          "pr_hama_14": 0,
+          "pr_hama_2": 0,
+          "pr_hama_3": 0,
+          "pr_hama_4": 0,
+          "pr_hama_5": 0,
+          "pr_hama_6": 0,
+          "pr_hama_7": 0,
+          "pr_hama_8": 0,
+          "pr_hama_9": 0
+        }
+      },
+      "name": "mild-floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Moderate to severe",
+              "max": 30,
+              "min": 25
+            },
+            "severity": "moderate_severe",
+            "value": 28
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_hama_1": 2,
+          "pr_hama_10": 2,
+          "pr_hama_11": 2,
+          "pr_hama_12": 2,
+          "pr_hama_13": 2,
+          "pr_hama_14": 2,
+          "pr_hama_2": 2,
+          "pr_hama_3": 2,
+          "pr_hama_4": 2,
+          "pr_hama_5": 2,
+          "pr_hama_6": 2,
+          "pr_hama_7": 2,
+          "pr_hama_8": 2,
+          "pr_hama_9": 2
+        }
+      },
+      "name": "moderate-severe"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "band": {
+              "label": "Severe",
+              "max": 56,
+              "min": 31
+            },
+            "severity": "severe",
+            "value": 56
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_hama_1": 4,
+          "pr_hama_10": 4,
+          "pr_hama_11": 4,
+          "pr_hama_12": 4,
+          "pr_hama_13": 4,
+          "pr_hama_14": 4,
+          "pr_hama_2": 4,
+          "pr_hama_3": 4,
+          "pr_hama_4": 4,
+          "pr_hama_5": 4,
+          "pr_hama_6": 4,
+          "pr_hama_7": 4,
+          "pr_hama_8": 4,
+          "pr_hama_9": 4
+        }
+      },
+      "name": "severe-ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Hamilton M (1959). The assessment of anxiety states by rating. Br J Med Psychol, 32(1), 50-55.",
+    "year": 1959
+  }
+}

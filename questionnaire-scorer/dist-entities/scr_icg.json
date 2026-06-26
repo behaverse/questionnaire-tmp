@@ -1,0 +1,220 @@
+{
+  "id": "scr_icg",
+  "name": "ICG Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "ICG Standard Scoring",
+      "description": "Inventory of Complicated Grief (Prigerson et al., 1995). Total = sum of the 19 items (each 0-4), range 0-76; a total above 25 indicates clinically significant complicated grief."
+    }
+  },
+  "x_publication": {
+    "citation": "Prigerson HG, Maciejewski PK, Reynolds CF 3rd, et al. (1995). Inventory of Complicated Grief: a scale to measure maladaptive symptoms of loss. Psychiatry Res, 59(1-2), 65-79.",
+    "year": 1995
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_icg_1|pr_icg_2|pr_icg_3|pr_icg_4|pr_icg_5|pr_icg_6|pr_icg_7|pr_icg_8|pr_icg_9|pr_icg_10|pr_icg_11|pr_icg_12|pr_icg_13|pr_icg_14|pr_icg_15|pr_icg_16|pr_icg_17|pr_icg_18|pr_icg_19)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "below_threshold",
+                  "elevated"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/icg/scorer.wasm",
+      "sha256": "05df36dfe7acf7c5e26576bc2bf8a924088d9b4cbe964b4d4733fe87144b7021"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "below-floor",
+      "input": {
+        "scored_responses": {
+          "pr_icg_1": 0,
+          "pr_icg_2": 0,
+          "pr_icg_3": 0,
+          "pr_icg_4": 0,
+          "pr_icg_5": 0,
+          "pr_icg_6": 0,
+          "pr_icg_7": 0,
+          "pr_icg_8": 0,
+          "pr_icg_9": 0,
+          "pr_icg_10": 0,
+          "pr_icg_11": 0,
+          "pr_icg_12": 0,
+          "pr_icg_13": 0,
+          "pr_icg_14": 0,
+          "pr_icg_15": 0,
+          "pr_icg_16": 0,
+          "pr_icg_17": 0,
+          "pr_icg_18": 0,
+          "pr_icg_19": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "below_threshold",
+            "band": {
+              "min": 0,
+              "max": 25,
+              "label": "Below threshold"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "elevated-mid",
+      "input": {
+        "scored_responses": {
+          "pr_icg_1": 2,
+          "pr_icg_2": 2,
+          "pr_icg_3": 2,
+          "pr_icg_4": 2,
+          "pr_icg_5": 2,
+          "pr_icg_6": 2,
+          "pr_icg_7": 2,
+          "pr_icg_8": 2,
+          "pr_icg_9": 2,
+          "pr_icg_10": 2,
+          "pr_icg_11": 2,
+          "pr_icg_12": 2,
+          "pr_icg_13": 2,
+          "pr_icg_14": 2,
+          "pr_icg_15": 2,
+          "pr_icg_16": 2,
+          "pr_icg_17": 2,
+          "pr_icg_18": 2,
+          "pr_icg_19": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 38,
+            "severity": "elevated",
+            "band": {
+              "min": 26,
+              "max": 76,
+              "label": "Complicated grief likely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_icg_1": 4,
+          "pr_icg_2": 4,
+          "pr_icg_3": 4,
+          "pr_icg_4": 4,
+          "pr_icg_5": 4,
+          "pr_icg_6": 4,
+          "pr_icg_7": 4,
+          "pr_icg_8": 4,
+          "pr_icg_9": 4,
+          "pr_icg_10": 4,
+          "pr_icg_11": 4,
+          "pr_icg_12": 4,
+          "pr_icg_13": 4,
+          "pr_icg_14": 4,
+          "pr_icg_15": 4,
+          "pr_icg_16": 4,
+          "pr_icg_17": 4,
+          "pr_icg_18": 4,
+          "pr_icg_19": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 76,
+            "severity": "elevated",
+            "band": {
+              "min": 26,
+              "max": 76,
+              "label": "Complicated grief likely"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

@@ -27,6 +27,12 @@ const RESP = {
   qst_gq6: Object.fromEntries(Array.from({ length: 6 }, (_, i) => [`pr_gq6_${i + 1}`, 6])),
   qst_tils: Object.fromEntries(Array.from({ length: 3 }, (_, i) => [`pr_tils_${i + 1}`, 3])),
   qst_pss: Object.fromEntries(Array.from({ length: 14 }, (_, i) => [`pr_pss_${i + 1}`, 2])),
+  qst_cage: Object.fromEntries(Array.from({ length: 4 }, (_, i) => [`pr_cage_${i + 1}`, 1])),
+  qst_hama: Object.fromEntries(Array.from({ length: 14 }, (_, i) => [`pr_hama_${i + 1}`, 2])),
+  qst_icg: Object.fromEntries(Array.from({ length: 19 }, (_, i) => [`pr_icg_${i + 1}`, 2])),
+  qst_gse: Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`pr_gse_${i + 1}`, 3])),
+  qst_erq: Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`pr_erq_${i + 1}`, 5])),
+  qst_spane: Object.fromEntries(Array.from({ length: 12 }, (_, i) => [`pr_spane_${i + 1}`, 4])),
 }
 
 let failed = 0

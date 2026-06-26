@@ -1,0 +1,170 @@
+{
+  "content": {
+    "en": {
+      "description": "Emotion Regulation Questionnaire (Gross & John, 2003). Two subscale MEAN scores (each item 1-7): Cognitive Reappraisal (items 1,3,5,7,8,10) and Expressive Suppression (items 2,4,6,9). Higher = greater habitual use of that strategy; no severity cut-offs.",
+      "name": "ERQ Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_erq",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "a79b35d8c86e9ab176beffdc6cf0f71788a75ba7c3ee36703f975182d15c157e",
+      "url": "https://behaverse.org/scorers/erq/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_erq_1|pr_erq_3|pr_erq_5|pr_erq_7|pr_erq_8|pr_erq_10|pr_erq_2|pr_erq_4|pr_erq_6|pr_erq_9)$": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "ERQ Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "reappraisal": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "suppression": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "reappraisal",
+          "suppression"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "reappraisal": {
+            "value": 1
+          },
+          "suppression": {
+            "value": 1
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_erq_1": 1,
+          "pr_erq_10": 1,
+          "pr_erq_2": 1,
+          "pr_erq_3": 1,
+          "pr_erq_4": 1,
+          "pr_erq_5": 1,
+          "pr_erq_6": 1,
+          "pr_erq_7": 1,
+          "pr_erq_8": 1,
+          "pr_erq_9": 1
+        }
+      },
+      "name": "low"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "reappraisal": {
+            "value": 4
+          },
+          "suppression": {
+            "value": 4
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_erq_1": 4,
+          "pr_erq_10": 4,
+          "pr_erq_2": 4,
+          "pr_erq_3": 4,
+          "pr_erq_4": 4,
+          "pr_erq_5": 4,
+          "pr_erq_6": 4,
+          "pr_erq_7": 4,
+          "pr_erq_8": 4,
+          "pr_erq_9": 4
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "reappraisal": {
+            "value": 7
+          },
+          "suppression": {
+            "value": 7
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_erq_1": 7,
+          "pr_erq_10": 7,
+          "pr_erq_2": 7,
+          "pr_erq_3": 7,
+          "pr_erq_4": 7,
+          "pr_erq_5": 7,
+          "pr_erq_6": 7,
+          "pr_erq_7": 7,
+          "pr_erq_8": 7,
+          "pr_erq_9": 7
+        }
+      },
+      "name": "high"
+    }
+  ],
+  "x_publication": {
+    "citation": "Gross JJ, John OP (2003). Individual differences in two emotion regulation processes: implications for affect, relationships, and well-being. J Pers Soc Psychol, 85(2), 348-362.",
+    "year": 2003
+  }
+}

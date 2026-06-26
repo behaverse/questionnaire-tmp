@@ -1,0 +1,170 @@
+{
+  "id": "scr_erq",
+  "name": "ERQ Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "ERQ Standard Scoring",
+      "description": "Emotion Regulation Questionnaire (Gross & John, 2003). Two subscale MEAN scores (each item 1-7): Cognitive Reappraisal (items 1,3,5,7,8,10) and Expressive Suppression (items 2,4,6,9). Higher = greater habitual use of that strategy; no severity cut-offs."
+    }
+  },
+  "x_publication": {
+    "citation": "Gross JJ, John OP (2003). Individual differences in two emotion regulation processes: implications for affect, relationships, and well-being. J Pers Soc Psychol, 85(2), 348-362.",
+    "year": 2003
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_erq_1|pr_erq_3|pr_erq_5|pr_erq_7|pr_erq_8|pr_erq_10|pr_erq_2|pr_erq_4|pr_erq_6|pr_erq_9)$": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "reappraisal": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "suppression": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "reappraisal",
+          "suppression"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/erq/scorer.wasm",
+      "sha256": "a79b35d8c86e9ab176beffdc6cf0f71788a75ba7c3ee36703f975182d15c157e"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "low",
+      "input": {
+        "scored_responses": {
+          "pr_erq_1": 1,
+          "pr_erq_3": 1,
+          "pr_erq_5": 1,
+          "pr_erq_7": 1,
+          "pr_erq_8": 1,
+          "pr_erq_10": 1,
+          "pr_erq_2": 1,
+          "pr_erq_4": 1,
+          "pr_erq_6": 1,
+          "pr_erq_9": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "reappraisal": {
+            "value": 1
+          },
+          "suppression": {
+            "value": 1
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "mid",
+      "input": {
+        "scored_responses": {
+          "pr_erq_1": 4,
+          "pr_erq_3": 4,
+          "pr_erq_5": 4,
+          "pr_erq_7": 4,
+          "pr_erq_8": 4,
+          "pr_erq_10": 4,
+          "pr_erq_2": 4,
+          "pr_erq_4": 4,
+          "pr_erq_6": 4,
+          "pr_erq_9": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "reappraisal": {
+            "value": 4
+          },
+          "suppression": {
+            "value": 4
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "high",
+      "input": {
+        "scored_responses": {
+          "pr_erq_1": 7,
+          "pr_erq_3": 7,
+          "pr_erq_5": 7,
+          "pr_erq_7": 7,
+          "pr_erq_8": 7,
+          "pr_erq_10": 7,
+          "pr_erq_2": 7,
+          "pr_erq_4": 7,
+          "pr_erq_6": 7,
+          "pr_erq_9": 7
+        }
+      },
+      "expected": {
+        "scores": {
+          "reappraisal": {
+            "value": 7
+          },
+          "suppression": {
+            "value": 7
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

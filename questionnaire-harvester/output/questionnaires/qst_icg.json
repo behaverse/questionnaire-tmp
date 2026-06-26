@@ -333,5 +333,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "ICG total",
+      "path": "/scores/total/value",
+      "scorer": "scr_icg@v26.0618"
+    },
+    {
+      "id": "total_severity",
+      "name": "ICG interpretation",
+      "path": "/scores/total/severity",
+      "scorer": "scr_icg@v26.0618"
+    }
   ]
 }

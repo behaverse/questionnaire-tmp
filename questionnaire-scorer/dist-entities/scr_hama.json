@@ -1,0 +1,207 @@
+{
+  "id": "scr_hama",
+  "name": "HAM-A Standard Scoring",
+  "content": {
+    "en": {
+      "status": "validated",
+      "name": "HAM-A Standard Scoring",
+      "description": "Hamilton Anxiety Rating Scale (Hamilton, 1959). Total = sum of the 14 clinician-rated items (each 0-4), range 0-56. Common severity bands: <18 mild, 18-24 mild-to-moderate, 25-30 moderate-to-severe, 31+ severe anxiety."
+    }
+  },
+  "x_publication": {
+    "citation": "Hamilton M (1959). The assessment of anxiety states by rating. Br J Med Psychol, 32(1), 50-55.",
+    "year": 1959
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "scored_responses": {
+        "type": "object",
+        "patternProperties": {
+          "^(pr_hama_1|pr_hama_2|pr_hama_3|pr_hama_4|pr_hama_5|pr_hama_6|pr_hama_7|pr_hama_8|pr_hama_9|pr_hama_10|pr_hama_11|pr_hama_12|pr_hama_13|pr_hama_14)$": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        }
+      }
+    },
+    "required": [
+      "scored_responses"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "scores": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "mild",
+                  "mild_moderate",
+                  "moderate_severe",
+                  "severe"
+                ]
+              },
+              "band": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "label"
+                ]
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ]
+      },
+      "missing_count": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ]
+  },
+  "implementations": [
+    {
+      "kind": "wasm",
+      "url": "https://behaverse.org/scorers/hama/scorer.wasm",
+      "sha256": "6a8a695174961b20788522d56f7a9903a6b563a353ad2da872d281650d516e16"
+    }
+  ],
+  "test_cases": [
+    {
+      "name": "mild-floor",
+      "input": {
+        "scored_responses": {
+          "pr_hama_1": 0,
+          "pr_hama_2": 0,
+          "pr_hama_3": 0,
+          "pr_hama_4": 0,
+          "pr_hama_5": 0,
+          "pr_hama_6": 0,
+          "pr_hama_7": 0,
+          "pr_hama_8": 0,
+          "pr_hama_9": 0,
+          "pr_hama_10": 0,
+          "pr_hama_11": 0,
+          "pr_hama_12": 0,
+          "pr_hama_13": 0,
+          "pr_hama_14": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "mild",
+            "band": {
+              "min": 0,
+              "max": 17,
+              "label": "Mild anxiety"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "moderate-severe",
+      "input": {
+        "scored_responses": {
+          "pr_hama_1": 2,
+          "pr_hama_2": 2,
+          "pr_hama_3": 2,
+          "pr_hama_4": 2,
+          "pr_hama_5": 2,
+          "pr_hama_6": 2,
+          "pr_hama_7": 2,
+          "pr_hama_8": 2,
+          "pr_hama_9": 2,
+          "pr_hama_10": 2,
+          "pr_hama_11": 2,
+          "pr_hama_12": 2,
+          "pr_hama_13": 2,
+          "pr_hama_14": 2
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 28,
+            "severity": "moderate_severe",
+            "band": {
+              "min": 25,
+              "max": 30,
+              "label": "Moderate to severe"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "severe-ceiling",
+      "input": {
+        "scored_responses": {
+          "pr_hama_1": 4,
+          "pr_hama_2": 4,
+          "pr_hama_3": 4,
+          "pr_hama_4": 4,
+          "pr_hama_5": 4,
+          "pr_hama_6": 4,
+          "pr_hama_7": 4,
+          "pr_hama_8": 4,
+          "pr_hama_9": 4,
+          "pr_hama_10": 4,
+          "pr_hama_11": 4,
+          "pr_hama_12": 4,
+          "pr_hama_13": 4,
+          "pr_hama_14": 4
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 56,
+            "severity": "severe",
+            "band": {
+              "min": 31,
+              "max": 56,
+              "label": "Severe"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

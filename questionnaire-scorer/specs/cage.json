@@ -1,0 +1,94 @@
+{
+  "id": "cage",
+  "scorer_id": "scr_cage",
+  "name": "CAGE Standard Scoring",
+  "status": "validated",
+  "description": "CAGE alcohol screening questionnaire (Ewing, 1984). Total = number of 'yes' answers across the 4 items (range 0-4); a total of 2 or more is a positive screen suggesting the need for further assessment of alcohol problems.",
+  "publication": {
+    "citation": "Ewing JA (1984). Detecting alcoholism: the CAGE questionnaire. JAMA, 252(14), 1905-1907.",
+    "year": 1984
+  },
+  "engine_spec": {
+    "item_range": [
+      0,
+      1
+    ],
+    "scores": [
+      {
+        "key": "total",
+        "items": [
+          "pr_cage_1",
+          "pr_cage_2",
+          "pr_cage_3",
+          "pr_cage_4"
+        ],
+        "bands": [
+          {
+            "min": 0,
+            "max": 1,
+            "severity": "negative",
+            "label": "Negative screen"
+          },
+          {
+            "min": 2,
+            "max": 4,
+            "severity": "positive",
+            "label": "Positive screen \u2014 assess for alcohol problem"
+          }
+        ]
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "negative",
+      "input": {
+        "scored_responses": {
+          "pr_cage_1": 0,
+          "pr_cage_2": 0,
+          "pr_cage_3": 0,
+          "pr_cage_4": 0
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 0,
+            "severity": "negative",
+            "band": {
+              "min": 0,
+              "max": 1,
+              "label": "Negative screen"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    },
+    {
+      "name": "positive",
+      "input": {
+        "scored_responses": {
+          "pr_cage_1": 1,
+          "pr_cage_2": 1,
+          "pr_cage_3": 1,
+          "pr_cage_4": 1
+        }
+      },
+      "expected": {
+        "scores": {
+          "total": {
+            "value": 4,
+            "severity": "positive",
+            "band": {
+              "min": 2,
+              "max": 4,
+              "label": "Positive screen \u2014 assess for alcohol problem"
+            }
+          }
+        },
+        "missing_count": 0
+      }
+    }
+  ]
+}

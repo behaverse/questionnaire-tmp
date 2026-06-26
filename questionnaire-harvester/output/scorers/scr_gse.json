@@ -1,0 +1,149 @@
+{
+  "content": {
+    "en": {
+      "description": "Generalized Self-Efficacy Scale (Schwarzer & Jerusalem, 1995). Total = sum of the 10 items (each 1-4), range 10-40; higher = stronger perceived self-efficacy. No standard severity cut-offs.",
+      "name": "GSE Standard Scoring",
+      "status": "validated"
+    }
+  },
+  "id": "scr_gse",
+  "implementations": [
+    {
+      "kind": "wasm",
+      "sha256": "e11bc066185a66f2ab2dea9a3aa6f912e166bc23acceb01ac91e6ffe93494165",
+      "url": "https://behaverse.org/scorers/gse/scorer.wasm"
+    }
+  ],
+  "inputs": {
+    "properties": {
+      "scored_responses": {
+        "patternProperties": {
+          "^(pr_gse_1|pr_gse_2|pr_gse_3|pr_gse_4|pr_gse_5|pr_gse_6|pr_gse_7|pr_gse_8|pr_gse_9|pr_gse_10)$": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "scored_responses"
+    ],
+    "type": "object"
+  },
+  "name": "GSE Standard Scoring",
+  "output_schema": {
+    "properties": {
+      "missing_count": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "scores": {
+        "properties": {
+          "total": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "scores",
+      "missing_count"
+    ],
+    "type": "object"
+  },
+  "test_cases": [
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 10
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gse_1": 1,
+          "pr_gse_10": 1,
+          "pr_gse_2": 1,
+          "pr_gse_3": 1,
+          "pr_gse_4": 1,
+          "pr_gse_5": 1,
+          "pr_gse_6": 1,
+          "pr_gse_7": 1,
+          "pr_gse_8": 1,
+          "pr_gse_9": 1
+        }
+      },
+      "name": "floor"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 20
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gse_1": 2,
+          "pr_gse_10": 2,
+          "pr_gse_2": 2,
+          "pr_gse_3": 2,
+          "pr_gse_4": 2,
+          "pr_gse_5": 2,
+          "pr_gse_6": 2,
+          "pr_gse_7": 2,
+          "pr_gse_8": 2,
+          "pr_gse_9": 2
+        }
+      },
+      "name": "mid"
+    },
+    {
+      "expected": {
+        "missing_count": 0,
+        "scores": {
+          "total": {
+            "value": 40
+          }
+        }
+      },
+      "input": {
+        "scored_responses": {
+          "pr_gse_1": 4,
+          "pr_gse_10": 4,
+          "pr_gse_2": 4,
+          "pr_gse_3": 4,
+          "pr_gse_4": 4,
+          "pr_gse_5": 4,
+          "pr_gse_6": 4,
+          "pr_gse_7": 4,
+          "pr_gse_8": 4,
+          "pr_gse_9": 4
+        }
+      },
+      "name": "ceiling"
+    }
+  ],
+  "x_publication": {
+    "citation": "Schwarzer R, Jerusalem M (1995). Generalized Self-Efficacy Scale. In Weinman J, Wright S, Johnston M (Eds.), Measures in Health Psychology (pp. 35-37). NFER-NELSON.",
+    "year": 1995
+  }
+}

@@ -193,5 +193,19 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "reappraisal",
+      "name": "Cognitive reappraisal (mean)",
+      "path": "/scores/reappraisal/value",
+      "scorer": "scr_erq@v26.0618"
+    },
+    {
+      "id": "suppression",
+      "name": "Expressive suppression (mean)",
+      "path": "/scores/suppression/value",
+      "scorer": "scr_erq@v26.0618"
+    }
   ]
 }

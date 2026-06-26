@@ -193,5 +193,13 @@
       ],
       "id": "page_main"
     }
+  ],
+  "scores": [
+    {
+      "id": "total",
+      "name": "GSE total",
+      "path": "/scores/total/value",
+      "scorer": "scr_gse@v26.0618"
+    }
   ]
 }
