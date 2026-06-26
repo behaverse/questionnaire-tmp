@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import type { DefMetadata, VersionInfo } from '../api/types'
 import { licenseLabel, languageLabel } from '../lib/labels'
+import { DownloadMenu } from './DownloadMenu'
 
 export interface MetadataHeaderProps {
   meta: DefMetadata
@@ -91,21 +92,13 @@ export function MetadataHeader({ meta, version, allVersions, lang, onLang, onDow
           </svg>
           Try it
         </a>
-        <button
-          className="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent"
-          onClick={onDownload}
-        >
-          <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
-            <path d="M8 2v8m0 0L5 7m3 3 3-3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Download JSON
-        </button>
-        <button type="button" className="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent" onClick={onExportMarkdown}>
-          Markdown
-        </button>
-        <button type="button" className="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-2 text-sm font-medium text-paper shadow-card transition-colors hover:bg-accent" onClick={onExportSurveyJS}>
-          SurveyJS
-        </button>
+        <DownloadMenu
+          items={[
+            { label: 'JSON', onSelect: onDownload },
+            { label: 'Markdown', onSelect: onExportMarkdown },
+            { label: 'SurveyJS', onSelect: onExportSurveyJS },
+          ]}
+        />
       </div>
     </header>
   )

@@ -18,7 +18,7 @@ describe('MetadataHeader', () => {
       </MemoryRouter>,
     )
     expect(screen.getByRole('heading', { name: /PHQ-9/ })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /download json/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /download/i })).toBeInTheDocument()
     // language is a dropdown (scales to many languages) listing each available language
     const select = screen.getByLabelText(/language/i)
     expect(select).toBeInTheDocument()
@@ -36,14 +36,15 @@ describe('MetadataHeader', () => {
     expect(onLang).toHaveBeenCalledWith('pt')
   })
 
-  it('fires onDownload when the button is clicked', async () => {
+  it('fires onDownload when the JSON item is chosen from the Download menu', async () => {
     const onDownload = vi.fn()
     render(
       <MemoryRouter>
         <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={onDownload} onExportMarkdown={() => {}} onExportSurveyJS={() => {}} />
       </MemoryRouter>,
     )
-    await userEvent.click(screen.getByRole('button', { name: /download json/i }))
+    await userEvent.click(screen.getByRole('button', { name: /download/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: 'JSON' }))
     expect(onDownload).toHaveBeenCalled()
   })
 
@@ -66,15 +67,17 @@ describe('MetadataHeader', () => {
     expect(screen.getByText('Part A screener')).toBeInTheDocument()
   })
 
-  it('renders Markdown + SurveyJS export buttons and fires their callbacks', async () => {
+  it('offers Markdown + SurveyJS in the Download menu and fires their callbacks', async () => {
     const onMd = vi.fn(); const onSjs = vi.fn()
     render(
       <MemoryRouter>
         <MetadataHeader meta={meta} version="v26.0602" allVersions={[]} lang="en" previewHref="http://localhost:5173/?preview=qst_phq9@v26.0602" onLang={() => {}} onDownload={() => {}} onExportMarkdown={onMd} onExportSurveyJS={onSjs} />
       </MemoryRouter>,
     )
-    await userEvent.click(screen.getByRole('button', { name: 'Markdown' }))
-    await userEvent.click(screen.getByRole('button', { name: 'SurveyJS' }))
+    await userEvent.click(screen.getByRole('button', { name: /download/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Markdown' }))
+    await userEvent.click(screen.getByRole('button', { name: /download/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: 'SurveyJS' }))
     expect(onMd).toHaveBeenCalled(); expect(onSjs).toHaveBeenCalled()
   })
 })
