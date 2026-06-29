@@ -59,9 +59,13 @@ what remains is polish.
   question search, add a search UI here calling the same Library endpoint (this app currently hits
   the VS `/v1/catalogue`, which has no search). Requires a live re-ingest to populate the content
   index (see `library/HANDOFF_content_search_index.md` §4).
-- **#4 Score-progression-over-time dashboard.** For a logged-in participant, chart how their scores on a
-  given questionnaire change across repeated sessions over time. UI lives here; the data endpoint
-  (scorer_outputs over time) is a VS follow-up — see `viewer-service/FOLLOWUPS.md`.
+- ~~**#4 Score-progression-over-time dashboard.**~~ **DONE (2026-06-29)** — My Data groups sessions by
+  questionnaire (`src/mydata/progression.ts` `groupByInstrument`) and draws a dependency-free SVG line
+  chart per named score (`src/mydata/ScoreSparkline.tsx`, with a `<table>` fallback) for any
+  questionnaire with ≥2 scored attempts. Data: the player persists a display-ready projection
+  (`x_score_display`) at completion; the VS stores it in `session.score_display` and returns it from
+  `GET /v1/me/sessions`. **No backfill**—only sessions completed after this shipped carry scores.
+  Instrument titles are still `instrument_id` (a human-title lookup is a separate item).
 - **#3 xAPI surfacing.** Once the VS stores xAPI statements, surface a participant's xAPI activity in
   "my data". Data side is a VS follow-up — see `viewer-service/FOLLOWUPS.md`.
 

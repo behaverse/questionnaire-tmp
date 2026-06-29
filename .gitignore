@@ -32,3 +32,4 @@ archive/
 **/.env.local
 **/.env.*.local
 .secrets/
+.superpowers/

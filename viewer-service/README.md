@@ -258,13 +258,20 @@ not checked).  Returns `401 { error: { code: "auth_required" } }` if absent or i
       "session_index": 1,
       "started_at": "2026-06-21T09:58:00Z",
       "completed_at": null,
-      "submitted_at": "2026-06-21T10:00:00Z"
+      "submitted_at": "2026-06-21T10:00:00Z",
+      "score_display": [{ "id": "sc_total", "name": "PHQ-9 total", "value": 12 }]
     }
   ]
 }
 ```
 
 Returns `{"sessions": []}` if the participant has no sessions.
+
+**`score_display`** is a viewer-supplied display projection (named numeric scores) for
+score-progression charts; `null` when the session carried no scores. The player persists it at
+completion via an `x_score_display` sidecar in the `POST /v1/sessions/{id}/scorer_outputs` body
+(stripped before the Schema-6 validation of `scorer_outputs` and stored in `session.score_display`);
+it is **not** a normative Schema-5/BDM field.
 
 **Scoping note:** `participant_sub` is matched exactly against `claims["sub"]`.
 Invite-link sessions are tagged `participant_sub = "invite:<code>"`, which is
