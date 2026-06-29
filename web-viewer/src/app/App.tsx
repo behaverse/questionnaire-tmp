@@ -46,6 +46,7 @@ const FIXTURES: Record<string, () => Promise<{ default: unknown }>> = {
   matrix: () => import('../fixtures/matrix.json'),
   widgets: () => import('../fixtures/widgets.json'),
   branch: () => import('../fixtures/branch.json'),
+  comments: () => import('../fixtures/comments.json'),
   phq9: () => import('../fixtures/phq9.json'),
   branch_score: () => import('../fixtures/branch_score.json'),
 }
