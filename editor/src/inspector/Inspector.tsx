@@ -1,7 +1,7 @@
 import type { JSX } from 'react'
 import { useEditorStore } from '../state/store'
 import { getAtPath, nodeKind, pathKey } from '../model/path'
-import { updateMetadata, updateNodeProps, setBlockPages, deleteBlock, updateFlow, unsetNodeProp } from '../model/tree'
+import { updateMetadata, updateNodeProps, setBlockPages, deleteBlock, updateFlow, updateStyle, unsetNodeProp } from '../model/tree'
 import { TextField, CheckboxField } from './fields'
 import type { Block, Page, Section } from '../model/types'
 import { ShowIfEditor } from '../canvas/ShowIfEditor'
@@ -21,6 +21,7 @@ export function Inspector() {
 
   if (kind === 'questionnaire') {
     const m = model.metadata
+    const style = (model.style as Record<string, unknown>) ?? {}
     body = (
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-ed-text">Questionnaire</h3>
@@ -34,6 +35,20 @@ export function Inspector() {
           { id: 'validation', label: 'Validation', content: <ValidationPanel /> },
           { id: 'scoring', label: 'Scoring', content: <ScoringPanel /> },
         ]} />
+        <div className="space-y-2 border-t border-ed-border pt-3">
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-ed-muted">Presentation</h4>
+          {/* Defaults: key-select ON, back-nav ON, comments OFF. We persist a flag only when it
+              differs from the default so questionnaires stay clean. */}
+          <CheckboxField label="Allow selecting options with keyboard letter keys"
+            checked={style.x_key_select !== false}
+            onChange={(v) => applyEdit((mm) => updateStyle(mm, { x_key_select: v ? undefined : false }))} />
+          <CheckboxField label="Allow going back to previous questions"
+            checked={style.x_back_nav !== false}
+            onChange={(v) => applyEdit((mm) => updateStyle(mm, { x_back_nav: v ? undefined : false }))} />
+          <CheckboxField label="Enable per-question comments (QA)"
+            checked={style.x_comments === true}
+            onChange={(v) => applyEdit((mm) => updateStyle(mm, { x_comments: v ? true : undefined }))} />
+        </div>
         <CheckboxField label="Randomize page order" checked={(model.flow as { randomize_pages?: boolean })?.randomize_pages === true}
           onChange={(v) => applyEdit((mm) => updateFlow(mm, { randomize_pages: v ? true : undefined }))} />
       </div>

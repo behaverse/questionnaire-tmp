@@ -93,6 +93,15 @@ export function updateFlow(model: Questionnaire, patch: Record<string, unknown>)
   })
 }
 
+export function updateStyle(model: Questionnaire, patch: Record<string, unknown>): Questionnaire {
+  return produce(model, (draft) => {
+    const style = { ...((draft.style as Record<string, unknown>) ?? {}), ...patch }
+    for (const k of Object.keys(style)) if (style[k] === undefined) delete style[k]
+    if (Object.keys(style).length === 0) delete draft.style
+    else draft.style = style
+  })
+}
+
 export function updateLogic(model: Questionnaire, rules: LogicRule[]): Questionnaire {
   return produce(model, (draft) => {
     if (rules.length === 0) delete draft.logic

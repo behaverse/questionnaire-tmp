@@ -84,6 +84,40 @@ describe('Inspector randomization (D2b)', () => {
   })
 })
 
+describe('Inspector presentation flags (style.x_*)', () => {
+  beforeEach(() => useEditorStore.getState().select(null))
+
+  it('key-select + back-nav default ON; unchecking writes the false flag', () => {
+    render(<Inspector />)
+    const keySel = screen.getByLabelText(/selecting options with keyboard/i) as HTMLInputElement
+    const back = screen.getByLabelText(/going back to previous questions/i) as HTMLInputElement
+    expect(keySel.checked).toBe(true)
+    expect(back.checked).toBe(true)
+    fireEvent.click(keySel)
+    fireEvent.click(back)
+    const style = useEditorStore.getState().model!.style as Record<string, unknown>
+    expect(style.x_key_select).toBe(false)
+    expect(style.x_back_nav).toBe(false)
+  })
+
+  it('re-checking key-select removes the flag (back to default, no key persisted)', () => {
+    render(<Inspector />)
+    const keySel = screen.getByLabelText(/selecting options with keyboard/i)
+    fireEvent.click(keySel) // → false
+    fireEvent.click(keySel) // → default, key removed
+    const style = (useEditorStore.getState().model!.style ?? {}) as Record<string, unknown>
+    expect('x_key_select' in style).toBe(false)
+  })
+
+  it('comments default OFF; checking writes x_comments:true', () => {
+    render(<Inspector />)
+    const comments = screen.getByLabelText(/per-question comments/i) as HTMLInputElement
+    expect(comments.checked).toBe(false)
+    fireEvent.click(comments)
+    expect((useEditorStore.getState().model!.style as Record<string, unknown>).x_comments).toBe(true)
+  })
+})
+
 it('groups Logic/Validation/Scoring into tabs at the questionnaire root', () => {
   useEditorStore.getState().select(null)
   render(<Inspector />)
