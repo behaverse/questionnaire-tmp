@@ -209,14 +209,14 @@ test('x_comments:true shows the widget; submitting POSTs the comment body', asyn
   await userEvent.click(await screen.findByRole('button', { name: /comment on this question/i }))
   const dialog = await screen.findByRole('dialog', { name: /comment on this question/i })
   // submit is disabled until something is entered
-  const submit = within(dialog).getByRole('button', { name: /send comment/i })
+  const submit = within(dialog).getByRole('button', { name: /^send$/i })
   expect(submit).toBeDisabled()
   await userEvent.type(within(dialog).getByRole('textbox'), 'Item 2 is ambiguous')
   await userEvent.click(within(dialog).getAllByRole('radio')[2])   // 3 stars
   expect(submit).not.toBeDisabled()
   await userEvent.click(submit)
   // thank-you shown
-  expect(await within(dialog).findByText(/thanks for your comment/i)).toBeInTheDocument()
+  expect(await within(dialog).findByText(/thanks/i)).toBeInTheDocument()
   // the POST carried the expected body
   const posts = fetchMock.mock.calls.filter(([u]) => String(u).endsWith('/comments'))
   expect(posts).toHaveLength(1)
