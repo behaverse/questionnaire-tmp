@@ -207,7 +207,7 @@ test('x_comments:true shows the widget; submitting POSTs the comment body', asyn
   renderApp()
   // open the modal
   await userEvent.click(await screen.findByRole('button', { name: /comment on this question/i }))
-  const dialog = await screen.findByRole('dialog', { name: /comment on this question/i })
+  const dialog = await screen.findByRole('dialog', { name: /your opinion matters/i })
   // submit is disabled until something is entered
   const submit = within(dialog).getByRole('button', { name: /^send$/i })
   expect(submit).toBeDisabled()
