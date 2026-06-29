@@ -45,7 +45,8 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
         onClick={() => setOpen(true)}
         aria-label={t(locale, 'comment_button')}
         title={t(locale, 'comment_button')}
-        className="qv-focusable fixed bottom-4 left-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-slate-300 bg-surface text-slate-500 shadow-sm hover:text-slate-800"
+        style={{ background: 'var(--qv-surface-bg, #ffffff)' }}
+        className="qv-focusable fixed bottom-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-slate-500 shadow-md hover:text-slate-800"
       >
         <svg aria-hidden viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -55,7 +56,7 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
   }
 
   return (
-    <div className="fixed inset-0 z-20 grid place-items-center bg-black/30 px-4" onClick={close}>
+    <div className="fixed inset-0 z-20 grid place-items-center bg-black/50 px-4" onClick={close}>
       <div
         ref={dialogRef}
         role="dialog"
@@ -64,7 +65,8 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => { if (e.key === 'Escape') close() }}
-        className="qv-card w-full max-w-md space-y-4 bg-surface text-left"
+        style={{ background: 'var(--qv-surface-bg, #ffffff)' }}
+        className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 p-6 text-left text-slate-800 shadow-2xl"
       >
         <h2 className="text-lg font-semibold">{t(locale, 'comment_title')}</h2>
         {sent ? (
@@ -79,7 +81,7 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
               maxLength={2000}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
-              className="qv-focusable w-full rounded-lg border border-slate-300 bg-surface px-3 py-2"
+              className="qv-focusable w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-800"
             />
             <fieldset>
               <legend className="mb-1 text-sm text-slate-500">{t(locale, 'comment_stars_label')}</legend>

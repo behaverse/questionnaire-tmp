@@ -5,7 +5,7 @@
   "style": { "x_comments": true },
   "pages": [
     { "id": "page_1", "elements": [
-      { "id": "msg_intro", "content": { "en": { "text": "QA comment demo — look for the speech-bubble icon at the bottom-left of every question; click it to leave a comment." } } },
+      { "id": "msg_intro", "content": { "en": { "text": "QA comment demo — look for the speech-bubble icon at the bottom-right of every question; click it to leave a comment." } } },
       { "id": "it_1", "required": true,
         "question": { "prompt": { "content": { "en": { "text": "Little interest or pleasure in doing things" } } } },
         "option": { "input_data_type": "choice", "measurement_type": "ordinal", "selection": "single",
