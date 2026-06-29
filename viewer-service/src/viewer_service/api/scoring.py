@@ -19,6 +19,7 @@ def _validator() -> Draft202012Validator:
 
 @router.post("/sessions/{session_id}/scorer_outputs")
 def post_scorer_outputs(session_id: str, payload: dict, session=Depends(require_session), conn=Depends(get_conn)):
+    display = payload.pop("x_score_display", None) if isinstance(payload, dict) else None
     try:
         _validator().validate(payload)
     except ValidationError as e:
@@ -26,5 +27,7 @@ def post_scorer_outputs(session_id: str, payload: dict, session=Depends(require_
     if session["ephemeral"]:
         return JSONResponse(status_code=202, content={"ephemeral": True})
     session_store.set_scorer_outputs(conn, session_id, payload)
+    if isinstance(display, list):
+        session_store.set_score_display(conn, session_id, display)
     conn.commit()
     return JSONResponse(status_code=202, content={"stored": True})

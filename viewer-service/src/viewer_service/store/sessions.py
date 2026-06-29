@@ -18,7 +18,7 @@ _SELECT_COLS = ("session_id", "session_index", "deployment_id", "viewer_id", "vi
                 "agent_id", "instrument_id", "instrument_version", "status", "token_hash",
                 "initial_locale", "last_active_locale", "started_at", "completed_at",
                 "submitted_at", "forwarded_at", "forward_attempts", "forward_failure_reason",
-                "ephemeral", "scorer_outputs", "participant_sub")
+                "ephemeral", "scorer_outputs", "participant_sub", "score_display")
 
 
 def _row_to_dict(row) -> dict:
@@ -59,6 +59,10 @@ def set_failure_reason(conn: psycopg.Connection, session_id: str, reason: str) -
 
 def set_scorer_outputs(conn: psycopg.Connection, session_id: str, outputs: dict) -> None:
     conn.execute("UPDATE session SET scorer_outputs=%s WHERE session_id=%s", (Json(outputs), session_id))
+
+
+def set_score_display(conn: psycopg.Connection, session_id: str, display: list) -> None:
+    conn.execute("UPDATE session SET score_display=%s WHERE session_id=%s", (Json(display), session_id))
 
 
 def list_sessions_for_participant(conn: psycopg.Connection, participant_sub: str) -> list[dict]:

@@ -47,6 +47,19 @@ def test_rejects_non_schema6_body(session):
     assert r.status_code == 422
 
 
+def test_stores_x_score_display_sidecar(session):
+    client, sid, h = session
+    body = {**_VALID_OUTPUTS, "x_score_display": [{"id": "scr_phq9", "name": "PHQ-9", "value": 12}]}
+    r = client.post(f"/v1/sessions/{sid}/scorer_outputs", json=body, headers=h)
+    assert r.status_code in (200, 202), r.text
+    import psycopg, os
+    from viewer_service.store import sessions as session_store
+    with psycopg.connect(os.environ["DATABASE_URL"]) as c:
+        row = session_store.get_session(c, sid)
+        assert row["scorer_outputs"] == _VALID_OUTPUTS              # sidecar stripped before validation
+        assert row["score_display"] == [{"id": "scr_phq9", "name": "PHQ-9", "value": 12}]
+
+
 def test_ephemeral_validates_but_skips_store(ephemeral_session):
     client, sid, h = ephemeral_session
     r = client.post(f"/v1/sessions/{sid}/scorer_outputs", json=_VALID_OUTPUTS, headers=h)

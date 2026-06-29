@@ -93,6 +93,7 @@ ALTER TABLE deployment ADD COLUMN IF NOT EXISTS consent                    jsonb
 
 ALTER TABLE session ADD COLUMN IF NOT EXISTS ephemeral boolean NOT NULL DEFAULT false;
 ALTER TABLE session ADD COLUMN IF NOT EXISTS scorer_outputs jsonb;
+ALTER TABLE session ADD COLUMN IF NOT EXISTS score_display jsonb;
 ALTER TABLE session ADD COLUMN IF NOT EXISTS participant_sub text;
 
 CREATE TABLE IF NOT EXISTS theme (

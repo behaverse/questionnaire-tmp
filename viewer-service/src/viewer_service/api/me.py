@@ -21,6 +21,7 @@ def my_sessions(conn=Depends(get_conn), claims=Depends(require_participant)):
         "started_at": r["started_at"].isoformat() if r["started_at"] else None,
         "completed_at": r["completed_at"].isoformat() if r["completed_at"] else None,
         "submitted_at": r["submitted_at"].isoformat() if r["submitted_at"] else None,
+        "score_display": r["score_display"],
     } for r in rows]}
 
 

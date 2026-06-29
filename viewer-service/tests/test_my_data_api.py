@@ -55,3 +55,14 @@ def test_my_responses_empty_is_header_only(client, auth_header):
     r = client.get("/v1/me/responses.csv", headers=auth_header(["participant"], sub="nobody"))
     assert r.status_code == 200
     assert len(r.text.strip().splitlines()) == 1           # header row only
+
+
+def test_me_sessions_includes_score_display(client, auth_header, pg_url):
+    _seed(pg_url, "carol", "sC")
+    with psycopg.connect(pg_url) as c:
+        sstore.set_score_display(c, "sC", [{"id": "sc", "name": "PHQ-9", "value": 9}])
+        c.commit()
+    client.headers.pop("authorization", None)
+    r = client.get("/v1/me/sessions", headers=auth_header(["participant"], sub="carol"))
+    assert r.status_code == 200
+    assert r.json()["sessions"][0]["score_display"] == [{"id": "sc", "name": "PHQ-9", "value": 9}]
