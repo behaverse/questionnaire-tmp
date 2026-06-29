@@ -29,6 +29,8 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 | `POST /v1/sessions/{id}/locale` | (token) switch locale → re-minted runtime. |
 | `POST /v1/sessions/{id}/responses` · `/events` | (token) submit Schema 5 / Schema 4a → enqueued to the outbox (202). |
 | `POST /v1/sessions/{id}/complete` | (token) mark the session submitted. |
+| `POST /v1/sessions/{id}/comments` | (token) submit a per-question **QA comment** `{page_id?, item_id?, locale?, comment?, stars?}` (comment ≤2000 chars, stars 1–5, one required); ephemeral validates-but-skips. Stored out-of-band from responses. |
+| `GET /v1/deployments/{id}/comments` · `…/comments.csv` | (researcher) read the deployment's QA comments as JSON or CSV download. |
 | `DELETE /runtime_cache[?deployment_id=]` | Admin purge (OD-18f). |
 | `GET /healthz` | Health. |
 

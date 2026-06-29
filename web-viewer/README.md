@@ -40,6 +40,7 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
 - `http://localhost:5173/?fixture=matrix` — Section + shared_option matrix
 - `http://localhost:5173/?fixture=widgets` — every supported widget triple + Message + an unsupported combo. Numeric scales (`number.interval`/`number.ratio`) render via `numberPresentation`: a `style.layout: slider|rating|input` hint wins, else auto — ≤ 11-point integer scale → `NumberRating` (segmented buttons), wider/continuous → `Slider` (`<input type=range>`), unbounded → `NumberInput`.
 - `http://localhost:5173/?fixture=branch` — a 3-page branch rule (`it_route == 1` skips to p3); proves in-browser logic
+- `http://localhost:5173/?fixture=comments` — the per-question **QA comment** widget (`style.x_comments: true`): a bottom-right icon opens a comment + star-rating modal
 
 ## URL contract
 
@@ -157,7 +158,9 @@ The portal routes (catalogue / my-data / account / reset-password / verify-email
 - `style.x_comments: true` (opt-in) shows a per-question **comment** widget for QA: a small icon
   that opens a modal capturing a free-text comment + an optional 1–5 star rating, POSTed to the VS
   (`POST /v1/sessions/{id}/comments`). Non-blocking and stored out-of-band from responses.
-  Researchers read them via `GET /v1/deployments/{id}/comments`. ("Comment", not "feedback".)
+  Researchers read them via `GET /v1/deployments/{id}/comments` (JSON) or `…/comments.csv`
+  (download). Authored questionnaire-level in the Editor (Presentation section); try it with
+  `?fixture=comments`. ("Comment", not "feedback".)
 
 > The player honours `x_key_select` / `x_back_nav` / `x_comments` today; authoring them from the
 > deployment/questionnaire (VS denormaliser + Editor) is a follow-up — see `FOLLOWUPS.md`.
