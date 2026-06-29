@@ -4,11 +4,16 @@ POST is on the participant path (anonymous session token); GET is researcher-gat
 Comments are commentary ABOUT a question, stored out-of-band from Schema-5 responses.
 """
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from .deps import get_conn, require_session
 from .identity import require_researcher
+from ..export_csv import to_csv
 from ..store import comments as comment_store
 from ..store import deployments as dep_store
+
+# Researcher-facing CSV column order (analysis-friendly: when/what/where first, then text).
+_CSV_COLS = ("id", "created_at", "deployment_id", "instrument_id", "instrument_version",
+             "page_id", "item_id", "locale", "stars", "comment", "session_id", "participant_sub")
 
 router = APIRouter()
 
@@ -52,3 +57,13 @@ def list_comments(deployment_id: str, conn=Depends(get_conn), claims=Depends(req
     if dep_store.get_deployment(conn, deployment_id) is None:
         raise HTTPException(status_code=404, detail="deployment not found")
     return {"comments": comment_store.list_comments(conn, deployment_id)}
+
+
+@router.get("/deployments/{deployment_id}/comments.csv")
+def export_comments(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
+    """Download the deployment's QA comments as CSV (mirrors the response export.csv path)."""
+    if dep_store.get_deployment(conn, deployment_id) is None:
+        raise HTTPException(status_code=404, detail="deployment not found")
+    rows = comment_store.list_comments(conn, deployment_id)
+    return StreamingResponse(to_csv(iter(rows), _CSV_COLS), media_type="text/csv", headers={
+        "Content-Disposition": f'attachment; filename="{deployment_id}_comments.csv"'})

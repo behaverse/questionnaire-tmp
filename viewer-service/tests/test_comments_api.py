@@ -91,6 +91,27 @@ def test_unknown_deployment_404(client):
     assert r.status_code == 404
 
 
+def test_comments_csv_export(session):
+    client, dep_id, sid, h = session
+    client.post(f"/v1/sessions/{sid}/comments", headers=h,
+                json={"page_id": "pg_1", "item_id": "it_1", "comment": "wording, unclear", "stars": 2})
+    r = client.get(f"/v1/deployments/{dep_id}/comments.csv")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("text/csv")
+    assert "attachment" in r.headers["content-disposition"]
+    lines = r.text.strip().splitlines()
+    assert lines[0].startswith("id,created_at,deployment_id")  # header
+    assert len(lines) == 2
+    # comment with an embedded comma is CSV-quoted, stars preserved
+    assert '"wording, unclear"' in lines[1] and ",2," in lines[1]
+
+
+def test_comments_csv_requires_researcher(session, auth_header):
+    client, dep_id, _sid, _h = session
+    assert client.get(f"/v1/deployments/{dep_id}/comments.csv",
+                      headers=auth_header(["participant"])).status_code == 403
+
+
 def test_ephemeral_validates_but_skips_store(ephemeral_session):
     client, _dep, sid, h = ephemeral_session
     r = client.post(f"/v1/sessions/{sid}/comments", headers=h, json={"comment": "x", "stars": 3})

@@ -35,8 +35,9 @@ participant-app) and are cross-linked.
     Editor Presentation section (see the #1/#2 authoring note above).
   - The deeper **QA-research** programme (domain-expert review workflows, "ask questions *about* a
     question", reviewer assignment, aggregation/dashboards) is a much larger separate effort.
-  - Researcher-facing **UI** to browse/export comments — the read *endpoint*
-    (`GET /v1/deployments/{id}/comments`) ships now (viewer-service); the UI does not.
+  - ~~Researcher read/export of comments.~~ **DONE (2026-06-26)** — `GET /v1/deployments/{id}/comments`
+    (JSON) + `GET /v1/deployments/{id}/comments.csv` (download, mirrors `export.csv`). No researcher
+    GUI exists in the project (data access is API/CSV by design), so there's no in-browser browser.
 - **#7 Replay.** Given a session's `bdm:` event stream (+ Schema-5 responses), reconstruct and play
   back how a participant moved through the questionnaire (step-by-step navigation, answers entered,
   revisions, timings). Player+VS effort: needs a VS event-export read endpoint and a player "replay"

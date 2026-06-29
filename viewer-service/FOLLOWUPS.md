@@ -16,10 +16,12 @@ Captured from root `my_comments.md`; player-side counterparts live in `web-viewe
   `question_comment` table (append-only) + `POST /v1/sessions/{id}/comments` (participant path,
   `require_session`; ephemeral validates-but-skips; inline validation: comment ≤2000 chars, stars
   int 1–5, at least one required) + researcher-gated `GET /v1/deployments/{id}/comments`. Comments
-  are stored out-of-band from Schema-5 responses ("comment", not "feedback"). **Remaining:** a
-  researcher **UI** to browse/export (endpoint ships, UI doesn't); a proper CSV/export path; the
-  deeper QA-research programme (expert review, "ask about this question", extra rating scales,
-  aggregation/dashboards) is a separate larger effort.
+  are stored out-of-band from Schema-5 responses ("comment", not "feedback"). Researcher read:
+  `GET /v1/deployments/{id}/comments` (JSON) **and** `GET /v1/deployments/{id}/comments.csv`
+  (download, mirrors `export.csv`) — **CSV export DONE (2026-06-26)**. **Remaining:** no researcher
+  **GUI** exists anywhere in the project (data access is API/CSV by design); the deeper QA-research
+  programme (expert review, "ask about this question", extra rating scales, aggregation/dashboards)
+  is a separate larger effort.
 - **#3 xAPI storage + surfacing.** Persist xAPI statements (already emittable from `bdm:` events?)
   and expose them so the participant platform can read them back (participant-app surfaces them).
   Needs a storage decision (own table vs. forward to an LRS) + a read endpoint.
