@@ -1,9 +1,12 @@
 import type { AuthFetch } from '@behaverse/participant-session'
 
+export type ScoreDisplay = { id: string; name: string; value: number }
+
 export type MySession = {
   session_id: string; instrument_id: string; instrument_version: string; deployment_id: string
   status: string; session_index: number
   started_at: string | null; completed_at: string | null; submitted_at: string | null
+  score_display?: ScoreDisplay[] | null
 }
 export type SessionsResult = { ok: true; sessions: MySession[] } | { ok: false; error: 'unauthorized' | 'network' }
 
