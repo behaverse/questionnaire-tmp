@@ -45,8 +45,7 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
         onClick={() => setOpen(true)}
         aria-label={t(locale, 'comment_button')}
         title={t(locale, 'comment_button')}
-        style={{ background: 'var(--qv-surface-bg, #ffffff)' }}
-        className="qv-focusable fixed bottom-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-slate-300 text-slate-500 shadow-md hover:text-slate-800"
+        className="qv-focusable fixed bottom-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-slate-300 bg-surface text-slate-500 shadow-md hover:text-slate-800"
       >
         <svg aria-hidden viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -65,8 +64,7 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => { if (e.key === 'Escape') close() }}
-        style={{ background: 'var(--qv-surface-bg, #ffffff)' }}
-        className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 p-6 text-left text-slate-800 shadow-2xl"
+        className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-surface p-6 text-left text-slate-800 shadow-2xl"
       >
         <h2 className="text-lg font-semibold">{t(locale, 'comment_title')}</h2>
         {sent ? (

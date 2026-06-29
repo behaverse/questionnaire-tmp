@@ -10,7 +10,7 @@ export default {
         success: 'var(--qv-success)',
         warning: 'var(--qv-warning)',
         error: 'var(--qv-error)',
-        surface: 'var(--qv-background)',
+        surface: 'var(--qv-surface-bg)',
       },
       fontFamily: { theme: ['var(--qv-font-family)'] },
     },
