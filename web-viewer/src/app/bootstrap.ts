@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import type { Runtime } from '../renderer/types'
 import type { Theme } from './theme'
+import type { ScoreDisplay } from '../scoring/display'
 
 export const VIEWER_ID = 'behaverse-web-viewer'
 export const VIEWER_VERSION = 'v26.0612'
@@ -100,12 +101,13 @@ export async function completeSession(vsBaseUrl: string, sessionId: string, toke
   }
 }
 
-export async function submitScorerOutputs(vsBaseUrl: string, sessionId: string, token: string, outputs: Record<string, unknown>): Promise<boolean> {
+export async function submitScorerOutputs(vsBaseUrl: string, sessionId: string, token: string, outputs: Record<string, unknown>, scoreDisplay?: ScoreDisplay[]): Promise<boolean> {
+  const body = scoreDisplay && scoreDisplay.length ? { ...outputs, x_score_display: scoreDisplay } : outputs
   try {
     const r = await fetch(`${vsBaseUrl}/v1/sessions/${sessionId}/scorer_outputs`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
-      body: JSON.stringify(outputs),
+      body: JSON.stringify(body),
     })
     return r.ok
   } catch {

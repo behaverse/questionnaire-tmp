@@ -29,7 +29,7 @@ import { ScoreSummary } from './chrome/ScoreSummary'
 import { StepTransition } from './chrome/StepTransition'
 import { t } from './chrome/strings'
 import { RichText } from '../renderer/RichText'
-import { displayScores } from '../scoring/display'
+import { displayScores, buildScoreDisplay } from '../scoring/display'
 import { agentActor, engineActor, ev, EventBatcher } from './events'
 import { buildItemRow, buildMessageRow, buildRuntimeIndex, stimulusFor } from './responses'
 import type { ElementIndex, SessionIdentity } from './responses'
@@ -348,9 +348,10 @@ export function App() {
       if (outcome === 'timeout') { dispatch({ type: 'submit_failed' }); return }
       pl.cache.refresh(stateRef.current.answers, pl.evaluator)
       const scorerOutputs = pl.cache.scorerOutputs()
+      const scoreDisplay = buildScoreDisplay(state.runtime!, pl.cache.resolver.score)
       const localRun = pl.identity.sessionId === 'fixture' || pl.identity.sessionId === 'preview'
       if (!ephemeralRef.current && !localRun && Object.keys(scorerOutputs).length > 0) {
-        await submitScorerOutputs(params.vsBaseUrl, pl.identity.sessionId, token, scorerOutputs)
+        await submitScorerOutputs(params.vsBaseUrl, pl.identity.sessionId, token, scorerOutputs, scoreDisplay)
       }
       const ok = localRun || (await completeSession(params.vsBaseUrl, pl.identity.sessionId, token))
       if (cancelled) return

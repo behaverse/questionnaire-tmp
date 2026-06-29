@@ -1,4 +1,4 @@
-import { mintSession, parseParams, safeReturnUrl, completeSession, getSession, getRuntime, switchLocale } from './bootstrap'
+import { mintSession, parseParams, safeReturnUrl, completeSession, getSession, getRuntime, switchLocale, submitScorerOutputs } from './bootstrap'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -164,4 +164,14 @@ test('mintSession defaults the new fields to null when absent', async () => {
     expect(r.confirmation_message).toBeNull()
     expect(r.redirect_url).toBeNull()
   }
+})
+
+test('submitScorerOutputs includes x_score_display when provided', async () => {
+  const fetchMock = vi.fn().mockResolvedValue(new Response('{}', { status: 202 }))
+  vi.stubGlobal('fetch', fetchMock)
+  await submitScorerOutputs('http://vs', 's1', 't1', { 'scr_x@v26.0602': { total: 1 } },
+    [{ id: 'sc', name: 'N', value: 1 }])
+  const body = JSON.parse(fetchMock.mock.calls[0][1].body as string)
+  expect(body.x_score_display).toEqual([{ id: 'sc', name: 'N', value: 1 }])
+  expect(body['scr_x@v26.0602']).toEqual({ total: 1 })
 })
