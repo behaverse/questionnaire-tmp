@@ -1,6 +1,6 @@
 import psycopg
 from fastapi import APIRouter, Depends
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
 from .deps import get_conn
 from .identity import require_participant
 from ..config import get_settings
@@ -23,6 +23,18 @@ def my_sessions(conn=Depends(get_conn), claims=Depends(require_participant)):
         "submitted_at": r["submitted_at"].isoformat() if r["submitted_at"] else None,
         "score_display": r["score_display"],
     } for r in rows]}
+
+
+@router.get("/me/events")
+def my_events(conn=Depends(get_conn), claims=Depends(require_participant)):
+    """Download the caller's xAPI activity (bdm: profile statements), flattened from event batches."""
+    events: list = []
+    for payload in export_store.iter_event_rows_for_participant(conn, claims["sub"]):
+        evs = payload.get("events") if isinstance(payload, dict) else None
+        if isinstance(evs, list):
+            events.extend(evs)
+    return JSONResponse(content={"events": events},
+                        headers={"Content-Disposition": 'attachment; filename="my_xapi.json"'})
 
 
 @router.get("/me/responses.csv")

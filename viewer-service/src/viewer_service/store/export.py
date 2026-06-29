@@ -15,6 +15,16 @@ def iter_response_rows_for_participant(conn: psycopg.Connection, participant_sub
             yield payload
 
 
+def iter_event_rows_for_participant(conn: psycopg.Connection, participant_sub: str) -> Iterator[dict]:
+    """Yield every event batch ({batch_id, events:[...]}) collected for one participant, from the
+    outbox. Scoped to session.participant_sub; kind='events' only; insertion order."""
+    cur = conn.execute(
+        "SELECT o.payload FROM outbox o JOIN session s ON o.session_id = s.session_id "
+        "WHERE s.participant_sub = %s AND o.kind = 'events' ORDER BY o.id", (participant_sub,))
+    for (payload,) in cur:
+        yield payload
+
+
 def iter_response_rows(conn: psycopg.Connection, deployment_id: str) -> Iterator[dict]:
     """Yield every Schema 5 Response collected for a deployment, flattened from the outbox.
     Reads only kind='responses' rows for the deployment's sessions, in insertion order. A

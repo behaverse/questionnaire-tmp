@@ -66,3 +66,31 @@ def test_me_sessions_includes_score_display(client, auth_header, pg_url):
     r = client.get("/v1/me/sessions", headers=auth_header(["participant"], sub="carol"))
     assert r.status_code == 200
     assert r.json()["sessions"][0]["score_display"] == [{"id": "sc", "name": "PHQ-9", "value": 9}]
+
+
+def _seed_events(pg_url, sid, events):
+    with psycopg.connect(pg_url) as c:
+        c.execute("INSERT INTO outbox (session_id, kind, payload, payload_sha256) "
+                  "VALUES (%s,'events',%s,%s)",
+                  (sid, Jsonb({"batch_id": sid + ":0", "events": events}), "he_" + sid))
+        c.commit()
+
+def test_me_events_flattens_and_scopes(client, auth_header, pg_url):
+    _seed(pg_url, "alice", "sA")
+    _seed(pg_url, "bob", "sB")
+    _seed_events(pg_url, "sA", [{"verb": "bdm:selected"}, {"verb": "bdm:completed"}])
+    _seed_events(pg_url, "sB", [{"verb": "bdm:selected"}])
+    client.headers.pop("authorization", None)
+    r = client.get("/v1/me/events", headers=auth_header(["participant"], sub="alice"))
+    assert r.status_code == 200
+    assert "attachment" in r.headers["content-disposition"]
+    assert [e["verb"] for e in r.json()["events"]] == ["bdm:selected", "bdm:completed"]   # bob excluded
+
+def test_me_events_requires_token(client):
+    client.headers.pop("authorization", None)
+    assert client.get("/v1/me/events").status_code == 401
+
+def test_me_events_empty(client, auth_header):
+    client.headers.pop("authorization", None)
+    r = client.get("/v1/me/events", headers=auth_header(["participant"], sub="nobody"))
+    assert r.status_code == 200 and r.json() == {"events": []}
