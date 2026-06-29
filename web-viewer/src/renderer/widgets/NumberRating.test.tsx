@@ -19,4 +19,24 @@ describe('NumberRating', () => {
     await userEvent.click(screen.getByRole('radio', { name: '6' }))
     expect(onChange).toHaveBeenCalledWith(6)
   })
+  it('roving tabindex: only the checked radio is tabbable', () => {
+    render(<NumberRating label="A" min={1} max={5} step={1} value={3} onChange={() => {}} />)
+    const tabbable = screen.getAllByRole('radio').filter((r) => r.getAttribute('tabindex') === '0')
+    expect(tabbable).toHaveLength(1)
+    expect(screen.getByRole('radio', { name: '3' })).toHaveAttribute('tabindex', '0')
+  })
+  it('when nothing is selected the first radio is tabbable', () => {
+    render(<NumberRating label="A" min={1} max={5} step={1} value={null} onChange={() => {}} />)
+    expect(screen.getByRole('radio', { name: '1' })).toHaveAttribute('tabindex', '0')
+  })
+  it('arrow keys move + select (selection follows focus), wrapping at the ends', async () => {
+    const onChange = vi.fn()
+    render(<NumberRating label="A" min={1} max={5} step={1} value={3} onChange={onChange} />)
+    screen.getByRole('radio', { name: '3' }).focus()
+    await userEvent.keyboard('{ArrowRight}')
+    expect(onChange).toHaveBeenLastCalledWith(4)
+    screen.getByRole('radio', { name: '1' }).focus()
+    await userEvent.keyboard('{ArrowLeft}')   // wraps to the last value
+    expect(onChange).toHaveBeenLastCalledWith(5)
+  })
 })

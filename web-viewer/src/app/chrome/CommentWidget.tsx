@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { t } from './strings'
 
 export type CommentDraft = { comment: string; stars: number | null }
@@ -15,6 +15,8 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const wasOpen = useRef(false)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const canSubmit = comment.trim() !== '' || stars !== null
@@ -27,7 +29,26 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
     setOpen(false); reset()
   }
   useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current) }, [])
-  useEffect(() => { if (open) dialogRef.current?.focus() }, [open])
+  useEffect(() => {
+    if (open) dialogRef.current?.focus()
+    else if (wasOpen.current) buttonRef.current?.focus()   // restore focus to the trigger on close
+    wasOpen.current = open
+  }, [open])
+
+  // Trap Tab within the dialog (+ Escape to close) — keep keyboard focus inside the modal.
+  function onDialogKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Escape') { close(); return }
+    if (e.key !== 'Tab') return
+    const root = dialogRef.current
+    if (!root) return
+    const items = Array.from(root.querySelectorAll<HTMLElement>('a[href], button, textarea, input, select, [tabindex]'))
+      .filter((el) => !el.hasAttribute('disabled') && el.getAttribute('tabindex') !== '-1')
+    if (items.length === 0) return
+    const first = items[0], last = items[items.length - 1]
+    const active = document.activeElement
+    if (e.shiftKey && (active === first || active === root)) { e.preventDefault(); last.focus() }
+    else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus() }
+  }
 
   async function submit() {
     if (!canSubmit || sending) return
@@ -41,6 +62,7 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
   if (!open) {
     return (
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-label={t(locale, 'comment_button')}
@@ -63,7 +85,7 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
         aria-label={t(locale, 'comment_title')}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => { if (e.key === 'Escape') close() }}
+        onKeyDown={onDialogKeyDown}
         className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-surface p-6 text-left text-slate-800 shadow-2xl"
       >
         {sent ? (

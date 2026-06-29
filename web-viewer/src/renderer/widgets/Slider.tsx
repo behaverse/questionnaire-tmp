@@ -5,9 +5,11 @@ type Props = {
   step?: number
   value: number | string | (number | string)[] | null
   onChange: (value: number | null) => void
+  /** Announced when no value has been chosen yet, so AT doesn't read the midpoint as a choice. */
+  unsetText?: string
 }
 
-export function Slider({ label, min, max, step, value, onChange }: Props) {
+export function Slider({ label, min, max, step, value, onChange, unsetText = 'Not selected' }: Props) {
   const current = typeof value === 'number' ? value : null
   const mid = min != null && max != null ? (min + max) / 2 : 0
   return (
@@ -18,7 +20,7 @@ export function Slider({ label, min, max, step, value, onChange }: Props) {
       <input
         type="range"
         aria-label={label}
-        aria-valuetext={current != null ? String(current) : undefined}
+        aria-valuetext={current != null ? String(current) : unsetText}
         min={min}
         max={max}
         step={step}

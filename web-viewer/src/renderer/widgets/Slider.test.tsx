@@ -19,4 +19,10 @@ describe('Slider', () => {
     fireEvent.change(range, { target: { value: '55' } })
     expect(onChange).toHaveBeenCalledWith(55)
   })
+  it('announces "Not selected" (not the midpoint) while unanswered, and the value once set', () => {
+    const { rerender } = render(<Slider label="How happy" min={0} max={100} step={1} value={null} onChange={() => {}} />)
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuetext', 'Not selected')
+    rerender(<Slider label="How happy" min={0} max={100} step={1} value={42} onChange={() => {}} />)
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuetext', '42')
+  })
 })
