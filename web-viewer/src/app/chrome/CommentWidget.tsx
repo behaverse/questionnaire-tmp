@@ -66,11 +66,11 @@ export function CommentWidget({ locale, onSubmit }: { locale: string; onSubmit: 
         onKeyDown={(e) => { if (e.key === 'Escape') close() }}
         className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-surface p-6 text-left text-slate-800 shadow-2xl"
       >
-        <h2 className="text-lg font-semibold">{t(locale, 'comment_title')}</h2>
         {sent ? (
-          <p role="status" className="text-slate-600">{t(locale, 'comment_thanks')}</p>
+          <p role="status" className="py-2 text-center text-lg font-semibold">{t(locale, 'comment_thanks')}</p>
         ) : (
           <>
+            <h2 className="text-lg font-semibold">{t(locale, 'comment_title')}</h2>
             <p className="text-sm text-slate-500">{t(locale, 'comment_help')}</p>
             <textarea
               aria-label={t(locale, 'comment_placeholder')}
