@@ -7,14 +7,15 @@ def latest_versions_cte() -> str:
 _VALID_SORTS = {"relevance", "title", "recency"}
 
 def _q_filter(q: str) -> tuple[str, list]:
-    """A catalogue text-search predicate: full-text (title+description) OR a case-insensitive
-    substring on title/short_title. The substring arm lets acronym queries like 'bis' find
-    'BIS/BAS' — Postgres FTS tokenises 'BIS/BAS' as the single lexeme 'bis/bas', which a plain
-    tsquery for 'bis' never matches; short_title isn't in search_tsv at all. Returns the SQL
-    fragment (referencing alias `c`) and its bind params."""
+    """A catalogue text-search predicate: full-text (title + content + description) OR a
+    case-insensitive substring on title/short_title/id. The substring arms let acronym queries
+    like 'bis' find 'BIS/BAS' — Postgres FTS tokenises 'BIS/BAS' as the single lexeme 'bis/bas',
+    which a plain tsquery for 'bis' never matches; short_title isn't in search_tsv at all. The
+    id arm preserves partial-id matching for reusable entities (e.g. 'opt_agr'), whose ids the
+    tsvector tokenises on '_' boundaries. Returns the SQL fragment (alias `c`) and bind params."""
     like = f"%{q}%"
     return ("(c.search_tsv @@ websearch_to_tsquery('english', %s) "
-            "OR c.title ILIKE %s OR c.short_title ILIKE %s)", [q, like, like])
+            "OR c.title ILIKE %s OR c.short_title ILIKE %s OR c.id ILIKE %s)", [q, like, like, like])
 
 def catalogue_stats(conn: psycopg.Connection) -> dict:
     """Headline counts of the latest-published catalogue: questionnaires, question (prompt)

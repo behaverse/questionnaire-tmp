@@ -1,7 +1,8 @@
 from pathlib import Path
 from library.loader import Artifact
 from library.store.entities import upsert_entity
-from library.store.index import rebuild_index_for
+from library.store.index import rebuild_index_for, _content_text
+from library.query import list_entries
 
 def _q():
     data = {"id": "qst_x", "version": "v26.0601", "license": "cc_by",
@@ -39,6 +40,43 @@ def test_rebuild_is_idempotent(conn):
     rebuild_index_for(conn, art, effective_license="cc_by")
     rebuild_index_for(conn, art, effective_license="cc_by"); conn.commit()
     assert conn.execute("SELECT count(*) FROM catalogue_entry WHERE id='qst_x'").fetchone()[0] == 1
+
+def _prompt(pid: str, text: str, version="v26.0601") -> Artifact:
+    data = {"id": pid, "content": {"en": {"text": text}}}
+    return Artifact("prompt", pid, version, data, Path(f"{pid}.json"))
+
+def _option(oid: str, anchors: list[str], version="v26.0601") -> Artifact:
+    data = {"id": oid, "content": {"en": {"label": "scale",
+            "options": [{"index": i + 1, "text": t} for i, t in enumerate(anchors)]}}}
+    return Artifact("option", oid, version, data, Path(f"{oid}.json"))
+
+def test_content_text_extracts_prompt_and_option_anchors():
+    assert "I crave excitement" in _content_text(_prompt("pr_x1", "I crave excitement"))
+    txt = _content_text(_option("opt_a7", ["strongly disagree", "strongly agree"]))
+    assert "strongly agree" in txt and "strongly disagree" in txt
+
+def test_content_is_full_text_searchable(conn):
+    # id/title carry no "excitement" — only the prompt TEXT does.
+    hit = _prompt("pr_x1", "I crave excitement and thrills")
+    miss = _prompt("pr_x2", "I prefer calm and routine")
+    for art in (hit, miss):
+        upsert_entity(conn, art, "c1"); rebuild_index_for(conn, art, effective_license="cc_by")
+    conn.commit()
+    rows, total = list_entries(conn, "prompt", q="excitement", limit=20, offset=0)
+    ids = [r["id"] for r in rows]
+    assert ids == ["pr_x1"] and total == 1
+
+def test_option_anchor_is_searchable(conn):
+    art = _option("opt_agreement_7", ["strongly disagree", "strongly agree"])
+    upsert_entity(conn, art, "c1"); rebuild_index_for(conn, art, effective_license="cc_by"); conn.commit()
+    rows, _ = list_entries(conn, "option", q="strongly agree", limit=20, offset=0)
+    assert [r["id"] for r in rows] == ["opt_agreement_7"]
+
+def test_id_substring_still_matches(conn):
+    art = _prompt("pr_unique_xyz", "Some unrelated wording")
+    upsert_entity(conn, art, "c1"); rebuild_index_for(conn, art, effective_license="cc_by"); conn.commit()
+    rows, _ = list_entries(conn, "prompt", q="unique_xyz", limit=20, offset=0)
+    assert [r["id"] for r in rows] == ["pr_unique_xyz"]
 
 def test_index_stores_instrument_id(conn):
     art = Artifact("questionnaire", "qst_x_asrs", "v26.0606",
