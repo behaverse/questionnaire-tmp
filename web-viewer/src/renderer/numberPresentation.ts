@@ -9,7 +9,10 @@ export function numberPresentation(
   option: { min?: number; max?: number; step?: number },
   layout?: string,
 ): NumberPresentation {
-  if (layout === 'slider' || layout === 'rating' || layout === 'input') return layout
+  const bounded = option.min != null && option.max != null
+  if (layout === 'input') return 'input'
+  if (layout === 'slider') return bounded ? 'slider' : 'input'
+  if (layout === 'rating') return bounded ? 'rating' : 'input'
   const { min, max } = option
   if (min == null || max == null) return 'input'
   const step = option.step ?? 1

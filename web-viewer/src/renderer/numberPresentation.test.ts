@@ -21,4 +21,12 @@ describe('numberPresentation', () => {
     expect(numberPresentation({ min: 1, max: 7, step: 1 }, 'input')).toBe('input')
     expect(numberPresentation({ min: 1, max: 7, step: 1 }, 'matrix')).toBe('rating') // unknown hint ignored
   })
+  it('slider/rating hints fall back to input when unbounded', () => {
+    expect(numberPresentation({ step: 1 }, 'slider')).toBe('input')
+    expect(numberPresentation({ step: 1 }, 'rating')).toBe('input')
+    expect(numberPresentation({ min: 0 }, 'slider')).toBe('input')
+    expect(numberPresentation({ min: 0 }, 'rating')).toBe('input')
+    expect(numberPresentation({ max: 10 }, 'slider')).toBe('input')
+    expect(numberPresentation({ max: 10 }, 'rating')).toBe('input')
+  })
 })
