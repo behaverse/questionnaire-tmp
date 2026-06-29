@@ -29,6 +29,7 @@ export type ItemElement = {
   option: OptionEntity
   required?: boolean
   show_if?: string
+  style?: { layout?: string }
 }
 export type SectionElement = {
   id?: string

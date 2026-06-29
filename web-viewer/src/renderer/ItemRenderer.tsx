@@ -2,10 +2,13 @@ import type { ReactNode } from 'react'
 import { deriveWidget } from './derive'
 import { mergeOptions } from './merge'
 import { RenderError, type AnswerValue, type ItemElement } from './types'
+import { numberPresentation } from './numberPresentation'
 import { CheckboxGroup } from './widgets/CheckboxGroup'
 import { NumberInput } from './widgets/NumberInput'
+import { NumberRating } from './widgets/NumberRating'
 import { RadioGroup } from './widgets/RadioGroup'
 import { RichText } from './RichText'
+import { Slider } from './widgets/Slider'
 import { TextInput } from './widgets/TextInput'
 import { UnsupportedElement } from './widgets/UnsupportedElement'
 
@@ -39,7 +42,14 @@ export function ItemRenderer({ answerKey, element, locale, value, onAnswer, keyH
       } else if (kind === 'choice.nominal.multiple') {
         widget = <CheckboxGroup label={prompt} choices={mergeOptions(element.option, locale)} value={value} onChange={(v) => onAnswer(answerKey, v)} />
       } else if (kind.startsWith('number.')) {
-        widget = <NumberInput label={prompt} min={element.option.min} max={element.option.max} step={element.option.step} value={value} onChange={(v) => onAnswer(answerKey, v)} />
+        const pres = numberPresentation(element.option, element.style?.layout)
+        if (pres === 'slider') {
+          widget = <Slider label={prompt} min={element.option.min} max={element.option.max} step={element.option.step} value={value} onChange={(v) => onAnswer(answerKey, v)} />
+        } else if (pres === 'rating') {
+          widget = <NumberRating label={prompt} min={element.option.min!} max={element.option.max!} step={element.option.step} value={value} onChange={(v) => onAnswer(answerKey, v)} />
+        } else {
+          widget = <NumberInput label={prompt} min={element.option.min} max={element.option.max} step={element.option.step} value={value} onChange={(v) => onAnswer(answerKey, v)} />
+        }
       } else {
         widget = <TextInput label={prompt} placeholder={element.option.content?.[locale]?.label} value={value} onChange={(v) => onAnswer(answerKey, v)} />
       }
