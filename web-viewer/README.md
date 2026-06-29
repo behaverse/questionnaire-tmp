@@ -38,7 +38,7 @@ Then open a bundled fixture — renderer work needs no Postgres/VS:
 
 - `http://localhost:5173/?fixture=mini` — 2 pages of radios
 - `http://localhost:5173/?fixture=matrix` — Section + shared_option matrix
-- `http://localhost:5173/?fixture=widgets` — every supported widget triple + Message + an unsupported combo
+- `http://localhost:5173/?fixture=widgets` — every supported widget triple + Message + an unsupported combo. Numeric scales (`number.interval`/`number.ratio`) render via `numberPresentation`: a `style.layout: slider|rating|input` hint wins, else auto — ≤ 11-point integer scale → `NumberRating` (segmented buttons), wider/continuous → `Slider` (`<input type=range>`), unbounded → `NumberInput`.
 - `http://localhost:5173/?fixture=branch` — a 3-page branch rule (`it_route == 1` skips to p3); proves in-browser logic
 
 ## URL contract

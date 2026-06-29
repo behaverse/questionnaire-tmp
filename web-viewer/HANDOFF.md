@@ -12,6 +12,7 @@
 - **Embedded scorer engine (OD-16):** `score(id)` runs live for branching + score display; `scorer_outputs` persist to the session (Schema 6). Vendored host in `src/scoring/vendor/` (regenerate via `scripts/build-scorer-host.mjs` if the drift test fails).
 - **Session resume (OD-14) + locale switch:** per-question state + session token persist to IndexedDB (DB `behaverse-web-viewer`, store `resume`, keyed by deployment); a reload resumes at the first unanswered visible question in the last-active locale. `LocaleSwitcher` swaps text with answers intact.
 - **Participant auth:** anonymous / invite / demo need no login; `authenticated` deployments use the player's own `LoginView` (or the SSO-handoff exchange). All via the shared **`@behaverse/participant-session`** package (`useSession()`).
+- **Widgets (`src/renderer/widgets/`):** choice→`RadioGroup`/`CheckboxGroup`, text→`TextInput`, message→`MessageBlock`, matrix section→`MatrixGroup`, and **numeric scales** (`number.interval`/`number.ratio`) → `Slider` (wide ranges) / `NumberRating` (≤11-pt integer scales, segmented buttons) / `NumberInput` (unbounded), chosen by `numberPresentation(option, style?.layout)` — a `style.layout: slider|rating|input` hint overrides the auto rule. `deriveWidget` (`derive.ts`) maps the option triple to the canonical widget id; unmapped → `UnsupportedElement`.
 - **Distribution:** iframe embedding (`behaverse:loaded|completed|resize` postMessage), PWA shell (SW precaches shell + evaluator WASM), Schema-7 manifest at `/manifest.json`.
 
 ## Run & test
