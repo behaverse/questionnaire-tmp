@@ -38,7 +38,7 @@ def test_widget_check_skipped_when_manifest_has_no_widgets():
     assert ctx.problems == []
 
 
-def test_missing_selection_defaults_to_single():
+def test_number_no_selection_segment():
     ctx = make_ctx({"widgets": ["number.interval"]})
     doc = _doc_with_option({"input_data_type": "number", "measurement_type": "interval"})
     reconcile_manifest(doc, ctx)
