@@ -2,10 +2,17 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 from .deps import get_conn
 from .. import query
-from ..models import Paginated, EntitySummary
+from ..models import Paginated, EntitySummary, PaginatedQuestions, QuestionHit
 from ..entity_types import ENTITY_TYPES
 
 router = APIRouter()
+
+@router.get("/questions/search", response_model=PaginatedQuestions)
+def search_questions(q: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):
+    """Search individual question-text entities (prompts) by content/id, returning each hit with
+    its prompt text — the 'search for questions' feature (vs. whole-questionnaire search)."""
+    rows, total = query.search_questions(conn, q=q, limit=limit, offset=offset)
+    return PaginatedQuestions(items=[QuestionHit(**r) for r in rows], total=total, limit=limit, offset=offset)
 
 @router.get("/questions", response_model=Paginated)
 def list_questions(q: str | None = None, limit: int = Query(20, le=100), offset: int = 0, conn=Depends(get_conn)):

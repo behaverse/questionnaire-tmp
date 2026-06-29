@@ -17,6 +17,46 @@ def _q_filter(q: str) -> tuple[str, list]:
     return ("(c.search_tsv @@ websearch_to_tsquery('english', %s) "
             "OR c.title ILIKE %s OR c.short_title ILIKE %s OR c.id ILIKE %s)", [q, like, like, like])
 
+def _first_text(content_json: dict | None) -> tuple[str | None, str | None]:
+    """The first locale's prompt text (and its locale) from an entity content map."""
+    content = (content_json or {}).get("content")
+    if isinstance(content, dict):
+        for loc, body in content.items():
+            if isinstance(body, dict) and isinstance(body.get("text"), str):
+                return body["text"], loc
+    return None, None
+
+def search_questions(conn: psycopg.Connection, *, q: str | None, limit: int, offset: int,
+                     entity_type: str = "prompt") -> tuple[list[dict], int]:
+    """Search reusable question-text entities (prompts by default) and return each hit WITH its
+    text snippet, joining the content body so the UI needn't fetch each entity separately.
+    Ranked by full-text relevance when `q` is given."""
+    where = ["c.entity_type=%s", "c.status='published'"]
+    params: list = [entity_type]
+    if q:
+        clause, qp = _q_filter(q); where.append(clause); params.extend(qp)
+    sql_where = " AND ".join(where)
+    total = conn.execute(
+        f"{latest_versions_cte()} SELECT count(*) FROM catalogue_entry c JOIN latest l "
+        f"ON c.id=l.id AND c.version=l.version WHERE {sql_where}", params).fetchone()[0]
+    if q:
+        order_by = "ts_rank(c.search_tsv, websearch_to_tsquery('english', %s)) DESC, c.id"
+        order_params: list = [q]
+    else:
+        order_by = "c.id"
+        order_params = []
+    rows = conn.execute(
+        f"{latest_versions_cte()} SELECT c.id, c.version, e.content_json "
+        f"FROM catalogue_entry c JOIN latest l ON c.id=l.id AND c.version=l.version "
+        f"JOIN entity e ON e.id=c.id AND e.version=c.version "
+        f"WHERE {sql_where} ORDER BY {order_by} LIMIT %s OFFSET %s",
+        params + order_params + [limit, offset]).fetchall()
+    out = []
+    for cid, cver, content_json in rows:
+        text, lang = _first_text(content_json)
+        out.append({"id": cid, "version": cver, "text": text, "language": lang})
+    return out, total
+
 def catalogue_stats(conn: psycopg.Connection) -> dict:
     """Headline counts of the latest-published catalogue: questionnaires, question (prompt)
     entities, option entities, and the number of distinct languages questionnaires are

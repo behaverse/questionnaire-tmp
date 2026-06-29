@@ -72,6 +72,18 @@ def test_alias_options(client):
     assert r_alias.status_code == 200
     assert r_alias.json()["total"] == r_direct.json()["total"]
 
+def test_search_questions_endpoint(client):
+    """GET /v1/questions/search returns prompt hits with a text snippet; id-substring matches."""
+    prompts = client.get("/v1/entities/prompt").json()["items"]
+    assert prompts
+    p = prompts[0]
+    r = client.get("/v1/questions/search", params={"q": p["id"]})
+    assert r.status_code == 200
+    items = r.json()["items"]
+    hit = next((it for it in items if it["id"] == p["id"]), None)
+    assert hit is not None
+    assert "text" in hit and "language" in hit  # snippet fields present (text may be None if absent)
+
 def test_entity_definition_returns_body(client):
     """GET /v1/entities/{etype}/{eid}/versions/{version}/definition returns content_json."""
     opt = client.get("/v1/entities/option").json()["items"][0]

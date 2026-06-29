@@ -2,7 +2,7 @@ from pathlib import Path
 from library.loader import Artifact
 from library.store.entities import upsert_entity
 from library.store.index import rebuild_index_for, _content_text
-from library.query import list_entries
+from library.query import list_entries, search_questions
 
 def _q():
     data = {"id": "qst_x", "version": "v26.0601", "license": "cc_by",
@@ -77,6 +77,16 @@ def test_id_substring_still_matches(conn):
     upsert_entity(conn, art, "c1"); rebuild_index_for(conn, art, effective_license="cc_by"); conn.commit()
     rows, _ = list_entries(conn, "prompt", q="unique_xyz", limit=20, offset=0)
     assert [r["id"] for r in rows] == ["pr_unique_xyz"]
+
+def test_search_questions_returns_text_snippet(conn):
+    hit = _prompt("pr_q1", "How often do you feel anxious?")
+    other = _prompt("pr_q2", "I sleep well at night")
+    for art in (hit, other):
+        upsert_entity(conn, art, "c1"); rebuild_index_for(conn, art, effective_license="cc_by")
+    conn.commit()
+    rows, total = search_questions(conn, q="anxious", limit=20, offset=0)
+    assert total == 1 and rows[0]["id"] == "pr_q1"
+    assert rows[0]["text"] == "How often do you feel anxious?" and rows[0]["language"] == "en"
 
 def test_index_stores_instrument_id(conn):
     art = Artifact("questionnaire", "qst_x_asrs", "v26.0606",

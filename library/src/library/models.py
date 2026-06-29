@@ -14,6 +14,18 @@ class Paginated(BaseModel):
     limit: int
     offset: int
 
+class QuestionHit(BaseModel):
+    id: str
+    version: str
+    text: str | None = None
+    language: str | None = None
+
+class PaginatedQuestions(BaseModel):
+    items: list[QuestionHit]
+    total: int
+    limit: int
+    offset: int
+
 class CatalogueCard(BaseModel):
     id: str
     version: str
