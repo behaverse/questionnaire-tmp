@@ -15,13 +15,14 @@ def _iter_options(node):
 
 
 def _widget_triple(option: dict) -> str:
-    return ".".join(
-        [
-            str(option.get("input_data_type")),
-            str(option.get("measurement_type")),
-            str(option.get("selection", "single")),
-        ]
-    )
+    """Canonical viewer widget id (design/05a §13). `selection` is a CHOICE-only facet:
+    choice → input.measurement.selection (default 'single'); number/text → input.measurement."""
+    i = str(option.get("input_data_type"))
+    m = str(option.get("measurement_type"))
+    if i == "choice":
+        s = str(option.get("selection", "single"))
+        return f"{i}.{m}.{s}"
+    return f"{i}.{m}"
 
 
 def reconcile_manifest(doc: dict, ctx: Ctx) -> None:

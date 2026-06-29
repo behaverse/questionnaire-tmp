@@ -1,5 +1,5 @@
 from denormaliser.context import Ctx
-from denormaliser.manifest import reconcile_manifest
+from denormaliser.manifest import reconcile_manifest, _widget_triple
 from denormaliser.policy import RuntimePolicy
 
 
@@ -39,7 +39,7 @@ def test_widget_check_skipped_when_manifest_has_no_widgets():
 
 
 def test_missing_selection_defaults_to_single():
-    ctx = make_ctx({"widgets": ["number.interval.single"]})
+    ctx = make_ctx({"widgets": ["number.interval"]})
     doc = _doc_with_option({"input_data_type": "number", "measurement_type": "interval"})
     reconcile_manifest(doc, ctx)
     assert ctx.problems == []
@@ -56,5 +56,29 @@ def test_unsupported_logic_action_errors():
 def test_supported_logic_action_passes():
     ctx = make_ctx({"logic_actions": ["skip"]})
     doc = {"pages": [], "logic": [{"id": "r1", "type": "skip", "condition": "x", "action": {}}]}
+    reconcile_manifest(doc, ctx)
+    assert ctx.problems == []
+
+
+def test_widget_triple_number_drops_selection():
+    assert _widget_triple({"input_data_type": "number", "measurement_type": "interval"}) == "number.interval"
+    # selection present on a number option is ignored
+    assert _widget_triple({"input_data_type": "number", "measurement_type": "ratio", "selection": "single"}) == "number.ratio"
+
+
+def test_widget_triple_text_drops_selection():
+    assert _widget_triple({"input_data_type": "text", "measurement_type": "nominal"}) == "text.nominal"
+
+
+def test_widget_triple_choice_keeps_selection():
+    assert _widget_triple({"input_data_type": "choice", "measurement_type": "nominal", "selection": "single"}) == "choice.nominal.single"
+    assert _widget_triple({"input_data_type": "choice", "measurement_type": "nominal", "selection": "multiple"}) == "choice.nominal.multiple"
+    # choice with no selection defaults to single
+    assert _widget_triple({"input_data_type": "choice", "measurement_type": "ordinal"}) == "choice.ordinal.single"
+
+
+def test_number_interval_passes_manifest_reconcile():
+    ctx = make_ctx({"widgets": ["number.interval", "number.ratio"]})
+    doc = _doc_with_option({"input_data_type": "number", "measurement_type": "interval", "min": 1, "max": 7, "step": 1})
     reconcile_manifest(doc, ctx)
     assert ctx.problems == []
