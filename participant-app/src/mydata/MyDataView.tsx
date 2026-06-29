@@ -3,6 +3,8 @@ import { parseParams } from '../params'
 import { useSession } from '@behaverse/participant-session'
 import { Link } from '../shell/router'
 import { fetchMySessions, downloadMyData, type MySession } from './client'
+import { groupByInstrument } from './progression'
+import { ScoreSparkline } from './ScoreSparkline'
 
 function StatusBadge({ status }: { status: string }) {
   const done = status === 'submitted' || status === 'completed' || status === 'forwarded' || status === 'validated'
@@ -94,7 +96,21 @@ export function MyDataView() {
           <p className="text-base font-medium text-zinc-700">No completed questionnaires yet.</p>
         </div>
       ) : (
-        <ul className="space-y-4">{sessions.map((s) => <SessionRow key={s.session_id} s={s} />)}</ul>
+        <div className="space-y-8">
+          {groupByInstrument(sessions).map((g) => {
+            const charts = g.series.filter((s) => s.points.length >= 2)
+            return (
+              <section key={g.instrument_id} className="space-y-4">
+                {charts.length > 0 && (
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {charts.map((s) => <ScoreSparkline key={s.id} series={s} />)}
+                  </div>
+                )}
+                <ul className="space-y-4">{g.sessions.map((s) => <SessionRow key={s.session_id} s={s} />)}</ul>
+              </section>
+            )
+          })}
+        </div>
       )}
       {loaded && sessions.length > 0 ? (
         <div className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm sm:p-6">

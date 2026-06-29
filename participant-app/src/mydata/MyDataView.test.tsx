@@ -40,3 +40,16 @@ test('anon: shows a Log in prompt linking to /account', async () => {
   const link = await screen.findByRole('link', { name: /log in/i })
   expect(link.getAttribute('href')).toBe('/account')
 })
+
+test('renders a score-progression chart for a questionnaire with >=2 scored attempts', async () => {
+  authed([
+    { session_id: 'a', instrument_id: 'qst_phq9', instrument_version: 'v1', deployment_id: 'd',
+      status: 'submitted', session_index: 2, started_at: null, completed_at: null,
+      submitted_at: '2026-02-01', score_display: [{ id: 'sc', name: 'PHQ-9 total', value: 8 }] },
+    { session_id: 'b', instrument_id: 'qst_phq9', instrument_version: 'v1', deployment_id: 'd',
+      status: 'submitted', session_index: 1, started_at: null, completed_at: null,
+      submitted_at: '2026-01-01', score_display: [{ id: 'sc', name: 'PHQ-9 total', value: 12 }] },
+  ])
+  renderView()
+  expect(await screen.findByRole('img', { name: /phq-9 total over time/i })).toBeInTheDocument()
+})
