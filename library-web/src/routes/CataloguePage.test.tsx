@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { CataloguePage } from './CataloguePage'
@@ -7,7 +8,7 @@ import { api } from '../api/client'
 
 vi.mock('../api/client', async (orig) => {
   const real = await orig<typeof import('../api/client')>()
-  return { ...real, api: { ...real.api, listQuestionnaires: vi.fn(), facets: vi.fn() } }
+  return { ...real, api: { ...real.api, listQuestionnaires: vi.fn(), facets: vi.fn(), searchQuestions: vi.fn() } }
 })
 
 const card = {
@@ -73,5 +74,18 @@ describe('CataloguePage', () => {
     setup()
     // appears in both the visible ErrorState and the sr-only live status region
     await waitFor(() => expect(screen.getAllByText(/invalid search or filter/i).length).toBeGreaterThan(0))
+  })
+
+  it('switches to Questions mode and shows question hits with text', async () => {
+    vi.mocked(api.listQuestionnaires).mockResolvedValue({ items: [group], total: 1, limit: 20, offset: 0 })
+    vi.mocked(api.searchQuestions).mockResolvedValue({
+      items: [{ id: 'pr_q1', version: 'v26.0601', text: 'How often do you feel anxious?', language: 'en' }],
+      total: 1, limit: 30, offset: 0,
+    })
+    setup()
+    await userEvent.click(screen.getByRole('radio', { name: /^questions$/i }))
+    await waitFor(() => expect(screen.getByText(/how often do you feel anxious/i)).toBeInTheDocument())
+    expect(screen.getByText(/pr_q1/)).toBeInTheDocument()
+    expect(api.searchQuestions).toHaveBeenCalled()
   })
 })

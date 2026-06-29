@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-export function SearchBar({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+export function SearchBar({ value, onChange, label = 'Search questionnaires', placeholder = 'Search questionnaires…' }: { value: string; onChange: (v: string) => void; label?: string; placeholder?: string }) {
   const [text, setText] = useState(value)
   const onChangeRef = useRef(onChange)
   useEffect(() => { onChangeRef.current = onChange })
@@ -25,8 +25,8 @@ export function SearchBar({ value, onChange }: { value: string; onChange: (v: st
       </svg>
       <input
         type="search"
-        aria-label="Search questionnaires"
-        placeholder="Search questionnaires…"
+        aria-label={label}
+        placeholder={placeholder}
         className="w-full rounded-lg border border-rule bg-paper-raised py-2.5 pl-10 pr-4 text-sm text-ink shadow-card transition-colors placeholder:text-ink-faint hover:border-ink-faint/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
         value={text}
         onChange={(e) => setText(e.target.value)}

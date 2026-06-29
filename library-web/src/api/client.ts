@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import type {
   InstrumentGroup, Paginated, VersionInfo, FacetResponse, ResolvedDefinition, CatalogueStats,
+  QuestionHit,
 } from './types'
 
 // Default: same-origin (empty base → relative /v1 resolved against window.location.origin in get()).
@@ -62,4 +63,6 @@ export const api = {
   facets: (facet_type: string) =>
     get<FacetResponse>('/v1/facets', { facet_type }),
   stats: () => get<CatalogueStats>('/v1/stats'),
+  searchQuestions: (q: string | undefined, limit = 30, offset = 0) =>
+    get<Paginated<QuestionHit>>('/v1/questions/search', { q, limit, offset }),
 }

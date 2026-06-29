@@ -4,6 +4,9 @@ import { api, type QuestionnaireQuery } from './client'
 export const useQuestionnaires = (q: QuestionnaireQuery) =>
   useQuery({ queryKey: ['questionnaires', q], queryFn: () => api.listQuestionnaires(q) })
 
+export const useQuestionSearch = (q: string | undefined, enabled = true) =>
+  useQuery({ queryKey: ['question-search', q], queryFn: () => api.searchQuestions(q), enabled })
+
 export const useFacets = (facetType: string) =>
   useQuery({ queryKey: ['facets', facetType], queryFn: () => api.facets(facetType) })
 

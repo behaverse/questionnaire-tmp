@@ -33,6 +33,8 @@ export interface InstrumentGroup {
 
 export interface Paginated<T> { items: T[]; total: number; limit: number; offset: number }
 
+export interface QuestionHit { id: string; version: string; text?: string | null; language?: string | null }
+
 export interface VersionInfo {
   id: string
   version: string
