@@ -1,6 +1,13 @@
 # Handoff — server-side content search index
 
-**Created:** 2026-06-18 · **Status:** ready to implement · **Owner action required:** a live re-ingest (see §4)
+**Created:** 2026-06-18 · **Status:** §1–§3 IMPLEMENTED (2026-06-26); §4 live re-ingest still pending (owner) · §5 optional
+
+> **Update 2026-06-26:** §1 (content indexed at weight B in `store/index.py`), §2 (`_q_filter` widened
+> with an `id ILIKE` arm in `query.py`), and §3 (tests) are merged. Also added `query.search_questions`
+> + `GET /v1/questions/search` (returns prompt hits **with their text snippet**) and a Questions search
+> mode in `library-web`'s catalogue. **Still required:** §4 — a live re-ingest, so the Supabase index
+> includes content (the live `GET /v1/questions/search?q=<word>` only matches id/title until then).
+> §5 (switch the Editor picker to server-side search) remains optional.
 
 ## Goal
 

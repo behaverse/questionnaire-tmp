@@ -52,12 +52,13 @@ what remains is polish.
   pre-launch consent preview is wanted.
 
 **Owner feature requests (2026-06-26, from root `my_comments.md`)**
-- **#9 Search for questions (not just questionnaires).** The catalogue search only matches whole
-  questionnaires. Add a way to search at the **question/item** level (by prompt text, scale, tag) so a
-  participant/researcher can find individual questions. Likely needs a Library/VS item-search endpoint
-  (the Library already indexes reusable Items — see `library/`) plus a results UI here. Cross-link:
-  `web-viewer/FOLLOWUPS.md` (owner requests) and the existing "No search or filter on the catalogue"
-  note in `web-viewer/FOLLOWUPS.md` (PP-D).
+- **#9 Search for questions — shipped in the Library catalogue (`library-web`), not here.**
+  **DONE (2026-06-26)** in `library/` + `library-web/`: the Library now full-text indexes entity
+  **content** and exposes `GET /v1/questions/search` (prompts, with text snippet); `library-web`'s
+  catalogue has a Questionnaires/Questions toggle. **If** the participant portal should also offer
+  question search, add a search UI here calling the same Library endpoint (this app currently hits
+  the VS `/v1/catalogue`, which has no search). Requires a live re-ingest to populate the content
+  index (see `library/HANDOFF_content_search_index.md` §4).
 - **#4 Score-progression-over-time dashboard.** For a logged-in participant, chart how their scores on a
   given questionnaire change across repeated sessions over time. UI lives here; the data endpoint
   (scorer_outputs over time) is a VS follow-up — see `viewer-service/FOLLOWUPS.md`.

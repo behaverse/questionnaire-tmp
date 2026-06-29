@@ -4,16 +4,22 @@
 
 Captured from root `my_comments.md`; player-side counterparts live in `web-viewer/FOLLOWUPS.md`.
 
-- **Presentation-control flags for #1/#2 (key-select + back-nav).** The player reads
-  `runtime.style.x_key_select` / `x_back_nav` (default `true`) to disable letter-key option
-  selection and the Back button. Nothing populates them yet. Add deployment-level (or
-  questionnaire-level) authoring + have the denormaliser emit them into `style` via the same
-  `^x_` extension channel as `x_presentation` / `x_show_score`. Editor exposes the toggles.
-- **#5/#6 Per-question QA-feedback storage.** New endpoint to accept per-page feedback from the
-  player (free-text comment + rating scales, tied to session + page/item id), stored separately
-  from Schema-5 responses. Define the schema (likely a new `feedback` table or a `bdm:`-adjacent
-  record) and a researcher-facing read/export path. The deeper QA-research programme (expert
-  review, "ask about this question", aggregation) is a separate larger effort.
+- **Presentation-control flags (key-select / back-nav / comments) — authoring is now Editor-side.**
+  The player reads `runtime.style.x_key_select` / `x_back_nav` / `x_comments`; these are authored at
+  the **questionnaire level** in the Editor (Presentation section) and the denormaliser carries
+  `style` verbatim into `runtime.style` — **no VS change was needed**. *Optional future work:* allow a
+  **per-deployment override** of these flags. That would need (a) adding them to `_ALLOWED_STYLE` in
+  `api/deployments.py`, and (b) actually merging deployment `style_overrides` into the generated
+  runtime's `style` (currently `style_overrides` is stored but not merged into the runtime at all —
+  even `progress_bar`/`question_numbering` overrides aren't applied yet).
+- ~~**#5/#6 Per-question QA-comment storage (lightweight slice).**~~ **DONE (2026-06-26)** —
+  `question_comment` table (append-only) + `POST /v1/sessions/{id}/comments` (participant path,
+  `require_session`; ephemeral validates-but-skips; inline validation: comment ≤2000 chars, stars
+  int 1–5, at least one required) + researcher-gated `GET /v1/deployments/{id}/comments`. Comments
+  are stored out-of-band from Schema-5 responses ("comment", not "feedback"). **Remaining:** a
+  researcher **UI** to browse/export (endpoint ships, UI doesn't); a proper CSV/export path; the
+  deeper QA-research programme (expert review, "ask about this question", extra rating scales,
+  aggregation/dashboards) is a separate larger effort.
 - **#3 xAPI storage + surfacing.** Persist xAPI statements (already emittable from `bdm:` events?)
   and expose them so the participant platform can read them back (participant-app surfaces them).
   Needs a storage decision (own table vs. forward to an LRS) + a read endpoint.

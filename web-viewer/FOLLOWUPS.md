@@ -15,11 +15,13 @@ participant-app) and are cross-linked.
 - ~~**#2 Disable back navigation.**~~ **DONE (2026-06-26)** — `runtime.style.x_back_nav` (default
   `true`). When `false`, the **Back** button is hidden so the participant cannot return to a prior
   question. Same player-honors / VS-plumbing-deferred split as #1.
-- **VS/Editor plumbing for #1 + #2 (follow-up).** The two flags are read from `runtime.style` but
-  nothing populates them yet. Add deployment-level (or questionnaire-level) authoring for
-  `x_key_select` / `x_back_nav`, have the denormaliser emit them into `style` (same `^x_` extension
-  channel as `x_presentation` / `x_show_score`), and expose toggles in the Editor. Tracked in
-  viewer-service + editor FOLLOWUPS.
+- ~~**Editor authoring for #1 + #2 (+ comments).**~~ **DONE (2026-06-26)** — the Editor's
+  questionnaire-root inspector now has a **Presentation** section with toggles for `x_key_select`,
+  `x_back_nav`, and `x_comments` (questionnaire-level `style`). Confirmed the denormaliser carries
+  the questionnaire `style` verbatim into `runtime.style`, so the player honours them with no VS
+  change. **Remaining (optional):** deployment-level *override* of these flags would need them added
+  to the VS `_ALLOWED_STYLE` allow-list **and** a style_overrides→runtime merge (which isn't wired
+  today); questionnaire-level authoring is the chosen home, matching `x_presentation`.
 - ~~**#5/#6 Per-page QA comment widget (lightweight slice).**~~ **DONE (2026-06-26)** —
   `runtime.style.x_comments` (default `false`, opt-in) renders a small fixed comment icon on each
   runner step; clicking opens a modal capturing a free-text **comment** + an optional **1–5 star**
@@ -29,8 +31,8 @@ participant-app) and are cross-linked.
   performance). **Remaining / deferred:**
   - The extra rating scales (clarity confusing→clear, sentiment angry→happy) were intentionally
     dropped from this slice — fold them into the larger QA-research effort if wanted.
-  - Authoring `style.x_comments` from the deployment/questionnaire (VS denormaliser + Editor toggle)
-    is the same plumbing follow-up as `x_key_select` / `x_back_nav`.
+  - ~~Authoring `style.x_comments` from the questionnaire (Editor toggle).~~ **DONE (2026-06-26)** —
+    Editor Presentation section (see the #1/#2 authoring note above).
   - The deeper **QA-research** programme (domain-expert review workflows, "ask questions *about* a
     question", reviewer assignment, aggregation/dashboards) is a much larger separate effort.
   - Researcher-facing **UI** to browse/export comments — the read *endpoint*
