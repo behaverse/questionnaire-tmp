@@ -16,7 +16,7 @@ export const PRESETS: Record<string, Profile> = {
   midpoint: { choice_strategy: 'midpoint', timing: { think_ms_min: 200, think_ms_max: 800 }, pointer: 'realistic', text: 'Neutral.' },
 }
 
-/** mulberry32 — small, fast, seeded PRNG returning [0, 1). Pure: no Date/Math.random. */
+/** mulberry32—small, fast, seeded PRNG returning [0, 1). Pure: no Date/Math.random. */
 export function makeRng(seed: number): () => number {
   let a = seed >>> 0
   return () => {
