@@ -6,7 +6,7 @@ import type { ScoreDisplay } from '../scoring/display'
 export const VIEWER_ID = 'behaverse-web-viewer'
 export const VIEWER_VERSION = 'v26.0612'
 
-export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null; returnUrl: string | null; preview: string | null; handoff: string | null }
+export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null; returnUrl: string | null; preview: string | null; handoff: string | null; mouseHz: number | null }
 
 /** Accept a return URL only if it is a well-formed http(s) URL; otherwise treat it as absent
  *  (guards against open-redirect/phishing via javascript:, data:, relative, or garbage values). */
@@ -33,6 +33,7 @@ export function parseParams(search: string): Params {
     returnUrl: safeReturnUrl(q.get('return_url')),
     preview: q.get('preview'),
     handoff: q.get('handoff'),
+    mouseHz: q.get('mouse_hz') ? Number(q.get('mouse_hz')) : null,
   }
 }
 
@@ -54,7 +55,7 @@ export async function fetchPreviewRuntime(vsBaseUrl: string, ref: string, viewer
   return { ok: true, runtime: body.runtime as Runtime }
 }
 
-export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean; participant_sub: string | null; consent: Record<string, string> | null; confirmation_message: Record<string, string> | null; redirect_url: string | null }
+export type MintOk = { ok: true; session_id: string; session_token: string; agent_id: string; session_index: number; runtime: Runtime; theme: Theme; ephemeral: boolean; participant_sub: string | null; consent: Record<string, string> | null; confirmation_message: Record<string, string> | null; redirect_url: string | null; channels: Record<string, unknown> | null }
 export type MintErr = { ok: false; kind: 'invalid_link' | 'not_open' | 'closed' | 'auth_required' | 'invite_invalid' | 'failed'; code: string }
 export type MintResult = MintOk | MintErr
 
@@ -80,7 +81,7 @@ export async function mintSession(vsBaseUrl: string, deploymentId: string, local
   }
   if (resp.ok) {
     const body = await resp.json()
-    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false, participant_sub: body.participant_sub ?? null, consent: body.consent ?? null, confirmation_message: body.confirmation_message ?? null, redirect_url: body.redirect_url ?? null }
+    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false, participant_sub: body.participant_sub ?? null, consent: body.consent ?? null, confirmation_message: body.confirmation_message ?? null, redirect_url: body.redirect_url ?? null, channels: body.channels ?? null }
   }
   const code = await resp.json().then((b) => b?.error?.code ?? String(resp.status)).catch(() => String(resp.status))
   const kind: MintErr['kind'] =

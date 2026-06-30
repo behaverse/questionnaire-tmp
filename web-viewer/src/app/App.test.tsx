@@ -717,6 +717,71 @@ test('return_url: the declined screen shows a Done link', async () => {
   expect(await screen.findByRole('link', { name: /done/i })).toHaveAttribute('href', 'https://app.example/done')
 })
 
+// Task 4 — mouse capture wiring
+// Helper: collect all fetch URLs seen after the initial render.
+function capturedFetchUrls(fetchMock: ReturnType<typeof vi.fn>): string[] {
+  return fetchMock.mock.calls.map(([u]) => String(u))
+}
+// Helper: collect all event verbs from all /events POSTs.
+function capturedEventVerbs(fetchMock: ReturnType<typeof vi.fn>): string[] {
+  return fetchMock.mock.calls
+    .filter(([u]) => String(u).includes('/events'))
+    .flatMap(([, i]) => JSON.parse((i as RequestInit).body as string).events.map((e: { verb: string }) => e.verb))
+}
+
+test('capture wiring: channels.mouse=true → bdm:recording_started emitted; channels absent → no recording events', async () => {
+  // The App test harness runs in jsdom. We walk to finish so the batcher.flush() at completion
+  // causes all buffered events (including recording_started) to be POSTed.
+  // The finish→recordings upload path (POST /recordings + bdm:recording_ended) is also covered here
+  // for channels.mouse=true: the capture.stop() + queue.enqueue('recordings') happens at finish.
+  setUrl('?deployment=dpl_1')
+  const mintWithCapture = { ...mintOk, channels: { mouse: true }, ephemeral: false }
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintWithCapture), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  fireEvent.change(screen.getByRole('slider'), { target: { value: '8' } })
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
+  const urls = capturedFetchUrls(fetchMock)
+  const verbs = capturedEventVerbs(fetchMock)
+  // recording_started must appear in the event stream
+  expect(verbs).toContain('bdm:recording_started')
+  // recording_ended must also appear
+  expect(verbs).toContain('bdm:recording_ended')
+  // a /recordings POST must have been made
+  expect(urls.some((u) => /\/sessions\/.+\/recordings$/.test(u))).toBe(true)
+})
+
+test('capture wiring: channels.mouse absent → no recording_* events and no /recordings POST', async () => {
+  setUrl('?deployment=dpl_1')
+  // mintOk has no channels field → channels will be null on the mint → captureMouseRef stays false
+  const fetchMock = vi.fn().mockImplementation(async (url: string) => {
+    if (String(url).endsWith('/sessions/new')) return new Response(JSON.stringify(mintOk), { status: 200 })
+    return new Response('{"enqueued":1}', { status: 202 })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  renderApp()
+  await screen.findByText(/Welcome\. Answer honestly\./)
+  // Walk through the entire questionnaire to finish (ensures no recording events even at finish)
+  await userEvent.click(await screen.findByRole('button', { name: /next/i }))
+  await userEvent.click(await screen.findByRole('radio', { name: /Not at all/ }))
+  await screen.findByRole('heading', { name: /How many hours/ }, { timeout: 2000 })
+  fireEvent.change(screen.getByRole('slider'), { target: { value: '8' } })
+  await userEvent.click(screen.getByRole('button', { name: /next/i }))
+  await screen.findByRole('heading', { name: /Thank you/i }, { timeout: 3000 })
+  const urls = capturedFetchUrls(fetchMock)
+  expect(urls.some((u) => /\/recordings$/.test(u))).toBe(false)
+  const verbs = capturedEventVerbs(fetchMock)
+  expect(verbs).not.toContain('bdm:recording_started')
+  expect(verbs).not.toContain('bdm:recording_ended')
+})
+
 // preview (roadmap #5) — render-only "try it": fetch the runtime, run it, capture nothing
 test('preview: ?preview= fetches the preview runtime and runs it without minting a session', async () => {
   setUrl('?preview=qst_x@v26.0601&return_url=https://lib.example/q')

@@ -38,6 +38,7 @@ import { backNavEnabled, commentsEnabled, flattenSteps, isSingleChoiceItem, keyS
 import { applyTheme, bundleToThemeId } from './theme'
 import type { Theme } from './theme'
 import { getTheme, resolveThemeId, DEFAULT_THEME_ID } from '../theme/registry'
+import { MouseCapture } from './mouseCapture'
 import { SubmissionQueue } from './transport'
 import { TrialClock } from './trial'
 
@@ -65,6 +66,7 @@ type Pipeline = {
   programs: Programs
   resolver: ScoreResolver
   cache: ScoreCache
+  capture?: MouseCapture
 }
 
 export function App() {
@@ -82,6 +84,7 @@ export function App() {
   const [loginErr, setLoginErr] = useState<string | null>(null)
   const [loginBusy, setLoginBusy] = useState(false)
   const ephemeralRef = useRef(false)
+  const captureMouseRef = useRef(false)
   const params = parseParams(window.location.search)
   const locale = state.runtime?.locale ?? params.locale ?? 'en'
   const localeRef = useRef(locale)
@@ -137,10 +140,12 @@ export function App() {
       programs: collectPrograms(runtime, evaluator),
       resolver: cache.resolver,
       cache,
+      capture: undefined as MouseCapture | undefined,
     }
     if (!deferStart) {
       batcher.add(ev.initialized(pipeline.current.engine, sessionId, nowIso()))
       batcher.add(ev.started(pipeline.current.engine, sessionId, nowIso()))
+      maybeStartCapture()
     }
   }
 
@@ -150,6 +155,18 @@ export function App() {
     p.batcher.add(ev.started(p.engine, sid, nowIso()))
     if (withConsent) p.batcher.add(ev.consented(p.engine, sid, nowIso()))
     p.batcher.flush()
+    maybeStartCapture()
+  }
+
+  function recId(sid: string) { return 'recording_mouse_' + sid }
+  function maybeStartCapture() {
+    const p = pipeline.current
+    if (!p || !captureMouseRef.current || p.capture) return
+    const cap = new MouseCapture({ sampleRateHz: params.mouseHz ?? 6 })
+    cap.start()
+    p.capture = cap
+    p.batcher.add(ev.recordingStarted(p.engine, recId(p.identity.sessionId), p.identity.sessionId,
+      { modality: 'mouse', sampleRate: cap.sampleRateHz, scope: 'runtime' }, nowIso()))
   }
 
   async function runBoot() {
@@ -205,6 +222,7 @@ export function App() {
     if (res.ok) {
       const scorerSet = await compileScorers(res.runtime)
       ephemeralRef.current = res.ephemeral
+      captureMouseRef.current = !!(res.channels && (res.channels as Record<string, unknown>).mouse) && !res.ephemeral
       localeRef.current = res.runtime.locale ?? 'en'
       const bundle = res.theme as Theme
       applyTheme(getTheme(resolveThemeId({ bundleId: bundleToThemeId(bundle) })), bundle)
@@ -341,6 +359,13 @@ export function App() {
     const token = state.session?.token ?? ''
     async function finish(pl: Pipeline) {
       pl.batcher.add(ev.completed(pl.engine, pl.identity.sessionId, nowIso()))
+      if (pl.capture) {
+        const samples = pl.capture.stop()
+        pl.capture = undefined
+        pl.queue.enqueue('recordings', { channel: 'mouse', samples })
+        pl.batcher.add(ev.recordingEnded(pl.engine, recId(pl.identity.sessionId), pl.identity.sessionId,
+          { url: `${params.vsBaseUrl}/v1/deployments/${params.deploymentId}/recordings`, sampleCount: samples.length }, nowIso()))
+      }
       pl.batcher.flush()
       const timeout = new Promise<'timeout'>((r) => window.setTimeout(() => r('timeout'), 10_000))
       const outcome = await Promise.race([pl.queue.idle().then(() => 'idle' as const), timeout])
@@ -371,6 +396,11 @@ export function App() {
     function onHide() {
       const p = pipeline.current
       if (!p) return
+      if (p?.capture) {
+        const samples = p.capture.stop()
+        p.capture = undefined
+        p.queue.enqueue('recordings', { channel: 'mouse', samples })
+      }
       p.batcher.flush()
       p.queue.flushKeepalive()
     }

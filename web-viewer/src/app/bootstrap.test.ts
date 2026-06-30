@@ -7,9 +7,9 @@ afterEach(() => {
 test('parseParams reads deployment/locale/viewer_url/fixture/theme', () => {
   expect(parseParams('?deployment=dpl_1&locale=pt&viewer_url=http://vs:9&fixture=mini&theme=sage')).toEqual({
     deploymentId: 'dpl_1', locale: 'pt', vsBaseUrl: 'http://vs:9', fixture: 'mini', theme: 'sage',
-    identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null, handoff: null,
+    identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null, handoff: null, mouseHz: null,
   })
-  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null, handoff: null })
+  expect(parseParams('')).toEqual({ deploymentId: null, locale: null, vsBaseUrl: 'http://localhost:8001', fixture: null, theme: null, identityBaseUrl: 'http://localhost:8100', invite: null, returnUrl: null, preview: null, handoff: null, mouseHz: null })
 })
 
 test('parseParams reads the SSO handoff code', () => {
@@ -35,7 +35,7 @@ test('parseParams reads + validates return_url', () => {
   expect(parseParams('').returnUrl).toBeNull()
 })
 
-const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false, participant_sub: null, consent: null, confirmation_message: null, redirect_url: null }
+const ok = { session_id: 's1', session_token: 't1', agent_id: 'agent_ab12', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: false, participant_sub: null, consent: null, confirmation_message: null, redirect_url: null, channels: null }
 
 test('mintSession posts viewer identity and returns the bundle', async () => {
   const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(ok), { status: 200 }))
