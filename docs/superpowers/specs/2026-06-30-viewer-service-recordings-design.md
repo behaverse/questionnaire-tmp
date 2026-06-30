@@ -73,7 +73,7 @@ Body: `{ "channel": "mouse", "samples": [ {t,x,y,button_state}, ... ] }`.
 - `GET /v1/me/recordings` → `{ "recordings": [ {channel, samples}, ... ] }` scoped to `claims["sub"]`
   (mirrors `/me/events`). `401` without a participant token.
 - `GET /v1/deployments/{deployment_id}/recordings` → `{ "recordings": [...] }`, `require_researcher`
-  (`401`/`403` otherwise; mirrors `/deployments/{id}/comments`).
+  (`401` without a token, `403` for a non-researcher token; mirrors `/deployments/{id}/comments`).
 
 ### Mint change
 
