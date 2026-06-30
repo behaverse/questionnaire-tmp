@@ -29,5 +29,5 @@ export class MouseRecorder {
   }
   press(at: Point): void { this.push(at, 'left_down') }
   release(at: Point): void { this.push(at, 'up') }
-  samples(): MouseSample[] { return this.rows }
+  samples(): MouseSample[] { return [...this.rows] } // defensive copy: callers can't mutate internal state
 }
