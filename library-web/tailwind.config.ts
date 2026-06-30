@@ -9,7 +9,8 @@ export default {
         accent: { DEFAULT: '#3a4cb5', fg: '#2b3a8f' },
         // Warm "paper & ink" neutrals layered on top of Tailwind's slate scale.
         paper: { DEFAULT: '#faf9f6', raised: '#ffffff', sunken: '#f3f1ea' },
-        ink: { DEFAULT: '#1f2430', soft: '#454c5c', faint: '#7a8194' },
+        // `faint` darkened from #7a8194 (3.7:1, failed WCAG AA) to meet 4.5:1 on every paper surface.
+        ink: { DEFAULT: '#1f2430', soft: '#454c5c', faint: '#646a79' },
         rule: { DEFAULT: '#e7e3d8', soft: '#efece3' },
       },
       fontFamily: {
