@@ -1,4 +1,4 @@
-# respondent-bot — handoff
+# respondent-bot—handoff
 
 Branch: `work/respondent-bot`
 
@@ -41,32 +41,32 @@ e2e: `tests/e2e/smoke.spec.ts`.
 
 ## What's done
 
-- **Seeded trait model** — five named presets + a `fixed` JSON profile; identical seed+profile ⇒
+- **Seeded trait model**—five named presets + a `fixed` JSON profile; identical seed+profile ⇒
   identical decisions; `--n N` uses seed `seed+i` per run.
-- **Two interaction lanes** — default (real pointer + `page.type()` per character); `--direct`
+- **Two interaction lanes**—default (real pointer + `page.type()` per character); `--direct`
   (uses `page.fill()` for text; choice interaction is label-click in both lanes because the
   player's radio inputs are screen-reader-only).
-- **v1 control support** — radio, number-rating, slider, number-input, text; unsupported controls
+- **v1 control support**—radio, number-rating, slider, number-input, text; unsupported controls
   (checkbox multi-select, matrix) throw loudly—no silent skips.
-- **Trace capture** — intercepts `POST /v1/sessions/{id}/events`, tees statements into
+- **Trace capture**—intercepts `POST /v1/sessions/{id}/events`, tees statements into
   `trace.json` of shape `{ deployment_id, session_id, statements: BdmEvent[] }`; events also
   persist to the Viewer Service outbox via the normal pipeline.
-- **`--n` loop** — serial multi-run; continues on failure, exits non-zero if any run failed.
-- **Offline capture smoke** — route-mocked e2e (no live VS/identity needed); asserts a
+- **`--n` loop**—serial multi-run; continues on failure, exits non-zero if any run failed.
+- **Offline capture smoke**—route-mocked e2e (no live VS/identity needed); asserts a
   well-formed trace is produced.
-- **Unit tests** — 33 tests covering profile determinism, strategy decisions (all presets),
+- **Unit tests**—33 tests covering profile determinism, strategy decisions (all presets),
   runner orchestration, trace well-formedness, and CLI argument parsing.
 
 ## Deferred follow-ups
 
-- **Authenticated-deployment runs** — SSO/login flow so the bot can run against `authenticated`
+- **Authenticated-deployment runs**—SSO/login flow so the bot can run against `authenticated`
   preset deployments; deferred because it requires the identity SSO handoff from the player.
-- **A real CI/E2E harness product** — a config-driven test suite (multi-instrument matrix,
+- **A real CI/E2E harness product**—a config-driven test suite (multi-instrument matrix,
   pass/fail criteria, CI report) built on top of this core driver.
-- **Load / concurrency** — `--n` runs serially today; parallel execution (multiple Playwright
+- **Load / concurrency**—`--n` runs serially today; parallel execution (multiple Playwright
   workers) is deferred until the VS/DB can absorb it.
-- **Checkbox multi-select + matrix controls** — the bot throws on these today; extend `UiDriver`
+- **Checkbox multi-select + matrix controls**—the bot throws on these today; extend `UiDriver`
   when those widget patterns are finalised.
-- **Browserless `--direct`** — drive the renderer-as-library directly (no browser) for pure
+- **Browserless `--direct`**—drive the renderer-as-library directly (no browser) for pure
   speed in CI; requires wiring `web-viewer`'s exported renderer lib into the bot (deferred until
   the renderer lib API stabilises).

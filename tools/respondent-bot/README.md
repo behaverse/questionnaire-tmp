@@ -126,7 +126,7 @@ The bot **throws** on an unsupported control type—it never silently skips.
 ## Running tests
 
 ```bash
-npm test          # Vitest unit tests (33 tests — profile, strategy, runner, trace, CLI)
+npm test          # Vitest unit tests (33 tests—profile, strategy, runner, trace, CLI)
 npm run e2e       # Playwright offline capture smoke (boots the web-viewer dev server on :5173
                   # via reuseExistingServer if not already running)
 npm run typecheck # tsc --noEmit
