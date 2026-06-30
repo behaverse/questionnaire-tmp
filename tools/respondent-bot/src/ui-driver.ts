@@ -17,6 +17,14 @@ export function playerUrl(base: string, p: { deploymentId: string; vsBaseUrl: st
   return u.toString()
 }
 
+/**
+ * The one Playwright driver. `direct: false` (default) is the realistic lane — real pointer
+ * motion (scroll → click) and per-character typing for human-like traces; `direct: true` is the
+ * fast lane for bulk fixture generation. A separate DirectDriver class is intentionally avoided —
+ * the lanes differ only in how `apply()` actuates a control, not in what they read or decide.
+ * Note: choice radios are sr-only, so both lanes click the wrapping <label>; the observable
+ * difference is text entry (`fill` vs per-character `type`).
+ */
 export class UiDriver implements Driver {
   constructor(private page: Page, private opts: { locale: string; direct?: boolean }) {}
 
