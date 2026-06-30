@@ -291,6 +291,23 @@ Returns a header-only CSV row with no data rows if the participant has no respon
 
 **Scoping:** same `claims["sub"]` match; invite participants excluded by namespace.
 
+#### `GET /v1/me/events`
+
+Downloads the caller's **xAPI activity** — their `bdm:`-profile event statements
+(`actor`/`verb`/`object`/`context`/`result`/`timestamp`), flattened from the retained
+`kind='events'` outbox batches via `iter_event_rows_for_participant`. Surfaced as-is in the `bdm:`
+profile (no ADL/IEEE remap).
+
+**Auth:** same as `/v1/me/sessions` — `Authorization: Bearer <Identity access token>`; `401` if
+absent or invalid.
+
+**Response (200):** `Content-Type: application/json`, `Content-Disposition: attachment;
+filename="my_xapi.json"`, body `{"events": [ <statement>, … ]}` in insertion order. `{"events": []}`
+when the participant has no events.
+
+**Scoping:** same `claims["sub"]` match. (A researcher event export + an optional standard-ADL remap
+are follow-ups.)
+
 ---
 
 ### `authenticated` mode (PP-A)

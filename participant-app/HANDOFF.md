@@ -66,8 +66,11 @@ what remains is polish.
   (`x_score_display`) at completion; the VS stores it in `session.score_display` and returns it from
   `GET /v1/me/sessions`. **No backfill**—only sessions completed after this shipped carry scores.
   Instrument titles are still `instrument_id` (a human-title lookup is a separate item).
-- **#3 xAPI surfacing.** Once the VS stores xAPI statements, surface a participant's xAPI activity in
-  "my data". Data side is a VS follow-up — see `viewer-service/FOLLOWUPS.md`.
+- ~~**#3 xAPI surfacing.**~~ **DONE (2026-06-30)** — My Data has a **"Download my activity (xAPI)"**
+  button (`downloadMyEvents` → `GET /v1/me/events`) that saves `my_xapi.json`, the caller's
+  `bdm:`-profile event statements flattened from the retained outbox. No new storage/capture/schema
+  (events were already stored). Surfaced as-is; a researcher event export and an optional standard-ADL
+  xAPI remap are follow-ups.
 
 **Deferred / blocked**
 - **Phase-5 Participant Platform** (study protocols, scheduling, researcher dashboards) is a separate
