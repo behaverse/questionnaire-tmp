@@ -3,6 +3,7 @@ import type { Driver } from './driver'
 import { runOnce } from './driver'
 import type { Decision, ItemView } from './strategy'
 import { makeRng, type Profile } from './profile'
+import { interpolatePath, MouseRecorder, type MouseSample, type Point } from './mouse'
 
 const FINISH_TITLES: Record<string, string[]> = {
   en: ['Thank you!', 'Already completed', 'You declined to take part'],
@@ -15,6 +16,23 @@ const CONSENT_AGREE: Record<string, string> = { en: 'I agree', pt: 'Concordo' }
 function localeLabel(table: Record<string, string>, locale: string): string {
   return table[locale.split('-')[0] ?? 'en'] ?? table.en ?? ''
 }
+
+const MOVE_STEPS = 12 // pointer hops per move (visible, smooth-ish, cheap)
+
+// Demo-only overlay: a cursor dot that follows real mouse events. pointer-events:none so it never
+// intercepts clicks. Injected via addInitScript before navigation when --show-cursor is set.
+const CURSOR_INIT_SCRIPT = `(() => {
+  const make = () => {
+    if (document.getElementById('__bot_cursor')) return
+    const c = document.createElement('div')
+    c.id = '__bot_cursor'
+    c.style.cssText = 'position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border:3px solid #e11d48;border-radius:50%;background:rgba(225,29,72,0.25);pointer-events:none;z-index:2147483647'
+    document.body.appendChild(c)
+  }
+  const move = (e) => { const c = document.getElementById('__bot_cursor'); if (c) { c.style.left = e.clientX + 'px'; c.style.top = e.clientY + 'px' } }
+  if (document.body) make(); else document.addEventListener('DOMContentLoaded', make)
+  document.addEventListener('mousemove', move, true)
+})()`
 
 export function playerUrl(base: string, p: { deploymentId: string; vsBaseUrl: string; locale: string }): string {
   const u = new URL(base)
@@ -33,7 +51,26 @@ export function playerUrl(base: string, p: { deploymentId: string; vsBaseUrl: st
  * difference is text entry (`fill` vs per-character `type`).
  */
 export class UiDriver implements Driver {
-  constructor(private page: Page, private opts: { locale: string; direct?: boolean }) {}
+  constructor(private page: Page, private opts: { locale: string; direct?: boolean; recorder?: MouseRecorder }) {}
+  private pos: Point = { x: 0, y: 0 }
+
+  /** Realistic actuation: move the cursor along a visible path to the target, then click it.
+   *  Records the path + press/release as Schema-4b samples. Falls back to a plain click if the
+   *  element has no layout box (no path recorded for that control). */
+  private async moveAndClick(target: import('@playwright/test').Locator): Promise<void> {
+    await target.scrollIntoViewIfNeeded().catch(() => {})
+    const box = await target.boundingBox()
+    if (!box) { await target.click(); return }
+    const to: Point = { x: box.x + box.width / 2, y: box.y + box.height / 2 }
+    for (const p of interpolatePath(this.pos, to, MOVE_STEPS)) {
+      await this.page.mouse.move(p.x, p.y)
+      this.opts.recorder?.moveThrough([p], 'up')
+    }
+    this.opts.recorder?.press(to)
+    await target.click() // cursor is already at `to`; Playwright click adds actionability without a visible jump
+    this.opts.recorder?.release(to)
+    this.pos = to
+  }
 
   async consentIfPresent(): Promise<boolean> {
     const agree = this.page.getByRole('button', { name: localeLabel(CONSENT_AGREE, this.opts.locale) })
@@ -82,11 +119,9 @@ export class UiDriver implements Driver {
 
   async apply(item: ItemView, decision: Decision): Promise<void> {
     if (item.kind === 'choice' && decision.kind === 'choice') {
-      // Radio inputs are visually hidden (sr-only); click the wrapping <label> to trigger React onChange.
-      const rg = this.page.getByRole('radiogroup', { name: item.id })
-      const label = rg.locator('label').nth(decision.index)
-      await label.scrollIntoViewIfNeeded()
-      await label.click()
+      const label = this.page.getByRole('radiogroup', { name: item.id }).locator('label').nth(decision.index)
+      if (this.opts.direct) { await label.scrollIntoViewIfNeeded(); await label.click() }
+      else await this.moveAndClick(label)
       return
     }
     if (item.kind === 'number' && decision.kind === 'number') {
@@ -97,7 +132,7 @@ export class UiDriver implements Driver {
     if (item.kind === 'text' && decision.kind === 'text') {
       const tb = this.page.getByRole('textbox', { name: item.id })
       if (this.opts.direct) await tb.fill(decision.text)
-      else { await tb.click(); await tb.type(decision.text, { delay: 15 }) }
+      else { await this.moveAndClick(tb); await tb.type(decision.text, { delay: 15 }) }
       return
     }
     throw new Error(`respondent-bot: decision/item kind mismatch (${item.kind} vs ${decision.kind})`)
@@ -105,22 +140,23 @@ export class UiDriver implements Driver {
 
   async next(): Promise<boolean> {
     const btn = this.page.getByRole('button', { name: localeLabel(NEXT_LABELS, this.opts.locale) })
-    if (await btn.isVisible().catch(() => false)) { await btn.click(); return true }
-    return false // terminal / submitting screen — no Next to click
+    if (!(await btn.isVisible().catch(() => false))) return false // terminal / submitting screen
+    if (this.opts.direct) await btn.click()
+    else await this.moveAndClick(btn)
+    return true
   }
 }
 
 /** Set up event-POST + mint capture, drive one run, return the captured bodies. */
 export async function drivePlayer(
   page: Page,
-  opts: { playerBase: string; deploymentId: string; vsBaseUrl: string; locale: string; profile: Profile; seed: number; direct?: boolean },
-): Promise<{ sessionId: string; eventBodies: unknown[]; finished: boolean; steps: number }> {
+  opts: { playerBase: string; deploymentId: string; vsBaseUrl: string; locale: string; profile: Profile; seed: number; direct?: boolean; showCursor?: boolean },
+): Promise<{ sessionId: string; eventBodies: unknown[]; finished: boolean; steps: number; mouseSamples: MouseSample[] }> {
   const eventBodies: unknown[] = []
   let sessionId = ''
   page.on('request', (req) => {
-    const url = req.url()
     if (req.method() !== 'POST') return
-    if (/\/v1\/sessions\/[^/]+\/events$/.test(url)) {
+    if (/\/v1\/sessions\/[^/]+\/events$/.test(req.url())) {
       try { eventBodies.push(req.postDataJSON()) } catch { /* ignore non-JSON */ }
     }
   })
@@ -130,12 +166,14 @@ export async function drivePlayer(
     }
   })
 
-  await page.goto(playerUrl(opts.playerBase, opts))
-  const driver = new UiDriver(page, { locale: opts.locale, direct: opts.direct })
+  const recorder = opts.direct ? undefined : new MouseRecorder(() => Date.now())
+  if (opts.showCursor) await page.addInitScript(CURSOR_INIT_SCRIPT)
+
+  await page.goto(playerUrl(opts.playerBase, { deploymentId: opts.deploymentId, vsBaseUrl: opts.vsBaseUrl, locale: opts.locale }))
+  const driver = new UiDriver(page, { locale: opts.locale, direct: opts.direct, recorder })
   const sleep = (ms: number) => page.waitForTimeout(ms)
   const result = await runOnce(driver, opts.profile, { rng: makeRng(opts.seed), sleep })
-  // let the final completed/submitted batch flush + POST
   await page.waitForTimeout(300)
   await page.waitForLoadState('networkidle').catch(() => {})
-  return { sessionId, eventBodies, finished: result.finished, steps: result.steps }
+  return { sessionId, eventBodies, finished: result.finished, steps: result.steps, mouseSamples: recorder?.samples() ?? [] }
 }
