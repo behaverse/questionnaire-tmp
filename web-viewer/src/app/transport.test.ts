@@ -60,3 +60,11 @@ test('flushKeepalive fires remaining items with keepalive and empties the queue'
   expect(q.pendingCount).toBe(0)
   vi.useRealTimers()
 })
+it('POSTs a recordings submission to the /recordings endpoint', async () => {
+  const calls: string[] = []
+  const fetchImpl = (async (url: string) => { calls.push(String(url)); return new Response('{}', { status: 202 }) }) as unknown as typeof fetch
+  const q = new SubmissionQueue({ vsBaseUrl: 'http://vs', sessionId: 'sid', token: 'tok', fetchImpl })
+  q.enqueue('recordings', { channel: 'mouse', samples: [] })
+  await q.idle()
+  expect(calls).toEqual(['http://vs/v1/sessions/sid/recordings'])
+})

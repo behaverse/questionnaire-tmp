@@ -1,4 +1,4 @@
-export type SubmissionKind = 'responses' | 'events'
+export type SubmissionKind = 'responses' | 'events' | 'recordings'
 type QueueItem = { kind: SubmissionKind; payload: object }
 type Options = {
   vsBaseUrl: string
