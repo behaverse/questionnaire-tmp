@@ -111,7 +111,7 @@ npm start -- --player http://localhost:5173/ --deployment dep_abc --show-cursor 
   "deployment_id": "dep_abc",
   "session_id": "sess_xyz",
   "statements": [ /* BdmEvent[] */ ],
-  "mouse": [ /* MouseSample[] — realistic lane only */ ]
+  "mouse": [ /* MouseSample[]—realistic lane only */ ]
 }
 ```
 
