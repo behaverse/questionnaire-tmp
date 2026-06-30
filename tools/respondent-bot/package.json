@@ -1,0 +1,21 @@
+{
+  "name": "@behaverse/respondent-bot",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "bin": { "respondent-bot": "src/cli.ts" },
+  "scripts": {
+    "start": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^25.9.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
