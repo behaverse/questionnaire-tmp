@@ -162,7 +162,7 @@ export function App() {
   function maybeStartCapture() {
     const p = pipeline.current
     if (!p || !captureMouseRef.current || p.capture) return
-    const cap = new MouseCapture({ sampleRateHz: params.mouseHz ?? 6 })
+    const cap = new MouseCapture({ sampleRateHz: params.mouseHz ?? 60 })
     cap.start()
     p.capture = cap
     p.batcher.add(ev.recordingStarted(p.engine, recId(p.identity.sessionId), p.identity.sessionId,

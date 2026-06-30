@@ -29,9 +29,9 @@ events (the latter carrying a `recording_url` to where the recording can be read
 
 ## Decisions (resolved)
 
-1. **Sample rate:** configurable, **default 6 Hz** (a `mousemove` sample at most every ~167 ms);
+1. **Sample rate:** configurable, **default 60 Hz** (a `mousemove` sample at most every ~16.7 ms);
    every `mousedown`/`mouseup` transition is captured immediately regardless of the throttle. Source:
-   a `?mouse_hz=<n>` URL param, falling back to 6. (Deployment-level rate config — extending
+   a `?mouse_hz=<n>` URL param, falling back to 60. (Deployment-level rate config — extending
    `channels` — is a noted follow-up.) ✅
 2. **Upload timing:** accumulate in memory, POST the whole recording **once at finish** via the
    submission queue; the queue's pagehide keepalive flush covers a finish/teardown race, and a
@@ -70,7 +70,7 @@ export class MouseCapture {
   get sampleRateHz(): number
 }
 ```
-- `sampleRateHz` default 6 → `minIntervalMs = 1000 / 6`. A `mousemove` is sampled only if
+- `sampleRateHz` default 60 → `minIntervalMs = 1000 / 60`. A `mousemove` is sampled only if
   `now - lastSampleAt >= minIntervalMs`. A `mousedown`/`mouseup` is ALWAYS sampled (updates the
   current `button_state`: left/right/middle_down on press, `up` on release).
 - Each sample: `t = (now - t0) / 1000` (seconds), `x = round(clientX)`, `y = round(clientY)`,
@@ -92,7 +92,7 @@ export class MouseCapture {
 ### Wiring (App.tsx)
 
 - **Boot (deployment capture path only):** after a successful mint, if `mint.channels?.mouse === true`
-  and the run is not fixture/preview/ephemeral: `const cap = new MouseCapture({ sampleRateHz: params.mouseHz ?? 6 }); cap.start()`,
+  and the run is not fixture/preview/ephemeral: `const cap = new MouseCapture({ sampleRateHz: params.mouseHz ?? 60 }); cap.start()`,
   store it on the pipeline ref, and `batcher.add(ev.recordingStarted(engine, recId, sid, {modality:'mouse', sampleRate: cap.sampleRateHz, scope:'runtime'}, nowIso()))`.
 - **Finish (the finishing effect, alongside completed/submitted):** if a capture is active:
   `const samples = cap.stop(); queue.enqueue('recordings', { channel:'mouse', samples });
@@ -112,7 +112,7 @@ export class MouseCapture {
 ## Testing (Vitest + jsdom — the player's stack)
 
 - **`mouseCapture.test.ts`:** with an injected clock + a jsdom target, dispatching `mousemove` faster
-  than the interval yields throttled samples (~6 Hz); `mousedown`/`mouseup` are captured immediately
+  than the interval yields throttled samples (~60 Hz); `mousedown`/`mouseup` are captured immediately
   and flip `button_state` (left_down → up); every sample matches the Schema-4b shape (keys + integer
   coords + enum); `maxSamples` caps the array; `stop()` detaches and is idempotent.
 - **`transport.test.ts`:** `enqueue('recordings', {channel,samples})` POSTs to

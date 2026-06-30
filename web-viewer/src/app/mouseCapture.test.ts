@@ -38,7 +38,7 @@ describe('MouseCapture', () => {
   it('rounds coords and matches the Schema-4b shape', () => {
     const c = clock()
     const target = new EventTarget()
-    const cap = new MouseCapture({ now: c.now, target })   // default 6 Hz
+    const cap = new MouseCapture({ now: c.now, target })   // default 60 Hz
     cap.start()
     target.dispatchEvent(move(1.6, 2.4))
     const s = cap.stop()
@@ -68,6 +68,6 @@ describe('MouseCapture', () => {
 
   it('exposes the configured sample rate', () => {
     expect(new MouseCapture({ sampleRateHz: 12 }).sampleRateHz).toBe(12)
-    expect(new MouseCapture().sampleRateHz).toBe(6)
+    expect(new MouseCapture().sampleRateHz).toBe(60)
   })
 })

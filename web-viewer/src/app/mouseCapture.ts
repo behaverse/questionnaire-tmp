@@ -17,7 +17,7 @@ export class MouseCapture {
   private active = false
 
   constructor(opts: { sampleRateHz?: number; maxSamples?: number; now?: () => number; target?: EventTarget } = {}) {
-    this.hz = opts.sampleRateHz ?? 6
+    this.hz = opts.sampleRateHz ?? 60
     this.maxSamples = opts.maxSamples ?? 50_000
     this.now = opts.now ?? (() => performance.now())
     this.target = opts.target ?? window
