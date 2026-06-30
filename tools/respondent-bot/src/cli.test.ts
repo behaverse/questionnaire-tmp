@@ -25,6 +25,15 @@ describe('parseArgs', () => {
   })
 })
 
+describe('parseArgs — show-cursor', () => {
+  it('defaults showCursor to false', () => {
+    expect(parseArgs(['--player', 'p', '--deployment', 'd']).showCursor).toBe(false)
+  })
+  it('sets showCursor when --show-cursor is present', () => {
+    expect(parseArgs(['--player', 'p', '--deployment', 'd', '--show-cursor']).showCursor).toBe(true)
+  })
+})
+
 describe('loadProfile', () => {
   it('resolves a built-in preset by name', () => {
     expect(loadProfile('midpoint').choice_strategy).toBe('midpoint')

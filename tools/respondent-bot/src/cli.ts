@@ -7,7 +7,7 @@ import { buildTrace, checkWellFormed } from './trace'
 
 export type CliOpts = {
   player: string; deployment: string; vsBaseUrl: string; profile: string
-  seed: number; n: number; direct: boolean; locale: string; trace?: string
+  seed: number; n: number; direct: boolean; locale: string; trace?: string; showCursor: boolean
 }
 
 export function parseArgs(argv: string[]): CliOpts {
@@ -26,6 +26,7 @@ export function parseArgs(argv: string[]): CliOpts {
     seed: Number(get('--seed') ?? '1'),
     n: Number(get('--n') ?? '1'),
     direct: argv.includes('--direct'),
+    showCursor: argv.includes('--show-cursor'),
     locale: get('--locale') ?? 'en',
     trace: get('--trace'),
   }
@@ -47,9 +48,9 @@ export async function main(argv: string[]): Promise<number> {
       try {
         const res = await drivePlayer(page, {
           playerBase: opts.player, deploymentId: opts.deployment, vsBaseUrl: opts.vsBaseUrl,
-          locale: opts.locale, profile, seed: opts.seed + i, direct: opts.direct,
+          locale: opts.locale, profile, seed: opts.seed + i, direct: opts.direct, showCursor: opts.showCursor,
         })
-        const trace = buildTrace(opts.deployment, res.sessionId, res.eventBodies)
+        const trace = buildTrace(opts.deployment, res.sessionId, res.eventBodies, res.mouseSamples)
         const verdict = checkWellFormed(trace.statements)
         const ok = res.finished && verdict.ok
         if (!ok) { failures++; console.error(`run ${i}: FAILED (finished=${res.finished}, trace=${verdict.reason ?? 'ok'})`) }
