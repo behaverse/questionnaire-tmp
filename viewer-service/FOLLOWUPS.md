@@ -1,5 +1,12 @@
 # Follow-ups — questionnaire-viewer-service (VS-A)
 
+## Recordings / SP3 follow-ups (2026-06-30)
+
+- **SP2 — player live capture.** The player does not yet collect Schema-4b mouse samples, POST them to `/v1/sessions/{id}/recordings`, or emit `bdm:recording_started` / `bdm:recording_ended` events with a `recording_url`. SP2 is the remaining piece of the mouse-tracking track.
+- **Canonical archive format + size cap / rate-limit.** Recordings are stored as raw JSON outbox rows with no compression. Define a canonical `.jsonl.gz` archive format for long-term storage; add a per-recording size cap and an ingest rate-limit (per session or per deployment) before production load.
+- **Recordings join the shared outbox-TTL-reaper follow-up.** The outbox pruning policy (see VS-B follow-ups) applies to `kind='recording'` rows the same as events/responses. Coordinate TTL semantics and ensure the participant "my data" export documents what it can still guarantee once pruning runs.
+- **Researcher CSV / streaming export of recordings.** `GET /v1/deployments/{id}/recordings` returns raw JSON. A structured CSV download (matching the `export.csv` pattern) and a streaming variant for large deployments are deferred.
+
 ## Owner feature requests (2026-06-26) — VS side
 
 Captured from root `my_comments.md`; player-side counterparts live in `web-viewer/FOLLOWUPS.md`.
