@@ -1,7 +1,10 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from .deps import get_conn, require_session
+from .identity import require_participant, require_researcher
 from .. import submission as submission_svc
+from ..store import export as export_store
+from ..store import deployments as dep_store
 
 router = APIRouter()
 
@@ -25,3 +28,18 @@ def post_recording(session_id: str, payload: dict, session=Depends(require_sessi
     if oid is None:
         return JSONResponse(status_code=202, content={"ephemeral": True})
     return JSONResponse(status_code=202, content={"enqueued": oid})
+
+
+@router.get("/me/recordings")
+def my_recordings(conn=Depends(get_conn), claims=Depends(require_participant)):
+    """Download the caller's behavioural-channel recordings (mouse/keyboard sample sets)."""
+    recs = list(export_store.iter_recording_rows_for_participant(conn, claims["sub"]))
+    return JSONResponse(content={"recordings": recs},
+                        headers={"Content-Disposition": 'attachment; filename="my_recordings.json"'})
+
+
+@router.get("/deployments/{deployment_id}/recordings")
+def list_recordings(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
+    if dep_store.get_deployment(conn, deployment_id) is None:
+        raise HTTPException(status_code=404, detail="deployment not found")
+    return {"recordings": list(export_store.iter_recording_rows(conn, deployment_id))}

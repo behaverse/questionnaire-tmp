@@ -78,3 +78,61 @@ def test_ephemeral_accepts_but_skips_store(ephemeral_session):
         n = c.execute("SELECT count(*) FROM outbox o JOIN session s ON o.session_id=s.session_id "
                       "WHERE s.deployment_id=%s AND o.kind='recording'", (dep_id,)).fetchone()[0]
     assert n == 0
+
+
+from psycopg.types.json import Jsonb
+from viewer_service.store import sessions as sstore
+
+
+def _seed_recording_session(pg_url, sub, sid, dep, samples):
+    with psycopg.connect(pg_url) as c:
+        sstore.insert_session(
+            c, ephemeral=False, participant_sub=sub, session_id=sid, session_index=1,
+            deployment_id=dep, viewer_id="web", viewer_version="v1", agent_id=sub,
+            instrument_id="qst_x", instrument_version="v26.0101", status="submitted",
+            token_hash="h_" + sid, initial_locale="en", last_active_locale="en")
+        c.execute("INSERT INTO outbox (session_id, kind, payload, payload_sha256) "
+                  "VALUES (%s,'recording',%s,%s)",
+                  (sid, Jsonb({"channel": "mouse", "samples": samples}), "hr_" + sid))
+        c.commit()
+
+
+def test_me_recordings_scoped(client, auth_header, pg_url):
+    _seed_recording_session(pg_url, "alice", "rA", "dep_x", [{"t": 0, "x": 1, "y": 2, "button_state": "up"}])
+    _seed_recording_session(pg_url, "bob", "rB", "dep_x", [{"t": 0, "x": 8, "y": 8, "button_state": "up"}])
+    client.headers.pop("authorization", None)
+    r = client.get("/v1/me/recordings", headers=auth_header(["participant"], sub="alice"))
+    assert r.status_code == 200
+    recs = r.json()["recordings"]
+    assert len(recs) == 1 and recs[0]["samples"][0]["x"] == 1   # bob excluded
+
+
+def test_me_recordings_requires_token(client):
+    client.headers.pop("authorization", None)
+    assert client.get("/v1/me/recordings").status_code == 401
+
+
+def test_me_recordings_empty(client, auth_header):
+    client.headers.pop("authorization", None)
+    r = client.get("/v1/me/recordings", headers=auth_header(["participant"], sub="nobody"))
+    assert r.status_code == 200 and r.json() == {"recordings": []}
+
+
+def test_deployment_recordings_researcher(session):
+    client, dep_id, sid, h = session
+    client.post(f"/v1/sessions/{sid}/recordings", headers=h,
+                json={"channel": "mouse", "samples": _SAMPLES})
+    g = client.get(f"/v1/deployments/{dep_id}/recordings")   # default headers carry researcher role
+    assert g.status_code == 200, g.text
+    recs = g.json()["recordings"]
+    assert len(recs) == 1 and recs[0]["channel"] == "mouse"
+
+
+def test_deployment_recordings_requires_researcher(session, auth_header):
+    client, dep_id, _sid, _h = session
+    assert client.get(f"/v1/deployments/{dep_id}/recordings",
+                      headers=auth_header(["participant"])).status_code == 403
+
+
+def test_deployment_recordings_unknown_404(client):
+    assert client.get("/v1/deployments/dpl_nope/recordings").status_code == 404
