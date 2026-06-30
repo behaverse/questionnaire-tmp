@@ -30,6 +30,11 @@ Service**. See [design/04_architecture.md](design/04_architecture.md).
   full participant experience (portal + player + Identity SSO handoff), and the Editor (incl. auto-translate).
 - **Public catalogue:** **https://questionnaire-library.vercel.app** — **222 questionnaires** (64 `survey_database`
   + 158 from the harvester), normalized **v26.0618**; homepage stats ~222 Q / 3,741 questions / 490 options / 7 languages.
+- **Owner quick-wins shipped + live (2026-06-26→30):** presentation flags (`x_key_select` / `x_back_nav`),
+  per-question QA **comments** (+ researcher CSV export), Editor authoring of those flags, Library
+  **question search**, the **score-progression** dashboard, and **xAPI download** (`my_comments.md`
+  #1/#2/#5-6/#9/#4/#3). **Remaining from `my_comments.md`: replay (#7) + respondent-bot (#8)** — now
+  written up as a ready-to-delegate track in [§System-wide tasks](#system-wide-tasks).
 - **Remaining big tracks:** **Phase 4** (Native/Godot viewer) and **Phase 5** (Participant Platform —
   studies/protocols/scheduling) — both system-level, see [§System-wide tasks](#system-wide-tasks).
 - **⚠️ Known content gap:** the 158 harvested questionnaires lack `classification` metadata, so the Library
@@ -95,6 +100,32 @@ Work that concerns the whole system or doesn't fit a single component. Decompose
   builder, OD-09 assignment scheduler, consent **lifecycle** (versioning/re-consent/withdrawal — the
   per-deployment consent gate is built), notifications, researcher dashboards. Spans Identity (ID-D),
   the Viewer Service, and a new platform surface.
+- **QA / research tooling — replay (#7) + respondent-bot (#8)** *(owner-requested, **ready to delegate
+  to a new agent**; brainstorm each with the owner before building).* A paired track: the
+  **respondent-bot** auto-answers a deployment and generates realistic interaction traces; **replay**
+  reconstructs a participant's run from those traces. Build **#8 first — it produces the event traces
+  #7 consumes.** Branch `work/respondent-bot`, then `work/replay`.
+  - **Foundation already in place** (don't rebuild): the player emits xAPI-shaped `bdm:` events
+    (`web-viewer/src/app/events.ts` + the `EventBatcher`, 5 s flush) → `POST /v1/sessions/{id}/events`
+    → **retained** in the Viewer Service `outbox` (`kind='events'`, never deleted). Events carry
+    `actor`/`verb`/`object`/`context.extensions`/`result.extensions`/`timestamp`. A participant can
+    already **download** their own statements via `GET /v1/me/events` (#3, live); the per-deployment
+    reader pattern is `viewer-service/.../store/export.py` `iter_event_rows_for_participant`.
+  - **#8 Respondent-bot** — likely a **Playwright-driven** harness (chromium is installed; the owner
+    reacts to screenshots) that drives the live player or a `?fixture=` / `?preview=` / `?deployment=`
+    run, plus a **trait/constraint model** (acquiescence, straight-lining, random, fixed profile, …)
+    and a toggle for **real pointer movement + clicks vs. direct state**. Doubles as cross-stack E2E
+    and as the trace generator for #7. New home: a small tool dir (e.g. `tools/respondent-bot/`).
+    First owner decision: scope (test-harness vs. data-generator vs. both) + the trait model.
+  - **#7 Replay** — needs (a) a **session/deployment-scoped event read** for researchers (only the
+    participant-self `/me/events` exists today — add the researcher read, mirroring how
+    `export.csv`/`comments.csv` are researcher-gated), and (b) a player **replay mode** that drives
+    the renderer from the ordered, timestamped event stream instead of live input (step-through +
+    timing reconstruction). First owner decision: viewer-embedded replay vs. a standalone viewer.
+  - **Detail + raw backlog:** `web-viewer/FOLLOWUPS.md` ("Owner feature requests" — #7/#8) and
+    `my_comments.md`. Follow the standing build pattern (brainstorm → spec → plan → subagent-driven
+    TDD → review → merge+push), exactly as #3/#4 were done (see their specs/plans in
+    `docs/superpowers/`).
 - **🔒 Identity/OD-08-gated features** spanning components: Library contribution/review workflow + DOI
   (ID-C2/C3), the Editor's real "Open in viewer" preview deployment + write-back of forked/translated
   entities to the shared Library. Unblock once the relevant Identity slices land.
