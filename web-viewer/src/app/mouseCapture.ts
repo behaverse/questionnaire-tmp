@@ -65,6 +65,6 @@ export class MouseCapture {
       this.target.removeEventListener('mousedown', this.onDown, true)
       this.target.removeEventListener('mouseup', this.onUp, true)
     }
-    return this.rows
+    return [...this.rows] // defensive copy: callers can't mutate the capture buffer
   }
 }

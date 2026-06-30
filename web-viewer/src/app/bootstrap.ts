@@ -33,7 +33,7 @@ export function parseParams(search: string): Params {
     returnUrl: safeReturnUrl(q.get('return_url')),
     preview: q.get('preview'),
     handoff: q.get('handoff'),
-    mouseHz: q.get('mouse_hz') ? Number(q.get('mouse_hz')) : null,
+    mouseHz: ((raw) => { const n = Number(raw); return raw && Number.isFinite(n) && n > 0 ? n : null })(q.get('mouse_hz')),
   }
 }
 
