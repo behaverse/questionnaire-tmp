@@ -70,3 +70,11 @@ e2e: `tests/e2e/smoke.spec.ts`.
 - **Browserless `--direct`**—drive the renderer-as-library directly (no browser) for pure
   speed in CI; requires wiring `web-viewer`'s exported renderer lib into the bot (deferred until
   the renderer lib API stabilises).
+- **Locale coverage**—consent/next/finish labels are tabled for `en`+`pt` only (mirroring the
+  player's `strings.ts`); add a locale before driving `--locale` for it. The `en` path is the
+  only one the e2e covers.
+- **`CommentWidget` collision**—a deployment with `style.x_comments` renders a fixed star-rating
+  `radiogroup` ("Rate this question") that `readItems` would treat as an extra choice item; skip
+  it by aria-label if comment-enabled deployments need bot runs.
+- **`Profile.pointer` is unused**—the lane switch is `--direct`/`opts.direct`, not `profile.pointer`;
+  drop the field or wire it when a third actuation style is needed.

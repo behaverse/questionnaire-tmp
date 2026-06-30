@@ -8,6 +8,13 @@ const FINISH_TITLES: Record<string, string[]> = {
   en: ['Thank you!', 'Already completed', 'You declined to take part'],
   pt: ['Obrigado!', 'Já concluído', 'Recusou a participação'],
 }
+// Player nav/consent labels per locale (mirror web-viewer/src/app/chrome/strings.ts).
+const NEXT_LABELS: Record<string, string> = { en: 'Next', pt: 'Seguinte' }
+const CONSENT_AGREE: Record<string, string> = { en: 'I agree', pt: 'Concordo' }
+
+function localeLabel(table: Record<string, string>, locale: string): string {
+  return table[locale.split('-')[0] ?? 'en'] ?? table.en ?? ''
+}
 
 export function playerUrl(base: string, p: { deploymentId: string; vsBaseUrl: string; locale: string }): string {
   const u = new URL(base)
@@ -29,7 +36,7 @@ export class UiDriver implements Driver {
   constructor(private page: Page, private opts: { locale: string; direct?: boolean }) {}
 
   async consentIfPresent(): Promise<boolean> {
-    const agree = this.page.getByRole('button', { name: 'I agree' })
+    const agree = this.page.getByRole('button', { name: localeLabel(CONSENT_AGREE, this.opts.locale) })
     if (await agree.isVisible().catch(() => false)) { await agree.click(); return true }
     return false
   }
@@ -97,7 +104,7 @@ export class UiDriver implements Driver {
   }
 
   async next(): Promise<boolean> {
-    const btn = this.page.getByRole('button', { name: 'Next' })
+    const btn = this.page.getByRole('button', { name: localeLabel(NEXT_LABELS, this.opts.locale) })
     if (await btn.isVisible().catch(() => false)) { await btn.click(); return true }
     return false // terminal / submitting screen — no Next to click
   }
