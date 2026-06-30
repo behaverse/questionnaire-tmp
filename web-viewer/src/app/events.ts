@@ -33,6 +33,8 @@ export const ev = {
   submitted: (a: Actor, sid: string, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:submitted', object: runtimeObj(sid), ...ctxExt({ sessionId: sid }) }),
   consented: (a: Actor, sid: string, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:consented', object: runtimeObj(sid), ...ctxExt({ sessionId: sid }) }),
   consentDeclined: (a: Actor, sid: string, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:consent_declined', object: runtimeObj(sid), ...ctxExt({ sessionId: sid }) }),
+  recordingStarted: (a: Actor, recordingId: string, sid: string, ext: { modality: string; sampleRate: number; scope: string }, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:recording_started', object: { objectType: 'bdm:Recording', id: recordingId }, result: { extensions: { 'bdm:recording_modality': ext.modality, 'bdm:sample_rate': ext.sampleRate, 'bdm:recording_scope': ext.scope } }, ...ctxExt({ sessionId: sid }) }),
+  recordingEnded: (a: Actor, recordingId: string, sid: string, ext: { url: string; sampleCount: number }, ts: string): BdmEvent => ({ timestamp: ts, actor: a, verb: 'bdm:recording_ended', object: { objectType: 'bdm:Recording', id: recordingId }, result: { extensions: { 'bdm:recording_url': ext.url, 'bdm:sample_count': ext.sampleCount } }, ...ctxExt({ sessionId: sid }) }),
 }
 
 export class EventBatcher {

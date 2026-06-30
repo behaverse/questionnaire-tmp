@@ -64,3 +64,21 @@ test('consented + consent_declined build runtime-instance events', () => {
   expect(d.verb).toBe('bdm:consent_declined')
   expect(d.object).toEqual({ objectType: 'bdm:RuntimeInstance', id: 's1' })
 })
+
+it('recordingStarted carries modality/sample_rate/scope on a bdm:Recording', () => {
+  const e = ev.recordingStarted(engineActor('eng'), 'recording_mouse_s1', 's1',
+    { modality: 'mouse', sampleRate: 6, scope: 'runtime' }, '2026-06-30T00:00:00.000Z')
+  expect(e.verb).toBe('bdm:recording_started')
+  expect(e.object).toEqual({ objectType: 'bdm:Recording', id: 'recording_mouse_s1' })
+  expect(e.result!.extensions).toEqual({
+    'bdm:recording_modality': 'mouse', 'bdm:sample_rate': 6, 'bdm:recording_scope': 'runtime' })
+  expect(e.context!.extensions['bdm:session_id']).toBe('s1')
+})
+
+it('recordingEnded carries recording_url + sample_count', () => {
+  const e = ev.recordingEnded(engineActor('eng'), 'recording_mouse_s1', 's1',
+    { url: 'http://vs/v1/deployments/dep/recordings', sampleCount: 42 }, '2026-06-30T00:00:01.000Z')
+  expect(e.verb).toBe('bdm:recording_ended')
+  expect(e.result!.extensions).toEqual({
+    'bdm:recording_url': 'http://vs/v1/deployments/dep/recordings', 'bdm:sample_count': 42 })
+})
