@@ -1,5 +1,7 @@
+import type { MouseSample } from './mouse'
+
 export type Statement = Record<string, unknown> & { verb?: string; timestamp?: string }
-export type Trace = { deployment_id: string; session_id: string; statements: Statement[] }
+export type Trace = { deployment_id: string; session_id: string; statements: Statement[]; mouse?: MouseSample[] }
 
 export function extractEventStatements(bodies: unknown[]): Statement[] {
   const out: Statement[] = []
@@ -10,8 +12,10 @@ export function extractEventStatements(bodies: unknown[]): Statement[] {
   return out
 }
 
-export function buildTrace(deploymentId: string, sessionId: string, bodies: unknown[]): Trace {
-  return { deployment_id: deploymentId, session_id: sessionId, statements: extractEventStatements(bodies) }
+export function buildTrace(deploymentId: string, sessionId: string, bodies: unknown[], mouse?: MouseSample[]): Trace {
+  const trace: Trace = { deployment_id: deploymentId, session_id: sessionId, statements: extractEventStatements(bodies) }
+  if (mouse && mouse.length) trace.mouse = mouse
+  return trace
 }
 
 export function checkWellFormed(statements: Statement[]): { ok: boolean; reason?: string } {

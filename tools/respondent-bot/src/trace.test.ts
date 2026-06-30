@@ -35,3 +35,14 @@ describe('checkWellFormed', () => {
     expect(r).toEqual({ ok: false, reason: 'timestamp regressed' })
   })
 })
+
+describe('buildTrace — mouse', () => {
+  it('includes a non-empty mouse array when provided', () => {
+    const t = buildTrace('dep', 'sess', [], [{ t: 0, x: 1, y: 2, button_state: 'up' }])
+    expect(t.mouse).toEqual([{ t: 0, x: 1, y: 2, button_state: 'up' }])
+  })
+  it('omits the mouse key when no samples are passed', () => {
+    expect('mouse' in buildTrace('dep', 'sess', [])).toBe(false)
+    expect('mouse' in buildTrace('dep', 'sess', [], [])).toBe(false)
+  })
+})
