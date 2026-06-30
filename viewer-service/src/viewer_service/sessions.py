@@ -50,7 +50,8 @@ def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_ver
             "participant_sub": participant_sub,
             "consent": deployment.get("consent"),
             "confirmation_message": deployment.get("confirmation_message"),
-            "redirect_url": deployment.get("redirect_url")}
+            "redirect_url": deployment.get("redirect_url"),
+            "channels": deployment.get("channels")}
 
 
 def session_runtime(conn, session: dict) -> dict:
