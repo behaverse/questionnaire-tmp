@@ -82,6 +82,7 @@ Each row links the component's own HANDOFF.md. Local dev ports in parens.
 | [editor/](editor/HANDOFF.md) | **The Editor** — visual Schema-2 authoring + auto-translate (Vite/React) | ✅ live | `work/editor` |
 | [api/](api/HANDOFF.md) | Vercel serverless entry for the deployed Library (thin) | ✅ live | `work/deploy-api` |
 | [questionnaire-harvester/](questionnaire-harvester/HANDOFF.md) | Web → Schema-2 harvester (**separate concurrent agent**; its HANDOFF is agent-maintained) | ✅ 158 live | — |
+| [tools/respondent-bot/](tools/respondent-bot/HANDOFF.md) | **Respondent-bot** — drives the player to auto-answer a deployment (trait model) + emit `bdm:` traces for replay (Node/Playwright) | ✅ | `work/respondent-bot` |
 
 > The participant experience is **three apps + a shared package**: the **portal** (`participant-app/`)
 > browses/picks, the **player** (`web-viewer/`) runs one questionnaire and returns, and
@@ -204,6 +205,8 @@ pytest tools/tests/ -q                                       # schema validation
 ( cd editor && npm test && npm run build )
 bash -c '. "$HOME/.cargo/env" && cd questionnaire-expression-evaluator && cargo test' ; ( cd questionnaire-expression-evaluator/web && npm test )
 bash -c '. "$HOME/.cargo/env" && cd questionnaire-scorer && cargo test' ; ( cd questionnaire-scorer/host && npm test )
+( cd tools/respondent-bot && npm test )                      # respondent-bot trait model + trace (unit)
+( cd tools/respondent-bot && npm run e2e )                   # respondent-bot offline capture smoke (Playwright)
 ```
 If integration tests hang (container ready but host can't reach its port), Docker's host→container NAT has
 gone stale — `sudo systemctl restart docker` clears it.

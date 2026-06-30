@@ -1,0 +1,133 @@
+# respondent-bot
+
+A Playwright-driven CLI that auto-answers a live questionnaire deployment end-to-end. It models
+respondent behaviour via a seeded trait profile (random, acquiescence bias, straight-lining,
+extreme, midpoint, or a fixed JSON profile), drives the player through every question, and tees
+the player's `bdm:` statements into a portable `trace.json`—the artifact the replay harness (#7)
+consumes. Doubles as a cross-stack E2E smoke lane and a data generator for pipeline validation.
+
+## Install
+
+```bash
+cd tools/respondent-bot
+npm install          # Chromium is already installed system-wide; no extra browser download needed
+```
+
+## Trait presets
+
+| Name | Behaviour |
+|---|---|
+| `random` | Chooses uniformly at random (default) |
+| `acquiescence` | Strongly biased toward high/agree options |
+| `straight_line` | Always picks the same relative position (first, middle, or last) |
+| `extreme` | Alternates between the two extreme options |
+| `midpoint` | Always picks the middle option (or nearest) |
+| `fixed` | Reads answers from a JSON profile file—see below |
+
+The `fixed` strategy is not a named preset; pass a JSON **file path** to `--profile`:
+
+```json
+{
+  "choice_strategy": "fixed",
+  "fixed": {
+    "item_phq_1": 2,
+    "Not at all": 0
+  }
+}
+```
+
+Keys may be the item `id` or its `aria-label`. Any item not found in the map falls back to
+`random`.
+
+## Interaction lanes
+
+**Default (realistic):** the bot moves a real pointer and types text character-by-character. Choice
+items are selected by clicking their wrapping `<label>` (the radio inputs are screen-reader-only,
+so both lanes use label-click—there is no difference in how choices are interacted with). Text
+entry uses `page.type()` to simulate keystrokes.
+
+**`--direct` (fast):** uses `page.fill()` for text fields instead of per-character typing. Choice
+selection is identical to the default lane (label-click). Useful for speed when realistic typing
+cadence is not required.
+
+## Seed determinism
+
+Identical `--seed` + `--profile` ⇒ identical decisions. With `--n N`, run `i` (zero-indexed) uses
+seed `seed + i`, so you get N distinct-but-reproducible runs.
+
+## CLI reference
+
+```
+npm start -- --player <url>        (required) base URL of the player, e.g. http://localhost:5173/
+             --deployment <id>     (required) deployment ID (dep_*)
+             --viewer-url <url>    Viewer Service base URL (default http://localhost:8001)
+             --profile <name|file> trait preset name or path to a .json profile (default random)
+             --seed <n>            RNG seed (default 1)
+             --n <count>           number of sequential runs (default 1)
+             --direct              fast lane: use fill() for text, skip pointer motion
+             --locale <code>       questionnaire locale (default en)
+             --trace <out.json>    write the captured bdm: trace to this file
+```
+
+## Examples
+
+```bash
+# one acquiescent respondent against a local open deployment, save the trace
+npm start -- --player http://localhost:5173/ --deployment dep_abc \
+  --viewer-url http://localhost:8001 --profile acquiescence --seed 42 --trace run.json
+
+# five random respondents (run.0.json … run.4.json)
+npm start -- --player http://localhost:5173/ --deployment dep_abc --profile random --n 5 --trace run.json
+
+# fast lane (no pointer motion)
+npm start -- --player http://localhost:5173/ --deployment dep_abc --direct
+```
+
+## Trace output
+
+`trace.json` shape:
+
+```json
+{
+  "deployment_id": "dep_abc",
+  "session_id": "sess_xyz",
+  "statements": [ /* BdmEvent[] */ ]
+}
+```
+
+The `statements` array is the same `bdm:` event stream the player POSTs to
+`/v1/sessions/{id}/events`; the CLI intercepts those requests and tees them into the file. The
+same events also persist to the Viewer Service outbox via the normal pipeline.
+
+Traces require a real `?deployment=` run—anonymous/open deployments or signed `?invite=` links.
+Authenticated deployments are not yet supported (deferred follow-up).
+
+## v1 control support
+
+| Control | Widget IDs | Support |
+|---|---|---|
+| Choice (radio) | `choice.*` | ✅ |
+| Number rating | `number.ratio`, `number.interval` with rating layout | ✅ |
+| Slider | `number.*` with slider layout | ✅ |
+| Number input | `number.*` with input layout | ✅ |
+| Text | `text.*` | ✅ |
+| Checkbox multi-select | `choice.*` multi | ❌ unsupported—**fails loudly** |
+| Matrix | `matrix.*` | ❌ unsupported—**fails loudly** |
+
+The bot **throws** on an unsupported control type—it never silently skips.
+
+## Operational gotchas
+
+- **CORS:** the player origin must be in the Viewer Service `VS_CORS_ORIGINS` allow-list or the
+  bot's session mint will fail with a network error.
+- **Deployment must be open:** the target deployment must be accepting responses (not paused,
+  quota-full, or in a mode that refuses anonymous mints).
+
+## Running tests
+
+```bash
+npm test          # Vitest unit tests (33 tests — profile, strategy, runner, trace, CLI)
+npm run e2e       # Playwright offline capture smoke (boots the web-viewer dev server on :5173
+                  # via reuseExistingServer if not already running)
+npm run typecheck # tsc --noEmit
+```

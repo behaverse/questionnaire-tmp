@@ -42,12 +42,12 @@ participant-app) and are cross-linked.
   back how a participant moved through the questionnaire (step-by-step navigation, answers entered,
   revisions, timings). Player+VS effort: needs a VS event-export read endpoint and a player "replay"
   mode that drives the renderer from events instead of live input. Larger; design separately.
-- **#8 Respondent-bot.** An automated agent that answers the web-viewer questionnaire end-to-end,
-  configurable with character traits / response constraints (e.g. acquiescence bias, fixed profile,
-  random, straight-lining), and optionally simulating real pointer movement + clicks (vs. direct
-  state) for realistic event traces. Useful for load/E2E testing, event-pipeline validation, and
-  generating replay fixtures (#7). Larger; design separately (likely a Playwright-driven harness +
-  a trait model).
+- ~~**#8 Respondent-bot.**~~ **DONE (2026-06-30)** — built as a standalone tool at
+  `tools/respondent-bot/` (Node + Playwright). Seeded trait model (random / acquiescence /
+  straight_line / extreme / midpoint / fixed), default real-pointer UI driver + `--direct`
+  fast lane, and real `?deployment=` runs that tee the `bdm:` statements into a portable
+  `trace.json` (the artifact #7 replays). See its README/HANDOFF. v1 targets anonymous-capable
+  deployments; authenticated + checkbox/matrix controls are deferred.
 
 ## PA-4 follow-ups — consent gate + completion polish (2026-06-24)
 
