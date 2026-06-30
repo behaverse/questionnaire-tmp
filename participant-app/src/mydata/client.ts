@@ -35,3 +35,17 @@ export async function downloadMyData(vsBaseUrl: string, authFetch: AuthFetch): P
     URL.revokeObjectURL(objectUrl)
   }
 }
+
+export async function downloadMyEvents(vsBaseUrl: string, authFetch: AuthFetch): Promise<void> {
+  const resp = await authFetch(`${vsBaseUrl}/v1/me/events`)
+  if (!resp.ok) throw new Error(`download failed: ${resp.status}`)
+  const blob = await resp.blob()
+  const objectUrl = URL.createObjectURL(blob)
+  try {
+    const a = document.createElement('a')
+    a.href = objectUrl; a.download = 'my_xapi.json'
+    document.body.appendChild(a); a.click(); a.remove()
+  } finally {
+    URL.revokeObjectURL(objectUrl)
+  }
+}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { parseParams } from '../params'
 import { useSession } from '@behaverse/participant-session'
 import { Link } from '../shell/router'
-import { fetchMySessions, downloadMyData, type MySession } from './client'
+import { fetchMySessions, downloadMyData, downloadMyEvents, type MySession } from './client'
 import { groupByInstrument } from './progression'
 import { ScoreSparkline } from './ScoreSparkline'
 
@@ -56,6 +56,7 @@ export function MyDataView() {
   const [sessions, setSessions] = useState<MySession[]>([])
   const [loaded, setLoaded] = useState(false)
   const [downloading, setDownloading] = useState(false)
+  const [downloadingEvents, setDownloadingEvents] = useState(false)
 
   useEffect(() => {
     if (session.status !== 'authed') return
@@ -81,6 +82,13 @@ export function MyDataView() {
     try { await downloadMyData(params.vsBaseUrl, session.authFetch) }
     catch (e) { console.error(e) }
     finally { setDownloading(false) }
+  }
+
+  async function handleDownloadEvents() {
+    setDownloadingEvents(true)
+    try { await downloadMyEvents(params.vsBaseUrl, session.authFetch) }
+    catch (e) { console.error(e) }
+    finally { setDownloadingEvents(false) }
   }
 
   return (
@@ -118,10 +126,16 @@ export function MyDataView() {
             <div className="text-sm font-semibold text-zinc-900">Export your responses</div>
             <div className="mt-0.5 text-sm text-zinc-500">A CSV of every answer you've submitted.</div>
           </div>
-          <button onClick={() => void handleDownload()} disabled={downloading}
-            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60">
-            {downloading ? 'Preparing…' : 'Download my data (CSV)'}
-          </button>
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            <button onClick={() => void handleDownload()} disabled={downloading}
+              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60">
+              {downloading ? 'Preparing…' : 'Download my data (CSV)'}
+            </button>
+            <button onClick={() => void handleDownloadEvents()} disabled={downloadingEvents}
+              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-zinc-300 bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 shadow-sm transition hover:border-zinc-400 disabled:cursor-not-allowed disabled:opacity-60">
+              {downloadingEvents ? 'Preparing…' : 'Download my activity (xAPI)'}
+            </button>
+          </div>
         </div>
       ) : null}
     </>

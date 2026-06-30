@@ -1,5 +1,5 @@
 import { test, expect, vi, beforeEach } from 'vitest'
-import { fetchMySessions, downloadMyData } from './client'
+import { fetchMySessions, downloadMyData, downloadMyEvents } from './client'
 import type { AuthFetch } from '@behaverse/participant-session'
 
 beforeEach(() => { vi.restoreAllMocks() })
@@ -24,6 +24,17 @@ test('downloadMyData fetches with authFetch and creates an object URL', async ()
   vi.stubGlobal('URL', { ...URL, createObjectURL, revokeObjectURL })
   await downloadMyData('http://vs', authFetch)
   expect(authFetch).toHaveBeenCalledWith('http://vs/v1/me/responses.csv')
+  expect(createObjectURL).toHaveBeenCalledOnce()
+  expect(revokeObjectURL).toHaveBeenCalledWith('blob:x')
+})
+
+test('downloadMyEvents fetches /v1/me/events via authFetch and creates an object URL', async () => {
+  const authFetch: AuthFetch = vi.fn().mockResolvedValue(new Response(JSON.stringify({ events: [] }), { status: 200 }))
+  const createObjectURL = vi.fn().mockReturnValue('blob:x')
+  const revokeObjectURL = vi.fn()
+  vi.stubGlobal('URL', { ...URL, createObjectURL, revokeObjectURL })
+  await downloadMyEvents('http://vs', authFetch)
+  expect(authFetch).toHaveBeenCalledWith('http://vs/v1/me/events')
   expect(createObjectURL).toHaveBeenCalledOnce()
   expect(revokeObjectURL).toHaveBeenCalledWith('blob:x')
 })

@@ -41,6 +41,12 @@ test('anon: shows a Log in prompt linking to /account', async () => {
   expect(link.getAttribute('href')).toBe('/account')
 })
 
+test('authed: shows a download-xAPI button', async () => {
+  authed([{ session_id: 's1', instrument_id: 'qst_x', instrument_version: 'v1', deployment_id: 'd', status: 'submitted', session_index: 1, started_at: null, completed_at: null, submitted_at: null }])
+  renderView()
+  expect(await screen.findByRole('button', { name: /download my activity/i })).toBeInTheDocument()
+})
+
 test('renders a score-progression chart for a questionnaire with >=2 scored attempts', async () => {
   authed([
     { session_id: 'a', instrument_id: 'qst_phq9', instrument_version: 'v1', deployment_id: 'd',
