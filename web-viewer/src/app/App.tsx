@@ -429,6 +429,12 @@ export function App() {
     }
 
     dispatch({ type: 'answer', key, value })
+    // Live score display: refresh the score cache on every answer so non-auto-advancing widgets
+    // (number scales, multi-select, text) update the shown score immediately — not only on advance.
+    // Single-choice items auto-advance (which already refreshes), so this mainly fixes the rest.
+    if (p && stateRef.current.runtime?.x_show_score === true && stateRef.current.runtime?.x_show_score_live === true) {
+      p.cache.refresh({ ...stateRef.current.answers, [key]: value }, p.evaluator)
+    }
     const step = state.steps[state.stepIndex]
     const focus = state.runtime ? presentationMode(state.runtime) === 'focus' : false
     const autoOn = state.runtime?.style?.x_auto_advance !== false

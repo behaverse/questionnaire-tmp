@@ -6,11 +6,20 @@ export const nullResolver: ScoreResolver = { score: () => null }
 
 export function scoredValueFor(option: Record<string, unknown>, prompt: { reversed?: boolean } | undefined, value: AnswerValue, ev: LogicEvaluator): AnswerValue {
   if (!prompt?.reversed || typeof value !== 'number') return value
+  // Discrete (choice) options carry their bounds as option.options[].value; numeric scales
+  // (number.interval/ratio sliders & rating buttons) carry them as option.min/max instead.
   const opts = (option.options as { value: number | string }[] | undefined) ?? []
   const nums = opts.map((o) => o.value).filter((v): v is number => typeof v === 'number')
-  if (nums.length === 0) return value
-  const min = Math.min(...nums)
-  const max = Math.max(...nums)
+  let min: number, max: number
+  if (nums.length > 0) {
+    min = Math.min(...nums)
+    max = Math.max(...nums)
+  } else if (typeof option.min === 'number' && typeof option.max === 'number') {
+    min = option.min
+    max = option.max
+  } else {
+    return value
+  }
   return ev.reversedValue(value, min, max)
 }
 
