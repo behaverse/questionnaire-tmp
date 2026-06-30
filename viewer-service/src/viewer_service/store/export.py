@@ -38,3 +38,22 @@ def iter_response_rows(conn: psycopg.Connection, deployment_id: str) -> Iterator
             yield from payload["responses"]
         else:
             yield payload
+
+
+def iter_recording_rows_for_participant(conn: psycopg.Connection, participant_sub: str) -> Iterator[dict]:
+    """Yield every behavioural-channel recording payload ({channel, samples}) for one participant,
+    from the outbox. Scoped to session.participant_sub; kind='recording' only; insertion order."""
+    cur = conn.execute(
+        "SELECT o.payload FROM outbox o JOIN session s ON o.session_id = s.session_id "
+        "WHERE s.participant_sub = %s AND o.kind = 'recording' ORDER BY o.id", (participant_sub,))
+    for (payload,) in cur:
+        yield payload
+
+
+def iter_recording_rows(conn: psycopg.Connection, deployment_id: str) -> Iterator[dict]:
+    """Yield every recording payload for a deployment's sessions; kind='recording'; insertion order."""
+    cur = conn.execute(
+        "SELECT o.payload FROM outbox o JOIN session s ON o.session_id = s.session_id "
+        "WHERE s.deployment_id = %s AND o.kind = 'recording' ORDER BY o.id", (deployment_id,))
+    for (payload,) in cur:
+        yield payload
