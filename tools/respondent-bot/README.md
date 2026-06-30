@@ -41,14 +41,29 @@ Keys may be the item `id` or its `aria-label`. Any item not found in the map fal
 
 ## Interaction lanes
 
-**Default (realistic):** the bot moves a real pointer and types text character-by-character. Choice
-items are selected by clicking their wrapping `<label>` (the radio inputs are screen-reader-only,
-so both lanes use label-click—there is no difference in how choices are interacted with). Text
-entry uses `page.type()` to simulate keystrokes.
+**Default (realistic):** the bot moves a real cursor along a path to each control and clicks it,
+then types text character-by-character. Choice items are selected by clicking their wrapping
+`<label>` (the radio inputs are screen-reader-only). The cursor motion is recorded into
+`trace.json` under a `mouse` array of Schema-4b samples:
 
-**`--direct` (fast):** uses `page.fill()` for text fields instead of per-character typing. Choice
-selection is identical to the default lane (label-click). Useful for speed when realistic typing
-cadence is not required.
+```json
+{ "t": 0.12, "x": 480, "y": 310, "button_state": "up" }
+```
+
+Fields: `t` = seconds from the first sample (float); `x`/`y` = integer viewport pixels;
+`button_state` ∈ `up | left_down | right_down | middle_down`. The recorded path is the bot's own
+synthetic motion (SP1)—capturing a real participant's mouse in the player is the SP2/SP3 track
+(deferred; see HANDOFF.md).
+
+Note: the number control (slider/spinbutton) is filled directly in both lanes; no drag-path is
+recorded for it yet (noted follow-up).
+
+Pass `--show-cursor` to render a visible red cursor ring that follows the bot's pointer—useful for
+demos and headed runs.
+
+**`--direct` (fast):** uses `page.fill()` for text fields and does **not** move the mouse;
+`trace.mouse` is omitted entirely. Choice selection is identical to the realistic lane
+(label-click). Useful for speed when realistic motion is not required.
 
 ## Seed determinism
 
@@ -65,6 +80,7 @@ npm start -- --player <url>        (required) base URL of the player, e.g. http:
              --seed <n>            RNG seed (default 1)
              --n <count>           number of sequential runs (default 1)
              --direct              fast lane: use fill() for text, skip pointer motion
+             --show-cursor         render a visible red cursor ring (demos/headed runs; default off)
              --locale <code>       questionnaire locale (default en)
              --trace <out.json>    write the captured bdm: trace to this file
 ```
@@ -81,6 +97,9 @@ npm start -- --player http://localhost:5173/ --deployment dep_abc --profile rand
 
 # fast lane (no pointer motion)
 npm start -- --player http://localhost:5173/ --deployment dep_abc --direct
+
+# headed demo run with visible cursor and trace output
+npm start -- --player http://localhost:5173/ --deployment dep_abc --show-cursor --trace run.json
 ```
 
 ## Trace output
@@ -91,13 +110,16 @@ npm start -- --player http://localhost:5173/ --deployment dep_abc --direct
 {
   "deployment_id": "dep_abc",
   "session_id": "sess_xyz",
-  "statements": [ /* BdmEvent[] */ ]
+  "statements": [ /* BdmEvent[] */ ],
+  "mouse": [ /* MouseSample[] — realistic lane only */ ]
 }
 ```
 
-The `statements` array is the same `bdm:` event stream the player POSTs to
-`/v1/sessions/{id}/events`; the CLI intercepts those requests and tees them into the file. The
-same events also persist to the Viewer Service outbox via the normal pipeline.
+`statements` is the same `bdm:` event stream the player POSTs to `/v1/sessions/{id}/events`; the
+CLI intercepts those requests and tees them into the file. The same events also persist to the
+Viewer Service outbox via the normal pipeline. `mouse` is present only for realistic-lane runs and
+holds the bot's own synthetic path as Schema-4b samples (see "Interaction lanes" above); it is
+omitted when `--direct` is used.
 
 Traces require a real `?deployment=` run—anonymous/open deployments or signed `?invite=` links.
 Authenticated deployments are not yet supported (deferred follow-up).

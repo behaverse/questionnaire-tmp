@@ -32,6 +32,7 @@ The e2e smoke boots the web-viewer dev server on `:5173` via Playwright's `reuse
 | `src/strategy.ts` | `decide(item, profile, rng)` → answer value + `thinkTime` delays; the trait model |
 | `src/driver.ts` | `Driver` interface + `runOnce` (driver-agnostic single-run orchestrator) |
 | `src/ui-driver.ts` | `UiDriver` (Playwright) + `drivePlayer` entry point |
+| `src/mouse.ts` | Pure linear path generator (`interpolatePath`) + Schema-4b `MouseRecorder` |
 | `src/trace.ts` | Trace aggregation from intercepted `/events` requests + well-formedness check |
 | `src/cli.ts` | CLI (flag parsing, `--n` loop, `--trace` write, non-zero exit on partial failure) |
 
@@ -43,9 +44,12 @@ e2e: `tests/e2e/smoke.spec.ts`.
 
 - **Seeded trait model**—five named presets + a `fixed` JSON profile; identical seed+profile ⇒
   identical decisions; `--n N` uses seed `seed+i` per run.
-- **Two interaction lanes**—default (real pointer + `page.type()` per character); `--direct`
-  (uses `page.fill()` for text; choice interaction is label-click in both lanes because the
-  player's radio inputs are screen-reader-only).
+- **Two interaction lanes**—realistic (default): moves a real cursor along a path to each control
+  then clicks, types text character-by-character, and records the synthetic pointer motion into
+  `trace.mouse` as Schema-4b samples `{t, x, y, button_state}`; pass `--show-cursor` to render a
+  visible red cursor ring for demos/headed runs. `--direct`: uses `page.fill()` for text, does not
+  move the mouse, and emits no `trace.mouse` samples. Choice interaction is label-click in both
+  lanes (player radio inputs are screen-reader-only).
 - **v1 control support**—radio, number-rating, slider, number-input, text; unsupported controls
   (checkbox multi-select, matrix) throw loudly—no silent skips.
 - **Trace capture**—intercepts `POST /v1/sessions/{id}/events`, tees statements into
@@ -59,6 +63,15 @@ e2e: `tests/e2e/smoke.spec.ts`.
 
 ## Deferred follow-ups
 
+- **SP2—player live mouse capture**—capture a real participant's mouse in the player (live pointer
+  → `.jsonl.gz` + `bdm:recording_started/ended` events + `recording_url` field); deferred, no
+  player-side recording yet.
+- **SP3—VS recording store + runtime channel**—Viewer Service upload/store of recording files +
+  `channels.mouse` flowed into the runtime for replay; depends on SP2.
+- **Human-like paths**—replace the current linear interpolation with easing, curve-fitting, and
+  seeded jitter so synthetic paths are harder to distinguish from real ones.
+- **Slider drag-pathing**—the number control (slider/spinbutton) is filled directly in both lanes
+  today; record a drag path for slider interactions as a follow-up.
 - **Authenticated-deployment runs**—SSO/login flow so the bot can run against `authenticated`
   preset deployments; deferred because it requires the identity SSO handoff from the player.
 - **A real CI/E2E harness product**—a config-driven test suite (multi-instrument matrix,
