@@ -49,6 +49,14 @@ participant-app) and are cross-linked.
   `trace.json` (the artifact #7 replays). See its README/HANDOFF. v1 targets anonymous-capable
   deployments; authenticated + checkbox/matrix controls are deferred.
 
+## SP2 follow-ups — mouse capture track (2026-06-30)
+
+- **Deployment-level capture config.** Sample rate and channel set are currently controlled by `?mouse_hz=` (URL param) and the `channels` flag baked at mint time. Extend the VS `channels` shape to let researchers configure the sample rate and which channels are active per deployment (rather than relying on the URL param override). Needs a VS schema change + denormaliser passthrough.
+- **Keyboard channel capture.** The current `channels` shape has `mouse` only. A `keyboard` channel (keydown/keyup events with timestamps, no content) would complement pointer capture for timing-based analytics — design the channel shape and add a `KeyCapture` sampler alongside `mouseCapture.ts`.
+- **Resumed sessions must not re-start capture.** A session resumed from IndexedDB should not re-emit `bdm:recording_started` or begin a second recording. The current implementation starts capture fresh on every mount — add a resume-state check so capture is skipped (or resumes appending to the existing recording, once chunked upload lands) when the session token is from IndexedDB.
+- **Chunked mid-run upload + canonical `.jsonl.gz`.** The current implementation accumulates all samples in memory and uploads once at finish. For long sessions this is fragile (tab crash = total loss). Add periodic chunked uploads during the run and define a canonical `.jsonl.gz` storage format at the VS level (SP3 follow-up).
+- **Live end-to-end verification (player → VS → researcher read).** The player-side track is functionally complete but has not been exercised end-to-end against a real VS with `channels.mouse` enabled. Verify: mint returns `channels.mouse`, capture runs, upload succeeds via `POST /v1/sessions/{id}/recordings`, and a researcher can read back the recording from `GET /v1/deployments/{id}/recordings`.
+
 ## PA-4 follow-ups — consent gate + completion polish (2026-06-24)
 
 - **Resumed sessions use the default finished screen.** The `confirmation_message` and
