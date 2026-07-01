@@ -24,6 +24,8 @@ class Settings:
     identity_audience: str = "questionnaire-apps"
     invite_signing_secret: str = ""
     invite_default_ttl_seconds: int = 2_592_000
+    web_viewer_base_url: str = ""
+    replay_link_ttl_seconds: int = 604_800
     scorer_dir: Path = REPO_ROOT / "questionnaire-scorer" / "dist-wasm"
     public_base_url: str = ""
     cron_secret: str | None = None
@@ -64,6 +66,8 @@ def get_settings() -> Settings:
         identity_audience=os.environ.get("IDENTITY_AUDIENCE", "questionnaire-apps"),
         invite_signing_secret=os.environ.get("INVITE_SIGNING_SECRET", ""),
         invite_default_ttl_seconds=int(os.environ.get("INVITE_DEFAULT_TTL_SECONDS", "2592000")),
+        web_viewer_base_url=os.environ.get("WEB_VIEWER_BASE_URL", ""),
+        replay_link_ttl_seconds=int(os.environ.get("REPLAY_LINK_TTL_SECONDS", "604800")),
         scorer_dir=Path(os.environ.get("VS_SCORER_DIR") or REPO_ROOT / "questionnaire-scorer" / "dist-wasm"),
         public_base_url=os.environ.get("VS_PUBLIC_BASE", ""),
         cron_secret=os.environ.get("CRON_SECRET") or None,
