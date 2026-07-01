@@ -62,6 +62,7 @@ def client(pg_url, id_key, monkeypatch):
     monkeypatch.setenv("DATABASE_URL", pg_url)
     monkeypatch.setenv("IDENTITY_ISSUER", _ID_ISSUER)
     monkeypatch.setenv("IDENTITY_AUDIENCE", _ID_AUDIENCE)
+    monkeypatch.setenv("INVITE_SIGNING_SECRET", "test-secret")
     _idmod.install_test_cache(id_key[1])
     from fastapi.testclient import TestClient
     from viewer_service.api.app import create_app

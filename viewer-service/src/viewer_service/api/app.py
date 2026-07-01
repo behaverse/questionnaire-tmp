@@ -10,7 +10,7 @@ _CODE_FOR = {400: "bad_request", 401: "unauthorized", 404: "not_found", 410: "go
 
 
 def create_app() -> FastAPI:
-    from . import viewers, deployments, runtime, admin, sessions, submission, export, themes, metrics, scorers, scoring, invites as invites_routes, me as me_routes, catalogue as catalogue_routes, comments as comments_routes, recordings as recordings_routes, internal
+    from . import viewers, deployments, runtime, admin, sessions, submission, export, themes, metrics, scorers, scoring, invites as invites_routes, me as me_routes, catalogue as catalogue_routes, comments as comments_routes, recordings as recordings_routes, replay as replay_routes, internal
     app = FastAPI(title="Questionnaire Viewer Service", version="v1")
     origins = list(get_settings().cors_origins)
     if origins:
@@ -36,6 +36,7 @@ def create_app() -> FastAPI:
     app.include_router(catalogue_routes.router, prefix="/v1")
     app.include_router(comments_routes.router, prefix="/v1")
     app.include_router(recordings_routes.router, prefix="/v1")
+    app.include_router(replay_routes.router, prefix="/v1")
     app.include_router(internal.router)
 
     @app.get("/healthz")
