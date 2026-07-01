@@ -56,3 +56,28 @@ def test_mint_foreign_session_404(client, monkeypatch, pg_url):
 
 def test_bundle_bad_token_401(client):
     assert client.get("/v1/replay?token=garbage").status_code == 401
+
+
+def test_bundle_preflight_error_is_422(client, monkeypatch, pg_url):
+    dep_id, sid = _setup(client, monkeypatch, pg_url)
+    token = client.post(f"/v1/deployments/{dep_id}/sessions/{sid}/replay-link").json()["token"]
+    import viewer_service.api.replay as replay_api
+    from denormaliser import PreflightError
+    from denormaliser.errors import Problem
+
+    def boom(conn, session):
+        raise PreflightError([Problem(kind="missing_locale", detail="d", where="w")])
+    monkeypatch.setattr(replay_api, "build_replay_bundle", boom)
+    assert client.get(f"/v1/replay?token={token}").status_code == 422
+
+
+def test_bundle_library_error_surfaces_upstream(client, monkeypatch, pg_url):
+    dep_id, sid = _setup(client, monkeypatch, pg_url)
+    token = client.post(f"/v1/deployments/{dep_id}/sessions/{sid}/replay-link").json()["token"]
+    import viewer_service.api.replay as replay_api
+    from viewer_service.library_client import LibraryError
+
+    def boom(conn, session):
+        raise LibraryError(502, "library down")
+    monkeypatch.setattr(replay_api, "build_replay_bundle", boom)
+    assert client.get(f"/v1/replay?token={token}").status_code == 502

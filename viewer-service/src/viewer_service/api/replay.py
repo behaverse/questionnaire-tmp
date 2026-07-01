@@ -1,9 +1,12 @@
 from urllib.parse import quote
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
+from denormaliser import PreflightError
 from .deps import get_conn
 from .identity import require_researcher
+from .sessions import _preflight_422
 from ..config import get_settings
+from ..library_client import LibraryError
 from ..replay_links import mint_replay, verify_replay
 from ..replay import build_replay_bundle
 from ..store import sessions as session_store
@@ -39,4 +42,9 @@ def bundle(token: str, conn=Depends(get_conn)):
     session = session_store.get_session(conn, payload["session_id"])
     if session is None or session["deployment_id"] != payload["deployment_id"]:
         raise HTTPException(status_code=404, detail="session not found")
-    return build_replay_bundle(conn, session)
+    try:
+        return build_replay_bundle(conn, session)
+    except PreflightError as e:            # a session whose runtime no longer preflights → 422, not 500
+        return _preflight_422(e)
+    except LibraryError as e:              # Library unreachable on a cache miss → surface upstream status
+        raise HTTPException(status_code=e.status, detail=e.message)
