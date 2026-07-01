@@ -4,6 +4,7 @@ import './index.css'
 import { App } from './app/App'
 import { parseParams } from './app/bootstrap'
 import { SessionProvider } from '@behaverse/participant-session'
+import { ReplayApp } from './replay/ReplayApp'
 
 // web-viewer is now the player only — the portal lives in the participant-app package.
 // The player still uses the session: authenticated deployments either accept a one-time SSO
@@ -20,9 +21,13 @@ if (params.handoff) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <SessionProvider identityBaseUrl={params.identityBaseUrl} handoffCode={params.handoff ?? undefined}>
-      <App />
-    </SessionProvider>
+    {params.replay
+      ? <ReplayApp src={params.replay} themeParam={params.theme} />
+      : (
+        <SessionProvider identityBaseUrl={params.identityBaseUrl} handoffCode={params.handoff ?? undefined}>
+          <App />
+        </SessionProvider>
+      )}
   </StrictMode>,
 )
 

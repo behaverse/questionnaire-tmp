@@ -6,7 +6,7 @@ import type { ScoreDisplay } from '../scoring/display'
 export const VIEWER_ID = 'behaverse-web-viewer'
 export const VIEWER_VERSION = 'v26.0612'
 
-export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null; returnUrl: string | null; preview: string | null; handoff: string | null; mouseHz: number | null }
+export type Params = { deploymentId: string | null; locale: string | null; vsBaseUrl: string; fixture: string | null; theme: string | null; identityBaseUrl: string; invite: string | null; returnUrl: string | null; preview: string | null; handoff: string | null; mouseHz: number | null; replay: string | null }
 
 /** Accept a return URL only if it is a well-formed http(s) URL; otherwise treat it as absent
  *  (guards against open-redirect/phishing via javascript:, data:, relative, or garbage values). */
@@ -34,6 +34,7 @@ export function parseParams(search: string): Params {
     preview: q.get('preview'),
     handoff: q.get('handoff'),
     mouseHz: ((raw) => { const n = Number(raw); return raw && Number.isFinite(n) && n > 0 ? n : null })(q.get('mouse_hz')),
+    replay: q.get('replay'),
   }
 }
 
