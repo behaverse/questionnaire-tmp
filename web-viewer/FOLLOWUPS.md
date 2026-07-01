@@ -38,10 +38,31 @@ participant-app) and are cross-linked.
   - ~~Researcher read/export of comments.~~ **DONE (2026-06-26)** — `GET /v1/deployments/{id}/comments`
     (JSON) + `GET /v1/deployments/{id}/comments.csv` (download, mirrors `export.csv`). No researcher
     GUI exists in the project (data access is API/CSV by design), so there's no in-browser browser.
-- **#7 Replay.** Given a session's `bdm:` event stream (+ Schema-5 responses), reconstruct and play
-  back how a participant moved through the questionnaire (step-by-step navigation, answers entered,
-  revisions, timings). Player+VS effort: needs a VS event-export read endpoint and a player "replay"
-  mode that drives the renderer from events instead of live input. Larger; design separately.
+- ~~**#7 Replay — RP1 (offline, file-based).**~~ **DONE (2026-06-30)** — `?replay=<src>` mounts
+  `ReplayApp` (no session). It fetches a replay bundle `{runtime, statements, mouse?}` (e.g. the
+  respondent-bot's `trace.json` paired with a runtime), reconstructs the run via
+  `src/replay/reconstruct.ts` (position from `bdm:trial_started`, answers from `bdm:trial_ended`
+  extensions), and plays it back read-only through the existing `StepRenderer` (pointer-events:none,
+  no-op onAnswer — no renderer change). Controls: timeline scrubber, play/pause, speed (0.5/1/2/4×).
+  Mouse overlay: `src/replay/cursor.ts` animates pointer from the `mouse` track when present. Files:
+  `src/replay/{reconstruct,cursor,clock,load}.ts` + `src/replay/{ReplayView,ReplayApp}.tsx`; normal
+  run path is unchanged. **RP2 + RP3 follow-ups:**
+  - **RP2 — VS researcher reads.** Expose `GET /v1/deployments/{id}/events` (event log) + a
+    per-session variant so a researcher can pull a participant's `bdm:` statement stream from the VS
+    without direct DB access. Pair with a runtime read so the caller can build a bundle client-side.
+  - **RP3 — live `?replay=<deployment>/<session>` loader.** A player-side loader that calls the RP2
+    endpoints, assembles `{runtime, statements, mouse?}` in memory, and passes the bundle into the
+    existing `ReplayApp` — giving researchers a shareable URL into any participant's run (researcher
+    auth required).
+  - **Live selected/deselected pre-commit highlighting.** During replay, show each option's
+    hover/focus/selected visual states in sync with the reconstructed pointer + answer timeline, so
+    reviewers can see the momentary selection before the participant confirmed.
+  - **Revision-diff UI.** When a step has multiple `RecAnswer` revisions, surface a visual diff
+    (e.g. strikethrough old answer → new answer) so reviewers can see how the participant changed
+    their mind.
+  - **Export replay as video.** Drive the replay at 1× speed via `MediaRecorder` + `captureStream`
+    on the player canvas/window and produce an `.mp4` / `.webm` download — useful for qualitative
+    research reports and stakeholder demos.
 - ~~**#8 Respondent-bot.**~~ **DONE (2026-06-30)** — built as a standalone tool at
   `tools/respondent-bot/` (Node + Playwright). Seeded trait model (random / acquiescence /
   straight_line / extreme / midpoint / fixed), default real-pointer UI driver + `--direct`
