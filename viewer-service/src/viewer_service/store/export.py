@@ -57,3 +57,19 @@ def iter_recording_rows(conn: psycopg.Connection, deployment_id: str) -> Iterato
         "WHERE s.deployment_id = %s AND o.kind = 'recording' ORDER BY o.id", (deployment_id,))
     for (payload,) in cur:
         yield payload
+
+
+def iter_event_rows_for_session(conn: psycopg.Connection, session_id: str) -> Iterator[dict]:
+    """Yield every event batch payload ({batch_id, events:[...]}) for one session; kind='events'; id order."""
+    cur = conn.execute(
+        "SELECT payload FROM outbox WHERE session_id = %s AND kind = 'events' ORDER BY id", (session_id,))
+    for (payload,) in cur:
+        yield payload
+
+
+def iter_recording_rows_for_session(conn: psycopg.Connection, session_id: str) -> Iterator[dict]:
+    """Yield every recording payload ({channel, samples}) for one session; kind='recording'; id order."""
+    cur = conn.execute(
+        "SELECT payload FROM outbox WHERE session_id = %s AND kind = 'recording' ORDER BY id", (session_id,))
+    for (payload,) in cur:
+        yield payload
