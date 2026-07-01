@@ -35,8 +35,15 @@ Captured from root `my_comments.md`; player-side counterparts live in `web-viewe
 - **#4 Score-progression-over-time dashboard (data side).** Provide an endpoint returning a
   participant's (or a deployment's) scorer_outputs over time so participant-app can chart score
   progression for a given questionnaire across sessions. UI lives in participant-app.
-- **#7 Replay (event export).** A read endpoint streaming a session's ordered `bdm:` events +
-  responses so the player can reconstruct/replay a participant's run. Pairs with web-viewer #7.
+- ~~**#7 Replay link (RP2).**~~ **DONE (2026-07-01)** — `POST /v1/deployments/{id}/sessions/{sid}/replay-link` (researcher-gated) mints a short-lived HMAC token and returns `{token, bundle_url, replay_url}`; `GET /v1/replay?token=` (token-authorized, no login) assembles and returns the RP1 bundle `{runtime, statements, mouse}` from `session_runtime` + `events`/`recording` outbox rows. See HANDOFF.md "Replay link" section. **Remaining (RP3)** — see dedicated section below.
+
+## Replay follow-ups / RP3 (2026-07-01)
+
+- **Web-viewer e2e + docs (RP3 core).** Confirm `?replay=<vs bundle url>` actually plays a live session end-to-end in the player (the RP1 renderer is complete, but there is no automated e2e or written doc that exercises a real `GET /v1/replay?token=` URL). Add an integration test + a short doc in `web-viewer/` confirming the round-trip.
+- **Researcher "copy replay link" UI.** No GUI exists for minting a replay link; researchers call the API directly. An optional "Copy replay link" button on the researcher session-list surface (when that surface exists) would close the loop without requiring API access.
+- **Researcher session-list surface.** There is no UI listing sessions for a deployment with per-session actions (view responses, export, copy replay link). A researcher session-list view (participant-app or editor) is a natural home.
+- **Dedicated `REPLAY_SIGNING_SECRET` + link revocation.** Replay tokens currently reuse `INVITE_SIGNING_SECRET`. A separate `REPLAY_SIGNING_SECRET` would let operators rotate or revoke replay access independently. Link revocation (token blocklist keyed by token hash) is also absent — a compromised link stays valid until expiry.
+- **Incremental live-follow of an in-progress session.** `GET /v1/replay?token=` returns a point-in-time snapshot; it cannot stream events as they arrive for an active session. A follow mode (SSE or polling) would let a researcher or QA observer watch a session as it happens.
 
 - **Auth (Identity) — RESOLVED (ID-B, 2026-06-21).** All control-plane endpoints are now
   gated by `require_researcher` (researcher/reviewer/administrator) or `require_admin`
