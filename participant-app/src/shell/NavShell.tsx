@@ -11,6 +11,7 @@ const NAV = [
 export function NavShell({ children }: { children: ReactNode }) {
   const session = useSession()
   const route = useRoute()
+  const nav = session.user?.roles?.includes('researcher') ? [...NAV, { to: '/studies', label: 'Studies' }] : NAV
   return (
     <div className="min-h-screen bg-zinc-50 font-theme text-zinc-900 antialiased">
       <header className="border-b border-zinc-200/70 bg-white/70 backdrop-blur">
@@ -19,7 +20,7 @@ export function NavShell({ children }: { children: ReactNode }) {
             <span className="mr-2 inline-flex items-center gap-2 text-sm font-semibold text-zinc-900">
               <span className="h-2 w-2 rounded-full bg-violet-500" aria-hidden /> Behaverse
             </span>
-            {NAV.map((n) => (
+            {nav.map((n) => (
               <Link key={n.to} to={n.to}
                 className={
                   'rounded-full px-3 py-1.5 text-sm font-medium transition ' +
