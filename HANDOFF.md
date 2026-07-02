@@ -118,11 +118,15 @@ Work that concerns the whole system or doesn't fit a single component. Decompose
     and a toggle for **real pointer movement + clicks vs. direct state**. Doubles as cross-stack E2E
     and as the trace generator for #7. New home: a small tool dir (e.g. `tools/respondent-bot/`).
     First owner decision: scope (test-harness vs. data-generator vs. both) + the trait model.
-  - **#7 Replay** — needs (a) a **session/deployment-scoped event read** for researchers (only the
-    participant-self `/me/events` exists today — add the researcher read, mirroring how
-    `export.csv`/`comments.csv` are researcher-gated), and (b) a player **replay mode** that drives
-    the renderer from the ordered, timestamped event stream instead of live input (step-through +
-    timing reconstruction). First owner decision: viewer-embedded replay vs. a standalone viewer.
+  - **#7 Replay** — **done through RP3-core (2026-07-02):** RP1 (offline replay renderer,
+    `?replay=<src>` → `ReplayApp`), RP2 (VS researcher link — `POST
+    /v1/deployments/{id}/sessions/{sid}/replay-link` + `GET /v1/replay?token=`), and RP3-core
+    (verified round-trip: automated e2e `tools/respondent-bot/tests/e2e/replay.spec.ts` + doc
+    `web-viewer/docs/replay.md`, screenshot `web-viewer/docs/replay-manual.png`) are all done.
+    **Remaining (RP3 follow-ons):** checkbox/multi-select answer reconstruction, a "copy replay
+    link" researcher UI, a researcher session-list surface, a dedicated `REPLAY_SIGNING_SECRET` +
+    link revocation, and incremental live-follow of an in-progress session — see
+    `web-viewer/FOLLOWUPS.md` and `viewer-service/FOLLOWUPS.md` for detail.
   - **Detail + raw backlog:** `web-viewer/FOLLOWUPS.md` ("Owner feature requests" — #7/#8) and
     `my_comments.md`. Follow the standing build pattern (brainstorm → spec → plan → subagent-driven
     TDD → review → merge+push), exactly as #3/#4 were done (see their specs/plans in
