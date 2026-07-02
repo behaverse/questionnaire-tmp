@@ -7,6 +7,7 @@ from .identity import require_researcher
 from ..models import DeploymentCreate, DeploymentPatch
 from ..modes import resolve_preset, UnsupportedPreset
 from ..store import deployments as store
+from ..store import sessions as session_store
 
 router = APIRouter()
 
@@ -63,6 +64,19 @@ def get(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_resea
     if dep is None:
         raise HTTPException(status_code=404, detail="deployment not found")
     return dep
+
+
+_SESSION_LIST_FIELDS = ("session_id", "session_index", "status", "participant_sub",
+                        "started_at", "completed_at", "submitted_at")
+
+
+@router.get("/deployments/{deployment_id}/sessions")
+def list_sessions(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
+    if store.get_deployment(conn, deployment_id) is None:
+        raise HTTPException(status_code=404, detail="deployment not found")
+    rows = session_store.list_sessions_for_deployment(conn, deployment_id)
+    # project only display-safe fields — never leak token_hash or other session internals
+    return {"sessions": [{k: r[k] for k in _SESSION_LIST_FIELDS} for r in rows]}
 
 
 @router.patch("/deployments/{deployment_id}")

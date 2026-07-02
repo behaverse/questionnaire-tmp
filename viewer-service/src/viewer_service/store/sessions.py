@@ -72,6 +72,13 @@ def list_sessions_for_participant(conn: psycopg.Connection, participant_sub: str
     return [_row_to_dict(r) for r in cur.fetchall()]
 
 
+def list_sessions_for_deployment(conn: psycopg.Connection, deployment_id: str) -> list[dict]:
+    cur = conn.execute(
+        f"SELECT {', '.join(_SELECT_COLS)} FROM session WHERE deployment_id=%s "
+        "ORDER BY started_at DESC", (deployment_id,))
+    return [_row_to_dict(r) for r in cur.fetchall()]
+
+
 def count_for_deployment(conn: psycopg.Connection, deployment_id: str) -> int:
     return conn.execute("SELECT count(*) FROM session WHERE deployment_id=%s",
                         (deployment_id,)).fetchone()[0]
