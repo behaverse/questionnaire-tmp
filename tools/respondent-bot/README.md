@@ -13,6 +13,39 @@ cd tools/respondent-bot
 npm install          # Chromium is already installed system-wide; no extra browser download needed
 ```
 
+## Quickstart
+
+The bot answers an **open** deployment (anonymous or signed-invite). End to end:
+
+1. **Get a deployment id.** Create one as a researcher (see
+   [`docs/testing-participant-flow.md`](../../docs/testing-participant-flow.md)) or reuse an existing
+   open `dep_*`. For a demo without a backend, use the offline smoke lane instead (`npm run e2e`).
+2. **Run the bot** against the player + Viewer Service, with the visible cursor on:
+   ```bash
+   npm start -- --player http://localhost:5173/ --deployment dep_abc \
+     --viewer-url http://localhost:8001 --profile acquiescence --show-cursor --trace run.json
+   ```
+   It mints a session, answers every question per the profile (moving a real cursor in the realistic
+   lane), and finishes on the "Thank you" screen.
+3. **Inspect the output.** `run.json` is the `{deployment_id, session_id, statements, mouse}` trace
+   (see [Trace output](#trace-output)). The same `bdm:` events + mouse recording also land in the
+   Viewer Service outbox, so the run can be **replayed** by a researcher (#7 replay).
+
+Against the **live stack**, point the flags at the deployed URLs, e.g.
+`--player https://player-sooty-six.vercel.app/ --viewer-url https://viewer-service.vercel.app`.
+
+## See it in action
+
+`npm run e2e` drives a full run headlessly and writes proof artifacts to
+`tests/e2e/screenshots/` (gitignored, regenerated on each run):
+
+- `respondent-bot-cursor.png` — the bot mid-run with the visible cursor over a chosen option
+- `respondent-bot-finished.png` — the completed run
+- a captured `trace.json` alongside
+
+For a paced, watchable capture (a `.webm` video + per-question stills), run a headed browser demo
+with `--show-cursor` against a real deployment. The frames land under the same `screenshots/` dir.
+
 ## Trait presets
 
 | Name | Behaviour |
@@ -51,9 +84,9 @@ then types text character-by-character. Choice items are selected by clicking th
 ```
 
 Fields: `t` = seconds from the first sample (float); `x`/`y` = integer viewport pixels;
-`button_state` ∈ `up | left_down | right_down | middle_down`. The recorded path is the bot's own
-synthetic motion (SP1)—capturing a real participant's mouse in the player is the SP2/SP3 track
-(deferred; see HANDOFF.md).
+`button_state` ∈ `up | left_down | right_down | middle_down`. This is the bot's **own** synthetic
+motion. Capturing a **real participant's** mouse in the player (SP2) and storing it server-side (SP3)
+are now shipped and deployed, and a researcher can replay any session (#7 replay); see HANDOFF.md.
 
 Note: the number control (slider/spinbutton) is filled directly in both lanes; no drag-path is
 recorded for it yet (noted follow-up).
@@ -144,6 +177,11 @@ The bot **throws** on an unsupported control type—it never silently skips.
   bot's session mint will fail with a network error.
 - **Deployment must be open:** the target deployment must be accepting responses (not paused,
   quota-full, or in a mode that refuses anonymous mints).
+- **Live catalogue questionnaires (known gap):** the bot selects a choice by clicking its wrapping
+  `<label>`, which works for the bundled fixtures. Some live `RadioGroup` renderings present option
+  rows as clickable `<div>`s (no `<label>`), which the current click misses—so the bot can stall on
+  those. Driving them (click the `role=radio` element / the option container instead of `<label>`)
+  is a tracked follow-up.
 
 ## Running tests
 

@@ -63,11 +63,15 @@ e2e: `tests/e2e/smoke.spec.ts`.
 
 ## Deferred follow-ups
 
-- **SP2—player live mouse capture**—capture a real participant's mouse in the player (live pointer
-  → `.jsonl.gz` + `bdm:recording_started/ended` events + `recording_url` field); deferred, no
-  player-side recording yet.
-- **SP3—VS recording store + runtime channel**—Viewer Service upload/store of recording files +
-  `channels.mouse` flowed into the runtime for replay; depends on SP2.
+- ~~**SP2—player live mouse capture**~~ **SHIPPED + DEPLOYED**—the player captures a real
+  participant's mouse when `channels.mouse` is on and uploads it; see `web-viewer/`.
+- ~~**SP3—VS recording store + runtime channel**~~ **SHIPPED + DEPLOYED**—Viewer Service stores the
+  recording + surfaces `channels` in the mint; the whole mouse-tracking track (SP1+SP2+SP3) and #7
+  replay are live.
+- **Live-renderer choice click (known gap)**—`apply()` clicks a choice's wrapping `<label>`, which
+  fits the bundled fixtures. Some live `RadioGroup` renderings present option rows as clickable
+  `<div>`s (no `<label>`), so the bot can stall driving real catalogue questionnaires. Fix: click the
+  `role=radio` element / the option container rather than `<label>`.
 - **Human-like paths**—replace the current linear interpolation with easing, curve-fitting, and
   seeded jitter so synthetic paths are harder to distinguish from real ones.
 - **Slider drag-pathing**—the number control (slider/spinbutton) is filled directly in both lanes
