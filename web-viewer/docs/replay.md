@@ -30,9 +30,11 @@ CORS error in the console, this is almost always the cause—add the player orig
 
 ## Known limitations (out of RP3-core scope)
 
-- **Multi-select (checkbox) answers are not reconstructed.** `bdm:trial_ended` emits
-  `additional_measures.values` for multi-select, which `reconstruct` does not yet read, so a checkbox item
-  replays blank. Single-select and numeric answers reconstruct correctly.
+- **Multi-select (checkbox) answers are not reconstructed.** For multi-select, `bdm:trial_ended` carries the
+  picked options as a single joined string in `bdm:response_description` (not a per-option array; the array
+  lives only in the Schema-5 response row's `additional_measures`, not in the event). `reconstruct` reads that
+  string but cannot map it back to individual checkboxes, so a checkbox item replays blank. Single-select and
+  numeric answers reconstruct correctly.
 - **Some `RadioGroup` live renderings** differ from the driven fixtures (see the respondent-bot HANDOFF);
   does not affect controlled read-only display of a reconstructed answer.
 
