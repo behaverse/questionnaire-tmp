@@ -55,4 +55,27 @@ describe('reconstruct', () => {
     expect(t.durationMs).toBe(0)
     expect(t.stateAt(0)).toEqual({ elementKey: null, answers: {} })
   })
+  it('reconstructs multi-select from the selected/deselected stream', () => {
+    const t = reconstruct([
+      ev(0, 'bdm:started'),
+      ev(1, 'bdm:trial_started', 'trial_ms'),
+      ev(2, 'bdm:selected', undefined, { 'bdm:option_index': 1 }),
+      ev(3, 'bdm:selected', undefined, { 'bdm:option_index': 3 }),
+      ev(4, 'bdm:deselected', undefined, { 'bdm:option_index': 1 }),
+      ev(5, 'bdm:trial_ended', 'trial_ms', { 'bdm:response_description': 'Gamma' }),
+      ev(6, 'bdm:submitted'),
+    ])
+    // after both selects, before the deselect
+    expect(t.stateAt(t.startMs + 3500).answers.ms.selectedIndices).toEqual([1, 3])
+    // after the deselect and trial_ended (which must not clobber the set)
+    expect(t.stateAt(t.endMs).answers.ms.selectedIndices).toEqual([3])
+  })
+  it('ignores selected events with no option index', () => {
+    const t = reconstruct([
+      ev(1, 'bdm:trial_started', 'trial_ms'),
+      ev(2, 'bdm:selected'),
+      ev(3, 'bdm:submitted'),
+    ])
+    expect(t.stateAt(t.endMs).answers.ms?.selectedIndices).toBeUndefined()
+  })
 })
