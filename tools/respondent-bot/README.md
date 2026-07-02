@@ -39,8 +39,8 @@ Against the **live stack**, point the flags at the deployed URLs, e.g.
 `npm run e2e` drives a full run headlessly and writes proof artifacts to
 `tests/e2e/screenshots/` (gitignored, regenerated on each run):
 
-- `respondent-bot-cursor.png` — the bot mid-run with the visible cursor over a chosen option
-- `respondent-bot-finished.png` — the completed run
+- `respondent-bot-cursor.png`—the bot mid-run with the visible cursor over a chosen option
+- `respondent-bot-finished.png`—the completed run
 - a captured `trace.json` alongside
 
 For a paced, watchable capture (a `.webm` video + per-question stills), run a headed browser demo
