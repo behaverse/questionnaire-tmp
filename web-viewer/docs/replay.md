@@ -45,6 +45,6 @@ CORS error in the console, this is almost always the cause—add the player orig
 
 ![Live replay of a real recorded session via GET /v1/replay?token=](replay-manual.png)
 
-*Captured 2026-07-01 from a real researcher-minted RP2 replay link — the player fetched the VS-assembled
+*Captured 2026-07-01 from a real researcher-minted RP2 replay link—the player fetched the VS-assembled
 bundle (42 statements + 196 mouse samples) and replayed it end-to-end with the cursor overlay, no player
 code change.*
