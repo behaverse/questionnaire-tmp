@@ -57,7 +57,7 @@ participant-app) and are cross-linked.
     (`tools/respondent-bot/tests/e2e/replay.spec.ts` + fixture `replay-bundle.json`, 2 passing tests)
     and a doc (`web-viewer/docs/replay.md`: round-trip + CORS requirement + known limits + a real
     full-stack verification screenshot `web-viewer/docs/replay-manual.png`, captured during RP2).
-    **Remaining RP3 follow-ons** (below): checkbox/multi-select reconstruction, "copy replay link"
+    **Remaining RP3 follow-ons** (below): "copy replay link"
     UI, researcher session-list surface, a dedicated `REPLAY_SIGNING_SECRET` + revocation, and
     live-follow.
   - **Live selected/deselected pre-commit highlighting.** During replay, show each option's

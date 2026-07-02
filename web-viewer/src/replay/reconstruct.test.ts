@@ -78,4 +78,14 @@ describe('reconstruct', () => {
     ])
     expect(t.stateAt(t.endMs).answers.ms?.selectedIndices).toBeUndefined()
   })
+  it('dedups re-selects and ignores deselecting an absent index', () => {
+    const t = reconstruct([
+      ev(1, 'bdm:trial_started', 'trial_ms'),
+      ev(2, 'bdm:selected', undefined, { 'bdm:option_index': 1 }),
+      ev(3, 'bdm:selected', undefined, { 'bdm:option_index': 1 }), // re-select → no-op
+      ev(4, 'bdm:deselected', undefined, { 'bdm:option_index': 2 }), // absent → no-op
+      ev(5, 'bdm:submitted'),
+    ])
+    expect(t.stateAt(t.endMs).answers.ms.selectedIndices).toEqual([1])
+  })
 })
