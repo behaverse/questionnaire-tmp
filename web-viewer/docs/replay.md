@@ -1,4 +1,4 @@
-# Replay — playing back a recorded session
+# Replay—playing back a recorded session
 
 The player renders a read-only playback of a recorded run when launched with `?replay=<src>`. `<src>` is a
 URL to a **replay bundle** `{ runtime, statements, mouse? }`. Two ways to get one:
@@ -15,17 +15,17 @@ POST /v1/deployments/{deployment_id}/sessions/{session_id}/replay-link      (res
   → { token, bundle_url, replay_url }
 ```
 
-- `bundle_url` — `GET /v1/replay?token=…` on the Viewer Service (token-authorized, no login; the token IS
+- `bundle_url`—`GET /v1/replay?token=…` on the Viewer Service (token-authorized, no login; the token IS
   the capability). Returns `{ runtime, statements, mouse }`.
-- `replay_url` — `${WEB_VIEWER_BASE_URL}/?replay=<url-encoded bundle_url>`; present only when
+- `replay_url`—`${WEB_VIEWER_BASE_URL}/?replay=<url-encoded bundle_url>`; present only when
   `WEB_VIEWER_BASE_URL` is set on the Viewer Service. Open it to watch the run.
 
-## CORS — the first thing to check
+## CORS—the first thing to check
 
 The player fetches `bundle_url` **cross-origin** (player origin → Viewer Service origin). The Viewer
 Service must return `Access-Control-Allow-Origin` for the player origin, i.e. the player origin must be in
 `VS_CORS_ORIGINS`. If a replay shows **"Replay unavailable / could not fetch the replay source"** with a
-CORS error in the console, this is almost always the cause — add the player origin to `VS_CORS_ORIGINS`
+CORS error in the console, this is almost always the cause—add the player origin to `VS_CORS_ORIGINS`
 (locally and in the deployed Viewer Service env) and retry.
 
 ## Known limitations (out of RP3-core scope)
