@@ -43,4 +43,8 @@ CORS error in the console, this is almost always the cause—add the player orig
   overlay render (and that a non-OK bundle response shows "Replay unavailable").
 - **Manual full-stack:** see the screenshot below from a real `GET /v1/replay?token=` round-trip.
 
-<!-- MANUAL-SCREENSHOT: replaced in Task 3 with docs/replay-manual.png + a one-line caption -->
+![Live replay of a real recorded session via GET /v1/replay?token=](replay-manual.png)
+
+*Captured 2026-07-01 from a real researcher-minted RP2 replay link — the player fetched the VS-assembled
+bundle (42 statements + 196 mouse samples) and replayed it end-to-end with the cursor overlay, no player
+code change.*
