@@ -69,10 +69,11 @@ participant-app) and are cross-linked.
   - **Export replay as video.** Drive the replay at 1× speed via `MediaRecorder` + `captureStream`
     on the player canvas/window and produce an `.mp4` / `.webm` download — useful for qualitative
     research reports and stakeholder demos.
-  - **Multi-select (checkbox) answers are not reconstructed in RP1** — `trial_ended` emits
-    `response_option_index` only for single-select; checkbox values live in `additional_measures`
-    which `reconstruct` does not read, so a checkbox item replays blank (consistent with the
-    respondent-bot's single-select/number v1 scope). Read `additional_measures.values` in a later slice.
+  - ~~**Multi-select (checkbox) answers are not reconstructed in RP1**~~ **DONE (2026-07-02)** — replay
+    now reconstructs checkbox state by folding the ordered `bdm:selected`/`bdm:deselected` events (each
+    carrying `bdm:option_index`) into `selectedIndices`; forward-only, sessions recorded before this
+    lack `bdm:option_index` and replay blank. See `src/replay/reconstruct.ts` +
+    `tools/respondent-bot/tests/e2e/replay.spec.ts` (fixture `replay-bundle-multiselect.json`).
   - **Stale/foreign `elementKey` falls back to the first step silently** — a trace whose element key
     isn't in the paired runtime renders step 0 with no notice (rather than an empty step + "step not
     in this runtime" message). Non-crashing; add the notice when RP3 loads live runtimes.
