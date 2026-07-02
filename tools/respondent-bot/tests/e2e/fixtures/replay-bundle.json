@@ -1,0 +1,49 @@
+{
+  "_comment": "VS-shaped replay bundle. Top-level keys {runtime,statements,mouse} mirror build_replay_bundle()—keep in sync with viewer-service/tests/test_replay_api.py::test_mint_then_fetch_bundle (asserts set(bundle) == {runtime,statements,mouse}).",
+  "runtime": {
+    "provenance": {
+      "source_questionnaire_id": "qst_mini",
+      "source_questionnaire_version": "v26.0609",
+      "locale": "en",
+      "viewer_conformance_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "deployment_runtime_policy_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "generated_at": "2026-06-11T00:00:00Z",
+      "denormaliser_version": "v26.0610"
+    },
+    "metadata": { "id": "qst_mini", "title": "Mini PHQ", "language": "en" },
+    "locale": "en",
+    "pages": [
+      {
+        "id": "page_1",
+        "elements": [
+          {
+            "id": "it_1",
+            "required": true,
+            "question": { "prompt": { "content": { "en": { "text": "Little interest or pleasure in doing things" } } } },
+            "option": {
+              "input_data_type": "choice",
+              "measurement_type": "ordinal",
+              "selection": "single",
+              "options": [ { "index": 1, "value": 0 }, { "index": 2, "value": 1 } ],
+              "content": { "en": { "options": [ { "index": 1, "text": "Not at all" }, { "index": 2, "text": "Several days" } ] } }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "statements": [
+    { "actor": { "id": "anon" }, "verb": "bdm:started", "object": { "id": "session" }, "timestamp": "2026-07-02T10:00:00.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:recording_started", "object": { "id": "session" }, "timestamp": "2026-07-02T10:00:00.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:trial_started", "object": { "id": "trial_it_1" }, "timestamp": "2026-07-02T10:00:01.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:trial_ended", "object": { "id": "trial_it_1" }, "result": { "extensions": { "bdm:response_option_index": 2 } }, "timestamp": "2026-07-02T10:00:03.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:submitted", "object": { "id": "session" }, "timestamp": "2026-07-02T10:00:04.000Z" }
+  ],
+  "mouse": [
+    { "t": 0, "x": 120, "y": 120, "button_state": "move" },
+    { "t": 1, "x": 180, "y": 160, "button_state": "move" },
+    { "t": 2, "x": 240, "y": 200, "button_state": "move" },
+    { "t": 3, "x": 300, "y": 240, "button_state": "move" },
+    { "t": 4, "x": 320, "y": 260, "button_state": "left_down" }
+  ]
+}

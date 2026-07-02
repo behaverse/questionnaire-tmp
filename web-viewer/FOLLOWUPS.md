@@ -50,10 +50,16 @@ participant-app) and are cross-linked.
   - **RP2 — VS researcher reads.** Expose `GET /v1/deployments/{id}/events` (event log) + a
     per-session variant so a researcher can pull a participant's `bdm:` statement stream from the VS
     without direct DB access. Pair with a runtime read so the caller can build a bundle client-side.
-  - **RP3 — live `?replay=<deployment>/<session>` loader.** A player-side loader that calls the RP2
-    endpoints, assembles `{runtime, statements, mouse?}` in memory, and passes the bundle into the
-    existing `ReplayApp` — giving researchers a shareable URL into any participant's run (researcher
-    auth required).
+  - ~~**RP3 — live `?replay=<deployment>/<session>` loader.**~~ **DONE (2026-07-02)** — verified:
+    the RP1 loader already accepts any bundle URL, including a live VS `GET /v1/replay?token=` link
+    (researcher-gated per RP2), giving researchers a shareable URL into any participant's run. RP3
+    core proved the round-trip with an automated browser e2e
+    (`tools/respondent-bot/tests/e2e/replay.spec.ts` + fixture `replay-bundle.json`, 2 passing tests)
+    and a doc (`web-viewer/docs/replay.md`: round-trip + CORS requirement + known limits + a real
+    full-stack verification screenshot `web-viewer/docs/replay-manual.png`, captured during RP2).
+    **Remaining RP3 follow-ons** (below): checkbox/multi-select reconstruction, "copy replay link"
+    UI, researcher session-list surface, a dedicated `REPLAY_SIGNING_SECRET` + revocation, and
+    live-follow.
   - **Live selected/deselected pre-commit highlighting.** During replay, show each option's
     hover/focus/selected visual states in sync with the reconstructed pointer + answer timeline, so
     reviewers can see the momentary selection before the participant confirmed.
