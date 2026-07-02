@@ -40,8 +40,8 @@ Captured from root `my_comments.md`; player-side counterparts live in `web-viewe
 ## Replay follow-ups / RP3 (2026-07-01)
 
 - ~~**Web-viewer e2e + docs (RP3 core).**~~ **DONE (2026-07-02)** — automated browser e2e `tools/respondent-bot/tests/e2e/replay.spec.ts` (+ fixture `replay-bundle.json`) drives the player `?replay=<mocked VS bundle url>` and asserts the round-trip renders (2 passing tests); doc `web-viewer/docs/replay.md` covers the round-trip + CORS requirement + known limits, with a real full-stack verification screenshot `web-viewer/docs/replay-manual.png` (captured during the RP2 session).
-- **Researcher "copy replay link" UI.** No GUI exists for minting a replay link; researchers call the API directly. An optional "Copy replay link" button on the researcher session-list surface (when that surface exists) would close the loop without requiring API access.
-- **Researcher session-list surface.** There is no UI listing sessions for a deployment with per-session actions (view responses, export, copy replay link). A researcher session-list view (participant-app or editor) is a natural home.
+- ~~**Researcher "copy replay link" UI.**~~ **DONE (2026-07-02)** — the participant-app `/studies` view has a per-session "Copy replay link" button (mints via the RP2 endpoint and copies `replay_url` to the clipboard).
+- ~~**Researcher session-list surface.**~~ **DONE (2026-07-02)** — the participant-app `/studies` view lists a researcher's deployments and each deployment's sessions, backed by the new `GET /v1/deployments/{id}/sessions`.
 - **Dedicated `REPLAY_SIGNING_SECRET` + link revocation.** Replay tokens currently reuse `INVITE_SIGNING_SECRET`. A separate `REPLAY_SIGNING_SECRET` would let operators rotate or revoke replay access independently. Link revocation (token blocklist keyed by token hash) is also absent — a compromised link stays valid until expiry.
 - **Incremental live-follow of an in-progress session.** `GET /v1/replay?token=` returns a point-in-time snapshot; it cannot stream events as they arrive for an active session. A follow mode (SSE or polling) would let a researcher or QA observer watch a session as it happens.
 

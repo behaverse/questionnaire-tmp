@@ -57,9 +57,10 @@ participant-app) and are cross-linked.
     (`tools/respondent-bot/tests/e2e/replay.spec.ts` + fixture `replay-bundle.json`, 2 passing tests)
     and a doc (`web-viewer/docs/replay.md`: round-trip + CORS requirement + known limits + a real
     full-stack verification screenshot `web-viewer/docs/replay-manual.png`, captured during RP2).
-    **Remaining RP3 follow-ons** (below): "copy replay link"
-    UI, researcher session-list surface, a dedicated `REPLAY_SIGNING_SECRET` + revocation, and
-    live-follow.
+    **Remaining RP3 follow-ons** (below): ~~a "copy replay link" UI, a researcher session-list
+    surface~~ **DONE (2026-07-02)** — viewer-service `GET /deployments/{id}/sessions` + the
+    participant-app `/studies` view with per-session copy replay link. Still remaining: a
+    dedicated `REPLAY_SIGNING_SECRET` + revocation, and live-follow.
   - **Live selected/deselected pre-commit highlighting.** During replay, show each option's
     hover/focus/selected visual states in sync with the reconstructed pointer + answer timeline, so
     reviewers can see the momentary selection before the participant confirmed.
