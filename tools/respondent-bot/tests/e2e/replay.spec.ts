@@ -4,9 +4,10 @@ import { fileURLToPath } from 'node:url'
 
 const bundle = readFileSync(fileURLToPath(new URL('./fixtures/replay-bundle.json', import.meta.url)), 'utf8')
 
-// The player fetches the VS bundle_url CROSS-ORIGIN, so the mocked response MUST send
-// Access-Control-Allow-Origin—this mirrors the real VS requirement (player origin in VS_CORS_ORIGINS).
-// Drop this header and the browser blocks the read: that failure is exactly what we are guarding.
+// The player fetches the VS bundle_url CROSS-ORIGIN, so the mocked response sends
+// Access-Control-Allow-Origin, mirroring the real VS requirement (player origin in VS_CORS_ORIGINS).
+// Note: Playwright auto-fills a permissive ACAO when the header is absent, so an ABSENT header does not
+// reproduce a real CORS block here; only a wrong-origin ACAO value does (verified manually—see task report).
 const CORS = { 'access-control-allow-origin': '*' }
 const BUNDLE_URL = 'http://vs.mock/v1/replay?token=demo' // a cross-origin VS URL, as a real replay_url carries
 const replayHref = (u: string) => `/?replay=${encodeURIComponent(u)}`
