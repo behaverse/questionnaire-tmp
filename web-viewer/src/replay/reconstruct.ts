@@ -1,6 +1,6 @@
 import type { BdmEvent } from '../app/events'
 
-export type RecAnswer = { optionIndex?: number; numeric?: number; description?: string }
+export type RecAnswer = { optionIndex?: number; numeric?: number; description?: string; selectedIndices?: number[] }
 export type ReplayState = { elementKey: string | null; answers: Record<string, RecAnswer> }
 export type TimelineEvent = { absMs: number; verb: string; elementKey: string | null }
 export type Timeline = {
@@ -33,6 +33,17 @@ export function reconstruct(statements: BdmEvent[]): Timeline {
     for (const r of rows) {
       if (r.absMs > absMs) break
       if (r.verb === 'bdm:trial_started' && r.elementKey) elementKey = r.elementKey
+      if ((r.verb === 'bdm:selected' || r.verb === 'bdm:deselected') && elementKey) {
+        const oi = r.ext['bdm:option_index']
+        if (typeof oi === 'number') {
+          const cur = answers[elementKey] ?? {}
+          const set = cur.selectedIndices ? [...cur.selectedIndices] : []
+          const pos = set.indexOf(oi)
+          if (r.verb === 'bdm:selected') { if (pos === -1) set.push(oi) }
+          else if (pos !== -1) set.splice(pos, 1)
+          answers[elementKey] = { ...cur, selectedIndices: set }
+        }
+      }
       if (r.verb === 'bdm:trial_ended' && r.elementKey) {
         const a: RecAnswer = {}
         const oi = r.ext['bdm:response_option_index']
@@ -41,7 +52,7 @@ export function reconstruct(statements: BdmEvent[]): Timeline {
         if (typeof oi === 'number') a.optionIndex = oi
         if (typeof n === 'number') a.numeric = n
         if (typeof d === 'string') a.description = d
-        answers[r.elementKey] = a
+        answers[r.elementKey] = { ...answers[r.elementKey], ...a }
       }
     }
     return { elementKey, answers }

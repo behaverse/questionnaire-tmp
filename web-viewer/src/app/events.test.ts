@@ -82,3 +82,13 @@ it('recordingEnded carries recording_url + sample_count', () => {
   expect(e.result!.extensions).toEqual({
     'bdm:recording_url': 'http://vs/v1/deployments/dep/recordings', 'bdm:sample_count': 42 })
 })
+
+it('selected/deselected carry bdm:option_index when given, and omit it when not', () => {
+  const a = agentActor('ag')
+  const c = { sessionId: 's1' }
+  const withIdx = ev.selected(a, 'opt', 'Alpha', c, 't', 2)
+  expect(withIdx.result?.extensions['bdm:option_index']).toBe(2)
+  const noIdx = ev.selected(a, 'opt', 'Alpha', c, 't')
+  expect(noIdx.result).toBeUndefined()
+  expect(ev.deselected(a, 'opt', 'Alpha', c, 't', 3).result?.extensions['bdm:option_index']).toBe(3)
+})

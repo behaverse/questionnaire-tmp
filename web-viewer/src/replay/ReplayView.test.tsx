@@ -21,6 +21,31 @@ const stream: BdmEvent[] = [
   ev(5, 'bdm:submitted'),
 ]
 
+const multiRuntime = {
+  metadata: { id: 'qst_ms', title: 'MS', language: 'en' }, locale: 'en',
+  pages: [{ id: 'p1', elements: [{
+    id: 'it_ms', question: { prompt: { content: { en: { text: 'Which apply?' } } } },
+    option: { input_data_type: 'choice', measurement_type: 'nominal', selection: 'multiple',
+      options: [{ index: 1, value: 'a' }, { index: 2, value: 'b' }, { index: 3, value: 'c' }],
+      content: { en: { options: [{ index: 1, text: 'Alpha' }, { index: 2, text: 'Beta' }, { index: 3, text: 'Gamma' }] } } },
+  }] }],
+} as unknown as Runtime
+
+const msStream: BdmEvent[] = [
+  ev(1, 'bdm:trial_started', 'trial_it_ms'),
+  ev(2, 'bdm:selected', undefined, { 'bdm:option_index': 1 }),
+  ev(3, 'bdm:selected', undefined, { 'bdm:option_index': 3 }),
+  ev(5, 'bdm:submitted'),
+]
+
+it('renders reconstructed multi-select checkboxes as selected', () => {
+  render(<ReplayView runtime={multiRuntime} timeline={reconstruct(msStream)} cursorAt={() => null} />)
+  fireEvent.change(screen.getByRole('slider', { name: /timeline/i }), { target: { value: String(reconstruct(msStream).durationMs) } })
+  expect((screen.getByRole('checkbox', { name: /Alpha/i }) as HTMLInputElement).checked).toBe(true)
+  expect((screen.getByRole('checkbox', { name: /Beta/i }) as HTMLInputElement).checked).toBe(false)
+  expect((screen.getByRole('checkbox', { name: /Gamma/i }) as HTMLInputElement).checked).toBe(true)
+})
+
 describe('ReplayView', () => {
   it('renders the current step and shows the reconstructed answer after scrubbing past it', () => {
     render(<ReplayView runtime={runtime} timeline={reconstruct(stream)} cursorAt={() => null} />)

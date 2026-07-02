@@ -11,8 +11,14 @@ const fmt = (ms: number) => `${Math.floor(ms / 1000)}s`
 
 /** Map a reconstructed answer to the renderer's AnswerValue using the element definition. */
 function toAnswerValue(el: Step['elements'][number]['element'], a: RecAnswer): AnswerValue | undefined {
-  const opt = (el as { option?: { input_data_type?: string; options?: { index: number; value: unknown }[] } }).option
+  const opt = (el as { option?: { input_data_type?: string; selection?: string; options?: { index: number; value: unknown }[] } }).option
   if (!opt) return undefined
+  if (opt.input_data_type === 'choice' && opt.selection === 'multiple' && a.selectedIndices && a.selectedIndices.length) {
+    const vals = a.selectedIndices
+      .map((idx) => (opt.options ?? []).find((o) => o.index === idx)?.value)
+      .filter((v) => v !== undefined)
+    return vals as AnswerValue
+  }
   if (opt.input_data_type === 'choice' && a.optionIndex != null) {
     const found = (opt.options ?? []).find((o) => o.index === a.optionIndex)
     if (found) return found.value as AnswerValue

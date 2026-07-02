@@ -261,6 +261,11 @@ test('walking the questionnaire submits message + item rows, events, then comple
   expect(verbs).toContain('bdm:trial_ended')
   expect(verbs).toContain('bdm:completed')
   expect(fetchMock.mock.calls.some(([u]) => String(u).endsWith('/sessions/s1/complete'))).toBe(true)
+
+  const selectedEv = events.find((e: { verb: string }) => e.verb === 'bdm:selected') as
+    { result?: { extensions: Record<string, unknown> } }
+  // the test answers it_1 with "Not at all" (option index 1)
+  expect(selectedEv?.result?.extensions['bdm:option_index']).toBe(1)
 })
 test('back-and-change emits an attempt row with x_response_revises', async () => {
   setUrl('?deployment=dpl_1')
