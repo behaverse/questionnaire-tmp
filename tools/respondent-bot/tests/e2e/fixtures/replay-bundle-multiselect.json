@@ -1,0 +1,22 @@
+{
+  "runtime": {
+    "provenance": { "source_questionnaire_id": "qst_ms", "source_questionnaire_version": "v26.0609", "locale": "en", "viewer_conformance_hash": "0000000000000000000000000000000000000000000000000000000000000000", "deployment_runtime_policy_hash": "0000000000000000000000000000000000000000000000000000000000000000", "generated_at": "2026-06-11T00:00:00Z", "denormaliser_version": "v26.0610" },
+    "metadata": { "id": "qst_ms", "title": "Multi", "language": "en" },
+    "locale": "en",
+    "pages": [ { "id": "page_1", "elements": [ {
+      "id": "it_ms", "required": false,
+      "question": { "prompt": { "content": { "en": { "text": "Which apply to you?" } } } },
+      "option": { "input_data_type": "choice", "measurement_type": "nominal", "selection": "multiple",
+        "options": [ { "index": 1, "value": "a" }, { "index": 2, "value": "b" }, { "index": 3, "value": "c" } ],
+        "content": { "en": { "options": [ { "index": 1, "text": "Alpha" }, { "index": 2, "text": "Beta" }, { "index": 3, "text": "Gamma" } ] } } }
+    } ] } ]
+  },
+  "statements": [
+    { "actor": { "id": "anon" }, "verb": "bdm:started", "object": { "id": "session" }, "timestamp": "2026-07-02T10:00:00.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:trial_started", "object": { "id": "trial_it_ms" }, "timestamp": "2026-07-02T10:00:01.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:selected", "object": { "objectType": "bdm:Option", "id": "it_ms", "name": "Alpha" }, "result": { "extensions": { "bdm:option_index": 1 } }, "timestamp": "2026-07-02T10:00:02.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:selected", "object": { "objectType": "bdm:Option", "id": "it_ms", "name": "Gamma" }, "result": { "extensions": { "bdm:option_index": 3 } }, "timestamp": "2026-07-02T10:00:03.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:trial_ended", "object": { "id": "trial_it_ms" }, "result": { "extensions": { "bdm:response_description": "Alpha; Gamma" } }, "timestamp": "2026-07-02T10:00:04.000Z" },
+    { "actor": { "id": "anon" }, "verb": "bdm:submitted", "object": { "id": "session" }, "timestamp": "2026-07-02T10:00:05.000Z" }
+  ]
+}
