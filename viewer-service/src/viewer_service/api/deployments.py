@@ -75,7 +75,7 @@ def list_sessions(deployment_id: str, conn=Depends(get_conn), claims=Depends(req
     if store.get_deployment(conn, deployment_id) is None:
         raise HTTPException(status_code=404, detail="deployment not found")
     rows = session_store.list_sessions_for_deployment(conn, deployment_id)
-    # project only display-safe fields — never leak token_hash or other session internals
+    # project only display-safe fields—never leak token_hash or other session internals
     return {"sessions": [{k: r[k] for k in _SESSION_LIST_FIELDS} for r in rows]}
 
 

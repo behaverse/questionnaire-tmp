@@ -30,7 +30,7 @@ export function StudiesView() {
   }, [isResearcher, vsBaseUrl, session.authFetch])
 
   useEffect(() => {
-    if (!selected) { setSessions([]); return }
+    if (!isResearcher || !selected) { setSessions([]); return }
     let live = true
     setLoading(true)
     listSessions(vsBaseUrl, session.authFetch, selected)
