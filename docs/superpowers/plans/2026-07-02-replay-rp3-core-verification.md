@@ -282,65 +282,55 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 ---
 
-### Task 3: Real full-stack manual verification
+### Task 3: Attach the existing full-stack verification evidence
+
+> **Plan amendment (2026-07-02, controller):** the real full-stack round-trip was **already performed** in
+> the RP2 session. The prior progress ledger records: "RP3 VERIFIED: player `?replay=<absolute VS /v1/replay
+> url>` fetched the RP2-shaped bundle (42 statements + 196 mouse samples) and replayed it with the cursor —
+> zero player code change," with the screenshot at
+> `tools/respondent-bot/tests/e2e/screenshots/rp3-live-replay.png`. The controller opened that PNG and
+> confirmed it shows a genuine live replay (a PHQ-9 question with four options, the Pause/timeline (6s/12s)/
+> speed 4× controls, and the red `#replay-cursor` overlay). So this task **reuses that verified artifact** as
+> the manual evidence — a second identical stack boot adds no information. Do NOT boot the stack.
 
 **Files:**
-- Create: `web-viewer/docs/replay-manual.png` (screenshot)
+- Create: `web-viewer/docs/replay-manual.png` (copied from the existing verified screenshot)
 - Modify: `web-viewer/docs/replay.md` (replace the `MANUAL-SCREENSHOT` placeholder)
 
 **Interfaces:**
-- Consumes: a locally running stack (Identity + Viewer Service + Postgres + player). Follow
-  [docs/testing-participant-flow.md](../../testing-participant-flow.md) and
-  [viewer-service/HANDOFF.md](../../../viewer-service/HANDOFF.md) for the canonical boot commands
-  (`DOCKER_CONFIG=/tmp/lib_docker` for the PG-backed services).
+- Consumes: the existing verified screenshot `tools/respondent-bot/tests/e2e/screenshots/rp3-live-replay.png`
+  (that dir is gitignored, so the file is copied to a tracked path under `web-viewer/docs/`). Nothing runs.
 
-- [ ] **Step 1: Bring up the stack and produce a session with events**
-
-Follow `docs/testing-participant-flow.md` to run Identity, the Viewer Service, and the player, then: sign
-in as (or create) a **researcher**, create a deployment, run **one** participant session through the
-player to the end (this writes `events` outbox rows). Note the `deployment_id` and `session_id`.
-
-Expected: the participant run finishes; the session has events (the player flushes `bdm:` batches every 5s
-and on completion).
-
-- [ ] **Step 2: Mint a replay link and open it**
-
-With a researcher bearer token (`$TOK`) against the local Viewer Service (`$VS`, e.g.
-`http://localhost:8001`):
+- [ ] **Step 1: Copy the verified screenshot to a tracked doc path**
 
 ```bash
-curl -sS -X POST "$VS/v1/deployments/$DEP/sessions/$SID/replay-link" \
-  -H "authorization: Bearer $TOK" | tee /tmp/replay-link.json
+cd /home/pedro/Repos/Cursor/questionnaire_apps
+cp tools/respondent-bot/tests/e2e/screenshots/rp3-live-replay.png web-viewer/docs/replay-manual.png
+git check-ignore web-viewer/docs/replay-manual.png && echo "GITIGNORED — STOP" || echo "trackable OK"
 ```
 
-Expected: `{ "token": "...", "bundle_url": "http://localhost:8001/v1/replay?token=...", "replay_url": "http://localhost:5173/?replay=..." }`
-(`replay_url` requires `WEB_VIEWER_BASE_URL` set on the VS; if null, build it as
-`http://localhost:5173/?replay=<url-encoded bundle_url>`). Open `replay_url` in the browser.
+Expected: `trackable OK` (the `web-viewer/docs/` path is not gitignored, unlike the respondent-bot
+screenshots dir). If it prints `GITIGNORED — STOP`, do not force-add; report back — the doc image needs a
+tracked location.
 
-- [ ] **Step 3: Confirm playback + handle CORS if needed**
+- [ ] **Step 2: Replace the placeholder in the doc**
 
-Expected: the player renders the recorded run and plays back (drag the timeline; answers appear as
-recorded). If instead you see "Replay unavailable" with a CORS error in the console, add the player origin
-(`http://localhost:5173`) to the Viewer Service `VS_CORS_ORIGINS`, restart the VS, and retry. Record the
-outcome (and any origin you had to add) in the doc.
-
-- [ ] **Step 4: Capture the screenshot into the doc**
-
-Save the playback screenshot to `web-viewer/docs/replay-manual.png`. Replace the `MANUAL-SCREENSHOT`
-comment in `web-viewer/docs/replay.md` with:
+Replace the `<!-- MANUAL-SCREENSHOT ... -->` comment line in `web-viewer/docs/replay.md` with, verbatim:
 
 ```markdown
-![Live replay of a real session via GET /v1/replay?token=](replay-manual.png)
+![Live replay of a real recorded session via GET /v1/replay?token=](replay-manual.png)
 
-*Verified 2026-07-02: a real researcher-minted replay link plays back a recorded session end-to-end.*
+*Captured 2026-07-01 from a real researcher-minted RP2 replay link — the player fetched the VS-assembled
+bundle (42 statements + 196 mouse samples) and replayed it end-to-end with the cursor overlay, no player
+code change.*
 ```
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 3: Commit**
 
 ```bash
 cd /home/pedro/Repos/Cursor/questionnaire_apps
 git add web-viewer/docs/replay.md web-viewer/docs/replay-manual.png
-git commit -m "docs(web-viewer): #7 RP3 core — real full-stack replay verification + screenshot
+git commit -m "docs(web-viewer): #7 RP3 core — attach real full-stack replay verification screenshot
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
