@@ -442,18 +442,19 @@ export function App() {
       if (entry && isItem(entry.element) && entry.element.option.input_data_type === 'choice') {
         const c = { sessionId: p.identity.sessionId, trialIndex: p.index.get(key)?.trialIndex }
         const opt = entry.element.option
-        let choices: { value: number | string; text: string }[] = []
+        let choices: { index: number; value: number | string; text: string }[] = []
         try { choices = mergeOptions(opt, locale) } catch { /* missing locale texts: events carry raw values */ }
         const textFor = (v: unknown) => choices.find((ch) => ch.value === v)?.text ?? String(v)
+        const indexFor = (v: unknown) => choices.find((ch) => ch.value === v)?.index
         const prev = state.answers[key]
         if (Array.isArray(value)) {
           const prevArr = Array.isArray(prev) ? prev : []
           const added = value.find((v) => !prevArr.includes(v))
           const removed = prevArr.find((v) => !value.includes(v))
-          if (added !== undefined) p.batcher.add(ev.selected(p.agent, opt.id ?? key, textFor(added), c, nowIso()))
-          if (removed !== undefined) p.batcher.add(ev.deselected(p.agent, opt.id ?? key, textFor(removed), c, nowIso()))
+          if (added !== undefined) p.batcher.add(ev.selected(p.agent, opt.id ?? key, textFor(added), c, nowIso(), indexFor(added)))
+          if (removed !== undefined) p.batcher.add(ev.deselected(p.agent, opt.id ?? key, textFor(removed), c, nowIso(), indexFor(removed)))
         } else if (value !== null) {
-          p.batcher.add(ev.selected(p.agent, opt.id ?? key, textFor(value), c, nowIso()))
+          p.batcher.add(ev.selected(p.agent, opt.id ?? key, textFor(value), c, nowIso(), indexFor(value)))
         }
       }
     }
