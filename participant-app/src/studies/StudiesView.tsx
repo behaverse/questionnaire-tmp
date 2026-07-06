@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { parseParams } from '../params'
 import { useSession } from '@behaverse/participant-session'
-import { listDeployments, listSessions, mintReplayLink, type Deployment, type Session } from './api'
+import { listDeployments, listSessions, mintReplayLink, revokeReplayLinks, type Deployment, type Session } from './api'
 
 function fmt(iso: string | null): string {
   if (!iso) return '—'
@@ -51,6 +51,15 @@ export function StudiesView() {
     }
   }
 
+  async function revokeLinks(sid: string) {
+    try {
+      await revokeReplayLinks(vsBaseUrl, session.authFetch, selected, sid)
+      setCopied((c) => ({ ...c, [sid]: 'Revoked ✓' }))
+    } catch {
+      setCopied((c) => ({ ...c, [sid]: 'Could not revoke' }))
+    }
+  }
+
   if (!isResearcher) {
     return <p className="text-sm text-zinc-500">Researchers only. Log in with a researcher account to view studies.</p>
   }
@@ -87,6 +96,10 @@ export function StudiesView() {
                   <button onClick={() => void copyLink(s.session_id)}
                     className="rounded-full border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100">
                     Copy replay link
+                  </button>
+                  <button onClick={() => void revokeLinks(s.session_id)}
+                    className="rounded-full border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-500 transition hover:bg-red-50 hover:text-red-700">
+                    Revoke links
                   </button>
                 </div>
               </li>

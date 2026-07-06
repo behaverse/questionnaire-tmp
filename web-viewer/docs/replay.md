@@ -28,6 +28,15 @@ Service must return `Access-Control-Allow-Origin` for the player origin, i.e. th
 CORS error in the console, this is almost always the cause—add the player origin to `VS_CORS_ORIGINS`
 (locally and in the deployed Viewer Service env) and retry.
 
+## Rotating the secret / revoking a link
+
+Replay tokens are signed with `REPLAY_SIGNING_SECRET` (falls back to `INVITE_SIGNING_SECRET` when unset)—rotating
+`REPLAY_SIGNING_SECRET` invalidates every replay link minted so far, VS-wide. To revoke just one session's
+links without a full rotation, a researcher hits **"Revoke links"** on the `/studies` view, or calls
+`POST /v1/deployments/{deployment_id}/sessions/{session_id}/replay-link/revoke` directly (researcher-gated).
+After either path, `GET /v1/replay?token=` for a token minted before the revoke returns `401`; re-minting
+(e.g. "Copy replay link") issues a fresh, working link. Revocation compares the token's mint time against the revoke time using the app and database clocks respectively, so if those clocks differ slightly, a link re-minted in the same instant as a revoke may take a moment to be honored.
+
 ## Known limitations (out of RP3-core scope)
 
 - **Multi-select (checkbox) answers reconstruct from the selection stream** (forward-only). Replay folds the
