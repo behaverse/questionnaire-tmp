@@ -122,6 +122,10 @@ The full state machine is documented in [08_viewer.md](08_viewer.md) §"Session 
 
 For `ephemeral` deployments (Demo, Preview), the session record is held in memory or short-TTL storage and is purged after the session ends. No data leaves the Viewer Service for `ephemeral` sessions.
 
+### Replay links and session inspection
+
+For QA and research analysis, the Viewer Service exposes a researcher-gated surface over a deployment's sessions: a **session list** (a credential-free projection — never the session token), a signed short-lived **replay link** minted for a specific session, per-session **revocation** of outstanding replay links, and a token-authorized **bundle** endpoint that assembles a session's Schema-3 runtime + its retained `bdm:` event stream + mouse track for the Web Viewer's replay mode (see [08_viewer.md](08_viewer.md) §"Replay"). Replay tokens are signed with a dedicated secret so they can be rotated independently of invite links; revocation compares a token's mint time against the session's revoke time. The event/mouse data is read from the durable outbox (see "Submission brokering").
+
 ## Submission brokering
 
 Viewers submit three streams to the Viewer Service:
