@@ -8,7 +8,7 @@ This document extends [05_data_model.md](05_data_model.md) §"Schema 2" with a d
 
 ## 1. Glossary
 
-Read this first; the rest of the document relies on these definitions being held in mind. The legacy [survey_database/](../survey_database/) and the v26.0528 schema both use some of these terms loosely; this document tightens them.
+Read this first; the rest of the document relies on these definitions being held in mind. The legacy [survey_database/](../archive/survey_database/) and the v26.0528 schema both use some of these terms loosely; this document tightens them.
 
 | Term | Definition | Distinct from |
 |---|---|---|
@@ -32,7 +32,7 @@ Read this first; the rest of the document relies on these definitions being held
 
 The v26.0528 Schema 2 treats **Question** as the primary reusable atom, with one polymorphic `Question` $def per UI input widget type (Radio, Checkbox, Slider, …) and a flat `OptionSet` companion that just holds `{ options: [{ value, text }] }`. **Prompt** and **Instruction** are minor side entities.
 
-The legacy [survey_database/](../survey_database/) — the 793-Prompt catalogue the project will migrate from — encodes a different model:
+The legacy [survey_database/](../archive/survey_database/) — the 793-Prompt catalogue the project will migrate from — encodes a different model:
 
 - A **Question is not a UI-widget atom.** It is a small composition (Prompt + optional Context + optional Instruction). An **Item** binds a Question to an Option; the Item is what appears on a Page.
 - **Prompts carry psychometric metadata** the v26.0528 schema discards: a concept-level **`name`**, a **Construct** (what the prompt measures), **`topics`** (analytic tags), and **`reversed`** (the prompt loads on its Construct in the negative direction).
@@ -890,6 +890,6 @@ The v26.0528 schema is preserved as `schemas/questionnaire/versions/v26.0528/sch
 - [10_open_decisions.md](10_open_decisions.md) §"OD-15" — the open-decision entry
 - [06_library.md](06_library.md) — Library content model (reusable-entity section needs update post-OD-15)
 - [13_importers.md](13_importers.md) — migration importer; will need handlers per new entity type
-- [survey_database/backend/models.py](../survey_database/backend/models.py) — the legacy SQLAlchemy models this pivot is aligned to
-- [survey_database/data/survey_db.sqlite](../survey_database/data/survey_db.sqlite) — the legacy data (793 Prompts, 560 Option rows, 935 compositions across 64 questionnaires)
+- [survey_database/backend/models.py](../archive/survey_database/backend/models.py) — the legacy SQLAlchemy models this pivot is aligned to
+- [survey_database/data/survey_db.sqlite](../archive/survey_database/data/survey_db.sqlite) — the legacy data (793 Prompts, 560 Option rows, 935 compositions across 64 questionnaires)
 - [docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md](../docs/superpowers/specs/2026-05-28-schemas-1-and-2-design.md) — the design spec that produced the superseded v26.0528 schema

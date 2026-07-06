@@ -15,7 +15,7 @@ This document describes the components of the Questionnaire Apps Ecosystem, thei
                        │   Behaverse schema registry                  │
                        │   (behaverse.org/schemas/*)                  │
                        │                                              │
-                       │   Identity (future sibling)                  │
+                       │   Identity (sibling)                         │
                        │   ─ federated auth for all components        │
                        └──────────────────────────────────────────────┘
                                             ▲
@@ -188,13 +188,23 @@ See [09_platform.md](09_platform.md) for the detailed specification.
 
 ---
 
+### 6. Scoring engine
+
+**Responsibility.** Execute external **Scorer** entities (per OD-16) to compute questionnaire scores, and cache the results. Scoring is not a formula baked into the questionnaire — each entry in `scores[]` names a pinned Scorer implementation whose output the viewers and Editor read through the OD-11 evaluator's `score(id)`.
+
+**Engine-location options.** A Scorer runs in one of three places, transparent to callers: **WASM-embedded** in the viewer or Editor (the reference path — deterministic, offline-capable), an **HTTP scoring service**, or a **local subprocess** for a self-hosted deployment. The Viewer Service serves the reference WASM scorers.
+
+**Caching.** Results are keyed by `(scorer_ref, canonical input hash)` so an unchanged input never recomputes, mirroring the Viewer Service's runtime cache. See [05b_scoring.md](05b_scoring.md) for the scoring model and the `questionnaire-scorer` reference engine + conformance runner.
+
+---
+
 ## Upstream sibling services (operated by the same organisation)
 
 | Sibling service | Role |
 |---|---|
 | **Behaverse Data Collection API** ([api.behaverse.org](https://api.behaverse.org/docs)) | Canonical store for response data (trial format), semantic event data (xAPI), and behavioural-channel attachment storage. The Viewer Service forwards here after lightweight validation. |
 | **Behaverse Schema Registry** (`behaverse.org/schemas/*`) | Hosts the published canonical JSON Schemas for questionnaire metadata, definition, response data, session metadata, xAPI extensions, and behavioural-channel attachment manifests. |
-| **Identity (future sibling)** | Federated authentication for users (researchers, contributors, reviewers, participants). See [12_governance.md](12_governance.md). |
+| **Identity (sibling)** | Federated authentication for users (researchers, contributors, reviewers, participants). See [12_governance.md](12_governance.md). |
 
 These are siblings of this project, not external third parties; the cross-project contracts are documented in [12_governance.md](12_governance.md).
 

@@ -111,6 +111,8 @@ The list of importers ships incrementally. Each importer is its own component on
 
 The canonical recommendation: build the SurveyJS importer first (it's the easiest and the data shape is closest to canonical JSON), use it to validate the importer architecture end-to-end, then add others as partner studies require them.
 
+Distinct from these file-format converters, the **questionnaire-harvester** (`questionnaire-harvester/`) is a *web-harvesting* pipeline — it scrapes public questionnaire sources (PsyToolkit, psychology-tools) into canonical Schema 2 entities with content-fingerprint dedup, rather than converting an uploaded file. It follows the same posture: it writes only its own output, and content is reviewed and manually ingested into the Library.
+
 Per-format delivery phasing is tracked in [plan/04_feature_priority.md](../plan/04_feature_priority.md).
 
 ## Open decisions
