@@ -135,6 +135,7 @@ All run as `PYTHONPATH=library/src:questionnaire-harvester/src python -m harvest
 | `check-short-titles` | Flags junk short_titles (qualifier fragments / version cruft / sentence-like). Non-zero exit when any flagged. |
 | `apply-classifications` | Bulk-apply curated `classifications.json` to canonical `metadata.classification.{domain,population}` + `metadata.instrument_id` (only non-empty override fields; `administration_mode` untouched). Powers the Library Domain / Population / Instrument filters. |
 | `check-classifications` | Flags coverage gaps (no `domain` / no `instrument_id`), off-vocab domain/population values, and malformed `instrument_id`. Non-zero exit when any flagged. |
+| `normalize-versions` | Re-stamp every questionnaire's `metadata.version` **and** all `@vYY.MMDD` ref suffixes to `--release` (entities are versionless, untouched). Idempotent; only rewrites files that change. Use before a fresh `library ingest --release`. |
 
 ### Curation / override stores (durable across re-harvest)
 
@@ -240,7 +241,7 @@ PYTHONPATH=library/src:questionnaire-harvester/src \
   python -m pytest questionnaire-harvester/tests -v
 ```
 
-Expected: 30 tests, all passing.
+Expected: 178 tests, all passing.
 
 ---
 

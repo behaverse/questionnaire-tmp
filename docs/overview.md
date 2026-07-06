@@ -44,7 +44,7 @@ handful of independently-deployable services that read and write that contract:
 - an **Identity** service for accounts/auth;
 - an **Editor** for authoring questionnaires without writing JSON by hand;
 - supporting **libraries** (a runtime denormaliser, a Rust→WASM expression evaluator, a
-  Rust→WASM scorer engine) shared across viewers;
+  Rust→WASM scoring engine + a scorer library covering the whole catalogue) shared across viewers;
 - a **Harvester** that scrapes public questionnaires into the canonical format.
 
 The ecosystem is delivered in phases: **Phase 1 (schemas + Library)** and **Phase 2
@@ -84,7 +84,7 @@ graph TD
     subgraph Libs["Shared libraries / engines"]
         DEN["runtime-denormaliser<br/>Schema 2→3"]
         EVAL["expression-evaluator<br/>Rust→WASM"]
-        SCO["questionnaire-scorer<br/>Rust→WASM (engine only)"]
+        SCO["questionnaire-scorer<br/>Rust→WASM (158 scorers)"]
     end
 
     subgraph Pipeline["Content pipeline"]
@@ -121,8 +121,8 @@ graph TD
     classDef orange fill:#e65100,stroke:#ffcc80,color:#fff;
     classDef red fill:#b71c1c,stroke:#ef9a9a,color:#fff;
 
-    class SCH,LW,PORTAL,PLAYER,PSESS,LIB,VS,ID,API,DEN,EVAL,HARV green;
-    class ED,SCO orange;
+    class SCH,LW,PORTAL,PLAYER,PSESS,LIB,VS,ID,API,DEN,EVAL,SCO,HARV green;
+    class ED orange;
     class GODOT,PLAT red;
 ```
 
@@ -141,7 +141,7 @@ graph TD
 | **participant-session** | shared auth/session lib | 🟢 complete | aliased (not published) |
 | **runtime-denormaliser** | Schema 2 → Schema 3 | 🟢 complete | imported lib |
 | **expression-evaluator** | OD-11 logic engine | 🟢 complete | WASM artifact |
-| **questionnaire-scorer** | OD-16 scoring engine | 🟠 engine + conformance only | WASM artifact |
+| **questionnaire-scorer** | OD-16 scoring engine + scorers | 🟢 engine + 158 scorers (all catalogue) | WASM artifacts; live |
 | **editor** | authoring SPA | 🟢 feature-complete + a11y modals | 🟢 **live** ([editor-static.vercel.app](https://editor-static.vercel.app); auto-translate via Anthropic) |
 | **questionnaire-harvester** | web → canonical content | 🟢 built (content/license review ongoing) | local CLI; output ingested live |
 | **Native / Godot viewer** | offline / embedded viewer | 🔴 not started (Phase 4) | — |
@@ -169,11 +169,10 @@ graph TD
 - **Dev status.** 🟢 Complete. Phase-1 deliverable; ~38 test files.
 - **Deployment status.** 🟢 **Live** — https://questionnaire-library.vercel.app (222
   questionnaires; homepage stats + Try-it preview live).
-- **Todos.** ⚠️ **Filters cover only the 64 classified (survey_db) questionnaires** — the 158
-  harvested ones lack `classification.{domain,population}`/instrument metadata, so Domain/
-  Population/Instrument filters can't see them. *This is a harvester content task* (populate
-  classification at ingest, or a one-off LLM tagging pass), **not** a Library code fix — the
-  facet code is correct. Also: contribution/review lifecycle (drafts/in_review, needs Identity
+- **Todos.** ~~Filters cover only the 64 classified (survey_db) questionnaires~~ **DONE (2026-06-25)**
+  — all 158 harvested questionnaires are now classified (domain/population/instrument_id, curated in
+  the harvester) and the survey_db domains normalized to the same clean vocab, so the Domain/
+  Population/Instrument filters cover the whole catalogue. Also: contribution/review lifecycle (drafts/in_review, needs Identity
   ID-C2); community signals in search ranking; per-questionnaire license badge.
 
 ### library-web — catalogue web UI
@@ -397,23 +396,29 @@ graph TD
 
 ### questionnaire-scorer — OD-16 scoring engine
 
-- **Description.** Scorer execution core + conformance runner: a Rust ABI (`scorer!`
-  macro), a reference **PHQ-9** scorer (Rust → WASM), a TypeScript host
+- **Description.** Scorer execution core + a full scorer library: a Rust ABI (`scorer!`
+  macro), a **data-driven scoring engine** (`scorer-engine`: sum/mean, subscales, linear
+  transforms, severity bands, from a per-instrument JSON spec) + **9 bespoke Rust crates** for
+  non-sum scoring (phq9, mdi, asrs, cirens, eq, vadrs, ccss, pti, nodscl), a TypeScript host
   (`compileScorer`/`runScorer`), and a conformance CLI.
-- **Features.** `scorer-abi` crate; PHQ-9 reference (`dist-wasm/phq9.wasm`); TS host
-  compile + execute with bindings; conformance runner/CLI for vector validation;
-  reproducible builds (sha256-synced).
-- **Relationships.** WASM served by **viewer-service** and reused by the **web-viewer**
-  scoring engine (and editor preview); the schema validator gates Library ingestion.
-- **Tool stack.** Rust (abi + phq9 crates), TypeScript host, wasm-pack, Cargo workspace;
-  cargo + vitest tests.
-- **Deployment.** WASM artifacts served by the VS; conformance CLI local.
+- **Features.** `scorer-abi` + `scorer-engine` crates; `build-scorer.mjs` (spec → wasm → derived
+  `scr_*` entity → conformance); **158 scorers covering the entire catalogue** (`specs/` + bespoke
+  crates → `dist-wasm/*.wasm` + `dist-entities/scr_*.json`); TS host compile + execute; conformance
+  runner/CLI; `verify-slice.mjs` auto-discovers + runs every wired scorer; reproducible builds
+  (sha256-synced). See `SCORERS.md`.
+- **Relationships.** WASM served by **viewer-service** (`VS_SCORER_MAP` → `/v1/scorers/{ref}/impl.wasm`)
+  and reused by the **web-viewer** scoring engine (and editor preview); questionnaires reference
+  scorers via `scores[]` (OD-16); the schema validator gates Library ingestion.
+- **Tool stack.** Rust (abi + engine + per-instrument crates), TypeScript host, Cargo workspace,
+  `wasm32-unknown-unknown`; cargo + vitest tests.
+- **Deployment.** WASM artifacts bundled into + served by the VS; conformance CLI local.
 - **Location.** [`questionnaire-scorer/`](../questionnaire-scorer/)
-- **Dev status.** 🟠 **Sub-project 1 only** — engine + conformance + one reference scorer.
-  `http`/`python`/`r` executors and more reference scorers (GAD-7, PSS-10) are not built.
-- **Deployment status.** WASM ready; no live remote executors.
-- **Todos.** `http`/`python`/`r` executors (SP3); more reference scorers; cross-impl
-  agreement assertions; Library publish gate; possible npm publish.
+- **Dev status.** 🟢 **158 scorers — whole catalogue scored** (149 data-driven + 9 bespoke Rust);
+  all conformant; `http`/`python`/`r` executors are still not built (wasm only).
+- **Deployment status.** 🟢 **Live** — all wired into the questionnaires + served by the VS.
+  (⚠ 4 slider scales are scored but unrenderable — web-viewer `number.interval.single` widget gap.)
+- **Todos.** `http`/`python`/`r` executors (SP3); cross-impl agreement assertions; Library publish
+  gate wiring; possible npm publish.
 
 ### questionnaire-harvester — content pipeline
 
@@ -422,9 +427,11 @@ graph TD
   Strictly isolated — writes only to its `output/`, never the Library DB directly.
 - **Features.** Source adapters (PsyToolkit DSL, psychology-tools forms); dedup
   fingerprinting; raw → reuse-or-mint → canonical pipeline; curation stores (descriptions,
-  short titles, source metadata); review/scoring artifacts; CLIs (harvest, review-export,
-  document-scoring, apply-descriptions, apply-short-titles); validation via the Library
-  Schema-2 validator. Manual promotion via `library ingest`.
+  short titles, **classifications**, source metadata); review/scoring artifacts; **executable
+  `scores[]` wiring** to `scr_*` scorer entities (from the sibling `questionnaire-scorer/`); CLIs
+  (harvest, review-export, document-scoring, apply-descriptions, apply-short-titles,
+  **apply-classifications**, normalize-versions); validation via the Library Schema-2 validator.
+  Manual promotion via `library ingest`.
 - **Relationships.** Reads psytoolkit.org / psychology-tools.com; writes `output/`; uses
   the **library** validator; content is manually ingested into the live **library**.
 - **Tool stack.** Python 3.11, BeautifulSoup4, httpx; pytest.
@@ -434,8 +441,9 @@ graph TD
   see project-wide notes).
 - **Deployment status.** Its output is **live** — 158 of the 222 live questionnaires came
   from the harvester (most still `license: unknown`, pending review).
-- **Todos.** Per-instrument domain/population extraction; fuzzy near-match dedup; more
-  source adapters; structured license block + a Web-UI disclaimer banner.
+- **Todos.** ~~Per-instrument domain/population extraction~~ **DONE** (all 158 classified + scored).
+  Fuzzy near-match dedup; more source adapters; structured license block + a Web-UI disclaimer
+  banner; content-review + licensing pass (still open).
 
 ### Native / Godot viewer — Phase 4 (not started)
 
