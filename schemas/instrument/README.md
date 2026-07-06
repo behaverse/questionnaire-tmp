@@ -12,7 +12,7 @@ Schema 1 of the questionnaire-apps ecosystem. Bibliographic and psychometric pro
 | `schema.json` | Current JSON Schema (Draft 2020-12) |
 | `context.jsonld` | JSON-LD context mapping fields to Dublin Core, Schema.org, DataCite |
 | `examples/` | Three examples: PHQ-9 (questionnaire), BDI-II (proprietary-restricted), IAT (cognitive task) |
-| `versions/` | Archived prior versions (empty for v26.0528 — first version) |
+| `versions/` | Archived prior versions (v26.0528, v26.0605) |
 | `CHANGELOG.md` | Version history |
 
 ## Required fields

@@ -15,8 +15,9 @@ the participant to the portal via the **Done** button / `return_url`.
 - **Runner** (`?deployment=`, `?invite=`, or `?fixture=`): the full questionnaire
   runner (`<App/>`). No nav shell — intentional focus mode.
 - **Auth**: anonymous / invite / demo deployments need no login. **Authenticated**
-  deployments prompt login here (the player's own `LoginView`); a seamless
-  cross-origin SSO handoff from the portal is a planned follow-up.
+  deployments prompt login here (the player's own `LoginView`), unless the portal
+  supplied a one-time SSO handoff code (`?handoff=`), which the player exchanges on
+  boot so authenticated participants don't re-login.
 - The **renderer** / **scoring** libraries (`build:lib` → `dist-lib`, consumed by
   the editor) are unchanged by the split.
 - **Replay** (`?replay=<bundle_url>`): a read-only playback mode that reconstructs a
@@ -219,9 +220,8 @@ per-item messages.
 
 **Scoring at answer-commit**: `reversed_value` items emit the post-reversal
 `score` into the Schema 5 `Response`, and Solution-bearing items emit `correct`.
-The `score(id)` expression function resolves to an **unavailable sentinel** until
-the Scorer host lands — so **score-gated branches do not fire** (by design, not a
-bug).
+`score(id)` resolves live via the embedded scorer engine (OD-16); score-gated
+branches fire on the computed score.
 
 **Progress**: when the runtime carries branch/skip rules, the bar shows a **step
 counter** (current step, no fixed total — the total is path-dependent).
@@ -293,8 +293,8 @@ deployments — revisit when authenticated deployments arrive (see FOLLOWUPS).
   IndexedDB; a reload resumes — see "Resume + locale (WV-E)" above.
 - Submission exists as of WV-B, but the submission queue is **in-memory** — a
   refresh loses any not-yet-sent rows/events; offline/PWA queue-and-sync is WV-F.
-- Logic/branching is live (WV-D, see above); `score(id)` is still null (external
-  Scorer deferred), so score-gated branches do not fire yet.
+- Logic/branching is live (WV-D); `score(id)` is live via the embedded scorer
+  engine (OD-16), so score-gated branches fire.
 
 ## Distribution (WV-F)
 

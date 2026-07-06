@@ -43,8 +43,8 @@ roadmap/MVP/phasing; `HANDOFF.md` is the navigation aid. Versioning is CalVer `v
 | [web-viewer/](web-viewer/) | **The player** — the focus-mode questionnaire runner (Vite/React); also exports the renderer/scoring libs for the editor | ✅ |
 | [participant-app/](participant-app/) | **The participant portal** — sign in, browse, pick → run → return, my-data (Vite/React) | ✅ |
 | [participant-session/](participant-session/) | Shared auth/session package consumed by the portal + the player | ✅ |
-| [editor/](editor/) | **The Editor** — visual authoring (Vite/React) | ✅ built, ⏸ parked |
-| [questionnaire-harvester/](questionnaire-harvester/) | Web → Schema-2 questionnaire harvester (separate concurrent track) | ✅ 158 live |
+| [editor/](editor/) | **The Editor** — visual authoring (Vite/React) | ✅ built + deployed, ⏸ dev-parked |
+| [questionnaire-harvester/](questionnaire-harvester/) | Web → Schema-2 questionnaire harvester | ✅ 158 live |
 | [api/](api/) | Vercel serverless entry for the deployed Library | — |
 
 > **The participant experience is three apps + a shared package**, not one: the **portal**

@@ -1,6 +1,6 @@
-# Questionnaire Editor — ED-A + ED-B + ED-C (C1 + C2a + C2b + C3a + C3b + C4)
+# Questionnaire Editor — feature-complete (ED-A..ED-K), built + live
 
-The custom React + TypeScript questionnaire **Editor** is being built in stages (ED-A..F). **ED-A** (structural foundation), **ED-B** (inline WYSIWYG preview), and the full **ED-C** item/Question/Option authoring + reusable-entity workflow — **ED-C1** (inline Option editor), **ED-C2a** (entity pool + new items), **ED-C2b** (Context / Instruction + Message authoring), **ED-C3a** (pick from Library), **ED-C3b** (newer-version notification + upgrade), and **ED-C4** (OD-05 override + fork) — are shipped. **ED-C is now COMPLETE**; see the decomposition table below.
+The custom React + TypeScript questionnaire **Editor** is built through **ED-K** and live at [editor-static.vercel.app](https://editor-static.vercel.app). Authoring is feature-complete (ED-A..ED-K); the Phase-3 gate—Library write-back + a real Viewer-Service preview deployment—remains **OD-08 / Identity**-blocked. See the decomposition table below.
 
 ED-A is the structural foundation of the custom React + TypeScript questionnaire **Editor** — the authoring tool researchers use to create, adapt, version, and translate questionnaires, producing canonical Schema 2 JSON. ED-A ships a static SPA (Vite · React 19 · TypeScript · Tailwind; Zustand + Immer state; dnd-kit; Ajv in-browser validation) with **no backend**: it opens/creates/loads/saves a Schema-2 questionnaire, renders the five-concept structure tree (Block ▸ Page ▸ Section ▸ Item/Message) in a 3-pane shell, lets you restructure + edit metadata, validates, and exports canonical JSON that round-trips Schema-2-valid. Persistence is browser-local (IndexedDB autosave) plus file open/save and open-from-Library.
 
@@ -24,7 +24,7 @@ The topbar `▢ Preview` button opens a split-pane WYSIWYG preview that renders 
 
 The preview re-renders live on edit, and exposes **language**, **device-frame**, and **scope** (selected page / whole questionnaire) pickers. Leaf `{ref}` entity bodies (prompts, options, etc.) are resolved on demand against the Library via `fetchEntityBody` — `GET {base}/v1/entities/{type}/{id}/versions/{version}/definition` (the per-entity body endpoint added in ED-C3a) — debounced and cached per `ref@version` in-memory for the session.
 
-The preview is **static structural** only: it renders every element unconditionally. Logic (`show_if` / skip / branching / piping), validation, and scoring are **not** evaluated in the preview — those arrive in **ED-D** when the expression evaluator + logic engine are wired into the preview.
+The preview now evaluates logic, validation, and scoring **live**: `show_if` / skip / branching / piping and per/cross-question validation run through the expression evaluator (OD-11), and scoring—including a live PHQ-9 score preview—runs through the renderer's scoring engine (**ED-D** + **ED-D4b**).
 
 ## ED-C1 — Option editor
 
@@ -37,7 +37,7 @@ Selecting an **inline item** (an element carrying an inline `option`) — or a m
 - **Inline placeholder / help** — language-keyed inline text for non-choice types (help for all).
 - **Derived-widget hint** — a "Renders as: …" chip computed from the renderer's `deriveWidget` (Radio / Checkbox / Number input / Text input).
 
-Edits push to the canonical model via the existing `updateNodeProps`; the questionnaire round-trips Schema-2-valid and the preview re-renders live. ED-C1 edits the **primary-language** (`metadata.language`) content; multi-locale translation is **ED-E**. Picking from the Library (ED-C3) and editing/forking a referenced Option (ED-C4) are still deferred — the canvas shows a read-only note for `{ref}` options.
+Edits push to the canonical model via the existing `updateNodeProps`; the questionnaire round-trips Schema-2-valid and the preview re-renders live. ED-C1 edits the **primary-language** (`metadata.language`) content; multi-locale translation is **ED-E**. Picking from the Library (**ED-C3a** / **ED-C3b**) and editing/forking a referenced Option (**ED-C4**) have shipped—a `{ref}` option carries a **`Fork to edit`** action.
 
 ## ED-C2a — entity pool + new items
 
@@ -126,11 +126,8 @@ Build order: **ED-A → ED-B → ED-C → ED-D → ED-E → ED-F**.
 **Doesn't yet (deferred):**
 - A pinned-vs-latest **content diff** view (ED-C3b surfaces the version + one-click upgrade only); **transitive** staleness of refs nested inside a Library entity's body → out of scope (the Library owns its entities' internal pinning).
 - Standalone **Placeholder / Help / RegEx / Solution** editors (Placeholder / Help are inline-editable inside the Option editor) → later.
-- Live logic / branching / scoring / validation **in the preview** (the preview is static structural — every element renders unconditionally) → **ED-D**.
-- Logic / validation builders / scoring / `show_if` expressions (authoring) → **ED-D**.
-- Translation interface — multi-locale Option/Prompt text/units beyond `metadata.language` (locale indicator is inert) → **ED-E**.
 - Renaming pool-entity ids (minted `pr_new_<n>` ids stick) → later nicety.
 - Promoting pool drafts to real Library versions → **OD-08** (needs Identity / write).
-- Preview deployment, PDF / printable-summary export → **ED-F**.
+- A real Viewer-Service **`preview` deployment** ("Open in viewer") → **OD-08** (the standalone shareable `preview.html` + Markdown / SurveyJS export have shipped).
 
 See `FOLLOWUPS.md` for known limitations and open items carried out of ED-A.

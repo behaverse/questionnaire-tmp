@@ -78,9 +78,9 @@ The service is feature-complete for Phase 2; everything below is deferred or blo
 - **Run `viewer-service/` tests in their OWN pytest invocation** — never combine with `library/` (separate testcontainers Postgres). `DOCKER_CONFIG=/tmp/lib_docker` is required.
 - `VS_CORS_ORIGINS` must list **every** frontend origin (per-origin CORS): library-web, editor, participant-app (portal :5174), web-viewer (player :5173). Test the actual browser request, not the raw API.
 - Restart the service after merging changes (Python services don't hot-reload in deploy).
-- Canonical content is already live on Supabase (212 Qs) — **do not re-import**.
+- Canonical content is already live on Supabase (222 Qs) — **do not re-import**.
 - Hard-pin Library refs `@vYY.MMDD`; never silently upgrade. CalVer `vYY.MMDD` everywhere.
-- Finish branches by **merging to master locally + pushing — no PRs.** `git fetch` + ff/rebase before pushing (the harvester agent shares this checkout).
+- Finish branches by **merging to master locally + pushing — no PRs.** `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) · [FOLLOWUPS.md](FOLLOWUPS.md)

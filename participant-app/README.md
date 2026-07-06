@@ -28,9 +28,8 @@ participant-app (portal, this package)        web-viewer (player)
   /?done=<id>  ◄─────────── return_url ───────  Done
 ```
 
-Anonymous / invite / demo questionnaires run with no sign-in. **Authenticated** deployments re-prompt
-login on the player (the player has its own login) — a seamless cross-origin SSO handoff is a planned
-follow-up (`docs/participant-app-roadmap.md` #1-SSO).
+Anonymous / invite / demo questionnaires run with no sign-in. **Authenticated** cards mint a one-time
+SSO handoff code at Start and pass `&handoff=` so the player doesn't re-prompt login (#1-SSO, shipped).
 
 ## Develop
 

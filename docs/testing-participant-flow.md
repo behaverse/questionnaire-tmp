@@ -64,8 +64,8 @@ the Library; each detail page has a **Try it** button that runs it in the player
 account, nothing stored** — and returns to the Library on Done. (Backed by the public VS
 `GET /v1/preview/runtime`; roadmap #5.)
 
-> **The canonical catalogue is already live** at **https://questionnaire-library.vercel.app** (212
-> questionnaires, on Supabase) — the deployed app just doesn't have Try-it wired yet. The local seed
+> **The canonical catalogue is already live** at **https://questionnaire-library.vercel.app** (222
+> questionnaires, on Supabase) — and **Try-it is now live on the deployed app too**. The local seed
 > below is **only** for an isolated local test; do **not** treat re-importing as "adding"
 > questionnaires (see [`operational-gotchas.md`](operational-gotchas.md) #3).
 

@@ -46,7 +46,7 @@ This component is feature-complete. Remaining items are version-bump-gated and m
 - A new CalVer is just a timestamp — `severity` is what tells consumers whether responses/scoring change. Even `corrective` requires explicit author opt-in downstream (OD-06 hard-pinning).
 - After any schema change, **re-run `tools/validate_schemas.py` and confirm exit 0** before merging; downstream code (denormaliser, VS, Web Viewer, Editor) keys off these shapes.
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing — the harvester agent shares this checkout and pushes master.
+- `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) · [VERSIONING.md](VERSIONING.md)

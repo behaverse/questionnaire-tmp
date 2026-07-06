@@ -61,7 +61,7 @@ The validator prints one PASS/FAIL/SKIP line per example/check; the SKIP is the 
 - Archived schema versions live at `schemas/<name>/versions/<ver>/schema.json` and MUST stay loadable
   so pinned cross-schema `$ref`s resolve; don't delete them.
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing — the **harvester agent shares this checkout** and pushes master.
+- `git fetch` + ff/rebase before pushing.
 - Run from repo root with the repo-root `.venv` active; `REPO_ROOT` is derived from the script path.
 
 ## References

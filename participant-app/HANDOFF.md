@@ -84,7 +84,7 @@ what remains is polish.
 
 ## Conventions & gotchas
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing — the harvester agent shares this checkout.
+- `git fetch` + ff/rebase before pushing.
 - The portal and player are **two separate origins**; never assume shared memory/cookies — pass state via
   the launch URL (`return_url`, `handoff`) and `src/params.ts` overrides.
 - `@behaverse/participant-session` is **source-aliased, not built** — changes to `../participant-session`

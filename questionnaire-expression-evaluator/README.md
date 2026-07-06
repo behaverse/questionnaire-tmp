@@ -1,6 +1,6 @@
 # questionnaire-expression-evaluator
 
-The **OD-11 reference evaluator** for the questionnaire `Expression` language: a single, deterministic module that every viewer embeds so that logic, validation, and scoring expressions evaluate **identically** across the Web Viewer (via wasm-bindgen), the Native Viewer (Godot, via a thin C-ABI wrapper), and the Editor preview (via wasmer-python). There is no second implementation to drift against — the cross-viewer contract is *"produces this module's output,"* not *"matches a hand-written spec."*
+The **OD-11 reference evaluator** for the questionnaire `Expression` language: a single, deterministic module that every viewer embeds so that logic, validation, and scoring expressions evaluate **identically** across the Web Viewer (via wasm-bindgen), the Native Viewer (Godot, via a thin C-ABI wrapper), and the Editor preview (embeds the same WASM directly). There is no second implementation to drift against — the cross-viewer contract is *"produces this module's output,"* not *"matches a hand-written spec."*
 
 The normative grammar this module implements is documented in [`design/15_expression_language.md`](../design/15_expression_language.md). The role it plays in the viewer family is described in [`design/08_viewer.md`](../design/08_viewer.md) §"Reference evaluator".
 
@@ -61,4 +61,4 @@ See [`design/15_expression_language.md`](../design/15_expression_language.md) �
 
 ## Deferred bindings
 
-The Godot C-ABI wrapper and the Editor wasmer-python binding are built when those components exist; they bind the *same* `core/` crate so they inherit identical semantics by construction. See [`FOLLOWUPS.md`](FOLLOWUPS.md).
+The Godot C-ABI wrapper is built when that component exists; it binds the *same* `core/` crate so it inherits identical semantics by construction. (The Editor embeds the WASM directly.) See [`FOLLOWUPS.md`](FOLLOWUPS.md).

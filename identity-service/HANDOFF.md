@@ -18,8 +18,9 @@
   (administrator only). Plus `GET /internal/reap` housekeeping route.
 - **Reusable verifier:** `identity_service.identity_client` (`JwksCache`, `verify`, `require_roles`) — imported by the
   Viewer Service (and future consumers) to gate endpoints. Mirrors the `library/` + `viewer-service/` layout.
-- **Mailer:** config-selected via `make_mailer` — `SmtpMailer` when `SMTP_HOST` set, else `ConsoleMailer` (logs the
-  link at INFO); `NullMailer` in tests. Verify/reset links built from `WEB_VIEWER_BASE_URL`.
+- **Mailer:** config-selected via `make_mailer` — `ResendMailer` when `RESEND_API_KEY` set (production), else
+  `SmtpMailer` when `SMTP_HOST` set, else `ConsoleMailer` (logs the link at INFO); `NullMailer` in tests.
+  Verify/reset links built from `WEB_VIEWER_BASE_URL`.
 - Built ID-A..C1 + email slice + PP/PA auth slices + SSO handoff. Live, sharing one Supabase DB with the Viewer Service.
 
 ## Run & test
@@ -42,9 +43,9 @@ Other CLI commands: `identity create-client`, `identity reap [--grace-seconds N]
 Service is feature-complete for the participant/editor auth needs shipped so far. Remaining items:
 
 ### Now
-- **TTL reaper not yet scheduled** — `identity reap` (and the `GET /internal/reap` route) exist and are safe, but
-  nothing calls them on a schedule, so the token tables grow unbounded in production. Wire a daily cron (Vercel cron
-  or the shared scheduler) and **coordinate with the Viewer Service** (shared Supabase DB). See [README.md](README.md) "Housekeeping".
+- **Shared TTL reaper across services** — Identity's own reaper is scheduled (Vercel daily cron `0 4 * * *` →
+  `GET /internal/reap`). Open item: coordinate a shared reaper across the Viewer Service (shared Supabase DB) so all
+  TTL tables are covered. See [README.md](README.md) "Housekeeping".
 
 ### Next
 - **Revoke other sessions on password change (PA-3)** — `change-password` only rewrites the hash; multi-device
@@ -75,7 +76,7 @@ Service is feature-complete for the participant/editor auth needs shipped so far
   Library/VS deploy loses the verifier.
 - **Shared Supabase DB** with the Viewer Service — schema changes and the TTL reaper must be coordinated with that agent.
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing (the harvester agent shares this checkout).
+- `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) · [FOLLOWUPS.md](FOLLOWUPS.md)

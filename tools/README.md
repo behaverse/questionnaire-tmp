@@ -4,7 +4,7 @@ Python utilities for the schemas project.
 
 ## validate_schemas.py
 
-Validates every example in `schemas/{instrument,questionnaire}/examples/` against its respective schema.
+Validates every example under `schemas/<name>/examples/` (all eight schemas, incl. two-level recordings/{mouse,keyboard}) plus cross-schema consistency checks.
 
 ### Usage
 

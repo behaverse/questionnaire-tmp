@@ -1,9 +1,9 @@
-# questionnaire-viewer-service (VS-A: runtime generation core)
+# questionnaire-viewer-service
 
 FastAPI + Postgres service that mints **cached Schema 3 runtimes** by calling the
 `questionnaire-runtime-denormaliser`, reading questionnaire + entity bodies from the
-**Library** over HTTP. VS-A is the runtime-generation spine; sessions, submission
-forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
+**Library** over HTTP. Sessions, submission forwarding (OD-13), deployment lifecycle,
+export, metrics, themes, catalogue/preview, and replay links are all live (VS-A..E).
 
 > **End-to-end manual test** (run all four services, create a deployment, pick + complete it as a
 > participant): see [`docs/testing-participant-flow.md`](../docs/testing-participant-flow.md).

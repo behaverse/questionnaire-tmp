@@ -39,9 +39,11 @@ Service**. See [design/04_architecture.md](design/04_architecture.md).
   [web-viewer/docs/replay.md](web-viewer/docs/replay.md).
 - **Remaining big tracks:** **Phase 4** (Native/Godot viewer) and **Phase 5** (Participant Platform —
   studies/protocols/scheduling) — both system-level, see [§System-wide tasks](#system-wide-tasks).
-- **⚠️ Known content gap:** the 158 harvested questionnaires lack `classification` metadata, so the Library
-  Domain/Population/Instrument filters only cover the 64 old ones. This is a **harvester content task**, not a
-  Library bug — see [questionnaire-harvester/HANDOFF.md](questionnaire-harvester/HANDOFF.md).
+- **✅ Classification gap CLOSED (2026-06-25; verified live 2026-07-06):** all 158 harvested questionnaires now
+  carry `classification.{domain,population,administration_mode}` + `instrument_id`, and the survey_db domains were
+  normalized to the same clean vocab and re-seeded. Live `/v1/facets` spans the whole corpus — **domain 222/222,
+  instrument 222/222, population 205/222**. Residual (minor): `administration_mode` covers only the 158 harvested,
+  and 17 survey_db entries lack `population`. See [questionnaire-harvester/HANDOFF.md](questionnaire-harvester/HANDOFF.md).
 
 ## How agents work here
 
@@ -54,8 +56,7 @@ cross-contamination. If you've been handed a component:
 2. **Branch:** create `work/<component>` (the suggested name is in each HANDOFF). Keep commits scoped to
    your component's directory.
 3. **Finish:** **merge to `master` locally + push — no PRs** (owner preference). `git fetch origin` +
-   ff-or-rebase **before every push** — a separate **harvester** agent shares this checkout and pushes
-   `master` concurrently (it works under `questionnaire-harvester/` + `library/`).
+   ff-or-rebase **before every push**.
 4. **Standing build pattern** for non-trivial work: brainstorm → spec (`docs/superpowers/specs/`) → plan
    (`docs/superpowers/plans/`) → subagent-driven TDD build → review → merge + push.
 5. The owner reacts to **screenshots** — for UI work, show don't describe (Playwright chromium is installed).
@@ -83,7 +84,7 @@ Each row links the component's own HANDOFF.md. Local dev ports in parens.
 | [participant-session/](participant-session/HANDOFF.md) | Shared auth/session package (portal + player consume by source alias) | ✅ | `work/participant-session` |
 | [editor/](editor/HANDOFF.md) | **The Editor** — visual Schema-2 authoring + auto-translate (Vite/React) | ✅ live | `work/editor` |
 | [api/](api/HANDOFF.md) | Vercel serverless entry for the deployed Library (thin) | ✅ live | `work/deploy-api` |
-| [questionnaire-harvester/](questionnaire-harvester/HANDOFF.md) | Web → Schema-2 harvester (**separate concurrent agent**; its HANDOFF is agent-maintained) | ✅ 158 live | — |
+| [questionnaire-harvester/](questionnaire-harvester/HANDOFF.md) | Web → Schema-2 harvester (its HANDOFF is a gitignored working note) | ✅ 158 live | — |
 | [tools/respondent-bot/](tools/respondent-bot/HANDOFF.md) | **Respondent-bot** — drives the player to auto-answer a deployment (trait model) + emit `bdm:` traces for replay (Node/Playwright) | ✅ | `work/respondent-bot` |
 
 > The participant experience is **three apps + a shared package**: the **portal** (`participant-app/`)
@@ -119,9 +120,10 @@ Work that concerns the whole system or doesn't fit a single component. Decompose
 - **🔒 Identity/OD-08-gated features** spanning components: Library contribution/review workflow + DOI
   (ID-C2/C3), the Editor's real "Open in viewer" preview deployment + write-back of forked/translated
   entities to the shared Library. Unblock once the relevant Identity slices land.
-- **Harvester content classification** (cross-cutting): populate `classification.{domain,population,
-  administration_mode}` + `instrument_id` for the 158 harvested questionnaires so the Library filters
-  cover them. Owned by the harvester — [questionnaire-harvester/HANDOFF.md](questionnaire-harvester/HANDOFF.md).
+- **Harvester content classification — ✅ DONE + LIVE (2026-06-25).** All 158 harvested questionnaires classified
+  (`domain`/`population`/`administration_mode` + `instrument_id`) and re-seeded; Library filters now cover all 222.
+  Residual only: back-fill `administration_mode` (and the 17 missing `population`) on the 64 survey_db entries so
+  those two facets also span the whole corpus. Owned by the harvester — [questionnaire-harvester/HANDOFF.md](questionnaire-harvester/HANDOFF.md).
 - **Shared TTL reaper** for unbounded token/outbox tables — Identity (`handoff_codes`/email/refresh) +
   Viewer Service (outbox). Coordinate a single approach across both services.
 - **Schema gaps requiring a CalVer bump** (🔒 breaking, new OD each): native **date** question type
@@ -168,7 +170,7 @@ Confirm exact live versions from each schema's `CHANGELOG` (the questionnaire sc
 
 - **Don't bump a schema version casually** — CalVer bumps are breaking per OD-06 (full spec/plan/execute each).
 - **Don't re-decide settled ODs** — open a new OD instead of silently revising an old one (all 21 resolved).
-- **Don't open PRs**; don't push without `git fetch` + ff/rebase first (shared checkout).
+- **Don't open PRs**; don't push without `git fetch` + ff/rebase first.
 - **Don't execute the multi-repo split** until cross-repo schema packaging exists (it would break the build).
 - **Don't `import-survey-db` into the local dev Library to "fill" it** — the canonical growing catalogue is
   the deployed Supabase app; a local re-import is a redundant parallel copy.

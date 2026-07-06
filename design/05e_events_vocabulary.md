@@ -623,9 +623,6 @@ Catalogue maintenance: keep this document up-to-date as the source of truth. Any
 
 ---
 
-## 10. Status + next steps
+## 10. Status
 
-- **Revision 4 authored:** 2026-06-05 — applies revision-3 review; closes all 10 open questions.
-- **Awaiting final user pass** before locking. If accepted as-is, this becomes the authoritative vocabulary inventory.
-- **Once locked:** the resolutions feed into closing **OD-19** (Schema 4a authoring) and the **BDM upstream change proposal** (added to [05c_bdm_alignment.md](05c_bdm_alignment.md) as deviation entries covering: `bdm:` namespace, the 24-verb vocabulary, the 15-object-type inventory, the 5 actor types, the extension key catalogue, the `agent` → `actor` field rename, and the `session` / `activity` / `runtime_instance` hierarchy).
-- **Implementation status:** Schema 4a (events JSON Schema) is **not** yet authored; this vocabulary doc is its design input.
+**Locked.** OD-19 resolved 2026-06-05, and the events JSON Schema (Schema 4a) is authored and live at `schemas/events/` (v26.0605). The BDM deviations this vocabulary introduced — the `bdm:` namespace, the 24-verb vocabulary, the 15-object-type inventory, the 5 actor types, the extension-key catalogue, the `agent` → `actor` field rename, and the `session` / `activity` / `runtime_instance` hierarchy — are filed upstream as deviation entries in [05c_bdm_alignment.md](05c_bdm_alignment.md) (D4–D6). This document is the authoritative vocabulary source of truth; keep it in sync with `schemas/events/` and BDM upstream.

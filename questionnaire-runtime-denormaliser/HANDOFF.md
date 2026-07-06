@@ -1,6 +1,6 @@
 # Runtime Denormaliser — Handoff
 
-**Path:** `questionnaire-runtime-denormaliser/` · **Stack:** pure Python (I/O-free library) · **Status:** ✅ built + merged (57 tests) · **Suggested branch:** `work/denormaliser`
+**Path:** `questionnaire-runtime-denormaliser/` · **Stack:** pure Python (I/O-free library) · **Status:** ✅ built + merged (61 tests) · **Suggested branch:** `work/denormaliser`
 
 > Pure library (per **OD-18**) that projects a **Schema 2 Questionnaire** into a **Schema 3 Runtime** ready for a viewer: refs inlined, content trimmed to one locale, viewer features reconciled against the Schema 7 manifest, scorer impls pinned, scoring optionally stripped, provenance attached. Consumed by the **Viewer Service** (session-mint) and conceptually by the **Editor** preview (which ports the logic to TS). It is a *faithful projection* — it keeps Schema 2 vocabulary; the Web Viewer does the final option-merge.
 > For deep detail see [README.md](README.md); for the raw deferred-items backlog see [FOLLOWUPS.md](FOLLOWUPS.md).
@@ -18,7 +18,7 @@ Pure Python; no Docker, no services needed.
 source ../.venv/bin/activate
 cd questionnaire-runtime-denormaliser
 pip install -e .[dev]
-pytest -q          # 57 tests
+pytest -q          # 61 tests
 ```
 (From the monorepo root, `pytest questionnaire-runtime-denormaliser/ -q` also works.)
 
@@ -38,7 +38,7 @@ This component is **essentially complete and merged** — the items below are sm
 - **`canonical_hash` is a shared contract** with the Viewer Service. Any change to its input normalisation invalidates VS cache keys — change both together or not at all.
 - **Run this suite separately** from `library/` and `viewer-service/` pytest sessions (those need Docker/Postgres; this one must not).
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing — the harvester agent shares this checkout and pushes master.
+- `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) · [FOLLOWUPS.md](FOLLOWUPS.md)

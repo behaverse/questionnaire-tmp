@@ -19,7 +19,7 @@
 cd editor
 npm install
 npm run dev        # Vite, PINNED to :5173 (live-Library CORS); serves /api/translate via dev shim if editor/.env.local has a key
-npm test           # vitest unit + RTL (~435 tests)
+npm test           # vitest unit + RTL (~465 tests)
 npm run typecheck  # tsc -b + tsc -p tsconfig.test.json
 npm run build      # typecheck + vite build → emits index.html + preview.html + wasm + samples
 npm run e2e        # Playwright chromium (~24 specs); needs: npx playwright install chromium
@@ -55,7 +55,7 @@ The editor is **feature-complete + LIVE** (ED-A..K shipped; modal a11y, M2 deplo
 - **Hard-pin Library refs `@vYY.MMDD`; never silently upgrade** — upgrade is always an explicit author click (`upgradeRef`). Forking is purely local (the Library is read-only from the editor).
 - **`dev` is pinned to :5173** for live-Library CORS — don't change the port casually.
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing — the **harvester agent shares this checkout** and pushes to `master`.
+- `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) — full ED-A..K decomposition + per-stage notes.

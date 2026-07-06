@@ -42,7 +42,7 @@ The legacy [survey_database/](../archive/survey_database/) — the 793-Prompt ca
 
 The v26.0528 implementation is correct as JSON Schema, but the entities it standardises are not the ones the legacy catalogue needs to round-trip into. Adopting a survey_database–aligned model means:
 
-- **Nine** reusable entity types (vs. four in v26.0528).
+- **Eleven** reusable entity types (vs. four in v26.0528).
 - A **composition-shaped Item** as the Page entry (vs. a polymorphic-widget Question).
 - The Page / Block / Section structural layer **retained** — OD-12 stands, this is the UX-grade layer over the legacy's flat composition table.
 

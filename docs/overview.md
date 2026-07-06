@@ -24,7 +24,7 @@ it does, how it connects, and where it stands. For the authoritative design see
 > is fixed (`bis` → BIS/BAS). Identity + Viewer Service share **one** Supabase DB. See
 > [`../DEPLOYMENT.md`](../DEPLOYMENT.md) §0 (as-built) + `scripts/redeploy-participant-stack.sh`.
 > The **editor** is now live too ([editor-static.vercel.app](https://editor-static.vercel.app),
-> M2 — authoring/preview/export; auto-translate function is a follow-up gated on an AI key).
+> M2 — authoring/preview/export; auto-translate is live via serverless `/api/translate` → Claude).
 > **Everything started is now hosted.** Remaining: **M3** polish.
 
 ---
@@ -344,17 +344,17 @@ graph TD
   renderer + scoring libraries; embeds **expression-evaluator** WASM; the auto-translate
   function calls the **Claude API**.
 - **Tool stack.** React 19, Vite 6, TypeScript 5.7, Zustand + Immer, dnd-kit, Ajv,
-  Tailwind, lucide; vitest + Testing Library + Playwright (~430 unit + ~24 e2e).
-- **Deployment.** Not deployed (a static SPA + one `/api/translate` serverless function;
-  needs the translate key as an env var).
+  Tailwind, lucide; vitest + Testing Library + Playwright (~465 unit + ~24 e2e).
+- **Deployment.** Static SPA + one `/api/translate` serverless function (needs the translate
+  key as an env var).
 - **Location.** [`editor/`](../editor/) (dev port pinned to **5173** for live-Library CORS).
 - **Dev status.** 🟠 **Feature-complete (ED-A..K + D4b) but PARKED.** The Phase-3 *gate* is
   not fully met — "reaches the Library, is reviewed, used in a deployment" needs Identity
   write-back (OD-08) + a real VS preview deployment, both blocked.
-- **Deployment status.** Not deployed.
-- **Todos.** Modal a11y (ForkDialog/LibraryPicker: Escape/role/focus-trap); deploy the
-  editor; Identity-gated Library write-back + "Propose shared version"; real VS preview
-  deploy. See [`editor/FOLLOWUPS.md`](../editor/FOLLOWUPS.md).
+- **Deployment status.** 🟢 **Live** — [editor-static.vercel.app](https://editor-static.vercel.app).
+- **Todos.** Modal a11y (ForkDialog/LibraryPicker: Escape/role/focus-trap); Identity-gated
+  Library write-back + "Propose shared version"; real VS preview deploy. See
+  [`editor/FOLLOWUPS.md`](../editor/FOLLOWUPS.md).
 
 ### runtime-denormaliser — Schema 2 → Schema 3
 
@@ -416,7 +416,7 @@ graph TD
 - **Dev status.** 🟢 **158 scorers — whole catalogue scored** (149 data-driven + 9 bespoke Rust);
   all conformant; `http`/`python`/`r` executors are still not built (wasm only).
 - **Deployment status.** 🟢 **Live** — all wired into the questionnaires + served by the VS.
-  (⚠ 4 slider scales are scored but unrenderable — web-viewer `number.interval.single` widget gap.)
+  (FSQ/RPS/SHS render as rating-buttons, SECS as slider — the `number.interval`/`ratio` widgets shipped + live.)
 - **Todos.** `http`/`python`/`r` executors (SP3); cross-impl agreement assertions; Library publish
   gate wiring; possible npm publish.
 
@@ -437,8 +437,7 @@ graph TD
 - **Tool stack.** Python 3.11, BeautifulSoup4, httpx; pytest.
 - **Deployment.** Local-only CLI; Git-tracked output; manual ingest.
 - **Location.** [`questionnaire-harvester/`](../questionnaire-harvester/)
-- **Dev status.** 🟢 Built (foundation complete; ⚠️ run by a **separate concurrent agent** —
-  see project-wide notes).
+- **Dev status.** 🟢 Built (foundation complete; see project-wide notes).
 - **Deployment status.** Its output is **live** — 158 of the 222 live questionnaires came
   from the harvester (most still `license: unknown`, pending review).
 - **Todos.** ~~Per-instrument domain/population extraction~~ **DONE** (all 158 classified + scored).
@@ -489,12 +488,6 @@ graph TD
   in this single local checkout for now. Superseded predecessors were moved to a
   gitignored top-level `archive/`. A folder reorg toward the target topology is an open
   project-wide task, not yet scheduled.
-
-- **⚠️ Multi-agent checkout.** A separate **harvester** agent shares this same checkout and
-  pushes `master` concurrently (working under `questionnaire-harvester/` + `library/`).
-  Keep commits scoped; `git fetch` + ff-or-rebase before every push;
-  `scripts/seed-supabase.md` is perpetually modified (stash before rebasing). `HANDOFF.md`
-  and `editor/.env.local` are gitignored.
 
 - **Operational gotchas.** Per-origin **CORS** allow-lists (`IDENTITY_CORS_ORIGINS`,
   `VS_CORS_ORIGINS`, `LIBRARY_CORS_ORIGINS`) must include every frontend port or pages

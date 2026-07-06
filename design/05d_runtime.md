@@ -182,7 +182,7 @@ where:
 
 ## 5. Schema 3 shape (skeleton)
 
-The Schema 3 deliverable will live at `schemas/runtime/schema.json` (provisional path) and at `https://behaverse.org/schemas/questionnaire/runtime/v26.MMDD/schema.json`. Its shape mirrors Schema 2 with these key differences:
+The Schema 3 deliverable lives at `schemas/runtime/schema.json` and is identified by `https://behaverse.org/schemas/runtime/vYY.MMDD/schema.json`. Its shape mirrors Schema 2 with these key differences:
 
 - All Library refs (`q_…`, `pr_…`, `opt_…`, `ctx_…`, `ins_…`, `msg_…`, `ph_…`, `help_…`, `rx_…`, `scl_…`, `scr_…`, `it_…`, `sol_…`) are **inlined** as embedded objects, not refs.
 - Each content-bearing entity carries only **one** language entry in its `content` (matching the runtime's `locale`).
