@@ -25,3 +25,8 @@ export async function mintReplayLink(vsBaseUrl: string, authFetch: AuthFetch, de
   if (!resp.ok) throw new Error(`replay-link ${resp.status}`)
   return await resp.json()
 }
+
+export async function revokeReplayLinks(vsBaseUrl: string, authFetch: AuthFetch, deploymentId: string, sessionId: string): Promise<void> {
+  const resp = await authFetch(`${vsBaseUrl}/v1/deployments/${deploymentId}/sessions/${sessionId}/replay-link/revoke`, { method: 'POST' })
+  if (!resp.ok) throw new Error(`revoke ${resp.status}`)
+}

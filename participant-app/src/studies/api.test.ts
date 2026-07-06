@@ -1,5 +1,5 @@
 import { test, expect, vi } from 'vitest'
-import { listDeployments, listSessions, mintReplayLink } from './api'
+import { listDeployments, listSessions, mintReplayLink, revokeReplayLinks } from './api'
 
 const af = (impl: (url: string, init?: RequestInit) => Response) =>
   vi.fn(async (url: string, init?: RequestInit) => impl(url, init)) as unknown as import('@behaverse/participant-session').AuthFetch
@@ -34,4 +34,13 @@ test('mintReplayLink POSTs and returns the link', async () => {
 test('a non-ok response throws', async () => {
   const authFetch = af(() => new Response('nope', { status: 403 }))
   await expect(listSessions('http://vs', authFetch, 'd1')).rejects.toThrow(/403/)
+})
+
+test('revokeReplayLinks POSTs to the revoke endpoint', async () => {
+  const authFetch = ((url: string, init?: RequestInit) => {
+    expect(url).toBe('http://vs/v1/deployments/d1/sessions/s1/replay-link/revoke')
+    expect(init?.method).toBe('POST')
+    return Promise.resolve(new Response('{"revoked_at":"2026-07-03T00:00:00Z"}', { status: 200 }))
+  }) as unknown as import('@behaverse/participant-session').AuthFetch
+  await expect(revokeReplayLinks('http://vs', authFetch, 'd1', 's1')).resolves.toBeUndefined()
 })

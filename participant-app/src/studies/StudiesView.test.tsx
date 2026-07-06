@@ -38,3 +38,16 @@ test('researcher: lists sessions and copies a replay link', async () => {
   await waitFor(() => expect(clip).toHaveBeenCalledWith('http://p/?replay=x'))
   expect(await screen.findByText(/copied/i)).toBeInTheDocument()
 })
+
+test('researcher: revokes replay links for a session', async () => {
+  authed(['researcher'], (url, init) => {
+    if (url.endsWith('/v1/deployments')) return new Response(JSON.stringify({ items: [{ deployment_id: 'd1', questionnaire_ref: 'q@v1' }] }), { status: 200 })
+    if (url.endsWith('/v1/deployments/d1/sessions')) return new Response(JSON.stringify({ sessions: [{ session_id: 's1', session_index: 1, status: 'submitted', participant_sub: null, started_at: null, completed_at: null, submitted_at: null }] }), { status: 200 })
+    if (url.endsWith('/replay-link/revoke') && init?.method === 'POST') return new Response('{"revoked_at":"x"}', { status: 200 })
+    return null
+  })
+  render_()
+  expect(await screen.findByText(/s1/)).toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: /revoke links/i }))
+  expect(await screen.findByText(/revoked/i)).toBeInTheDocument()
+})
