@@ -125,3 +125,10 @@ CREATE TABLE IF NOT EXISTS question_comment (
   created_at         timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS question_comment_dep_idx ON question_comment (deployment_id, created_at);
+
+-- Per-session replay-link revocation (#7-4). A token whose iat predates revoked_at is rejected.
+CREATE TABLE IF NOT EXISTS replay_revocation (
+  session_id     text PRIMARY KEY REFERENCES session (session_id),
+  deployment_id  text NOT NULL,
+  revoked_at     timestamptz NOT NULL DEFAULT now()
+);
