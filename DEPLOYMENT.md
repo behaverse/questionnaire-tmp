@@ -201,6 +201,9 @@ QREF='qst_wellbeing@v26.0601' \
 | `IDENTITY_ISSUER` | `http://localhost:8100` | `https://<identity-vercel-project>.vercel.app` | Must match the `iss` claim in tokens |
 | `IDENTITY_AUDIENCE` | `questionnaire-apps` | `questionnaire-apps` | Must match the `aud` claim; default is fine |
 | `INVITE_SIGNING_SECRET` | `dev-invite-secret` | `<random 32+ char secret>` | Signs invite-link tokens; rotate with care |
+| `REPLAY_SIGNING_SECRET` | _(unset)_ | _(optional; `<random 32+ char secret>`)_ | Signs researcher **replay-link** tokens; falls back to `INVITE_SIGNING_SECRET` when unset. Rotating it invalidates all outstanding replay links |
+| `WEB_VIEWER_BASE_URL` | `http://localhost:5173` | `https://<player>.vercel.app` | Player origin — the Viewer Service builds the `replay_url` (and the `/studies` "Watch live" link) from it; when unset, a minted replay link returns `bundle_url` only |
+| `REPLAY_LINK_TTL_SECONDS` | _(unset → 7 days)_ | _(optional)_ | Lifetime of a minted replay link |
 | `SCHEMAS_DIR` | `./schemas` | _(set by `vercel.json` includeFiles; default is fine)_ | Path to the bundled schemas directory |
 | `VS_SCORER_DIR` | `./questionnaire-scorer/dist-wasm` | _(set by `vercel.json` includeFiles; default is fine)_ | Path to bundled scorer wasm files |
 | `BEHAVERSE_BASE_URL` | `http://localhost:9000` | _(unset unless Behaverse forwarding is active)_ | Forwarding is disabled when this is a localhost URL |

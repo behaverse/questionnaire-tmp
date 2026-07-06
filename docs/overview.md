@@ -8,7 +8,7 @@ it does, how it connects, and where it stands. For the authoritative design see
 
 > **Maintenance note.** This document is a hand-maintained summary; the per-component
 > details drift as work lands. When in doubt, the component READMEs, the agent memory
-> index, and `HANDOFF.md` are more current. Last refreshed: **2026-06-25**.
+> index, and `HANDOFF.md` are more current. Last refreshed: **2026-07-06**.
 
 > **🟢 LIVE (2026-06-25).** The **entire participant stack is deployed** on Vercel + Supabase
 > (free tier, $0): **portal** [portal-henna-seven-32.vercel.app](https://portal-henna-seven-32.vercel.app),
@@ -191,10 +191,9 @@ graph TD
 - **Deployment.** Vercel (root `vercel.json` builds this as the site frontend).
 - **Location.** [`library-web/`](../library-web/) (dev port **5175**).
 - **Dev status.** 🟢 Complete; ~16 test files + e2e.
-- **Deployment status.** 🟢 **Live** (catalogue). The **"Try it"** preview works **locally
-  only** — public Try-it needs the VS preview endpoint + a hosted player.
-- **Todos.** Ship the public Try-it (hosted player + VS preview + CORS); license
-  disclaimer banner for harvested content.
+- **Deployment status.** 🟢 **Live** (catalogue). The **"Try it"** preview is **live** too —
+  it opens the hosted player against the VS preview endpoint.
+- **Todos.** License disclaimer banner for harvested content.
 
 ### api/ — Vercel serverless entry
 
@@ -220,22 +219,25 @@ graph TD
   (mint, resume, locale switch, completion); response collection (Schema 5 → durable
   outbox) + OD-13 forwarding worker; BDM-native CSV export (researcher + participant
   my-data); public `GET /v1/catalogue`; signed HMAC invite links; render-only **preview**
-  endpoint; theme bundles (WCAG-AA checked); deployment metrics; admin runtime-cache purge.
-  Control-plane is Identity-gated; the participant path is session-token-gated.
+  endpoint; theme bundles (WCAG-AA checked); deployment metrics; admin runtime-cache purge;
+  researcher **`GET /v1/deployments/{id}/sessions`** (credential-free session list);
+  **replay-link** minting + a token-authorized `GET /v1/replay` bundle endpoint, per-session
+  replay-link **revocation**, and a dedicated **`REPLAY_SIGNING_SECRET`** (falls back to
+  `INVITE_SIGNING_SECRET`). Control-plane is Identity-gated; the participant path is
+  session-token-gated.
 - **Relationships.** Calls **runtime-denormaliser**; reads **library** over HTTP; verifies
   **identity-service** JWTs (JWKS); serves **questionnaire-scorer** WASM; consumed by
   **web-viewer** and **participant-app**.
 - **Tool stack.** Python 3.12, FastAPI, Uvicorn, Postgres (psycopg3), Pydantic, httpx,
-  PyJWT, jsonschema; pytest (~199 tests).
-- **Deployment.** Local-only (run alongside Library + Identity).
+  PyJWT, jsonschema; pytest (~260 tests).
+- **Deployment.** Vercel serverless, deployed from a self-contained assembled dir
+  (siblings pinned as PEP 508 git deps + `schemas`/scorer bundled locally).
 - **Location.** [`viewer-service/`](../viewer-service/) (dev port **8001**).
-- **Dev status.** 🟢 Complete (VS-A..E).
-- **Deployment status.** Local-only — **not yet hosted**; hosting it is the gate for a
-  public end-to-end deployment.
-- **Todos.** Deploy publicly (enables public Try-it + authenticated runs); per-record
-  deployment ownership; single-use invites; ephemeral-session TTL purge; locale validation
-  at deployment-create; cross-service retry/backoff to Library. See
-  [`viewer-service/FOLLOWUPS.md`](../viewer-service/FOLLOWUPS.md).
+- **Dev status.** 🟢 Complete (VS-A..E + replay).
+- **Deployment status.** 🟢 **Live** — https://viewer-service.vercel.app.
+- **Todos.** Per-record deployment ownership; single-use invites; ephemeral-session TTL
+  purge; locale validation at deployment-create; cross-service retry/backoff to Library.
+  See [`viewer-service/FOLLOWUPS.md`](../viewer-service/FOLLOWUPS.md).
 
 ### identity-service — Identity / Auth (OD-08)
 
@@ -251,11 +253,11 @@ graph TD
   endpoints called by **participant-app** / **web-viewer** (via **participant-session**).
 - **Tool stack.** Python 3.12, FastAPI, Uvicorn, Postgres (psycopg3), Pydantic, Argon2,
   PyJWT, httpx; pytest (~61 tests).
-- **Deployment.** Local-only. Note: its package is installed into the **live** Library's
-  serverless build (imported on boot) even though the auth *service* itself isn't hosted.
+- **Deployment.** Vercel serverless, deployed straight from `identity-service/`. Its
+  package is also installed into the **live** Library's serverless build (imported on boot).
 - **Location.** [`identity-service/`](../identity-service/) (dev port **8100**).
 - **Dev status.** 🟢 Complete (ID-A core + ID-B gating + ID-C1 community).
-- **Deployment status.** Local-only.
+- **Deployment status.** 🟢 **Live** — https://identity-service-three.vercel.app.
 - **Todos.** ID-C2 contribution workflow (GitHub-PR-vs-DB-draft is an open design
   question); ID-C3 DOI minting (DataCite-blocked); ID-D editor collaboration; admin
   multi-tenant isolation; refresh-token race hardening; revoke-sessions-on-password-change.
@@ -271,19 +273,22 @@ graph TD
   resume from IndexedDB; multi-locale + switcher; consent gate + completion screens with
   optional redirect + manual **Done** return-URL; offline queue + retry; PWA; **renderer +
   scoring exported as a library** (consumed by the editor); iframe embedding via
-  postMessage; render-only `?preview=` boot path.
+  postMessage; render-only `?preview=` boot path; read-only **replay** mode (`?replay=`
+  renders a recorded session from its `bdm:` event stream + mouse track) with **live-follow**
+  (`?follow=1` polls the session and keeps the view at the latest event); multi-select
+  (checkbox) answers reconstruct from the selected/deselected stream.
 - **Relationships.** Mints sessions / posts responses + events to **viewer-service**;
   logs in via **identity-service** (+ SSO handoff exchange on boot); embeds
   **expression-evaluator** WASM; launched by **participant-app** with
   `?deployment&return_url`; uses **participant-session**.
 - **Tool stack.** React 19, Vite 6, TypeScript 5.7, react-markdown + rehype-sanitize,
-  Tailwind, vite-plugin-pwa, Ajv; vitest + Testing Library + axe-core (~253 tests).
-- **Deployment.** Local-only (not yet hosted).
+  Tailwind, vite-plugin-pwa, Ajv; vitest + Testing Library + axe-core (~326 tests).
+- **Deployment.** Vercel, static build (source-aliases sibling dirs, so it's built locally
+  and deployed as a static `dist/`).
 - **Location.** [`web-viewer/`](../web-viewer/) (dev port **5173**).
-- **Dev status.** 🟢 Complete (WV-A..F + scoring + participant slices).
-- **Deployment status.** Local-only — hosting it (with the VS) is the public end-to-end
-  deliverable.
-- **Todos.** Deploy publicly; resumed sessions don't carry confirmation/redirect screen.
+- **Dev status.** 🟢 Complete (WV-A..F + scoring + participant slices + replay).
+- **Deployment status.** 🟢 **Live** — https://player-sooty-six.vercel.app.
+- **Todos.** Resumed sessions don't carry confirmation/redirect screen.
 
 ### participant-app — the portal
 
@@ -293,16 +298,20 @@ graph TD
 - **Features.** Public catalogue browse; register (auto-login) / login / logout;
   account profile + change-password; email verification + password reset; **My data**
   (sessions + CSV download); pick→run→return with a "pick another" banner; mints an SSO
-  handoff code so authenticated deployments don't re-login on the player.
-- **Relationships.** Calls **viewer-service** (`/v1/catalogue`, `/v1/me/*`) and
-  **identity-service** (auth); launches **web-viewer**; uses **participant-session**.
+  handoff code so authenticated deployments don't re-login on the player; researcher-gated
+  **`/studies`** surface — pick a deployment, list its sessions, per-session **Copy replay
+  link / Revoke links / Watch live**.
+- **Relationships.** Calls **viewer-service** (`/v1/catalogue`, `/v1/me/*`,
+  `/v1/deployments/{id}/sessions`, replay-link mint/revoke) and **identity-service** (auth);
+  launches **web-viewer**; uses **participant-session**.
 - **Tool stack.** React 19, Vite 6, TypeScript 5.7, Tailwind; vitest + Testing Library
-  (~86 tests).
-- **Deployment.** Local-only (not yet hosted).
+  (~102 tests).
+- **Deployment.** Vercel, static build (source-aliases sibling dirs, so it's built locally
+  and deployed as a static `dist/`).
 - **Location.** [`participant-app/`](../participant-app/) (dev port **5174**).
-- **Dev status.** 🟢 Complete (PA-1..4 + roadmap #1–#8 + SSO).
-- **Deployment status.** Local-only.
-- **Todos.** Turn-key `vercel.json`; deploy alongside the player + VS.
+- **Dev status.** 🟢 Complete (PA-1..4 + roadmap #1–#8 + SSO + `/studies`).
+- **Deployment status.** 🟢 **Live** — https://portal-henna-seven-32.vercel.app.
+- **Todos.** None outstanding for the core portal.
 
 ### participant-session — shared auth/session library
 
@@ -423,7 +432,7 @@ graph TD
 - **Location.** [`questionnaire-harvester/`](../questionnaire-harvester/)
 - **Dev status.** 🟢 Built (foundation complete; ⚠️ run by a **separate concurrent agent** —
   see project-wide notes).
-- **Deployment status.** Its output is **live** — 158 of the 212 live questionnaires came
+- **Deployment status.** Its output is **live** — 158 of the 222 live questionnaires came
   from the harvester (most still `license: unknown`, pending review).
 - **Todos.** Per-instrument domain/population extraction; fuzzy near-match dedup; more
   source adapters; structured license block + a Web-UI disclaimer banner.
@@ -499,14 +508,14 @@ graph TD
 
 ## Where to go next
 
-Three viable, non-blocking tracks (owner's standing rule: finish all components, with the
+The public full-stack deployment is **done** (VS + player + portal are all live, public
+"Try it" and authenticated runs both work) and the replay/QA track (#7) is **done**. Two
+viable, non-blocking tracks remain (owner's standing rule: finish all components, with the
 Native/Godot viewer **LAST**):
 
 1. **Phase 5 — Participant Platform** (largest unbuilt piece: study/protocol builder,
    OD-09 scheduler, consent lifecycle, notifications, dashboards).
-2. **Public full-stack deployment** (host VS + player + portal → unlocks public "Try it"
-   and authenticated runs).
-3. **Unblock the Editor** (Identity-gated Library write-back + real VS preview → closes the
+2. **Unblock the Editor** (Identity-gated Library write-back + real VS preview → closes the
    Phase-3 gate).
 
 See [`../HANDOFF.md`](../HANDOFF.md) and [`../plan/01_roadmap.md`](../plan/01_roadmap.md)
