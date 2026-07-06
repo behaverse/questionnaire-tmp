@@ -59,8 +59,9 @@ participant-app) and are cross-linked.
     full-stack verification screenshot `web-viewer/docs/replay-manual.png`, captured during RP2).
     **Remaining RP3 follow-ons** (below): ~~a "copy replay link" UI, a researcher session-list
     surface~~ **DONE (2026-07-02)** — viewer-service `GET /deployments/{id}/sessions` + the
-    participant-app `/studies` view with per-session copy replay link. Still remaining: a
-    dedicated `REPLAY_SIGNING_SECRET` + revocation, and live-follow.
+    participant-app `/studies` view with per-session copy replay link. ~~A dedicated
+    `REPLAY_SIGNING_SECRET` + revocation~~ **DONE (2026-07-03)** — see `web-viewer/docs/replay.md`
+    + `viewer-service/FOLLOWUPS.md`. Still remaining: live-follow.
   - **Live selected/deselected pre-commit highlighting.** During replay, show each option's
     hover/focus/selected visual states in sync with the reconstructed pointer + answer timeline, so
     reviewers can see the momentary selection before the participant confirmed.
