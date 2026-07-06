@@ -51,6 +51,18 @@ export function StudiesView() {
     }
   }
 
+  async function watchLive(sid: string) {
+    try {
+      const link = await mintReplayLink(vsBaseUrl, session.authFetch, selected, sid)
+      if (!link.replay_url) { setCopied((c) => ({ ...c, [sid]: 'Set WEB_VIEWER_BASE_URL to watch live' })); return }
+      const url = link.replay_url + (link.replay_url.includes('?') ? '&' : '?') + 'follow=1'
+      window.open(url, '_blank', 'noopener')
+      setCopied((c) => ({ ...c, [sid]: 'Opened live view' }))
+    } catch {
+      setCopied((c) => ({ ...c, [sid]: 'Could not open live view' }))
+    }
+  }
+
   async function revokeLinks(sid: string) {
     try {
       await revokeReplayLinks(vsBaseUrl, session.authFetch, selected, sid)
@@ -100,6 +112,10 @@ export function StudiesView() {
                   <button onClick={() => void revokeLinks(s.session_id)}
                     className="rounded-full border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-500 transition hover:bg-red-50 hover:text-red-700">
                     Revoke links
+                  </button>
+                  <button onClick={() => void watchLive(s.session_id)}
+                    className="rounded-full border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100">
+                    Watch live
                   </button>
                 </div>
               </li>
