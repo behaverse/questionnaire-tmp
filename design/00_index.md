@@ -63,4 +63,4 @@ If you find yourself wanting to add a "Phase 2" tag inside a design doc — it b
 
 Earlier scattered specs and prototype design notes (`SPECIFICATION_READONLY.md`, `SYSTEM_DESIGN.md`, `system_design.md`, `data_standards.md`, the old `specs/` and `schemas/` folders) have been moved to [../archive_do_not_edit/](../archive_do_not_edit/). They are kept for historical reference. **Do not edit them; do not cite them as authoritative.** This folder supersedes them in full.
 
-The three prototype codebases (`qv_godot/`, `survey_database/`, `survey_system/`) remain in place under the project root. They are **reference-only** for the design phase; the design is written from clean principles, not from inherited code constraints. Migration of existing content (notably the 792 questions in `survey_database/`) is a future task.
+The three prototype codebases (`qv_godot/`, `survey_database/`, `survey_system/`) remain in place under the project root. They are **reference-only** for the design phase; the design is written from clean principles, not from inherited code constraints. Migration of existing content (notably the 793 questions in `survey_database/`) is a future task.

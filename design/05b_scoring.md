@@ -273,7 +273,7 @@ The v26.0601 implementation needs to evolve. The next CalVer bump will:
 
 ## 8. Migration of legacy scoring
 
-The 792 legacy `survey_database/` Prompts carry a `reversed` flag (migrates 1:1 to `Prompt.reversed` per 4.1) and a `construct`-equivalent that migrates to `Prompt.construct` (already done in v26.0601). What does **not** migrate automatically:
+The 793 legacy `survey_database/` Prompts carry a `reversed` flag (migrates 1:1 to `Prompt.reversed` per 4.1) and a `construct`-equivalent that migrates to `Prompt.construct` (already done in v26.0601). What does **not** migrate automatically:
 
 - Subscale aggregation logic (was implicit in legacy scoring scripts). Each instrument's scoring becomes a new Scorer entity, hand-authored or auto-generated from the legacy script with human review.
 - Interpretation bands (were inline in legacy reports). Move into the Scorer's `output_schema` / implementation.

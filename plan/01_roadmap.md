@@ -4,7 +4,7 @@ This roadmap sequences the work needed to deliver the ecosystem described in [..
 
 It is a sequencing document, not a calendar. Dates are intentionally absent until the team commits to them at MVP planning.
 
-**Last revised.** 2026-06-06.
+**Last revised.** 2026-07-06.
 
 ## Sequencing rationale
 
@@ -37,11 +37,11 @@ All 20 originally-tracked open decisions resolved (Resolution log in [../design/
 
 **Library-implementation portion: Library Core + legacy importer + web UI built ✅** (merged to `master`, under `library/` + `library-web/`). The Library Core exposes the public read API (catalogue list/detail/versions/definition, reusable entities, dependency-graph `dependents`, full-text search, facets) over Git-ingested canonical JSON, with storage Approach C (`jsonb` + derived index). The importer converts the full `survey_database/` catalogue into canonical Schema 2 JSON + provenance + loss report; its smoke test validates every artifact and ingests all 64 questionnaires into Postgres with zero errors. The **Library web UI** (sub-project 5) — a Vite/React/TS read-only catalogue SPA (search → view → download), with instrument-family grouping (OD-21) — is built + merged. 121 library + 309 schema + 59 frontend tests pass. **Still pending:** contribution/review workflow + DOI (needs auth/Identity, OD-08) and community signals (Identity) — both deferred (need Identity). (Public schema hosting at `behaverse.org/schemas/` is **deferred** — schemas kept in-repo, owner decision 2026-06-10; see [02_mvp_scope.md](02_mvp_scope.md) §"Schema hosting".)
 
-**Gate to leave Phase 1 — ✅ COMPLETE (Phase 1 shipped 2026-06-10).** Schemas authored ✅ (kept in-repo; behaverse.org hosting deferred). Library read API ✅. **Library web UI ✅.** **MVP deployed + live** ✅ — React SPA + FastAPI (serverless) on **Vercel**, reading a seeded managed Postgres on **Supabase** (eu-central-1), same-origin: **https://questionnaire-library.vercel.app** (64 questionnaires / 54 instrument families). A researcher can search → view → download end-to-end on the public URL. **Phase 1 is done; Phase 2 is the next priority** (see below) — to be delegated to a new agent.
+**Gate to leave Phase 1 — ✅ COMPLETE (Phase 1 shipped 2026-06-10).** Schemas authored ✅ (kept in-repo; behaverse.org hosting deferred). Library read API ✅. **Library web UI ✅.** **MVP deployed + live** ✅ — React SPA + FastAPI (serverless) on **Vercel**, reading a seeded managed Postgres on **Supabase** (eu-central-1), same-origin: **https://questionnaire-library.vercel.app** (64 questionnaires / 54 instrument families). A researcher can search → view → download end-to-end on the public URL. **Phase 1 is done.** (Phase 2 is now also complete and live — see below.)
 
 ## Phase 2 — Web Viewer + Deployments
 
-> **Status (2026-06-11): IN PROGRESS — backend complete.** The denormaliser + the full Viewer Service (VS-A..E) are built, tested, and merged. The remaining gate-critical work is the participant-facing **Web Viewer** + its embedded **WASM evaluator**. The "Web Viewer — START HERE" delegation brief is in `HANDOFF.md`.
+> **Status (2026-07-06): ✅ COMPLETE + LIVE.** The denormaliser, the full Viewer Service (VS-A..E), the **Web Viewer** player (WV-A..F), the **WASM expression evaluator** and **scorer conformance runner**, and the whole **participant experience** (portal + player + Identity SSO handoff, plus the owner roadmap #1–#8 and the **replay** QA/research track) are built, merged, and **deployed on Vercel + Supabase**. The end-to-end pipeline (Library → deployment → player → `bdm:` events + responses → Viewer Service → export) runs live. See `HANDOFF.md` + `docs/overview.md`.
 
 **Outcome.** A questionnaire from the Library can be deployed for anonymous online use; participants complete it; responses and xAPI events flow into Behaverse; the researcher can export the data.
 
@@ -49,17 +49,17 @@ All 20 originally-tracked open decisions resolved (Resolution log in [../design/
 
 - ✅ **`questionnaire-runtime-denormaliser` Python library** (per OD-18). Built + merged 2026-06-10 (`questionnaire-runtime-denormaliser/`, 56 tests).
 - ✅ **Viewer Service / Orchestrator** (per OD-18f/OD-13/OD-14): `runtime_cache` 5-tuple cache + admin purge; viewer-registry (Schema 7); `/sessions/new` minting Schema 3; OD-13 queued-forwarding outbox + SHA-256 + pluggable Behaverse sink; sessions/resume/locale; deployment management & lifecycle. Built + merged 2026-06-10/11 as **VS-A..E** (`viewer-service/`, 116 tests).
-- ❌ **Web Viewer** rendering Schema 3 runtimes (per OD-01 → S1 Pure custom: custom React + TypeScript, no SurveyJS). Publishes a Schema 7 conformance manifest. **← NEXT (gate-critical).**
-- ❌ **Session resume semantics** (OD-14) implemented in the Web Viewer (the Viewer-Service-side resume rules are built; the client side is part of the Web Viewer).
-- ❌ **WASM expression evaluator** with `score(id)` host function (per OD-11 + OD-16 §3). Evaluates `LogicRule.condition`; invokes Scorers for branching-required scores. Embedded by Web Viewer, Native Viewer, Editor. **← gate-critical, shared.**
-- ❌ **Scorer conformance runner** turning the `check_scorer_conformance` SKIP stub into a real test runner (per OD-16).
+- ✅ **Web Viewer** rendering Schema 3 runtimes (per OD-01 → S1 Pure custom: React + TypeScript, no SurveyJS). Publishes a Schema 7 conformance manifest. Built + merged (WV-A..F) + **live** (player-sooty-six.vercel.app).
+- ✅ **Session resume semantics** (OD-14) implemented in the Web Viewer (WV-E — IndexedDB per-question + resume token).
+- ✅ **WASM expression evaluator** with `score(id)` host function (per OD-11 + OD-16 §3). Evaluates `LogicRule.condition`; invokes Scorers for branching-required scores. Built + merged (`questionnaire-expression-evaluator`, Rust→WASM); embedded by the player + editor.
+- ✅ **Scorer conformance runner** turning the `check_scorer_conformance` SKIP stub into a real test runner (per OD-16). Built + merged (`questionnaire-scorer` SP1 — Scorer ABI + PHQ-9 + `checkScorer` CLI).
 - ✅ **CSV serializer** for Schema 5 → BDM-compliant CSV (per OD-17). Built in VS-D (`viewer-service` `export_csv` + `GET /deployments/{id}/export.csv`).
 - ✅ **Anonymous-link deployment mode** (UC-04) — VS-C.
 - ✅ **Demo mode** (UC-08) — VS-C (ephemeral deployments).
 - ✅ **Researcher response export** (UC-11) — VS-D (the CSV export endpoint). *Web-Viewer-collected data is the end-to-end proof, pending the viewer.*
 - ✅ **Researcher monitoring dashboard, minimal version** (UC-12) — VS-E (`GET /deployments/{id}/metrics`; SSE/UI deferred).
 
-**Gate to leave Phase 2.** End-to-end pipeline works: Library → deployment → Web Viewer (rendering Schema 3) → emitted bdm: events (Schema 4a) + responses (Schema 5) + session metadata (Schema 6) → Viewer Service → Behaverse (`forwarded` state confirmed) → export. UC-04, UC-08, UC-11 satisfied.
+**Gate to leave Phase 2 — ✅ MET (2026-06-25, participant stack live).** End-to-end pipeline works: Library → deployment → Web Viewer (rendering Schema 3) → emitted bdm: events (Schema 4a) + responses (Schema 5) + session metadata (Schema 6) → Viewer Service → Behaverse (`forwarded` state confirmed) → export. UC-04, UC-08, UC-11 satisfied.
 
 ## Phase 3 — Editor
 
