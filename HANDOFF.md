@@ -123,8 +123,9 @@ Work that concerns the whole system or doesn't fit a single component. Decompose
     /v1/deployments/{id}/sessions/{sid}/replay-link` + `GET /v1/replay?token=`), and RP3-core
     (verified round-trip: automated e2e `tools/respondent-bot/tests/e2e/replay.spec.ts` + doc
     `web-viewer/docs/replay.md`, screenshot `web-viewer/docs/replay-manual.png`) are all done.
-    **Remaining (RP3 follow-ons):** incremental live-follow of an in-progress session — see
-    `web-viewer/FOLLOWUPS.md` and `viewer-service/FOLLOWUPS.md` for detail.
+    **#7 replay (RP1/RP2/RP3 + all follow-ons) is now fully complete** — including live-follow
+    (`&follow=1`, the `/studies` "Watch live" button) — see `web-viewer/FOLLOWUPS.md` and
+    `viewer-service/FOLLOWUPS.md` for detail.
   - **Detail + raw backlog:** `web-viewer/FOLLOWUPS.md` ("Owner feature requests" — #7/#8) and
     `my_comments.md`. Follow the standing build pattern (brainstorm → spec → plan → subagent-driven
     TDD → review → merge+push), exactly as #3/#4 were done (see their specs/plans in

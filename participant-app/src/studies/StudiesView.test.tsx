@@ -51,3 +51,18 @@ test('researcher: revokes replay links for a session', async () => {
   await userEvent.click(screen.getByRole('button', { name: /revoke links/i }))
   expect(await screen.findByText(/revoked/i)).toBeInTheDocument()
 })
+
+test('researcher: Watch live opens the follow URL', async () => {
+  const open = vi.fn()
+  vi.stubGlobal('open', open)
+  authed(['researcher'], (url, init) => {
+    if (url.endsWith('/v1/deployments')) return new Response(JSON.stringify({ items: [{ deployment_id: 'd1', questionnaire_ref: 'q@v1' }] }), { status: 200 })
+    if (url.endsWith('/v1/deployments/d1/sessions')) return new Response(JSON.stringify({ sessions: [{ session_id: 's1', session_index: 1, status: 'in_progress', participant_sub: null, started_at: null, completed_at: null, submitted_at: null }] }), { status: 200 })
+    if (url.endsWith('/replay-link') && init?.method === 'POST') return new Response(JSON.stringify({ token: 't', bundle_url: 'http://vs/v1/replay?token=t', replay_url: 'http://p/?replay=enc' }), { status: 200 })
+    return null
+  })
+  render_()
+  expect(await screen.findByText(/s1/)).toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: /watch live/i }))
+  await waitFor(() => expect(open).toHaveBeenCalledWith('http://p/?replay=enc&follow=1', '_blank', 'noopener'))
+})
