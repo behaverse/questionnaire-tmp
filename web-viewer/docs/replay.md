@@ -20,6 +20,14 @@ POST /v1/deployments/{deployment_id}/sessions/{session_id}/replay-link      (res
 - `replay_url`—`${WEB_VIEWER_BASE_URL}/?replay=<url-encoded bundle_url>`; present only when
   `WEB_VIEWER_BASE_URL` is set on the Viewer Service. Open it to watch the run.
 
+## Watching live (follow mode)
+
+Append `&follow=1` to a `replay_url` (the `/studies` **"Watch live"** button does this automatically) to
+follow an in-progress session rather than view a fixed snapshot—the player polls `GET
+/v1/replay?token=…` every ~4s and keeps the view pinned to the latest event, stopping automatically once
+the session ends. The ~4s poll cadence matches the player's own ~5s event-flush interval, so the live view
+never lags more than one flush behind the real run.
+
 ## CORS—the first thing to check
 
 The player fetches `bundle_url` **cross-origin** (player origin → Viewer Service origin). The Viewer
