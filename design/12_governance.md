@@ -18,7 +18,7 @@ Three sibling projects operate under the same organisation:
 |---|---|
 | **Questionnaire Apps Ecosystem** (this repository) | Library, Editor, Viewer Service, Viewers, Participant Platform. Authoring + rendering + study orchestration. |
 | **Behaverse** ([behaverse.org](https://behaverse.org), [api.behaverse.org](https://api.behaverse.org/docs)) | Data collection API, response trial-format spec, xAPI events store, schema registry. |
-| **Identity** (a future sibling) | Authentication + authorisation for users (researchers, contributors, reviewers, participants) across both projects. |
+| **Identity** (a sibling) | Authentication + authorisation for users (researchers, contributors, reviewers, participants) across both projects. |
 
 Each project has its own roadmap, its own release cadence, and its own implementation stack. They coordinate via cross-project contracts (below); they do not merge plans.
 
@@ -43,7 +43,7 @@ The ecosystem's source is split across **multiple repositories** under the exist
 | Data plane | Viewers in this project submit responses, events, and attachment manifests to Behaverse. Behaverse owns the canonical store and provides per-deployment / per-session read APIs back to this project's Viewer Service for the real-time monitoring dashboard. |
 | URI stability | URIs under `behaverse.org/{entity-type}/{id}` are stable for a minimum of 10 years from first publication. Cited instruments remain resolvable. |
 
-### With Identity (when it ships)
+### With Identity
 
 | Concern | Contract |
 |---|---|

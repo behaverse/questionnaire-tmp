@@ -120,8 +120,8 @@ Mirror `behaverse/schemas` throughout (the owner's instruction):
 
 §2 + §7–9 are resolved: org · multi-repo · `questionnaire-` prefix · umbrella split · schemas in `questionnaire-schemas` (→ `behaverse/schemas` later) · `questionnaire-library-service` · shared libs one-repo-each · shared-lib prefix · importers-as-package · prototypes/archive stay-local (no repo) · docs consolidation · mirror-`behaverse/schemas` conventions · schemas CC-BY-4.0.
 
-## 12. Knock-on updates (apply on go-ahead)
+## 12. Knock-on updates (applied)
 
-- Reconcile **OD-18 denormaliser name** `behaverse-runtime-denormaliser` → `questionnaire-runtime-denormaliser` in [05d_runtime.md](05d_runtime.md) and the OD-18 memory.
-- Update **schema licence** in [11_content_licensing.md](11_content_licensing.md): CC0 → **CC-BY-4.0**.
-- Fold the locked topology into [12_governance.md](12_governance.md); add this doc to [00_index.md](00_index.md).
+- ✅ Reconciled **OD-18 denormaliser name** `behaverse-runtime-denormaliser` → `questionnaire-runtime-denormaliser` in [05d_runtime.md](05d_runtime.md) and the OD-18 memory.
+- ✅ Updated **schema licence** in [11_content_licensing.md](11_content_licensing.md): CC0 → **CC-BY-4.0**.
+- ✅ Folded the locked topology into [12_governance.md](12_governance.md); added this doc to [00_index.md](00_index.md).
