@@ -15,6 +15,11 @@ from ..store import deployments as dep_store
 router = APIRouter()
 
 
+def _replay_secret(s) -> str:
+    """Dedicated replay secret when set, else the invite secret (non-breaking fallback)."""
+    return s.replay_signing_secret or s.invite_signing_secret
+
+
 @router.post("/deployments/{deployment_id}/sessions/{session_id}/replay-link")
 def mint_link(deployment_id: str, session_id: str, request: Request, conn=Depends(get_conn),
               claims=Depends(require_researcher)):
@@ -24,7 +29,7 @@ def mint_link(deployment_id: str, session_id: str, request: Request, conn=Depend
     if session is None or session["deployment_id"] != deployment_id:
         raise HTTPException(status_code=404, detail="session not found in this deployment")
     s = get_settings()
-    token = mint_replay(s.invite_signing_secret, deployment_id=deployment_id, session_id=session_id,
+    token = mint_replay(_replay_secret(s), deployment_id=deployment_id, session_id=session_id,
                         ttl=s.replay_link_ttl_seconds)
     base = (s.public_base_url or str(request.base_url)).rstrip("/")
     bundle_url = f"{base}/v1/replay?token={token}"
@@ -35,7 +40,7 @@ def mint_link(deployment_id: str, session_id: str, request: Request, conn=Depend
 @router.get("/replay")
 def bundle(token: str, conn=Depends(get_conn)):
     s = get_settings()
-    payload = verify_replay(s.invite_signing_secret, token)
+    payload = verify_replay(_replay_secret(s), token)
     if payload is None:
         return JSONResponse(status_code=401, content={"error": {"code": "invalid_replay_token",
             "message": "the replay token is missing, invalid, or expired"}})

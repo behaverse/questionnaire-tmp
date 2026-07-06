@@ -36,3 +36,17 @@ def test_empty_secret_fails_closed():
 def test_garbage_token_returns_none():
     assert verify_replay(SECRET, None) is None
     assert verify_replay(SECRET, "no-dot") is None
+
+
+def test_payload_carries_iat():
+    tok = mint_replay(SECRET, deployment_id="d", session_id="s", ttl=100, now=1000)
+    p = verify_replay(SECRET, tok, now=1050)
+    assert p["iat"] == 1000 and p["exp"] == 1100
+
+
+def test_default_iat_is_subsecond_float():
+    tok = mint_replay(SECRET, deployment_id="d", session_id="s", ttl=100)
+    import json as _json
+    from viewer_service.invites import _b64u_decode
+    payload = _json.loads(_b64u_decode(tok.split(".")[0]))
+    assert isinstance(payload["iat"], float)
