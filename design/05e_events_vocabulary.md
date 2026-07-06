@@ -171,8 +171,8 @@ Grouped here by interaction kind for readability:
 
 | Verb | Object type | When triggered |
 |---|---|---|
-| `bdm:selected` | `bdm:Option` / `bdm:UIComponent` | Discrete option selected — radio chosen, checkbox checked, dropdown picked. Carries object reference to the selected option. The full multi-select state is reconstructable from the selected/deselected event sequence; not duplicated on the event. |
-| `bdm:deselected` | `bdm:Option` / `bdm:UIComponent` | Discrete option deselected — checkbox unchecked. Carries the deselected option's reference. |
+| `bdm:selected` | `bdm:Option` / `bdm:UIComponent` | Discrete option selected — radio chosen, checkbox checked, dropdown picked. Carries object reference to the selected option and `result.extensions[bdm:option_index]` (its 1-based option index), so the selection is machine-reconstructable without re-parsing labels. The full multi-select state is reconstructable from the selected/deselected event sequence; not duplicated on the event. |
+| `bdm:deselected` | `bdm:Option` / `bdm:UIComponent` | Discrete option deselected — checkbox unchecked. Carries the deselected option's reference and `result.extensions[bdm:option_index]`. |
 
 **Continuous value:**
 

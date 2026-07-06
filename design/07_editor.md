@@ -64,12 +64,12 @@ Validation messages are translatable text fields.
 
 ### 6. Scoring builder
 
-For each defined score (subscale, total, derived):
+Per OD-16 (external **Scorer** entities; see [05b_scoring.md](05b_scoring.md)), scoring is not authored as inline formulas or interpretation bands — those were dissolved (`ScoringDef` / `InterpretationBand` removed). The builder instead lets an author:
 
-- Name and identifier.
-- Formula expression with autocomplete over question IDs (`sum(q_depression_*)`, `mean(scl_anxiety)`, weighted sums).
-- Output type (numeric, categorical).
-- Optional interpretation bands (cutoffs, severity labels).
+- **Declare `scores[]`** on the questionnaire — each a `{ id, scorer, path }` triple binding a score id to a pinned Scorer Library entity (`scr_*@vYY.MMDD`) and a JSON-Pointer `path` into that Scorer's output.
+- **Pick a Scorer from the Library** (the Scorer-reference picker) and hard-pin its version (OD-06), browsing the Scorer's declared inputs/outputs.
+- **Auto-fill `Prompt.subscales`** from each Prompt's `construct` (per 05b §4.2), so subscale membership is derived rather than hand-listed.
+- **Preview scores live** — the shared web-viewer scoring engine runs the pinned Scorer's WASM in-editor (e.g. PHQ-9), so computed scores update as the author edits. Any severity banding is the Scorer's own output, not an editor construct.
 
 The builder shows a live evaluation against a synthetic sample response — computed by the same WASM evaluator (OD-11) so the displayed score is exactly what the viewer will produce at run time.
 
@@ -140,7 +140,7 @@ Once a questionnaire is judged ready, the researcher can submit it to the Librar
 1. Researcher opens an existing 21-item questionnaire.
 2. Creates a derived version `qst_phq9_short`.
 3. Removes 11 items.
-4. Adjusts the scoring formula and interpretation bands.
+4. Adjusts the questionnaire's `scores[]` (its Scorer references).
 5. Submits both the derived questionnaire and a validation note to the Library for peer review.
 
 ## Interactions with other components

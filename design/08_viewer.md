@@ -118,6 +118,10 @@ Per OD-07 (resolved 2026-05-21), the deployment-level default-state matrix is:
 
 The Web Viewer captures only what's enabled; disabled channels produce no attachment and no `recorded` xAPI statement. Continuous-signal channels go in Schema 4b attachments uploaded to the Viewer Service; only the summary RT extension travels in xAPI statements. The webcam/microphone two-layer consent (researcher enables on deployment AND participant explicitly grants at session start) is the privacy floor; no silent recording is possible under any combination of settings.
 
+### Replay
+
+Besides running a questionnaire, the Web Viewer can render a recorded session in a read-only **replay** mode. Given a session's ordered `bdm:` event stream (see [05e_events_vocabulary.md](05e_events_vocabulary.md)), its Schema-3 runtime, and any mouse track (Schema 4b), it reconstructs each question's state, the participant's answers — single-select and multi-select alike, the latter from the `bdm:selected` / `bdm:deselected` sequence carrying `bdm:option_index` — and a cursor overlay, with play / seek / speed controls. Nothing is captured or submitted in replay mode. A researcher reaches a replay through a signed, short-lived link the Viewer Service mints for a specific session (see [08a_viewer_service.md](08a_viewer_service.md)); a **live-follow** variant polls an in-progress session and keeps the view at the latest event until the session ends. Replay is a QA / research-analysis tool, outside the participant contract.
+
 ## Native Viewer (Godot)
 
 ### Responsibilities
