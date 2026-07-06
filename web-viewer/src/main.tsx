@@ -22,7 +22,7 @@ if (params.handoff) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {params.replay
-      ? <ReplayApp src={params.replay} themeParam={params.theme} />
+      ? <ReplayApp src={params.replay} themeParam={params.theme} follow={params.follow} />
       : (
         <SessionProvider identityBaseUrl={params.identityBaseUrl} handoffCode={params.handoff ?? undefined}>
           <App />
