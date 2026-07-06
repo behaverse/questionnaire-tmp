@@ -5,7 +5,7 @@ import { reconstruct } from './reconstruct'
 import { buildCursor, findRecordingStartMs } from './cursor'
 import { loadBundle, type ReplayBundle } from './load'
 import { ReplayView } from './ReplayView'
-import { isTerminal, POLL_MS, NO_CHANGE_CAP } from './follow'
+import { isTerminal, POLL_MS, NO_CHANGE_CAP, FAIL_CAP } from './follow'
 
 type Phase = { kind: 'loading' } | { kind: 'error'; error: string } | { kind: 'ready'; bundle: ReplayBundle }
 
@@ -26,9 +26,12 @@ export function ReplayApp({ src, themeParam, follow = false }: { src: string; th
     let cancelled = false
     let noChange = 0
     let lastLen = -1
+    let fails = 0
     const id = setInterval(async () => {
       const r = await loadBundle(src)
-      if (cancelled || !r.ok) return                       // transient error: keep last, keep polling
+      if (cancelled) return
+      if (!r.ok) { if (++fails >= FAIL_CAP) clearInterval(id); return }   // keep the last bundle; stop only after sustained failures
+      fails = 0
       setPhase((p) => (p.kind === 'ready' ? { kind: 'ready', bundle: r.bundle } : p))
       if (isTerminal(r.bundle.statements)) { clearInterval(id); return }   // session ended
       noChange = r.bundle.statements.length > lastLen ? 0 : noChange + 1
