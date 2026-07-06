@@ -19,6 +19,11 @@ the participant to the portal via the **Done** button / `return_url`.
   cross-origin SSO handoff from the portal is a planned follow-up.
 - The **renderer** / **scoring** libraries (`build:lib` → `dist-lib`, consumed by
   the editor) are unchanged by the split.
+- **Replay** (`?replay=<bundle_url>`): a read-only playback mode that reconstructs a
+  recorded session from its `bdm:` event stream (+ optional mouse track) — question
+  state, answers, and a cursor overlay — with play/seek/speed controls and a
+  `?follow=1` live mode that tails an in-progress session. See
+  [`docs/replay.md`](docs/replay.md).
 
 Specs: `docs/superpowers/specs/2026-06-11-web-viewer-wv-a-design.md` and the
 PA-1/PA-2 design docs in the same directory.
@@ -340,7 +345,7 @@ deployments — revisit when authenticated deployments arrive (see FOLLOWUPS).
 ## Tests
 
 ```bash
-npm test            # vitest (315 tests) + Schema 7 manifest validation
+npm test            # vitest (326 tests) + Schema 7 manifest validation
 npm run typecheck   # tests mock loadEvaluator — no prior wasm build needed
 npm run build       # tsc + builds evaluator --target web + bundles the wasm
 npm run build:lib   # renderer library (OD-03) → dist-lib/ (ESM + dts + CSS)

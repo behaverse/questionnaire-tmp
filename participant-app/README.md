@@ -12,6 +12,9 @@ through URLs (a launch URL + a `return_url`), not shared memory.
   return (`/?done=<id>`) a friendly "all done — pick another" banner shows.
 - **Account** (`/account`) — register / sign in (auto-login on register), profile, change password.
 - **My data** (`/my-data`) — the participant's own sessions + CSV download (`/v1/me/*`).
+- **Studies** (`/studies`) — researcher-only: pick a deployment, list its sessions, then **Copy
+  replay link**, **Revoke links**, or **Watch live** (opens the player in `?follow=1`) per session.
+  Nav-gated on the `researcher` role; the real gate is the Viewer Service's `require_researcher`.
 - **Reset / verify** (`/reset-password`, `/verify-email`) — reached from emailed links.
 
 Auth/session is the shared **`@behaverse/participant-session`** package (persistent login via a

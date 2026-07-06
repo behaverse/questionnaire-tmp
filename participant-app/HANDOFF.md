@@ -14,6 +14,12 @@
 - **Account** (`/account`, `src/account/`) — register (auto-login), sign in, profile, change password;
   plus emailed-link views `ResetPasswordView` / `VerifyEmailView` (`/reset-password`, `/verify-email`).
 - **My data** (`/my-data`, `src/mydata/`) — participant's own sessions + CSV download via `/v1/me/*`.
+- **Studies** (`/studies`, `src/studies/`) — the first researcher-facing UI. Pick a deployment
+  (`GET /v1/deployments`), list its sessions (`GET /v1/deployments/{id}/sessions`), then per session
+  **Copy replay link**, **Revoke links**, and **Watch live** (mints a replay link and opens the
+  player at `replay_url&follow=1`). `StudiesView.tsx` gates on the `researcher` role in
+  `session.user.roles`, and `NavShell` only shows the nav item to researchers — the VS's
+  `require_researcher` is the real gate.
 - **Shell** (`src/shell/`) — tiny hash/path router + `NavShell` (avatar + email when signed in) →
   `ParticipantApp`. Session is the shared `@behaverse/participant-session` package (`src/session/`),
   source-aliased from `../participant-session/src` in `vite.config.ts` (no build step).
@@ -25,7 +31,7 @@
 ```bash
 cd participant-app && npm install
 npm run dev          # http://localhost:5174
-npm test             # vitest (16 test files)
+npm test             # vitest (18 test files, 102 tests)
 npm run build        # tsc -b && tsc -p tsconfig.test.json && vite build
 ```
 Needs the backends running: **Identity :8100 + Viewer Service :8001 + Library :8000**. Both the

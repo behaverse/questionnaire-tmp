@@ -31,6 +31,10 @@ forwarding (OD-13), and deployment-management UX arrive in VS-B / VS-C.
 | `POST /v1/sessions/{id}/complete` | (token) mark the session submitted. |
 | `POST /v1/sessions/{id}/comments` | (token) submit a per-question **QA comment** `{page_id?, item_id?, locale?, comment?, stars?}` (comment ≤2000 chars, stars 1–5, one required); ephemeral validates-but-skips. Stored out-of-band from responses. |
 | `GET /v1/deployments/{id}/comments` · `…/comments.csv` | (researcher) read the deployment's QA comments as JSON or CSV download. |
+| `GET /v1/deployments/{id}/sessions` | (researcher) list a deployment's sessions — credential-free projection (`session_id`, `session_index`, `status`, `participant_sub`, `started_at`, `completed_at`, `submitted_at`; never `token_hash`). |
+| `POST /v1/deployments/{id}/sessions/{sid}/replay-link` | (researcher) mint a short-lived signed replay-link token for one session. |
+| `POST /v1/deployments/{id}/sessions/{sid}/replay-link/revoke` | (researcher) revoke all replay links minted for a session. |
+| `GET /v1/replay?token=` | (token-authorized) fetch the replay bundle `{runtime, statements, mouse}` for a minted, non-revoked token. |
 | `DELETE /runtime_cache[?deployment_id=]` | Admin purge (OD-18f). |
 | `GET /healthz` | Health. |
 
@@ -357,3 +361,46 @@ examined.
 
 All three are `null` when not set on the deployment.  The Web Viewer reads them at boot; see the
 `web-viewer/README.md` **Consent gate + completion polish (PA-4)** section for the runner behaviour.
+
+---
+
+### Replay links + session list + revocation (RP1/RP2, #7)
+
+Researchers can list a deployment's sessions and mint a short-lived, signed **replay link** for a
+specific session so it can be re-watched in the web-viewer's `?replay=` mode without exposing raw
+session data.
+
+`GET /v1/deployments/{id}/sessions` returns a **credential-free** projection of a deployment's
+sessions — `session_id`, `session_index`, `status`, `participant_sub`, `started_at`,
+`completed_at`, `submitted_at` — never `token_hash`.
+
+**Minting a replay link (researcher):**
+
+```
+POST /v1/deployments/{id}/sessions/{sid}/replay-link
+Authorization: Bearer <researcher token>
+```
+
+Returns `200 {"token": "...", "bundle_url": "...", "replay_url": "..." | null}` — `bundle_url` is
+the VS `GET /v1/replay?token=…` URL; `replay_url` is
+`${WEB_VIEWER_BASE_URL}/?replay=<encoded bundle_url>` when `WEB_VIEWER_BASE_URL` is set, else
+`null`.
+
+**Revoking a session's links (researcher):**
+
+```
+POST /v1/deployments/{id}/sessions/{sid}/replay-link/revoke
+Authorization: Bearer <researcher token>
+```
+
+Returns `200 {"revoked_at": "..."}`. `GET /v1/replay?token=` then returns `401
+replay_link_revoked` for any token whose `iat` predates `revoked_at` — a token minted *after* the
+revoke still works, matching a "revoke, then re-share" workflow.
+
+**Configuration:**
+
+| Variable | Description | Default |
+|---|---|---|
+| `REPLAY_SIGNING_SECRET` | HMAC secret for replay-link tokens. Falls back to `INVITE_SIGNING_SECRET` when unset. Rotating it invalidates all outstanding replay links. | — (optional; falls back) |
+| `REPLAY_LINK_TTL_SECONDS` | Replay-link token lifetime. | `604800` (7 days) |
+| `WEB_VIEWER_BASE_URL` | Player origin, used to build the ready-to-use `replay_url` (and the participant-app's "Watch live" link). If unset, only `bundle_url` is returned. | — (optional) |
