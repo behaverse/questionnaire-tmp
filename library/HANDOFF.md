@@ -49,15 +49,15 @@ The component is feature-complete and live. Remaining items are enhancements / b
 - **Comment editing** (delete+repost works today); **use-case-suitability ratings**; **GET/DELETE rating not 404-ing on unknown qid** (deliberate idempotent minor). All in [FOLLOWUPS.md](FOLLOWUPS.md).
 
 ### Cross-cutting (NOT a Library task)
-- **Content-classification gap.** The 158 harvested questionnaires lack `classification.{domain,population,administration_mode}` / `instrument_id`, so the Library Domain/Population/Instrument filters only cover the 64 `survey_db` ones. The Library facet code (`store/index.py`, faceting) is **correct** — this is missing source metadata and belongs to the harvester. See **[../questionnaire-harvester/HANDOFF.md](../questionnaire-harvester/HANDOFF.md)**.
+- **Classification complete** — all 222 entries carry classification (domain/population/administration_mode) + instrument_id; `/v1/facets` spans the full catalogue.
 
 ## Conventions & gotchas
 - **Tests need `DOCKER_CONFIG=/tmp/lib_docker`** (testcontainers Postgres) and must run as their **own** pytest invocation — do **not** combine with `viewer-service/`.
-- **Don't re-import casually.** Canonical content is live on Supabase; re-seeding TRUNCATEs + re-ingests. Always re-ingest the **full current set** (survey_db + harvested), never drop harvested entities, and **coordinate with the harvester agent** (shares the live DB; run when it isn't mid-write).
+- **Don't re-import casually.** Canonical content is live on Supabase; re-seeding TRUNCATEs + re-ingests. Always re-ingest the **full current set** (survey_db + harvested) and never drop harvested entities.
 - **DEPLOY:** live Library auto-deploys from `master`. Root `requirements.txt` must keep `questionnaire-identity-service @ ./identity-service` — the Library imports `identity_service` on boot (community auth) and will 500 without it.
 - **Ops follow-up:** the deployed function runs in `iad1` (US) while Supabase is `eu-central-1`; consider moving to `fra1` for latency.
 - **Re-seeding a schema change:** DROP SCHEMA before migrate (per the instrument-grouping re-seed note).
-- Finish branches by **merging to master locally + pushing — no PRs**. `git fetch` + ff/rebase before pushing (the harvester agent shares this checkout).
+- Finish branches by **merging to master locally + pushing — no PRs**. `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) · [FOLLOWUPS.md](FOLLOWUPS.md) · [HANDOFF_content_search_index.md](HANDOFF_content_search_index.md)

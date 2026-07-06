@@ -52,7 +52,7 @@ This component is **essentially done** (feature-complete + merged). Everything b
 - **Grammar is normative in [design/15_expression_language.md](../design/15_expression_language.md)**, not in code comments or this README. Update the design doc when the language changes.
 - **Rebuild `web/pkg/` after any `core/` change** before running the WASM tests / wiring a consumer — the JS side runs the *compiled* WASM, not the Rust source.
 - `. "$HOME/.cargo/env"` is required for every `cargo` / `wasm-pack` invocation in this environment.
-- Finish branches by **merging to master locally + pushing — no PRs** (owner preference). `git fetch` + ff/rebase before pushing (the harvester agent shares this checkout).
+- Finish branches by **merging to master locally + pushing — no PRs** (owner preference). `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) · [FOLLOWUPS.md](FOLLOWUPS.md)

@@ -31,11 +31,11 @@ All fields in data models owned by this project use **`snake_case`**. Fields inh
 |---|---|---|---|
 | 1 | Instrument Metadata | Bibliographic + psychometric properties, licensing, provenance | `behaverse.org/schemas/instrument/vYY.MMDD/schema.json` |
 | 2 | Questionnaire Definition | Structural specification (pages, blocks, sections, questions, subscales, tags, style, flow, logic, scoring, translations) | `behaverse.org/schemas/questionnaire/vYY.MMDD/schema.json` |
-| 3 | Questionnaire Runtime | Optimised for viewer rendering — a denormalised view of Schema 2 (references resolved, translations applied for the requested language, scoring optionally stripped) | `behaverse.org/schemas/questionnaire/runtime/vYY.MMDD.json` |
-| 4a | Event Data (xAPI) | Semantic events: viewed, answered, navigated, submitted, recorded, … | `behaverse.org/schemas/questionnaire/events/xapi/vYY.MMDD.json` |
-| 4b | Behavioural Channels | Per-session attachments for continuous data (mouse, keyboard, future webcam/microphone) | `behaverse.org/schemas/questionnaire/channels/vYY.MMDD.json` |
-| 5 | Response Data | Participant answers per item / per session | `behaverse.org/schemas/questionnaire/response/vYY.MMDD.json` |
-| 6 | Session Metadata | Session-level tracking | `behaverse.org/schemas/questionnaire/session/vYY.MMDD.json` |
+| 3 | Questionnaire Runtime | Optimised for viewer rendering — a denormalised view of Schema 2 (references resolved, translations applied for the requested language, scoring optionally stripped) | `behaverse.org/schemas/runtime/vYY.MMDD/schema.json` |
+| 4a | Event Data (xAPI) | Semantic events: viewed, answered, navigated, submitted, recorded, … | `behaverse.org/schemas/events/vYY.MMDD/schema.json` |
+| 4b | Behavioural Channels | Per-session attachments for continuous data (mouse, keyboard, future webcam/microphone) | `behaverse.org/schemas/recordings/{mouse,keyboard}/vYY.MMDD/schema.json` |
+| 5 | Response Data | Participant answers per item / per session | `behaverse.org/schemas/response/vYY.MMDD/schema.json` |
+| 6 | Session Metadata | Session-level tracking | `behaverse.org/schemas/session/vYY.MMDD/schema.json` |
 | 7 | Viewer Conformance Manifest | Per-viewer declaration of supported features (schema versions, evaluator, widgets, channels, Scorer impl kinds, logic actions, locale switching, resume). Per OD-18c; consumed by the Viewer Service when generating Schema 3. | `behaverse.org/schemas/viewer_conformance/vYY.MMDD/schema.json` |
 
 ## Reusable-component model
@@ -70,7 +70,7 @@ These are deliberately not resolved in this document; they appear in [10_open_de
 
 ---
 
-## Schema 1 — Questionnaire Metadata
+## Schema 1 — Instrument Metadata
 
 **Purpose.** Bibliographic and psychometric properties for cataloguing, search, and citation. Embedded in every Questionnaire Definition's `metadata` field, and also queryable independently from the Library.
 

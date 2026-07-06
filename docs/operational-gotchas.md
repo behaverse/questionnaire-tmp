@@ -43,7 +43,7 @@ with the `Origin` header. Better still, drive the real page (Playwright) — but
 ## 3. Don't re-import content — the canonical catalogue already exists on Supabase
 
 The real questionnaire catalogue is **live on the deployed app** (`questionnaire-library.vercel.app`,
-backed by Supabase): **212 questionnaires** = the 64 from the `survey_database` import **plus 158 from
+backed by Supabase): **222 questionnaires** = the 64 from the `survey_database` import **plus 158 from
 the `questionnaire-harvester`** (normalized to `v26.0618`, ingested into Supabase). The harvester keeps
 adding to it.
 
@@ -53,8 +53,8 @@ different release version, which then diverges from production and confuses ever
 seeding/importing locally, ask:
 
 - Is this content already live on Supabase? (almost always yes — check the deployed `/v1/questionnaires`)
-- For a **public demo**, the deployed app is the source of truth — deploy the missing pieces (the VS
-  `preview` endpoint + a hosted player + the Try-it link) rather than re-importing locally.
+- For a **public demo**, the deployed app is the source of truth — the VS `preview` endpoint, the hosted
+  player, and the Try-it link are all live; use them rather than re-importing locally.
 - Only seed locally for a genuinely isolated local test, and prefer ingesting the harvester's
   already-normalized content (same as prod) over a fresh `import-survey-db` at a throwaway version.
 
@@ -70,5 +70,5 @@ Dev servers are long-lived. The Vite frontends HMR the working tree, but the **P
 Running `git add -A` (even from inside a package dir) stages the **whole repo**, including untracked
 scratch (`archive*/`, `my_comments.md`, build output, the harvester's `seed-supabase.md`) and any
 `node_modules`/`dist` not yet ignored. **Stage explicit paths** for commits in this repo (there's a lot
-of untracked scratch and a concurrent harvester agent sharing master). Always `git diff --cached
+of untracked scratch). Always `git diff --cached
 --name-only | grep -iE "node_modules|/dist/|archive|seed-supabase"` before committing.

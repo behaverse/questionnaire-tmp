@@ -12,7 +12,7 @@ Run all commands from inside `tools/respondent-bot/`.
 
 ```bash
 npm install                          # first-time setup (Chromium already installed system-wide)
-npm test                             # Vitest unit tests (33 tests)
+npm test                             # Vitest unit tests (41 tests)
 npm run e2e                          # Playwright offline capture smoke
 npm run typecheck                    # tsc --noEmit
 
@@ -37,8 +37,8 @@ The e2e smoke boots the web-viewer dev server on `:5173` via Playwright's `reuse
 | `src/cli.ts` | CLI (flag parsing, `--n` loop, `--trace` write, non-zero exit on partial failure) |
 
 Test files mirror their source modules: `src/profile.test.ts`, `src/strategy.test.ts`,
-`src/runner.test.ts`, `src/trace.test.ts`, `src/cli.test.ts`;
-e2e: `tests/e2e/smoke.spec.ts`.
+`src/mouse.test.ts`, `src/runner.test.ts`, `src/trace.test.ts`, `src/cli.test.ts`;
+e2e: `tests/e2e/smoke.spec.ts`, `tests/e2e/mouse.spec.ts`, `tests/e2e/replay.spec.ts`.
 
 ## What's done
 
@@ -58,7 +58,7 @@ e2e: `tests/e2e/smoke.spec.ts`.
 - **`--n` loop**—serial multi-run; continues on failure, exits non-zero if any run failed.
 - **Offline capture smoke**—route-mocked e2e (no live VS/identity needed); asserts a
   well-formed trace is produced.
-- **Unit tests**—33 tests covering profile determinism, strategy decisions (all presets),
+- **Unit tests**—41 tests covering profile determinism, strategy decisions (all presets),
   runner orchestration, trace well-formedness, and CLI argument parsing.
 
 ## Deferred follow-ups

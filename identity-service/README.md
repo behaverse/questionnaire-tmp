@@ -63,12 +63,13 @@ Verify-email and password-reset emails are sent via a config-selected mailer:
 
 | Mailer | When | Behaviour |
 |---|---|---|
-| `SmtpMailer` | `SMTP_HOST` env var is set | Sends via SMTP with STARTTLS. Credentials optional. |
-| `ConsoleMailer` | `SMTP_HOST` not set (default) | Logs the full email body (including the link) at INFO level — zero-setup local dev. |
+| `ResendMailer` | `RESEND_API_KEY` env var is set | Sends via the Resend API (production). |
+| `SmtpMailer` | `SMTP_HOST` set (no `RESEND_API_KEY`) | Sends via SMTP with STARTTLS. Credentials optional. |
+| `ConsoleMailer` | neither set (default) | Logs the full email body (including the link) at INFO level — zero-setup local dev. |
 | `NullMailer` | tests only | Records messages in `.sent`; never logs or connects. |
 
-`make_mailer(settings)` (in `identity_service/mailer.py`) chooses between `SmtpMailer` and
-`ConsoleMailer` at startup; tests inject `NullMailer` directly.
+`make_mailer(settings)` (in `identity_service/mailer.py`) chooses among `ResendMailer` (preferred when
+`RESEND_API_KEY` is set), `SmtpMailer`, and `ConsoleMailer` at startup; tests inject `NullMailer` directly.
 
 **Email link format:**
 
@@ -80,7 +81,8 @@ Verify-email and password-reset emails are sent via a config-selected mailer:
 | Variable | Default | Description |
 |---|---|---|
 | `WEB_VIEWER_BASE_URL` | `http://localhost:5173` | Base URL of the web viewer; used to build the verify/reset links in outgoing emails. |
-| `SMTP_HOST` | *(unset)* | SMTP server hostname. Unset → ConsoleMailer. |
+| `RESEND_API_KEY` | *(unset)* | Resend API key. Set → sends via the Resend API (production); preferred over SMTP/Console. |
+| `SMTP_HOST` | *(unset)* | SMTP server hostname. Unset (and no `RESEND_API_KEY`) → ConsoleMailer. |
 | `SMTP_PORT` | `587` | SMTP port (STARTTLS). |
 | `SMTP_USERNAME` | *(unset)* | SMTP auth username (optional). |
 | `SMTP_PASSWORD` | *(unset)* | SMTP auth password (optional). |
@@ -90,5 +92,4 @@ With the default ConsoleMailer (no SMTP config), look for the verify/reset link 
 service console** (`uvicorn` stdout at INFO level). Copy the URL into the browser.
 
 ## Out of scope for ID-A
-Real email sending (NullMailer stub only), social/ORCID/GitHub federation, hosted login UI,
-full OAuth2/OIDC, MFA, JS/TS verifier, and wiring existing consumers — all later slices.
+Social/ORCID/GitHub federation, hosted login UI, full OAuth2/OIDC, MFA, JS/TS verifier — all later slices.

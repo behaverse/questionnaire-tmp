@@ -8,6 +8,12 @@ JSON Schemas for the questionnaire-apps ecosystem. Locally authored; mirror to [
 |---|---|---|
 | 1 | [`instrument/`](instrument/) | Instrument metadata — bibliographic, psychometric, licensing, classification. Generic across instrument types (questionnaires, cognitive tasks, paradigms). |
 | 2 | [`questionnaire/`](questionnaire/) | Questionnaire structural definition — pages, blocks, sections, questions, subscales, logic, scoring, validation. Embeds Schema 1 at `metadata`. |
+| 3 | [`runtime/`](runtime/) | Denormalised runtime questionnaire (v26.0603) — server-resolved render tree the viewer consumes. |
+| 4a | [`events/`](events/) | Event vocabulary (v26.0605) — `bdm:` verbs/objects/actors for interaction statements. |
+| 4b | [`recordings/`](recordings/) | Recording channels (v26.0605) — two-level `mouse`/`keyboard` sample schemas. |
+| 5 | [`response/`](response/) | Response records (v26.0603) — strict BDM Response table alignment. |
+| 6 | [`session/`](session/) | Session records (v26.0603) — participant session state and scorer outputs. |
+| 7 | [`viewer_conformance/`](viewer_conformance/) | Conformance manifest (v26.0603) — viewer capability/conformance declaration. |
 
 ## Validation
 

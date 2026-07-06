@@ -57,7 +57,7 @@ The player is feature-complete and live; remaining items are optimisations, poli
 
 ## Conventions & gotchas
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing — the **harvester agent shares this checkout** and pushes master.
+- `git fetch` + ff/rebase before pushing.
 - **Focus-mode is locked.** One question per view, auto-advance on single choice; never Google-Forms density.
 - **All durations are in SECONDS** (Schema 5 / BDM convention), not ms. **ALL response attempts are kept** — Back-and-edit emits a new revising row; dedup is analysis-side only, never storage-side.
 - Themes are **data-only** (no structural change — cross-viewer fidelity contract); keep WCAG-AA contrast green and the `qv-theme` CSS synced across the two files.

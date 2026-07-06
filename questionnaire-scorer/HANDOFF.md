@@ -1,6 +1,6 @@
 # questionnaire-scorer — Handoff
 
-**Path:** `questionnaire-scorer/` · **Stack:** Rust → wasm (scorer impls) + TypeScript host/runner · **Status:** ✅ built + merged (OD-16 SP1) · **Suggested branch:** `work/scorer`
+**Path:** `questionnaire-scorer/` · **Stack:** Rust → wasm (scorer impls) + TypeScript host/runner · **Status:** ✅ built + merged (OD-16; data-driven engine + 158 scorers live). Started as SP1 (ABI v1 + PHQ-9). · **Suggested branch:** `work/scorer`
 
 > The Scorer execution core and conformance runner for OD-16 scoring: a normative raw-wasm **Scorer ABI v1**, a reference **PHQ-9** scorer, a TS host that compiles + runs scorers, and a `scorer-conformance` CLI. The Web Viewer (SP2a/b) and the Editor (ED-D4b) run scorers through this same host.
 > For deep detail see [README.md](README.md) and the normative [ABI.md](ABI.md); for the raw deferred-items backlog see [FOLLOWUPS.md](FOLLOWUPS.md).
@@ -9,14 +9,15 @@
 - **ABI v1 ([ABI.md](ABI.md), normative).** A Scorer is a wasm module that imports nothing and is deterministic; exports `memory`, `scorer_abi_version`, `scorer_alloc`, `scorer_dealloc`, `scorer_score`. Returns a length-prefixed UTF-8 JSON envelope `{ok:true,output}` or `{ok:false,error}`; never traps on bad input.
 - **`abi/`** — `scorer-abi` Rust crate: ABI plumbing + the `scorer!(score)` macro. Authors write `fn score(&Value) -> Result<Value,String>` and build a `cdylib` for `wasm32-unknown-unknown` (no wasm-bindgen).
 - **`scorers/phq9/`** — the reference PHQ-9 scorer (Rust), built to `dist-wasm/phq9.wasm` by `scripts/build-phq9.mjs` (the build script also syncs the sha256 into `scr_phq9.json`).
+- **`engine/` (scorer-engine) + `specs/<id>.json` + `scripts/build-scorer.mjs`** → 158 `scr_*` entities (`dist-entities/`); see [SCORERS.md](SCORERS.md).
 - **`host/`** — TS host: `compileScorer`/`runScorer` ([host/src/runScorer.ts](host/src/runScorer.ts)), the conformance runner ([host/src/conformance.ts](host/src/conformance.ts), `checkScorer`), and the `scorer-conformance` CLI ([host/src/cli.ts](host/src/cli.ts)).
 - **Conformance checks:** sha256 match → ABI version `==1` → every `test_case` returns `ok:true` + validates against `output_schema` + deep-equals `expected` → determinism across repeated runs. Non-`wasm` impl kinds are reported `not_checked`.
 
 ## Run & test
-    # Rust (scorer-abi + phq9 unit tests; 9)
+    # Rust workspace tests (scorer-abi + engine + all scorer crates)
     bash -c '. "$HOME/.cargo/env" && cd questionnaire-scorer && cargo test'
 
-    # Host + conformance (6; the npm `pretest` rebuilds dist-wasm/phq9.wasm first)
+    # Host + conformance (the npm `pretest` rebuilds dist-wasm/phq9.wasm first)
     ( cd questionnaire-scorer/host && npm install && npm test )
 
     # Conformance CLI against the PHQ-9 entity + binary
@@ -33,7 +34,7 @@ This component (OD-16 SP1) is feature-complete and merged. Live `score(id)` in t
 **Now** — none required; the engine + runner are done.
 
 **Next**
-- **More reference scorers.** Only PHQ-9 exists. Add GAD-7 / PSS-10 / a Solution-bearing example — useful conformance fixtures as the Scorer library grows. ([FOLLOWUPS.md](FOLLOWUPS.md))
+- All 158 harvested instruments are scored + live (see [SCORERS.md](SCORERS.md)): a data-driven scorer-engine + build-scorer.mjs + per-instrument specs/ cover sum/mean/subscale/band shapes; 9 bespoke Rust crates cover non-linear cases (phq9, mdi, asrs, cirens, eq, vadrs, ccss, pti, nodscl).
 - **External Scorer SDKs.** Document/scaffold authoring scorers in languages other than Rust against ABI v1 (any core-wasm target implementing the five exports is conformant — see [ABI.md](ABI.md)).
 - **Cross-impl agreement.** When a Scorer ships >1 impl kind, have the runner assert all kinds deep-equal on every test case. ([FOLLOWUPS.md](FOLLOWUPS.md))
 
@@ -49,7 +50,7 @@ This component (OD-16 SP1) is feature-complete and merged. Live `score(id)` in t
 - A conformant scorer **never traps** on bad input and **ignores unrecognised `scored_responses` keys** (select only the prompt ids it scores; treat its own absent keys as missing).
 - After any Rust change, **rebuild the wasm** so its sha256 re-syncs into `scr_phq9.json` — otherwise conformance fails on the hash check.
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing (the harvester agent shares this checkout).
+- `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) · [ABI.md](ABI.md) (normative) · [FOLLOWUPS.md](FOLLOWUPS.md)

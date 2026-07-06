@@ -4,9 +4,10 @@ The shared participant **auth/session** layer — the single source of truth con
 **participant-app** (portal) and the **web-viewer** (player).
 
 - `SessionProvider` / `useSession` — persistent login (a localStorage refresh token), single-flight
-  silent refresh on boot + 401, logout.
+  silent refresh on boot + 401, logout + SSO handoff boot exchange.
 - `client` — the Identity HTTP client: `login`, `refresh`, `logout`, `fetchMe`, `register`,
-  `changePassword`, `verifyEmail`, `requestPasswordReset`, `resetPassword`.
+  `changePassword`, `verifyEmail`, `requestPasswordReset`, `resetPassword`, `mintHandoff`,
+  `exchangeHandoff`.
 - `authFetch` — `makeAuthFetch(getAccess, doRefresh)`: a `fetch` that attaches the access token and
   refreshes once on 401.
 - `storage` — refresh-token persistence.

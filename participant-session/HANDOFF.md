@@ -66,7 +66,7 @@ optional follow-ons remain.
   (StrictMode double-invoke guarded via `booted` ref).
 - **CORS:** Identity must allow both the portal and player origins (auth runs from both).
 - Finish branches by **merging to master locally + pushing — no PRs** (owner preference).
-- `git fetch` + ff/rebase before pushing (the harvester agent shares this checkout).
+- `git fetch` + ff/rebase before pushing.
 
 ## References
 - [README.md](README.md) — consumption (alias + dedupe) detail.

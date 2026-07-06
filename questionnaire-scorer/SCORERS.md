@@ -71,9 +71,11 @@ subscale. Multi-form transforms: WHO-5 uses `transform.mul = 4`; DASS-21 subscal
 | `who5` | sum × 4 + bands | Topp et al. 2015 |
 | `dass21` | 3 subscales × 2 + per-subscale bands | Lovibond & Lovibond 1995 |
 
+> The table shows illustrative scorer shapes; the true total is 149 specs + 9 bespoke = 158.
+
 ## Wired vertical slice (done)
 
-The 4 scorers above are wired end-to-end:
+All 158 scorers are wired end-to-end (each qst_* declares scores[]; entities in output/scorers/) and live:
 - each `qst_<id>.json` declares `scores[]: { id, scorer, path }` (OD-16; JSON-Pointer into the
   scorer output, e.g. `/scores/total/value`), referencing `scr_<id>@v26.0618`;
 - the Scorer entities live in `questionnaire-harvester/output/scorers/scr_<id>.json` (ingested
@@ -97,5 +99,5 @@ The 4 scorers above are wired end-to-end:
 
 ## Coverage
 
-~150 instruments remain; each is a `specs/<id>.json` + sourced cut-offs. Instruments needing
+All 158 harvested instruments are scored + live (149 spec-driven + 9 bespoke crates). 0 remain. Instruments needing
 non-linear / lookup-table scoring (e.g. MBTI-type categorical) still want a bespoke crate.
