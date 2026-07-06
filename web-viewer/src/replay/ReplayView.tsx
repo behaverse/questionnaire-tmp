@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { StepRenderer } from '../renderer'
 import type { AnswerValue, Runtime } from '../renderer/types'
 import { flattenSteps, type Step } from '../app/steps'
@@ -28,10 +28,17 @@ function toAnswerValue(el: Step['elements'][number]['element'], a: RecAnswer): A
   return undefined
 }
 
-export function ReplayView({ runtime, timeline, cursorAt }: { runtime: Runtime; timeline: Timeline; cursorAt: (absMs: number) => { x: number; y: number } | null }) {
+export function ReplayView({ runtime, timeline, cursorAt, follow }: {
+  runtime: Runtime; timeline: Timeline; cursorAt: (absMs: number) => { x: number; y: number } | null
+  follow?: { following: boolean; ended: boolean; onToggle: () => void }
+}) {
   const steps = useMemo(() => flattenSteps(runtime), [runtime])
   const locale = runtime.locale ?? 'en'
   const clock = useReplayClock(timeline.durationMs)
+  // live-tail: while following (and not ended), keep the view pinned to the latest event
+  useEffect(() => {
+    if (follow?.following && !follow.ended) clock.seek(timeline.durationMs)
+  }, [follow?.following, follow?.ended, timeline.durationMs, clock.seek])
   const absMs = timeline.startMs + clock.offsetMs
   const state = timeline.stateAt(absMs)
 
@@ -63,6 +70,12 @@ export function ReplayView({ runtime, timeline, cursorAt }: { runtime: Runtime; 
         <label>speed <select aria-label="speed" value={clock.speed} onChange={(e) => clock.setSpeed(Number(e.target.value))}>
           {SPEEDS.map((s) => <option key={s} value={s}>{s}×</option>)}
         </select></label>
+        {follow && (
+          <button onClick={follow.onToggle} disabled={follow.ended}
+            style={{ color: follow.ended ? '#71717a' : follow.following ? '#e11d48' : '#a1a1aa', fontWeight: 600 }}>
+            {follow.ended ? 'Ended' : follow.following ? '● LIVE' : 'Paused'}
+          </button>
+        )}
       </div>
     </div>
   )

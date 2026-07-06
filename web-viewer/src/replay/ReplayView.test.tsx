@@ -66,3 +66,22 @@ describe('ReplayView', () => {
     expect(document.getElementById('replay-cursor')).not.toBeNull()
   })
 })
+
+it('shows a LIVE badge and live-tails the clock to the end while following', () => {
+  const stmts = [ev(1, 'bdm:trial_started', 'trial_it_1'), ev(3, 'bdm:trial_ended', 'trial_it_1', { 'bdm:response_option_index': 2 })]
+  const { rerender } = render(<ReplayView runtime={runtime} timeline={reconstruct(stmts)} cursorAt={() => null}
+    follow={{ following: true, ended: false, onToggle: () => {} }} />)
+  expect(screen.getByRole('button', { name: /live/i })).toBeInTheDocument()
+  // a longer timeline arrives → the clock live-tails to the new end (total == max)
+  const longer = [...stmts, ev(9, 'bdm:submitted')]
+  rerender(<ReplayView runtime={runtime} timeline={reconstruct(longer)} cursorAt={() => null}
+    follow={{ following: true, ended: false, onToggle: () => {} }} />)
+  const scrubber = screen.getByRole('slider', { name: /timeline/i }) as HTMLInputElement
+  expect(Number(scrubber.value)).toBe(reconstruct(longer).durationMs)  // pinned to the live edge
+})
+
+it('shows Ended and stops tailing when ended', () => {
+  render(<ReplayView runtime={runtime} timeline={reconstruct([ev(1, 'bdm:trial_started', 'trial_it_1')])} cursorAt={() => null}
+    follow={{ following: true, ended: true, onToggle: () => {} }} />)
+  expect(screen.getByRole('button', { name: /ended/i })).toBeInTheDocument()
+})
