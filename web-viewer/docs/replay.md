@@ -35,7 +35,7 @@ Replay tokens are signed with `REPLAY_SIGNING_SECRET` (falls back to `INVITE_SIG
 links without a full rotation, a researcher hits **"Revoke links"** on the `/studies` view, or calls
 `POST /v1/deployments/{deployment_id}/sessions/{session_id}/replay-link/revoke` directly (researcher-gated).
 After either path, `GET /v1/replay?token=` for a token minted before the revoke returns `401`; re-minting
-(e.g. "Copy replay link") issues a fresh, working link.
+(e.g. "Copy replay link") issues a fresh, working link. Revocation compares the token's mint time against the revoke time using the app and database clocks respectively, so if those clocks differ slightly, a link re-minted in the same instant as a revoke may take a moment to be honored.
 
 ## Known limitations (out of RP3-core scope)
 

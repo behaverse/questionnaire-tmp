@@ -5,7 +5,7 @@ from denormaliser import PreflightError
 from .deps import get_conn
 from .identity import require_researcher
 from .sessions import _preflight_422
-from ..config import get_settings
+from ..config import Settings, get_settings
 from ..library_client import LibraryError
 from ..replay_links import mint_replay, verify_replay
 from ..replay import build_replay_bundle
@@ -16,7 +16,7 @@ from ..store import replay_revocation as revocation_store
 router = APIRouter()
 
 
-def _replay_secret(s) -> str:
+def _replay_secret(s: Settings) -> str:
     """Dedicated replay secret when set, else the invite secret (non-breaking fallback)."""
     return s.replay_signing_secret or s.invite_signing_secret
 
