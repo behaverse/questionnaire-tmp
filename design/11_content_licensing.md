@@ -95,6 +95,6 @@ Imported content (per [13_importers.md](13_importers.md)) inherits the source's 
 
 ## Migration of existing content
 
-The 792 questions and 59 questionnaires migrated from `survey_database/` are tagged through a one-time audit pass before they reach the Library's public catalogue. Items that cannot be confidently audited are tagged `unknown` and migrated anyway — the `unknown` tag is itself an honest declaration, not a barrier.
+The 793 questions and 64 questionnaires migrated from `survey_database/` are tagged through a one-time audit pass before they reach the Library's public catalogue. Items that cannot be confidently audited are tagged `unknown` and migrated anyway — the `unknown` tag is itself an honest declaration, not a barrier.
 
 The audit is a tagging exercise, not a gatekeeping exercise: every audited item migrates; the metadata records what is known.

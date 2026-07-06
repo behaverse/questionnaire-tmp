@@ -4,7 +4,7 @@
 >
 > - **(a) Library software** — the codebase that implements catalogue, search, REST API, contribution workflow, etc. Python + FastAPI + PostgreSQL backend, JS/TS web UI. Lives in a Git repository.
 > - **(b) Library deployment** — one specific running instance of (a) — a server, a database, a public URL. Per OD-10 there is **exactly one** such instance, operated by the operating organisation.
-> - **(c) Library content** — the questionnaires, reusable components, translations, reviews, comments, ratings, and usage statistics actually stored in the database of (b). Seeded at MVP from the 792 questions + 59 questionnaires in `survey_database/`; grows through the contribution workflow.
+> - **(c) Library content** — the questionnaires, reusable components, translations, reviews, comments, ratings, and usage statistics actually stored in the database of (b). Seeded at MVP from the 793 questions + 64 questionnaires in `survey_database/`; grows through the contribution workflow.
 >
 > The rest of this doc says "the Library" without specifying which sense, because OD-10 maps the three 1:1:1 (one software, one deployment, one content pool). If OD-10 is ever revisited (federated lab-Libraries, third-party deployments of the software), the (a) / (b) / (c) distinction will become load-bearing.
 

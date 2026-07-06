@@ -4,6 +4,8 @@ The MVP boundary: what the first deliverable contains, and what it deliberately 
 
 **Last revised.** 2026-06-06 (schema-hosting decision added 2026-06-10: schemas kept in-repo; public hosting at `behaverse.org/schemas/` deferred — see "Schema hosting" below).
 
+> **Update (2026-07-06).** Phase 1 (this MVP) is **complete and deployed live** — the Library web UI shipped and the catalogue is public at https://questionnaire-library.vercel.app; only the auth-gated contribution/review workflow (OD-08) stays deferred. The dated "as of 2026-06-06" status below is a historical snapshot — see [01_roadmap.md](01_roadmap.md) + [../HANDOFF.md](../HANDOFF.md) for current status.
+
 ## MVP outcome
 
 A researcher can:

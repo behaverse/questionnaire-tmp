@@ -4,6 +4,8 @@ Each question type and cross-cutting feature defined in [../design/02_terminolog
 
 A feature being assigned to a phase means: by the end of that phase, every component that should support the feature does so. Earlier phases may render or store the feature partially, but full end-to-end support is gated by the assigned phase.
 
+> **Update (2026-07-06).** Phases 1 and 2 are complete and deployed; the dated "Status (2026-06-05)" table further below is a historical snapshot (e.g. the `survey_database` migration is long since done — 222 questionnaires are live). See [01_roadmap.md](01_roadmap.md) + [../HANDOFF.md](../HANDOFF.md) for current status.
+
 ## Question types
 
 Per `design/02_terminology.md`, there are nine **core types** plus a set of **demoted types** that collapse into a core type + a `style` value. The table below tracks viewer support per core type; the demoted-type aliases are listed in a second sub-table for cross-reference.
