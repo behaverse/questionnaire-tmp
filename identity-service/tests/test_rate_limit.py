@@ -63,6 +63,32 @@ def test_distinct_ips_have_independent_budgets(pg_url, monkeypatch):
     assert c.post("/v1/auth/login", json=body, headers={"x-forwarded-for": "2.2.2.2"}).status_code == 401
 
 
+def test_trusted_header_takes_precedence_over_forwarded_for(pg_url, monkeypatch):
+    """The hardened x-vercel-forwarded-for keys the bucket; a spoofed x-forwarded-for is ignored, so
+    an attacker can't rotate XFF to escape a per-IP limit behind Vercel."""
+    _bootstrap(pg_url)
+    c = _client(pg_url, monkeypatch, RATE_LIMIT_LOGIN="1/3600")
+    body = {"email": "nobody@e.com", "password": "wrong", "audience": "questionnaire-apps"}
+    h1 = {"x-vercel-forwarded-for": "9.9.9.9", "x-forwarded-for": "1.1.1.1"}
+    h2 = {"x-vercel-forwarded-for": "9.9.9.9", "x-forwarded-for": "2.2.2.2"}  # same trusted IP, diff XFF
+    assert c.post("/v1/auth/login", json=body, headers=h1).status_code == 401
+    assert c.post("/v1/auth/login", json=body, headers=h2).status_code == 429  # still the same bucket
+
+
+def test_limiter_fails_open_on_db_error(pg_url, monkeypatch):
+    """A limiter DB hiccup must never 500 a legitimate login — it fails open (allows the request)."""
+    _bootstrap(pg_url)
+    c = _client(pg_url, monkeypatch, RATE_LIMIT_LOGIN="1/3600")
+    from identity_service.store import rate_limit as rl
+    def boom(*a, **k):
+        raise RuntimeError("db down")
+    monkeypatch.setattr(rl, "check_and_record", boom)
+    body = {"email": "nobody@e.com", "password": "wrong", "audience": "questionnaire-apps"}
+    # would be 429 on the 2nd call if the limiter worked; with it erroring, both pass through to 401
+    assert c.post("/v1/auth/login", json=body).status_code == 401
+    assert c.post("/v1/auth/login", json=body).status_code == 401
+
+
 def test_prune_drops_only_old_hits(conn):
     conn.execute("INSERT INTO rate_limit_hit (bucket, ts) VALUES ('b', now() - interval '2 days')")
     conn.execute("INSERT INTO rate_limit_hit (bucket, ts) VALUES ('b', now())")

@@ -41,9 +41,25 @@ describe('checkGuard — shared-secret mode', () => {
 describe('checkGuard — rate limiting', () => {
   test('the Nth+1 request from one IP in the window is 429', () => {
     const env = { TRANSLATE_RATE_LIMIT: '3' }
-    const headers = { origin: 'https://editor.example', host: 'editor.example', 'x-forwarded-for': '9.9.9.9' }
+    const headers = { origin: 'https://editor.example', host: 'editor.example', 'x-vercel-forwarded-for': '9.9.9.9' }
     const results = Array.from({ length: 4 }, () => checkGuard(req(headers), env))
     expect(results.slice(0, 3).every((r) => r.ok)).toBe(true)
     expect(results[3]).toMatchObject({ ok: false, status: 429 })
+  })
+
+  test('a spoofed x-forwarded-for cannot escape the per-IP limit when a trusted header is present', () => {
+    const env = { TRANSLATE_RATE_LIMIT: '1' }
+    const base = { origin: 'https://editor.example', host: 'editor.example', 'x-vercel-forwarded-for': '7.7.7.7' }
+    expect(checkGuard(req({ ...base, 'x-forwarded-for': 'a.a.a.a' }), env).ok).toBe(true)
+    // same trusted IP, different (rotated) XFF → still the same bucket → blocked
+    expect(checkGuard(req({ ...base, 'x-forwarded-for': 'b.b.b.b' }), env)).toMatchObject({ ok: false, status: 429 })
+  })
+
+  test('a junk TRANSLATE_RATE_LIMIT falls back to the default instead of disabling the limiter', () => {
+    const env = { TRANSLATE_RATE_LIMIT: 'not-a-number' }
+    const headers = { origin: 'https://editor.example', host: 'editor.example', 'x-vercel-forwarded-for': '5.5.5.5' }
+    const results = Array.from({ length: 31 }, () => checkGuard(req(headers), env))
+    expect(results.slice(0, 30).every((r) => r.ok)).toBe(true)   // default cap is 30/min
+    expect(results[30]).toMatchObject({ ok: false, status: 429 })
   })
 })
