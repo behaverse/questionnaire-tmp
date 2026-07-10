@@ -26,11 +26,11 @@ def new_session(conn, deployment: dict, viewer: dict, viewer_id: str, viewer_ver
     if auth_mode == "identity" and participant_claims is not None:
         participant_sub = participant_claims["sub"]
         agent_id = participant_sub
-        session_index = session_store.count_for_agent(conn, agent_id) + 1
+        session_index = session_store.next_index_for_agent(conn, agent_id)
     elif auth_mode == "invite" and invite_payload is not None:
         agent_id = invite_payload["participant_id"]
         participant_sub = "invite:" + agent_id
-        session_index = session_store.count_for_agent(conn, agent_id) + 1
+        session_index = session_store.next_index_for_agent(conn, agent_id)
     else:
         participant_sub = None
         agent_id = "agent_" + uuid.uuid4().hex[:8]

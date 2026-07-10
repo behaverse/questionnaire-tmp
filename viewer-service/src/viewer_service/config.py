@@ -32,6 +32,7 @@ class Settings:
     cron_secret: str | None = None
     scorer_map: dict[str, str] = field(default_factory=dict)
     enable_docs: bool = False
+    ephemeral_session_ttl_seconds: int = 86_400   # prune demo/ephemeral sessions older than this
 
 
 def forwarding_enabled(settings: "Settings") -> bool:
@@ -76,4 +77,5 @@ def get_settings() -> Settings:
         cron_secret=os.environ.get("CRON_SECRET") or None,
         scorer_map=scorer_map,
         enable_docs=os.environ.get("ENABLE_DOCS", "").strip().lower() in ("1", "true", "yes", "on"),
+        ephemeral_session_ttl_seconds=int(os.environ.get("EPHEMERAL_SESSION_TTL_SECONDS", "86400")),
     )
