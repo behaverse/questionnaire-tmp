@@ -4,13 +4,13 @@ from fastapi.responses import JSONResponse
 from denormaliser import PreflightError
 from .deps import get_conn
 from .identity import require_researcher
+from .authz import require_owned_deployment
 from .sessions import _preflight_422
 from ..config import Settings, get_settings
 from ..library_client import LibraryError
 from ..replay_links import mint_replay, verify_replay
 from ..replay import build_replay_bundle
 from ..store import sessions as session_store
-from ..store import deployments as dep_store
 from ..store import replay_revocation as revocation_store
 
 router = APIRouter()
@@ -24,8 +24,7 @@ def _replay_secret(s: Settings) -> str:
 @router.post("/deployments/{deployment_id}/sessions/{session_id}/replay-link")
 def mint_link(deployment_id: str, session_id: str, request: Request, conn=Depends(get_conn),
               claims=Depends(require_researcher)):
-    if dep_store.get_deployment(conn, deployment_id) is None:
-        raise HTTPException(status_code=404, detail="deployment not found")
+    require_owned_deployment(conn, deployment_id, claims)
     session = session_store.get_session(conn, session_id)
     if session is None or session["deployment_id"] != deployment_id:
         raise HTTPException(status_code=404, detail="session not found in this deployment")
@@ -41,8 +40,7 @@ def mint_link(deployment_id: str, session_id: str, request: Request, conn=Depend
 @router.post("/deployments/{deployment_id}/sessions/{session_id}/replay-link/revoke")
 def revoke_link(deployment_id: str, session_id: str, conn=Depends(get_conn),
                 claims=Depends(require_researcher)):
-    if dep_store.get_deployment(conn, deployment_id) is None:
-        raise HTTPException(status_code=404, detail="deployment not found")
+    require_owned_deployment(conn, deployment_id, claims)
     session = session_store.get_session(conn, session_id)
     if session is None or session["deployment_id"] != deployment_id:
         raise HTTPException(status_code=404, detail="session not found in this deployment")

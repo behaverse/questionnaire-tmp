@@ -42,13 +42,21 @@ def list_catalogue_candidates(conn: psycopg.Connection) -> list[dict]:
     return [dict(zip(cols, r)) for r in rows]
 
 
-def list_deployments(conn: psycopg.Connection) -> list[dict]:
-    rows = conn.execute(
-        "SELECT deployment_id, questionnaire_ref, mode_preset, active_from, active_until, "
-        "created_at FROM deployment ORDER BY created_at DESC").fetchall()
-    cols = ["deployment_id", "questionnaire_ref", "mode_preset", "active_from",
-            "active_until", "created_at"]
-    return [dict(zip(cols, r)) for r in rows]
+_LIST_COLS = ["deployment_id", "questionnaire_ref", "mode_preset", "active_from",
+              "active_until", "created_at"]
+
+
+def list_deployments(conn: psycopg.Connection, *, owner: str | None = None) -> list[dict]:
+    """List deployments, newest first. When `owner` is given, restrict to that creator's rows
+    (the researcher-scoped listing); when None, list all (the administrator view)."""
+    sql = (f"SELECT {', '.join(_LIST_COLS)} FROM deployment ")
+    params: tuple = ()
+    if owner is not None:
+        sql += "WHERE created_by=%s "
+        params = (owner,)
+    sql += "ORDER BY created_at DESC"
+    rows = conn.execute(sql, params).fetchall()
+    return [dict(zip(_LIST_COLS, r)) for r in rows]
 
 
 def patch_deployment(conn: psycopg.Connection, deployment_id: str, *, active_until=..., quota=...) -> bool:

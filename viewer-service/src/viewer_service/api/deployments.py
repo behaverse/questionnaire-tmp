@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from denormaliser import RuntimePolicy
 from .deps import get_conn
 from .identity import require_researcher
+from .authz import require_owned_deployment, is_admin
 from ..models import DeploymentCreate, DeploymentPatch
 from ..modes import resolve_preset, UnsupportedPreset
 from ..store import deployments as store
@@ -55,15 +56,14 @@ def create(body: DeploymentCreate, conn=Depends(get_conn), claims=Depends(requir
 
 @router.get("/deployments")
 def list_(conn=Depends(get_conn), claims=Depends(require_researcher)):
-    return {"items": store.list_deployments(conn)}
+    # Scope to the caller's own deployments; administrators see all.
+    owner = None if is_admin(claims) else claims["sub"]
+    return {"items": store.list_deployments(conn, owner=owner)}
 
 
 @router.get("/deployments/{deployment_id}")
 def get(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
-    dep = store.get_deployment(conn, deployment_id)
-    if dep is None:
-        raise HTTPException(status_code=404, detail="deployment not found")
-    return dep
+    return require_owned_deployment(conn, deployment_id, claims)
 
 
 _SESSION_LIST_FIELDS = ("session_id", "session_index", "status", "participant_sub",
@@ -72,8 +72,7 @@ _SESSION_LIST_FIELDS = ("session_id", "session_index", "status", "participant_su
 
 @router.get("/deployments/{deployment_id}/sessions")
 def list_sessions(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
-    if store.get_deployment(conn, deployment_id) is None:
-        raise HTTPException(status_code=404, detail="deployment not found")
+    require_owned_deployment(conn, deployment_id, claims)
     rows = session_store.list_sessions_for_deployment(conn, deployment_id)
     # project only display-safe fields—never leak token_hash or other session internals
     return {"sessions": [{k: r[k] for k in _SESSION_LIST_FIELDS} for r in rows]}
@@ -81,6 +80,7 @@ def list_sessions(deployment_id: str, conn=Depends(get_conn), claims=Depends(req
 
 @router.patch("/deployments/{deployment_id}")
 def patch(deployment_id: str, body: DeploymentPatch, conn=Depends(get_conn), claims=Depends(require_researcher)):
+    require_owned_deployment(conn, deployment_id, claims)
     kwargs = {}
     if "active_until" in body.model_fields_set:
         kwargs["active_until"] = body.active_until
