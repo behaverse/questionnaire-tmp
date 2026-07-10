@@ -6,6 +6,33 @@
 
 ---
 
+## 0a. Phase-0 security hardening — required live actions (2026-07-10)
+
+The 2026-07-10 review shipped security fixes on `work/security-hardening` (merged to master). Two need
+an operator action against the LIVE stack when redeploying — do these **with** the redeploy:
+
+1. **Identity — set `DEFAULT_REGISTER_ROLE=participant`** on the Identity Vercel project, then redeploy
+   Identity. Before this, public `/v1/auth/register` granted `researcher` by default (privilege
+   escalation). The code default is now `participant`; the live env must not override it back.
+   Grant researcher/reviewer to real accounts via `POST /v1/admin/users/{id}/roles` or the
+   `identity create-admin` CLI.
+2. **Viewer Service — deployment ownership is now enforced.** Researcher routes (`get`, `sessions`,
+   `export.csv`, `metrics`, `invites`, `comments`, `recordings`, `runtime`, `replay-link`, `patch`,
+   and the scoped `list`) now require the caller to be the deployment's `created_by` (admins override;
+   non-owners get 404). **Backfill any legacy rows with a NULL `created_by`** or they become
+   admin-only — run once against the shared DB after deploying VS:
+   ```sql
+   -- set the real owner sub for pre-ownership deployments (they are otherwise admin-only):
+   UPDATE deployment SET created_by = '<owner-identity-sub>' WHERE created_by IS NULL;
+   ```
+   Confirm the owner account holds the `administrator` role (or is the `created_by`) so it retains
+   access to its live deployments. Then redeploy VS via `scripts/redeploy-participant-stack.sh vs`.
+3. **Editor** — `/api/translate` is now origin-guarded + rate-limited. Optionally set
+   `TRANSLATE_SHARED_SECRET` on the editor project to fully lock it (see `editor/.env.example`).
+4. **Backups** — stand up `scripts/backup-supabase.sh` on a schedule (see [docs/backups.md](docs/backups.md)).
+
+---
+
 ## 0. AS-BUILT (the live deployment, 2026-06-25) — read this first
 
 The participant stack went live on **Vercel + Supabase (free tier, $0)**. The actual
