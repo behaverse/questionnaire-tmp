@@ -21,4 +21,7 @@ def reap_expired(conn, *, grace_seconds: int = 0) -> dict[str, int]:
             f"DELETE FROM {table} WHERE expires_at < now() - make_interval(secs => %s)",
             (grace_seconds,))
         counts[table] = cur.rowcount
+    # rate-limit hits have no expires_at; drop anything well past the longest window (1 day).
+    from ..store import rate_limit as rl_store
+    counts["rate_limit_hit"] = rl_store.prune(conn, max_age_seconds=86_400)
     return counts

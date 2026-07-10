@@ -1,5 +1,16 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+
+def _limit(env_name: str, default: str) -> tuple[int, int]:
+    """Parse a `count/seconds` rate-limit spec from env (e.g. '10/300') into (count, window)."""
+    raw = os.environ.get(env_name, default)
+    try:
+        count, window = raw.split("/", 1)
+        return int(count), int(window)
+    except (ValueError, AttributeError):
+        c, w = default.split("/")
+        return int(c), int(w)
 
 
 @dataclass(frozen=True)
@@ -24,6 +35,9 @@ class Settings:
     resend_api_key: str | None = None
     cron_secret: str | None = None
     enable_docs: bool = False
+    rate_limit_enabled: bool = True
+    # per-route (count, window_seconds) for the auth rate limiter, keyed by bucket name
+    rate_limits: dict[str, tuple[int, int]] = field(default_factory=dict)
 
 
 def get_settings() -> Settings:
@@ -48,4 +62,12 @@ def get_settings() -> Settings:
         resend_api_key=os.environ.get("RESEND_API_KEY") or None,
         cron_secret=os.environ.get("CRON_SECRET") or None,
         enable_docs=os.environ.get("ENABLE_DOCS", "").strip().lower() in ("1", "true", "yes", "on"),
+        rate_limit_enabled=os.environ.get("RATE_LIMIT_ENABLED", "1").strip().lower()
+            not in ("0", "false", "no", "off"),
+        rate_limits={
+            "login": _limit("RATE_LIMIT_LOGIN", "10/300"),
+            "register": _limit("RATE_LIMIT_REGISTER", "5/3600"),
+            "reset": _limit("RATE_LIMIT_RESET", "5/3600"),
+            "verify": _limit("RATE_LIMIT_VERIFY", "20/3600"),
+        },
     )
