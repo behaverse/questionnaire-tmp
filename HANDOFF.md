@@ -205,6 +205,8 @@ gone stale — `sudo systemctl restart docker` clears it.
 ## References
 
 - [README.md](README.md) — short project overview · [DEPLOYMENT.md](DEPLOYMENT.md) — live URLs + as-built deploy
+- [docs/backups.md](docs/backups.md) — **DB backup + restore runbook** (responses are a single copy; back them up)
+- [plan/05_completion_plan.md](plan/05_completion_plan.md) — completion + production-hardening plan (2026-07-10 review)
 - [design/00_index.md](design/00_index.md) — authoritative design · [plan/01_roadmap.md](plan/01_roadmap.md) — roadmap/phasing
 - [docs/operational-gotchas.md](docs/operational-gotchas.md) · [docs/testing-participant-flow.md](docs/testing-participant-flow.md) · [docs/overview.md](docs/overview.md)
 - [docs/handoff-archive.md](docs/handoff-archive.md) — the previous chronological HANDOFF (full history)

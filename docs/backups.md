@@ -9,10 +9,12 @@ between an accident and total, unrecoverable loss of study data. Library *conten
 
 ## What to back up
 
-| Database | Supabase ref | Holds | Re-seedable? |
+| Database | Supabase project | Holds | Re-seedable? |
 |---|---|---|---|
-| identity-viewer (shared) | `vknmmbcenrgorexxqhxv` | accounts, sessions, **responses/events (outbox)**, comments | ❌ no |
-| library | `bmtpeswbtugyoiycelwz` | catalogue content | ✅ via importer/harvester |
+| identity-viewer (shared) | `questionnaire-identity` | accounts, sessions, **responses/events (outbox)**, comments | ❌ no |
+| library | (separate library project) | catalogue content | ✅ via importer/harvester |
+
+(Find each project's ref + connection string in the Supabase dashboard — don't hard-code refs here.)
 
 ## Run it
 
