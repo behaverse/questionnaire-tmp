@@ -7,27 +7,38 @@ from ..store import users as ustore, clients as cstore
 router = APIRouter()
 
 
+def _caller_client(conn, claims):
+    """The client/audience the caller's admin token is scoped to (tokens carry a single `aud`).
+    Admin READS are limited to this audience so an admin of one client can't enumerate another's
+    users/emails/roles system-wide."""
+    client = cstore.by_slug(conn, claims.get("aud"))
+    if client is None:
+        raise HTTPException(status_code=403, detail="unknown audience")
+    return client
+
+
 @router.get("/v1/admin/users")
-def list_users(limit: int = 50, offset: int = 0, _=Depends(require_admin),
+def list_users(limit: int = 50, offset: int = 0, claims=Depends(require_admin),
                conn=Depends(get_conn)):
-    rows = ustore.list_all(conn, limit=limit, offset=offset)
+    client = _caller_client(conn, claims)
+    rows = ustore.list_in_client(conn, client["id"], limit=limit, offset=offset)
     return {"users": [{"id": str(u["id"]), "email": u["email"],
                        "display_name": u["display_name"], "status": u["status"],
                        "email_verified": u["email_verified"]} for u in rows]}
 
 
 @router.get("/v1/admin/users/{user_id}")
-def get_user(user_id: str, _=Depends(require_admin), conn=Depends(get_conn)):
+def get_user(user_id: str, claims=Depends(require_admin), conn=Depends(get_conn)):
+    client = _caller_client(conn, claims)
     u = ustore.by_id(conn, user_id)
-    if u is None:
+    # Only surface a user who holds a role in the caller's audience — otherwise the user is
+    # invisible to this admin (404, same as a nonexistent id: don't confirm cross-client users).
+    rs = ustore.roles_for(conn, u["id"], client["id"]) if u is not None else []
+    if u is None or not rs:
         raise HTTPException(status_code=404, detail="user not found")
-    roles: dict[str, list[str]] = {}
-    for c in cstore.list_all(conn):
-        rs = ustore.roles_for(conn, u["id"], c["id"])
-        if rs:
-            roles[c["slug"]] = rs
     return {"id": str(u["id"]), "email": u["email"], "display_name": u["display_name"],
-            "status": u["status"], "email_verified": u["email_verified"], "roles": roles}
+            "status": u["status"], "email_verified": u["email_verified"],
+            "roles": {client["slug"]: rs}}
 
 
 @router.post("/v1/admin/users/{user_id}/roles", status_code=204)
@@ -57,9 +68,10 @@ def revoke_role(user_id: str, body: RoleIn, claims=Depends(require_admin), conn=
 
 
 @router.get("/v1/admin/clients")
-def list_clients(_=Depends(require_admin), conn=Depends(get_conn)):
-    return {"clients": [{"id": str(c["id"]), "slug": c["slug"], "name": c["name"]}
-                        for c in cstore.list_all(conn)]}
+def list_clients(claims=Depends(require_admin), conn=Depends(get_conn)):
+    # Scoped to the caller's own audience — an admin of one client doesn't enumerate the registry.
+    c = _caller_client(conn, claims)
+    return {"clients": [{"id": str(c["id"]), "slug": c["slug"], "name": c["name"]}]}
 
 
 @router.post("/v1/admin/clients", status_code=201)

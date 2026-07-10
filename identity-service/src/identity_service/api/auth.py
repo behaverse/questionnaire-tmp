@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from .deps import get_conn, require_access
+from .ratelimit import rate_limit
 from ..config import get_settings
 from ..mailer import make_mailer
 from ..service import auth
@@ -16,7 +17,7 @@ def _handle(fn):
         raise HTTPException(status_code=e.status, detail={"code": e.code, "message": e.message})
 
 
-@router.post("/v1/auth/register", status_code=201)
+@router.post("/v1/auth/register", status_code=201, dependencies=[Depends(rate_limit("register"))])
 def register(body: RegisterIn, conn=Depends(get_conn)):
     s = get_settings()
     def go():
@@ -27,7 +28,7 @@ def register(body: RegisterIn, conn=Depends(get_conn)):
     return _handle(go)
 
 
-@router.post("/v1/auth/login")
+@router.post("/v1/auth/login", dependencies=[Depends(rate_limit("login"))])
 def login(body: LoginIn, conn=Depends(get_conn)):
     s = get_settings()
     def go():
@@ -59,14 +60,16 @@ def me(claims=Depends(require_access), conn=Depends(get_conn)):
     return auth.profile(conn, user_id=claims["sub"], audience=claims["aud"])
 
 
-@router.post("/v1/auth/verify-email", status_code=204)
+@router.post("/v1/auth/verify-email", status_code=204,
+             dependencies=[Depends(rate_limit("verify"))])
 def verify_email(body: VerifyEmailIn, conn=Depends(get_conn)):
     def go():
         auth.verify_email(conn, token=body.token); conn.commit()
     return _handle(go)
 
 
-@router.post("/v1/auth/request-password-reset", status_code=202)
+@router.post("/v1/auth/request-password-reset", status_code=202,
+             dependencies=[Depends(rate_limit("reset"))])
 def request_reset(body: RequestResetIn, conn=Depends(get_conn)):
     s = get_settings()
     auth.request_password_reset(conn, s, make_mailer(s), email=body.email)

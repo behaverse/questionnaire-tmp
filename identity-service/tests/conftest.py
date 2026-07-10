@@ -22,6 +22,7 @@ def conn(pg_url):
 @pytest.fixture
 def client(pg_url, monkeypatch):
     monkeypatch.setenv("DATABASE_URL", pg_url)
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "0")   # off by default; rate-limit tests re-enable it
     from fastapi.testclient import TestClient
     from identity_service.api.app import create_app
     return TestClient(create_app())
@@ -36,5 +37,5 @@ def _truncate(request):
     url = request.getfixturevalue("pg_url")
     with psycopg.connect(url) as c:
         c.execute("TRUNCATE users, clients, user_roles, refresh_tokens, "
-                  "email_tokens, handoff_codes, signing_keys CASCADE")
+                  "email_tokens, handoff_codes, signing_keys, rate_limit_hit CASCADE")
         c.commit()

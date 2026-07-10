@@ -10,10 +10,13 @@ _CODE_FOR = {400: "bad_request", 401: "unauthorized", 403: "forbidden",
              404: "not_found", 410: "gone", 422: "unprocessable"}
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Questionnaire Library", version="v1")
+    s = get_settings()
+    # Interactive docs / OpenAPI schema OFF unless ENABLE_DOCS is set.
+    docs = {} if s.enable_docs else {"docs_url": None, "redoc_url": None, "openapi_url": None}
+    app = FastAPI(title="Questionnaire Library", version="v1", **docs)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=list(get_settings().cors_origins),
+        allow_origins=list(s.cors_origins),
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allow_headers=["*"],
     )

@@ -53,9 +53,29 @@ def test_create_client(client, pg_url):
     _bootstrap_admin(pg_url)
     H = {"Authorization": f"Bearer {_admin_token(client)}"}
     r = client.post("/v1/admin/clients", headers=H, json={"slug": "platform", "name": "Platform"})
-    assert r.status_code == 201
+    assert r.status_code == 201 and r.json()["slug"] == "platform"
+    # duplicate → 409
+    assert client.post("/v1/admin/clients", headers=H,
+                       json={"slug": "platform", "name": "P"}).status_code == 409
+    # admin reads are audience-scoped: the caller (aud=questionnaire-apps) sees only its own client
     slugs = [c["slug"] for c in client.get("/v1/admin/clients", headers=H).json()["clients"]]
-    assert "platform" in slugs
+    assert slugs == ["questionnaire-apps"]
+
+
+def test_admin_reads_are_audience_scoped(client, pg_url):
+    """An administrator of one client must not enumerate another client's users (PII) or registry."""
+    _bootstrap_admin(pg_url)  # admin@e.com is administrator of questionnaire-apps
+    H = {"Authorization": f"Bearer {_admin_token(client)}"}
+    # a second client with its own user, none of which touch questionnaire-apps
+    with __import__("psycopg").connect(pg_url) as c:
+        other = cstore.create(c, "other-client", "Other")
+        oid = ustore.create(c, "outsider@e.com", passwords.hash_password("password1"))
+        ustore.grant_role(c, oid, other, "researcher")
+        c.commit()
+    emails = {u["email"] for u in client.get("/v1/admin/users", headers=H).json()["users"]}
+    assert "outsider@e.com" not in emails            # cross-client user is invisible
+    # and the outsider is a 404 by id (existence not confirmable)
+    assert client.get(f"/v1/admin/users/{oid}", headers=H).status_code == 404
 
 
 def test_invalid_role_rejected(client, pg_url):

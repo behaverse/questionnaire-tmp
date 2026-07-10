@@ -64,6 +64,14 @@ CREATE TABLE IF NOT EXISTS handoff_codes (
   created_at  timestamptz NOT NULL DEFAULT now()
 );
 
+-- per-(route, client-IP) attempt log for auth rate limiting (brute-force / email-bombing guard).
+-- Rows are pruned to the active window on each check + by the reaper; not security-critical if lost.
+CREATE TABLE IF NOT EXISTS rate_limit_hit (
+  bucket text NOT NULL,
+  ts     timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS rate_limit_hit_bucket_ts ON rate_limit_hit (bucket, ts);
+
 CREATE TABLE IF NOT EXISTS signing_keys (
   kid         text PRIMARY KEY,
   alg         text NOT NULL DEFAULT 'EdDSA',

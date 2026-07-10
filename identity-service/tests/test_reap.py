@@ -35,7 +35,7 @@ def test_reap_deletes_expired_rows_and_keeps_live_ones(pg_url):
     with psycopg.connect(pg_url) as c:
         deleted = maintenance.reap_expired(c, grace_seconds=0)
         c.commit()
-    assert deleted == {"handoff_codes": 1, "email_tokens": 1, "refresh_tokens": 1}
+    assert deleted == {"handoff_codes": 1, "email_tokens": 1, "refresh_tokens": 1, "rate_limit_hit": 0}
     assert _counts(pg_url) == {"handoff_codes": 1, "email_tokens": 1, "refresh_tokens": 1}  # the live rows
 
 
@@ -44,7 +44,7 @@ def test_reap_grace_window_spares_recently_expired_rows(pg_url):
     with psycopg.connect(pg_url) as c:
         deleted = maintenance.reap_expired(c, grace_seconds=7200)  # 2h grace → nothing yet
         c.commit()
-    assert deleted == {"handoff_codes": 0, "email_tokens": 0, "refresh_tokens": 0}
+    assert deleted == {"handoff_codes": 0, "email_tokens": 0, "refresh_tokens": 0, "rate_limit_hit": 0}
     assert _counts(pg_url) == {"handoff_codes": 2, "email_tokens": 2, "refresh_tokens": 2}
 
 
