@@ -17,7 +17,8 @@ def test_register_login_me_flow(client, pg_url):
         "email": "a@e.com", "password": "password1", "display_name": "Ada",
         "audience": "questionnaire-apps"})
     assert r.status_code == 201, r.text
-    assert r.json()["roles"] == ["researcher"]
+    # Public registration grants the unprivileged `participant` role, never `researcher`.
+    assert r.json()["roles"] == ["participant"]
 
     r = client.post("/v1/auth/login", json={
         "email": "a@e.com", "password": "password1", "audience": "questionnaire-apps"})
@@ -29,6 +30,18 @@ def test_register_login_me_flow(client, pg_url):
 
     r = client.get("/v1/auth/me")                       # no token
     assert r.status_code == 401
+
+
+def test_register_never_grants_privileged_role(client, pg_url):
+    """Regression: public self-registration must not confer researcher/reviewer/administrator
+    (a privilege-escalation hole if it does — anyone could self-mint a researcher token)."""
+    _bootstrap(pg_url)
+    r = client.post("/v1/auth/register", json={
+        "email": "b@e.com", "password": "password1", "audience": "questionnaire-apps"})
+    assert r.status_code == 201, r.text
+    granted = set(r.json()["roles"])
+    assert granted == {"participant"}
+    assert not (granted & {"researcher", "reviewer", "administrator", "contributor"})
 
 
 def test_jwks_endpoint(client, pg_url):

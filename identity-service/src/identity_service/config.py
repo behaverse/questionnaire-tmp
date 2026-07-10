@@ -11,7 +11,9 @@ class Settings:
     verify_token_ttl: int = 86_400   # seconds (1 day)
     reset_token_ttl: int = 3_600     # seconds (1 hour)
     handoff_ttl: int = 60            # seconds (cross-origin SSO handoff code)
-    default_register_role: str = "researcher"
+    # Public self-registration must NOT grant a privileged role. `researcher`/`reviewer`/
+    # `administrator` are granted by an admin (POST /v1/admin/users/{id}/roles) or the CLI.
+    default_register_role: str = "participant"
     cors_origins: tuple[str, ...] = ()
     web_viewer_base_url: str = "http://localhost:5173"
     smtp_host: str | None = None
@@ -34,7 +36,7 @@ def get_settings() -> Settings:
         verify_token_ttl=int(os.environ.get("VERIFY_TOKEN_TTL", "86400")),
         reset_token_ttl=int(os.environ.get("RESET_TOKEN_TTL", "3600")),
         handoff_ttl=int(os.environ.get("HANDOFF_TTL", "60")),
-        default_register_role=os.environ.get("DEFAULT_REGISTER_ROLE", "researcher"),
+        default_register_role=os.environ.get("DEFAULT_REGISTER_ROLE", "participant"),
         cors_origins=origins,
         web_viewer_base_url=os.environ.get("WEB_VIEWER_BASE_URL", "http://localhost:5173"),
         smtp_host=os.environ.get("SMTP_HOST") or None,

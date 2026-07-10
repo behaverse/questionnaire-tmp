@@ -25,7 +25,7 @@ def test_admin_grants_role(client, pg_url):
     _bootstrap_admin(pg_url)
     tok = _admin_token(client)
     H = {"Authorization": f"Bearer {tok}"}
-    # register a plain researcher
+    # register a plain user (participant by default), then an admin elevates them
     client.post("/v1/auth/register", json={
         "email": "r@e.com", "password": "password1", "audience": "questionnaire-apps"})
     users = client.get("/v1/admin/users", headers=H).json()["users"]
