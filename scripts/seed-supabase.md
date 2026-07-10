@@ -16,7 +16,11 @@ export DATABASE_URL='<Session pooler URI, port 5432, with your DB password>'
 
 python -m library.cli migrate                       # -> schema applied
 rm -rf /tmp/content
-python -m library.cli import-survey-db survey_database/data/survey_db.sqlite \
+# NOTE: survey_db.sqlite lives only on the owner's machine under the gitignored, local-only
+# archive/ tree (archive/survey_database/data/survey_db.sqlite) — it is NOT in a fresh clone.
+# The 158 harvested questionnaires (step 2, harvester ingest) ARE reproducible from the tracked
+# questionnaire-harvester/output/.
+python -m library.cli import-survey-db archive/survey_database/data/survey_db.sqlite \
   --out /tmp/content --release v26.0606 --imported-at 2026-06-06T00:00:00Z
 python -m library.cli ingest /tmp/content --release v26.0606   # -> ingested=1184 skipped=0 errors=0
 
@@ -40,13 +44,16 @@ python3 -c "import psycopg,os; c=psycopg.connect(os.environ['DATABASE_URL']); c.
 # clears everything, so the harvester ingest must be re-run too or those 158 vanish.
 ```
 
+## Connection-string shape (reference)
 
+Never commit a real connection string or project ref. The shape is:
 
+```bash
+# migration / seeding — SESSION pooler, port 5432:
+export DATABASE_URL='postgresql://postgres.<project-ref>:<password>@aws-1-<region>.pooler.supabase.com:5432/postgres'
+# the deployed app — TRANSACTION pooler, port 6543:
+export DATABASE_URL='postgresql://postgres.<project-ref>:<password>@aws-1-<region>.pooler.supabase.com:6543/postgres'
+```
 
-export DATABASE_URL='postgresql://postgres.bmtpeswbtugyoiycelwz:[YOUR-PASSWORD]@aws-1-eu-central-1.pooler.supabase.com:5432/postgres'
-python -m library.cli migrate
-python -m library.cli ingest /tmp/content --release v26.0606
-
-export DATABASE_URL='postgresql://postgres.bmtpeswbtugyoiycelwz:[YOUR-PASSWORD]@aws-1-eu-central-1.pooler.supabase.com:5432/postgres'
-
-export DATABASE_URL='postgresql://postgres.bmtpeswbtugyoiycelwz:[YOUR-PASSWORD]@aws-1-eu-central-1.pooler.supabase.com:6543/postgres'
+Get the live string from the Supabase dashboard (§1) and keep it in your shell / a gitignored
+`.env.local` only. Rotate the DB password if a real string is ever pasted into a tracked file.

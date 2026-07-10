@@ -74,6 +74,18 @@ test('completeSession returns false on http error and on network failure', async
   vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('x')))
   expect(await completeSession('http://vs:9', 's1', 't1')).toBe(false)
 })
+test('mintSession sanitizes a malicious redirect_url from the response (open-redirect guard)', async () => {
+  const body = { ...ok, redirect_url: 'javascript:alert(document.cookie)' }
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 200 })))
+  const res = await mintSession('http://vs:9', 'dpl_1', null)
+  expect(res).toMatchObject({ ok: true, redirect_url: null })
+})
+test('mintSession passes through an http(s) redirect_url', async () => {
+  const body = { ...ok, redirect_url: 'https://study.example/thanks' }
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 200 })))
+  const res = await mintSession('http://vs:9', 'dpl_1', null)
+  expect(res).toMatchObject({ ok: true, redirect_url: 'https://study.example/thanks' })
+})
 test('mintSession surfaces ephemeral from the response', async () => {
   const body = { session_id: 's1', session_token: 't1', agent_id: 'agent_a', session_index: 1, runtime: { metadata: {} }, theme: null, ephemeral: true }
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 200 })))

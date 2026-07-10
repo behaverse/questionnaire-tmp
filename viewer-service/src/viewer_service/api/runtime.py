@@ -3,9 +3,9 @@ from fastapi.responses import JSONResponse
 from denormaliser import PreflightError
 from .deps import get_conn
 from .identity import require_researcher
+from .authz import require_owned_deployment
 from ..models import RuntimeRequest
 from ..library_client import LibraryError
-from ..store import deployments as dep_store
 from ..store import viewers as viewer_store
 from ..runtime import mint_runtime, preview_runtime
 
@@ -31,9 +31,7 @@ def preview(ref: str, viewer_id: str, viewer_version: str, locale: str | None = 
 
 @router.post("/deployments/{deployment_id}/runtime")
 def mint(deployment_id: str, body: RuntimeRequest, conn=Depends(get_conn), claims=Depends(require_researcher)):
-    dep = dep_store.get_deployment(conn, deployment_id)
-    if dep is None:
-        raise HTTPException(status_code=404, detail="deployment not found")
+    dep = require_owned_deployment(conn, deployment_id, claims)
     viewer = viewer_store.get_viewer(conn, body.viewer_id, body.viewer_version)
     if viewer is None:
         raise HTTPException(status_code=404, detail="viewer not registered")

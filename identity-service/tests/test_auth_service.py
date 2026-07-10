@@ -17,13 +17,13 @@ def test_register_login_profile_refresh(conn):
     s = _bootstrap(conn); m = NullMailer()
     prof = auth.register(conn, s, m, email="a@e.com", password="pw1",
                          display_name="Ada", audience="questionnaire-apps")
-    assert prof["email"] == "a@e.com" and prof["roles"] == ["researcher"]
+    assert prof["email"] == "a@e.com" and prof["roles"] == ["participant"]
     assert len(m.sent) == 1                            # verify email stub-sent
 
     toks = auth.login(conn, s, email="a@e.com", password="pw1", audience="questionnaire-apps")
     assert toks["token_type"] == "Bearer" and toks["expires_in"] == s.access_ttl
     claims = jwks_verify(conn, toks["access_token"], s)
-    assert claims["roles"] == ["researcher"] and claims["aud"] == "questionnaire-apps"
+    assert claims["roles"] == ["participant"] and claims["aud"] == "questionnaire-apps"
 
     rot = auth.refresh(conn, s, refresh_token=toks["refresh_token"])
     assert rot["refresh_token"] != toks["refresh_token"]

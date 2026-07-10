@@ -29,6 +29,20 @@ def test_create_unsupported_preset_422(client):
     assert r.json()["error"]["code"] == "unsupported_preset"
 
 
+def test_create_rejects_non_http_redirect_url(client):
+    for bad in ("javascript:alert(1)", "data:text/html,x", "/relative/path", "ftp://h/x", "notaurl"):
+        r = client.post("/v1/deployments", json=_body(redirect_url=bad))
+        assert r.status_code == 422, f"{bad!r} should be rejected"
+        assert r.json()["error"]["code"] == "invalid_redirect_url"
+
+
+def test_create_accepts_https_redirect_url(client):
+    r = client.post("/v1/deployments", json=_body(redirect_url="https://study.example.org/thanks"))
+    assert r.status_code == 201, r.text
+    dep_id = r.json()["deployment_id"]
+    assert client.get(f"/v1/deployments/{dep_id}").json()["redirect_url"] == "https://study.example.org/thanks"
+
+
 def test_create_rejects_instrument_only_override(client):
     r = client.post("/v1/deployments", json=_body(flow_overrides={"allow_back": True}))
     assert r.status_code == 422

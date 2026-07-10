@@ -83,7 +83,9 @@ export async function mintSession(vsBaseUrl: string, deploymentId: string, local
   }
   if (resp.ok) {
     const body = await resp.json()
-    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false, participant_sub: body.participant_sub ?? null, consent: body.consent ?? null, confirmation_message: body.confirmation_message ?? null, redirect_url: body.redirect_url ?? null, channels: body.channels ?? null }
+    // Sanitize the post-completion redirect the same way as return_url: only http(s) is honoured,
+    // so a malicious/garbage redirect_url (javascript:, data:, relative) can't drive navigation.
+    return { ok: true, session_id: body.session_id, session_token: body.session_token, agent_id: body.agent_id, session_index: body.session_index, runtime: body.runtime, theme: body.theme ?? null, ephemeral: body.ephemeral ?? false, participant_sub: body.participant_sub ?? null, consent: body.consent ?? null, confirmation_message: body.confirmation_message ?? null, redirect_url: safeReturnUrl(body.redirect_url ?? null), channels: body.channels ?? null }
   }
   const code = await resp.json().then((b) => b?.error?.code ?? String(resp.status)).catch(() => String(resp.status))
   const kind: MintErr['kind'] =

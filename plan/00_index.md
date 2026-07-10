@@ -4,7 +4,7 @@ This folder records **how and when** the Questionnaire Apps Ecosystem gets built
 
 If something here contradicts the design folder, the design folder wins. Plan documents reference the design; they never restate it.
 
-**Last revised.** 2026-07-06 — Phases 1 and 2 are complete and **deployed live** (Library, Identity, Viewer Service, player, portal, editor on Vercel + Supabase); the full participant experience and the owner QA/research (replay) track are done. Phase 3 (Editor) is built but its gate is not fully met; Phases 4–6 remain. All open decisions (OD-01…OD-21) resolved. Full status in [../HANDOFF.md](../HANDOFF.md).
+**Last revised.** 2026-07-10 — Phases 1 and 2 are complete and **deployed live** (Library, Identity, Viewer Service, player, portal, editor on Vercel + Supabase); the full participant experience and the owner QA/research (replay) track are done. Phase 3 (Editor) is built but its gate is not fully met; Phases 4–6 remain. All open decisions (OD-01…OD-21) resolved. A whole-repo review (2026-07-10) produced [05_completion_plan.md](05_completion_plan.md) — the sequenced completion + production-hardening plan (security fixes first). Full status in [../HANDOFF.md](../HANDOFF.md).
 
 ## Contents
 
@@ -15,6 +15,7 @@ If something here contradicts the design folder, the design folder wins. Plan do
 | 02 | [02_mvp_scope.md](02_mvp_scope.md) | What is and is not in the MVP |
 | 03 | [03_use_case_priority.md](03_use_case_priority.md) | Priority assigned to each use case from `design/03_use_cases.md` |
 | 04 | [04_feature_priority.md](04_feature_priority.md) | Priority assigned to question types and cross-cutting features |
+| 05 | [05_completion_plan.md](05_completion_plan.md) | Completion + production-hardening plan for the built web platform (from the 2026-07-10 review) |
 
 ## Status as of 2026-07-06
 

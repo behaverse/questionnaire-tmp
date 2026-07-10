@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from .deps import get_conn, require_session
 from .identity import require_participant, require_researcher
+from .authz import require_owned_deployment
 from .. import submission as submission_svc
 from ..store import export as export_store
-from ..store import deployments as dep_store
 
 router = APIRouter()
 
@@ -40,6 +40,5 @@ def my_recordings(conn=Depends(get_conn), claims=Depends(require_participant)):
 
 @router.get("/deployments/{deployment_id}/recordings")
 def list_recordings(deployment_id: str, conn=Depends(get_conn), claims=Depends(require_researcher)):
-    if dep_store.get_deployment(conn, deployment_id) is None:
-        raise HTTPException(status_code=404, detail="deployment not found")
+    require_owned_deployment(conn, deployment_id, claims)
     return {"recordings": list(export_store.iter_recording_rows(conn, deployment_id))}

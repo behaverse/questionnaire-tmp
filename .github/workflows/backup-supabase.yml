@@ -1,0 +1,48 @@
+# Nightly logical backup of the Supabase databases → encrypted GitHub artifact.
+#
+# ⚠️ SAFETY GATES BEFORE ENABLING (participant PII is in these dumps):
+#   1. The repository MUST be private. A DB dump artifact on a public repo leaks participant data.
+#   2. Set repo secrets: SHARED_DATABASE_URL, LIBRARY_DATABASE_URL (session-pooler :5432 strings),
+#      and BACKUP_GPG_PASSPHRASE (symmetric key for at-rest encryption of the artifact).
+#   3. Prefer an off-GitHub sink (S3/B2 via rclone) for real off-site durability; the artifact path
+#      here is a convenience with GitHub's retention limits.
+# Until those are in place this workflow only runs on manual dispatch (no schedule side effects).
+name: backup-supabase
+
+on:
+  workflow_dispatch: {}
+  # Uncomment to enable the nightly schedule ONCE the repo is private and secrets are set:
+  # schedule:
+  #   - cron: "0 3 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install postgresql-client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - name: Dump databases
+        env:
+          SHARED_DATABASE_URL: ${{ secrets.SHARED_DATABASE_URL }}
+          LIBRARY_DATABASE_URL: ${{ secrets.LIBRARY_DATABASE_URL }}
+          BACKUP_DIR: ./backups
+        run: bash scripts/backup-supabase.sh
+      - name: Encrypt dumps (symmetric gpg)
+        env:
+          BACKUP_GPG_PASSPHRASE: ${{ secrets.BACKUP_GPG_PASSPHRASE }}
+        run: |
+          test -n "$BACKUP_GPG_PASSPHRASE" || { echo "BACKUP_GPG_PASSPHRASE not set — refusing to upload plaintext PII"; exit 1; }
+          for f in backups/*.dump; do
+            gpg --batch --yes --passphrase "$BACKUP_GPG_PASSPHRASE" -c "$f"
+            rm -f "$f"
+          done
+      - name: Upload encrypted artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: supabase-backup-${{ github.run_id }}
+          path: backups/*.gpg
+          retention-days: 14
