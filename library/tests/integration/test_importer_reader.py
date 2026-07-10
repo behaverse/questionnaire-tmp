@@ -1,7 +1,13 @@
 from pathlib import Path
+import pytest
 from library.importers.survey_db.reader import SurveyDB
 
 DB = Path("survey_database/data/survey_db.sqlite")
+
+# See test_importer_run.py: the legacy sqlite is archived/local-only (content already imported to
+# Supabase). Run these importer-reader checks only when that sqlite is present — never a re-import.
+pytestmark = pytest.mark.skipif(
+    not DB.exists(), reason="survey_db.sqlite archived/local-only; content already imported (no re-import)")
 
 def test_counts_match_known_catalogue():
     db = SurveyDB(DB)
