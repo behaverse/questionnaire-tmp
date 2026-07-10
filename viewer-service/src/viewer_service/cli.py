@@ -47,7 +47,24 @@ def main(argv: list[str] | None = None) -> int:
         while True:                                  # daemon loop
             print(_forward_once())
             time.sleep(interval)
-    print("usage: viewer-service {migrate | forward-worker [--once|--loop --interval N]}")
+    if cmd == "reap":
+        from . import maintenance
+        s = get_settings()
+        with psycopg.connect(s.database_url) as conn:
+            counts = maintenance.reap(conn, replay_link_ttl_seconds=s.replay_link_ttl_seconds,
+                                      ephemeral_ttl_seconds=s.ephemeral_session_ttl_seconds)
+            conn.commit()
+        print(f"reaped {counts}")
+        return 0
+    if cmd == "requeue-failed":
+        from . import maintenance
+        with psycopg.connect(get_settings().database_url) as conn:
+            n = maintenance.requeue_failed(conn)
+            conn.commit()
+        print(f"requeued {n} failed outbox row(s) to pending")
+        return 0
+    print("usage: viewer-service {migrate | forward-worker [--once|--loop --interval N] "
+          "| reap | requeue-failed}")
     return 2
 
 

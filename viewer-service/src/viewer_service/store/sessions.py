@@ -84,6 +84,16 @@ def count_for_deployment(conn: psycopg.Connection, deployment_id: str) -> int:
                         (deployment_id,)).fetchone()[0]
 
 
+def next_index_for_agent(conn: psycopg.Connection, agent_id: str) -> int:
+    """Allocate the next per-agent session_index, serialized against concurrent mints for the SAME
+    agent via a transaction-scoped advisory lock. Two participants double-starting would otherwise
+    both read count=N and both insert index=N+1 (duplicate). The lock is released at commit — the
+    caller must insert the session and commit in the same transaction (new_session does)."""
+    conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", (agent_id,))
+    (n,) = conn.execute("SELECT count(*) FROM session WHERE agent_id=%s", (agent_id,)).fetchone()
+    return n + 1
+
+
 def count_for_agent(conn: psycopg.Connection, agent_id: str) -> int:
     return conn.execute("SELECT count(*) FROM session WHERE agent_id=%s",
                         (agent_id,)).fetchone()[0]

@@ -31,6 +31,15 @@ def lookup(conn: psycopg.Connection, token_hash: str) -> dict | None:
         "FROM refresh_tokens WHERE token_hash = %s", (token_hash,))
 
 
+def lookup_for_update(conn: psycopg.Connection, token_hash: str) -> dict | None:
+    """Same as `lookup` but locks the row (FOR UPDATE) so concurrent refreshes of the same token
+    serialize: the second waits, then reads the now-rotated row and is caught by reuse-detection —
+    instead of both passing the reuse check and forking the family into two valid tokens."""
+    return _row(conn,
+        "SELECT id, user_id, client_id, family_id, expires_at, revoked_at, rotated_to "
+        "FROM refresh_tokens WHERE token_hash = %s FOR UPDATE", (token_hash,))
+
+
 def rotate(conn: psycopg.Connection, old_row: dict, new_token_hash: str,
            new_expires_at: datetime) -> uuid.UUID:
     new_id = issue(conn, old_row["user_id"], old_row["client_id"], new_token_hash,

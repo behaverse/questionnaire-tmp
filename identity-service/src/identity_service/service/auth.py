@@ -118,7 +118,9 @@ def login(conn, settings, *, email, password, audience) -> dict:
 
 
 def refresh(conn, settings, *, refresh_token) -> dict:
-    row = rstore.lookup(conn, tokens.hash_token(refresh_token))
+    # FOR UPDATE: serialize concurrent refreshes of the same token so a double-submit deterministically
+    # hits reuse-detection (401) rather than forking the family into two valid tokens.
+    row = rstore.lookup_for_update(conn, tokens.hash_token(refresh_token))
     if row is None:
         raise InvalidToken()
     if rstore.is_reuse(row):
