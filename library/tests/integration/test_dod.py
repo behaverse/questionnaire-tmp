@@ -19,4 +19,5 @@ def test_dod_end_to_end(pg_url, monkeypatch):
     client = TestClient(create_app())
     assert client.get("/v1/questionnaires").json()["total"] >= 1
     assert client.get("/v1/search", params={"q": "Minimal"}).status_code == 200
-    assert client.get("/openapi.json").status_code == 200
+    # interactive docs / OpenAPI schema are gated off by default (ENABLE_DOCS unset) in prod
+    assert client.get("/openapi.json").status_code == 404

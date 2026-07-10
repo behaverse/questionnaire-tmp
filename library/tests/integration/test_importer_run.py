@@ -1,6 +1,6 @@
 import json, sqlite3
 from pathlib import Path
-import psycopg
+import psycopg, pytest
 from library.importers.survey_db.run import import_survey_db
 from library.validation import build_registry, validate_artifact
 from library.loader import load_tree
@@ -10,6 +10,12 @@ from library.config import get_settings
 DB = Path("survey_database/data/survey_db.sqlite")
 REL = "v26.0606"; AT = "2026-06-06T00:00:00Z"
 S = get_settings()
+
+# The legacy survey_db has already been imported (content is live on Supabase) and its sqlite now
+# lives only in the gitignored, local-only archive/. These tests validate the one-time importer, so
+# they run ONLY when someone has that sqlite present — never a continuous re-import in CI.
+pytestmark = pytest.mark.skipif(
+    not DB.exists(), reason="survey_db.sqlite archived/local-only; content already imported (no re-import)")
 
 def test_full_run_counts_validate_and_ingest(tmp_path):
     summary = import_survey_db(DB, tmp_path, release=REL, imported_at=AT)
