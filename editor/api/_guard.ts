@@ -40,18 +40,39 @@ function originAllowed(request: Request, env: Env): boolean {
   }
 }
 
-// module-level: survives across requests on a warm (Fluid) instance
+function clientIp(request: Request): string {
+  // Prefer platform-hardened headers; raw X-Forwarded-For[0] is client-controlled behind an
+  // appending proxy. On Vercel x-vercel-forwarded-for is spoof-safe.
+  for (const h of ['x-vercel-forwarded-for', 'x-real-ip']) {
+    const v = (request.headers.get(h) ?? '').trim()
+    if (v) return v.split(',')[0].trim()
+  }
+  const xff = (request.headers.get('x-forwarded-for') ?? '').trim()
+  return xff ? xff.split(',')[0].trim() : 'unknown'
+}
+
+// module-level: survives across requests on a warm (Fluid) instance. Bounded so a flood of distinct
+// IPs (or spoofed header values) can't grow it without limit.
 const _hits = new Map<string, number[]>()
+const _MAX_BUCKETS = 10_000
 
 function rateLimited(request: Request, env: Env): boolean {
-  const limit = Number(env.TRANSLATE_RATE_LIMIT ?? '30')
-  if (!Number.isFinite(limit) || limit <= 0) return false
-  const ip = (request.headers.get('x-forwarded-for') ?? '').split(',')[0].trim() || 'unknown'
+  // A junk TRANSLATE_RATE_LIMIT falls back to the default rather than silently disabling the limiter.
+  const parsed = Number(env.TRANSLATE_RATE_LIMIT ?? '30')
+  const limit = Number.isFinite(parsed) ? parsed : 30
+  if (limit <= 0) return false
   const now = Date.now()
   const windowStart = now - 60_000
+  const ip = clientIp(request)
   const recent = (_hits.get(ip) ?? []).filter((t) => t > windowStart)
   recent.push(now)
-  _hits.set(ip, recent)
+  if (recent.length === 0) _hits.delete(ip)   // never happens (just pushed) — guards future edits
+  else _hits.set(ip, recent)
+  // Evict buckets whose window has fully elapsed; hard-cap the map size as a backstop.
+  if (_hits.size > _MAX_BUCKETS) {
+    for (const [k, ts] of _hits) if (ts.every((t) => t <= windowStart)) _hits.delete(k)
+    if (_hits.size > _MAX_BUCKETS) _hits.clear()
+  }
   return recent.length > limit
 }
 
