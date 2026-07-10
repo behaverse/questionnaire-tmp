@@ -1,3 +1,4 @@
+import hmac
 import psycopg
 from fastapi import APIRouter, Depends, Header, HTTPException
 from ..config import get_settings, forwarding_enabled
@@ -8,9 +9,10 @@ router = APIRouter()
 
 
 def _require_cron(authorization: str | None = Header(default=None)):
-    """Fail-closed cron guard. Matches Vercel Cron's `Authorization: Bearer ${CRON_SECRET}`."""
+    """Fail-closed cron guard. Matches Vercel Cron's `Authorization: Bearer ${CRON_SECRET}`.
+    Constant-time compare so the guard doesn't leak the secret via response timing."""
     secret = get_settings().cron_secret
-    if not secret or authorization != f"Bearer {secret}":
+    if not secret or not hmac.compare_digest(authorization or "", f"Bearer {secret}"):
         raise HTTPException(status_code=401, detail="unauthorized")
 
 

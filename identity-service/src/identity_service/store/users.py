@@ -39,6 +39,18 @@ def list_all(conn: psycopg.Connection, limit: int = 50, offset: int = 0) -> list
     return [dict(zip(cols, r)) for r in cur.fetchall()]
 
 
+def list_in_client(conn: psycopg.Connection, client_id, limit: int = 50, offset: int = 0) -> list[dict]:
+    """Users holding at least one role in the given client/audience — the scope an administrator
+    of that audience is allowed to enumerate (admin reads must not span other clients)."""
+    cur = conn.execute(
+        f"SELECT DISTINCT {', '.join('u.' + c for c in _USER_COLS.split(', '))}, u.created_at "
+        "FROM users u JOIN user_roles r ON r.user_id = u.id "
+        "WHERE r.client_id = %s ORDER BY u.created_at DESC LIMIT %s OFFSET %s",
+        (client_id, limit, offset))
+    cols = [d.name for d in cur.description]
+    return [dict(zip(cols, r)) for r in cur.fetchall()]
+
+
 def set_email_verified(conn: psycopg.Connection, user_id) -> None:
     conn.execute("UPDATE users SET email_verified = true, updated_at = now() WHERE id = %s",
                  (user_id,))

@@ -23,6 +23,7 @@ class Settings:
     smtp_from: str = "no-reply@behaverse.local"
     resend_api_key: str | None = None
     cron_secret: str | None = None
+    enable_docs: bool = False
 
 
 def get_settings() -> Settings:
@@ -46,4 +47,5 @@ def get_settings() -> Settings:
         smtp_from=os.environ.get("SMTP_FROM", "no-reply@behaverse.local"),
         resend_api_key=os.environ.get("RESEND_API_KEY") or None,
         cron_secret=os.environ.get("CRON_SECRET") or None,
+        enable_docs=os.environ.get("ENABLE_DOCS", "").strip().lower() in ("1", "true", "yes", "on"),
     )

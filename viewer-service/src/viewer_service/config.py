@@ -31,6 +31,7 @@ class Settings:
     public_base_url: str = ""
     cron_secret: str | None = None
     scorer_map: dict[str, str] = field(default_factory=dict)
+    enable_docs: bool = False
 
 
 def forwarding_enabled(settings: "Settings") -> bool:
@@ -74,4 +75,5 @@ def get_settings() -> Settings:
         public_base_url=os.environ.get("VS_PUBLIC_BASE", ""),
         cron_secret=os.environ.get("CRON_SECRET") or None,
         scorer_map=scorer_map,
+        enable_docs=os.environ.get("ENABLE_DOCS", "").strip().lower() in ("1", "true", "yes", "on"),
     )

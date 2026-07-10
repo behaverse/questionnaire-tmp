@@ -10,8 +10,12 @@ _CODE_FOR = {400: "bad_request", 401: "unauthorized", 403: "forbidden",
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Questionnaire Identity Service", version="v1")
-    origins = list(get_settings().cors_origins)
+    s = get_settings()
+    # Interactive docs / OpenAPI schema are OFF unless ENABLE_DOCS is set — don't publicly
+    # advertise the full auth API surface (and its example payloads) in production.
+    docs = {} if s.enable_docs else {"docs_url": None, "redoc_url": None, "openapi_url": None}
+    app = FastAPI(title="Questionnaire Identity Service", version="v1", **docs)
+    origins = list(s.cors_origins)
     if origins:
         app.add_middleware(CORSMiddleware, allow_origins=origins,
                            allow_methods=["*"], allow_headers=["*"])

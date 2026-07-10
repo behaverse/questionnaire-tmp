@@ -14,6 +14,7 @@ class Settings:
     identity_jwks_url: str = "http://localhost:8100/.well-known/jwks.json"
     identity_issuer: str = "http://localhost:8100"
     identity_audience: str = "questionnaire-apps"
+    enable_docs: bool = False
 
 def get_settings() -> Settings:
     raw = os.environ.get("LIBRARY_CORS_ORIGINS")
@@ -27,4 +28,5 @@ def get_settings() -> Settings:
         identity_jwks_url=os.environ.get("IDENTITY_JWKS_URL", "http://localhost:8100/.well-known/jwks.json"),
         identity_issuer=os.environ.get("IDENTITY_ISSUER", "http://localhost:8100"),
         identity_audience=os.environ.get("IDENTITY_AUDIENCE", "questionnaire-apps"),
+        enable_docs=os.environ.get("ENABLE_DOCS", "").strip().lower() in ("1", "true", "yes", "on"),
     )
