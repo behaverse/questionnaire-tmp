@@ -234,7 +234,7 @@ QREF='qst_wellbeing@v26.0601' \
 | `SCHEMAS_DIR` | `./schemas` | _(set by `vercel.json` includeFiles; default is fine)_ | Path to the bundled schemas directory |
 | `VS_SCORER_DIR` | `./questionnaire-scorer/dist-wasm` | _(set by `vercel.json` includeFiles; default is fine)_ | Path to bundled scorer wasm files |
 | `BEHAVERSE_BASE_URL` | `http://localhost:9000` | _(unset unless Behaverse forwarding is active)_ | Forwarding is disabled when this is a localhost URL |
-| `CRON_SECRET` | `dev-cron-secret` | `<same or different 32+ char secret>` | Vercel sends this to `/internal/forward` every 10 minutes |
+| `CRON_SECRET` | `dev-cron-secret` | `<same or different 32+ char secret>` | Vercel sends this to `/internal/forward` daily (03:00 UTC); that tick drains the outbox fully **and** reaps dead rows |
 | `VS_PUBLIC_BASE` | _(unset)_ | `https://<viewer-service-vercel-project>.vercel.app` | Optional; used to build absolute invite/preview links |
 
 ### 3.4 Player (web-viewer) — Vite build-time vars
@@ -421,8 +421,8 @@ Both Python services declare cron jobs in their `vercel.json`:
 
 | Service | Path | Schedule | Purpose |
 |---|---|---|---|
-| identity-service | `/internal/reap` | `0 4 * * *` (04:00 UTC daily) | Reap expired tokens (TTL cleanup) |
-| viewer-service | `/internal/forward` | `*/10 * * * *` (every 10 min) | Drain the outbox → Behaverse |
+| identity-service | `/internal/reap` | `0 4 * * *` (04:00 UTC daily) | Reap expired tokens + rate-limit hits (TTL cleanup) |
+| viewer-service | `/internal/forward` | `0 3 * * *` (03:00 UTC daily) | Drain the outbox → Behaverse (batches until empty) **and** reap moot revocations + aged ephemeral sessions. Reap is also separately callable at `/internal/reap`. One cron to stay within the Vercel Hobby per-account cron cap. |
 
 Vercel reads the `crons` array automatically and triggers each path on schedule. It sends the
 request with `Authorization: Bearer <CRON_SECRET>` where `CRON_SECRET` is the value set in
@@ -583,7 +583,7 @@ Replace Vercel Cron with Cloud Scheduler HTTP jobs that hit the same internal en
 | Cloud Scheduler job | URL | Schedule | Header |
 |---|---|---|---|
 | identity-reap | `https://<identity-cloudrun-url>/internal/reap` | `0 4 * * *` | `Authorization: Bearer <CRON_SECRET>` |
-| vs-forward | `https://<vs-cloudrun-url>/internal/forward` | `*/10 * * * *` | `Authorization: Bearer <CRON_SECRET>` |
+| vs-forward | `https://<vs-cloudrun-url>/internal/forward` | `0 3 * * *` | `Authorization: Bearer <CRON_SECRET>` (drains outbox + reaps) |
 
 Use an OIDC service account token for Cloud Scheduler → Cloud Run authentication (add it as
 a second `Authorization` header is not possible — instead, protect the internal endpoints with
