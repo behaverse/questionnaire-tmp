@@ -1,4 +1,5 @@
 import uuid
+from urllib.parse import urlparse
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from denormaliser import RuntimePolicy
@@ -17,6 +18,16 @@ _ALLOWED_STYLE = {"progress_bar", "question_numbering"}
 _ALLOWED_FLOW = {"max_time_seconds"}
 
 
+def _is_http_url(url: str) -> bool:
+    """A post-completion redirect must be an absolute http(s) URL — reject javascript:/data:/relative
+    so a stored redirect_url can't drive an open-redirect/phishing navigation in the player."""
+    try:
+        p = urlparse(url)
+    except ValueError:
+        return False
+    return p.scheme in ("http", "https") and bool(p.netloc)
+
+
 @router.post("/deployments", status_code=201)
 def create(body: DeploymentCreate, conn=Depends(get_conn), claims=Depends(require_researcher)):
     try:
@@ -31,6 +42,9 @@ def create(body: DeploymentCreate, conn=Depends(get_conn), claims=Depends(requir
     if body.flow_overrides and set(body.flow_overrides) - _ALLOWED_FLOW:
         return JSONResponse(status_code=422, content={"error": {
             "code": "instrument_only_override", "message": "flow_overrides may only set: max_time_seconds"}})
+    if body.redirect_url is not None and not _is_http_url(body.redirect_url):
+        return JSONResponse(status_code=422, content={"error": {
+            "code": "invalid_redirect_url", "message": "redirect_url must be an absolute http(s) URL"}})
     try:
         policy = RuntimePolicy(**body.runtime_policy).to_canonical_dict()
     except TypeError as e:
