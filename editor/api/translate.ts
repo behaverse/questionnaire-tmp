@@ -3,11 +3,14 @@
 // where extensionless relative imports don't resolve. moduleResolution "bundler" maps .js → .ts.
 import { translateField } from '../src/translate/translateCore.js'
 import { makeGenerate } from './_provider.js'
+import { checkGuard } from './_guard.js'
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
 export async function POST(request: Request): Promise<Response> {
+  const guard = checkGuard(request, process.env)
+  if (!guard.ok) return json({ error: guard.message }, guard.status)
   let input: unknown
   try { input = await request.json() } catch { return json({ error: 'invalid JSON' }, 400) }
   try {
