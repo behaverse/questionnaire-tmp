@@ -4,7 +4,8 @@ This roadmap sequences the work needed to deliver the ecosystem described in [..
 
 It is a sequencing document, not a calendar. Dates are intentionally absent until the team commits to them at MVP planning.
 
-**Last revised.** 2026-07-06.
+**Last revised.** 2026-07-11 — Phases 1–3 built + live; a 2026-07-10→11 security + production-hardening
+pass (Phase 0/1 of [05_completion_plan.md](05_completion_plan.md)) is done + live. Phases 4–6 below remain.
 
 ## Sequencing rationale
 

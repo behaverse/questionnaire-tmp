@@ -4,7 +4,7 @@ This folder records **how and when** the Questionnaire Apps Ecosystem gets built
 
 If something here contradicts the design folder, the design folder wins. Plan documents reference the design; they never restate it.
 
-**Last revised.** 2026-07-10 — Phases 1 and 2 are complete and **deployed live** (Library, Identity, Viewer Service, player, portal, editor on Vercel + Supabase); the full participant experience and the owner QA/research (replay) track are done. Phase 3 (Editor) is built but its gate is not fully met; Phases 4–6 remain. All open decisions (OD-01…OD-21) resolved. A whole-repo review (2026-07-10) produced [05_completion_plan.md](05_completion_plan.md) — the sequenced completion + production-hardening plan (security fixes first). Full status in [../HANDOFF.md](../HANDOFF.md).
+**Last revised.** 2026-07-11 — Phases 1 and 2 are complete and **deployed live** (Library, Identity, Viewer Service, player, portal, editor on Vercel + Supabase); the full participant experience and the owner QA/research (replay) track are done. Phase 3 (Editor) is built but its gate is not fully met; Phases 4–6 remain. All open decisions (OD-01…OD-21) resolved. A whole-repo review (2026-07-10) produced [05_completion_plan.md](05_completion_plan.md); **its Phase 0 (critical security) and Phase 1 (production hardening) are DONE + LIVE (2026-07-11)** — see that doc's status tracker. Full status in [../HANDOFF.md](../HANDOFF.md).
 
 ## Contents
 

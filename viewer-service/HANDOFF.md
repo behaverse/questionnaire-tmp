@@ -9,6 +9,17 @@
 > https://viewer-service.vercel.app (shares one Supabase DB with Identity).
 > For deep detail see [README.md](README.md); for the raw deferred-items backlog see [FOLLOWUPS.md](FOLLOWUPS.md).
 
+> **🔒 Hardening (2026-07-11, live).** **Per-owner authorization** on every deployment-addressed
+> researcher route via `api/authz.require_owned_deployment` (`created_by == sub`, else 404; admin
+> override) — closes a cross-tenant IDOR. Any NEW deployment/`{id}` route MUST use it.
+> `redirect_url` is http(s)-validated at create. **TTL reaper** (`maintenance.reap`: moot
+> replay-revocations + aged ephemeral sessions; the outbox is NEVER pruned — it's the export source)
+> + `requeue-failed` CLI, folded into the daily `/internal/forward` tick (which now drains until
+> empty). `session_index` mint is serialized by a pg advisory lock. Constant-time cron guard; API
+> docs gated off unless `ENABLE_DOCS`; `regions:["fra1"]`. **Migrations:** numbered
+> `store/migrations/*.sql` in `schema_migrations` (keys namespaced `viewer_service:` — shared DB with
+> Identity). Sentry dormant unless `SENTRY_DSN`. See [../plan/05_completion_plan.md](../plan/05_completion_plan.md).
+
 ## What it is
 - **Runtime minting** — calls `questionnaire-runtime-denormaliser` (Schema 2 → 3) over Library bodies; cached by the OD-18f 5-tuple `(qst_id, qst_version, locale, viewer_conformance_hash, deployment_runtime_policy_hash)` with LRU eviction. Routes: [`runtime.py`](src/viewer_service/api/runtime.py), [`viewers.py`](src/viewer_service/api/viewers.py).
 - **Participant data path** — anonymous + authenticated + `invite_link` sessions; opaque hashed session tokens; resume/locale switch; response (Schema 5) / event (Schema 4a) submission → durable Postgres outbox (202). Routes: [`sessions.py`](src/viewer_service/api/sessions.py), [`submission.py`](src/viewer_service/api/submission.py), [`me.py`](src/viewer_service/api/me.py), [`invites.py`](src/viewer_service/api/invites.py).

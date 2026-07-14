@@ -5,6 +5,11 @@
 > The read-only canonical catalogue of questionnaires and reusable entities (Schema 2). It serves a public `/v1` REST API consumed by the Editor, the Library Web UI, and the Viewer Service, plus the `survey_db` importer and Identity-gated community signals.
 > For deep detail see [README.md](README.md); for the raw deferred-items backlog see [FOLLOWUPS.md](FOLLOWUPS.md).
 
+> **🔒 Hardening (2026-07-11, live).** API docs gated off unless `ENABLE_DOCS`; Sentry dormant unless
+> `SENTRY_DSN`. **Migrations:** numbered `store/migrations/*.sql` recorded in `schema_migrations` (keys
+> namespaced `library:`); **never `DROP SCHEMA`** — use a migration. See
+> [../plan/05_completion_plan.md](../plan/05_completion_plan.md).
+
 ## What it is
 - **Read-only catalogue API** (`src/library/api/`): `questionnaires.py`, `entities.py`, `search.py`, `resolve.py`, `community.py`, `identity.py`, wired in `app.py`. Public read endpoints under `/v1` (list/detail/search/stats/resolve/healthz); no auth to browse or download definitions.
 - **Storage = jsonb + derived index.** Full entity bodies live in `entity.content_json` (source of truth); `catalogue_entry` (incl. a GIN-indexed `search_tsv`), `entity_ref`, and `facet` are *derived* by `store/index.py` `rebuild_index_for()`. Query layer: `query.py` `list_entries()` + `api/search.py`.

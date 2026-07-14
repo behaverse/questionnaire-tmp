@@ -21,11 +21,25 @@ in a **Web Viewer** (built), a **Native/Godot viewer** (not started), or as PDF;
 interaction events flow into the sibling [Behaverse](https://behaverse.org) project via the **Viewer
 Service**. See [design/04_architecture.md](design/04_architecture.md).
 
-## State at a glance (2026-07-06)
+## State at a glance (2026-07-11)
 
 - **🟢 Everything started is LIVE on Vercel + Supabase ($0 tier)** and browser-verified: Library, Identity,
   Viewer Service, the player (web-viewer), the portal (participant-app), **and the editor**. Real email via
   Resend (`xcit.org`). URLs are in each component HANDOFF and [DEPLOYMENT.md](DEPLOYMENT.md) §0.
+- **🔒 Security + production hardening — DONE + LIVE (2026-07-10→11).** A 5-lens whole-repo review
+  ([plan/05_completion_plan.md](plan/05_completion_plan.md)) drove Phase 0 (critical security + backups) and
+  Phase 1 (auth/ops hardening), both merged and **redeployed live** + verified. Highlights, all live:
+  registration is participant-only + **enumeration-resistant** (uniform 202); the Viewer Service enforces
+  **per-owner authorization** on every deployment route (cross-tenant IDOR closed); `redirect_url` is
+  http(s)-validated (open-redirect closed); the editor's `/api/translate` is guarded; **per-IP rate limiting**
+  on auth endpoints (backed by the live `rate_limit_hit` table); admin reads are audience-scoped;
+  constant-time cron guards; interactive API docs gated off (`ENABLE_DOCS`). Ops: **nightly `pg_dump`
+  backups** ([docs/backups.md](docs/backups.md)), a **VS TTL reaper** + `requeue-failed`, **`fra1`** region,
+  **versioned migrations** (`schema_migrations`, baseline adopted on the live DBs), **Sentry** (dormant unless
+  `SENTRY_DSN`; set on all 3 services), and a **GitHub Actions uptime + Supabase keepalive**
+  ([docs/monitoring.md](docs/monitoring.md)). An adversarial re-review confirmed the IDOR fix complete and
+  fixed rate-limiter follow-ups (trusted client-IP, fail-open, bounded map). **Deferred** (owner):
+  RLS/PostgREST exposure check (all tables RLS-off incl. `users`/`outbox`) — see memory / plan/05.
 - **Built + live:** Phase 1 (schemas + Library), Phase 2 (Viewer Service + Web Viewer + deployments), the
   full participant experience (portal + player + Identity SSO handoff), and the Editor (incl. auto-translate).
 - **Public catalogue:** **https://questionnaire-library.vercel.app** — **222 questionnaires** (64 `survey_database`
@@ -124,8 +138,10 @@ Work that concerns the whole system or doesn't fit a single component. Decompose
   (`domain`/`population`/`administration_mode` + `instrument_id`) and re-seeded; Library filters now cover all 222.
   Residual only: back-fill `administration_mode` (and the 17 missing `population`) on the 64 survey_db entries so
   those two facets also span the whole corpus. Owned by the harvester — [questionnaire-harvester/HANDOFF.md](questionnaire-harvester/HANDOFF.md).
-- **Shared TTL reaper** for unbounded token/outbox tables — Identity (`handoff_codes`/email/refresh) +
-  Viewer Service (outbox). Coordinate a single approach across both services.
+- **TTL reaper — ✅ DONE (2026-07-10→11).** Identity reaps `handoff_codes`/email/refresh + `rate_limit_hit`
+  (daily `/internal/reap` cron). Viewer Service `maintenance.reap` prunes moot replay-revocations + aged
+  ephemeral sessions (folded into the daily `/internal/forward` tick; the outbox is NEVER pruned — it's the
+  export source) + a `requeue-failed` CLI. See [plan/05_completion_plan.md](plan/05_completion_plan.md).
 - **Schema gaps requiring a CalVer bump** (🔒 breaking, new OD each): native **date** question type
   (Schema 2 `input_data_type`); **per-locale** validation messages + metadata/section/page/block titles
   (plain strings today — blocks full Editor translation); promote the player's `x_response_revises`/
@@ -138,7 +154,8 @@ Work that concerns the whole system or doesn't fit a single component. Decompose
   packaging first (the split would break the build today). Until then, everything is one local repo.
 - **Public schema hosting** at `behaverse.org/schemas/` — deferred; `$id` URLs stay canonical + resolve
   locally. Don't change them.
-- **Ops:** move the Library function `iad1` (US) → `fra1` to match the EU Supabase region.
+- **Ops:** ~~move the Library function `iad1` (US) → `fra1`~~ **✅ DONE** — `regions:["fra1"]` on all 3
+  Python `vercel.json`.
 
 ## Active conventions — must follow
 
@@ -149,6 +166,12 @@ Work that concerns the whole system or doesn't fit a single component. Decompose
 - **Design vs. plan separation:** `design/` = what the system *is*; `plan/` = when/how it's built. Build
   *status* goes in `plan/` + the component HANDOFFs, never in `design/`.
 - **No PRs:** finish branches by merging to `master` locally + pushing (owner preference).
+- **Migrations:** each service applies numbered `store/migrations/*.sql` recorded in `schema_migrations`
+  (service-namespaced version keys, e.g. `identity:001_baseline.sql`, since Identity+VS share one DB). New
+  schema changes = a new `NNN_*.sql` (never edit an applied one); they CAN alter existing columns.
+  **Never `DROP SCHEMA`** to force a change — use a migration.
+- **API docs** are gated off in prod unless `ENABLE_DOCS` is truthy; **Sentry** is dormant unless
+  `SENTRY_DSN` is set (both platform-agnostic env vars — the owner may move Vercel→GCP later).
 
 ## Schema inventory — what's shipped
 
@@ -206,7 +229,8 @@ gone stale — `sudo systemctl restart docker` clears it.
 
 - [README.md](README.md) — short project overview · [DEPLOYMENT.md](DEPLOYMENT.md) — live URLs + as-built deploy
 - [docs/backups.md](docs/backups.md) — **DB backup + restore runbook** (responses are a single copy; back them up)
-- [plan/05_completion_plan.md](plan/05_completion_plan.md) — completion + production-hardening plan (2026-07-10 review)
+- [docs/monitoring.md](docs/monitoring.md) — Sentry (dormant unless `SENTRY_DSN`) + uptime/keepalive (healthchecks + GH Actions)
+- [plan/05_completion_plan.md](plan/05_completion_plan.md) — **completion + production-hardening plan** (2026-07-10 review; Phase 0/1 done, 2–6 remain)
 - [design/00_index.md](design/00_index.md) — authoritative design · [plan/01_roadmap.md](plan/01_roadmap.md) — roadmap/phasing
 - [docs/operational-gotchas.md](docs/operational-gotchas.md) · [docs/testing-participant-flow.md](docs/testing-participant-flow.md) · [docs/overview.md](docs/overview.md)
 - [docs/handoff-archive.md](docs/handoff-archive.md) — the previous chronological HANDOFF (full history)
