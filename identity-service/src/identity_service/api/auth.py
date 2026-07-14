@@ -17,14 +17,16 @@ def _handle(fn):
         raise HTTPException(status_code=e.status, detail={"code": e.code, "message": e.message})
 
 
-@router.post("/v1/auth/register", status_code=201, dependencies=[Depends(rate_limit("register"))])
+@router.post("/v1/auth/register", status_code=202, dependencies=[Depends(rate_limit("register"))])
 def register(body: RegisterIn, conn=Depends(get_conn)):
+    # Uniform 202 whether or not the email already exists (enumeration-resistant) — the response body
+    # carries no account info. The client then logs in with the submitted credentials.
     s = get_settings()
     def go():
-        out = auth.register(conn, s, make_mailer(s), email=body.email, password=body.password,
-                            display_name=body.display_name, audience=body.audience)
+        auth.register(conn, s, make_mailer(s), email=body.email, password=body.password,
+                      display_name=body.display_name, audience=body.audience)
         conn.commit()
-        return out
+        return {"status": "accepted"}
     return _handle(go)
 
 

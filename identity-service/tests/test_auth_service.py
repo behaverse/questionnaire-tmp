@@ -15,9 +15,8 @@ def _bootstrap(conn):
 
 def test_register_login_profile_refresh(conn):
     s = _bootstrap(conn); m = NullMailer()
-    prof = auth.register(conn, s, m, email="a@e.com", password="pw1",
-                         display_name="Ada", audience="questionnaire-apps")
-    assert prof["email"] == "a@e.com" and prof["roles"] == ["participant"]
+    auth.register(conn, s, m, email="a@e.com", password="pw1",
+                  display_name="Ada", audience="questionnaire-apps")
     assert len(m.sent) == 1                            # verify email stub-sent
 
     toks = auth.login(conn, s, email="a@e.com", password="pw1", audience="questionnaire-apps")
@@ -41,13 +40,21 @@ def test_bad_password_and_unknown_client(conn):
         auth.login(conn, s, email="a@e.com", password="pw1", audience="nope")
 
 
-def test_email_in_use(conn):
-    s = _bootstrap(conn)
-    auth.register(conn, s, NullMailer(), email="a@e.com", password="pw1",
+def test_register_is_enumeration_resistant(conn):
+    """A second registration with an existing email must NOT raise, must NOT create a second account
+    or overwrite the password, and must notify the real owner — so registration can't probe existence."""
+    s = _bootstrap(conn); m = NullMailer()
+    auth.register(conn, s, m, email="a@e.com", password="pw1",
                   display_name="", audience="questionnaire-apps")
-    with pytest.raises(auth.EmailInUse):
-        auth.register(conn, s, NullMailer(), email="A@E.COM", password="pw2",
-                      display_name="", audience="questionnaire-apps")
+    # duplicate attempt (case-insensitive email) — no raise, no second account, password unchanged
+    auth.register(conn, s, m, email="A@E.COM", password="pw2",
+                  display_name="", audience="questionnaire-apps")
+    assert conn.execute("SELECT count(*) FROM users").fetchone()[0] == 1
+    auth.login(conn, s, email="a@e.com", password="pw1", audience="questionnaire-apps")   # original pw works
+    with pytest.raises(auth.InvalidCredentials):
+        auth.login(conn, s, email="a@e.com", password="pw2", audience="questionnaire-apps")  # pw2 didn't take
+    # the duplicate attempt sent a "you already have an account" notice to the real owner
+    assert len(m.sent) == 2 and "already have an account" in m.sent[1][1].lower()
 
 
 def test_public_jwks_lists_active_key(conn):

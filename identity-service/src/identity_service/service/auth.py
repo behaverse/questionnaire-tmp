@@ -25,10 +25,6 @@ class UnknownClient(AuthError):
     code = "unknown_client"; status = 400; message = "Unknown client/audience."
 
 
-class EmailInUse(AuthError):
-    code = "email_in_use"; status = 409; message = "That email is already registered."
-
-
 class NoSigningKey(AuthError):
     code = "no_signing_key"; status = 500; message = "No active signing key is configured."
 
@@ -94,10 +90,19 @@ def exchange_handoff(conn, settings, *, code) -> dict:
     return _issue_tokens(conn, settings, user, client)
 
 
-def register(conn, settings, mailer, *, email, password, display_name, audience) -> dict:
+def register(conn, settings, mailer, *, email, password, display_name, audience) -> None:
+    """Enumeration-resistant registration: the caller-visible outcome is IDENTICAL whether or not the
+    email already exists (the endpoint returns a uniform 202), so registration can't be used to probe
+    which addresses have accounts. An existing email creates nothing and instead notifies the real
+    owner; a new email is created and sent a verify link."""
     client = _client_or_raise(conn, audience)
     if ustore.by_email(conn, email) is not None:
-        raise EmailInUse(email)
+        # Never signal existence to the caller. Tell the address's real owner someone tried to sign up.
+        mailer.send(email, "You already have an account",
+                    f"Someone tried to create an account with this email at {settings.web_viewer_base_url}. "
+                    "You already have one — no action is needed. If it was you, just log in "
+                    "(or reset your password if you've forgotten it).")
+        return
     uid = ustore.create(conn, email, passwords.hash_password(password), display_name)
     ustore.grant_role(conn, uid, client["id"], settings.default_register_role)
     raw = tokens.mint_refresh()
@@ -105,7 +110,6 @@ def register(conn, settings, mailer, *, email, password, display_name, audience)
                   _now() + timedelta(seconds=settings.verify_token_ttl))
     link = f"{settings.web_viewer_base_url}/verify-email?token={raw}"
     mailer.send(email, "Verify your email", f"Verify your email: {link}")
-    return profile(conn, user_id=uid, audience=audience)
 
 
 def login(conn, settings, *, email, password, audience) -> dict:

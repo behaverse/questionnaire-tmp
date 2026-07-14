@@ -95,7 +95,10 @@ export async function fetchMe(identityBaseUrl: string, access: string): Promise<
 
 export async function register(
   identityBaseUrl: string, email: string, password: string, displayName: string,
-): Promise<{ ok: true } | { ok: false; error: 'email_in_use' | 'invalid' | 'network' }> {
+): Promise<{ ok: true } | { ok: false; error: 'invalid' | 'network' }> {
+  // Registration is enumeration-resistant: the server returns a uniform 2xx whether or not the email
+  // already exists (never a 409 "email in use"). The caller then logs in with the same credentials —
+  // an existing email + wrong password simply fails login with a generic message.
   let resp: Response
   try {
     resp = await fetch(`${identityBaseUrl}/v1/auth/register`, {
@@ -106,7 +109,6 @@ export async function register(
     return { ok: false, error: 'network' }
   }
   if (resp.ok) return { ok: true }
-  if (resp.status === 409) return { ok: false, error: 'email_in_use' }
   if (resp.status === 422) return { ok: false, error: 'invalid' }
   return { ok: false, error: 'network' }
 }

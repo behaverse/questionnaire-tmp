@@ -36,8 +36,8 @@ def test_register_is_rate_limited_per_ip(pg_url, monkeypatch):
     _bootstrap(pg_url)
     c = _client(pg_url, monkeypatch, RATE_LIMIT_REGISTER="2/3600")
     mk = lambda i: {"email": f"u{i}@e.com", "password": "password1", "audience": "questionnaire-apps"}
-    assert c.post("/v1/auth/register", json=mk(1)).status_code == 201
-    assert c.post("/v1/auth/register", json=mk(2)).status_code == 201
+    assert c.post("/v1/auth/register", json=mk(1)).status_code == 202
+    assert c.post("/v1/auth/register", json=mk(2)).status_code == 202
     assert c.post("/v1/auth/register", json=mk(3)).status_code == 429   # 3rd blocked
 
 

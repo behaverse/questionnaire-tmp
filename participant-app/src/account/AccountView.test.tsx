@@ -33,10 +33,14 @@ test('register then auto-login lands on the profile', async () => {
   expect(calls.some((u) => u.endsWith('/v1/auth/login'))).toBe(true)
 })
 
-test('register with an existing email shows the email-in-use message', async () => {
+test('register with an existing email is enumeration-resistant: generic error, never "already registered"', async () => {
+  // Server returns the uniform 202 for any email; the follow-up login fails (wrong password for the
+  // existing account) with invalid_credentials — the UI must not reveal that the account existed.
   vi.stubGlobal('fetch', vi.fn(async (url: string) => {
     if ((url as string).endsWith('/v1/auth/refresh')) return new Response('{}', { status: 401 })
-    if ((url as string).endsWith('/v1/auth/register')) return new Response('{}', { status: 409 })
+    if ((url as string).endsWith('/v1/auth/register')) return new Response('{"status":"accepted"}', { status: 202 })
+    if ((url as string).endsWith('/v1/auth/login'))
+      return new Response('{"error":{"code":"invalid_credentials"}}', { status: 401 })
     return new Response('{}', { status: 200 })
   }))
   renderView()
@@ -44,7 +48,8 @@ test('register with an existing email shows the email-in-use message', async () 
   await userEvent.type(screen.getByLabelText(/email/i), 'a@e.com')
   await userEvent.type(screen.getByLabelText(/password/i), 'password1')
   await userEvent.click(screen.getByRole('button', { name: /^sign up$/i }))
-  expect(await screen.findByText(/already registered/i)).toBeInTheDocument()
+  expect(await screen.findByText(/invalid email or password/i)).toBeInTheDocument()
+  expect(screen.queryByText(/already registered/i)).not.toBeInTheDocument()
 })
 
 test('a short password is rejected before any request', async () => {
