@@ -7,6 +7,15 @@
 > `identity_client` verifier. Architected to later stand alone and serve multiple Behaverse projects (audience-aware).
 > For deep detail see [README.md](README.md); for the raw deferred-items backlog see [FOLLOWUPS.md](FOLLOWUPS.md).
 
+> **🔒 Hardening (2026-07-11, live).** Registration grants `participant` only and is
+> **enumeration-resistant** (uniform 202; existing email → owner notice, no account created).
+> **Per-IP rate limiting** on login/register/reset/verify (`rate_limit_hit` table + reaper;
+> trusted client-IP via `x-vercel-forwarded-for`, fail-open). Admin **reads are audience-scoped**
+> (no cross-client PII enumeration). Refresh uses `SELECT..FOR UPDATE` (no family-fork race).
+> Cron guard is constant-time. API docs gated off unless `ENABLE_DOCS`. **Migrations:** numbered
+> `store/migrations/*.sql` in `schema_migrations` (keys namespaced `identity:` — shared DB with VS).
+> Sentry dormant unless `SENTRY_DSN`. See [../plan/05_completion_plan.md](../plan/05_completion_plan.md).
+
 ## What it is
 - **Tokens:** EdDSA-JWT access tokens (≤15 min, verified offline via `GET /.well-known/jwks.json`) + opaque
   rotating refresh tokens (reuse → family-revoke). Argon2id email+password accounts. Audience-scoped 5-role RBAC.

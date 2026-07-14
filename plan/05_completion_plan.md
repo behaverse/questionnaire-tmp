@@ -8,7 +8,25 @@ per-component detail stays in each component's `HANDOFF.md`/`FOLLOWUPS.md`.
 Future tracks (Godot viewer, Participant Platform, schema CalVer bumps, multi-repo split) are **out of
 scope** here — they remain in [01_roadmap.md](01_roadmap.md) Phases 4–6.
 
-**Last revised.** 2026-07-10.
+**Last revised.** 2026-07-11.
+
+## Status tracker (2026-07-11)
+
+| Phase | State |
+|---|---|
+| **0 — Emergency security + data safety** | ✅ **DONE + LIVE.** All of 0.1–0.6 merged, redeployed, and verified live. Registration participant-only; VS per-owner authz (IDOR closed); `redirect_url` validated; editor `/api/translate` guarded; nightly `pg_dump` backup script (restore drill verified); Supabase ref scrubbed. |
+| **1 — Production hardening** | ✅ **DONE + LIVE.** Auth rate limiting (live `rate_limit_hit` table), enumeration-resistant registration (D1), admin audience-scoping, constant-time cron guards, docs gating, `fra1` region, redeploy-script fail-loud, VS TTL reaper + `requeue-failed`, `session_index` + refresh races fixed, outbox drain-until-empty. Plus an adversarial re-review + rate-limiter follow-up fixes. Versioned migrations (D2) + Sentry/monitoring/keepalive (D3) also shipped. |
+| **2 — Engineering foundation** | ⬜ **NOT STARTED.** CI (GitHub Actions), `--import-mode=importlib` to unify pytest, eslint/prettier/ruff + pre-commit, PIN deployed Python deps, ~25 MB tracked-wasm strategy, repo hygiene, undocumented-env sweep, npm workspaces + toolchain upgrades. |
+| **3 — Documentation + licensing** | ◔ **PARTIAL.** DEPLOYMENT cron/migration reconciled; monitoring/backups docs added; HANDOFF refreshed. **Still open:** LICENSE files (schemas CC-BY-4.0 + code TBC), the 157 `license: unknown` harvested-content triage, remaining link fixes. |
+| **4 — Functional completion** | ⬜ **NOT STARTED.** Fix the 1 stale schema-id test, content search index, facet backfill, resume-path UX, wire `style_overrides`, scorer-conformance gate, etc. |
+| **5 — Close the Phase-3 gate** | ⬜ Blocked on the ID-C2 contribution-model design decision. |
+| **6 — Future tracks** | ⬜ Godot viewer, Participant Platform, schema CalVer bumps — unchanged in [01_roadmap.md](01_roadmap.md). |
+
+**Deferred security item (owner):** RLS/PostgREST exposure — every Supabase table is RLS-off, including
+the PII-bearing `users`/`outbox`; verify whether the anon key can reach them via `…/rest/v1/` and lock
+down if so. Belongs in Phase 1/2 hardening.
+
+The rest of this document is the original sequenced plan (unchanged); use the tracker above for current status.
 
 ## Review verdict (context)
 

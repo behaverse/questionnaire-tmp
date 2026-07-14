@@ -4,16 +4,18 @@ An open, modular platform for designing, distributing, running, and analysing ps
 questionnaires. This monorepo holds the **design**, the **canonical JSON schemas**, and the
 **implementations** of every component.
 
-**Status (2026-07-06).** Phase 1 (schemas + Library) and Phase 2 (Web Viewer + deployments) **shipped**;
+**Status (2026-07-11).** Phase 1 (schemas + Library) and Phase 2 (Web Viewer + deployments) **shipped**;
 the full **participant experience** and the **Editor** are **built and live on Vercel + Supabase** — the
 whole stack (Library, Identity, Viewer Service, player, portal, editor) is deployed and browser-verified on
 the $0 tier. The public Library is at **https://questionnaire-library.vercel.app** with **222
-questionnaires** (64 `survey_database` + 158 from the harvester). The owner **QA / research-tooling** track is
-complete — notably the **replay** feature (record → replay a session, researcher `/studies` links,
-live-follow) and the respondent-bot. Remaining major tracks: **Phase 4** (Godot native viewer) and
-**Phase 5** (Participant Platform — studies/protocols/scheduling). See **[HANDOFF.md](HANDOFF.md)** for the
-live status and what's next, and **[docs/operational-gotchas.md](docs/operational-gotchas.md)** before
-running the stack.
+questionnaires** (64 `survey_database` + 158 from the harvester). A 2026-07-10→11 whole-repo review drove a
+**security + production-hardening pass** — now merged and **live**: registration hardening (participant-only,
+enumeration-resistant), Viewer-Service per-owner authorization (cross-tenant IDOR closed), auth rate
+limiting, nightly DB backups, versioned migrations, Sentry error tracking, and an uptime/keepalive monitor
+(see **[plan/05_completion_plan.md](plan/05_completion_plan.md)**). Remaining major tracks: engineering
+foundation (CI/linters — Phase 2 of the completion plan), **Phase 4** (Godot native viewer) and **Phase 5**
+(Participant Platform). See **[HANDOFF.md](HANDOFF.md)** for the live status and what's next, and
+**[docs/operational-gotchas.md](docs/operational-gotchas.md)** before running the stack.
 
 ## Start here
 

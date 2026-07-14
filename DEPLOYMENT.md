@@ -6,10 +6,28 @@
 
 ---
 
-## 0a. Phase-0 security hardening — required live actions (2026-07-10)
+## 0a. Security + production hardening — ✅ DONE + LIVE (2026-07-11)
 
-The 2026-07-10 review shipped security fixes on `work/security-hardening` (merged to master). Two need
-an operator action against the LIVE stack when redeploying — do these **with** the redeploy:
+The 2026-07-10→11 whole-repo review's Phase 0 (critical security) and Phase 1 (production hardening) are
+**merged, redeployed, and verified live** across all 5 Vercel projects. State now live:
+
+- Registration is participant-only + enumeration-resistant; VS enforces per-owner authorization
+  (`created_by`); `redirect_url` validated; editor `/api/translate` guarded; per-IP auth rate limiting
+  (backed by the live `rate_limit_hit` table); admin reads audience-scoped; API docs gated (`ENABLE_DOCS`).
+- **Migrations adopted on the live DBs** — `schema_migrations` created + `001_baseline.sql` recorded for
+  identity/viewer_service (shared DB) and library; the drift that had left `rate_limit_hit` +
+  `replay_revocation` missing is fixed. Future changes = numbered `store/migrations/NNN_*.sql`.
+- **Sentry** `SENTRY_DSN` + `SENTRY_ENVIRONMENT=production` set on identity, viewer-service, library
+  (dormant in code until the DSN is present).
+- **Backups**: `scripts/backup-supabase.sh` (see [docs/backups.md](docs/backups.md)) — schedule it.
+- **Uptime + keepalive**: `.github/workflows/uptime-keepalive.yml` (green) pings healthchecks.io + keeps
+  the Library DB warm (see [docs/monitoring.md](docs/monitoring.md)); needs the `HC_PING_URL` repo secret.
+
+> Historical note — the original operator actions this section listed (set `DEFAULT_REGISTER_ROLE`,
+> backfill `created_by`, adopt the migration baseline, set the Sentry DSN) have all been completed. The
+> `created_by` backfill turned out unnecessary (all live deployments already had owners).
+
+The original required-action list follows for reference:
 
 1. **Identity — set `DEFAULT_REGISTER_ROLE=participant`** on the Identity Vercel project, then redeploy
    Identity. Before this, public `/v1/auth/register` granted `researcher` by default (privilege
