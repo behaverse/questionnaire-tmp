@@ -300,6 +300,21 @@ DATABASE_URL="<viewer-service Supabase pooled connection string>" \
 
 Both CLIs are idempotent — safe to run again after updates.
 
+**Migration system (2026-07-11).** Each service applies **numbered `.sql` files** in
+`store/migrations/` (`001_baseline.sql`, `002_*.sql`, …) and records each applied file in a
+`schema_migrations` table, so every file runs **exactly once** against a known state. `migrate` runs
+only the pending ones.
+
+- **Adopting the baseline on the existing live DBs:** `001_baseline.sql` is the prior schema, all
+  `IF NOT EXISTS`, so running `migrate` on a database that already has the tables is a **no-op that
+  just records `001_baseline.sql`**. Run it once per live DB (identity+VS shared DB, and the library
+  DB) after deploying this change.
+- **Adding a schema change:** drop a new `NNN_description.sql` (next number) into the service's
+  `store/migrations/`. Unlike the old re-applied `schema.sql`, a migration **can alter existing
+  columns/constraints** (it runs once). Never edit an already-applied migration — add a new one.
+- **Do NOT `DROP SCHEMA`** to force a change anymore — that destroys non-re-seedable data (responses,
+  users, comments). Use a migration.
+
 ### 4.3 Generate signing keys and create the admin account
 
 ```bash

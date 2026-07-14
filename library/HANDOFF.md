@@ -8,7 +8,7 @@
 ## What it is
 - **Read-only catalogue API** (`src/library/api/`): `questionnaires.py`, `entities.py`, `search.py`, `resolve.py`, `community.py`, `identity.py`, wired in `app.py`. Public read endpoints under `/v1` (list/detail/search/stats/resolve/healthz); no auth to browse or download definitions.
 - **Storage = jsonb + derived index.** Full entity bodies live in `entity.content_json` (source of truth); `catalogue_entry` (incl. a GIN-indexed `search_tsv`), `entity_ref`, and `facet` are *derived* by `store/index.py` `rebuild_index_for()`. Query layer: `query.py` `list_entries()` + `api/search.py`.
-- **Git-backed read-only ingestion.** `cli.py` exposes `migrate`, `ingest <dir> --release vYY.MMDD`, `import-survey-db`. Schema applied via `store/migrate.apply_schema` (no Alembic).
+- **Git-backed read-only ingestion.** `cli.py` exposes `migrate`, `ingest <dir> --release vYY.MMDD`, `import-survey-db`. Schema applied via `store/migrate.apply_migrations` — numbered `store/migrations/*.sql` recorded in `schema_migrations` (lightweight, no Alembic).
 - **survey_db importer** (`src/library/importers/survey_db/`): `survey_db.sqlite` → Schema-2 JSON + provenance + loss report (`mappers.py`, `writer.py`, `provenance.py`, `loss.py`). Produced the 64 imported questionnaires (8 instrument families, all `variant: "base"`).
 - **Community signals (ID-C1)**: Identity-gated threaded comments + 1–5 ratings + GDPR self-erasure (`api/community.py`, `store/community.py`). First Library *write* endpoints; reads are public. JWT/JWKS verification via `identity_service`.
 - **Faceting / instrument grouping** (OD-21): `domain` / `population` / `administration_mode` facets + `instrument_id` / `variant` drive the grouped catalogue.
@@ -56,7 +56,11 @@ The component is feature-complete and live. Remaining items are enhancements / b
 - **Don't re-import casually.** Canonical content is live on Supabase; re-seeding TRUNCATEs + re-ingests. Always re-ingest the **full current set** (survey_db + harvested) and never drop harvested entities.
 - **DEPLOY:** live Library auto-deploys from `master`. Root `requirements.txt` must keep `questionnaire-identity-service @ ./identity-service` — the Library imports `identity_service` on boot (community auth) and will 500 without it.
 - **Ops follow-up:** the deployed function runs in `iad1` (US) while Supabase is `eu-central-1`; consider moving to `fra1` for latency.
-- **Re-seeding a schema change:** DROP SCHEMA before migrate (per the instrument-grouping re-seed note).
+- **Schema changes:** add a numbered `store/migrations/NNN_*.sql` (see DEPLOYMENT.md "Migration
+  system"); `migrate` runs pending ones once, recorded in `schema_migrations`. **Do NOT `DROP SCHEMA`**
+  — it destroys the non-re-seedable `comment`/`rating` tables. Re-seeding *content* (a full catalogue
+  re-import) still uses the explicit `TRUNCATE` list in `scripts/seed-supabase.md`, which spares
+  community tables — that's separate from a schema migration.
 - Finish branches by **merging to master locally + pushing — no PRs**. `git fetch` + ff/rebase before pushing.
 
 ## References
