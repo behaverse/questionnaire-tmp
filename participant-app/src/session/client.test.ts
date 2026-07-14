@@ -81,9 +81,9 @@ test('register posts the profile fields with audience and returns ok on 201', as
   expect(JSON.parse((init as RequestInit).body as string)).toEqual({ email: 'a@e.com', password: 'password1', display_name: 'Al', audience: 'questionnaire-apps' })
 })
 
-test('register maps 409 to email_in_use', async () => {
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 409 })))
-  expect(await register('http://id', 'a@e.com', 'password1', '')).toEqual({ ok: false, error: 'email_in_use' })
+test('register treats the uniform 202 (enumeration-resistant) as ok', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{"status":"accepted"}', { status: 202 })))
+  expect(await register('http://id', 'a@e.com', 'password1', '')).toEqual({ ok: true })
 })
 
 test('register maps 422 to invalid', async () => {

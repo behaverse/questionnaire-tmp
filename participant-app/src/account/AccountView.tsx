@@ -82,11 +82,14 @@ export function AccountView() {
       const r = await register(params.identityBaseUrl, email, password, displayName)
       if (!r.ok) {
         setBusy(false)
-        setErr(r.error === 'email_in_use' ? 'That email is already registered — log in instead.'
-          : r.error === 'invalid' ? 'Password must be at least 8 characters.'
+        setErr(r.error === 'invalid' ? 'Password must be at least 8 characters.'
           : 'Network error — try again.')
         return
       }
+      // Registration is enumeration-resistant, so we don't learn here whether the email was new. We
+      // just log in with the entered credentials: a brand-new account logs straight in; an email that
+      // already existed logs in if the password matches, else shows the generic invalid-credentials
+      // message below (never revealing that the account already existed).
     } else {
       setBusy(true)
     }
