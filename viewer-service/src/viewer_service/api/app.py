@@ -4,12 +4,14 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from ..config import get_settings
+from ..observability import init_sentry
 
 _CODE_FOR = {400: "bad_request", 401: "unauthorized", 404: "not_found", 410: "gone",
              422: "unprocessable", 502: "upstream_unavailable", 503: "service_unavailable"}
 
 
 def create_app() -> FastAPI:
+    init_sentry("viewer-service")
     from . import viewers, deployments, runtime, admin, sessions, submission, export, themes, metrics, scorers, scoring, invites as invites_routes, me as me_routes, catalogue as catalogue_routes, comments as comments_routes, recordings as recordings_routes, replay as replay_routes, internal
     s = get_settings()
     # Interactive docs / OpenAPI schema are OFF unless ENABLE_DOCS is set (don't advertise the

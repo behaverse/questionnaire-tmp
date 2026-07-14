@@ -4,12 +4,14 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from ..config import get_settings
+from ..observability import init_sentry
 
 _CODE_FOR = {400: "bad_request", 401: "unauthorized", 403: "forbidden",
              404: "not_found", 409: "conflict", 422: "unprocessable"}
 
 
 def create_app() -> FastAPI:
+    init_sentry("identity-service")
     s = get_settings()
     # Interactive docs / OpenAPI schema are OFF unless ENABLE_DOCS is set — don't publicly
     # advertise the full auth API surface (and its example payloads) in production.

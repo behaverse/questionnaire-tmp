@@ -11,6 +11,7 @@ dependencies = [
   "pyjwt[crypto]>=2.8",
   "jsonschema>=4.20",
   "referencing>=0.30",
+  "sentry-sdk>=2.0",
 ]
 
 [project.optional-dependencies]

@@ -5,11 +5,13 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from . import questionnaires, entities, search, community
 from ..config import get_settings
+from ..observability import init_sentry
 
 _CODE_FOR = {400: "bad_request", 401: "unauthorized", 403: "forbidden",
              404: "not_found", 410: "gone", 422: "unprocessable"}
 
 def create_app() -> FastAPI:
+    init_sentry("library")
     s = get_settings()
     # Interactive docs / OpenAPI schema OFF unless ENABLE_DOCS is set.
     docs = {} if s.enable_docs else {"docs_url": None, "redoc_url": None, "openapi_url": None}
