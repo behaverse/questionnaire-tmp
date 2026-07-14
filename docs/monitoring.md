@@ -21,25 +21,36 @@ To turn it on:
 3. Redeploy. Unhandled exceptions now report to Sentry. `send_default_pii=False` is hard-set so
    participant data is never captured.
 
-## 2. Uptime + free-tier keepalive (external checker) — you set this up
+## 2. Uptime + free-tier keepalive — GitHub Actions cron + healthchecks.io
 
 Supabase pauses a **free** project after ~7 idle days; the Library then goes down until manually
-resumed. An external checker that periodically hits a DB-touching endpoint both watches uptime **and**
-keeps the database warm — and, being external, needs no extra Vercel cron (Hobby caps those).
+resumed. Something must periodically hit a DB-touching endpoint to both watch uptime **and** keep the
+database warm.
 
-Use UptimeRobot or healthchecks.io (both free). Suggested checks:
+Two models of external monitor:
+- **UptimeRobot** actively *polls* your URLs (create 3 monitors, no code) — its GET to
+  `/v1/questionnaires` doubles as the keepalive.
+- **healthchecks.io** is a *dead-man's-switch*: it waits for your system to **ping it** and alerts if a
+  ping doesn't arrive. It does NOT poll your URLs, so it can't do the keepalive by itself.
 
-| Check | URL | Every | Purpose |
-|---|---|---|---|
-| Library catalogue | `https://questionnaire-library.vercel.app/v1/questionnaires?limit=1` | 6 h | **keepalive** (touches the Library DB → never pauses) + uptime |
-| Identity health | `https://identity-service-three.vercel.app/healthz` | 15 min | uptime |
-| Viewer Service health | `https://viewer-service.vercel.app/healthz` | 15 min | uptime |
+This repo uses the healthchecks model via
+[`.github/workflows/uptime-keepalive.yml`](../.github/workflows/uptime-keepalive.yml): a scheduled
+GitHub Actions job (every 6 h) that GETs the endpoints below **and** pings healthchecks with the
+result. Portable — it survives a Vercel→Cloud Run move unchanged.
 
-> The identity+VS shared DB is already kept warm by the daily `/internal/forward` cron (it connects to
-> the DB every run), so the keepalive above only needs to cover the **separate Library** project. Keep
-> the Library check at ≤ a few days' interval regardless.
+| Endpoint probed | Purpose |
+|---|---|
+| `https://questionnaire-library.vercel.app/v1/questionnaires?limit=1` | **keepalive** (touches the Library DB → never pauses) + uptime |
+| `https://identity-service-three.vercel.app/healthz` | uptime |
+| `https://viewer-service.vercel.app/healthz` | uptime |
 
-Point the alert channel (email/Slack) at yourself so a downed service or a paused DB pages you.
+**Setup:** create a Check on healthchecks.io (Period **6 h**, Grace **~2 h**), copy its ping URL, and add
+it as the GitHub repo secret **`HC_PING_URL`** (Settings → Secrets and variables → Actions). Point the
+healthchecks alert channel (email) at yourself. Trigger the workflow once manually (Actions tab → run
+workflow) to confirm green.
+
+> The identity+VS shared DB is already kept warm by the daily `/internal/forward` cron, so the keepalive
+> only strictly needs to cover the **separate Library** project — but probing all three also gives uptime.
 
 ## 3. Outbox depth alert (already computed, not yet surfaced)
 

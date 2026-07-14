@@ -1,0 +1,42 @@
+# Active uptime check + Supabase free-tier keepalive, reported to healthchecks.io.
+#
+# healthchecks.io is a dead-man's-switch (it waits for a ping; it does NOT poll your URLs), so this
+# scheduled job does the actual GETs and then pings it. The GET to the Library's /v1/questionnaires
+# touches its Postgres → keeps the separate Library Supabase project from pausing after ~7 idle days.
+# (The identity+VS shared DB is already kept warm by the daily /internal/forward cron.)
+#
+# Setup: create a Check on healthchecks.io (Period 6h, Grace ~2h), then add its ping URL as the repo
+# secret HC_PING_URL (Settings → Secrets and variables → Actions). Until that secret is set, the
+# endpoint checks still run (keepalive works); only the healthchecks ping is skipped.
+name: uptime-keepalive
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe endpoints + report to healthchecks
+        env:
+          HC_PING_URL: ${{ secrets.HC_PING_URL }}
+        run: |
+          set +e
+          fail=0
+          for url in \
+            "https://questionnaire-library.vercel.app/v1/questionnaires?limit=1" \
+            "https://identity-service-three.vercel.app/healthz" \
+            "https://viewer-service.vercel.app/healthz"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$url")
+            echo "$url -> $code"
+            [ "$code" = "200" ] || fail=1
+          done
+          if [ -n "$HC_PING_URL" ]; then
+            if [ "$fail" = "0" ]; then curl -fsS --max-time 15 "$HC_PING_URL" > /dev/null
+            else curl -fsS --max-time 15 "$HC_PING_URL/fail" > /dev/null; fi
+          fi
+          exit $fail
