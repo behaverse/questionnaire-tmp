@@ -5,6 +5,15 @@
 # touches its Postgres → keeps the separate Library Supabase project from pausing after ~7 idle days.
 # (The identity+VS shared DB is already kept warm by the daily /internal/forward cron.)
 #
+# IMPORTANT: this keeps an ACTIVE db warm; it CANNOT wake an already-PAUSED Supabase project (those need
+# a manual restore in the dashboard / via API). So if the Library project ever shows INACTIVE, restore
+# it first, then this keeps it warm going forward.
+#
+# ALERTING is via healthchecks (success/fail ping), NOT the GitHub run status — the job intentionally
+# exits 0 even when an endpoint is down, so you don't get noisy GitHub "run failed" emails; healthchecks
+# is what pages you (configure its alert channel). Each endpoint is retried a few times to ride out
+# free-tier cold starts before being called down.
+#
 # Setup: create a Check on healthchecks.io (Period 6h, Grace ~2h), then add its ping URL as the repo
 # secret HC_PING_URL (Settings → Secrets and variables → Actions). Until that secret is set, the
 # endpoint checks still run (keepalive works); only the healthchecks ping is skipped.
@@ -26,12 +35,21 @@ jobs:
           HC_PING_URL: ${{ secrets.HC_PING_URL }}
         run: |
           set +e
+          probe() {  # retry a few times to ride out free-tier cold starts; echo final code
+            local url="$1" code=000
+            for attempt in 1 2 3; do
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 40 "$url")
+              [ "$code" = "200" ] && break
+              sleep 10
+            done
+            echo "$code"
+          }
           fail=0
           for url in \
             "https://questionnaire-library.vercel.app/v1/questionnaires?limit=1" \
             "https://identity-service-three.vercel.app/healthz" \
             "https://viewer-service.vercel.app/healthz"; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$url")
+            code=$(probe "$url")
             echo "$url -> $code"
             [ "$code" = "200" ] || fail=1
           done
@@ -39,4 +57,5 @@ jobs:
             if [ "$fail" = "0" ]; then curl -fsS --max-time 15 "$HC_PING_URL" > /dev/null
             else curl -fsS --max-time 15 "$HC_PING_URL/fail" > /dev/null; fi
           fi
-          exit $fail
+          # Always succeed the GitHub run — healthchecks owns alerting (avoids noisy failure emails).
+          exit 0
