@@ -8,24 +8,31 @@ it does, how it connects, and where it stands. For the authoritative design see
 
 > **Maintenance note.** This document is a hand-maintained summary; the per-component
 > details drift as work lands. When in doubt, the component READMEs, the agent memory
-> index, and `HANDOFF.md` are more current. Last refreshed: **2026-07-06**.
+> index, and `HANDOFF.md` are more current. **For what to do next, the canonical tracker is
+> [`../plan/05_completion_plan.md`](../plan/05_completion_plan.md)** (status per phase).
+> Last refreshed: **2026-07-11**.
 
-> **🟢 LIVE (2026-06-25).** The **entire participant stack is deployed** on Vercel + Supabase
+> **🟢 LIVE + hardened (2026-07-11).** The **entire stack is deployed** on Vercel + Supabase
 > (free tier, $0): **portal** [portal-henna-seven-32.vercel.app](https://portal-henna-seven-32.vercel.app),
 > **player** [player-sooty-six.vercel.app](https://player-sooty-six.vercel.app) (⚠ **not**
 > `web-viewer.vercel.app` — that alias is squatted by an unrelated "Vespucci" app; the player is
 > launched _with_ a questionnaire, its bare root shows nothing),
 > **Viewer Service** [viewer-service.vercel.app](https://viewer-service.vercel.app),
 > **Identity** [identity-service-three.vercel.app](https://identity-service-three.vercel.app)
-> (with **real email via Resend**, domain `xcit.org`). The whole pick → run → submit →
-> download journey is browser-verified end-to-end. The **Library**
-> ([questionnaire-library.vercel.app](https://questionnaire-library.vercel.app)) had a broken
-> build (uv requirements) now fixed — its **Try-it** preview is live and acronym **search**
-> is fixed (`bis` → BIS/BAS). Identity + Viewer Service share **one** Supabase DB. See
-> [`../DEPLOYMENT.md`](../DEPLOYMENT.md) §0 (as-built) + `scripts/redeploy-participant-stack.sh`.
-> The **editor** is now live too ([editor-static.vercel.app](https://editor-static.vercel.app),
-> M2 — authoring/preview/export; auto-translate is live via serverless `/api/translate` → Claude).
-> **Everything started is now hosted.** Remaining: **M3** polish.
+> (**real email via Resend**, domain `xcit.org`), and the **Library**
+> ([questionnaire-library.vercel.app](https://questionnaire-library.vercel.app), 222 questionnaires) +
+> **editor** ([editor-static.vercel.app](https://editor-static.vercel.app)). Identity + Viewer Service
+> share **one** Supabase DB; the Library keeps its own. See [`../DEPLOYMENT.md`](../DEPLOYMENT.md) §0
+> (as-built) + `scripts/redeploy-participant-stack.sh`.
+>
+> A **2026-07-10→11 whole-repo review** drove a **security + production-hardening pass** — Phase 0
+> (critical security) and Phase 1 (hardening) of [`../plan/05_completion_plan.md`](../plan/05_completion_plan.md),
+> now **merged, redeployed, and live**: registration is participant-only + enumeration-resistant; the
+> Viewer Service enforces **per-owner authorization** on deployment routes (cross-tenant IDOR closed);
+> `redirect_url` validated; auth **rate limiting**; **nightly DB backups**; **versioned migrations**
+> (`schema_migrations`); **Sentry** error tracking; and a **GitHub Actions uptime + Supabase keepalive**.
+> **Next up:** the completion plan's Phase 2 (CI/linters/pinned deps) → Phase 3 (licensing) → Phase 4
+> (functional completion). One deferred security item: RLS/PostgREST exposure check (see plan/05).
 
 ---
 
@@ -228,15 +235,17 @@ graph TD
   **identity-service** JWTs (JWKS); serves **questionnaire-scorer** WASM; consumed by
   **web-viewer** and **participant-app**.
 - **Tool stack.** Python 3.12, FastAPI, Uvicorn, Postgres (psycopg3), Pydantic, httpx,
-  PyJWT, jsonschema; pytest (~260 tests).
+  PyJWT, jsonschema; pytest (~276 tests).
 - **Deployment.** Vercel serverless, deployed from a self-contained assembled dir
   (siblings pinned as PEP 508 git deps + `schemas`/scorer bundled locally).
 - **Location.** [`viewer-service/`](../viewer-service/) (dev port **8001**).
-- **Dev status.** 🟢 Complete (VS-A..E + replay).
+- **Dev status.** 🟢 Complete (VS-A..E + replay) + **hardened** (per-owner authorization on every
+  deployment route, `redirect_url` validation, TTL reaper + `requeue-failed`, `session_index` race
+  fixed, `regions:[fra1]`, docs gating — 2026-07-11).
 - **Deployment status.** 🟢 **Live** — https://viewer-service.vercel.app.
-- **Todos.** Per-record deployment ownership; single-use invites; ephemeral-session TTL
-  purge; locale validation at deployment-create; cross-service retry/backoff to Library.
-  See [`viewer-service/FOLLOWUPS.md`](../viewer-service/FOLLOWUPS.md).
+- **Todos.** ~~Per-record deployment ownership~~ **DONE** (owner scoping live); ~~ephemeral-session TTL
+  purge~~ **DONE** (reaper); single-use invites; locale validation at deployment-create; cross-service
+  retry/backoff to Library. See [`viewer-service/FOLLOWUPS.md`](../viewer-service/FOLLOWUPS.md).
 
 ### identity-service — Identity / Auth (OD-08)
 
@@ -251,15 +260,17 @@ graph TD
 - **Relationships.** Token verifier imported by **library** and **viewer-service**; auth
   endpoints called by **participant-app** / **web-viewer** (via **participant-session**).
 - **Tool stack.** Python 3.12, FastAPI, Uvicorn, Postgres (psycopg3), Pydantic, Argon2,
-  PyJWT, httpx; pytest (~61 tests).
+  PyJWT, httpx; pytest (~87 tests).
 - **Deployment.** Vercel serverless, deployed straight from `identity-service/`. Its
   package is also installed into the **live** Library's serverless build (imported on boot).
 - **Location.** [`identity-service/`](../identity-service/) (dev port **8100**).
-- **Dev status.** 🟢 Complete (ID-A core + ID-B gating + ID-C1 community).
+- **Dev status.** 🟢 Complete (ID-A core + ID-B gating + ID-C1 community) + **hardened**
+  (enumeration-resistant registration, per-IP rate limiting, audience-scoped admin reads,
+  `FOR UPDATE` refresh-race fix, docs gating — 2026-07-11).
 - **Deployment status.** 🟢 **Live** — https://identity-service-three.vercel.app.
-- **Todos.** ID-C2 contribution workflow (GitHub-PR-vs-DB-draft is an open design
-  question); ID-C3 DOI minting (DataCite-blocked); ID-D editor collaboration; admin
-  multi-tenant isolation; refresh-token race hardening; revoke-sessions-on-password-change.
+- **Todos.** ~~refresh-token race hardening~~ **DONE** (`FOR UPDATE`); ID-C2 contribution workflow
+  (GitHub-PR-vs-DB-draft is an open design question); ID-C3 DOI minting (DataCite-blocked); ID-D editor
+  collaboration; admin multi-tenant isolation; revoke-sessions-on-password-change.
   See [`identity-service/FOLLOWUPS.md`](../identity-service/FOLLOWUPS.md).
 
 ### web-viewer — the player
@@ -502,22 +513,52 @@ graph TD
   the expression grammar is normative in `design/15`; the canonical format stack is "S1
   pure custom" (JSON + React web viewer + Godot native + Editor, no SurveyJS).
 
-- **Resolved blockers.** The previously-open token-table **TTL reaper** (handoff/email/
-  refresh tables growing unbounded) is now built and merged (`identity reap`).
+- **Security + production hardening (2026-07-11, live).** A 5-lens whole-repo review
+  ([`../plan/05_completion_plan.md`](../plan/05_completion_plan.md)) closed two critical security holes
+  (privilege-escalation on register; cross-tenant IDOR in the Viewer Service) and shipped a hardening
+  pass, all live: enumeration-resistant registration, per-IP auth rate limiting, per-owner deployment
+  authorization, `redirect_url` validation, audience-scoped admin reads, constant-time cron guards, API
+  docs gated (`ENABLE_DOCS`). **Ops maturity:** nightly `pg_dump` backups ([`backups.md`](backups.md)),
+  a VS TTL reaper + `requeue-failed`, `regions:[fra1]`, **versioned migrations** (`schema_migrations`;
+  numbered `store/migrations/*.sql`, never `DROP SCHEMA`), **Sentry** (dormant unless `SENTRY_DSN`), and
+  a **GitHub Actions uptime + Supabase keepalive** ([`monitoring.md`](monitoring.md)). Everything is
+  platform-agnostic (env-var-driven) since the owner may move Vercel→GCP later. **Deferred:**
+  RLS/PostgREST exposure check (all Supabase tables RLS-off incl. `users`/`outbox`).
+- **Free-tier gotcha.** A Supabase **free** project **pauses after ~7 idle days** and then 500s until a
+  **manual restore** (the keepalive prevents pausing while active but can't wake an already-paused DB).
+  The Library DB paused once (2026-07-25) → restored. If the Library shows `INACTIVE`, restore it in the
+  Supabase dashboard.
+- **Resolved blockers.** The token-table **TTL reaper** (handoff/email/refresh + `rate_limit_hit`) and
+  the **VS reaper** (replay-revocations + ephemeral sessions) are built + live. The `iad1→fra1` region
+  mismatch is fixed.
 
 ---
 
 ## Where to go next
 
-The public full-stack deployment is **done** (VS + player + portal are all live, public
-"Try it" and authenticated runs both work) and the replay/QA track (#7) is **done**. Two
-viable, non-blocking tracks remain (owner's standing rule: finish all components, with the
-Native/Godot viewer **LAST**):
+**The canonical "what's next" tracker is [`../plan/05_completion_plan.md`](../plan/05_completion_plan.md)**
+(status per phase). The public full-stack deployment is live and the security + production-hardening pass
+(its **Phase 0 + Phase 1**) is done. The remaining work, in the plan's order:
 
-1. **Phase 5 — Participant Platform** (largest unbuilt piece: study/protocol builder,
-   OD-09 scheduler, consent lifecycle, notifications, dashboards).
-2. **Unblock the Editor** (Identity-gated Library write-back + real VS preview → closes the
-   Phase-3 gate).
+1. **Completion plan — Phase 2 (Engineering foundation).** The highest-leverage next step: **CI** (there's
+   still no automated gate on merges), linters/formatters (eslint/prettier/ruff) + pre-commit, **pinned**
+   Python deps for the deployed services, and repo hygiene. Prereq for CI: `--import-mode=importlib` so the
+   Python suites run in one invocation.
+2. **Completion plan — Phase 3 (Licensing).** Add LICENSE files (schemas CC-BY-4.0; code TBC) and triage
+   the **157 harvested questionnaires live with `license: unknown`** — the one item with legal exposure.
+3. **Completion plan — Phase 4 (Functional completion).** Small in-scope items: fix the 1 stale schema-id
+   test, the server-side content search index, facet backfill, resume-path UX, wire `style_overrides`, the
+   scorer-conformance publish gate.
+4. **Deferred security item:** the RLS/PostgREST exposure check (all Supabase tables RLS-off incl.
+   `users`/`outbox` — verify the anon key can't reach them).
 
-See [`../HANDOFF.md`](../HANDOFF.md) and [`../plan/01_roadmap.md`](../plan/01_roadmap.md)
-for the full sequencing rationale.
+**Larger tracks** (owner's standing rule: finish all components, Native/Godot **LAST**):
+- **Close the Phase-3 gate** — unblock the Editor (Identity-gated Library write-back + real VS preview);
+  blocked on the ID-C2 contribution-model design decision (GitHub-PR vs DB-draft).
+- **Phase 5 — Participant Platform** (largest unbuilt piece: study/protocol builder, OD-09 scheduler,
+  consent lifecycle, notifications, dashboards).
+- **Phase 4 (roadmap) — Native/Godot viewer** (sequenced last).
+
+See [`../plan/05_completion_plan.md`](../plan/05_completion_plan.md) (immediate work) +
+[`../HANDOFF.md`](../HANDOFF.md) §System-wide tasks + [`../plan/01_roadmap.md`](../plan/01_roadmap.md)
+(full sequencing).
